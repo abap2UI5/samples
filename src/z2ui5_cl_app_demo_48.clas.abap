@@ -28,7 +28,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_48 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -98,5 +99,4 @@ CLASS z2ui5_cl_app_demo_48 IMPLEMENTATION.
     client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) ) ).
 
   ENDMETHOD.
-
 ENDCLASS.

@@ -21,11 +21,13 @@ CLASS z2ui5_cl_app_demo_55 DEFINITION PUBLIC.
     data next type z2ui5_if_client=>ty_s_next.
 
     DATA mv_check_popover TYPE abap_bool.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_55 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_55 IMPLEMENTATION.
 
 
   METHOD refresh_data.

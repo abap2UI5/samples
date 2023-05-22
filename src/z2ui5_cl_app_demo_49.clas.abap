@@ -151,6 +151,7 @@ CLASS z2ui5_cl_app_demo_49 DEFINITION PUBLIC.
         io_box TYPE REF TO z2ui5_cl_xml_view.
     METHODS z2ui5_set_data.
 
+private section.
 ENDCLASS.
 
 

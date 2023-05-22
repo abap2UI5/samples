@@ -3,6 +3,8 @@ CLASS z2ui5_cl_app_demo_44 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+protected section.
+private section.
 ENDCLASS.
 
 
