@@ -55,8 +55,9 @@ CLASS Z2UI5_CL_APP_DEMO_52 IMPLEMENTATION.
 
       WHEN `POPOVER_DETAIL`.
         DATA(lv_id) = client->get( )-event_data.
-        mv_check_popover = abap_true.
         next-popover_open_by_id = lv_id.
+        mv_check_popover = abap_true.
+        data(lv_count) = client->get( )-event_data2.
 
       WHEN 'BUTTON_POST'.
         client->popup_message_box( 'button post was pressed' ).
@@ -99,7 +100,7 @@ CLASS Z2UI5_CL_APP_DEMO_52 IMPLEMENTATION.
             )->text( 'Counter' ).
 
     tab->items( )->column_list_item( )->cells(
-       )->link( text = '{COUNT}' press = client->_event( val = `POPOVER_DETAIL` data = `${$source>/id}` hold_view = abap_true )
+       )->link( text = '{COUNT}' press = client->_event( val = `POPOVER_DETAIL` hold_view = abap_true data = `${$source>/id}` data2 = `${COUNT}` )
        )->text( '{INFO}'
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
