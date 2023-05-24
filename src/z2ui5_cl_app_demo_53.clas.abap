@@ -16,6 +16,7 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
     DATA mt_token            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
     DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
+    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -81,52 +82,9 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         product TYPE RANGE OF string,
       END OF ty_S_filter.
 
-    TYPES:
-      BEGIN OF ty_S_sort,
-        name TYPE string,
-        type TYPE string,
-      END OF ty_S_sort.
-
-
     DATA ms_filter TYPE ty_s_filter.
 
-    DATA:
-      BEGIN OF ms_layout,
-        check_zebra   TYPE abap_bool,
-        title         TYPE string,
-        sticky_header TYPE string,
-        selmode       TYPE string,
-        t_filter_show TYPE STANDARD TABLE OF ty_S_filter_show,
-        s_filter      TYPE ty_s_filter,
-        t_cols        TYPE STANDARD TABLE OF ty_S_cols,
-        t_sort        TYPE STANDARD TABLE OF ty_S_sort,
-      END OF ms_layout.
 
-    TYPES:
-      BEGIN OF s_combobox,
-        key  TYPE string,
-        text TYPE string,
-      END OF s_combobox.
-
-    TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
-
-    CLASS-METHODS encode_base64
-      IMPORTING
-        val           TYPE string
-      RETURNING
-        VALUE(result) TYPE string.
-
-    TYPES:
-      BEGIN OF ty_S_db_layout,
-        selkz   TYPE ABap_bool,
-        name    TYPE string,
-        user    TYPE string,
-        default TYPE abap_bool,
-        data    TYPE string,
-      END OF ty_S_db_layout.
-    DATA mt_db_layout TYPE STANDARD TABLE OF ty_S_db_layout.
-
-    DATA mv_layout_name TYPE string.
 
   PROTECTED SECTION.
 
@@ -144,7 +102,6 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render.
-    METHODS init_table_output.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
 
@@ -157,63 +114,6 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
-
-
-  METHOD encode_base64.
-
-    TRY.
-        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>encode_base64
-          EXPORTING
-            unencoded = val
-          RECEIVING
-            encoded   = result.
-
-      CATCH cx_sy_dyn_call_illegal_class.
-
-        DATA(classname) = 'CL_HTTP_UTILITY'.
-        CALL METHOD (classname)=>encode_base64
-          EXPORTING
-            unencoded = val
-          RECEIVING
-            encoded   = result.
-
-    ENDTRY.
-
-  ENDMETHOD.
-
-
-  METHOD init_table_output.
-
-    " CLEAR  ms_layout-s_table.
-    " CLEAR mt_cols.
-    "  CLEAR  ms_layout-t_cols.
-
-    ms_view-headerexpanded = abap_true.
-    ms_view-headerpinned   = abap_true.
-
-    DATA(lt_cols)   = lcl_db=>get_fieldlist_by_table( mt_table ).
-    LOOP AT lt_cols REFERENCE INTO DATA(lr_col) FROM 2.
-
-      INSERT VALUE #(
-        name = lr_col->*
-      ) INTO TABLE  ms_layout-t_filter_show.
-
-      INSERT VALUE #(
-         visible = abap_true
-         name = lr_col->*
-       "  length = `10px`
-         title = lr_col->*
-       ) INTO TABLE ms_layout-t_cols.
-
-*      INSERT VALUE #(
-*       "  selkz = abap_true
-*         name = lr_col->*
-*      "   length = `10px`
-*       ) INTO TABLE  ms_layout-t_cols.
-
-    ENDLOOP.
-
-  ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
@@ -245,11 +145,24 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
+    mt_mapping = VALUE #(
+    (  name = `EQ` value = `={LOW}`      )
+   (   name = `LT` value = `<{LOW}`   )
+   (   name = `LE` value = `<={LOW}`  )
+   (   name = `GT` value = `>{LOW}`   )
+   (   name = `GE` value = `>={LOW}`   )
+   (   name = `CP` value = `*{LOW}*`  )
 
-      WHEN 'SORT_ADD'.
-        INSERT VALUE #( ) INTO TABLE ms_layout-t_sort.
-        app-view_popup = 'POPUP_SETUP'.
+   (   name = `BT` value = `{LOW}...{HIGH}` )
+   (   name = `NE` value = `!(={LOW})`    )
+   (   name = `NE` value = `!(<leer>)`    )
+   (   name = `<leer>` value = `<leer>`    )
+
+
+   ).
+
+
+    CASE app-get-event.
 
       WHEN `FLTER_UPDTAE`.
 
@@ -258,23 +171,49 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
         app-next-s_cursor-selectionend = `999`.
         app-next-s_cursor-selectionstart  = `999`.
 
-        IF mv_value IS NOT INITIAL.
-          CASE mv_value(1).
-            WHEN `=`.
-              DATA(lv_option) = `EQ`.
-              mv_value = mv_value+1.
-            WHEN `<`.
-              lv_option = `LT`.
-              mv_value = mv_value+1.
-            WHEN OTHERS.
-              lv_option = `EQ`.
-          ENDCASE.
 
-          INSERT VALUE #( sign = `I` option = lv_option low = mv_value ) INTO TABLE ms_filter-product.
 
-          CLEAR mv_value.
-        ENDIF.
+        DATA ls_range LIKE LINE OF ms_filter-product.
 
+
+        DATA(lv_length) = strlen( mv_value ) - 1.
+        CASE mv_value(1).
+
+          WHEN `=`.
+            ls_range = VALUE #(  option = `EQ` low = mv_value+1 ).
+
+          WHEN `<`.
+            IF mv_value+1(1) = `=`.
+              ls_range = VALUE #(  option = `LE` low = mv_value+2 ).
+            ELSE.
+              ls_range = VALUE #(  option = `LT` low = mv_value+1 ).
+            ENDIF.
+          WHEN `>`.
+            IF mv_value+1(1) = `=`.
+              ls_range = VALUE #(  option = `GE` low = mv_value+2 ).
+            ELSE.
+              ls_range = VALUE #(  option = `GT` low = mv_value+1 ).
+            ENDIF.
+
+          WHEN `*`.
+            IF mv_value+lv_length(1) = `*`.
+              SHIFT mv_value RIGHT DELETING TRAILING `*`.
+              SHIFT mv_value LEFT DELETING LEADING `*`.
+              ls_range = VALUE #(  option = `CP` low = mv_value ).
+            ENDIF.
+
+            "wenn letzt
+
+          WHEN OTHERS.
+
+            IF mv_value CP `...`.
+              SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
+              ls_range-option = `BT`.
+            ENDIF.
+
+        ENDCASE.
+
+        INSERT ls_range INTO TABLE ms_filter-product.
 
       WHEN `FILTER_VALUE_HELP`.
         app-next-s_cursor-id = `FILTER`.
@@ -289,20 +228,20 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
     ENDCASE.
 
-    clear mt_token.
+    CLEAR mt_token.
+
+
+
+
+
     LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
-      data(lv_low) = ``.
-      CASE lr_row->option.
 
-        WHEN `EQ`.
-          lv_low = `=`.
-        WHEN `LT`.
-          lv_low = `<`.
+      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
 
-      ENDCASE.
+      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
 
-      DATA(lv_value) = lv_low && lr_row->low.
-      INSERT VALUE #( key = lr_row->low text = lv_value ) INTO TABLE mt_token.
+      INSERT VALUE #( key = lv_value text = lv_value ) INTO TABLE mt_token.
     ENDLOOP.
 
   ENDMETHOD.
@@ -310,14 +249,8 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    init_table_output( ).
-
     ms_view-title = `Standart`.
-    ms_layout-selmode = 'MultiSelect'.
-    ms_layout-check_zebra = abap_true.
     ms_view-t_tab = CORRESPONDING #( mt_table ).
-    ms_layout-sticky_header = `HeaderToolbar,InfoToolbar,ColumnHeaders`.
-    ms_layout-title = `Drafts`.
 
     app-next-t_scroll = VALUE #( ( name = `page_main` ) ).
     app-view_main = `MAIN`.
@@ -331,8 +264,6 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
       WHEN `POPUP_FILTER`.
         z2ui5_on_render_pop_filter( ).
     ENDCASE.
-
-    app-next-path = app-next-path && `/` &&  app-view_main.
 
     CASE app-view_main.
       WHEN 'MAIN'.
@@ -358,8 +289,9 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
            )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
-            headerexpanded = client->_bind( ms_view-headerexpanded )
-            headerpinned   = client->_bind(  ms_view-headerpinned  ) ).
+            headerexpanded = abap_true
+            headerpinned   = abap_true
+            ).
 
     DATA(header_title) = page->title( ns = 'f'
             )->get( )->dynamic_page_title( ).
@@ -410,38 +342,31 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
                         text = `{TEXT}`
         ).
 
-    DATA(rt_filter)  = ms_layout-t_filter_show.
-    DELETE rt_filter WHERE selkz = abap_false.
 
     lo_box->get_parent( )->hbox( justifycontent = `End`
         )->button( text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
-        )->button( text = `Adapt Filters (` && shift_right( CONV string( lines(  rt_filter ) ) ) && `)`  press = client->_event( `POPUP_FILTER` )
+        )->button( text = `Adapt Filters (`   press = client->_event( `POPUP_FILTER` )
         ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
     DATA(tab) = cont->table(
         items = client->_bind( val = ms_view-t_tab )
-        alternaterowcolors = ms_layout-check_zebra
-        sticky = ms_layout-sticky_header
         ).
 
     DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
-    LOOP AT ms_layout-t_cols REFERENCE INTO DATA(lr_field)
-          WHERE visible = abap_true.
-      lo_columns->column(
-            minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
-            demandpopin = abap_true width = lr_field->length )->text( text = CONV char10( lr_field->title )
-        )->footer(
-        )->object_number( number = `Summe` unit = 'ST' state = `Warning` ).
-      lv_width = lv_width + 10.
-    ENDLOOP.
+
+*    LOOP AT ms_layout-t_cols REFERENCE INTO DATA(lr_field)
+*          WHERE visible = abap_true.
+      lo_columns->column( )->text( text = `Product` ).
+
+*    ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
-    LOOP AT ms_layout-t_cols REFERENCE INTO lr_field.
-      lo_cells->text( `{` && lr_field->name && `}` ).
-    ENDLOOP.
+*    LOOP AT ms_layout-t_cols REFERENCE INTO lr_field.
+      lo_cells->text( `{PRODUCT}` ).
+*    ENDLOOP.
 
     app-next-xml_main = page->get_root( )->xml_get( ).
 
@@ -451,33 +376,33 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
-
-    lo_popup->dialog( 'abap2UI5 - Popup to select entry'
-        )->table(
-            mode = 'MultiSelect'
-            items = client->_bind( ms_layout-t_filter_show )
-            )->columns(
-                )->column( )->text( 'Title' )->get_parent(
-                )->column( )->text( 'Color' )->get_parent(
-                )->column( )->text( 'Info' )->get_parent(
-                )->column( )->text( 'Description' )->get_parent(
-            )->get_parent(
-            )->items( )->column_list_item( selected = '{SELKZ}'
-                )->cells(
-             "       )->checkbox( '{SELKZ}'
-                    )->text( '{NAME}'
-                    )->text( '{VALUE}'
-             "       )->text( '{DESCR}'
-        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-        )->footer( )->overflow_toolbar(
-            )->toolbar_spacer(
-            )->button(
-                text  = 'continue'
-                press = client->_event( 'POPUP_FILTER_CONTINUE' )
-                type  = 'Emphasized' ).
-
-    app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
+*    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+*
+*    lo_popup->dialog( 'abap2UI5 - Popup to select entry'
+*        )->table(
+*            mode = 'MultiSelect'
+*            items = client->_bind( ms_layout-t_filter_show )
+*            )->columns(
+*                )->column( )->text( 'Title' )->get_parent(
+*                )->column( )->text( 'Color' )->get_parent(
+*                )->column( )->text( 'Info' )->get_parent(
+*                )->column( )->text( 'Description' )->get_parent(
+*            )->get_parent(
+*            )->items( )->column_list_item( selected = '{SELKZ}'
+*                )->cells(
+*             "       )->checkbox( '{SELKZ}'
+*                    )->text( '{NAME}'
+*                    )->text( '{VALUE}'
+*             "       )->text( '{DESCR}'
+*        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+*        )->footer( )->overflow_toolbar(
+*            )->toolbar_spacer(
+*            )->button(
+*                text  = 'continue'
+*                press = client->_event( 'POPUP_FILTER_CONTINUE' )
+*                type  = 'Emphasized' ).
+*
+*    app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
 
   ENDMETHOD.
 
@@ -488,9 +413,16 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
 *    IF ms_layout-s_filter-uuid IS INITIAL.
 
-    DATA(lt_data) = lcl_db=>db_read( ).
 
-    mt_table = lt_data.
+
+    mt_table = VALUE #(
+        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'sofa' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'oven' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+    ).
 
 *      SELECT FROM z2ui5_t_draft
 *          FIELDS uuid, uuid_prev, timestampl, uname
