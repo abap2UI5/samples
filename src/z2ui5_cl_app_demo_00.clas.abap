@@ -123,7 +123,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Cell with Popover' press = client->_event( 'z2ui5_cl_app_demo_52' )
          )->button( text = 'Filter'     press = client->_event( 'z2ui5_cl_app_demo_53' )
          )->button( text = 'Layout'     press = client->_event( 'z2ui5_cl_app_demo_55' )
-         )->button( text = 'Navigation' press = client->_event( 'z2ui5_cl_app_demo_54' )
+*         )->button( text = 'Navigation' press = client->_event( 'z2ui5_cl_app_demo_54' )
 
     ).
 

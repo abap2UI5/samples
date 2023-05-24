@@ -3,11 +3,8 @@ CLASS lcl_db DEFINITION.
 
   PUBLIC SECTION.
 
-
-    TYPES ty_t_table TYPE z2ui5_cl_app_demo_13=>ty_t_table.
-
-    CLASS-DATA app TYPE REF TO z2ui5_cl_app_demo_13.
-    "CLASS-DATA st_table TYPE ty_t_table.
+    types: ty_t_table type z2ui5_cl_app_demo_53=>ty_t_table.
+    CLASS-DATA st_table TYPE z2ui5_cl_app_demo_53=>ty_t_table.
 
     CLASS-METHODS generate_test_data.
 
@@ -60,6 +57,7 @@ CLASS lcl_db DEFINITION.
     CLASS-METHODS db_read
       RETURNING
         VALUE(result) TYPE ty_t_table.
+
     CLASS-METHODS get_test_data_json
       RETURNING
         VALUE(result) TYPE string.
@@ -73,16 +71,15 @@ CLASS lcl_db IMPLEMENTATION.
 
   METHOD generate_test_data.
 
-    app->st_db = VALUE #(
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
-        ( carrid = 'DL' connid = '0106' countryfr = 'US' cityfrom = 'NEW YORK' airpfrom = 'JFK' countryto = 'DE' cityto = 'FRANKFURT' airpto = 'FR' )
+    st_table = VALUE #(
+        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'sofa' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'oven' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
+
 
   ENDMETHOD.
 
@@ -122,23 +119,23 @@ CLASS lcl_db IMPLEMENTATION.
 
   METHOD get_table_by_csv.
 
-    SPLIT val AT ';' INTO TABLE DATA(lt_cols).
-
-    LOOP AT lt_cols INTO DATA(lv_field).
-
-      DATA(ls_row) = VALUE z2ui5_cl_app_demo_13=>ty_s_spfli( ).
-      DATA(lv_index) = 1.
-      DO.
-        ASSIGN COMPONENT lv_index OF STRUCTURE ls_row TO FIELD-SYMBOL(<field>).
-        IF sy-subrc <> 0.
-          EXIT.
-        ENDIF.
-        <field> = lv_field.
-        lv_index = lv_index + 1.
-      ENDDO.
-      INSERT ls_row INTO TABLE result.
-
-    ENDLOOP.
+*    SPLIT val AT ';' INTO TABLE DATA(lt_cols).
+*
+*    LOOP AT lt_cols INTO DATA(lv_field).
+*
+*      DATA(ls_row) = VALUE z2ui5_cl_app_demo_13=>ty_s_spfli( ).
+*      DATA(lv_index) = 1.
+*      DO.
+*        ASSIGN COMPONENT lv_index OF STRUCTURE ls_row TO FIELD-SYMBOL(<field>).
+*        IF sy-subrc <> 0.
+*          EXIT.
+*        ENDIF.
+*        <field> = lv_field.
+*        lv_index = lv_index + 1.
+*      ENDDO.
+*      INSERT ls_row INTO TABLE result.
+*
+*    ENDLOOP.
 
   ENDMETHOD.
 
@@ -147,17 +144,21 @@ CLASS lcl_db IMPLEMENTATION.
     "normally modify database here
 
     "test scenario, therefore write internal table instead
-    app->st_db = value.
+*    app->st_db = value.
 
   ENDMETHOD.
 
   METHOD db_read.
 
+
+    lcl_db=>generate_test_data( ).
+    result = st_table.
+
     "normally read database here
 
     "test scenario, therefore read internal table instead
 
-    result = app->st_db.
+*    result = app->st_db.
 
   ENDMETHOD.
 

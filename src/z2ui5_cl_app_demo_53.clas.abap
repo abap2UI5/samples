@@ -12,10 +12,24 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         selkz   TYPE abap_bool,
       END OF ty_S_token.
 
+    DATA mv_value TYPE string.
     DATA mt_token            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
-*    DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
-    DATA mt_table TYPE STANDARD TABLE OF z2ui5_t_draft.
+
+    TYPES:
+      BEGIN OF ty_s_tab,
+        selkz            TYPE abap_bool,
+        product          TYPE string,
+        create_date      TYPE string,
+        create_by        TYPE string,
+        storage_location TYPE string,
+        quantity         TYPE i,
+      END OF ty_s_tab.
+
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+
+    DATA mt_table TYPE ty_t_table.
     DATA ms_detail TYPE z2ui5_t_draft.
     DATA mv_check_columns TYPE abap_bool.
     DATA mv_check_sort TYPE abap_bool.
@@ -43,7 +57,7 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         headerexpanded TYPE abap_bool,
         search_val     TYPE string,
         title          TYPE string,
-        t_tab          TYPE STANDARD TABLE OF ty_S_out WITH EMPTY KEY,
+        t_tab          TYPE ty_t_table,
       END OF ms_view.
 
     TYPES:
@@ -60,23 +74,17 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         selkz TYPE abap_bool,
         name  TYPE string,
         value TYPE string,
-        " t_value TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY,
       END OF ty_S_filter_show.
 
     TYPES:
       BEGIN OF ty_S_filter,
-        uuid      TYPE string,
-        uuid_prev TYPE string,
-        "STANDARD TABLE OF ty_s_token WITH EMPTY KEY,
+        product TYPE RANGE OF string,
       END OF ty_S_filter.
 
     TYPES:
       BEGIN OF ty_S_sort,
-        "  selkz      TYPE abap_bool,
         name TYPE string,
         type TYPE string,
-        " descr      TYPE string,
-        "  check_descending TYPE string,
       END OF ty_S_sort.
 
     DATA:
@@ -151,12 +159,12 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         io_box TYPE REF TO z2ui5_cl_xml_view.
     METHODS z2ui5_set_data.
 
-private section.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
 
   METHOD encode_base64.
@@ -221,8 +229,7 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
     me->client     = client.
     app-get        = client->get( ).
     app-view_popup = ``.
-    app-next-path = `/z2ui5_cl_app_demo_49`.
-    app-next-title = `List Report`.
+    app-next-title = `Filter`.
 
 
     IF app-check_initialized = abap_false.
@@ -251,6 +258,26 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
       WHEN 'SORT_ADD'.
         INSERT VALUE #( ) INTO TABLE ms_layout-t_sort.
         app-view_popup = 'POPUP_SETUP'.
+
+      WHEN `FLTER_UPDTAE`.
+
+        app-next-s_cursor-id = `FILTER`.
+        app-next-s_cursor-cursorpos = `999`.
+        app-next-s_cursor-selectionend = `999`.
+        app-next-s_cursor-selectionstart  = `999`.
+
+        mv_value =  '=' && mv_value.
+        INSERT VALUE #( key = mv_value text = mv_value selkz = abap_true ) INTO TABLE mt_token.
+        CLEAR mv_value.
+
+        DATA(lt_token) = mt_token.
+
+      WHEN `FILTER_VALUE_HELP`.
+        app-next-s_cursor-id = `FILTER`.
+        app-next-s_cursor-cursorpos = `999`.
+        app-next-s_cursor-selectionend = `999`.
+        app-next-s_cursor-selectionstart  = `999`.
+        DATA(lt_token2) = mt_token.
 
       WHEN `SORT_DELETE`.
         DELETE ms_layout-t_sort WHERE name = app-get-event_data.
@@ -345,49 +372,14 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
     ms_layout-title = `Drafts`.
 
     app-next-t_scroll = VALUE #( ( name = `page_main` ) ).
+    app-view_main = `MAIN`.
 
-    mt_token = VALUE #(
-                   ( key = 'VAL1' text = 'value_1' selkz = abap_true  visible = abap_true )
-                   ( key = 'VAL3' text = 'value_3' selkz = abap_false visible = abap_true )
-                   ( key = 'VAL4' text = 'value_4' selkz = abap_true )
-                   ( key = '<500' text = '<500'    selkz = abap_true )
-               ).
-
-
-
-    " IF app-view_main IS INITIAL.
-    DATA(lv_url) = z2ui5_cl_http_handler=>client-t_header[ name = `referer` ]-value.
-    SPLIT lv_url AT `/z2ui5_cl_app_demo_49/` INTO DATA(lv_dummy1) DATA(lv_dummy2).
-    SPLIT lv_dummy2 AT `(` INTO DATA(lv_view) DATA(lv_token).
-    IF lv_view IS NOT INITIAL.
-      app-view_main = lv_view.
-      SPLIT lv_token AT `(` INTO DATA(lv_token2) lv_dummy1.
-      SPLIT lv_token2 AT `)` INTO lv_token lv_dummy1.
-      ms_detail-uuid = lv_token.
-      IF ms_detail-uuid IS NOT INITIAL.
-        z2ui5_set_data( ).
-
-        ms_detail = mt_table[ uuid = ms_detail-uuid ].
-
-        SELECT SINGLE FROM z2ui5_t_draft
-          FIELDS *
-          WHERE uuid = @ms_detail-uuid
-        INTO CORRESPONDING FIELDS OF @ms_detail
-        .
-
-      ENDIF.
-      "    ENDIF.
-    ELSE.
-      app-view_main  = 'MAIN'.
-    ENDIF.
-
-
-*    mt_token_sugg = VALUE #(
-*        ( key = 'VAL1' text = 'value_1' )
-*        ( key = 'VAL2' text = 'value_2' )
-*        ( key = 'VAL3' text = 'value_3' )
-*        ( key = 'VAL4' text = 'value_4' )
-*    ).
+*    mt_token = VALUE #(
+*                   ( key = 'VAL1' text = 'value_1' selkz = abap_true  visible = abap_true )
+*                   ( key = 'VAL3' text = 'value_3' selkz = abap_false visible = abap_true )
+*                   ( key = 'VAL4' text = 'value_4' selkz = abap_true )
+*                   ( key = '<500' text = '<500'    selkz = abap_true )
+*               ).
 
 
   ENDMETHOD.
@@ -560,80 +552,23 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
         items = client->_bind( val = ms_view-t_tab )
         alternaterowcolors = ms_layout-check_zebra
         sticky = ms_layout-sticky_header
-        autopopinmode = abap_true
-        mode = ms_layout-selmode ).
+        ).
 
-*    tab->header_toolbar(
-*          )->toolbar(
-*              )->title( text = ms_layout-title && ` (` && shift_right( CONV string( lines( ms_view-t_tab ) ) ) && `)` level = `H2`
-*                  )->toolbar_spacer(
-*              )->button(
-*                  icon = 'sap-icon://refresh'
-*                  press = client->_event( 'BUTTON_REFRESH' )
-*              )->multi_input(
-*                    tokens = client->_bind( mt_token )
-*                    showclearicon   = abap_true
-**                    showvaluehelp   = abap_true
-**                    suggestionitems = client->_bind( mt_token_sugg )
-*                )->item(
-*                        key = `{KEY}`
-*                        text = `{TEXT}`
-*                )->tokens(
-*                    )->token(
-*                        key = `{KEY}`
-*                        text = `{TEXT}`
-*                        selected = `{SELKZ}`
-**                        visible = `{VISIBLE}`
-*               )->get_parent( )->get_parent(
-*
-*      )->toolbar_spacer(
-**             )->button(
-**                text = `Custom Action`
-**                  press = client->_event( 'BUTTON_CUSTOM' )
-*
-*              )->button(
-*                  text = `Anlegen`
-*                  enabled = abap_false
-*                  press = client->_event( 'BUTTON_CREATE' )
-*                     )->button(
-*                  text = `Löschen`
-*                  press = client->_event( 'BUTTON_DELETE' )
-*              )->button(
-*                  icon = 'sap-icon://action-settings'
-*                  press = client->_event( 'BUTTON_SETUP' )
-*              )->button(
-*                  icon = 'sap-icon://download'
-*                  press = client->_event( 'BUTTON_DOWNLOAD' )
-*              ).
-
-
-    data(lv_width) = 10.
+    DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
     LOOP AT ms_layout-t_cols REFERENCE INTO DATA(lr_field)
           WHERE visible = abap_true.
       lo_columns->column(
-            minscreenwidth = shift_right( conv string( lv_width ) ) && `px`
+            minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
             demandpopin = abap_true width = lr_field->length )->text( text = CONV char10( lr_field->title )
         )->footer(
         )->object_number( number = `Summe` unit = 'ST' state = `Warning` ).
-        lv_width = lv_width + 10.
+      lv_width = lv_width + 10.
     ENDLOOP.
 
-    DATA(lo_cells) = tab->items( )->column_list_item(
-        press = client->_event( val = 'DETAIL' data = `${UUID}` )
-        selected = `{SELKZ}`
-        type = `Navigation` )->cells( ).
-    LOOP AT ms_layout-t_cols REFERENCE INTO lr_field
-          WHERE visible = abap_true.
-      IF lr_field->editable = abap_true.
-        lo_cells->input( `{` && lr_field->name && `}` ).
-      ELSE.
-        " lo_cells->text(  `{` && lr_field->name && `}` ).
-        lo_cells->link( text = `{` && lr_field->name && `}`
-        "   press = client->_event( val = `POPUP_DETAIL` data = `${` && lr_field->name && `}` ) ).
-           press = client->_event( val = `POPUP_DETAIL` data = `${$source>/id}` ) ).
-          " press = client->_event( val = `POPUP_DETAIL` data = `$event` ) ).
-      ENDIF.
+    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    LOOP AT ms_layout-t_cols REFERENCE INTO lr_field.
+      lo_cells->text( `{` && lr_field->name && `}` ).
     ENDLOOP.
 
     app-next-xml_main = page->get_root( )->xml_get( ).
@@ -883,22 +818,26 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
     "dirty solution
     "todo: map filters to rangetab and make a nice select
 
-    IF ms_layout-s_filter-uuid IS INITIAL.
+*    IF ms_layout-s_filter-uuid IS INITIAL.
 
-      SELECT FROM z2ui5_t_draft
-          FIELDS uuid, uuid_prev, timestampl, uname
-        INTO CORRESPONDING FIELDS OF TABLE @mt_table
-          UP TO 50 ROWS.
+    DATA(lt_data) = lcl_db=>db_read( ).
 
-    ELSE.
+    mt_table = lt_data.
 
-      SELECT FROM z2ui5_t_draft
-      FIELDS uuid, uuid_prev, timestampl, uname
-      WHERE uuid = @ms_layout-s_filter-uuid
-            INTO CORRESPONDING FIELDS OF TABLE @mt_table
-                    UP TO 50 ROWS.
-
-    ENDIF.
+*      SELECT FROM z2ui5_t_draft
+*          FIELDS uuid, uuid_prev, timestampl, uname
+*        INTO CORRESPONDING FIELDS OF TABLE @mt_table
+*          UP TO 50 ROWS.
+*
+*    ELSE.
+*
+*      SELECT FROM z2ui5_t_draft
+*      FIELDS uuid, uuid_prev, timestampl, uname
+*      WHERE uuid = @ms_layout-s_filter-uuid
+*            INTO CORRESPONDING FIELDS OF TABLE @mt_table
+*                    UP TO 50 ROWS.
+*
+*    ENDIF.
 
     ms_view-t_tab = CORRESPONDING #( mt_table ).
 
@@ -907,13 +846,13 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
 
   METHOD z2ui5_set_detail.
 
-    ms_detail = mt_table[ uuid = client->get( )-event_data ].
-
-    SELECT SINGLE FROM z2ui5_t_draft
-      FIELDS *
-      WHERE uuid = @ms_detail-uuid
-    INTO CORRESPONDING FIELDS OF @ms_detail
-    .
+*    ms_detail = mt_table[ uuid = client->get( )-event_data ].
+*
+*    SELECT SINGLE FROM z2ui5_t_draft
+*      FIELDS *
+*      WHERE uuid = @ms_detail-uuid
+*    INTO CORRESPONDING FIELDS OF @ms_detail
+*    .
 
   ENDMETHOD.
 
@@ -959,21 +898,45 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
 
   METHOD z2ui5_set_filter.
 
-      io_box->search_field(
-                    value = client->_bind( ms_view-search_val )
-                    search = client->_event( 'BUTTON_SEARCH' )
-                    change = client->_event( 'BUTTON_SEARCH' )
-                    width = `17.5rem`
-                    id    = `SEARCH`
-              ).
+    io_box->vbox(
+        )->text(  `Search`
+        )->search_field(
+                      value = client->_bind( ms_view-search_val )
+                       search = client->_event( 'BUTTON_SEARCH' )
+                       change = client->_event( 'BUTTON_SEARCH' )
+                       width = `17.5rem`
+                       id    = `SEARCH`
+                 ).
 
-    IF line_exists( ms_layout-t_filter_show[  name = `UUID` selkz = abap_true  ] ).
-      io_box->input( value = client->_bind( ms_layout-s_filter-uuid ) description = `UUID` ).
-    ENDIF.
+*    IF line_exists( ms_layout-t_filter_show[  name = `PRODUCT` selkz = abap_true  ] ).
+    io_box->vbox(
+        )->text(  `Product:`
+       " )->input( value = client->_bind( ms_layout-s_filter-product )
+        )->multi_input(
+                    tokens          = client->_bind( mt_token )
+                    showclearicon   = abap_true
+*                    showvaluehelp   = abap_true
+*                    suggestionitems = client->_bind( mt_token_sugg )
+                    value           = client->_bind( mv_value )
+                    tokenUpdate     = client->_event( 'FLTER_UPDTAE' )
+                    submit          = client->_event( 'FLTER_UPDTAE' )
+                    id              = `FILTER`
+                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+                )->item(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+                )->tokens(
+                    )->token(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+*                        selected = `{SELKZ}`
+*                        visible = `{VISIBLE}`
+        ).
+*    ENDIF.
 
-    IF line_exists( ms_layout-t_filter_show[  name = `UUID_PREV` selkz = abap_true ] ).
-      io_box->input( value = client->_bind( ms_layout-s_filter-uuid_prev ) description = `UUID_PREV` ).
-    ENDIF.
+*    IF line_exists( ms_layout-t_filter_show[  name = `UUID_PREV` selkz = abap_true ] ).
+*      io_box->input( value = client->_bind( ms_layout-s_filter-uuid_prev ) description = `UUID_PREV` ).
+*    ENDIF.
 
     "todo other columns...
 
