@@ -5,51 +5,40 @@ CLASS z2ui5_cl_app_demo_52 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
-        count    TYPE string,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        checkbox TYPE abap_bool,
-      END OF ty_row.
+      BEGIN OF ty_s_tab,
+        selkz            TYPE abap_bool,
+        product          TYPE string,
+        create_date      TYPE string,
+        create_by        TYPE string,
+        storage_location TYPE string,
+        quantity         TYPE i,
+      END OF ty_s_tab.
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_table TYPE ty_T_table.
     DATA check_initialized TYPE abap_bool.
-    METHODS refresh_data.
-
-    data next type z2ui5_if_client=>ty_s_next.
+    DATA next TYPE z2ui5_if_client=>ty_s_next.
 
     DATA mv_check_popover TYPE abap_bool.
-protected section.
-private section.
+    DATA mv_product TYPE string.
+
+    METHODS  z2ui5_set_data.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_52 IMPLEMENTATION.
-
-
-  METHOD refresh_data.
-
-    DO 100 TIMES.
-      DATA(ls_row) = VALUE ty_row( count = sy-index  value = 'red'
-        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-        descr = 'this is a description' checkbox = abap_true ).
-      INSERT ls_row INTO TABLE t_tab.
-    ENDDO.
-
-  ENDMETHOD.
-
+CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      refresh_data( ).
+
     ENDIF.
 
-    clear next.
+    CLEAR next.
 
     CASE client->get( )-event.
 
@@ -57,69 +46,87 @@ CLASS Z2UI5_CL_APP_DEMO_52 IMPLEMENTATION.
         DATA(lv_id) = client->get( )-event_data.
         next-popover_open_by_id = lv_id.
         mv_check_popover = abap_true.
-        data(lv_count) = client->get( )-event_data2.
+        mv_product = client->get( )-event_data2.
 
-      WHEN 'BUTTON_POST'.
-        client->popup_message_box( 'button post was pressed' ).
+      WHEN 'BUTTON_START'.
+        z2ui5_set_data( ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
 
     ENDCASE.
 
-  IF mv_check_popover = abap_false.
+    IF mv_check_popover = abap_false.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-            title          = 'abap2UI5 - Demo displaying popver without rerendering the main view'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me get = client->get( ) )
-        )->get_parent( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+             )->page( id = `page_main`
+                     title          = 'abap2UI5 - List Report Features'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = abap_true
+                 )->header_content(
+                     )->link(
+                         text = 'Demo' target = '_blank'
+                         href = 'https://twitter.com/OblomovDev/status/1637163852264624139'
+                     )->link(
+                         text = 'Source_Code' target = '_blank' href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me get = client->get( ) )
+                )->get_parent( ).
 
-    DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
-        )->table(
-            growing             = abap_true
-            growingthreshold    = '20'
-            growingscrolltoload = abap_true
-            items               = client->_bind_one( t_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+      DATA(page) = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
 
-    tab->columns(
-        )->column(
-            )->text( 'Color' )->get_parent(
-        )->column(
-            )->text( 'Info' )->get_parent(
-        )->column(
-            )->text( 'Description' )->get_parent(
-        )->column(
-            )->text( 'Checkbox' )->get_parent(
-         )->column(
-            )->text( 'Counter' ).
+      DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
+      header_title->heading( ns = 'f' )->hbox( )->title( `Item Popover` ).
+      header_title->expanded_content( 'f' ).
+      header_title->snapped_content( ns = 'f' ).
 
-    tab->items( )->column_list_item( )->cells(
-       )->link( text = '{COUNT}' press = client->_event( val = `POPOVER_DETAIL` hold_view = abap_true data = `${$source>/id}` data2 = `${COUNT}` )
-       )->text( '{INFO}'
-       )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
-       )->text( '{COUNT}' ).
+      DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+           )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-    next-xml_main = page->get_root( )->xml_get( ).
 
-    else.
+      lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+          text = `Go`
+          press = client->_event( `BUTTON_START` )
+          type = `Emphasized` ).
+
+      DATA(cont) = page->content( ns = 'f' ).
+
+      DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+
+      tab->header_toolbar(
+              )->toolbar(
+                  )->toolbar_spacer(
+                  )->button(
+                      icon = 'sap-icon://download'
+                      press = client->_event( 'BUTTON_DOWNLOAD' )
+                  ).
+
+      DATA(lo_columns) = tab->columns( ).
+      lo_columns->column( )->text( text = `Product` ).
+      lo_columns->column( )->text( text = `Date` ).
+      lo_columns->column( )->text( text = `Name` ).
+      lo_columns->column( )->text( text = `Location` ).
+      lo_columns->column( )->text( text = `Quantity` ).
+
+      DATA(lo_cells) = tab->items( )->column_list_item( ).
+      lo_cells->link( text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` hold_view = abap_true data = `${$source>/id}` data2 = `${PRODUCT}` ) ).
+      lo_cells->text( `{CREATE_DATE}` ).
+      lo_cells->text( `{CREATE_BY}` ).
+      lo_cells->text( `{STORAGE_LOCATION}` ).
+      lo_cells->text( `{QUANTITY}` ).
+
+      next-xml_main = page->get_root( )->xml_get( ).
+
+    ELSE.
 
       mv_check_popover = abap_false.
 
       DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-      lo_popup->popover( placement = `Bottom` title = 'abap2UI5 - this is a popover'  contentwidth = `50%`
+      lo_popup->popover( placement = `Right` title = `abap2UI5 - Popover - ` && mv_product  contentwidth = `50%`
         )->simple_form( editable = abap_true
         )->content( 'form'
-            )->label( 'info1'
-            )->text(  `this is a text`
+            )->label( 'Product'
+            )->text(  mv_product
             )->label( 'info2'
             )->text(  `this is a text`
             )->label( 'info3'
@@ -143,4 +150,61 @@ CLASS Z2UI5_CL_APP_DEMO_52 IMPLEMENTATION.
     client->set_next( next ).
 
   ENDMETHOD.
+
+
+  METHOD z2ui5_set_data.
+
+    mt_table = VALUE #(
+        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+             ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+    ).
+
+  ENDMETHOD.
+
 ENDCLASS.
