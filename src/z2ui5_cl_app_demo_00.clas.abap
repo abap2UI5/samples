@@ -121,7 +121,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     grid->simple_form( title = 'HowTo - List Report'     layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'Search Field' press = client->_event( 'z2ui5_cl_app_demo_53' )
-*           )->button( text = 'Filter'     press = client->_event( 'z2ui5_cl_app_demo_56' )
+         )->button( text = 'Download CSV'     press = client->_event( 'z2ui5_cl_app_demo_57' )
 *              )->button( text = 'CSV' press = client->_event( 'z2ui5_cl_app_demo_52' )
 *         )->button( text = 'Cell with Popover' press = client->_event( 'z2ui5_cl_app_demo_52' )
 
