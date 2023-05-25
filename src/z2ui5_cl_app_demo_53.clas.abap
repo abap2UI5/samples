@@ -17,7 +17,7 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
 
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    data mv_search_value type string.
+    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
 
@@ -77,12 +77,9 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
     CASE app-get-event.
 
-      WHEN 'BUTTON_SEARCH' or 'BUTTON_START'.
+      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         z2ui5_set_data( ).
         z2ui5_set_search( ).
-
-*      WHEN 'BUTTON_START'.
-*        z2ui5_set_data( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
@@ -124,54 +121,33 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
                     text = 'Source_Code' target = '_blank' href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me get = client->get( ) )
            )->get_parent( ).
 
-    DATA(page) = view->dynamic_page(
-            headerexpanded = abap_true
-            headerpinned   = abap_true
-            ).
+    DATA(page) = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f'
-            )->get( )->dynamic_page_title( ).
-
-    header_title->heading( ns = 'f' )->hbox(
-         )->title( `Search Field`
-).
-
-    header_title->expanded_content( 'f'
-*             )->label( text = 'Table Data'
-             ).
-
-    header_title->snapped_content( ns = 'f'
-*             )->label( text = 'Table Data'
-              ).
-
+    DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
+    header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
+    header_title->expanded_content( 'f' ).
+    header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-    lo_box->vbox(
-          )->text(  `Search`
-          )->search_field(
-                        value = client->_bind( mv_search_value )
-                         search = client->_event( 'BUTTON_SEARCH' )
-                         change = client->_event( 'BUTTON_SEARCH' )
-                         width = `17.5rem`
-                         id    = `SEARCH`
-                   ).
+    lo_box->vbox( )->text( `Search` )->search_field(
+         value  = client->_bind( mv_search_value )
+         search = client->_event( 'BUTTON_SEARCH' )
+         change = client->_event( 'BUTTON_SEARCH' )
+         width  = `17.5rem`
+         id     = `SEARCH` ).
 
-
-    lo_box->get_parent( )->hbox( justifycontent = `End`
-        )->button( text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
-        ).
+    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+        text = `Go`
+        press = client->_event( `BUTTON_START` )
+        type = `Emphasized` ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
-    DATA(tab) = cont->table(
-        items = client->_bind( val = mt_table )
-        ).
+    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
 
-    DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
-
     lo_columns->column( )->text( text = `Product` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
