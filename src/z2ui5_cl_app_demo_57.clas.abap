@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
+CLASS z2ui5_cl_app_demo_57 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -14,12 +14,10 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
-
+    DATA mv_check_download TYPE abap_bool.
 
   PROTECTED SECTION.
 
@@ -39,15 +37,27 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
     METHODS z2ui5_on_render.
     METHODS z2ui5_on_render_main.
 
-    METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
+
+    CLASS-METHODS hlp_get_csv_by_tab
+      IMPORTING
+        val           TYPE STANDARD TABLE
+      RETURNING
+        VALUE(rv_row) TYPE string.
+
+    CLASS-METHODS hlp_get_base64
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
+
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_57 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -77,9 +87,11 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
     CASE app-get-event.
 
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
+      WHEN 'BUTTON_START'.
         z2ui5_set_data( ).
-        z2ui5_set_search( ).
+
+      WHEN `BUTTON_DOWNLOAD`.
+        mv_check_download = abap_true.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
@@ -95,6 +107,27 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD hlp_get_base64.
+
+    TRY.
+        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>encode_base64
+          EXPORTING
+            unencoded = val
+          RECEIVING
+            encoded   = result.
+
+      CATCH cx_sy_dyn_call_illegal_class.
+
+        DATA(classname) = 'CL_HTTP_UTILITY'.
+        CALL METHOD (classname)=>encode_base64
+          EXPORTING
+            unencoded = val
+          RECEIVING
+            encoded   = result.
+
+    ENDTRY.
+
+  ENDMETHOD.
 
   METHOD z2ui5_on_render.
 
@@ -121,22 +154,26 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
                     text = 'Source_Code' target = '_blank' href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me get = client->get( ) )
            )->get_parent( ).
 
+    IF mv_check_download = abap_true.
+      mv_check_download = abap_false.
+
+      DATA(lv_csv) = hlp_get_csv_by_tab( mt_table ).
+      DATA(lv_base64) = hlp_get_base64( lv_csv ).
+
+      view->zz_plain( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
+
+    ENDIF.
+
     DATA(page) = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
+    header_title->heading( ns = 'f' )->hbox( )->title( `Download CSV` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-    lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
-         width  = `17.5rem`
-         id     = `SEARCH` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go`
@@ -146,6 +183,14 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
     DATA(cont) = page->content( ns = 'f' ).
 
     DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+
+  tab->header_toolbar(
+          )->toolbar(
+              )->toolbar_spacer(
+              )->button(
+                  icon = 'sap-icon://download'
+                  press = client->_event( 'BUTTON_DOWNLOAD' )
+              ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -180,33 +225,39 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD hlp_get_csv_by_tab.
 
-    app-next-s_cursor-id = 'SEARCH'.
-    app-next-s_cursor-cursorpos = '99'.
-    app-next-s_cursor-selectionend = '99'.
-    app-next-s_cursor-selectionstart = '99'.
-
-    IF mv_search_value IS NOT INITIAL.
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
-        DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
-
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
+    IF val IS INITIAL.
+      RETURN.
     ENDIF.
 
-  ENDMETHOD.
+    DATA(lo_struc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_data( val[ 1 ] ) ).
+    DATA(lt_components) = lo_struc->get_components( ).
 
+    rv_row  = ``.
+    LOOP AT lt_components INTO DATA(lv_name) FROM 2.
+      rv_row = rv_row && lv_name-name && `;`.
+    ENDLOOP.
+    rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
+
+    DATA lr_row TYPE REF TO data.
+
+    LOOP AT val REFERENCE INTO lr_row.
+
+      DATA(lv_index) = 2.
+      DO.
+        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+        IF sy-subrc <> 0.
+          EXIT.
+        ENDIF.
+        rv_row = rv_row && <field>.
+        lv_index = lv_index + 1.
+        rv_row = rv_row && `;`.
+      ENDDO.
+
+      rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
+    ENDLOOP.
+
+  ENDMETHOD.
 
 ENDCLASS.
