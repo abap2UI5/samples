@@ -4,6 +4,15 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
+    types:
+        begin of ty_S_filter_pop,
+            option type string,
+            low type string,
+            high type string,
+            key type string,
+        end of ty_S_filter_pop.
+     data mt_filter type STANDARD TABLE OF ty_S_filter_pop with empty key.
+
     TYPES:
       BEGIN OF ty_s_token,
         key     TYPE string,
@@ -199,6 +208,11 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
    ).
 
+    mt_filter = value #(
+      ( option = `EQ` low = `test` )
+      ( option = `EQ` low = `test` )
+       ).
+
 
   ENDMETHOD.
 
@@ -305,20 +319,69 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog( 'Define Conditons - Product' ).
 
-    data(vbox) = lo_popup->dialog( 'Define Conditons - Product'
-        )->vbox( class = `sapUiMediumMargin` ).
+*
 
-        vbox->text( `Product` ).
-        vbox->flex_box(
-                )->combobox(
 
-                )->get_parent(
-                )->input(
-                )->button( ).
+  DATA(item) = lo_popup->list(
+            headertext = `Product`
+           items           = client->_bind( mt_filter )
+           selectionchange = client->_event( 'SELCHANGE' )
+              )->custom_list_item( ).
 
-        vbox->text( `Selected Elements and Conditions (` && `5` &&  `)` ).
+ data(grid) = item->grid( ).
+
+    grid->combobox(
+                 selectedkey = `{OPTION}`
+                 items       = client->_bind_one( mt_mapping )
+*                                    ( key = 'BLUE'  text = 'green' )
+*                                    ( key = 'GREEN' text = 'blue' )
+*                                    ( key = 'BLACK' text = 'red' )
+*                                    ( key = 'GRAY'  text = 'gray' ) ) )
+             )->item(
+                     key = '{NAME}'
+                     text = '{NAME}'
+             )->get_parent(
+             )->input( value = `{LOW}`
+             )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
+             )->button( icon = 'sap-icon://decline' type = `Transparent`
+             ).
+
+*    grid->combobox(
+*            selectedkey = client->_bind( screen-combo_key )
+*            items       = client->_bind_one( VALUE ty_t_combo(
+*                    ( key = 'BLUE'  text = 'green' )
+*                    ( key = 'GREEN' text = 'blue' )
+*                    ( key = 'BLACK' text = 'red' )
+*                    ( key = 'GRAY'  text = 'gray' ) ) )
+*                )->item(
+*                    key = '{KEY}'
+*                    text = '{TEXT}'
+*        )->get_parent( )->get_parent( ).
+*
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+
+
+
+*        )->vbox( class = `sapUiMediumMargin` ).
+*
+*
+*        vbox->flex_box(
+*                )->combobox(
+*
+*                )->get_parent(
+*                )->input(
+*                )->button( ).
+*
+*        vbox->text( `Selected Elements and Conditions (` && `5` &&  `)` ).
 
 *        )->table(
 *            mode = 'MultiSelect'
@@ -336,7 +399,8 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 *                    )->text( '{VALUE}'
 *             "       )->text( '{DESCR}'
 *        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-        vbox->get_parent( )->footer( )->overflow_toolbar(
+
+        lo_popup->footer( )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
                 text  = 'OK'
