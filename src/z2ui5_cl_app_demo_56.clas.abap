@@ -307,7 +307,19 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    lo_popup->dialog( 'abap2UI5 - Popup to select entry'
+    data(vbox) = lo_popup->dialog( 'Define Conditons - Product'
+        )->vbox( class = `sapUiMediumMargin` ).
+
+        vbox->text( `Product` ).
+        vbox->flex_box(
+                )->combobox(
+
+                )->get_parent(
+                )->input(
+                )->button( ).
+
+        vbox->text( `Selected Elements and Conditions (` && `5` &&  `)` ).
+
 *        )->table(
 *            mode = 'MultiSelect'
 *            items = client->_bind( ms_layout-t_filter_show )
@@ -324,12 +336,16 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 *                    )->text( '{VALUE}'
 *             "       )->text( '{DESCR}'
 *        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-        )->footer( )->overflow_toolbar(
+        vbox->get_parent( )->footer( )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
-                text  = 'continue'
-                press = client->_event( 'FILTER_VALUE_HELP_CONTINUE' )
-                type  = 'Emphasized' ).
+                text  = 'OK'
+                press = client->_event( 'FILTER_VALUE_HELP_OK' )
+                type  = 'Emphasized'
+           )->button(
+                text  = 'Cancel'
+                press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
+           ).
 
     app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
 
