@@ -4,22 +4,22 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    types:
-        begin of ty_S_filter_pop,
-            option type string,
-            low type string,
-            high type string,
-            key type string,
-        end of ty_S_filter_pop.
-     data mt_filter type STANDARD TABLE OF ty_S_filter_pop with empty key.
+    TYPES:
+      BEGIN OF ty_S_filter_pop,
+        option TYPE string,
+        low    TYPE string,
+        high   TYPE string,
+        key    TYPE string,
+      END OF ty_S_filter_pop.
+    DATA mt_filter TYPE STANDARD TABLE OF ty_S_filter_pop WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_token,
-        key     TYPE string,
-        text    TYPE string,
-        visible TYPE abap_bool,
-        selkz   TYPE abap_bool,
-        editable   TYPE abap_bool,
+        key      TYPE string,
+        text     TYPE string,
+        visible  TYPE abap_bool,
+        selkz    TYPE abap_bool,
+        editable TYPE abap_bool,
       END OF ty_S_token.
 
     DATA mv_value TYPE string.
@@ -117,50 +117,55 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-next-s_cursor-selectionend = `999`.
         app-next-s_cursor-selectionstart  = `999`.
 
-    if mv_value is not INITIAL.
-        DATA ls_range LIKE LINE OF ms_filter-product.
-        DATA(lv_length) = strlen( mv_value ) - 1.
-        CASE mv_value(1).
+        IF mv_value IS NOT INITIAL.
+          DATA ls_range LIKE LINE OF ms_filter-product.
+          DATA(lv_length) = strlen( mv_value ) - 1.
+          CASE mv_value(1).
 
-          WHEN `=`.
-            ls_range = VALUE #(  option = `EQ` low = mv_value+1 ).
+            WHEN `=`.
+              ls_range = VALUE #(  option = `EQ` low = mv_value+1 ).
 
-          WHEN `<`.
-            IF mv_value+1(1) = `=`.
-              ls_range = VALUE #(  option = `LE` low = mv_value+2 ).
-            ELSE.
-              ls_range = VALUE #(  option = `LT` low = mv_value+1 ).
-            ENDIF.
-          WHEN `>`.
-            IF mv_value+1(1) = `=`.
-              ls_range = VALUE #(  option = `GE` low = mv_value+2 ).
-            ELSE.
-              ls_range = VALUE #(  option = `GT` low = mv_value+1 ).
-            ENDIF.
+            WHEN `<`.
+              IF mv_value+1(1) = `=`.
+                ls_range = VALUE #(  option = `LE` low = mv_value+2 ).
+              ELSE.
+                ls_range = VALUE #(  option = `LT` low = mv_value+1 ).
+              ENDIF.
+            WHEN `>`.
+              IF mv_value+1(1) = `=`.
+                ls_range = VALUE #(  option = `GE` low = mv_value+2 ).
+              ELSE.
+                ls_range = VALUE #(  option = `GT` low = mv_value+1 ).
+              ENDIF.
 
-          WHEN `*`.
-            IF mv_value+lv_length(1) = `*`.
-              SHIFT mv_value RIGHT DELETING TRAILING `*`.
-              SHIFT mv_value LEFT DELETING LEADING `*`.
-              ls_range = VALUE #(  option = `CP` low = mv_value ).
-            ENDIF.
+            WHEN `*`.
+              IF mv_value+lv_length(1) = `*`.
+                SHIFT mv_value RIGHT DELETING TRAILING `*`.
+                SHIFT mv_value LEFT DELETING LEADING `*`.
+                ls_range = VALUE #(  option = `CP` low = mv_value ).
+              ENDIF.
 
-            "wenn letzt
 
-          WHEN OTHERS.
 
-            IF mv_value CP `...`.
-              SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
-              ls_range-option = `BT`.
-           else.
-            ls_range = VALUE #( option = `EQ` low = mv_value ).
-           endif.
+            WHEN OTHERS.
 
-        ENDCASE.
+              IF mv_value CP `...`.
+                SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
+                ls_range-option = `BT`.
+              ELSE.
+                ls_range = VALUE #( option = `EQ` low = mv_value ).
+              ENDIF.
 
-        INSERT ls_range INTO TABLE ms_filter-product.
+          ENDCASE.
 
-        endif.
+          INSERT ls_range INTO TABLE ms_filter-product.
+
+        ENDIF.
+
+      WHEN `POPUP_DELETE`.
+        DELETE mt_filter WHERE key = app-get-event_data.
+        app-view_popup = `VALUE_HELP`.
+
       WHEN `FILTER_VALUE_HELP`.
         app-next-s_cursor-id = `FILTER`.
         app-next-s_cursor-cursorpos = `999`.
@@ -174,8 +179,8 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     ENDCASE.
 
 
-    clear mv_value.
-    clear mt_token.
+    CLEAR mv_value.
+    CLEAR mt_token.
     LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
 
       DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
@@ -208,9 +213,9 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
    ).
 
-    mt_filter = value #(
-      ( option = `EQ` low = `test` )
-      ( option = `EQ` low = `test` )
+    mt_filter = VALUE #(
+      ( option = `EQ` low = `test` key = `01` )
+      ( option = `EQ` low = `test` key = `02` )
        ).
 
 
@@ -319,18 +324,33 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog( 'Define Conditons - Product' ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
+    contentheight = `50%`
+    contentwidth = `50%`
+        title = 'Define Conditons - Product' ).
 
 *
 
+*if mt_filter is not INITIAL.
 
-  DATA(item) = lo_popup->list(
-            headertext = `Product`
-           items           = client->_bind( mt_filter )
-           selectionchange = client->_event( 'SELCHANGE' )
-              )->custom_list_item( ).
+   data(vbox) = lo_popup->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
 
- data(grid) = item->grid( ).
+   data(pan)  = vbox->panel(
+*      EXPORTING
+        expandable = abap_false
+        expanded   = abap_true
+        headertext = `Product`
+*      RECEIVING
+*        result     =
+    ). "->grid( ).
+    DATA(item) = pan->list(
+           "   headertext = `Product`
+              noData = `no conditions defined`
+             items           = client->_bind( mt_filter )
+             selectionchange = client->_event( 'SELCHANGE' )
+                )->custom_list_item( ).
+
+    DATA(grid) = item->grid( ).
 
     grid->combobox(
                  selectedkey = `{OPTION}`
@@ -345,8 +365,58 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
              )->get_parent(
              )->input( value = `{LOW}`
              )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline' type = `Transparent`
+             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` data = `${KEY}` )
              ).
+
+*endif.
+
+  data(panel) = vbox->vbox(
+
+    )->hbox( justifycontent = `End` )->button( text = `Add` icon = `sap-icon://add` )->get_parent(
+    )->panel(
+*      EXPORTING
+        expandable = abap_false
+        expanded   = abap_true
+        headertext = `Selected Elements and Conditions`
+*      RECEIVING
+*        result     =
+    )->grid( ).
+
+    panel->multi_input(
+                    tokens          = client->_bind( mt_token )
+                    showclearicon   = abap_true
+                    value           = client->_bind( mv_value )
+*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
+                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
+                    submit          = client->_event( 'FILTER_UPDATE' )
+                    id              = `FILTER`
+                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+                    enabled = abap_false
+                )->item(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+                )->tokens(
+                    )->token(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+                        visible = `{VISIBLE}`
+                        selected = `{SELKZ}`
+                        editable = `{EDITABLE}`
+               ).
+
+    panel->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+       ).
+
+*data(hbox) = lo_popup->vbox(
+*    )->text( `Selected Elements and Conditions`
+*    )->hbox( ).
+*
+*       hbox->
+*
+*
+*  hbox->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+*        ).
+
 
 *    grid->combobox(
 *            selectedkey = client->_bind( screen-combo_key )
@@ -400,16 +470,16 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 *             "       )->text( '{DESCR}'
 *        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
-        lo_popup->footer( )->overflow_toolbar(
-            )->toolbar_spacer(
-            )->button(
-                text  = 'OK'
-                press = client->_event( 'FILTER_VALUE_HELP_OK' )
-                type  = 'Emphasized'
-           )->button(
-                text  = 'Cancel'
-                press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
-           ).
+    lo_popup->footer( )->overflow_toolbar(
+        )->toolbar_spacer(
+        )->button(
+            text  = 'OK'
+            press = client->_event( 'FILTER_VALUE_HELP_OK' )
+            type  = 'Emphasized'
+       )->button(
+            text  = 'Cancel'
+            press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
+       ).
 
     app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
 
