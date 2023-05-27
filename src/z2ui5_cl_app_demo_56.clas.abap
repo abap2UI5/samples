@@ -24,7 +24,6 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     DATA mv_value       TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
-*    DATA mt_token_popup TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
 
@@ -41,17 +40,14 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     DATA mt_table TYPE ty_t_table.
 
+    TYPES ty_t_range TYPE RANGE OF string.
+    TYPES ty_s_range TYPE LINE OF ty_T_range.
     TYPES:
       BEGIN OF ty_S_filter,
-        product TYPE RANGE OF string,
+        product TYPE ty_t_range,
       END OF ty_S_filter.
 
-    CLASS-METHODS hlp_get_uuid
-      RETURNING
-        VALUE(result) TYPE string.
-
     DATA ms_filter TYPE ty_s_filter.
-
 
   PROTECTED SECTION.
 
@@ -71,10 +67,18 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
     METHODS z2ui5_on_render.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
-
     METHODS z2ui5_set_data.
+    METHODS map_range_to_token.
 
-  PRIVATE SECTION.
+    CLASS-METHODS hlp_get_range_by_value
+      IMPORTING
+        VALUE(value)  TYPE string
+      RETURNING
+        VALUE(result) TYPE ty_S_range.
+
+    CLASS-METHODS hlp_get_uuid
+      RETURNING
+        VALUE(result) TYPE string.
 ENDCLASS.
 
 
@@ -105,7 +109,45 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD hlp_get_range_by_value.
 
+    DATA(lv_length) = strlen( value ) - 1.
+    CASE value(1).
+
+      WHEN `=`.
+        result = VALUE #(  option = `EQ` low = value+1 ).
+
+      WHEN `<`.
+        IF value+1(1) = `=`.
+          result = VALUE #(  option = `LE` low = value+2 ).
+        ELSE.
+          result = VALUE #(  option = `LT` low = value+1 ).
+        ENDIF.
+      WHEN `>`.
+        IF value+1(1) = `=`.
+          result = VALUE #(  option = `GE` low = value+2 ).
+        ELSE.
+          result = VALUE #(  option = `GT` low = value+1 ).
+        ENDIF.
+
+      WHEN `*`.
+        IF value+lv_length(1) = `*`.
+          SHIFT value RIGHT DELETING TRAILING `*`.
+          SHIFT value LEFT DELETING LEADING `*`.
+          result = VALUE #( sign = `I` option = `CP` low = value ).
+        ENDIF.
+
+      WHEN OTHERS.
+        IF value CP `...`.
+          SPLIT value AT `...` INTO result-low result-high.
+          result-option = `BT`.
+        ELSE.
+          result = VALUE #( sign = `I` option = `EQ` low = value ).
+        ENDIF.
+
+    ENDCASE.
+
+  ENDMETHOD.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -121,46 +163,20 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-next-s_cursor-selectionstart  = `999`.
 
         IF mv_value IS NOT INITIAL.
-          DATA ls_range LIKE LINE OF ms_filter-product.
-          DATA(lv_length) = strlen( mv_value ) - 1.
-          CASE mv_value(1).
-
-            WHEN `=`.
-              ls_range = VALUE #(  option = `EQ` low = mv_value+1 ).
-
-            WHEN `<`.
-              IF mv_value+1(1) = `=`.
-                ls_range = VALUE #(  option = `LE` low = mv_value+2 ).
-              ELSE.
-                ls_range = VALUE #(  option = `LT` low = mv_value+1 ).
-              ENDIF.
-            WHEN `>`.
-              IF mv_value+1(1) = `=`.
-                ls_range = VALUE #(  option = `GE` low = mv_value+2 ).
-              ELSE.
-                ls_range = VALUE #(  option = `GT` low = mv_value+1 ).
-              ENDIF.
-
-            WHEN `*`.
-              IF mv_value+lv_length(1) = `*`.
-                SHIFT mv_value RIGHT DELETING TRAILING `*`.
-                SHIFT mv_value LEFT DELETING LEADING `*`.
-                ls_range = VALUE #(  option = `CP` low = mv_value ).
-              ENDIF.
-
-            WHEN OTHERS.
-              IF mv_value CP `...`.
-                SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
-                ls_range-option = `BT`.
-              ELSE.
-                ls_range = VALUE #( option = `EQ` low = mv_value ).
-              ENDIF.
-
-          ENDCASE.
-
+          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
 
+      WHEN `FILTER_VALUE_HELP_OK`.
+        CLEAR ms_filter-product.
+        LOOP AT mt_filter REFERENCE INTO DATA(lr_filter).
+          INSERT VALUE #(
+              sign = `I`
+              option = lr_filter->option
+              low = lr_filter->low
+              high = lr_filter->high
+           ) INTO TABLE ms_filter-product.
+        ENDLOOP.
 
       WHEN `POPUP_ADD`.
         INSERT VALUE #( key = hlp_get_uuid( ) ) INTO TABLE mt_filter.
@@ -184,6 +200,16 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-next-s_cursor-selectionstart  = `999`.
         app-view_popup = `VALUE_HELP`.
 
+        CLEAR mt_filter.
+        LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
+          INSERT VALUE #(
+                   low = lr_product->low
+                   high = lr_product->high
+                   option = lr_product->option
+                   key = hlp_get_uuid( )
+           ) INTO TABLE mt_filter.
+
+        ENDLOOP.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
     ENDCASE.
@@ -208,27 +234,12 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     (   name = `<leer>` value = `<leer>`    )
     ).
 
-    mt_filter = VALUE #(
-      ( option = `EQ` low = `test` key = `01` )
-      ( option = `EQ` low = `test` key = `02` )
-       ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render.
 
-    CLEAR mv_value.
-    CLEAR mt_token.
-    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
-
-      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-
-      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
-      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
-
-      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
-    ENDLOOP.
+    map_range_to_token( ).
 
     CASE app-view_popup.
       WHEN `VALUE_HELP`.
@@ -378,6 +389,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
+    "replace this with a db select here...
     mt_table = VALUE #(
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -386,6 +398,10 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
+
+    "put the range in the where clause of your abap sql command
+    "using internal table instead
+    DELETE mt_table WHERE product NOT IN ms_filter-product.
 
   ENDMETHOD.
 
@@ -407,6 +423,23 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     ENDTRY.
 
     result = uuid.
+
+  ENDMETHOD.
+
+
+  METHOD map_range_to_token.
+
+    CLEAR mv_value.
+    CLEAR mt_token.
+    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
+
+      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
+
+      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
+
+      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
+    ENDLOOP.
 
   ENDMETHOD.
 
