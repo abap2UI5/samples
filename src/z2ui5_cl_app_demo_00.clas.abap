@@ -123,6 +123,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Search Field' press = client->_event( 'z2ui5_cl_app_demo_53' )
          )->button( text = 'Download CSV' press = client->_event( 'z2ui5_cl_app_demo_57' )
          )->button( text = 'Popover Item' press = client->_event( 'z2ui5_cl_app_demo_52' )
+         )->button( text = 'Filter' press = client->_event( 'z2ui5_cl_app_demo_56' )
+         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
 *         )->button( text = 'Cell with Popover' press = client->_event( 'z2ui5_cl_app_demo_52' )
 
 *         )->button( text = 'Layout'     press = client->_event( 'z2ui5_cl_app_demo_55' )
@@ -216,20 +218,20 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
                      growfactor = '3'
                      styleclass = 'sapUiTinyMargin' ).
 
-    form->flex_box( class = 'columns'
-         )->button(
-             text = 'List Report'
-             press = client->_event( 'z2ui5_cl_app_demo_49' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Similar functionality to a Fiori Elements List Report - Display Table with Sorting, Filtering, Navigation, Layouts and Custom Functions` )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
+*    form->flex_box( class = 'columns'
+*         )->button(
+*             text = 'List Report'
+*             press = client->_event( 'z2ui5_cl_app_demo_49' ) )->get(
+*             )->layout_data(
+*                 )->flex_item_data(
+*                     growfactor = '1'
+*                     styleclass = 'sapUiTinyMargin'
+*         )->get_parent( )->get_parent(
+*         )->text( `Similar functionality to a Fiori Elements List Report - Display Table with Sorting, Filtering, Navigation, Layouts and Custom Functions` )->get(
+*             )->layout_data(
+*                 )->flex_item_data(
+*                     growfactor = '3'
+*                     styleclass = 'sapUiTinyMargin' ).
 
     form = page->grid( 'L9 M12 S12'
           )->content( 'layout'
