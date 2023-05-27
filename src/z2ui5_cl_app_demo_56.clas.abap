@@ -148,10 +148,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
                 ls_range = VALUE #(  option = `CP` low = mv_value ).
               ENDIF.
 
-
-
             WHEN OTHERS.
-
               IF mv_value CP `...`.
                 SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
                 ls_range-option = `BT`.
@@ -162,7 +159,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
           ENDCASE.
 
           INSERT ls_range INTO TABLE ms_filter-product.
-
         ENDIF.
 
 
@@ -190,10 +186,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
-
     ENDCASE.
-
-
 
   ENDMETHOD.
 
@@ -203,25 +196,22 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     app-view_main = `MAIN`.
 
     mt_mapping = VALUE #(
-    (  name = `EQ` value = `={LOW}`    )
-    (   name = `LT` value = `<{LOW}`   )
-    (   name = `LE` value = `<={LOW}`  )
-    (   name = `GT` value = `>{LOW}`   )
-    (   name = `GE` value = `>={LOW}`  )
-    (   name = `CP` value = `*{LOW}*`  )
-
-    (   name = `BT` value = `{LOW}...{HIGH}` )
-    (   name = `NE` value = `!(={LOW})`    )
-    (   name = `NE` value = `!(<leer>)`    )
-    ( name = `<leer>` value = `<leer>`    )
-
-   ).
+    (  name = `EQ`      value = `={LOW}`    )
+    (   name = `LT`     value = `<{LOW}`   )
+    (   name = `LE`     value = `<={LOW}`  )
+    (   name = `GT`     value = `>{LOW}`   )
+    (   name = `GE`     value = `>={LOW}`  )
+    (   name = `CP`     value = `*{LOW}*`  )
+    (   name = `BT`     value = `{LOW}...{HIGH}` )
+    (   name = `NE`     value = `!(={LOW})`    )
+    (   name = `NE`     value = `!(<leer>)`    )
+    (   name = `<leer>` value = `<leer>`    )
+    ).
 
     mt_filter = VALUE #(
       ( option = `EQ` low = `test` key = `01` )
       ( option = `EQ` low = `test` key = `02` )
        ).
-
 
   ENDMETHOD.
 
@@ -278,9 +268,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
     header_title->heading( ns = 'f' )->hbox(
         )->title( `Filter` ).
-
     header_title->expanded_content( 'f' ).
-
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
@@ -292,12 +280,10 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
                     tokens          = client->_bind( mt_token )
                     showclearicon   = abap_true
                     value           = client->_bind( mv_value )
-*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
                     tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
                     submit          = client->_event( 'FILTER_UPDATE' )
                     id              = `FILTER`
                     valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
-*                    enabled = abap_false
                 )->item(
                         key = `{KEY}`
                         text = `{TEXT}`
@@ -340,19 +326,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_pop_filter.
 
-
-*    CLEAR mt_token_popup.
-*    LOOP AT mt_filter REFERENCE INTO DATA(lr_row).
-*
-*      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-*
-*      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
-*      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
-*
-*      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token_popup.
-*    ENDLOOP.
-
-
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
     contentheight = `50%`
     contentwidth = `50%`
@@ -377,10 +350,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     grid->combobox(
                  selectedkey = `{OPTION}`
                  items       = client->_bind_one( mt_mapping )
-*                                    ( key = 'BLUE'  text = 'green' )
-*                                    ( key = 'GREEN' text = 'blue' )
-*                                    ( key = 'BLACK' text = 'red' )
-*                                    ( key = 'GRAY'  text = 'gray' ) ) )
              )->item(
                      key = '{NAME}'
                      text = '{NAME}'
@@ -390,52 +359,9 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
              )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` data = `${KEY}` )
              ).
 
-*endif.
-
-*    DATA(panel) = vbox->vbox(
-*
-**      )->hbox( justifycontent = `End` )->button( text = `Add` icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` ) )->get_parent(
-*        )->panel(
-**      EXPORTING
-*            expandable = abap_false
-*            expanded   = abap_true
-*            headertext = `Selected Elements and Conditions`
-**      RECEIVING
-**        result     =
-*        )->grid( ).
-
-*    panel->multi_input(
-*                    tokens          = client->_bind( mt_token_popup )
-*                    showclearicon   = abap_true
-**                    value           = client->_bind( mv_value )
-**                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
-*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
-*                    submit          = client->_event( 'FILTER_UPDATE' )
-*                    id              = `FILTER`
-*                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
-*                    enabled = abap_false
-*                )->item(
-*                        key = `{KEY}`
-*                        text = `{TEXT}`
-*                )->tokens(
-*                    )->token(
-*                        key = `{KEY}`
-*                        text = `{TEXT}`
-*                        visible = `{VISIBLE}`
-*                        selected = `{SELKZ}`
-*                        editable = `{EDITABLE}`
-*               ).
-
-*    panel->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
-*        )->button( icon = 'sap-icon://refresh' type = `Transparent` press = client->_event( val = `POPUP_REFRESH` )
-*       ).
-
     lo_popup->footer( )->overflow_toolbar(
-
-*        )->button( icon = 'sap-icon://refresh' type = `Transparent` press = client->_event( val = `POPUP_REFRESH` )
         )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
         )->button( text = `Add Item`   icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` )
-
         )->toolbar_spacer(
         )->button(
             text  = 'OK'
