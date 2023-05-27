@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
+CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -22,8 +22,10 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_S_token.
 
-    DATA mv_value       TYPE string.
-    DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mv_value TYPE string.
+    DATA mt_token            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mt_token_popup            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
 
@@ -40,14 +42,17 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     DATA mt_table TYPE ty_t_table.
 
-    TYPES ty_t_range TYPE RANGE OF string.
-    TYPES ty_s_range TYPE LINE OF ty_T_range.
     TYPES:
       BEGIN OF ty_S_filter,
-        product TYPE ty_t_range,
+        product TYPE RANGE OF string,
       END OF ty_S_filter.
 
+    CLASS-METHODS hlp_get_uuid
+      RETURNING
+        VALUE(result) TYPE string.
+
     DATA ms_filter TYPE ty_s_filter.
+
 
   PROTECTED SECTION.
 
@@ -67,23 +72,15 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
     METHODS z2ui5_on_render.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
+
     METHODS z2ui5_set_data.
-    METHODS map_range_to_token.
 
-    CLASS-METHODS hlp_get_range_by_value
-      IMPORTING
-        VALUE(value)  TYPE string
-      RETURNING
-        VALUE(result) TYPE ty_S_range.
-
-    CLASS-METHODS hlp_get_uuid
-      RETURNING
-        VALUE(result) TYPE string.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -91,6 +88,8 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     me->client     = client.
     app-get        = client->get( ).
     app-view_popup = ``.
+    app-next-title = `Filter`.
+
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
@@ -109,45 +108,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD hlp_get_range_by_value.
 
-    DATA(lv_length) = strlen( value ) - 1.
-    CASE value(1).
-
-      WHEN `=`.
-        result = VALUE #(  option = `EQ` low = value+1 ).
-
-      WHEN `<`.
-        IF value+1(1) = `=`.
-          result = VALUE #(  option = `LE` low = value+2 ).
-        ELSE.
-          result = VALUE #(  option = `LT` low = value+1 ).
-        ENDIF.
-      WHEN `>`.
-        IF value+1(1) = `=`.
-          result = VALUE #(  option = `GE` low = value+2 ).
-        ELSE.
-          result = VALUE #(  option = `GT` low = value+1 ).
-        ENDIF.
-
-      WHEN `*`.
-        IF value+lv_length(1) = `*`.
-          SHIFT value RIGHT DELETING TRAILING `*`.
-          SHIFT value LEFT DELETING LEADING `*`.
-          result = VALUE #( sign = `I` option = `CP` low = value ).
-        ENDIF.
-
-      WHEN OTHERS.
-        IF value CP `...`.
-          SPLIT value AT `...` INTO result-low result-high.
-          result-option = `BT`.
-        ELSE.
-          result = VALUE #( sign = `I` option = `EQ` low = value ).
-        ENDIF.
-
-    ENDCASE.
-
-  ENDMETHOD.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -163,20 +124,50 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-next-s_cursor-selectionstart  = `999`.
 
         IF mv_value IS NOT INITIAL.
-          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
+          DATA ls_range LIKE LINE OF ms_filter-product.
+          DATA(lv_length) = strlen( mv_value ) - 1.
+          CASE mv_value(1).
+
+            WHEN `=`.
+              ls_range = VALUE #(  option = `EQ` low = mv_value+1 ).
+
+            WHEN `<`.
+              IF mv_value+1(1) = `=`.
+                ls_range = VALUE #(  option = `LE` low = mv_value+2 ).
+              ELSE.
+                ls_range = VALUE #(  option = `LT` low = mv_value+1 ).
+              ENDIF.
+            WHEN `>`.
+              IF mv_value+1(1) = `=`.
+                ls_range = VALUE #(  option = `GE` low = mv_value+2 ).
+              ELSE.
+                ls_range = VALUE #(  option = `GT` low = mv_value+1 ).
+              ENDIF.
+
+            WHEN `*`.
+              IF mv_value+lv_length(1) = `*`.
+                SHIFT mv_value RIGHT DELETING TRAILING `*`.
+                SHIFT mv_value LEFT DELETING LEADING `*`.
+                ls_range = VALUE #(  option = `CP` low = mv_value ).
+              ENDIF.
+
+
+
+            WHEN OTHERS.
+
+              IF mv_value CP `...`.
+                SPLIT mv_value AT `...` INTO ls_range-low ls_range-high.
+                ls_range-option = `BT`.
+              ELSE.
+                ls_range = VALUE #( option = `EQ` low = mv_value ).
+              ENDIF.
+
+          ENDCASE.
+
           INSERT ls_range INTO TABLE ms_filter-product.
+
         ENDIF.
 
-      WHEN `FILTER_VALUE_HELP_OK`.
-        CLEAR ms_filter-product.
-        LOOP AT mt_filter REFERENCE INTO DATA(lr_filter).
-          INSERT VALUE #(
-              sign = `I`
-              option = lr_filter->option
-              low = lr_filter->low
-              high = lr_filter->high
-           ) INTO TABLE ms_filter-product.
-        ENDLOOP.
 
       WHEN `POPUP_ADD`.
         INSERT VALUE #( key = hlp_get_uuid( ) ) INTO TABLE mt_filter.
@@ -186,13 +177,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         DELETE mt_filter WHERE key = app-get-event_data.
         app-view_popup = `VALUE_HELP`.
 
-      WHEN `POPUP_DELETE_ALL`.
-        mt_filter = VALUE #( ).
-        app-view_popup = `VALUE_HELP`.
-
-      WHEN `POPUP_REFRESH`.
-        app-view_popup = `VALUE_HELP`.
-
       WHEN `FILTER_VALUE_HELP`.
         app-next-s_cursor-id = `FILTER`.
         app-next-s_cursor-cursorpos = `999`.
@@ -200,19 +184,12 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-next-s_cursor-selectionstart  = `999`.
         app-view_popup = `VALUE_HELP`.
 
-        CLEAR mt_filter.
-        LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
-          INSERT VALUE #(
-                   low = lr_product->low
-                   high = lr_product->high
-                   option = lr_product->option
-                   key = hlp_get_uuid( )
-           ) INTO TABLE mt_filter.
-
-        ENDLOOP.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
+
     ENDCASE.
+
+
 
   ENDMETHOD.
 
@@ -222,24 +199,42 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     app-view_main = `MAIN`.
 
     mt_mapping = VALUE #(
-    (  name = `EQ`      value = `={LOW}`    )
-    (   name = `LT`     value = `<{LOW}`   )
-    (   name = `LE`     value = `<={LOW}`  )
-    (   name = `GT`     value = `>{LOW}`   )
-    (   name = `GE`     value = `>={LOW}`  )
-    (   name = `CP`     value = `*{LOW}*`  )
-    (   name = `BT`     value = `{LOW}...{HIGH}` )
-    (   name = `NE`     value = `!(={LOW})`    )
-    (   name = `NE`     value = `!(<leer>)`    )
-    (   name = `<leer>` value = `<leer>`    )
-    ).
+    (  name = `EQ` value = `={LOW}`    )
+    (   name = `LT` value = `<{LOW}`   )
+    (   name = `LE` value = `<={LOW}`  )
+    (   name = `GT` value = `>{LOW}`   )
+    (   name = `GE` value = `>={LOW}`  )
+    (   name = `CP` value = `*{LOW}*`  )
+
+    (   name = `BT` value = `{LOW}...{HIGH}` )
+    (   name = `NE` value = `!(={LOW})`    )
+    (   name = `NE` value = `!(<leer>)`    )
+    ( name = `<leer>` value = `<leer>`    )
+
+   ).
+
+    mt_filter = VALUE #(
+      ( option = `EQ` low = `test` key = `01` )
+      ( option = `EQ` low = `test` key = `02` )
+       ).
+
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render.
 
-    map_range_to_token( ).
+    CLEAR mv_value.
+    CLEAR mt_token.
+    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
+
+      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
+
+      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
+
+      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
+    ENDLOOP.
 
     CASE app-view_popup.
       WHEN `VALUE_HELP`.
@@ -279,7 +274,9 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
     header_title->heading( ns = 'f' )->hbox(
         )->title( `Filter` ).
+
     header_title->expanded_content( 'f' ).
+
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
@@ -291,10 +288,12 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
                     tokens          = client->_bind( mt_token )
                     showclearicon   = abap_true
                     value           = client->_bind( mv_value )
+*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
                     tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
                     submit          = client->_event( 'FILTER_UPDATE' )
                     id              = `FILTER`
                     valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+*                    enabled = abap_false
                 )->item(
                         key = `{KEY}`
                         text = `{TEXT}`
@@ -337,18 +336,38 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_pop_filter.
 
+
+    CLEAR mt_token_popup.
+    LOOP AT mt_filter REFERENCE INTO DATA(lr_row).
+
+      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
+
+      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
+
+      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token_popup.
+    ENDLOOP.
+
+
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
     contentheight = `50%`
     contentwidth = `50%`
         title = 'Define Conditons - Product' ).
 
+*
+
+*if mt_filter is not INITIAL.
+
     DATA(vbox) = lo_popup->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
 
     DATA(pan)  = vbox->panel(
+*      EXPORTING
          expandable = abap_false
          expanded   = abap_true
          headertext = `Product`
-     ).
+*      RECEIVING
+*        result     =
+     ). "->grid( ).
     DATA(item) = pan->list(
            "   headertext = `Product`
               noData = `no conditions defined`
@@ -361,6 +380,10 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     grid->combobox(
                  selectedkey = `{OPTION}`
                  items       = client->_bind_one( mt_mapping )
+*                                    ( key = 'BLUE'  text = 'green' )
+*                                    ( key = 'GREEN' text = 'blue' )
+*                                    ( key = 'BLACK' text = 'red' )
+*                                    ( key = 'GRAY'  text = 'gray' ) ) )
              )->item(
                      key = '{NAME}'
                      text = '{NAME}'
@@ -370,9 +393,109 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
              )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` data = `${KEY}` )
              ).
 
+*endif.
+
+    DATA(panel) = vbox->vbox(
+
+      )->hbox( justifycontent = `End` )->button( text = `Add` icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` ) )->get_parent(
+      )->panel(
+*      EXPORTING
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Selected Elements and Conditions`
+*      RECEIVING
+*        result     =
+      )->grid( ).
+
+    panel->multi_input(
+                    tokens          = client->_bind( mt_token_popup )
+                    showclearicon   = abap_true
+*                    value           = client->_bind( mv_value )
+*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
+                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
+                    submit          = client->_event( 'FILTER_UPDATE' )
+                    id              = `FILTER`
+                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+                    enabled = abap_false
+                )->item(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+                )->tokens(
+                    )->token(
+                        key = `{KEY}`
+                        text = `{TEXT}`
+                        visible = `{VISIBLE}`
+                        selected = `{SELKZ}`
+                        editable = `{EDITABLE}`
+               ).
+
+    panel->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+       ).
+
+*data(hbox) = lo_popup->vbox(
+*    )->text( `Selected Elements and Conditions`
+*    )->hbox( ).
+*
+*       hbox->
+*
+*
+*  hbox->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+*        ).
+
+
+*    grid->combobox(
+*            selectedkey = client->_bind( screen-combo_key )
+*            items       = client->_bind_one( VALUE ty_t_combo(
+*                    ( key = 'BLUE'  text = 'green' )
+*                    ( key = 'GREEN' text = 'blue' )
+*                    ( key = 'BLACK' text = 'red' )
+*                    ( key = 'GRAY'  text = 'gray' ) ) )
+*                )->item(
+*                    key = '{KEY}'
+*                    text = '{TEXT}'
+*        )->get_parent( )->get_parent( ).
+*
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+*         grid->text( `Product` ).
+
+
+
+*        )->vbox( class = `sapUiMediumMargin` ).
+*
+*
+*        vbox->flex_box(
+*                )->combobox(
+*
+*                )->get_parent(
+*                )->input(
+*                )->button( ).
+*
+*        vbox->text( `Selected Elements and Conditions (` && `5` &&  `)` ).
+
+*        )->table(
+*            mode = 'MultiSelect'
+*            items = client->_bind( ms_layout-t_filter_show )
+*            )->columns(
+*                )->column( )->text( 'Title' )->get_parent(
+*                )->column( )->text( 'Color' )->get_parent(
+*                )->column( )->text( 'Info' )->get_parent(
+*                )->column( )->text( 'Description' )->get_parent(
+*            )->get_parent(
+*            )->items( )->column_list_item( selected = '{SELKZ}'
+*                )->cells(
+*             "       )->checkbox( '{SELKZ}'
+*                    )->text( '{NAME}'
+*                    )->text( '{VALUE}'
+*             "       )->text( '{DESCR}'
+*        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+
     lo_popup->footer( )->overflow_toolbar(
-        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
-        )->button( text = `Add Item`   icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` )
         )->toolbar_spacer(
         )->button(
             text  = 'OK'
@@ -389,7 +512,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    "replace this with a db select here...
     mt_table = VALUE #(
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -398,10 +520,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
-
-    "put the range in the where clause of your abap sql command
-    "using internal table instead
-    DELETE mt_table WHERE product NOT IN ms_filter-product.
 
   ENDMETHOD.
 
@@ -423,23 +541,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     ENDTRY.
 
     result = uuid.
-
-  ENDMETHOD.
-
-
-  METHOD map_range_to_token.
-
-    CLEAR mv_value.
-    CLEAR mt_token.
-    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
-
-      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-
-      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
-      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
-
-      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
-    ENDLOOP.
 
   ENDMETHOD.
 
