@@ -124,7 +124,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Download CSV' press = client->_event( 'z2ui5_cl_app_demo_57' )
          )->button( text = 'Popover Item' press = client->_event( 'z2ui5_cl_app_demo_52' )
          )->button( text = 'Filter' press = client->_event( 'z2ui5_cl_app_demo_56' )
-         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
+*         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
 *         )->button( text = 'Cell with Popover' press = client->_event( 'z2ui5_cl_app_demo_52' )
 
 *         )->button( text = 'Layout'     press = client->_event( 'z2ui5_cl_app_demo_55' )

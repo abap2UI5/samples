@@ -22,10 +22,9 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_S_token.
 
-    DATA mv_value TYPE string.
-    DATA mt_token            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
-    DATA mt_token_popup            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
-    DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mv_value       TYPE string.
+    DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+*    DATA mt_token_popup TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
 
@@ -88,8 +87,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     me->client     = client.
     app-get        = client->get( ).
     app-view_popup = ``.
-    app-next-title = `Filter`.
-
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
@@ -175,6 +172,13 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
       WHEN `POPUP_DELETE`.
         DELETE mt_filter WHERE key = app-get-event_data.
+        app-view_popup = `VALUE_HELP`.
+
+      WHEN `POPUP_DELETE_ALL`.
+        mt_filter = VALUE #( ).
+        app-view_popup = `VALUE_HELP`.
+
+      WHEN `POPUP_REFRESH`.
         app-view_popup = `VALUE_HELP`.
 
       WHEN `FILTER_VALUE_HELP`.
@@ -337,16 +341,16 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
   METHOD z2ui5_on_render_pop_filter.
 
 
-    CLEAR mt_token_popup.
-    LOOP AT mt_filter REFERENCE INTO DATA(lr_row).
-
-      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-
-      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
-      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
-
-      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token_popup.
-    ENDLOOP.
+*    CLEAR mt_token_popup.
+*    LOOP AT mt_filter REFERENCE INTO DATA(lr_row).
+*
+*      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
+*
+*      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+*      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
+*
+*      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token_popup.
+*    ENDLOOP.
 
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
@@ -354,20 +358,13 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     contentwidth = `50%`
         title = 'Define Conditons - Product' ).
 
-*
-
-*if mt_filter is not INITIAL.
-
     DATA(vbox) = lo_popup->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
 
     DATA(pan)  = vbox->panel(
-*      EXPORTING
          expandable = abap_false
          expanded   = abap_true
          headertext = `Product`
-*      RECEIVING
-*        result     =
-     ). "->grid( ).
+     ).
     DATA(item) = pan->list(
            "   headertext = `Product`
               noData = `no conditions defined`
@@ -395,107 +392,50 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
 *endif.
 
-    DATA(panel) = vbox->vbox(
-
-      )->hbox( justifycontent = `End` )->button( text = `Add` icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` ) )->get_parent(
-      )->panel(
-*      EXPORTING
-          expandable = abap_false
-          expanded   = abap_true
-          headertext = `Selected Elements and Conditions`
-*      RECEIVING
-*        result     =
-      )->grid( ).
-
-    panel->multi_input(
-                    tokens          = client->_bind( mt_token_popup )
-                    showclearicon   = abap_true
-*                    value           = client->_bind( mv_value )
-*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
-                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
-                    submit          = client->_event( 'FILTER_UPDATE' )
-                    id              = `FILTER`
-                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
-                    enabled = abap_false
-                )->item(
-                        key = `{KEY}`
-                        text = `{TEXT}`
-                )->tokens(
-                    )->token(
-                        key = `{KEY}`
-                        text = `{TEXT}`
-                        visible = `{VISIBLE}`
-                        selected = `{SELKZ}`
-                        editable = `{EDITABLE}`
-               ).
-
-    panel->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
-       ).
-
-*data(hbox) = lo_popup->vbox(
-*    )->text( `Selected Elements and Conditions`
-*    )->hbox( ).
+*    DATA(panel) = vbox->vbox(
 *
-*       hbox->
-*
-*
-*  hbox->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
-*        ).
+**      )->hbox( justifycontent = `End` )->button( text = `Add` icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` ) )->get_parent(
+*        )->panel(
+**      EXPORTING
+*            expandable = abap_false
+*            expanded   = abap_true
+*            headertext = `Selected Elements and Conditions`
+**      RECEIVING
+**        result     =
+*        )->grid( ).
 
-
-*    grid->combobox(
-*            selectedkey = client->_bind( screen-combo_key )
-*            items       = client->_bind_one( VALUE ty_t_combo(
-*                    ( key = 'BLUE'  text = 'green' )
-*                    ( key = 'GREEN' text = 'blue' )
-*                    ( key = 'BLACK' text = 'red' )
-*                    ( key = 'GRAY'  text = 'gray' ) ) )
+*    panel->multi_input(
+*                    tokens          = client->_bind( mt_token_popup )
+*                    showclearicon   = abap_true
+**                    value           = client->_bind( mv_value )
+**                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `$event` )
+*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
+*                    submit          = client->_event( 'FILTER_UPDATE' )
+*                    id              = `FILTER`
+*                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+*                    enabled = abap_false
 *                )->item(
-*                    key = '{KEY}'
-*                    text = '{TEXT}'
-*        )->get_parent( )->get_parent( ).
-*
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
-*         grid->text( `Product` ).
+*                        key = `{KEY}`
+*                        text = `{TEXT}`
+*                )->tokens(
+*                    )->token(
+*                        key = `{KEY}`
+*                        text = `{TEXT}`
+*                        visible = `{VISIBLE}`
+*                        selected = `{SELKZ}`
+*                        editable = `{EDITABLE}`
+*               ).
 
-
-
-*        )->vbox( class = `sapUiMediumMargin` ).
-*
-*
-*        vbox->flex_box(
-*                )->combobox(
-*
-*                )->get_parent(
-*                )->input(
-*                )->button( ).
-*
-*        vbox->text( `Selected Elements and Conditions (` && `5` &&  `)` ).
-
-*        )->table(
-*            mode = 'MultiSelect'
-*            items = client->_bind( ms_layout-t_filter_show )
-*            )->columns(
-*                )->column( )->text( 'Title' )->get_parent(
-*                )->column( )->text( 'Color' )->get_parent(
-*                )->column( )->text( 'Info' )->get_parent(
-*                )->column( )->text( 'Description' )->get_parent(
-*            )->get_parent(
-*            )->items( )->column_list_item( selected = '{SELKZ}'
-*                )->cells(
-*             "       )->checkbox( '{SELKZ}'
-*                    )->text( '{NAME}'
-*                    )->text( '{VALUE}'
-*             "       )->text( '{DESCR}'
-*        )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+*    panel->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+*        )->button( icon = 'sap-icon://refresh' type = `Transparent` press = client->_event( val = `POPUP_REFRESH` )
+*       ).
 
     lo_popup->footer( )->overflow_toolbar(
+
+*        )->button( icon = 'sap-icon://refresh' type = `Transparent` press = client->_event( val = `POPUP_REFRESH` )
+        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
+        )->button( text = `Add Item`   icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` )
+
         )->toolbar_spacer(
         )->button(
             text  = 'OK'
