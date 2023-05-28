@@ -4,7 +4,7 @@ CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
- TYPES:
+    TYPES:
       BEGIN OF s_combobox,
         key  TYPE string,
         text TYPE string,
@@ -21,7 +21,7 @@ CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_S_cols.
 
-          TYPES:
+    TYPES:
       BEGIN OF ty_S_sort,
         "  selkz      TYPE abap_bool,
         name TYPE string,
@@ -30,7 +30,7 @@ CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
         "  check_descending TYPE string,
       END OF ty_S_sort.
 
-   DATA:
+    DATA:
       BEGIN OF ms_layout,
         check_zebra   TYPE abap_bool,
         title         TYPE string,
@@ -144,6 +144,8 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
       WHEN `BUTTON_START`.
         z2ui5_set_data( ).
 
+      WHEN `BUTTON_SETUP`.
+        app-view_popup = `POPUP`.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
@@ -159,6 +161,10 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
 
     app-view_main = `MAIN`.
 
+
+    ms_layout-t_cols = VALUE #(
+        ( name = `PRODUCT` visible = abap_true )
+    ).
 
   ENDMETHOD.
 
@@ -196,7 +202,9 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-
+    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+        ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
@@ -234,22 +242,24 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
 *    lo_cells->text( `{QUANTITY}` ).
 
 
-    data(lv_width) = 10.
+    DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
     LOOP AT ms_layout-t_cols REFERENCE INTO DATA(lr_field)
           WHERE visible = abap_true.
       lo_columns->column(
-            minscreenwidth = shift_right( conv string( lv_width ) ) && `px`
+            minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
             demandpopin = abap_true width = lr_field->length )->text( text = CONV char10( lr_field->title )
-        )->footer(
-        )->object_number( number = `Summe` unit = 'ST' state = `Warning` ).
-        lv_width = lv_width + 10.
+            ).
+*        )->footer(
+*        )->object_number( number = `Summe` unit = 'ST' state = `Warning` ).
+      lv_width = lv_width + 10.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
         press = client->_event( val = 'DETAIL' data = `${UUID}` )
         selected = `{SELKZ}`
-        type = `Navigation` )->cells( ).
+*        type = `Navigation`
+         )->cells( ).
     LOOP AT ms_layout-t_cols REFERENCE INTO lr_field
           WHERE visible = abap_true.
       IF lr_field->editable = abap_true.
@@ -259,7 +269,7 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
         lo_cells->link( text = `{` && lr_field->name && `}`
         "   press = client->_event( val = `POPUP_DETAIL` data = `${` && lr_field->name && `}` ) ).
            press = client->_event( val = `POPUP_DETAIL` data = `${$source>/id}` ) ).
-          " press = client->_event( val = `POPUP_DETAIL` data = `$event` ) ).
+        " press = client->_event( val = `POPUP_DETAIL` data = `$event` ) ).
       ENDIF.
     ENDLOOP.
 
@@ -286,7 +296,7 @@ CLASS z2ui5_cl_app_demo_58 IMPLEMENTATION.
   METHOD z2ui5_on_render_popup.
 
 
-  DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     ro_popup = ro_popup->dialog( title = 'View Setup'  resizable = abap_true
           contentheight = `50%` contentwidth = `50%` ).
