@@ -33,11 +33,6 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
-    ENDIF.
-
     CLEAR next.
 
     CASE client->get( )-event.
@@ -53,7 +48,6 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
 
     ENDCASE.
 
@@ -81,7 +75,6 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
       DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
            )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
-
 
       lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
           text = `Go`
@@ -145,7 +138,6 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
       next-xml_popup = lo_popup->get_root( )->xml_get( ).
     ENDIF.
-
 
     client->set_next( next ).
 
