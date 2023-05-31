@@ -75,6 +75,7 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
 
 
     DATA(page) = view->dynamic_page(
+        showfooter = abap_true
        "  headerExpanded = abap_true
       "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
      ).
@@ -146,6 +147,20 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
              description = '{DESCR}'
              icon        = '{ICON}'
              info        = '{INFO}' ).
+
+
+        page->footer( ns = `f` )->overflow_toolbar(
+             )->overflow_toolbar_button(
+                 icon    = `sap-icon://edit`
+                 text    = 'edit header'
+                 type    = 'Emphasized'
+                 tooltip = 'edit'
+             )->overflow_toolbar_button(
+                 icon    = `sap-icon://pull-down`
+                 text    = 'show section'
+                 type    = 'Emphasized'
+                 tooltip = 'pull-down'
+                 ).
 
     client->set_next( VALUE #( xml_main = page->get_root(  )->xml_get( ) ) ).
 

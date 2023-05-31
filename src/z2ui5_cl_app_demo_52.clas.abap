@@ -61,7 +61,7 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
                  )->header_content(
                      )->link(
                          text = 'Demo' target = '_blank'
-                         href = 'https://twitter.com/OblomovDev/status/1637163852264624139'
+                         href = 'https://twitter.com/OblomovDev/status/1662001605950971904'
                      )->link(
                          text = 'Source_Code' target = '_blank' href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me get = client->get( ) )
                 )->get_parent( ).
