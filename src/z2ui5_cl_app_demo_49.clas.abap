@@ -13,7 +13,6 @@ CLASS z2ui5_cl_app_demo_49 DEFINITION PUBLIC.
       END OF ty_S_token.
 
     DATA mt_token            TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
-*    DATA mt_token_sugg       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
     DATA mt_table TYPE STANDARD TABLE OF z2ui5_t_draft.
     DATA ms_detail TYPE z2ui5_t_draft.
@@ -253,7 +252,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
         app-view_popup = 'POPUP_SETUP'.
 
       WHEN `SORT_DELETE`.
-        DELETE ms_layout-t_sort WHERE name = app-get-event_data.
+        DELETE ms_layout-t_sort WHERE name = app-get-t_event_arg[ 1 ].
         app-view_popup = 'POPUP_SETUP'.
 
       WHEN 'BUTTON_DELETE'.
@@ -300,7 +299,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
         app-view_main = 'DETAIL'.
 
       WHEN 'POPUP_DETAIL'.
-        app-next-popover_open_by_id = app-get-event_data.
+        app-next-popover_open_by_id = app-get-t_event_arg[ 1 ].
         app-view_popup = 'POPUP_LAYOUT'.
 
       WHEN 'POPUP_LAYOUT'.
@@ -619,7 +618,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press = client->_event( val = 'DETAIL' data = `${UUID}` )
+        press = client->_event( val = 'DETAIL' t_arg = value #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
         type = `Navigation` )->cells( ).
     LOOP AT ms_layout-t_cols REFERENCE INTO lr_field
@@ -630,7 +629,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
         " lo_cells->text(  `{` && lr_field->name && `}` ).
         lo_cells->link( text = `{` && lr_field->name && `}`
         "   press = client->_event( val = `POPUP_DETAIL` data = `${` && lr_field->name && `}` ) ).
-           press = client->_event( val = `POPUP_DETAIL` data = `${$source>/id}` ) ).
+           press = client->_event( val = `POPUP_DETAIL` t_arg = value #(  (  `${$source>/id}` ) ) ) ).
           " press = client->_event( val = `POPUP_DETAIL` data = `$event` ) ).
       ENDIF.
     ENDLOOP.
@@ -846,7 +845,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
      key = 'ASCENDING'
      icon = 'sap-icon://sort-ascending'
 )->get_parent( )->get_parent(
-)->button( type = `Transparent` icon = 'sap-icon://decline' press = client->_event( val = `SORT_DELETE` data = `${NAME}` ) ).
+)->button( type = `Transparent` icon = 'sap-icon://decline' press = client->_event( val = `SORT_DELETE` t_arg = value #( ( `${NAME}` ) ) ) ).
 *            )->get_parent( )->get_parent( )->get_parent(
 
 *           )->button(
@@ -906,7 +905,8 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
 
   METHOD z2ui5_set_detail.
 
-    ms_detail = mt_table[ uuid = client->get( )-event_data ].
+    data(lt_arg) = client->get( )-t_event_arg.
+    ms_detail = mt_table[ uuid = lt_arg[ 1 ] ].
 
     SELECT SINGLE FROM z2ui5_t_draft
       FIELDS *
