@@ -4,7 +4,6 @@ CLASS z2ui5_cl_app_demo_57 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     TYPES:
       BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
@@ -57,7 +56,66 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_57 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
+
+
+  METHOD hlp_get_base64.
+
+    TRY.
+        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>encode_base64
+          EXPORTING
+            unencoded = val
+          RECEIVING
+            encoded   = result.
+
+      CATCH cx_sy_dyn_call_illegal_class.
+
+        DATA(classname) = 'CL_HTTP_UTILITY'.
+        CALL METHOD (classname)=>encode_base64
+          EXPORTING
+            unencoded = val
+          RECEIVING
+            encoded   = result.
+
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD hlp_get_csv_by_tab.
+
+    IF val IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    DATA(lo_struc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_data( val[ 1 ] ) ).
+    DATA(lt_components) = lo_struc->get_components( ).
+
+    rv_row  = ``.
+    LOOP AT lt_components INTO DATA(lv_name) FROM 2.
+      rv_row = rv_row && lv_name-name && `;`.
+    ENDLOOP.
+    rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
+
+    DATA lr_row TYPE REF TO data.
+
+    LOOP AT val REFERENCE INTO lr_row.
+
+      DATA(lv_index) = 2.
+      DO.
+        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+        IF sy-subrc <> 0.
+          EXIT.
+        ENDIF.
+        rv_row = rv_row && <field>.
+        lv_index = lv_index + 1.
+        rv_row = rv_row && `;`.
+      ENDDO.
+
+      rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
+    ENDLOOP.
+
+  ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
@@ -107,27 +165,6 @@ CLASS z2ui5_cl_app_demo_57 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD hlp_get_base64.
-
-    TRY.
-        CALL METHOD ('CL_WEB_HTTP_UTILITY')=>encode_base64
-          EXPORTING
-            unencoded = val
-          RECEIVING
-            encoded   = result.
-
-      CATCH cx_sy_dyn_call_illegal_class.
-
-        DATA(classname) = 'CL_HTTP_UTILITY'.
-        CALL METHOD (classname)=>encode_base64
-          EXPORTING
-            unencoded = val
-          RECEIVING
-            encoded   = result.
-
-    ENDTRY.
-
-  ENDMETHOD.
 
   METHOD z2ui5_on_render.
 
@@ -223,41 +260,4 @@ CLASS z2ui5_cl_app_demo_57 IMPLEMENTATION.
     ).
 
   ENDMETHOD.
-
-
-  METHOD hlp_get_csv_by_tab.
-
-    IF val IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    DATA(lo_struc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_data( val[ 1 ] ) ).
-    DATA(lt_components) = lo_struc->get_components( ).
-
-    rv_row  = ``.
-    LOOP AT lt_components INTO DATA(lv_name) FROM 2.
-      rv_row = rv_row && lv_name-name && `;`.
-    ENDLOOP.
-    rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
-
-    DATA lr_row TYPE REF TO data.
-
-    LOOP AT val REFERENCE INTO lr_row.
-
-      DATA(lv_index) = 2.
-      DO.
-        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-        IF sy-subrc <> 0.
-          EXIT.
-        ENDIF.
-        rv_row = rv_row && <field>.
-        lv_index = lv_index + 1.
-        rv_row = rv_row && `;`.
-      ENDDO.
-
-      rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
-    ENDLOOP.
-
-  ENDMETHOD.
-
 ENDCLASS.
