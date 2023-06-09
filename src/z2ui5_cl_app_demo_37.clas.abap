@@ -108,7 +108,7 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
     CASE app-get-event.
 
       WHEN 'POST'.
-        client->popup_message_toast( app-get-event_data ).
+        client->popup_message_toast( app-get-t_event_arg[ 1 ] ).
 
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.
