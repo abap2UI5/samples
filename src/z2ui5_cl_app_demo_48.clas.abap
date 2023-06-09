@@ -8,15 +8,15 @@ CLASS z2ui5_cl_app_demo_48 DEFINITION
 
     TYPES:
       BEGIN OF ty_row,
-        title    TYPE string,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        highlight type string,
-        wrapCharLimit type i,
-        selected TYPE abap_bool,
-        checkbox TYPE abap_bool,
+        title         TYPE string,
+        value         TYPE string,
+        descr         TYPE string,
+        icon          TYPE string,
+        info          TYPE string,
+        highlight     TYPE string,
+        wrapCharLimit TYPE i,
+        selected      TYPE abap_bool,
+        checkbox      TYPE abap_bool,
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_48 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -49,7 +49,8 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'EDIT'.
-        data(lv_row_title) = client->get( )-event_data.
+        DATA(lt_arg) = client->get( )-t_event_arg.
+        DATA(lv_row_title) = lt_arg[ 1 ].
         client->popup_message_box( `EDIT - ` && lv_row_title ).
       WHEN 'SELCHANGE'.
         DATA(lt_sel) = t_tab.
@@ -93,7 +94,7 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
               ( n = 'wrapping'      v = `true` )
               ( n = 'wrapCharLimit'      v = `{WRAPCHARLIMIT}` )
               ( n = 'selected'    v = `{SELECTED}` )
-              ( n = 'detailPress'      v = client->_event( val = 'EDIT' data = `${TITLE}` ) )
+              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )  ) ) )
 
               ) ).
     client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) ) ).
