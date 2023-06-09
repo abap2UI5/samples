@@ -99,11 +99,11 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
 
     DATA lr_row TYPE REF TO data.
 
-    LOOP AT val REFERENCE INTO lr_row.
+    LOOP AT val assigning FIELD-SYMBOL(<row>).
 
       DATA(lv_index) = 2.
       DO.
-        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+        ASSIGN COMPONENT lv_index OF STRUCTURE <row> TO FIELD-SYMBOL(<field>).
         IF sy-subrc <> 0.
           EXIT.
         ENDIF.
