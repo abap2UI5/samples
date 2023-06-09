@@ -53,11 +53,6 @@ CLASS Z2UI5_CL_APP_DEMO_54 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN `POPOVER_DETAIL`.
-        DATA(lv_id) = client->get( )-event_data.
-        mv_check_popover = abap_true.
-        next-popover_open_by_id = lv_id.
-
       WHEN 'BUTTON_POST'.
         client->popup_message_box( 'button post was pressed' ).
       WHEN 'BACK'.
@@ -99,7 +94,7 @@ CLASS Z2UI5_CL_APP_DEMO_54 IMPLEMENTATION.
             )->text( 'Counter' ).
 
     tab->items( )->column_list_item( )->cells(
-       )->link( text = '{VALUE}' press = client->_event( val = `POPOVER_DETAIL` data = `${$source>/id}` hold_view = abap_true )
+*       )->link( text = '{VALUE}' press = client->_event( val = `POPOVER_DETAIL` data = `${$source>/id}` hold_view = abap_true )
        )->text( '{INFO}'
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
@@ -114,24 +109,7 @@ CLASS Z2UI5_CL_APP_DEMO_54 IMPLEMENTATION.
       DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
       lo_popup->popover( placement = `Bottom` title = 'abap2UI5 - Layout'  contentwidth = `50%`
-         " )->input( description = `Name` value = client->_bind( mv_layout_name )
           )->button( text = `Save` press = client->_event( `BUTTON_SAVE_LAYOUT` )
-*          )->table(
-*              mode = 'SingleSelectLeft'
-*              items = client->_bind( mt_db_layout )
-*              )->columns(
-*                  )->column( )->text( 'Name' )->get_parent(
-*                  )->column( )->text( 'User' )->get_parent(
-*                  )->column( )->text( 'Default' )->get_parent(
-*               "   )->column( )->text( 'Description' )->get_parent(
-*              )->get_parent(
-*              )->items( )->column_list_item( selected = '{SELKZ}'
-*                  )->cells(
-*               "       )->checkbox( '{SELKZ}'
-*                      )->text( '{NAME}'
-*                      )->text( '{USER}'
-*                      )->text( '{DEFAULT}'
-*               "       )->text( '{DESCR}'
           )->footer( )->overflow_toolbar(
               )->toolbar_spacer(
                )->button(
