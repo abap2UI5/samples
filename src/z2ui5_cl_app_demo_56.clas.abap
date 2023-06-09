@@ -79,35 +79,13 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
     CLASS-METHODS hlp_get_uuid
       RETURNING
         VALUE(result) TYPE string.
+private section.
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->client     = client.
-    app-get        = client->get( ).
-    app-view_popup = ``.
-
-    IF app-check_initialized = abap_false.
-      app-check_initialized = abap_true.
-      z2ui5_on_init( ).
-    ENDIF.
-
-    IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
-    z2ui5_on_render( ).
-
-    client->set_next( app-next ).
-    CLEAR app-get.
-    CLEAR app-next.
-
-  ENDMETHOD.
 
   METHOD hlp_get_range_by_value.
 
@@ -148,6 +126,70 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
+
+  METHOD hlp_get_uuid.
+
+    DATA uuid TYPE sysuuid_c32.
+
+    TRY.
+        CALL METHOD ('CL_SYSTEM_UUID')=>create_uuid_c32_static
+          RECEIVING
+            uuid = uuid.
+      CATCH cx_sy_dyn_call_illegal_class.
+        DATA lv_fm TYPE string.
+        lv_fm = 'GUID_CREATE'.
+        CALL FUNCTION lv_fm
+          IMPORTING
+            ev_guid_32 = uuid.
+    ENDTRY.
+
+    result = uuid.
+
+  ENDMETHOD.
+
+
+  METHOD map_range_to_token.
+
+    CLEAR mv_value.
+    CLEAR mt_token.
+    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
+
+      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
+
+      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
+
+      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client     = client.
+    app-get        = client->get( ).
+    app-view_popup = ``.
+
+    IF app-check_initialized = abap_false.
+      app-check_initialized = abap_true.
+      z2ui5_on_init( ).
+    ENDIF.
+
+    IF app-get-event IS NOT INITIAL.
+      z2ui5_on_event( ).
+    ENDIF.
+
+    z2ui5_on_render( ).
+
+    client->set_next( app-next ).
+    CLEAR app-get.
+    CLEAR app-next.
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -183,7 +225,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         app-view_popup = `VALUE_HELP`.
 
       WHEN `POPUP_DELETE`.
-        DELETE mt_filter WHERE key = app-get-event_data.
+        DELETE mt_filter WHERE key = app-get-t_event_arg[ 1 ].
         app-view_popup = `VALUE_HELP`.
 
       WHEN `POPUP_DELETE_ALL`.
@@ -291,7 +333,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
                     tokens          = client->_bind( mt_token )
                     showclearicon   = abap_true
                     value           = client->_bind( mv_value )
-                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1' data = `JSON.parse( ${$parameters>/removedTokens} )` )
+                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
                     submit          = client->_event( 'FILTER_UPDATE' )
                     id              = `FILTER`
                     valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
@@ -334,7 +376,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD z2ui5_on_render_pop_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
@@ -367,7 +408,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
              )->get_parent(
              )->input( value = `{LOW}`
              )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` data = `${KEY}` )
+             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` t_arg = value #( ( `${KEY}` ) ) )
              ).
 
     lo_popup->footer( )->overflow_toolbar(
@@ -387,6 +428,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_set_data.
 
     "replace this with a db select here...
@@ -404,43 +446,4 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     DELETE mt_table WHERE product NOT IN ms_filter-product.
 
   ENDMETHOD.
-
-
-  METHOD hlp_get_uuid.
-
-    DATA uuid TYPE sysuuid_c32.
-
-    TRY.
-        CALL METHOD ('CL_SYSTEM_UUID')=>create_uuid_c32_static
-          RECEIVING
-            uuid = uuid.
-      CATCH cx_sy_dyn_call_illegal_class.
-        DATA lv_fm TYPE string.
-        lv_fm = 'GUID_CREATE'.
-        CALL FUNCTION lv_fm
-          IMPORTING
-            ev_guid_32 = uuid.
-    ENDTRY.
-
-    result = uuid.
-
-  ENDMETHOD.
-
-
-  METHOD map_range_to_token.
-
-    CLEAR mv_value.
-    CLEAR mt_token.
-    LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
-
-      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-
-      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
-      REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
-
-      INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
-    ENDLOOP.
-
-  ENDMETHOD.
-
 ENDCLASS.
