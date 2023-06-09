@@ -4,7 +4,6 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     TYPES:
       BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
@@ -47,7 +46,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -207,6 +206,4 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
-
-
 ENDCLASS.
