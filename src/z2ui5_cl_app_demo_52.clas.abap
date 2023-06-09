@@ -31,6 +31,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
+
   METHOD z2ui5_if_app~main.
 
     CLEAR next.
@@ -38,10 +39,10 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `POPOVER_DETAIL`.
-        DATA(lv_id) = client->get( )-event_data.
-        next-popover_open_by_id = lv_id.
+        DATA(lt_arg) = client->get( )-t_event_arg.
+        next-popover_open_by_id = lt_arg[ 1 ].
         mv_check_popover = abap_true.
-        mv_product = client->get( )-event_data2.
+        mv_product = lt_arg[ 2 ].
 
       WHEN 'BUTTON_START'.
         z2ui5_set_data( ).
@@ -101,7 +102,7 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
       lo_columns->column( )->text( text = `Quantity` ).
 
       DATA(lo_cells) = tab->items( )->column_list_item( ).
-      lo_cells->link( text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` hold_view = abap_true data = `${$source>/id}` data2 = `${PRODUCT}` ) ).
+      lo_cells->link( text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` hold_view = abap_true t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) )  ) ).
       lo_cells->text( `{CREATE_DATE}` ).
       lo_cells->text( `{CREATE_BY}` ).
       lo_cells->text( `{STORAGE_LOCATION}` ).
@@ -198,5 +199,4 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
     ).
 
   ENDMETHOD.
-
 ENDCLASS.
