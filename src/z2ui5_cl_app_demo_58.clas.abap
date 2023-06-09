@@ -261,7 +261,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press = client->_event( val = 'DETAIL' data = `${UUID}` )
+        press = client->_event( val = 'DETAIL' t_arg = value #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
       )->cells( ).
 
