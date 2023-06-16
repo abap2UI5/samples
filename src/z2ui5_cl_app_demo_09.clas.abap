@@ -215,10 +215,10 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Demo'  target = '_blank'
-                    href = 'https://twitter.com/OblomovDev/status/1637470531136921600'
+                    href = 'https://twitter.com/abap2UI5/status/1637470531136921600'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me get = client->get( ) )
+                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
         )->get_parent( ).
 
     DATA(form) = page->grid( 'L7 M7 S7'

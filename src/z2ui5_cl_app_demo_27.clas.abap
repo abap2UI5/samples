@@ -91,10 +91,10 @@ CLASS Z2UI5_CL_APP_DEMO_27 IMPLEMENTATION.
               navbuttonpress = client->_event( 'BACK' )
               shownavbutton  = abap_true
           )->header_content(
-              )->link( text = `Demo` target = `_blank` href = `https://twitter.com/OblomovDev/status/1647889242545111043`
+              )->link( text = `Demo` target = `_blank` href = `https://twitter.com/abap2UI5/status/1647889242545111043`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me get = client->get( ) )
+                  href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
           )->get_parent(
           )->simple_form( title = 'Binding Syntax' editable = abap_true
               )->content( 'form'

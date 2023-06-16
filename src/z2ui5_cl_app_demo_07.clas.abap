@@ -176,8 +176,8 @@ CLASS Z2UI5_CL_APP_DEMO_07 IMPLEMENTATION.
            shownavbutton  = abap_true
        )->header_content( ns = 'm'
            )->toolbar_spacer( ns = 'm'
-           )->link( ns = 'm' text = 'Demo'   target = '_blank'     href = 'https://twitter.com/OblomovDev/status/1638487600930357248'
-           )->link( ns = 'm'  target = '_blank' text = 'Source_Code' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me get = client->get( ) )
+           )->link( ns = 'm' text = 'Demo'   target = '_blank'     href = 'https://twitter.com/abap2UI5/status/1638487600930357248'
+           )->link( ns = 'm'  target = '_blank' text = 'Source_Code' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
        )->get_parent( ).
 
     page->text( ns = 'm' text = 'Custom Control for File Upload is now loaded.'
@@ -198,8 +198,8 @@ CLASS Z2UI5_CL_APP_DEMO_07 IMPLEMENTATION.
             shownavbutton  = abap_true
         )->header_content(
             )->toolbar_spacer(
-            )->link( text = 'Demo'        href = 'https://twitter.com/OblomovDev/status/1638487600930357248'
-            )->link( text = 'Source_Code' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me get = client->get( ) )
+            )->link( text = 'Demo'        href = 'https://twitter.com/abap2UI5/status/1638487600930357248'
+            )->link( text = 'Source_Code' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
         )->get_parent( ).
 
     page->cc_file_uploader(

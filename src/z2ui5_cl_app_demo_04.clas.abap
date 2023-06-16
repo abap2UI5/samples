@@ -85,7 +85,7 @@ CLASS Z2UI5_CL_APP_DEMO_04 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me get = client->get( ) )
+                        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
                         target = '_blank'
                 )->get_parent( ).
 
