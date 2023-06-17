@@ -70,14 +70,12 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
 
         CREATE DATA mt_table TYPE STANDARD TABLE OF (mv_name).
-        "FIELD-SYMBOLS <tab> TYPE table.
         ASSIGN mt_table->* TO <tab>.
 
         SELECT FROM (mv_name)
             FIELDS *
           INTO CORRESPONDING FIELDS OF TABLE @<tab>
             UP TO 100 ROWS.
-
 
       WHEN 'BUTTON_CONFIRM'.
         client->popup_message_toast( |confirm| ).
