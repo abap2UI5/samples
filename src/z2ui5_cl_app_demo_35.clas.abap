@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_35 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
 
       WHEN 'BUTTON_TABLE'.
         FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-        CREATE DATA mt_table TYPE STANDARD TABLE OF (mv_name).
+        CREATE DATA mt_table TYPE STANDARD TABLE OF (mv_name) with DEFAULT KEY.
         ASSIGN mt_table->* TO <tab>.
         mt_cols = lcl_db=>get_fieldlist_by_table( <tab> ).
 
@@ -113,7 +113,7 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
                  href = 'https://twitter.com/abap2UI5/status/1656904560953237508'
              )->link(
                  text = 'Source_Code' target = '_blank'
-                 href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                 href = z2ui5_cl_xml_view=>hlp_get_source_code_url( app = me )
          )->get_parent(
          )->simple_form(  editable = abap_true
              )->content( `form`
@@ -133,7 +133,7 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
       ASSIGN mt_table->* TO <tab>.
       DATA(tab) = lo_view->get_parent( )->get_parent( )->simple_form( editable = abap_true
                 )->content( 'form' )->table(
-                  items = client->_bind( val = <tab>  check_gen_data = abap_true )
+                  items = client->_bind( val = <tab> )
               ).
 
       DATA(lo_columns) = tab->columns( ).

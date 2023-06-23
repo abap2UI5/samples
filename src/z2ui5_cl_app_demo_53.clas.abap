@@ -23,21 +23,10 @@ CLASS z2ui5_cl_app_demo_53 DEFINITION PUBLIC.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
-    DATA:
-      BEGIN OF app,
-        check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
-      END OF app.
+    DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
-
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
 
@@ -46,42 +35,34 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-    app-get        = client->get( ).
 
-    IF app-check_initialized = abap_false.
-      app-check_initialized = abap_true.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
       z2ui5_on_init( ).
+      RETURN.
     ENDIF.
 
-    IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
-    z2ui5_on_render( ).
-
-    client->set_next( app-next ).
-    CLEAR app-get.
-    CLEAR app-next.
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
+    CASE client->get( )-event.
 
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         z2ui5_set_data( ).
         z2ui5_set_search( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
     ENDCASE.
 
@@ -90,37 +71,22 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    app-view_main = `MAIN`.
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-  ENDMETHOD.
+    data(page1) = view->page( id = `page_main`
+            title          = 'abap2UI5 - List Report Features'
+            navbuttonpress = client->__event( 'BACK' )
+            shownavbutton  = abap_true ).
 
+      page1->header_content(
+            )->link(
+                text = 'Demo' target = '_blank'
+                href = 'https://twitter.com/abap2UI5/status/1661642823542747138'
+            )->link(
+                text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+       ).
 
-  METHOD z2ui5_on_render.
-
-    CASE app-view_main.
-      WHEN 'MAIN'.
-        z2ui5_on_render_main( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_render_main.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( id = `page_main`
-                title          = 'abap2UI5 - List Report Features'
-                navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1661642823542747138'
-                )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
-           )->get_parent( ).
-
-    DATA(page) = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
+    DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
     header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
@@ -131,20 +97,21 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
     lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
+         value  = client->__bind_edit( mv_search_value )
+         search = client->__event( 'BUTTON_SEARCH' )
+         change = client->__event( 'BUTTON_SEARCH' )
+*         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go`
-        press = client->_event( `BUTTON_START` )
+        press = client->__event( `BUTTON_START` )
         type = `Emphasized` ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
-    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+    DATA(tab) = cont->table( items = client->__bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -160,10 +127,9 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    app-next-xml_main = page->get_root( )->xml_get( ).
+    client->set_view( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -181,12 +147,8 @@ CLASS Z2UI5_CL_APP_DEMO_53 IMPLEMENTATION.
 
   METHOD z2ui5_set_search.
 
-    app-next-s_cursor-id = 'SEARCH'.
-    app-next-s_cursor-cursorpos = '99'.
-    app-next-s_cursor-selectionend = '99'.
-    app-next-s_cursor-selectionstart = '99'.
-
     IF mv_search_value IS NOT INITIAL.
+
       LOOP AT mt_table REFERENCE INTO DATA(lr_row).
         DATA(lv_row) = ``.
         DATA(lv_index) = 1.

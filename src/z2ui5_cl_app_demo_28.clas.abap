@@ -68,6 +68,11 @@ CLASS Z2UI5_CL_APP_DEMO_28 IMPLEMENTATION.
 
     CASE app-get-event.
 
+    when `TEST`.
+          mv_counter = mv_counter + 1.
+        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
+            INTO TABLE t_tab.
+
       WHEN 'TIMER_FINISHED'.
         mv_counter = mv_counter + 1.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
@@ -91,8 +96,8 @@ CLASS Z2UI5_CL_APP_DEMO_28 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-    app-next-s_timer-interval_ms = '2000'.
-    app-next-s_timer-event_finished = 'TIMER_FINISHED'.
+*    app-next-s_timer-interval_ms = '2000'.
+*    app-next-s_timer-event_finished = 'TIMER_FINISHED'.
 
   ENDMETHOD.
 
@@ -104,6 +109,8 @@ CLASS Z2UI5_CL_APP_DEMO_28 IMPLEMENTATION.
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
          )->header_content(
+            )->button( text = `test` press = client->_event( val = `TEST` hold_view = abap_true )
+            )->button( text = `test2` press = client->_event( val = `TEST` )
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
