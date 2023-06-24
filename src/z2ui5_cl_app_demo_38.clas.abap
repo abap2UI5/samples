@@ -122,7 +122,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
-            navbuttonpress = client->__event( 'BACK' )
+            navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
             )->get_parent( ).
     page->button( text = 'Messages' press = client->__event( 'POPUP' )  ).
     page->message_view(
-        items = client->__bind_edit( t_msg )
+        items = client->__bind( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
