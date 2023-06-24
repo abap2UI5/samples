@@ -6,76 +6,61 @@ CLASS z2ui5_cl_app_demo_26 DEFINITION PUBLIC.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
-    data mv_placement type string.
+    DATA mv_placement TYPE string.
 
   PROTECTED SECTION.
 
-    data client            TYPE REF TO z2ui5_if_client.
-    DATA:
-      BEGIN OF app,
-        check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
-        s_get             TYPE z2ui5_if_client=>ty_s_get,
-        s_next            TYPE z2ui5_if_client=>ty_s_next,
-      END OF app.
+    DATA client TYPE REF TO z2ui5_if_client.
+    DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_display_popover
+      IMPORTING
+        id TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_26 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-    app-s_get      = client->get( ).
-    app-view_popup = ``.
 
-    IF app-check_initialized = abap_false.
-      app-check_initialized = abap_true.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
       z2ui5_on_init( ).
+      z2ui5_display_view( ).
+      RETURN.
     ENDIF.
 
-    IF app-s_get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
-
-    client->set_next( app-s_next ).
-    CLEAR app-s_get.
-    CLEAR app-s_next.
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
-    CASE app-s_get-event.
+    CASE client->get( )-event.
 
       WHEN 'POPOVER'.
-        app-view_popup = 'POPOVER'.
-        app-s_next-popover_open_by_id = 'TEST'.
+        z2ui5_display_popover( `TEST` ).
 
       WHEN 'BUTTON_CONFIRM'.
         client->popup_message_toast( |confirm| ).
-        app-view_popup = ''.
+        client->set_popover( `` ).
 
       WHEN 'BUTTON_CANCEL'.
         client->popup_message_toast( |cancel| ).
-        app-view_popup = ''.
+        client->set_popover( `` ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-s_get-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
     ENDCASE.
 
@@ -87,100 +72,91 @@ CLASS Z2UI5_CL_APP_DEMO_26 IMPLEMENTATION.
     mv_placement = 'Left'.
     product  = 'tomato'.
     quantity = '500'.
-    app-view_main = 'VIEW_MAIN'.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD z2ui5_display_view.
 
-    CASE app-view_main.
-
-      WHEN 'VIEW_MAIN'.
-
-        app-s_next-xml_main = Z2UI5_CL_XML_VIEW=>factory( )->shell(
-          )->page(
-                  title          = 'abap2UI5 - Popover Examples'
-                  navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = abap_true
-              )->header_content(
-                  )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
-                  )->link(
-                      text = 'Source_Code' target = '_blank'
-                      href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
-              )->get_parent(
-              )->simple_form( 'Popover'
-                  )->content( 'form'
-                      )->title( 'Input'
-                      )->label( 'Link'
-                      )->link(  text = 'Documentation UI5 Popover Control' href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
-                      )->label( 'placement'
-                      )->segmented_button( client->_bind( mv_placement )
-                            )->items(
-                            )->segmented_button_item(
-                                    key = 'Left'
-                                    icon = 'sap-icon://add-favorite'
-                                    text = 'Left'
-                            )->segmented_button_item(
-                                    key = 'Top'
-                                    icon = 'sap-icon://accept'
-                                    text = 'Top'
-                            )->segmented_button_item(
-                                    key = 'Bottom'
-                                    icon = 'sap-icon://accept'
-                                    text = 'Bottom'
-                            )->segmented_button_item(
-                                    key = 'Right'
-                                    icon = 'sap-icon://attachment'
-                                    text = 'Right'
-                      )->get_parent( )->get_parent(
-                      )->label( 'popover'
-                      )->button(
-                          text  = 'show'
-                          press = client->_event( 'POPOVER' )
-                          id = 'TEST'
-                      )->button(
-                          text  = 'cancel'
-                          press = client->_event( 'POPOVER' )
-                    )->button(
-                          text  = 'post'
-                          press = client->_event( 'POPOVER' )
-           )->get_root( )->xml_get( ).
-
-
-      WHEN 'VIEW_SECOND'.
-
-
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_render_popup.
-
-    CASE app-view_popup.
-
-      WHEN 'POPOVER'.
-
-        app-s_next-xml_popup = Z2UI5_CL_XML_VIEW=>factory_popup( )->popover(
-                    title     = 'Popover Title'
-                    placement = mv_placement
-                )->footer( )->overflow_toolbar(
-                    )->toolbar_spacer(
-                    )->button(
-                        text  = 'Cancel'
-                        press = client->_event( 'BUTTON_CANCEL' )
-                    )->button(
-                        text  = 'Confirm'
-                        press = client->_event( 'BUTTON_CONFIRM' )
-                        type  = 'Emphasized'
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    view->shell(
+      )->page(
+              title          = 'abap2UI5 - Popover Examples'
+              navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true )
+              shownavbutton  = abap_true
+          )->header_content(
+              )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
+              )->link(
+                  text = 'Source_Code' target = '_blank'
+                  href = view->hlp_get_source_code_url( )
+          )->get_parent(
+          )->simple_form( 'Popover'
+              )->content( 'form'
+                  )->title( 'Input'
+                  )->label( 'Link'
+                  )->link(  text = 'Documentation UI5 Popover Control' href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
+                  )->label( 'placement'
+                  )->segmented_button( client->__bind_edit( mv_placement )
+                        )->items(
+                        )->segmented_button_item(
+                                key = 'Left'
+                                icon = 'sap-icon://add-favorite'
+                                text = 'Left'
+                        )->segmented_button_item(
+                                key = 'Top'
+                                icon = 'sap-icon://accept'
+                                text = 'Top'
+                        )->segmented_button_item(
+                                key = 'Bottom'
+                                icon = 'sap-icon://accept'
+                                text = 'Bottom'
+                        )->segmented_button_item(
+                                key = 'Right'
+                                icon = 'sap-icon://attachment'
+                                text = 'Right'
                   )->get_parent( )->get_parent(
-              )->text(  'make an input here:'
-              )->input( value = 'abcd'
-              )->get_root( )->xml_get( ).
+                  )->label( 'popover'
+                  )->button(
+                      text  = 'show'
+                      press = client->__event( 'POPOVER' )
+                      id = 'TEST'
+                  )->button(
+                      text  = 'cancel'
+                      press = client->__event( 'POPOVER' )
+                )->button(
+                      text  = 'post'
+                      press = client->__event( 'POPOVER' )
+          ).
 
-    ENDCASE.
+    client->set_view( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_display_popover.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    view->popover(
+                  title     = 'Popover Title'
+                  placement = mv_placement
+              )->footer( )->overflow_toolbar(
+                  )->toolbar_spacer(
+                  )->button(
+                      text  = 'Cancel'
+                      press = client->__event( 'BUTTON_CANCEL' )
+                  )->button(
+                      text  = 'Confirm'
+                      press = client->__event( 'BUTTON_CONFIRM' )
+                      type  = 'Emphasized'
+                )->get_parent( )->get_parent(
+            )->text(  'make an input here:'
+            )->input( value = 'abcd'
+            ).
+
+    client->set_popover(
+      xml        = view->stringify( )
+      open_by_id = id
+    ).
 
   ENDMETHOD.
 ENDCLASS.
