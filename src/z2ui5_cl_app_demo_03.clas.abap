@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_03 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_03 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -41,46 +41,46 @@ CLASS Z2UI5_CL_APP_DEMO_03 IMPLEMENTATION.
         ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
       ).
 
+      DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+      DATA(page) = view->shell(
+          )->page(
+              title          = 'abap2UI5 - List'
+              navbuttonpress = client->__event( 'BACK' )
+                shownavbutton = abap_true
+              )->header_content(
+                  )->link(
+                      text = 'Source_Code'  target = '_blank'
+                      href = view->hlp_get_source_code_url( )
+              )->get_parent( ).
+
+      page->list(
+          headertext      = 'List Ouput'
+          items           = client->__bind_edit( t_tab )
+          mode            = `SingleSelectMaster`
+          selectionchange = client->__event( 'SELCHANGE' )
+          )->standard_list_item(
+              title       = '{TITLE}'
+              description = '{DESCR}'
+              icon        = '{ICON}'
+              info        = '{INFO}'
+              press       = client->__event( 'TEST' )
+              selected    = `{SELECTED}`
+         ).
+
+      client->set_view( view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.
+
       WHEN 'SELCHANGE'.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
         client->popup_message_box( `go to details for item ` && lt_sel[ 1 ]-title ).
 
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
     ENDCASE.
-
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-            title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
-            )->get_parent( ).
-
-    page->list(
-        headertext      = 'List Ouput'
-        items           = client->_bind( t_tab )
-        mode            = `SingleSelectMaster`
-        selectionchange = client->_event( 'SELCHANGE' )
-        )->standard_list_item(
-            title       = '{TITLE}'
-            description = '{DESCR}'
-            icon        = '{ICON}'
-            info        = '{INFO}'
-            press       = client->_event( 'TEST' )
-         "   type        = `Navigation`
-            selected    = `{SELECTED}`
-            ).
-
-    client->set_next( VALUE #( xml_main = page->get_root(  )->xml_get( ) ) ).
 
   ENDMETHOD.
 ENDCLASS.
