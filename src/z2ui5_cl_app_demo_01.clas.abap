@@ -6,7 +6,6 @@ CLASS z2ui5_cl_app_demo_01 DEFINITION PUBLIC.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
-    DATA quantity2 TYPE string.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -43,10 +42,8 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
                         )->title( 'Input'
                         )->label( 'quantity'
                         )->input( client->__bind_edit( quantity )
-                        )->label( client->__bind( quantity2 )
-                        )->input(
-                            value   = product
-                            enabled = abap_false
+                        )->label( `product`
+                        )->input( value = product enabled = abap_false
                         )->button(
                             text  = 'post'
                             press = client->__event( val = 'BUTTON_POST' )
@@ -55,12 +52,13 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+
       WHEN 'BUTTON_POST'.
-        quantity = CONV i( quantity ) + 1.
-        quantity2 = CONV i( quantity ) + 1.
         client->popup_message_toast( |{ product } { quantity } - send to the server| ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
+
     ENDCASE.
 
   ENDMETHOD.

@@ -27,7 +27,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
             client->nav_app_call( li_app ).
-
+            return.
           CATCH cx_root.
         ENDTRY.
     ENDCASE.
