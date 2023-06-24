@@ -52,23 +52,23 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    DATA(page2) = view->shell( )->page( ).
-
-    page2->illustrated_message(
-         title = `HTTP 500 - Server Error`
-         enableformattedtext = abap_true
-      description = mv_html
-         illustrationtype = `sapIllus-ErrorScreen`
-         illustrationsize = `Dot`
-    )->additional_content(
-     )->button(
-                text  = 'information'
-                press = client->__event( 'BUTTON_MESSAGE_BOX' ) ).
-
-    client->set_view( view->stringify( ) ).
-
-
-    RETURN.
+*    DATA(page2) = view->shell( )->page( ).
+*
+*    page2->illustrated_message(
+*         title = `HTTP 500 - Server Error`
+*         enableformattedtext = abap_true
+*      description = mv_html
+*         illustrationtype = `sapIllus-ErrorScreen`
+*         illustrationsize = `Dot`
+*    )->additional_content(
+*     )->button(
+*                text  = 'Home'
+*                type  = `Emphasized`
+*                press = client->__event_frontend( client->cs_event-leave_home ) ).
+*
+*    client->set_view( view->stringify( ) ).
+*
+*    RETURN.
 
     DATA(page) = view->shell(
         )->page(
