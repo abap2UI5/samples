@@ -21,10 +21,7 @@ CLASS z2ui5_cl_app_demo_22 DEFINITION PUBLIC.
       BEGIN OF app,
         client            TYPE REF TO z2ui5_if_client,
         check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
         s_get             TYPE z2ui5_if_client=>ty_s_get,
-        s_next            TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
   PROTECTED SECTION.
@@ -34,7 +31,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_22 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_22 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -57,114 +54,109 @@ CLASS Z2UI5_CL_APP_DEMO_22 IMPLEMENTATION.
         INSERT ls_row INTO TABLE t_tab.
       ENDDO.
 
+
+      DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
+      DATA(page) = view->page(
+          id = 'id_page'
+          title = 'abap2ui5 - Scrolling and Cursor (use the browser Chrome to avoid incompatibilities)'
+          navbuttonpress = client->__event( 'BACK' )
+          shownavbutton = abap_true
+          ).
+
+      page->header_content( )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( ) ).
+
+
+      page->input(
+          id = 'id_text1'
+          value = client->__bind_edit( mv_value1 )
+          ).
+      page->text_area(
+          width = '100%'
+          height = '10%'
+          id = 'id_text2'
+           value = client->__bind_edit( mv_value2 ) ).
+
+      page->button( text = 'cursor input pos 3'  press = client->__event( 'BUTTON_FOCUS_FIRST' ) ).
+      page->button( text = 'cursor text area pos 5 to 10'  press = client->__event( 'BUTTON_FOCUS_SECOND' ) ).
+      page->button( text = 'scroll end + focus end'  press = client->__event( 'BUTTON_FOCUS_END' ) ).
+
+      DATA(tab) = page->table( sticky = 'ColumnHeaders,HeaderToolbar' headertext = 'Table with some entries' items = client->__bind( t_tab ) ).
+
+      tab->columns(
+          )->column( )->text( 'Title' )->get_parent(
+          )->column( )->text( 'Color' )->get_parent(
+          )->column( )->text( 'Info' )->get_parent(
+          )->column( )->text( 'Description' ).
+
+      tab->items( )->column_list_item( )->cells(
+         )->text( '{TITLE}'
+         )->text( '{VALUE}'
+         )->text( '{INFO}'
+        )->text( '{DESCR}' ).
+
+      page->text_area(
+           id = 'id_text3'
+           width = '100%'
+           height = '10%'
+           value = client->__bind( mv_value3 ) ).
+
+      page->footer( )->overflow_toolbar(
+            )->button( text = 'Scroll Top'     press = client->__event( 'BUTTON_SCROLL_TOP' )
+           )->button( text = 'Scroll 500 up'   press = client->__event( 'BUTTON_SCROLL_UP' )
+           )->button( text = 'Scroll 500 down' press = client->__event( 'BUTTON_SCROLL_DOWN' )
+           )->button( text = 'Scroll Bottom'   press = client->__event( 'BUTTON_SCROLL_BOTTOM' )
+           )->toolbar_spacer(
+           )->button( text = 'Server Event and hold position' press = client->__event( 'BUTTON_SCROLL_HOLD' )
+         ).
+
+      client->set_view( view->stringify( ) ).
+
     ENDIF.
 
-     app-s_next-t_scroll = VALUE #(
-             ( name = 'id_page'  )
-             ( name = 'id_text3'  )
-            ).
+*
 
     CASE client->get( )-event.
 
       WHEN 'BUTTON_SCROLL_TOP'.
-        "nothing to do, default mode
+      client->set_scroll_pos( VALUE #(
+             ( name = 'id_page'  )
+             ( name = 'id_text3'  )
+           ) ).
+
 
       WHEN 'BUTTON_SCROLL_BOTTOM'.
-        app-s_next-t_scroll = VALUE #( ( name = 'id_page' value = '99999' ) ).
+        client->set_scroll_pos( VALUE #( ( name = 'id_page' value = '99999' ) ) ).
 
       WHEN 'BUTTON_SCROLL_UP'.
         DATA(lv_pos) = CONV i( app-s_get-t_scroll_pos[ name = `id_page` ]-value ) - 500.
-        app-s_next-t_scroll = VALUE #( (  name = 'id_page'  value = lv_pos ) ).
+        client->set_scroll_pos(  VALUE #( (  name = 'id_page'  value = lv_pos ) ) ).
 
       WHEN 'BUTTON_SCROLL_DOWN'.
-        lv_pos = CONV i( value #( app-s_get-t_scroll_pos[ name = `id_page` ]-value optional ) ) + 500.
-        app-s_next-t_scroll = VALUE #( (  name = 'id_page'  value = lv_pos ) ).
+        lv_pos = CONV i( VALUE #( app-s_get-t_scroll_pos[ name = `id_page` ]-value OPTIONAL ) ) + 500.
+        client->set_scroll_pos(  VALUE #( (  name = 'id_page'  value = lv_pos ) ) ).
 
       WHEN 'BUTTON_SCROLL_HOLD'.
-        app-s_next-t_scroll = app-s_get-t_scroll_pos.
+
+*       client->set_scroll_pos(  app-s_get-t_scroll_pos ).
 
       WHEN 'BUTTON_FOCUS_FIRST'.
-        app-s_next-s_cursor =  VALUE #( id = 'id_text1'  cursorpos = '3' selectionstart = '3' selectionend = '3' ).
+        client->set_cursor(  VALUE #( id = 'id_text1'  cursorpos = '3' selectionstart = '3' selectionend = '3' ) ).
 
       WHEN 'BUTTON_FOCUS_SECOND'.
-        app-s_next-s_cursor  = VALUE #( id = 'id_text2'  cursorpos = '5' selectionstart = '5' selectionend = '10' ).
+        client->set_cursor(  VALUE #( id = 'id_text2'  cursorpos = '5' selectionstart = '5' selectionend = '10' ) ).
 
       WHEN 'BUTTON_FOCUS_END'.
-        app-s_next-s_cursor =  VALUE #( id = 'id_text3'  cursorpos = '99999' selectionstart = '99999' selectionend = '999999' ).
+        client->set_cursor(   VALUE #( id = 'id_text3'  cursorpos = '99999' selectionstart = '99999' selectionend = '999999' ) ).
 
-        app-s_next-t_scroll = VALUE #(
-             ( name = 'id_page'  value = '99999' )
-             ( name = 'id_text3' value = '99999' )
-            ).
-
-
-
+        client->set_scroll_pos(  VALUE #(
+                 ( name = 'id_page'  value = '99999' )
+                 ( name = 'id_text3' value = '99999' )
+                ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
     ENDCASE.
-
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = view->page(
-        id = 'id_page'
-        title = 'abap2ui5 - Scrolling and Cursor (use the browser Chrome to avoid incompatibilities)'
-        navbuttonpress = client->_event( 'BACK' )
-        shownavbutton = abap_true
-        ).
-
-    page->header_content( )->link( text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me ) ).
-
-
-    page->input(
-        id = 'id_text1'
-        value = client->_bind( mv_value1 )
-        ).
-    page->text_area(
-        width = '100%'
-        height = '10%'
-        id = 'id_text2'
-         value = client->_bind( mv_value2 ) ).
-
-    page->button( text = 'cursor input pos 3'  press = client->_event( 'BUTTON_FOCUS_FIRST' ) ).
-    page->button( text = 'cursor text area pos 5 to 10'  press = client->_event( 'BUTTON_FOCUS_SECOND' ) ).
-    page->button( text = 'scroll end + focus end'  press = client->_event( 'BUTTON_FOCUS_END' ) ).
-
-    DATA(tab) = page->table( sticky = 'ColumnHeaders,HeaderToolbar' headertext = 'Table with some entries' items = client->_bind_one( t_tab ) ).
-
-    tab->columns(
-        )->column( )->text( 'Title' )->get_parent(
-        )->column( )->text( 'Color' )->get_parent(
-        )->column( )->text( 'Info' )->get_parent(
-        )->column( )->text( 'Description' ).
-
-    tab->items( )->column_list_item( )->cells(
-       )->text( '{TITLE}'
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
-      )->text( '{DESCR}' ).
-
-    page->text_area(
-         id = 'id_text3'
-         width = '100%'
-         height = '10%'
-         value = client->_bind( mv_value3 ) ).
-
-    page->footer( )->overflow_toolbar(
-          )->button( text = 'Scroll Top'     press = client->_event( 'BUTTON_SCROLL_TOP' )
-         )->button( text = 'Scroll 500 up'   press = client->_event( 'BUTTON_SCROLL_UP' )
-         )->button( text = 'Scroll 500 down' press = client->_event( 'BUTTON_SCROLL_DOWN' )
-         )->button( text = 'Scroll Bottom'   press = client->_event( 'BUTTON_SCROLL_BOTTOM' )
-         )->toolbar_spacer(
-         )->button( text = 'Server Event and hold position' press = client->_event( 'BUTTON_SCROLL_HOLD' )
-       ).
-
-    app-s_next-xml_main = page->get_root( )->xml_get( ).
-    client->set_next( app-s_next ).
-
-    app-view_popup = ``.
-    CLEAR app-s_next.
 
   ENDMETHOD.
 ENDCLASS.
