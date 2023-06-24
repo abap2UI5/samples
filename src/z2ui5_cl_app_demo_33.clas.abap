@@ -5,16 +5,28 @@ CLASS z2ui5_cl_app_demo_33 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mv_type TYPE string.
 
+    METHODS display_view.
+
+    DATA check_initialized TYPE abap_bool.
+    DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_33 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      mv_type = `sapIllus-NoActivities`.
+      display_view( ).
+      return.
+    ENDIF.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -28,10 +40,16 @@ CLASS Z2UI5_CL_APP_DEMO_33 IMPLEMENTATION.
 
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+
+  ENDMETHOD.
+
+  METHOD display_view.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
@@ -39,20 +57,20 @@ CLASS Z2UI5_CL_APP_DEMO_33 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1647175810917318657`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
     page->link( text = 'Documentation'  target = '_blank' href = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
-    page->button( text = 'NoActivities' press = client->_event( 'sapIllus-NoActivities' ) ).
-    page->button( text = 'AddPeople' press = client->_event( 'sapIllus-AddPeople' ) ).
-    page->button( text = 'Connection' press = client->_event( 'sapIllus-Connection' ) ).
-    page->button( text = 'NoDimensionsSet' press = client->_event( 'sapIllus-NoDimensionsSet' ) ).
-    page->button( text = 'NoEntries' press = client->_event( 'sapIllus-NoEntries' ) ).
-    page->illustrated_message( illustrationtype = mv_type
+    page->button( text = 'NoActivities' press = client->__event( 'sapIllus-NoActivities' ) ).
+    page->button( text = 'AddPeople' press = client->__event( 'sapIllus-AddPeople' ) ).
+    page->button( text = 'Connection' press = client->__event( 'sapIllus-Connection' ) ).
+    page->button( text = 'NoDimensionsSet' press = client->__event( 'sapIllus-NoDimensionsSet' ) ).
+    page->button( text = 'NoEntries' press = client->__event( 'sapIllus-NoEntries' ) ).
+    page->illustrated_message( illustrationtype = client->__bind( mv_type )
     )->additional_content(  )->button(
                 text  = 'information'
-                press = client->_event( 'BUTTON_MESSAGE_BOX' ) ).
+                press = client->__event( 'BUTTON_MESSAGE_BOX' ) ).
 
-    client->set_next( VALUE #( xml_main = page->get_root(  )->xml_get( ) ) ).
+    client->set_view( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
