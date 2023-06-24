@@ -6,7 +6,7 @@ CLASS z2ui5_cl_app_demo_33 DEFINITION PUBLIC.
     DATA mv_type TYPE string.
 
     METHODS display_view.
-
+    DATA mv_html TYPE string.
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
@@ -21,11 +21,16 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
+    mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
+    `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
+  `><li>list item 1</li><li>list item 2<ul><li>sub item 1</li><li>sub item 2</li></ul></li></ul><p>pre:</p><pre>abc    def    ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
+  `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
+
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       mv_type = `sapIllus-NoActivities`.
       display_view( ).
-      return.
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
@@ -46,6 +51,25 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
   METHOD display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+
+    DATA(page2) = view->shell( )->page( ).
+
+    page2->illustrated_message(
+         title = `HTTP 500 - Server Error`
+         enableformattedtext = abap_true
+      description = mv_html
+         illustrationtype = `sapIllus-ErrorScreen`
+         illustrationsize = `Dot`
+    )->additional_content(
+     )->button(
+                text  = 'information'
+                press = client->__event( 'BUTTON_MESSAGE_BOX' ) ).
+
+    client->set_view( view->stringify( ) ).
+
+
+    RETURN.
+
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
