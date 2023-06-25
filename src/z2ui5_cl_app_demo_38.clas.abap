@@ -75,7 +75,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
               contentwidth = '50%' ).
 
     popup->message_view(
-            items      = client->__bind_edit( t_msg )
+            items      = client->_bind_edit( t_msg )
             groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
             description = `{DESCRIPTION}`
             groupname   = `{GROUP}` ).
 
-    client->set_popover( xml = popup->stringify( ) OPEN_BY_id = id ).
+    client->popover_display( xml = popup->stringify( ) by_id = id ).
 
   ENDMETHOD.
 
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
           contentwidth = '50%' ).
 
     popup->message_view(
-            items = client->__bind_edit( t_msg )
+            items = client->_bind_edit( t_msg )
             groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -112,12 +112,12 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
       )->button(
           id    = `test2`
           text  = 'test'
-          press = client->__event( `TEST` )
+          press = client->_event( `TEST` )
       )->button(
           text  = 'close'
-          press = client->__event_frontend( client->cs_event-popup_close ) ).
+          press = client->_event_client( client->cs_event-popup_close ) ).
 
-    client->set_popup( popup->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
@@ -128,7 +128,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
-            navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
@@ -138,9 +138,9 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
                     text = 'Source_Code'  target = '_blank'
                     href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
-    page->button( text = 'Messages' press = client->__event( 'POPUP' )  ).
+    page->button( text = 'Messages' press = client->_event( 'POPUP' )  ).
     page->message_view(
-        items = client->__bind_edit( t_msg )
+        items = client->_bind_edit( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -153,15 +153,15 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
          )->button(
              id = 'test'
              text  = 'Messages (6)'
-             press = client->__event( 'POPOVER' )
+             press = client->_event( 'POPOVER' )
              type  = 'Emphasized'
          )->toolbar_spacer(
          )->button(
              text  = 'Send to Server'
-             press = client->__event( 'BUTTON_SEND' )
+             press = client->_event( 'BUTTON_SEND' )
              type  = 'Success' ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
