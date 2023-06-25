@@ -50,12 +50,12 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
         z2ui5_display_popup_input( ).
 
       WHEN 'POPUP_CONFIRM'.
-        client->popup_message_toast( |confirm| ).
+        client->message_toast_display( |confirm| ).
         client->popup_close( ).
 
       WHEN 'POPUP_CANCEL'.
         CLEAR mv_textarea.
-        client->popup_message_toast( |cancel| ).
+        client->message_toast_display( |cancel| ).
         client->popup_close( ).
 
       WHEN 'SHOW_VIEW_MAIN'.
@@ -100,9 +100,9 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                       )->button(
                           text  = 'Confirm'
                           press = client->_event( 'POPUP_CONFIRM' )
-                          type  = 'Emphasized' )->get_root( )->xml_get( ).
+                          type  = 'Emphasized' ).
 
-    client->popup_open( view->stringify( ) ).
+    client->popup_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -124,10 +124,10 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                 )->content( 'form'
                     )->title( 'Input'
                     )->label( 'quantity'
-                    )->input( client->_bind( quantity )
+                    )->input( client->_bind_edit( quantity )
                     )->label( 'text'
                     )->input(
-                        value   = client->_bind( mv_textarea )
+                        value   = client->_bind_edit( mv_textarea )
                         enabled = abap_false
                     )->button(
                         text  = 'show popup input'
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                   text  = 'Go to View Second'
                   press = client->_event( 'SHOW_VIEW_SECOND' ) ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -177,7 +177,7 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                     text  = 'Go to View Main'
                     press = client->_event( 'SHOW_VIEW_MAIN' ) ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

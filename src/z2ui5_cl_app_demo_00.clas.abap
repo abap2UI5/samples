@@ -252,6 +252,6 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
                      growfactor = '3'
                      styleclass = 'sapUiTinyMargin' ).
 
-    client->set_view( page->stringify( ) ).
+    client->view_display( page->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.
