@@ -29,7 +29,7 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
       client->set_view( lo_view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
-                    navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true )
+                    navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
                     shownavbutton  = abap_true
                 )->header_content(
                     )->link(
@@ -41,12 +41,12 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
                     )->content( 'form'
                         )->title( 'Input'
                         )->label( 'quantity'
-                        )->input( client->__bind_edit( quantity )
+                        )->input( client->_bind_edit( quantity )
                         )->label( `product`
                         )->input( value = product enabled = abap_false
                         )->button(
                             text  = 'post'
-                            press = client->__event( val = 'BUTTON_POST' )
+                            press = client->_event( val = 'BUTTON_POST' )
              )->stringify( ) ).
 
     ENDIF.
