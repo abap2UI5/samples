@@ -86,16 +86,16 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
                )->button( text = 'read' press = client->_event( 'BUTTON_READ_PREVIOUS' )
 
                )->label( 'Call previous app and show data of this app'
-               )->input( client->_bind( mv_input )
+               )->input( client->_bind_edit( mv_input )
                )->button( text = 'back' press = client->_event( 'BACK_WITH_EVENT' ) ).
 
       WHEN 'SECOND'.
 
-        view =  Z2UI5_CL_XML_VIEW=>factory( client ).
+        view = Z2UI5_CL_XML_VIEW=>factory( client ).
         page = view->shell(
             )->page(
                     title          = 'abap2UI5 - flow logic - APP 02'
-                    navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true ) shownavbutton = abap_true
                 )->header_content(
                     )->link( text = 'Demo'        href = `https://twitter.com/abap2UI5/status/1640743794206228480`
                     )->link( text = 'Source_Code' href = view->hlp_get_source_code_url(  )
