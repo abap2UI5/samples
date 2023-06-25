@@ -32,7 +32,6 @@ CLASS z2ui5_cl_app_demo_21 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA mv_popup_name TYPE string.
 
     METHODS ui5_view_display.
     METHODS ui5_popup_decide.
@@ -51,13 +50,72 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
 
+  METHOD ui5_handle_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPUP_TO_DECIDE'.
+        ui5_popup_decide( ).
+
+      WHEN 'BUTTON_CONFIRM'.
+        client->popup_close( ).
+        client->message_toast_display( 'confirm pressed' ).
+
+      WHEN 'BUTTON_CANCEL'.
+        client->popup_close(  ).
+        client->message_toast_display( 'cancel pressed' ).
+
+      WHEN 'POPUP_TO_TEXTAREA'.
+        mv_stretch_active = abap_false.
+        ui5_popup_textarea( ).
+
+      WHEN 'POPUP_TO_TEXTAREA_STRETCH'.
+        mv_stretch_active = abap_true.
+        ui5_popup_textarea( ).
+
+      WHEN 'POPUP_TO_TEXTAREA_SIZE'.
+        ui5_popup_textarea_size( ).
+
+      WHEN 'BUTTON_TEXTAREA_CANCEL'.
+        client->popup_close( ).
+        client->message_toast_display( 'textarea deleted' ).
+        CLEAR mv_textarea.
+
+      WHEN 'BUTTON_TEXTAREA_CONFIRM'.
+        client->popup_close( ).
+
+      WHEN 'POPUP_TO_INPUT'.
+        ms_popup_input-value1 = 'value1'.
+        ui5_popup_input( ).
+
+      WHEN 'POPUP_TABLE'.
+        CLEAR t_tab.
+        DO 10 TIMES.
+          DATA(ls_row) = VALUE ty_row( title = 'entry_' && sy-index  value = 'red' info = 'completed'  descr = 'this is a description' ).
+          INSERT ls_row INTO TABLE t_tab.
+        ENDDO.
+        ui5_popup_table( ).
+
+      WHEN 'POPUP_TABLE_CONTINUE'.
+        client->popup_close( ).
+        DELETE t_tab WHERE selkz = abap_false.
+        client->message_toast_display( `Entry selected: ` && VALUE #( t_tab[ 1 ]-title DEFAULT `no entry selected` )  ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
                 shownavbutton  = abap_true
             )->header_content(
                 )->link(
@@ -108,8 +166,7 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
 
   METHOD ui5_popup_decide.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    DATA(popup) = view->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
                 title = 'Title'
                 icon = 'sap-icon://question-mark'
             )->content(
@@ -126,15 +183,14 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
                     press = client->_event( 'BUTTON_CONFIRM' )
                     type  = 'Emphasized' ).
 
-    client->popup_display( view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD ui5_popup_input.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    DATA(popup) = view->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
        contentheight = '500px'
        contentwidth  = '500px'
        title = 'Title'
@@ -160,15 +216,14 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                type  = 'Emphasized' ).
 
-    client->popup_display( view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD ui5_popup_table.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    DATA(popup) = view->dialog( 'abap2UI5 - Popup to select entry'
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog( 'abap2UI5 - Popup to select entry'
            )->table(
                mode = 'SingleSelectLeft'
                items = client->_bind_edit( t_tab )
@@ -192,15 +247,14 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
                    press = client->_event( 'POPUP_TABLE_CONTINUE' )
                    type  = 'Emphasized' ).
 
-    client->popup_display( view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD ui5_popup_textarea.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    DATA(popup) = view->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
               stretch = mv_stretch_active
               title = 'Title'
               icon = 'sap-icon://edit'
@@ -220,15 +274,14 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
                   press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                   type  = 'Emphasized' ).
 
-    client->popup_display( view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD ui5_popup_textarea_size.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    DATA(popup) = view->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
                contentheight = '100px'
                contentwidth  = '1200px'
                title         = 'Title'
@@ -249,7 +302,7 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
                    press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                    type  = 'Emphasized' ).
 
-    client->popup_display( view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
@@ -257,7 +310,6 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    mv_popup_name = ''.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -269,67 +321,6 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
     ENDIF.
 
     ui5_handle_event( ).
-
-  ENDMETHOD.
-
-  METHOD ui5_handle_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'POPUP_TO_DECIDE'.
-        ui5_popup_decide( ).
-
-      WHEN 'BUTTON_CONFIRM'.
-        client->popup_close( ).
-        client->message_toast_display( 'confirm pressed' ).
-
-      WHEN 'BUTTON_CANCEL'.
-        client->popup_close(  ).
-        client->message_toast_display( 'cancel pressed' ).
-
-      WHEN 'POPUP_TO_TEXTAREA'.
-        mv_stretch_active = abap_false.
-        ui5_popup_textarea( ).
-
-      WHEN 'POPUP_TO_TEXTAREA_STRETCH'.
-        mv_stretch_active = abap_true.
-        ui5_popup_textarea( ).
-
-      WHEN 'POPUP_TO_TEXTAREA_SIZE'.
-        ui5_popup_textarea_size( ).
-
-      WHEN 'BUTTON_TEXTAREA_CANCEL'.
-        client->popup_close( ).
-        client->message_toast_display( 'textarea deleted' ).
-        CLEAR mv_textarea.
-
-      WHEN 'BUTTON_TEXTAREA_CONFIRM'.
-        client->popup_close( ).
-
-      WHEN 'POPUP_TO_INPUT'.
-        ms_popup_input-value1 = 'value1'.
-        ui5_popup_input( ).
-
-      WHEN 'POPUP_BAL'.
-        mv_popup_name =  'POPUP_BAL'.
-
-      WHEN 'POPUP_TABLE'.
-        CLEAR t_tab.
-        DO 10 TIMES.
-          DATA(ls_row) = VALUE ty_row( title = 'entry_' && sy-index  value = 'red' info = 'completed'  descr = 'this is a description' ).
-          INSERT ls_row INTO TABLE t_tab.
-        ENDDO.
-        ui5_popup_table( ).
-
-      WHEN 'POPUP_TABLE_CONTINUE'.
-        client->popup_close( ).
-        DELETE t_tab WHERE selkz = abap_false.
-        client->message_toast_display( `Entry selected: ` && VALUE #( t_tab[ 1 ]-title DEFAULT `no entry selected` )  ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
