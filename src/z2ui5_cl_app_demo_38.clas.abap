@@ -54,6 +54,8 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POPUP'.
         z2ui5_display_popup( ).
+        WHEN 'TEST'.
+        z2ui5_display_popover( `test2` ).
       WHEN 'POPOVER'.
         z2ui5_display_popover( `test` ).
       WHEN 'BACK'.
@@ -108,6 +110,10 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     popup->footer( )->overflow_toolbar(
       )->toolbar_spacer(
       )->button(
+          id    = `test2`
+          text  = 'test'
+          press = client->__event( `TEST` )
+      )->button(
           text  = 'close'
           press = client->__event_frontend( client->cs_event-popup_close ) ).
 
@@ -134,7 +140,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
             )->get_parent( ).
     page->button( text = 'Messages' press = client->__event( 'POPUP' )  ).
     page->message_view(
-        items = client->__bind( t_msg )
+        items = client->__bind_edit( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`

@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         )->content( 'layout' ).
 
     grid->simple_form( title = 'HowTo - Basic' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Communication & Data Binding' press = client->__event( 'z2ui5_cl_app_demo_01' )
+        )->button( text = 'Communication & Data Binding' press = client->__event( 'zzz_test_05' )
         )->button( text = 'Events, Error & Change View'  press = client->__event( 'z2ui5_cl_app_demo_04' )
         )->button( text = 'Flow Logic'                   press = client->__event( 'z2ui5_cl_app_demo_24' )
 
@@ -129,7 +129,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     DATA(form) = page->grid( 'L9 M12 S12'
         )->content( 'layout'
-        )->simple_form( 'Demos I'
+        )->simple_form( 'Demos'
             )->vbox( ).
 
     form->flex_box( class = 'columns'
@@ -213,28 +213,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
                      growfactor = '3'
                      styleclass = 'sapUiTinyMargin' ).
 
-*    form->flex_box( class = 'columns'
-*         )->button(
-*             text = 'List Report'
-*             press = client->__event( 'z2ui5_cl_app_demo_49' ) )->get(
-*             )->layout_data(
-*                 )->flex_item_data(
-*                     growfactor = '1'
-*                     styleclass = 'sapUiTinyMargin'
-*         )->get_parent( )->get_parent(
-*         )->text( `Similar functionality to a Fiori Elements List Report - Display Table with Sorting, Filtering, Navigation, Layouts and Custom Functions` )->get(
-*             )->layout_data(
-*                 )->flex_item_data(
-*                     growfactor = '3'
-*                     styleclass = 'sapUiTinyMargin' ).
-
-    form = page->grid( 'L9 M12 S12'
-          )->content( 'layout'
-          )->simple_form( 'Demos II'
-            )->vbox( ).
-
-    form->text( `These demos are based on controls that are not part of openUI5. Please make sure to switch the bootstrapping to UI5 first.` ).
-    form->flex_box( class = 'columns'
+ form->flex_box( class = 'columns'
          )->button(
              text  = 'Visualization'
              press = client->__event( 'z2ui5_cl_app_demo_16' ) )->get(
@@ -250,16 +229,24 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
                      growfactor = '3'
                      styleclass = 'sapUiTinyMargin' ).
 
+
+    form = page->grid( 'L9 M12 S12'
+          )->content( 'layout'
+          )->simple_form( 'Open-source projects using abap2UI5'
+            )->vbox( ).
+
       form->flex_box( class = 'columns'
-         )->button(
-             text  = 'Monitoring'
-             press = client->__event( 'z2ui5_cl_app_demo_41' ) )->get(
+         )->link(
+                text = `Axage`
+              target = `_blank`
+             href  = 'https://github.com/nomssi/axage/'
+              )->get(
              )->layout_data(
                  )->flex_item_data(
                      growfactor = '1'
                      styleclass = 'sapUiTinyMargin'
          )->get_parent( )->get_parent(
-         )->text( `Use the timer function of abap2UI5 to create self refreshing monitor apps.` )->get(
+         )->text( `Adventure Game Axage using abap2UI5` )->get(
              )->layout_data(
                  )->flex_item_data(
                      growfactor = '3'
