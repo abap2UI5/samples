@@ -45,7 +45,7 @@ CLASS z2ui5_cl_app_demo_03 IMPLEMENTATION.
       DATA(page) = view->shell(
           )->page(
               title          = 'abap2UI5 - List'
-              navbuttonpress = client->__event( 'BACK' )
+              navbuttonpress = client->_event( 'BACK' )
                 shownavbutton = abap_true
               )->header_content(
                   )->link(
@@ -55,19 +55,19 @@ CLASS z2ui5_cl_app_demo_03 IMPLEMENTATION.
 
       page->list(
           headertext      = 'List Ouput'
-          items           = client->__bind_edit( t_tab )
+          items           = client->_bind_edit( t_tab )
           mode            = `SingleSelectMaster`
-          selectionchange = client->__event( 'SELCHANGE' )
+          selectionchange = client->_event( 'SELCHANGE' )
           )->standard_list_item(
               title       = '{TITLE}'
               description = '{DESCR}'
               icon        = '{ICON}'
               info        = '{INFO}'
-              press       = client->__event( 'TEST' )
+              press       = client->_event( 'TEST' )
               selected    = `{SELECTED}`
          ).
 
-      client->set_view( view->stringify( ) ).
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_app_demo_03 IMPLEMENTATION.
       WHEN 'SELCHANGE'.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        client->popup_message_box( `go to details for item ` && lt_sel[ 1 ]-title ).
+        client->message_box_display( `go to details for item ` && lt_sel[ 1 ]-title ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).

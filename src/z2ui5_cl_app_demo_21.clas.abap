@@ -264,7 +264,7 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
       ui5_init( ).
     ENDIF.
 
-    IF client->get( )-check_navigated_to = abap_true.
+    IF client->get( )-check_on_navigated = abap_true.
       ui5_view_display( ).
     ENDIF.
 

@@ -24,7 +24,7 @@ CLASS z2ui5_cl_app_demo_24 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->get( )-check_navigated_to = abap_true.
+    IF client->get( )-check_on_navigated = abap_true.
       display_view( client ).
     ENDIF.
 
