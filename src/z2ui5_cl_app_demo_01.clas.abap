@@ -25,8 +25,8 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-      DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
-      client->set_view( lo_view->shell(
+      DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+      client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
                     navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = lo_view->hlp_get_source_code_url(  )
+                        href = view->hlp_get_source_code_url(  )
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Form Title' editable = abap_true
@@ -54,7 +54,7 @@ CLASS z2ui5_cl_app_demo_01 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-        client->popup_message_toast( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ product } { quantity } - send to the server| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
