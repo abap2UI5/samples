@@ -15,17 +15,9 @@ CLASS z2ui5_cl_app_demo_18 DEFINITION PUBLIC.
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
 
-    METHODS z2ui5_display_view_main
-      RETURNING
-        VALUE(result) TYPE string.
-
-    METHODS z2ui5_display_view_second
-      RETURNING
-        VALUE(result) TYPE string.
-
-    METHODS z2ui5_display_popup_input
-      RETURNING
-        VALUE(result) TYPE string.
+    METHODS z2ui5_display_view_main.
+    METHODS z2ui5_display_view_second.
+    METHODS z2ui5_display_popup_input.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -37,7 +29,7 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -59,10 +51,12 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
 
       WHEN 'POPUP_CONFIRM'.
         client->popup_message_toast( |confirm| ).
+        client->popup_close( ).
 
       WHEN 'POPUP_CANCEL'.
         CLEAR mv_textarea.
         client->popup_message_toast( |cancel| ).
+        client->popup_close( ).
 
       WHEN 'SHOW_VIEW_MAIN'.
         z2ui5_display_view_main( ).
@@ -90,8 +84,8 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
     view->dialog(
-                      title = 'Title'
-                      icon = 'sap-icon://edit'
+             title = 'Title'
+             icon = 'sap-icon://edit'
                   )->content(
                       )->text_area(
                           height = '100%'
@@ -115,11 +109,11 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
 
   METHOD z2ui5_display_view_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
                 shownavbutton  = abap_true
             )->header_content(
                 )->link(
@@ -157,11 +151,11 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
 
   METHOD z2ui5_display_view_second.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
-                  navbuttonpress = client->_event( 'BACK' )
+                  navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
                   shownavbutton  = abap_true
               )->header_content(
                   )->link(
