@@ -47,18 +47,19 @@ CLASS Z2UI5_CL_APP_DEMO_24 IMPLEMENTATION.
 
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
             DATA(lo_called_app) = CAST z2ui5_cl_app_demo_25( client->get_app( client->get( )-id_prev_app ) ).
-            client->popup_message_box( `Input made in the previous app:` && lo_called_app->mv_input ).
+            client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
 
         ENDCASE.
 
     ENDCASE.
 
 
-    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01' navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
         )->header_content(
             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-            )->link( text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
         )->get_parent(
 
        )->grid( 'L6 M12 S12' )->content( 'layout'
@@ -78,10 +79,7 @@ CLASS Z2UI5_CL_APP_DEMO_24 IMPLEMENTATION.
          )->input( client->_bind( mv_input2 )
     ).
 
-    client->set_next( VALUE #(
-        xml_main = view->get_root( )->xml_get( )
-       " event    = mv_event
-         ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
