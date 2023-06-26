@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
         DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
 
       WHEN 'BUTTON_MSG_BOX'.
-        client->popup_message_box(
+        client->message_box_display(
           text = 'this is a message box with a custom text'
           type = 'success' ).
 
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
 
     ENDCASE.
 
-    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( ).
+    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
 
 
     DATA(page) = view->dynamic_page(
@@ -141,7 +141,7 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
 
     cont->list(
          headertext = 'List Ouput'
-         items      = client->_bind_one( t_tab )
+         items      = client->_bind( t_tab )
          )->standard_list_item(
              title       = '{TITLE}'
              description = '{DESCR}'
@@ -162,7 +162,7 @@ CLASS Z2UI5_CL_APP_DEMO_30 IMPLEMENTATION.
                  tooltip = 'pull-down'
                  ).
 
-    client->set_next( VALUE #( xml_main = page->get_root(  )->xml_get( ) ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

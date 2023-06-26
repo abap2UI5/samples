@@ -14,7 +14,6 @@ CLASS z2ui5_cl_app_demo_23 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         s_get             TYPE z2ui5_if_client=>ty_s_get,
-        s_next            TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -46,9 +45,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
 
     z2ui5_on_render_main( ).
 
-    client->set_next( app-s_next ).
     CLEAR app-s_get.
-    CLEAR app-s_next.
 
   ENDMETHOD.
 
@@ -79,7 +76,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
 
     CASE app-view_main.
 
@@ -116,7 +113,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
                               `  text="XML" ` && |\n|  &&
                               ` /></f:content></f:SimpleForm></Page></Shell></mvc:View>`.
 
-        app-s_next-xml_main = z2ui5_cl_xml_view=>hlp_replace_controller_name( lv_xml ).
+        client->view_display( lo_view->hlp_replace_controller_name( lv_xml ) ).
 
       WHEN 'NORMAL'.
 
@@ -128,7 +125,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                      href = lo_view->hlp_get_source_code_url(  )
                       target = '_blank'
               )->get_parent(
               )->simple_form( 'Form Title'
@@ -146,7 +143,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
                           text  = 'XML'
                           press = client->_event( 'XML' ) ).
 
-        app-s_next-xml_main = lo_view->get_root( )->xml_get( ).
+       client->view_display( lo_view->stringify( ) ).
 
       WHEN 'GENERIC'.
 
@@ -191,7 +188,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
                     ( n = `text`  v = `XML` )
                     ( n = `press` v = client->_event( 'XML' ) ) ) ).
 
-        app-s_next-xml_main = lo_view->get_root( )->xml_get( ).
+       client->view_display( lo_view->stringify( ) ).
 
     ENDCASE.
 
