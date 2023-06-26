@@ -130,8 +130,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
    grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
-         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_42' )
-         )->button( text = 'Visualization Item' press = client->_event( 'z2ui5_cl_app_demo_16' )
+*         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_42' )
+*         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
     ).
 
 
