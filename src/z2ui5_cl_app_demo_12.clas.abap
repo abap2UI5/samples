@@ -11,6 +11,7 @@ CLASS z2ui5_cl_app_demo_12 DEFINITION PUBLIC.
 
     DATA mv_check_popup TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_set_Screen TYPE abap_bool.
     METHODS ui5_popup_decide.
     METHODS ui5_popup_info_frontend_close.
     METHODS ui5_view_display.
@@ -32,6 +33,11 @@ CLASS z2ui5_cl_app_demo_12 IMPLEMENTATION.
       ui5_view_display( ).
     ENDIF.
 
+    IF mv_Set_Screen = abap_true.
+      mv_Set_Screen = abap_false.
+      ui5_view_display( ).
+    ENDIF.
+
     mv_set_prev_view = ''.
 
     IF mv_check_popup = abap_true.
@@ -44,7 +50,7 @@ CLASS z2ui5_cl_app_demo_12 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_01'.
         ui5_popup_decide( ).
-        mv_main_view = ''.
+        mv_set_Screen = abap_true.
 
       WHEN 'POPUP_DECIDE_CONTINUE'.
         mv_main_view = 'MAIN'.
