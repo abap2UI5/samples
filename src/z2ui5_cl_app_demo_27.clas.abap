@@ -22,7 +22,6 @@ CLASS z2ui5_cl_app_demo_27 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         s_get             TYPE z2ui5_if_client=>ty_s_get,
-        s_next            TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -54,9 +53,7 @@ CLASS Z2UI5_CL_APP_DEMO_27 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-s_next ).
     CLEAR app-s_get.
-    CLEAR app-s_next.
 
   ENDMETHOD.
 
@@ -85,7 +82,8 @@ CLASS Z2UI5_CL_APP_DEMO_27 IMPLEMENTATION.
 
   METHOD z2ui5_on_render.
 
-    app-s_next-xml_main = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(lv_xml) = view->shell(
       )->page(
               title          = 'abap2UI5 - Binding Syntax'
               navbuttonpress = client->_event( 'BACK' )
@@ -94,7 +92,7 @@ CLASS Z2UI5_CL_APP_DEMO_27 IMPLEMENTATION.
               )->link( text = `Demo` target = `_blank` href = `https://twitter.com/abap2UI5/status/1647889242545111043`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                  href = view->hlp_get_source_code_url( )
           )->get_parent(
           )->simple_form( title = 'Binding Syntax' editable = abap_true
               )->content( 'form'
@@ -146,6 +144,9 @@ CLASS Z2UI5_CL_APP_DEMO_27 IMPLEMENTATION.
                     enabled = abap_false
 
        )->get_root( )->xml_get( ).
+
+
+       client->view_display( lv_xml ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -58,7 +58,6 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
 
@@ -79,6 +78,7 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
     CLASS-METHODS hlp_get_uuid
       RETURNING
         VALUE(result) TYPE string.
+
 private section.
 ENDCLASS.
 
@@ -182,10 +182,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_render( ).
-
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -199,10 +196,10 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
       WHEN `FILTER_UPDATE`.
 
-        app-next-s_cursor-id = `FILTER`.
-        app-next-s_cursor-cursorpos = `999`.
-        app-next-s_cursor-selectionend = `999`.
-        app-next-s_cursor-selectionstart  = `999`.
+*        app-next-s_cursor-id = `FILTER`.
+*        app-next-s_cursor-cursorpos = `999`.
+*        app-next-s_cursor-selectionend = `999`.
+*        app-next-s_cursor-selectionstart  = `999`.
 
         IF mv_value IS NOT INITIAL.
           DATA(ls_range) = hlp_get_range_by_value( mv_value ).
@@ -236,10 +233,10 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
         app-view_popup = `VALUE_HELP`.
 
       WHEN `FILTER_VALUE_HELP`.
-        app-next-s_cursor-id = `FILTER`.
-        app-next-s_cursor-cursorpos = `999`.
-        app-next-s_cursor-selectionend = `999`.
-        app-next-s_cursor-selectionstart  = `999`.
+*        app-next-s_cursor-id = `FILTER`.
+**        app-next-s_cursor-cursorpos = `999`.
+*        app-next-s_cursor-selectionend = `999`.
+*        app-next-s_cursor-selectionstart  = `999`.
         app-view_popup = `VALUE_HELP`.
 
         CLEAR mt_filter.
@@ -298,8 +295,9 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( id = `page_main`
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+
+       view = view->page( id = `page_main`
                 title          = 'abap2UI5 - List Report Features'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton  = abap_true
@@ -308,7 +306,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
            )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
@@ -371,14 +369,15 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    app-next-xml_main = page->get_root( )->xml_get( ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( )->dialog(
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    lo_popup->dialog(
     contentheight = `50%`
     contentwidth = `50%`
         title = 'Define Conditons - Product' ).
@@ -401,7 +400,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
     grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = client->_bind_one( mt_mapping )
+                 items       = client->_bind( mt_mapping )
              )->item(
                      key = '{NAME}'
                      text = '{NAME}'
@@ -424,7 +423,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
             press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
        ).
 
-    app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
+    client->popup_display( lo_popup->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 

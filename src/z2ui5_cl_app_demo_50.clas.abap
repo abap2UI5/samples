@@ -27,12 +27,12 @@ CLASS Z2UI5_CL_APP_DEMO_50 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_POST'.
-        client->popup_message_toast( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ product } { quantity } - send to the server| ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
     ENDCASE.
 
-    client->set_next( VALUE #( xml_main = z2ui5_cl_xml_view=>factory(
+   client->view_display( z2ui5_cl_xml_view=>factory( client
         )->shell(
         )->page(
                 title          = 'abap2UI5 - Changed CSS'
@@ -41,7 +41,7 @@ CLASS Z2UI5_CL_APP_DEMO_50 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = Z2UI5_CL_XML_VIEW=>factory( client )->hlp_get_source_code_url( )
                     target = '_blank'
             )->get_parent(
             )->zz_plain( `<html:style> .sapMInput {` && |\n|  &&
@@ -94,7 +94,7 @@ CLASS Z2UI5_CL_APP_DEMO_50 IMPLEMENTATION.
                     )->button(
                         text  = 'post'
                         press = client->_event( 'BUTTON_POST' )
-         )->get_root( )->xml_get( ) ) ).
+         )->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

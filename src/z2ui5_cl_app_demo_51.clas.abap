@@ -27,12 +27,12 @@ CLASS Z2UI5_CL_APP_DEMO_51 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_POST'.
-        client->popup_message_toast( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ product } { quantity } - send to the server| ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
           )->page(
                id = 'id_page'
                title = 'abapScheme - Workbench'
@@ -97,7 +97,7 @@ CLASS Z2UI5_CL_APP_DEMO_51 IMPLEMENTATION.
 *                 " icon  = 'sap-icon://learning-assistant' // 'sap-icon://sys-help'
 *                 ).
 
-    client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) ) ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -31,32 +31,16 @@ CLASS z2ui5_cl_app_demo_21 DEFINITION PUBLIC.
     DATA t_bapiret TYPE bapirettab.
 
     DATA check_initialized TYPE abap_bool.
-    DATA mv_popup_name TYPE string.
-    DATA mv_main_xml TYPE string.
-    DATA mv_popup_xml TYPE string.
-    METHODS view_main
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS view_popup_decide
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS view_popup_textarea_size
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS view_popup_textarea
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS view_popup_input
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS view_popup_table
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    METHODS ui5_view_display.
+    METHODS ui5_popup_decide.
+    METHODS ui5_popup_textarea_size.
+    METHODS ui5_popup_textarea.
+    METHODS ui5_popup_input.
+    METHODS ui5_popup_table.
+    METHODS ui5_handle_event.
+    METHODS ui5_init.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -64,22 +48,81 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
+
+  METHOD ui5_handle_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPUP_TO_DECIDE'.
+        ui5_popup_decide( ).
+
+      WHEN 'BUTTON_CONFIRM'.
+        client->popup_close( ).
+        client->message_toast_display( 'confirm pressed' ).
+
+      WHEN 'BUTTON_CANCEL'.
+        client->popup_close(  ).
+        client->message_toast_display( 'cancel pressed' ).
+
+      WHEN 'POPUP_TO_TEXTAREA'.
+        mv_stretch_active = abap_false.
+        ui5_popup_textarea( ).
+
+      WHEN 'POPUP_TO_TEXTAREA_STRETCH'.
+        mv_stretch_active = abap_true.
+        ui5_popup_textarea( ).
+
+      WHEN 'POPUP_TO_TEXTAREA_SIZE'.
+        ui5_popup_textarea_size( ).
+
+      WHEN 'BUTTON_TEXTAREA_CANCEL'.
+        client->popup_close( ).
+        client->message_toast_display( 'textarea deleted' ).
+        CLEAR mv_textarea.
+
+      WHEN 'BUTTON_TEXTAREA_CONFIRM'.
+        client->popup_close( ).
+
+      WHEN 'POPUP_TO_INPUT'.
+        ms_popup_input-value1 = 'value1'.
+        ui5_popup_input( ).
+
+      WHEN 'POPUP_TABLE'.
+        CLEAR t_tab.
+        DO 10 TIMES.
+          DATA(ls_row) = VALUE ty_row( title = 'entry_' && sy-index  value = 'red' info = 'completed'  descr = 'this is a description' ).
+          INSERT ls_row INTO TABLE t_tab.
+        ENDDO.
+        ui5_popup_table( ).
+
+      WHEN 'POPUP_TABLE_CONTINUE'.
+        client->popup_close( ).
+        DELETE t_tab WHERE selkz = abap_false.
+        client->message_toast_display( `Entry selected: ` && VALUE #( t_tab[ 1 ]-title DEFAULT `no entry selected` )  ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
 
 
-  METHOD view_main.
+  METHOD ui5_view_display.
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
                 shownavbutton  = abap_true
             )->header_content(
                 )->link(
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
            )->get_parent( ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
@@ -116,15 +159,14 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
             text  = 'Popup to select'
             press = client->_event( 'POPUP_TABLE' ) ).
 
-    mv_main_xml = page->get_root( )->xml_get( ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_popup_decide.
+  METHOD ui5_popup_decide.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
-        )->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
                 title = 'Title'
                 icon = 'sap-icon://question-mark'
             )->content(
@@ -141,27 +183,26 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                     press = client->_event( 'BUTTON_CONFIRM' )
                     type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_popup_input.
+  METHOD ui5_popup_input.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
-       )->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
        contentheight = '500px'
        contentwidth  = '500px'
        title = 'Title'
        )->content(
            )->simple_form(
                )->label( 'Input1'
-               )->input( client->_bind( ms_popup_input-value1 )
+               )->input( client->_bind_edit( ms_popup_input-value1 )
                )->label( 'Input2'
-               )->input( client->_bind( ms_popup_input-value2 )
+               )->input( client->_bind_edit( ms_popup_input-value2 )
                )->label( 'Checkbox'
                )->checkbox(
-                   selected = client->_bind( ms_popup_input-check_is_active )
+                   selected = client->_bind_edit( ms_popup_input-check_is_active )
                    text     = 'this is a checkbox'
                    enabled  = abap_true
        )->get_parent( )->get_parent(
@@ -175,18 +216,17 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_popup_table.
+  METHOD ui5_popup_table.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
-       )->dialog( 'abap2UI5 - Popup to select entry'
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog( 'abap2UI5 - Popup to select entry'
            )->table(
                mode = 'SingleSelectLeft'
-               items = client->_bind( t_tab )
+               items = client->_bind_edit( t_tab )
                )->columns(
                    )->column( )->text( 'Title' )->get_parent(
                    )->column( )->text( 'Color' )->get_parent(
@@ -207,15 +247,14 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                    press = client->_event( 'POPUP_TABLE_CONTINUE' )
                    type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_popup_textarea.
+  METHOD ui5_popup_textarea.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
-      )->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
               stretch = mv_stretch_active
               title = 'Title'
               icon = 'sap-icon://edit'
@@ -223,7 +262,7 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
               )->text_area(
                   height = '100%'
                   width  = '100%'
-                  value  = client->_bind( mv_textarea )
+                  value  = client->_bind_edit( mv_textarea )
           )->get_parent(
           )->footer( )->overflow_toolbar(
               )->toolbar_spacer(
@@ -235,15 +274,14 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                   press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                   type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_popup_textarea_size.
+  METHOD ui5_popup_textarea_size.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
-       )->dialog(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
                contentheight = '100px'
                contentwidth  = '1200px'
                title         = 'Title'
@@ -252,7 +290,7 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                )->text_area(
                    height = '95%'
                    width  = '99%'
-                   value  = client->_bind( mv_textarea )
+                   value  = client->_bind_edit( mv_textarea )
           )->get_parent(
           )->footer( )->overflow_toolbar(
                )->toolbar_spacer(
@@ -264,98 +302,40 @@ CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
                    press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                    type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
+
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-
-      t_bapiret = VALUE #(
-        ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-        ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-        ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-        ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-        ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-        ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-         ).
-
+      ui5_init( ).
     ENDIF.
 
-    mv_popup_name = ''.
+    IF client->get( )-check_on_navigated = abap_true.
+      ui5_view_display( ).
+    ENDIF.
 
+    ui5_handle_event( ).
 
-    CASE client->get( )-event.
-
-      WHEN 'POPUP_TO_DECIDE'.
-        mv_popup_name = 'POPUP_TO_DECIDE'.
-
-      WHEN 'BUTTON_CONFIRM'.
-        client->popup_message_toast( 'confirm pressed' ).
-
-      WHEN 'BUTTON_CANCEL'.
-        client->popup_message_toast( 'cancel pressed' ).
-
-      WHEN 'POPUP_TO_TEXTAREA'.
-        mv_popup_name = 'POPUP_TO_TEXTAREA'.
-        mv_stretch_active = abap_false.
-
-      WHEN 'POPUP_TO_TEXTAREA_STRETCH'.
-        mv_popup_name = 'POPUP_TO_TEXTAREA'.
-        mv_stretch_active = abap_true.
-
-      WHEN 'POPUP_TO_TEXTAREA_SIZE'.
-        mv_popup_name = 'POPUP_TO_TEXTAREA_SIZE'.
-
-      WHEN 'BUTTON_TEXTAREA_CANCEL'.
-        client->popup_message_toast( 'textarea deleted' ).
-        CLEAR mv_textarea.
-
-      WHEN 'POPUP_TO_INPUT'.
-        ms_popup_input-value1 = 'value1'.
-        mv_popup_name =  'POPUP_TO_INPUT'.
-
-      WHEN 'POPUP_BAL'.
-        mv_popup_name =  'POPUP_BAL'.
-
-      WHEN 'POPUP_TABLE'.
-        CLEAR t_tab.
-        DO 10 TIMES.
-          DATA(ls_row) = VALUE ty_row( title = 'entry_' && sy-index  value = 'red' info = 'completed'  descr = 'this is a description' ).
-          INSERT ls_row INTO TABLE t_tab.
-        ENDDO.
-        mv_popup_name = 'POPUP_TABLE'.
-
-      WHEN 'POPUP_TABLE_CONTINUE'.
-        DELETE t_tab WHERE selkz = abap_false.
-        client->popup_message_toast( `Entry selected: ` && VALUE #( t_tab[ 1 ]-title DEFAULT `no entry selected` )  ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-    view_main( client ).
-
-    CASE mv_popup_name.
-
-      WHEN 'POPUP_TO_DECIDE'.
-        view_popup_decide( client ).
-      WHEN 'POPUP_TO_TEXTAREA'.
-        view_popup_textarea( client ).
-      WHEN 'POPUP_TO_TEXTAREA_SIZE'.
-        view_popup_textarea_size( client ).
-      WHEN 'POPUP_TO_INPUT'.
-        view_popup_input( client ).
-      WHEN 'POPUP_TABLE'.
-        view_popup_table( client ).
-
-    ENDCASE.
-
-    client->set_next( VALUE #( xml_main = mv_main_xml xml_popup = mv_popup_xml ) ).
-    CLEAR: mv_main_xml, mv_popup_xml.
   ENDMETHOD.
+
+
+  METHOD ui5_init.
+
+    t_bapiret = VALUE #(
+      ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
+      ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
+      ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
+      ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
+      ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
+      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
+       ).
+
+  ENDMETHOD.
+
 ENDCLASS.

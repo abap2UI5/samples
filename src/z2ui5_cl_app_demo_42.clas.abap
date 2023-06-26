@@ -19,7 +19,6 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
 
         IF check_initialized = abap_false.
           check_initialized = abap_true.
-
         ENDIF.
 
 
@@ -29,7 +28,7 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
             DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
 
           WHEN 'BUTTON_MSG_BOX'.
-            client->popup_message_box(
+            client->message_box_display(
               text = 'this is a message box with a custom text'
               type = 'success' ).
 
@@ -38,7 +37,7 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
 
         ENDCASE.
 
-        DATA(view) = Z2UI5_CL_XML_VIEW=>factory( ).
+        DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
 
 
         DATA(page) = view->object_page_layout(
@@ -183,7 +182,7 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
                           )->label( text    = 'details'
                           )->label( text    = 'details' ).
 
-          client->set_next( value #( xml_main = page->get_root(  )->xml_get( ) ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

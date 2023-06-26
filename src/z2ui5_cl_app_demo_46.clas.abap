@@ -55,7 +55,7 @@ CLASS Z2UI5_CL_APP_DEMO_46 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
         )->page(
             title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
             navbuttonpress = client->_event( 'BACK' )
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_APP_DEMO_46 IMPLEMENTATION.
                 )->button( text = 'Display Table' press = client->_event( 'TABLE' )
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = Z2UI5_CL_XML_VIEW=>factory( client )->hlp_get_source_code_url( )
             )->get_parent( ).
 
     CASE mv_display.
@@ -104,7 +104,8 @@ CLASS Z2UI5_CL_APP_DEMO_46 IMPLEMENTATION.
            )->text( '{INFO}' ).
 
     ENDCASE.
-    client->set_next( VALUE #( xml_main = page->get_root(  )->xml_get( ) ) ).
+
+    client->view_display( page->get_root(  )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -9,7 +9,6 @@ CLASS z2ui5_cl_app_demo_00 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
 
@@ -27,13 +26,13 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
             client->nav_app_call( li_app ).
-
+            return.
           CATCH cx_root.
         ENDTRY.
     ENDCASE.
 
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory(
+    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( client
         )->shell( )->page(
         title = 'abap2UI5 - Demo Section'
         class = 'sapUiContentPadding sapUiResponsivePadding--content '
@@ -76,7 +75,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
    grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
         )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
-        )->button( text = 'Filter'   press = client->_event( 'z2ui5_cl_app_demo_45' )
+*        )->button( text = 'Filter'   press = client->_event( 'z2ui5_cl_app_demo_45' )
     ).
 
     grid->simple_form( title = 'HowTo - Popups' layout = 'ResponsiveGridLayout' )->content( 'form'
@@ -115,8 +114,6 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
-         )->button( text = 'Change Model at Runtime' press = client->_event( 'z2ui5_cl_app_demo_35' )
-      "   )->button( text = 'FE Table' press = client->_event( 'z2ui5_cl_app_demo_49' )
     ).
 
     grid->simple_form( title = 'HowTo - List Report'     layout = 'ResponsiveGridLayout' )->content( 'form'
@@ -127,146 +124,17 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
     ).
 
-    DATA(form) = page->grid( 'L9 M12 S12'
-        )->content( 'layout'
-        )->simple_form( 'Demos I'
-            )->vbox( ).
+    grid->simple_form( title = 'HowTo - Tree Control'     layout = 'ResponsiveGridLayout' )->content( 'form'
+          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
+    ).
 
-    form->flex_box( class = 'columns'
-        )->button(
-            text = 'App Template'
-            press = client->_event( 'Z2UI5_CL_APP_DEMO_18' ) )->get(
-            )->layout_data(
-                )->flex_item_data(
-                    growfactor = '1'
-                    styleclass = 'sapUiTinyMargin'
-        )->get_parent( )->get_parent(
-        )->text(
-`You have complete freedom in structuring your apps and handling the flow logic, if you need a little bit of guidance use this template - it includes two views, one popup` &&
-` and some flow logic`
-                             )->get(
-            )->layout_data(
-                )->flex_item_data(
-                    growfactor = '3'
-                    styleclass = 'sapUiTinyMargin' ).
+   grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
+         )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
+*         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_42' )
+*         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
+    ).
 
-    form->flex_box( class = 'columns'
-        )->button(
-            text = 'MIME Editor'
-            press = client->_event( 'Z2UI5_CL_APP_DEMO_14' ) )->get(
-            )->layout_data(
-                )->flex_item_data(
-                    growfactor = '1'
-                    styleclass = 'sapUiTinyMargin'
-        )->get_parent( )->get_parent(
-        )->text( `Use the sap.ui.codeeditor to develop editor apps, a lot of formats are possible (json, xml, abap, js, yaml...) - `
-                            && 'for instance edit files from the MIME Repository' )->get(
-            )->layout_data(
-                )->flex_item_data(
-                    growfactor = '3'
-                    styleclass = 'sapUiTinyMargin' ).
 
-    form->flex_box( class = 'columns'
-         )->button(
-             text = 'Table Maintenance'
-             press = client->_event( 'Z2UI5_CL_APP_DEMO_13' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Use the sap.ui.table to develop table maintenance apps - `
-                             && 'import/export data in csv/json/xml, edit entries in the table control and save it to database' )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
-
-    form->flex_box( class = 'columns'
-         )->button(
-             text = 'File Upload/Download'
-             press = client->_event( 'Z2UI5_CL_APP_DEMO_07' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Use the upload control to transfer files - `
-                             && 'every format is possible (pdf, zip, jpg...) and display it again in a html iframe' )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
-
-    form->flex_box( class = 'columns'
-         )->button(
-             text = 'Layouts'
-             press = client->_event( 'z2ui5_cl_app_demo_42' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Use the sap.uxap.ObjectPageLayout to easily display information related to a business object. It is composed of a header and content wrapping in sections and subestions` )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
-
-*    form->flex_box( class = 'columns'
-*         )->button(
-*             text = 'List Report'
-*             press = client->_event( 'z2ui5_cl_app_demo_49' ) )->get(
-*             )->layout_data(
-*                 )->flex_item_data(
-*                     growfactor = '1'
-*                     styleclass = 'sapUiTinyMargin'
-*         )->get_parent( )->get_parent(
-*         )->text( `Similar functionality to a Fiori Elements List Report - Display Table with Sorting, Filtering, Navigation, Layouts and Custom Functions` )->get(
-*             )->layout_data(
-*                 )->flex_item_data(
-*                     growfactor = '3'
-*                     styleclass = 'sapUiTinyMargin' ).
-
-    form = page->grid( 'L9 M12 S12'
-          )->content( 'layout'
-          )->simple_form( 'Demos II'
-            )->vbox( ).
-
-    form->text( `These demos are based on controls that are not part of openUI5. Please make sure to switch the bootstrapping to UI5 first.` ).
-    form->flex_box( class = 'columns'
-         )->button(
-             text  = 'Visualization'
-             press = client->_event( 'z2ui5_cl_app_demo_16' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Use the sap.suite.ui.microchart controls to visualize data - `
-                             && 'choose between bar charts, donut charts, line charts or radial charts and make your data beautiful' )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
-
-      form->flex_box( class = 'columns'
-         )->button(
-             text  = 'Monitoring'
-             press = client->_event( 'z2ui5_cl_app_demo_41' ) )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '1'
-                     styleclass = 'sapUiTinyMargin'
-         )->get_parent( )->get_parent(
-         )->text( `Use the timer function of abap2UI5 to create self refreshing monitor apps.` )->get(
-             )->layout_data(
-                 )->flex_item_data(
-                     growfactor = '3'
-                     styleclass = 'sapUiTinyMargin' ).
-
-    client->set_next( VALUE #(
-        path = `/`
-        xml_main = page->get_root( )->xml_get( ) ) ).
+    client->view_display( page->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

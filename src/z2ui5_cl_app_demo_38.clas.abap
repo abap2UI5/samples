@@ -16,31 +16,27 @@ CLASS z2ui5_cl_app_demo_38 DEFINITION PUBLIC.
     DATA t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
 
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_display_popup.
+    METHODS z2ui5_display_popover
+      IMPORTING
+        id TYPE string.
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA:
-      BEGIN OF app,
-        check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
-      END OF app.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
-    app-get        = client->get( ).
-    app-view_popup = ``.
+    me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -51,22 +47,88 @@ CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
           ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 02' )
           ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Success' group = 'group 03' ) ).
 
+      z2ui5_display_view( ).
+
     ENDIF.
 
     CASE client->get( )-event.
       WHEN 'POPUP'.
-        app-view_popup = 'POPUP'.
+        z2ui5_display_popup( ).
+        WHEN 'TEST'.
+        z2ui5_display_popover( `test2` ).
       WHEN 'POPOVER'.
-        app-view_popup = 'POPOVER'.
-        app-next-popover_open_by_id = 'test'.
+        z2ui5_display_popover( `test` ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+  ENDMETHOD.
+
+  METHOD z2ui5_display_popover.
+
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+
+    popup = popup->popover(
+              placement = `Top`
+              title = `Messages`
+              contentheight = '50%'
+              contentwidth = '50%' ).
+
+    popup->message_view(
+            items      = client->_bind_edit( t_msg )
+            groupitems = abap_true
+        )->message_item(
+            type        = `{TYPE}`
+            title       = `{TITLE}`
+            subtitle    = `{SUBTITLE}`
+            description = `{DESCRIPTION}`
+            groupname   = `{GROUP}` ).
+
+    client->popover_display( xml = popup->stringify( ) by_id = id ).
+
+  ENDMETHOD.
+
+  METHOD z2ui5_display_popup.
+
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+
+    popup = popup->dialog(
+          title = `Messages`
+          contentheight = '50%'
+          contentwidth = '50%' ).
+
+    popup->message_view(
+            items = client->_bind_edit( t_msg )
+            groupitems = abap_true
+        )->message_item(
+            type        = `{TYPE}`
+            title       = `{TITLE}`
+            subtitle    = `{SUBTITLE}`
+            description = `{DESCRIPTION}`
+            groupname   = `{GROUP}` ).
+
+    popup->footer( )->overflow_toolbar(
+      )->toolbar_spacer(
+      )->button(
+          id    = `test2`
+          text  = 'test'
+          press = client->_event( `TEST` )
+      )->button(
+          text  = 'close'
+          press = client->_event_client( client->cs_event-popup_close ) ).
+
+    client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
+  METHOD z2ui5_display_view.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+
+    DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
@@ -74,11 +136,11 @@ CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1647246029828268032`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
     page->button( text = 'Messages' press = client->_event( 'POPUP' )  ).
     page->message_view(
-        items = client->_bind( t_msg )
+        items = client->_bind_edit( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -99,59 +161,8 @@ CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
              press = client->_event( 'BUTTON_SEND' )
              type  = 'Success' ).
 
-    app-next-xml_main = page->get_root(  )->xml_get( ).
-
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    CASE app-view_popup.
-
-      WHEN 'POPOVER'.
-
-        popup = popup->popover(
-            placement = `Top`
-            title = `Messages`
-            contentheight = '50%'
-            contentwidth = '50%' ).
-
-        popup->message_view(
-                items      = client->_bind( t_msg )
-                groupitems = abap_true
-            )->message_item(
-                type        = `{TYPE}`
-                title       = `{TITLE}`
-                subtitle    = `{SUBTITLE}`
-                description = `{DESCRIPTION}`
-                groupname   = `{GROUP}` ).
-
-      WHEN 'POPUP'.
-
-        popup = popup->dialog(
-        title = `Messages`
-        contentheight = '50%'
-        contentwidth = '50%' ).
-
-        popup->message_view(
-                items = client->_bind( t_msg )
-                groupitems = abap_true
-            )->message_item(
-                type        = `{TYPE}`
-                title       = `{TITLE}`
-                subtitle    = `{SUBTITLE}`
-                description = `{DESCRIPTION}`
-                groupname   = `{GROUP}` ).
-
-        popup->footer( )->overflow_toolbar(
-          )->toolbar_spacer(
-          )->button(
-              text  = 'close'
-              press = client->_event_close_popup( ) ).
-
-    ENDCASE.
-
-    app-next-xml_popup = popup->get_root(  )->xml_get( ).
-
-    client->set_next( app-next ).
-    CLEAR app-get.
-    CLEAR app-next.
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

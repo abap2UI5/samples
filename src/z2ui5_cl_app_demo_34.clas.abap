@@ -28,7 +28,8 @@ CLASS Z2UI5_CL_APP_DEMO_34 IMPLEMENTATION.
 
   METHOD view_main.
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
                 navbuttonpress = client->_event( 'BACK' )
@@ -38,7 +39,7 @@ CLASS Z2UI5_CL_APP_DEMO_34 IMPLEMENTATION.
              "       text = 'Demo' target = '_blank'
                "     href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
            )->get_parent( ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
@@ -57,7 +58,7 @@ CLASS Z2UI5_CL_APP_DEMO_34 IMPLEMENTATION.
 
   METHOD view_popup_bal.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
+    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup( client
         )->dialog( 'abap2ui5 - Popup Message Log'
             )->table( client->_bind( t_bapiret )
                 )->columns(
@@ -125,7 +126,8 @@ CLASS Z2UI5_CL_APP_DEMO_34 IMPLEMENTATION.
         view_popup_bal( client ).
     ENDCASE.
 
-    client->set_next( VALUE #( xml_main = mv_main_xml xml_popup = mv_popup_xml ) ).
+    client->view_display( mv_main_xml ).
+    client->popup_display( mv_popup_xml ).
     CLEAR: mv_main_xml, mv_popup_xml.
   ENDMETHOD.
 ENDCLASS.

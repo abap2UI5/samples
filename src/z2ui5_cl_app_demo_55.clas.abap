@@ -18,8 +18,6 @@ CLASS z2ui5_cl_app_demo_55 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
     METHODS refresh_data.
 
-    data next type z2ui5_if_client=>ty_s_next.
-
     DATA mv_check_popover TYPE abap_bool.
 protected section.
 private section.

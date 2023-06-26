@@ -15,7 +15,6 @@ CLASS z2ui5_cl_app_demo_32 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -47,9 +46,7 @@ CLASS Z2UI5_CL_APP_DEMO_32 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -59,10 +56,10 @@ CLASS Z2UI5_CL_APP_DEMO_32 IMPLEMENTATION.
     CASE app-get-event.
 
       WHEN 'POST'.
-        client->popup_message_toast( app-get-t_event_arg[ 1 ] ).
+        client->message_toast_display( app-get-t_event_arg[ 1 ] ).
 
       WHEN 'MYCC'.
-        client->popup_message_toast( 'MYCC event ' && mv_value ).
+        client->message_toast_display( 'MYCC event ' && mv_value ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
@@ -82,14 +79,16 @@ CLASS Z2UI5_CL_APP_DEMO_32 IMPLEMENTATION.
 
   METHOD z2ui5_on_render.
 
-    app-next-xml_main = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
+    data(lo_view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+
+   data(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n|  &&
                           `    ><m:Button ` && |\n|  &&
                           `  text="back" ` && |\n|  &&
                           `  press="` && client->_event( 'BACK' ) && `" ` && |\n|  &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n|  &&
-                   `       <m:Link target="_blank" text="Source_Code" href="` && Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me ) && `"/>` && |\n|  &&
+                   `       <m:Link target="_blank" text="Source_Code" href="` && lo_view->hlp_get_source_code_url(  ) && `"/>` && |\n|  &&
                           `<html><head><style>` && |\n|  &&
                           `body {background-color: powderblue;}` && |\n|  &&
                           `h1   {color: blue;}` && |\n|  &&
@@ -107,7 +106,7 @@ CLASS Z2UI5_CL_APP_DEMO_32 IMPLEMENTATION.
                           `</html> ` && |\n|  &&
                             `</mvc:View>`.
 
-    app-next-xml_main = z2ui5_cl_xml_view=>hlp_replace_controller_name( app-next-xml_main ).
+    client->view_display( lo_view->hlp_replace_controller_name( lv_xml ) ).
 
   ENDMETHOD.
 ENDCLASS.

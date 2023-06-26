@@ -19,7 +19,7 @@ CLASS Z2UI5_CL_APP_DEMO_10 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( client )->shell(
         )->page(
             title           = 'abap2UI5 - Demo Layout'
             navbuttonpress  = client->_event( 'BACK' )
@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_APP_DEMO_10 IMPLEMENTATION.
         href = 'https://twitter.com/abap2UI5'
       )->link(
         text = 'Source_Code' target = '_blank'
-        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+        href = page->hlp_get_source_code_url( )
        ).
 
     page->sub_header(
@@ -86,7 +86,7 @@ CLASS Z2UI5_CL_APP_DEMO_10 IMPLEMENTATION.
             )->button( text = 'reject' type = 'Reject'
             )->button( text = 'accept' type = 'Success' ).
 
-    client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

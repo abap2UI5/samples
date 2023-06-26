@@ -75,7 +75,6 @@ CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -100,7 +99,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
     me->client     = client.
     app-get        = client->get( ).
     app-view_popup = ``.
-    app-next-title = `Filter`.
+*    app-next-title = `Filter`.
 
 
     IF app-check_initialized = abap_false.
@@ -114,9 +113,9 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-next ).
+*    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
+*    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -191,8 +190,8 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( id = `page_main`
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+       view = view->page( id = `page_main`
                 title          = 'abap2UI5 - List Report Features'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton  = abap_true
@@ -201,7 +200,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1662821284873396225'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
            )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
@@ -274,14 +273,14 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    app-next-xml_main = page->get_root( )->xml_get( ).
+   client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render_popup.
 
-    DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
     ro_popup = ro_popup->dialog( title = 'View Setup'  resizable = abap_true
           contentheight = `50%` contentwidth = `50%` ).
@@ -304,8 +303,8 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
                )->Input( value = client->_bind( ms_layout-title )
                )->label( 'sel mode'
                )->combobox(
-                   selectedkey = client->_bind( ms_layout-selmode )
-                   items       = client->_bind_one( VALUE ty_t_combo(
+                   selectedkey = client->_bind_edit( ms_layout-selmode )
+                   items       = client->_bind( VALUE ty_t_combo(
                        ( key = 'None'  text = 'None' )
                        ( key = 'SingleSelect' text = 'SingleSelect' )
                        ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )
@@ -347,7 +346,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
               type  = 'Emphasized' ).
 
-    app-next-xml_popup = ro_popup->get_root( )->xml_get( ).
+    client->popup_display( ro_popup->get_root( )->xml_get( ) ).
 
 
   ENDMETHOD.
@@ -355,7 +354,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_popup_save.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
     lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
         )->input( description = `Name` value = client->_bind( mv_layout )
@@ -386,7 +385,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
                 press = client->_event( 'POPUP_LAYOUT_CONTINUE' )
                 type  = 'Emphasized' ).
 
-    app-next-xml_popup = lo_popup->get_root( )->xml_get( ).
+       client->popup_display( lo_popup->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 

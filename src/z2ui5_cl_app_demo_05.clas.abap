@@ -82,7 +82,7 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
             DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
 
           WHEN 'BUTTON_MSG_BOX'.
-            client->popup_message_box(
+            client->message_box_display(
               text = 'this is a message box with a custom text'
               type = 'success' ).
 
@@ -91,7 +91,8 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
 
         ENDCASE.
 
-        DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+        data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        DATA(page) = view->shell(
             )->page(
                     title          = 'abap2UI5 - Selection-Screen more Controls'
                     navbuttonpress = client->_event( 'BACK' )
@@ -99,7 +100,7 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'  target = '_blank'
-                        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                        href = view->hlp_get_source_code_url( )
                 )->get_parent( ).
 
         page->generic_tag(
@@ -147,12 +148,12 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                 state           = 'Success'
             )->label( 'StepInput'
             )->step_input(
-                value = client->_bind( screen-step_val_01 )
+                value = client->_bind_edit( screen-step_val_01 )
                 step = '2'
                 min = '0'
                 max = '20'
             )->step_input(
-                value = client->_bind( screen-step_val_02 )
+                value = client->_bind_edit( screen-step_val_02 )
                 step = '10'
                 min = '0'
                 max = '100'
@@ -169,7 +170,7 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                 class         = 'sapUiTinyMargin'
             )->label( 'MultiInput'
             )->multi_input(
-                    tokens          = client->_bind( mt_token )
+                    tokens          = client->_bind_edit( mt_token )
                     showclearicon   = abap_true
                     showvaluehelp   = abap_true
                     suggestionitems = client->_bind( mt_token_sugg )
@@ -231,7 +232,7 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                     press = client->_event( 'BUTTON_SEND' )
                     type  = 'Success' ).
 
-      client->set_next( value #( xml_main = page->get_root(  )->xml_get( ) ) ).
+      client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

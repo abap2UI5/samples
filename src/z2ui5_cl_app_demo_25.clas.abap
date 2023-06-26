@@ -24,7 +24,7 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_ROUNDTRIP'.
-        client->popup_message_box( 'server-client roundtrip, method on_event of the abap controller was called' ).
+        client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
 
       WHEN 'BUTTON_RESTART'.
         client->nav_app_call( NEW z2ui5_cl_app_demo_25( ) ).
@@ -35,7 +35,7 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
       WHEN 'BUTTON_READ_PREVIOUS'.
         DATA(lo_previous_app) = CAST z2ui5_cl_app_demo_24( client->get_app( client->get( )-id_prev_app ) ).
         mv_input_previous = lo_previous_app->mv_input2.
-        client->popup_message_toast( `data of previous app read` ).
+        client->message_toast_display( `data of previous app read` ).
 
       WHEN 'SHOW_VIEW_MAIN'.
         mv_show_view = 'MAIN'.
@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
         CASE mv_event_backend.
 
           WHEN 'NEW_APP_EVENT'.
-            client->popup_message_box( 'new app called and event NEW_APP_EVENT raised' ).
+            client->message_box_display( 'new app called and event NEW_APP_EVENT raised' ).
 
         ENDCASE.
 
@@ -64,13 +64,14 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
 
       WHEN 'MAIN' OR ''.
 
-        DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+        data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        DATA(page) = view->shell(
             )->page(
                    title          = 'abap2UI5 - flow logic - APP 02'
                    navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
                )->header_content(
                    )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-                   )->link( text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                   )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
                )->get_parent( ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'
@@ -85,18 +86,19 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
                )->button( text = 'read' press = client->_event( 'BUTTON_READ_PREVIOUS' )
 
                )->label( 'Call previous app and show data of this app'
-               )->input( client->_bind( mv_input )
+               )->input( client->_bind_edit( mv_input )
                )->button( text = 'back' press = client->_event( 'BACK_WITH_EVENT' ) ).
 
       WHEN 'SECOND'.
 
-        page = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+        view = Z2UI5_CL_XML_VIEW=>factory( client ).
+        page = view->shell(
             )->page(
                     title          = 'abap2UI5 - flow logic - APP 02'
-                    navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true ) shownavbutton = abap_true
                 )->header_content(
                     )->link( text = 'Demo'        href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-                    )->link( text = 'Source_Code' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    )->link( text = 'Source_Code' href = view->hlp_get_source_code_url(  )
                 )->get_parent( ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'
@@ -108,10 +110,7 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
 
     ENDCASE.
 
-    client->set_next( VALUE #(
-        xml_main = page->get_root( )->xml_get( )
-      "  event = mv_next_event
-         ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
