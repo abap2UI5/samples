@@ -28,7 +28,6 @@ CLASS z2ui5_cl_app_demo_57 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -134,9 +133,7 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -178,8 +175,9 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( id = `page_main`
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+
+        view->page( id = `page_main`
                 title          = 'abap2UI5 - List Report Features'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton  = abap_true
@@ -188,7 +186,7 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1661723127595016194'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
            )->get_parent( ).
 
     IF mv_check_download = abap_true.
@@ -243,7 +241,7 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    app-next-xml_main = page->get_root( )->xml_get( ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 

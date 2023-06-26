@@ -75,7 +75,7 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
 
     data(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->__event( 'BACK' )
+            navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true ).
 
       page1->header_content(
@@ -97,21 +97,21 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
     lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->__bind_edit( mv_search_value )
-         search = client->__event( 'BUTTON_SEARCH' )
-         change = client->__event( 'BUTTON_SEARCH' )
+         value  = client->_bind_edit( mv_search_value )
+         search = client->_event( 'BUTTON_SEARCH' )
+         change = client->_event( 'BUTTON_SEARCH' )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go`
-        press = client->__event( `BUTTON_START` )
+        press = client->_event( `BUTTON_START` )
         type = `Emphasized` ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
-    DATA(tab) = cont->table( items = client->__bind( val = mt_table ) ).
+    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_app_demo_53 IMPLEMENTATION.
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
