@@ -13,7 +13,6 @@ CLASS z2ui5_cl_app_demo_31 DEFINITION PUBLIC.
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
         popup             type string,
       END OF app.
 
@@ -48,9 +47,7 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
     z2ui5_on_render_main( ).
     z2ui5_on_render_popup( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -64,7 +61,7 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
       WHEN 'POPUP'.
         app-popup = 'TEST'.
         WHEN 'DATA'.
-        client->popup_message_box( 'Event raised value:' && mv_value ).
+        client->message_box_display( 'Event raised value:' && mv_value ).
     ENDCASE.
 
   ENDMETHOD.
@@ -79,7 +76,9 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    app-next-xml_main = `<mvc:View controllerName="sap.m.sample.GenericTileAsLaunchTile.Page"` && |\n|  &&
+data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+
+    data(lv_xml) = `<mvc:View controllerName="sap.m.sample.GenericTileAsLaunchTile.Page"` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n|  &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n|  &&
@@ -87,7 +86,7 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
                         `       <Button text="BACK" type="Emphasized" press="` && client->_event( 'BACK') && `"/>` && |\n|  &&
                         `       <Link target="_blank" text="Demo" href="https://twitter.com/abap2UI5/status/1645104539387691008"/>` && |\n|  &&
-                        `       <Link target="_blank" text="Source_Code" href="` && Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me ) && `"/>` && |\n|  &&
+                        `       <Link target="_blank" text="Source_Code" href="` && view->hlp_get_source_code_url( ) && `"/>` && |\n|  &&
                         `   </form:SimpleForm>  ` && |\n|  &&
                         `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( 'POPUP' ) && `"` && |\n|  &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n|  &&
@@ -161,19 +160,21 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
                         `   </GenericTile>` && |\n|  &&
                         `</mvc:View>`.
 
-     app-next-xml_main = z2ui5_cl_xml_view=>hlp_replace_controller_name( app-next-xml_main ).
+     client->view_display(  view->hlp_replace_controller_name( lv_xml ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render_popup.
 
+data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+
     if app-popup = `TEST`.
-    app-next-xml_popup = `<core:FragmentDefinition` && |\n|  &&
+    data(lv_xml) = `<core:FragmentDefinition` && |\n|  &&
                          `  xmlns="sap.m"` && |\n|  &&
                          `  xmlns:core="sap.ui.core">` && |\n|  &&
                          `  <ViewSettingsDialog` && |\n|  &&
-                         `      confirm="` && client->_event_close_popup( ) && `">` && |\n|  &&
+                         `      confirm="` && client->_event_client( client->cs_event-popup_close ) && `">` && |\n|  &&
                          `      <sortItems>` && |\n|  &&
                          `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n|  &&
                          `          <ViewSettingsItem text="Field 2" key="2" />` && |\n|  &&
@@ -209,6 +210,8 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
                          `      </filterItems>` && |\n|  &&
                          `  </ViewSettingsDialog>` && |\n|  &&
                          `</core:FragmentDefinition>`.
+
+    client->popup_display( lv_xml ).
 
     endif.
   ENDMETHOD.

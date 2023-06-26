@@ -38,7 +38,7 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
       WHEN 'BUTTON_MESSAGE_BOX'.
-        client->popup_message_box( 'Action of illustrated message' ).
+        client->message_box_display( 'Action of illustrated message' ).
 
       WHEN OTHERS.
         mv_type = client->get( )-event.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true  )
+            navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
@@ -84,17 +84,17 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
                     href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
     page->link( text = 'Documentation'  target = '_blank' href = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
-    page->button( text = 'NoActivities' press = client->__event( 'sapIllus-NoActivities' ) ).
-    page->button( text = 'AddPeople' press = client->__event( 'sapIllus-AddPeople' ) ).
-    page->button( text = 'Connection' press = client->__event( 'sapIllus-Connection' ) ).
-    page->button( text = 'NoDimensionsSet' press = client->__event( 'sapIllus-NoDimensionsSet' ) ).
-    page->button( text = 'NoEntries' press = client->__event( 'sapIllus-NoEntries' ) ).
-    page->illustrated_message( illustrationtype = client->__bind( mv_type )
+    page->button( text = 'NoActivities' press = client->_event( 'sapIllus-NoActivities' ) ).
+    page->button( text = 'AddPeople' press = client->_event( 'sapIllus-AddPeople' ) ).
+    page->button( text = 'Connection' press = client->_event( 'sapIllus-Connection' ) ).
+    page->button( text = 'NoDimensionsSet' press = client->_event( 'sapIllus-NoDimensionsSet' ) ).
+    page->button( text = 'NoEntries' press = client->_event( 'sapIllus-NoEntries' ) ).
+    page->illustrated_message( illustrationtype = client->_bind( mv_type )
     )->additional_content(  )->button(
                 text  = 'information'
-                press = client->__event( 'BUTTON_MESSAGE_BOX' ) ).
+                press = client->_event( 'BUTTON_MESSAGE_BOX' ) ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
