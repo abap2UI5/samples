@@ -25,7 +25,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_45 IMPLEMENTATION.
 
 
   METHOD refresh_data.
@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
         ENDIF.
 
       WHEN 'BUTTON_POST'.
-        client->popup_message_box( 'button post was pressed' ).
+        client->message_box_display( 'button post was pressed' ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
     ENDCASE.
 
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = z2ui5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
         )->get_parent( ).
 
     page->simple_form( title = 'Form Title' editable = abap_true
@@ -89,7 +89,7 @@ CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
             growing             = abap_true
             growingthreshold    = '20'
             growingscrolltoload = abap_true
-            items               = client->_bind_one( t_tab )
+            items               = client->_bind( t_tab )
             sticky              = 'ColumnHeaders,HeaderToolbar' ).
 
     tab->header_toolbar(
@@ -115,7 +115,7 @@ CLASS Z2UI5_CL_APP_DEMO_45 IMPLEMENTATION.
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
        )->text( '{COUNT}' ).
 
-    client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) )  ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

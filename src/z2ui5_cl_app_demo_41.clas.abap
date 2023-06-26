@@ -25,7 +25,6 @@ CLASS z2ui5_cl_app_demo_41 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -57,9 +56,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -73,8 +70,10 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
             INTO TABLE t_tab.
 
-        app-next-s_timer-interval_ms = '2000'.
-        app-next-s_timer-event_finished = 'TIMER_FINISHED'.
+        client->timer_set(
+          interval_ms    = '2000'
+          event_finished = 'TIMER_FINISHED'
+        ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
@@ -91,15 +90,18 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-    app-next-s_timer-interval_ms = '2000'.
-    app-next-s_timer-event_finished = 'TIMER_FINISHED'.
+        client->timer_set(
+          interval_ms    = '2000'
+          event_finished = 'TIMER_FINISHED'
+        ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+    lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
@@ -107,7 +109,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
-                 href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                 href = lo_view->hlp_get_source_code_url( )
          )->get_parent(
           ).
 
@@ -127,14 +129,14 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
 
     lo_view->list(
          headertext = 'Data auto refresh (2 sec)'
-         items      = client->_bind_one( t_tab )
+         items      = client->_bind( t_tab )
          )->standard_list_item(
              title       = '{TITLE}'
              description = '{DESCR}'
              icon        = '{ICON}'
              info        = '{INFO}' ).
 
-    app-next-xml_main = lo_view->get_root( )->xml_get( ).
+    client->view_display(  lo_view->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

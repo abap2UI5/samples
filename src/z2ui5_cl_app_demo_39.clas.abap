@@ -13,7 +13,6 @@ CLASS z2ui5_cl_app_demo_39 DEFINITION PUBLIC.
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_init.
@@ -46,9 +45,7 @@ CLASS Z2UI5_CL_APP_DEMO_39 IMPLEMENTATION.
     z2ui5_on_render_main( ).
     z2ui5_on_render_popup( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -60,7 +57,7 @@ CLASS Z2UI5_CL_APP_DEMO_39 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
       WHEN 'POPUP'.
-        client->popup_message_box( 'Event raised value:' && mv_value ).
+        client->message_box_display( 'Event raised value:' && mv_value ).
 
     ENDCASE.
 
@@ -76,7 +73,7 @@ CLASS Z2UI5_CL_APP_DEMO_39 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    app-next-xml_main = `<mvc:View controllerName="sap.m.sample.GenericTileAsLaunchTile.Page"` && |\n|  &&
+    data(lv_xml) = `<mvc:View controllerName="sap.m.sample.GenericTileAsLaunchTile.Page"` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n|  &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n|  &&
@@ -156,14 +153,14 @@ CLASS Z2UI5_CL_APP_DEMO_39 IMPLEMENTATION.
                         `   </GenericTile>` && |\n|  &&
                         `</mvc:View>`.
 
-    app-next-xml_main = z2ui5_cl_xml_view=>hlp_replace_controller_name( app-next-xml_main ).
+    client->view_display( z2ui5_cl_xml_view=>factory( client )->hlp_replace_controller_name( lv_xml ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render_popup.
 
-    app-next-xml_popup = `<core:FragmentDefinition` && |\n|  &&
+   client->popup_display( `<core:FragmentDefinition` && |\n|  &&
                          `  xmlns="sap.m"` && |\n|  &&
                          `  xmlns:core="sap.ui.core">` && |\n|  &&
                          `  <ViewSettingsDialog` && |\n|  &&
@@ -202,7 +199,7 @@ CLASS Z2UI5_CL_APP_DEMO_39 IMPLEMENTATION.
                          `          </ViewSettingsFilterItem>` && |\n|  &&
                          `      </filterItems>` && |\n|  &&
                          `  </ViewSettingsDialog>` && |\n|  &&
-                         `</core:FragmentDefinition>`.
+                         `</core:FragmentDefinition>` ).
 
   ENDMETHOD.
 ENDCLASS.

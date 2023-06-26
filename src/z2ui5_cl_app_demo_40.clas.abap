@@ -16,7 +16,6 @@ CLASS z2ui5_cl_app_demo_40 DEFINITION PUBLIC.
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_client=>ty_s_get,
-        next              TYPE z2ui5_if_client=>ty_s_next,
       END OF app.
 
     METHODS z2ui5_on_event.
@@ -42,9 +41,7 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
 
     z2ui5_on_render( ).
 
-    client->set_next( app-next ).
     CLEAR app-get.
-    CLEAR app-next.
 
   ENDMETHOD.
 
@@ -54,7 +51,7 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
     CASE app-get-event.
 
       WHEN 'LOAD_BC'.
-        client->popup_message_box( 'JSBarcode Library loaded').
+        client->message_box_display( 'JSBarcode Library loaded').
         mv_load_lib = abap_true.
 
       WHEN 'BACK'.
@@ -67,14 +64,14 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
 
   METHOD z2ui5_on_render.
 
-    app-next-xml_main = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
+    data(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n|  &&
                           `    ><m:Button ` && |\n|  &&
                           `  text="back" ` && |\n|  &&
                           `  press="` && client->_event( 'BACK' ) && `" ` && |\n|  &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n|  &&
-                   `       <m:Link target="_blank" text="Source_Code" href="` && Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me ) && `"/>` && |\n|  &&
+                   `       <m:Link target="_blank" text="Source_Code" href="` && Z2UI5_CL_XML_VIEW=>factory( client )->hlp_get_source_code_url( ) && `"/>` && |\n|  &&
 
                           `<html><head>` && |\n|  &&
                           `</head>` && |\n|  &&
@@ -91,15 +88,15 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
                           `</svg>` && |\n|.
     IF mv_load_lib = abap_true.
       mv_load_lib = abap_false.
-      app-next-xml_main = app-next-xml_main && `<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"> </script>`.
+      lv_xml = lv_xml && `<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"> </script>`.
     ENDIF.
 
-    app-next-xml_main = app-next-xml_main && `<script> JsBarcode(".barcode").init(); </script>` &&
+    lv_xml = lv_xml && `<script> JsBarcode(".barcode").init(); </script>` &&
            `</body>` && |\n|  &&
            `</html> ` && |\n|  &&
              `</mvc:View>`.
 
-    app-next-xml_main = z2ui5_cl_xml_view=>hlp_replace_controller_name( app-next-xml_main ).
+    client->view_display( z2ui5_cl_xml_view=>factory( client )->hlp_replace_controller_name( lv_xml ) ).
 
   ENDMETHOD.
 ENDCLASS.

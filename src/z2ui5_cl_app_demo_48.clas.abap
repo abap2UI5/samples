@@ -51,16 +51,16 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
       WHEN 'EDIT'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_row_title) = lt_arg[ 1 ].
-        client->popup_message_box( `EDIT - ` && lv_row_title ).
+        client->message_box_display( `EDIT - ` && lv_row_title ).
       WHEN 'SELCHANGE'.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        client->popup_message_box( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
+        client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
         )->page(
             title          = 'abap2UI5 - List'
             navbuttonpress = client->_event( 'BACK' )
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1657279838586109953`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = z2ui5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
             )->get_parent( ).
 
     page->list(
@@ -97,7 +97,8 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
               ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )  ) ) )
 
               ) ).
-    client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) ) ).
+
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.
