@@ -70,7 +70,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
                 )->get_parent( ).
 
         page->segmented_button(
-            selected_key     = client->_bind( mv_sel_mode )
+            selected_key     = client->_bind_edit( mv_sel_mode )
             selection_change = client->_event( 'BUTTON_SEGMENT_CHANGE' ) )->get(
                 )->items( )->get(
                     )->segmented_button_item(

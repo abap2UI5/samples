@@ -148,12 +148,12 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                 state           = 'Success'
             )->label( 'StepInput'
             )->step_input(
-                value = client->_bind( screen-step_val_01 )
+                value = client->_bind_edit( screen-step_val_01 )
                 step = '2'
                 min = '0'
                 max = '20'
             )->step_input(
-                value = client->_bind( screen-step_val_02 )
+                value = client->_bind_edit( screen-step_val_02 )
                 step = '10'
                 min = '0'
                 max = '100'
@@ -170,7 +170,7 @@ CLASS Z2UI5_CL_APP_DEMO_05 IMPLEMENTATION.
                 class         = 'sapUiTinyMargin'
             )->label( 'MultiInput'
             )->multi_input(
-                    tokens          = client->_bind( mt_token )
+                    tokens          = client->_bind_edit( mt_token )
                     showclearicon   = abap_true
                     showvaluehelp   = abap_true
                     suggestionitems = client->_bind( mt_token_sugg )

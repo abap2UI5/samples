@@ -19,7 +19,6 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
 
         IF check_initialized = abap_false.
           check_initialized = abap_true.
-
         ENDIF.
 
 
@@ -183,7 +182,7 @@ CLASS Z2UI5_CL_APP_DEMO_42 IMPLEMENTATION.
                           )->label( text    = 'details'
                           )->label( text    = 'details' ).
 
-    client->view_display( page->get_root(  )->xml_get( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
