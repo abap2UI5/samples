@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
 
         CASE client->get( )-event.
           WHEN 'BUTTON_SEGMENT_CHANGE'.
-            client->popup_message_toast( `Selection Mode changed` ).
+            client->message_toast_display( `Selection Mode changed` ).
 
           WHEN 'BUTTON_READ_SEL'.
             t_tab_sel = t_tab.
@@ -54,7 +54,8 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
 
         ENDCASE.
 
-        DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        DATA(page) = view->shell(
             )->page(
                 title          = 'abap2UI5 - Table with different Selection Modes'
                 navbuttonpress = client->_event( 'BACK' )
@@ -65,7 +66,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
                         href = 'https://twitter.com/abap2UI5/status/1637852441671528448'
                     )->link(
                         text = 'Source_Code' target = '_blank'
-                        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                        href = view->hlp_get_source_code_url( )
                 )->get_parent( ).
 
         page->segmented_button(
@@ -91,7 +92,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
         page->table(
             headertext = 'Table'
             mode = mv_sel_mode
-            items = client->_bind( t_tab )
+            items = client->_bind_edit( t_tab )
             )->columns(
                 )->column( )->text( 'Title' )->get_parent(
                 )->column( )->text( 'Value' )->get_parent(
@@ -104,7 +105,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
                         )->text( '{VALUE}'
                         )->text( '{DESCR}' ).
 
-        page->table( client->_bind_one( t_tab_sel )
+        page->table( client->_bind( t_tab_sel )
             )->header_toolbar(
                 )->overflow_toolbar(
                     )->title( 'Selected Entries'
@@ -123,7 +124,7 @@ CLASS Z2UI5_CL_APP_DEMO_19 IMPLEMENTATION.
                 )->text( '{VALUE}'
                 )->text( '{DESCR}' ).
 
-  client->set_next( value #( xml_main = page->get_root(  )->xml_get( ) ) ).
+  client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -79,7 +79,7 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Tables and editable'
-                navbuttonpress = client->__event( 'BACK' )
+                navbuttonpress = client->_event( 'BACK' )
                   shownavbutton = abap_true
             )->header_content(
                 )->link(
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(tab) = page->table(
-            items = client->__bind_edit( t_tab )
+            items = client->_bind_edit( t_tab )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
@@ -100,15 +100,15 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
                 )->button(
                     icon  = 'sap-icon://delete'
                     text  = 'delete selected row'
-                    press = client->__event( 'BUTTON_DELETE' )
+                    press = client->_event( 'BUTTON_DELETE' )
                 )->button(
                     icon  = 'sap-icon://add'
                     text  = 'add'
-                    press = client->__event( 'BUTTON_ADD' )
+                    press = client->_event( 'BUTTON_ADD' )
                 )->button(
                     icon  = 'sap-icon://edit'
                     text  = SWITCH #( check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
-                    press = client->__event( 'BUTTON_EDIT' )
+                    press = client->_event( 'BUTTON_EDIT' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -131,7 +131,7 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
           )->input( value = '{DESCR}' enabled = `{EDITABLE}`
           )->checkbox( selected = '{CHECKBOX}' enabled = `{EDITABLE}` ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
