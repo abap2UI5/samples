@@ -18,7 +18,6 @@ CLASS z2ui5_cl_app_demo_52 DEFINITION PUBLIC.
     DATA mt_table TYPE ty_T_table.
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA next TYPE z2ui5_if_client=>ty_s_next.
 
     DATA mv_check_popover TYPE abap_bool.
     DATA mv_product TYPE string.
@@ -47,8 +46,6 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
       z2ui5_display_view( ).
       RETURN.
     ENDIF.
-
-    CLEAR next.
 
     CASE client->get( )-event.
 
@@ -90,10 +87,11 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
             )->toolbar_spacer(
             )->button(
                 text  = 'details'
-                press = client->__event( 'BUTTON_DETAILS' )
+                press = client->_event( 'BUTTON_DETAILS' )
                 type  = 'Emphasized'
                 ).
-    client->set_popover( xml = lo_popover->stringify( )  open_by_id = id ).
+
+    client->popover_display( xml = lo_popover->stringify( )  by_id = id ).
 
   ENDMETHOD.
 
@@ -158,7 +156,7 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
     data(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->__event( 'BACK' )
+            navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true
         )->header_content(
             )->link(
@@ -180,19 +178,19 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go`
-        press = client->__event( `BUTTON_START` )
+        press = client->_event( `BUTTON_START` )
         type = `Emphasized` ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
-    DATA(tab) = cont->table( items = client->__bind_edit( val = mt_table ) ).
+    DATA(tab) = cont->table( items = client->_bind_edit( val = mt_table ) ).
 
     tab->header_toolbar(
             )->toolbar(
                 )->toolbar_spacer(
                 )->button(
                     icon = 'sap-icon://download'
-                    press = client->__event( 'BUTTON_DOWNLOAD' )
+                    press = client->_event( 'BUTTON_DOWNLOAD' )
                 ).
 
     DATA(lo_columns) = tab->columns( ).
@@ -203,13 +201,13 @@ CLASS z2ui5_cl_app_demo_52 IMPLEMENTATION.
     lo_columns->column( )->text( text = `Quantity` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->link( text = '{PRODUCT}' press = client->__event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) )  ) ).
+    lo_cells->link( text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) )  ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
