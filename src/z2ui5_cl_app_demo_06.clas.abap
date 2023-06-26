@@ -51,31 +51,31 @@ CLASS Z2UI5_CL_APP_DEMO_06 IMPLEMENTATION.
 
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
-        client->popup_message_toast( 'sort ascending' ).
+        client->message_toast_display( 'sort ascending' ).
 
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
-        client->popup_message_toast( 'sort descending' ).
+        client->message_toast_display( 'sort descending' ).
 
       WHEN 'BUTTON_POST'.
-        client->popup_message_box( 'button post was pressed' ).
+        client->message_box_display( 'button post was pressed' ).
 
       WHEN 'MENU_DEFAULT'.
-        client->popup_message_box( 'menu default pressed' ).
+        client->message_box_display( 'menu default pressed' ).
 
            WHEN 'MENU_01'.
-        client->popup_message_box( 'menu 01 pressed' ).
+        client->message_box_display( 'menu 01 pressed' ).
 
            WHEN 'MENU_02'.
-        client->popup_message_box( 'menu 02 pressed' ).
+        client->message_box_display( 'menu 02 pressed' ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
     ENDCASE.
 
-
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
@@ -83,7 +83,7 @@ CLASS Z2UI5_CL_APP_DEMO_06 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = view->hlp_get_source_code_url(  )
         )->get_parent( ).
 
     DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
@@ -91,7 +91,7 @@ CLASS Z2UI5_CL_APP_DEMO_06 IMPLEMENTATION.
             growing             = abap_true
             growingthreshold    = '20'
             growingscrolltoload = abap_true
-            items               = client->_bind_one( t_tab )
+            items               = client->_bind( t_tab )
             sticky              = 'ColumnHeaders,HeaderToolbar' ).
 
     tab->header_toolbar(
@@ -170,7 +170,7 @@ CLASS Z2UI5_CL_APP_DEMO_06 IMPLEMENTATION.
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
        )->text( '{COUNT}' ).
 
-    client->set_next( VALUE #( xml_main = page->get_root( )->xml_get( ) )  ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

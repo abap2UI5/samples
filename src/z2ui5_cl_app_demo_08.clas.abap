@@ -21,19 +21,19 @@ CLASS Z2UI5_CL_APP_DEMO_08 IMPLEMENTATION.
         CASE client->get( )-event.
 
           WHEN 'BUTTON_MESSAGE_BOX'.
-            client->popup_message_box( 'this is a message box' ).
+            client->message_box_display( 'this is a message box' ).
 
           WHEN 'BUTTON_MESSAGE_BOX_ERROR'.
-            client->popup_message_box( text = 'this is a message box' type = 'error' ).
+            client->message_box_display( text = 'this is a message box' type = 'error' ).
 
           WHEN 'BUTTON_MESSAGE_BOX_SUCCESS'.
-            client->popup_message_box( text = 'this is a message box' type = 'success' ).
+            client->message_box_display( text = 'this is a message box' type = 'success' ).
 
           WHEN 'BUTTON_MESSAGE_BOX_WARNING'.
-            client->popup_message_box( text = 'this is a message box' type = 'warning' ).
+            client->message_box_display( text = 'this is a message box' type = 'warning' ).
 
           WHEN 'BUTTON_MESSAGE_TOAST'.
-            client->popup_message_toast( 'this is a message toast' ).
+            client->message_toast_display( 'this is a message toast' ).
 
           WHEN 'BUTTON_MESSAGE_STRIP_INFO'.
             check_strip_active = abap_true.
@@ -52,7 +52,8 @@ CLASS Z2UI5_CL_APP_DEMO_08 IMPLEMENTATION.
 
         ENDCASE.
 
-        DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        DATA(page) = view->shell(
             )->page(
                 title          = 'abap2UI5 - Messages'
                 navbuttonpress = client->_event( 'BACK' )
@@ -60,7 +61,7 @@ CLASS Z2UI5_CL_APP_DEMO_08 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'  target = '_blank'
-                        href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                        href = view->hlp_get_source_code_url(  )
                 )->get_parent( ).
 
         IF check_strip_active = abap_true.
@@ -103,6 +104,6 @@ CLASS Z2UI5_CL_APP_DEMO_08 IMPLEMENTATION.
                         text = 'Message Toast'
                         press = client->_event( 'BUTTON_MESSAGE_TOAST' ) ).
 
-        client->set_next( value #( xml_main = page->get_root(  )->xml_get( ) ) ).
+        client->view_display( view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

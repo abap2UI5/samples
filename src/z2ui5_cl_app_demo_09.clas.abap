@@ -109,21 +109,21 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
         IF lines( mt_employees_sel ) = 1.
           screen-name = mt_employees_sel[ 1 ]-name.
           screen-lastname = mt_employees_sel[ 1 ]-lastname.
-          client->popup_message_toast( 'f4 value selected' ).
+          client->message_toast_display( 'f4 value selected' ).
         ENDIF.
 
       WHEN 'POPUP_TABLE_F4_CONTINUE'.
         DELETE mt_suggestion_sel WHERE selkz = abap_false.
         IF lines( mt_suggestion_sel ) = 1.
           screen-color_02 = mt_suggestion_sel[ 1 ]-value.
-          client->popup_message_toast( 'f4 value selected' ).
+          client->message_toast_display( 'f4 value selected' ).
         ENDIF.
 
       WHEN 'BUTTON_SEND'.
-        client->popup_message_box( 'success - values send to the server' ).
+        client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
         CLEAR screen.
-        client->popup_message_toast( 'View initialized' ).
+        client->message_box_display( 'View initialized' ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
@@ -207,7 +207,8 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
 
   METHOD z2ui5_on_rendering.
 
-    DATA(page) = Z2UI5_CL_XML_VIEW=>factory( )->shell(
+    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Value Help Examples'
             navbuttonpress = client->_event( 'BACK' )
@@ -218,7 +219,7 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1637470531136921600'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
+                    href = view->hlp_get_source_code_url( )
         )->get_parent( ).
 
     DATA(form) = page->grid( 'L7 M7 S7'
@@ -228,9 +229,9 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
 
     form->label( 'Input with sugestion items'
         )->input(
-            value           = client->_bind( screen-color_01 )
+            value           = client->_bind_edit( screen-color_01 )
             placeholder     = 'fill in your favorite colour'
-            suggestionitems = client->_bind_one( mt_suggestion )
+            suggestionitems = client->_bind( mt_suggestion )
             showsuggestion  = abap_true )->get(
             )->suggestion_items( )->get(
                 )->list_item(
@@ -239,25 +240,25 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
 
     form->label( 'Input only numbers allowed'
         )->input(
-            value       = client->_bind( screen-quantity )
+            value       = client->_bind_edit( screen-quantity )
             type        = 'Number'
             placeholder = 'quantity' ).
 
     form->label( 'Input with F4'
         )->input(
-            value            = client->_bind( screen-color_02 )
+            value            = client->_bind_edit( screen-color_02 )
             placeholder      = 'fill in your favorite colour'
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( 'POPUP_TABLE_F4' ) ).
 
     form->label( 'Custom F4 Popup'
         )->input(
-            value            = client->_bind( screen-name )
+            value            = client->_bind_edit( screen-name )
             placeholder      = 'name'
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' )
         )->input(
-            value            = client->_bind( screen-lastname )
+            value            = client->_bind_edit( screen-lastname )
             placeholder      = 'lastname'
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' ) ).
@@ -277,13 +278,14 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
                 enabled = abap_false
                 type    = 'Success' ).
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory( ).
+
+    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory( client ).
+
     CASE mv_view_popup.
 
       WHEN 'POPUP_TABLE_F4'.
 
-        popup = Z2UI5_CL_XML_VIEW=>factory_popup(
-            )->dialog( 'abap2UI5 - F4 Value Help'
+            popup->dialog( 'abap2UI5 - F4 Value Help'
             )->table(
                     mode  = 'SingleSelectLeft'
                     items = client->_bind( mt_suggestion_sel )
@@ -309,14 +311,13 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
 
       WHEN 'POPUP_TABLE_F4_CUSTOM'.
 
-        popup = Z2UI5_CL_XML_VIEW=>factory_popup(
-            )->dialog( 'abap2UI5 - F4 Value Help' ).
+        popup->dialog( 'abap2UI5 - F4 Value Help' ).
 
         popup->simple_form(
             )->label( 'Location'
             )->input(
-                    value           = client->_bind( screen-city )
-                    suggestionitems = client->_bind_one( mt_suggestion_city )
+                    value           = client->_bind_edit( screen-city )
+                    suggestionitems = client->_bind( mt_suggestion_city )
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
                     )->list_item(
@@ -359,9 +360,8 @@ CLASS Z2UI5_CL_APP_DEMO_09 IMPLEMENTATION.
 
     ENDCASE.
 
-    client->set_next( VALUE #(
-      xml_main  = page->get_root(  )->xml_get( )
-      xml_popup = popup->get_root(  )->xml_get( )
-      ) ).
+    client->view_display( page->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
+
   ENDMETHOD.
 ENDCLASS.
