@@ -52,12 +52,12 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
         z2ui5_display_popover( `TEST` ).
 
       WHEN 'BUTTON_CONFIRM'.
-        client->popup_message_toast( |confirm| ).
-        client->set_popover( `` ).
+        client->message_toast_display( |confirm| ).
+        client->popover_close( ).
 
       WHEN 'BUTTON_CANCEL'.
-        client->popup_message_toast( |cancel| ).
-        client->set_popover( `` ).
+        client->message_toast_display( |cancel| ).
+        client->popover_close( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
     view->shell(
       )->page(
               title          = 'abap2UI5 - Popover Examples'
-              navbuttonpress = client->__event( val = 'BACK' check_view_transit = abap_true )
+              navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
               shownavbutton  = abap_true
           )->header_content(
               )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
                   )->label( 'Link'
                   )->link(  text = 'Documentation UI5 Popover Control' href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
                   )->label( 'placement'
-                  )->segmented_button( client->__bind_edit( mv_placement )
+                  )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key = 'Left'
@@ -118,17 +118,17 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
                   )->label( 'popover'
                   )->button(
                       text  = 'show'
-                      press = client->__event( 'POPOVER' )
+                      press = client->_event( 'POPOVER' )
                       id = 'TEST'
                   )->button(
                       text  = 'cancel'
-                      press = client->__event( 'POPOVER' )
+                      press = client->_event( 'POPOVER' )
                 )->button(
                       text  = 'post'
-                      press = client->__event( 'POPOVER' )
+                      press = client->_event( 'POPOVER' )
           ).
 
-    client->set_view( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -143,19 +143,19 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'Cancel'
-                      press = client->__event( 'BUTTON_CANCEL' )
+                      press = client->_event( 'BUTTON_CANCEL' )
                   )->button(
                       text  = 'Confirm'
-                      press = client->__event( 'BUTTON_CONFIRM' )
+                      press = client->_event( 'BUTTON_CONFIRM' )
                       type  = 'Emphasized'
                 )->get_parent( )->get_parent(
             )->text(  'make an input here:'
             )->input( value = 'abcd'
             ).
 
-    client->set_popover(
-      xml        = view->stringify( )
-      open_by_id = id
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id
     ).
 
   ENDMETHOD.

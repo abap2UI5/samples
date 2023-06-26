@@ -76,6 +76,7 @@ CLASS z2ui5_cl_app_demo_12 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_05'.
         mv_check_popup = abap_true.
+        client->view_destroy( ).
         client->nav_app_call( z2ui5_cl_app_demo_20=>factory(
           i_text          = '(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back'
           i_cancel_text   = 'Cancel '
