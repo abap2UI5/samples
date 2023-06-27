@@ -137,8 +137,8 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
           RECEIVING
             uuid = uuid.
       CATCH cx_sy_dyn_call_illegal_class.
-        DATA lv_fm TYPE string.
-        lv_fm = 'GUID_CREATE'.
+
+        DATA(lv_fm) = 'GUID_CREATE'.
         CALL FUNCTION lv_fm
           IMPORTING
             ev_guid_32 = uuid.

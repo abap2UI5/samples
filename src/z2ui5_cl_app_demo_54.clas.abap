@@ -15,11 +15,11 @@ CLASS z2ui5_cl_app_demo_54 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+
 
     METHODS refresh_data.
 
-    DATA mv_check_popover TYPE abap_bool.
+
 protected section.
 private section.
 ENDCLASS.

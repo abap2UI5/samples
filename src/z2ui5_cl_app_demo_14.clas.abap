@@ -6,16 +6,16 @@ CLASS z2ui5_cl_app_demo_14 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-    DATA mv_type TYPE string.
-    DATA mv_path TYPE string.
 
-    DATA mv_sel1 TYPE abap_bool.
-    DATA mv_sel2 TYPE abap_bool.
-    DATA mv_sel3 TYPE abap_bool.
 
-    DATA mv_sel4 TYPE abap_bool.
-    DATA mv_sel5 TYPE abap_bool.
-    DATA mv_sel6 TYPE abap_bool.
+
+
+
+
+
+
+
+
     DATA mv_sel7 TYPE abap_bool.
     DATA mv_sel8 TYPE abap_bool.
     DATA mv_sel9 TYPE abap_bool.
@@ -23,10 +23,10 @@ CLASS z2ui5_cl_app_demo_14 DEFINITION PUBLIC.
     DATA mv_sel11 TYPE abap_bool.
     DATA mv_sel12 TYPE abap_bool.
 
-    DATA mv_tab_bar_active TYPE abap_bool.
-    DATA mv_tab_donut_active TYPE abap_bool.
+
+
     DATA mv_tab_line_active TYPE abap_bool.
-    DATA mv_tab_radial_active TYPE abap_bool.
+
 
     METHODS render_tab_line.
 

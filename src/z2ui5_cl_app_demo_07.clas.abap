@@ -14,27 +14,27 @@ CLASS z2ui5_cl_app_demo_07 DEFINITION
              col4   TYPE string,
            END OF ts_tree_row_base.
 
-    TYPES: BEGIN OF ts_tree_level3.
+    TYPES BEGIN OF ts_tree_level3.
              INCLUDE TYPE ts_tree_row_base.
-    TYPES: END OF ts_tree_level3.
+    TYPES END OF ts_tree_level3.
 
-    TYPES: tt_tree_level3 TYPE STANDARD TABLE OF ts_tree_level3 WITH KEY object.
+    TYPES tt_tree_level3 TYPE STANDARD TABLE OF ts_tree_level3 WITH KEY object.
 
-    TYPES: BEGIN OF ts_tree_level2.
+    TYPES BEGIN OF ts_tree_level2.
              INCLUDE TYPE ts_tree_row_base.
-    TYPES:   categories TYPE tt_tree_level3.
-    TYPES: END OF ts_tree_level2.
+    TYPES   categories TYPE tt_tree_level3.
+    TYPES END OF ts_tree_level2.
 
-    TYPES: tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object.
+    TYPES tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object.
 
-    TYPES: BEGIN OF ts_tree_level1.
+    TYPES BEGIN OF ts_tree_level1.
              INCLUDE TYPE ts_tree_row_base.
-    TYPES:   categories TYPE tt_tree_level2.
-    TYPES: END OF ts_tree_level1.
+    TYPES   categories TYPE tt_tree_level2.
+    TYPES END OF ts_tree_level1.
 
-    TYPES: tt_tree_level1 TYPE STANDARD TABLE OF ts_tree_level1 WITH KEY object.
+    TYPES tt_tree_level1 TYPE STANDARD TABLE OF ts_tree_level1 WITH KEY object.
 
-    DATA: mt_tree TYPE tt_tree_level1.
+    DATA mt_tree TYPE tt_tree_level1.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.

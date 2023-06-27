@@ -96,7 +96,7 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
     ENDLOOP.
     rv_row = rv_row && cl_abap_char_utilities=>cr_lf.
 
-    DATA lr_row TYPE REF TO data.
+
 
     LOOP AT val assigning FIELD-SYMBOL(<row>).
 

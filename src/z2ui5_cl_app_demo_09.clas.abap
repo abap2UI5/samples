@@ -44,7 +44,7 @@ CLASS z2ui5_cl_app_demo_09 DEFINITION PUBLIC.
     DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
 
-    DATA mv_view_main TYPE string.
+
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING

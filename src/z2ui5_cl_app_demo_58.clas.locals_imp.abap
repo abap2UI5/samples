@@ -32,7 +32,6 @@ CLASS lcl_db IMPLEMENTATION.
   ENDMETHOD.
 
 
-
 ENDCLASS.
 
 CLASS z2ui5_lcl_utility DEFINITION INHERITING FROM cx_no_check.
@@ -72,18 +71,6 @@ CLASS z2ui5_lcl_utility DEFINITION INHERITING FROM cx_no_check.
         v    TYPE clike     DEFAULT `CX_SY_SUBRC`
         when TYPE abap_bool DEFAULT abap_true
           PREFERRED PARAMETER v.
-
-    CLASS-METHODS get_header_val
-      IMPORTING
-        v             TYPE clike
-      RETURNING
-        VALUE(result) TYPE z2ui5_if_client=>ty_s_name_value-value.
-
-    CLASS-METHODS get_param_val
-      IMPORTING
-        v             TYPE clike
-      RETURNING
-        VALUE(result) TYPE z2ui5_if_client=>ty_s_name_value-value.
 
     CLASS-METHODS get_uuid
       RETURNING
@@ -278,25 +265,6 @@ CLASS z2ui5_lcl_utility IMPLEMENTATION.
 
     mv_counter = mv_counter + 1.
     result = get_trim_upper( mv_counter ).
-
-  ENDMETHOD.
-
-
-  METHOD get_header_val.
-
-*    result  = z2ui5_cl_http_handler=>client-t_header[ name = v ]-value.
-
-  ENDMETHOD.
-
-
-  METHOD get_param_val.
-*
-*    DATA(lt_param) = VALUE z2ui5_if_client=>ty_t_name_value( LET tab = z2ui5_cl_http_handler=>client-t_param IN FOR row IN tab
-*                                 ( name = to_upper( row-name ) value = to_upper( row-value ) ) ).
-*    TRY.
-*        result = lt_param[ name = get_trim_upper( v ) ]-value.
-*      CATCH cx_root.
-*    ENDTRY.
 
   ENDMETHOD.
 

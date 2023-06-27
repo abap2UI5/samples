@@ -56,14 +56,9 @@ CLASS z2ui5_cl_app_demo_58 DEFINITION PUBLIC.
     DATA mv_check_columns TYPE abap_bool.
     DATA mt_table TYPE ty_t_table.
 
-    TYPES:
-      BEGIN OF ty_S_filter,
-        product TYPE RANGE OF string,
-      END OF ty_S_filter.
-
     DATA mv_layout TYPE string.
     DATA mv_check_sort TYPE abap_bool.
-    DATA ms_filter TYPE ty_s_filter.
+
 
 
   PROTECTED SECTION.
@@ -335,7 +330,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
          "       )->text( '{DESCR}'
     )->get_parent( )->get_parent( )->get_parent( )->get_parent(  )->get_parent( ).
 
-    DATA(lo_tab_sort) = lo_tab->tab(
+   lo_tab->tab(
                    text     = 'Sort'
                    selected = client->_bind( mv_check_sort ) ).
 

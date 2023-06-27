@@ -167,8 +167,6 @@ data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
 
   METHOD z2ui5_on_render_popup.
 
-data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
-
     if app-popup = `TEST`.
     data(lv_xml) = `<core:FragmentDefinition` && |\n|  &&
                          `  xmlns="sap.m"` && |\n|  &&

@@ -4,7 +4,7 @@
   },
   "dependencies": [
     {
-      "url": "https://github.com/abapedia/steampunk-2302-api",
+      "url": "https://github.com/abapedia/steampunk-2305-api",
       "folder": "/deps",
       "files": "/src/**/*.*"
     },
@@ -27,7 +27,7 @@
     "ambiguous_statement": true,
     "avoid_use": true,
     "begin_end_names": true,
-    "begin_single_include": true,
+    "begin_single_include": false,
     "call_transaction_authority_check": true,
     "cds_comment_style": true,
     "cds_legacy_view": true,
