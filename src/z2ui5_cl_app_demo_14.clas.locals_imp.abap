@@ -27,7 +27,11 @@ CLASS lcl_mime_api DEFINITION FINAL.
     CLASS-METHODS get_editor_type
       RETURNING
         VALUE(r_result) TYPE ty_t_suggest.
-    CLASS-METHODS save_data.
+
+    CLASS-METHODS save_data
+      IMPORTING
+        i_mv_editor TYPE string.
+
 
   PROTECTED SECTION.
 

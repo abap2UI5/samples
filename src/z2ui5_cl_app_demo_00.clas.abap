@@ -81,7 +81,12 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - Popups' layout = 'ResponsiveGridLayout' )->content( 'form'
           )->button( text = 'Basic'                        press = client->_event( 'Z2UI5_CL_APP_DEMO_21' )
         )->button( text = 'Popups & Flow Logic'           press = client->_event( 'z2ui5_cl_app_demo_12' )
-        )->button( text = 'Popover'             press = client->_event( 'z2ui5_cl_app_demo_26' )
+
+    ).
+
+    grid->simple_form( title = 'HowTo - Popover' layout = 'ResponsiveGridLayout' )->content( 'form'
+        )->button( text = 'Basic'             press = client->_event( 'z2ui5_cl_app_demo_26' )
+        )->button( text = 'Item Level' press = client->_event( 'z2ui5_cl_app_demo_52' )
     ).
 
     grid->simple_form( title = 'HowTo - Messages' layout = 'ResponsiveGridLayout' )->content( 'form'
@@ -111,15 +116,9 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'ext. Library' press = client->_event( 'z2ui5_cl_app_demo_40' )
     ).
 
-    grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
-         )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
-    ).
-
     grid->simple_form( title = 'HowTo - List Report'     layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'Search Field' press = client->_event( 'z2ui5_cl_app_demo_53' )
          )->button( text = 'Download CSV' press = client->_event( 'z2ui5_cl_app_demo_57' )
-         )->button( text = 'Popover Item' press = client->_event( 'z2ui5_cl_app_demo_52' )
          )->button( text = 'Filter' press = client->_event( 'z2ui5_cl_app_demo_56' )
          )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
     ).
@@ -128,11 +127,28 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
           )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
     ).
 
-   grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
+        grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
+          )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
+          )->button( text = 'Donut Chart' press = client->_event( 'z2ui5_cl_app_demo_13' )
+          )->button( text = 'Line Chart' press = client->_event( 'z2ui5_cl_app_demo_14' )
+          )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' )
+    ).
+
+    grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
+         )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
+         )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
+    ).
+
+       grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
+*         )->button( text = 'Smallest View' press = client->_event( 'Z2UI5_CL_APP_DEMO_44' )
 *         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_42' )
 *         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
     ).
+
+
+
+
 
 
     client->view_display( page->stringify( ) ).
