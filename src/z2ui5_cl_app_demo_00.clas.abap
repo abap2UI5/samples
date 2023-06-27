@@ -123,7 +123,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' )
     ).
 
-    grid->simple_form( title = 'HowTo - Tree Control'     layout = 'ResponsiveGridLayout' )->content( 'form'
+    grid->simple_form( title = 'HowTo - Tree Controls'     layout = 'ResponsiveGridLayout' )->content( 'form'
           )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
     ).
 
@@ -137,6 +137,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
+         )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' )
     ).
 
        grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
