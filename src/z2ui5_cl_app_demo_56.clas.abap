@@ -377,7 +377,8 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
   METHOD z2ui5_on_render_pop_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
-    lo_popup->dialog(
+
+    lo_popup = lo_popup->dialog(
     contentheight = `50%`
     contentwidth = `50%`
         title = 'Define Conditons - Product' ).
@@ -423,7 +424,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
             press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
        ).
 
-    client->popup_display( lo_popup->get_root( )->xml_get( ) ).
+    client->popup_display( lo_popup->stringify( ) ).
 
   ENDMETHOD.
 

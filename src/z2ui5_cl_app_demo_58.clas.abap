@@ -292,7 +292,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
-    lo_tab->tab( text = 'Table' selected = client->_bind( mv_check_table )
+    lo_tab->tab( text = 'Table' selected = client->_bind_Edit( mv_check_table )
        )->simple_form( editable = abap_true
            )->content( 'form'
                )->label( 'zebra mode'
@@ -317,7 +317,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
                 text     = 'Columns'
                 selected = client->_bind( mv_check_columns )
        )->table(
-        items = client->_bind( ms_layout-t_cols )
+        items = client->_bind_edit( ms_layout-t_cols )
         )->columns(
             )->column( )->text( 'Visible' )->get_parent(
             )->column( )->text( 'Name' )->get_parent(
@@ -356,12 +356,12 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
+    lo_popup = lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
         )->input( description = `Name` value = client->_bind( mv_layout )
         )->button( text = `Save` press = client->_event( `BUTTON_SAVE_LAYOUT` )
         )->table(
             mode = 'SingleSelectLeft'
-            items = client->_bind( mt_db_layout )
+            items = client->_bind_edit( mt_db_layout )
             )->columns(
                 )->column( )->text( 'Name' )->get_parent(
                 )->column( )->text( 'User' )->get_parent(

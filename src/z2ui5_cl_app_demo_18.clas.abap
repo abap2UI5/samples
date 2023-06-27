@@ -90,7 +90,7 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                       )->text_area(
                           height = '100%'
                           width  = '100%'
-                          value  = client->_bind( mv_textarea )
+                          value  = client->_bind_edit( mv_textarea )
                   )->get_parent(
                   )->footer( )->overflow_toolbar(
                       )->toolbar_spacer(
