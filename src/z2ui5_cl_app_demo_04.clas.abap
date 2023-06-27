@@ -4,7 +4,7 @@ CLASS z2ui5_cl_app_demo_04 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA mo_app TYPE REF TO z2ui5_if_app.
+
 
     DATA check_initialized TYPE abap_bool.
     DATA mv_view_main TYPE string.

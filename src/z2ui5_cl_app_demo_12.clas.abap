@@ -4,9 +4,9 @@ CLASS z2ui5_cl_app_demo_12 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA mv_popup_view TYPE string.
+
     DATA mv_main_view  TYPE string.
-    DATA mv_check_initialized TYPE abap_bool.
+
     DATA mv_set_prev_view TYPE abap_bool.
 
     DATA mv_check_popup TYPE abap_bool.

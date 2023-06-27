@@ -22,7 +22,7 @@ CLASS z2ui5_cl_app_demo_20 DEFINITION PUBLIC.
     DATA mv_confirm_text TYPE string.
     DATA mv_confirm_event TYPE string.
     DATA mv_event TYPE string.
-    DATA mv_delete_view TYPE abap_bool.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
