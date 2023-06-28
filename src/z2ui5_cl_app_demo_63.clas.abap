@@ -19,8 +19,22 @@ CLASS z2ui5_cl_app_demo_63 DEFINITION PUBLIC.
         user TYPE string,
       END OF ms_popup_input.
 
-    DATA mt_data TYPE STANDARD TABLE OF z2ui5_t_demo_01.
+    DATA:
+      BEGIN OF ms_popup_start,
+        name TYPE string,
+        user TYPE string,
+      END OF ms_popup_start.
+
+    TYPES:
+      BEGIN OF ty_s_game,
+        selkz TYPE abap_bool,
+        game  TYPE string,
+      END OF ty_S_game.
+
+    DATA mt_data TYPE STANDARD TABLE OF ty_S_game WITH EMPTY KEY.
+
     METHODS popup_display.
+    METHODS popup_display_start.
 
   PROTECTED SECTION.
 
@@ -45,17 +59,19 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
+
+    ENDIF.
+
+    IF client->get( )-check_on_navigated = abap_true.
       z2ui5_on_rendering( client ).
     ENDIF.
+
+    z2ui5_on_event( client ).
 
     SELECT FROM z2ui5_t_demo_01
         FIELDS *
         WHERE name = 'TEST02'
-        INTO TABLE @mt_data.
-
-    z2ui5_on_event( client ).
-
-    COMMIT WORK.
+        INTO CORRESPONDING FIELDS OF TABLE @mt_data.
 
   ENDMETHOD.
 
@@ -64,16 +80,51 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
+      WHEN 'BUTTON_CANCEL'.
+        client->popup_close( ).
+
       WHEN 'BUTTON_CONFIRM'.
+        client->popup_close( ).
 
-        MODIFY z2ui5_t_demo_01 FROM @( VALUE #(
-           uuid = client->get( )-id name = 'TEST02' game = ms_popup_input-name ) ).
-        COMMIT WORK.
+        DATA(game) = NEW z2ui5_cl_app_demo_64( ).
+        game->mv_user = ms_popup_input-user.
+        game->mv_name = ms_popup_input-name.
+        client->nav_app_call( game ).
+*        MODIFY z2ui5_t_demo_01 FROM @( VALUE #(
+*           name = 'TEST02' game = ms_popup_input-name uuid = cast z2ui5_if_app( game )->id ) ).
+*        COMMIT WORK.
 
-       client->popup_close( ).
 
       WHEN 'BUTTON_ADD'.
         popup_display( ).
+
+      WHEN 'BUTTON_DELETE'.
+        DATA(lt_entry) = mt_data.
+        DELETE lt_entry WHERE selkz = abap_false.
+
+        LOOP AT lt_entry INTO DATA(ls_entry).
+          DELETE FROM z2ui5_t_demo_01 WHERE
+              game = @ls_entry-game.
+        ENDLOOP.
+        COMMIT WORK AND WAIT.
+
+      WHEN 'JOIN'.
+        DATA(lt_arg) = client->get( )-t_event_arg.
+        ms_popup_start-name = lt_arg[ 1 ].
+        popup_display_start( ).
+        client->popup_close( ).
+
+      WHEN 'BUTTON_START'.
+        client->popup_close( ).
+
+        SELECT SINGLE FROM z2ui5_t_demo_01
+        FIELDS *
+        WHERE
+            name = 'TEST02' AND
+          game = @ms_popup_start-name
+        INTO @DATA(ls_data).
+        client->nav_app_leave( client->get_app( ls_data-uuid ) ).
+        RETURN.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
@@ -86,7 +137,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
          )->page(
-            title          = 'abap2UI5 - Sessions'
+            title          = 'abap2UI5 - Games'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
@@ -103,7 +154,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'Active Session:'
+                )->title( 'Active Games:'
                 )->toolbar_spacer(
                 )->button(
                     icon  = 'sap-icon://delete'
@@ -120,12 +171,16 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
             )->text( 'Name' )->get_parent(
           )->column(
             )->text( 'UUID' )->get_parent(
+             )->column(
+            )->text( 'Action' )->get_parent(
      ).
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->text( text = '{GAME}'
           )->text( text = '{UUID}'
+          )->button( text = 'Join' press = client->_event( val = `JOIN` t_arg = VALUE #( ( `${GAME}` ) )  )
+
            ).
 
     client->view_display( page->stringify( ) ).
@@ -140,7 +195,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
           title = 'Title'
           )->content(
               )->simple_form(
-                  )->label( 'Name Session'
+                  )->label( 'Name Game'
                   )->input( client->_bind_edit( ms_popup_input-name )
                   )->label( 'Name User'
                   )->input( client->_bind_edit( ms_popup_input-user )
@@ -154,6 +209,34 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
               )->button(
                   text  = 'Confirm'
                   press = client->_event( 'BUTTON_CONFIRM' )
+                  type  = 'Emphasized' ).
+
+    client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
+  METHOD popup_display_start.
+
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+          contentheight = '500px'
+          contentwidth  = '500px'
+          title = 'Title'
+          )->content(
+              )->simple_form(
+                  )->label( 'Name Session'
+                  )->input( value = client->_bind_edit( ms_popup_start-name ) enabled = abap_false
+                  )->label( 'Name User'
+                  )->input( client->_bind_edit( ms_popup_start-user )
+                  )->label( 'Checkbox'
+          )->get_parent( )->get_parent(
+          )->footer( )->overflow_toolbar(
+              )->toolbar_spacer(
+              )->button(
+                  text  = 'Cancel'
+                  press = client->_event( 'BUTTON_CANCEL' )
+              )->button(
+                  text  = 'Go'
+                  press = client->_event( 'BUTTON_START' )
                   type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
