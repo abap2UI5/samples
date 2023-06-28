@@ -24,6 +24,7 @@ CLASS z2ui5_cl_app_demo_02 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items.
+    DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF s_combobox,
@@ -33,7 +34,7 @@ CLASS z2ui5_cl_app_demo_02 DEFINITION PUBLIC.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-    DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
+
 
     DATA check_initialized TYPE abap_bool.
 

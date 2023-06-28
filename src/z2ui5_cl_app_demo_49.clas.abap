@@ -62,6 +62,8 @@ CLASS z2ui5_cl_app_demo_49 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'TIMER_FINISHED'.
+
+      do 5 times.
         mv_counter = mv_counter + 1.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
             INTO TABLE t_tab.
@@ -70,6 +72,7 @@ CLASS z2ui5_cl_app_demo_49 IMPLEMENTATION.
           interval_ms    = '2000'
           event_finished = 'TIMER_FINISHED'
         ).
+        enddo.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).

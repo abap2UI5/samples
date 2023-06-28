@@ -144,7 +144,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
        grid->simple_form( title = 'HowTo - View & Model'     layout = 'ResponsiveGridLayout' )->content( 'form'
 
          )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
-         )->button( text = 'Search Model upd.' press = client->_event( 'z2ui5_cl_app_demo_59' )
+         )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
+         )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
 *         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
     ).
 

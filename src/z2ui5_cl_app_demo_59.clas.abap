@@ -117,7 +117,7 @@ method z2ui5_view_display.
          value  = client->_bind_edit( mv_search_value )
          search = client->_event( 'BUTTON_SEARCH' )
          change = client->_event( 'BUTTON_SEARCH' )
-*         livechange = client->__event( 'BUTTON_SEARCH' )
+         livechange = client->_event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` ).
 
