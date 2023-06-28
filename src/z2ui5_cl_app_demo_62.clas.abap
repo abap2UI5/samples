@@ -84,7 +84,7 @@ CLASS z2ui5_cl_app_demo_62 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
          )->page(
-            title          = 'abap2UI5 - Selection-Screen Example'
+            title          = 'abap2UI5 - Start app with values Demo'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
@@ -96,10 +96,10 @@ CLASS z2ui5_cl_app_demo_62 IMPLEMENTATION.
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    grid->simple_form( 'Input'
+    grid->simple_form( editable = abap_true title = 'Input'
         )->content( 'form'
-            )->button( press = client->_event( `test` )
-            )->label( 'Input with value help'
+*            )->button( press = client->_event( `test` )
+            )->label( 'Make an input here and restart the app'
             )->input(
                     value           = client->_bind_edit( screen-colour )
                     placeholder     = 'fill in your favorite colour'  ).

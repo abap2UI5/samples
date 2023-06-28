@@ -7,15 +7,22 @@ CLASS z2ui5_cl_app_demo_64 DEFINITION PUBLIC.
     DATA mv_user TYPE string.
     DATA mv_game TYPE string.
 
-    DATA mt_tab TYPE string_table.
+*    DATA mt_tab TYPE string_table.
     DATA mv_message TYPE string.
     DATA check_db_load TYPE abap_bool.
 
-*    DATA:
-*      BEGIN OF screen,
-*        check_is_active TYPE abap_bool,
-*        colour          TYPE string,
-*      END OF screen.
+    TYPES:
+      BEGIN OF ty_row,
+        title    TYPE string,
+        value    TYPE string,
+        descr    TYPE string,
+        icon     TYPE string,
+        info     TYPE string,
+        selected TYPE abap_bool,
+        checkbox TYPE abap_bool,
+      END OF ty_row.
+
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -48,13 +55,13 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
 
       WHEN 'REFRESH' OR 'SEND'.
 
-        IF check_db_load = abap_false.
+        IF check_db_load = abap_true.
           IF call_newest_state( client ).
             RETURN.
           ENDIF.
         ENDIF.
 
-        check_db_load = abap_false.
+
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
@@ -63,6 +70,7 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
 
     z2ui5_on_rendering( client ).
 
+    check_db_load = abap_true.
     MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-id name = 'TEST02' game = mv_game ) ).
     COMMIT WORK.
 
@@ -87,10 +95,6 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    DATA(lv_val) = ``.
-    LOOP AT mt_tab INTO DATA(lv_text).
-      lv_val = lv_val && lv_text.
-    ENDLOOP.
 
     grid->simple_form( 'Input'
         )->content( 'form'
@@ -98,9 +102,21 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
             )->label( 'Input with value help'
             )->input( value = client->_bind_edit( mv_message )
              )->button( text = 'send' press = client->_event( `SEND` )
-            )->text_area(
-                    value  = lv_val
             ).
+
+    grid->list(
+        headertext      = 'List Ouput'
+        items           = client->_bind_edit( t_tab )
+*          mode            = `SingleSelectMaster`
+*          selectionchange = client->_event( 'SELCHANGE' )
+        )->standard_list_item(
+            title       = '{TITLE}'
+            description = '{DESCR}'
+*              icon        = '{ICON}'
+*              info        = '{INFO}'
+*              press       = client->_event( 'TEST' )
+*              selected    = `{SELECTED}`
+       ).
 
     client->view_display( page->stringify( ) ).
 
@@ -123,10 +139,11 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
       IF sy-subrc = 0.
         DATA(app) = CAST z2ui5_cl_app_demo_64( i_client->get_app( ls_draft-uuid ) ).
         app->mv_user = mv_user.
-        IF mv_message IS NOT INITIAL.
-          INSERT mv_user && `:` && mv_message INTO TABLE app->mt_tab.
+
+        IF mv_message IS NOT INITIAL and client->get( )-event = 'SEND'.
+          INSERT VALUE #( title = mv_user descr = mv_message ) INTO TABLE app->t_tab.
         ENDIF.
-        app->check_db_load = abap_true.
+        app->check_db_load = abap_false.
         i_client->nav_app_leave(  app ).
         result = abap_true.
       ENDIF.
