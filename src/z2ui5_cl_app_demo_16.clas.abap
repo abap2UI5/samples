@@ -38,7 +38,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_16 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_16 IMPLEMENTATION.
 
 
   METHOD render_tab_bar.
@@ -119,6 +119,7 @@ CLASS z2ui5_cl_app_demo_16 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 

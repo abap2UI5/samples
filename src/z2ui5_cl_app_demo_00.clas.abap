@@ -135,15 +135,16 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     ).
 
     grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
+         )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
          )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
          )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' )
     ).
 
-       grid->simple_form( title = 'HowTo - More II'     layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
-*         )->button( text = 'Smallest View' press = client->_event( 'Z2UI5_CL_APP_DEMO_44' )
-*         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_42' )
+       grid->simple_form( title = 'HowTo - View & Model'     layout = 'ResponsiveGridLayout' )->content( 'form'
+
+         )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
+         )->button( text = 'Search Model upd.' press = client->_event( 'z2ui5_cl_app_demo_59' )
 *         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
     ).
 

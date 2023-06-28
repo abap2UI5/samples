@@ -38,7 +38,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_29 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_29 IMPLEMENTATION.
+
 
   METHOD render_tab_radial.
 

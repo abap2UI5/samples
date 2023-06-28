@@ -20,7 +20,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_04 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_04 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -60,27 +60,6 @@ CLASS z2ui5_cl_app_demo_04 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD z2ui5_view_second_display.
-
-    mv_view_main = 'SECOND'.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    DATA(page) = view->shell( )->page(
-     title          = 'abap2UI5 - Controller'
-     navbuttonpress = client->_event( 'BACK' )
-     shownavbutton = abap_true
-     ).
-
-    page->grid( 'L12 M12 S12' )->content( 'layout'
-        )->simple_form( 'View Second' )->content( 'form'
-            )->label( 'Change View'
-            )->button(
-                text  = 'Display View MAIN'
-                press = client->_event( 'BUTTON_CHANGE_VIEW' ) ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
 
   METHOD z2ui5_view_main_display.
 
@@ -122,4 +101,26 @@ CLASS z2ui5_cl_app_demo_04 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD z2ui5_view_second_display.
+
+    mv_view_main = 'SECOND'.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) = view->shell( )->page(
+     title          = 'abap2UI5 - Controller'
+     navbuttonpress = client->_event( 'BACK' )
+     shownavbutton = abap_true
+     ).
+
+    page->grid( 'L12 M12 S12' )->content( 'layout'
+        )->simple_form( 'View Second' )->content( 'form'
+            )->label( 'Change View'
+            )->button(
+                text  = 'Display View MAIN'
+                press = client->_event( 'BUTTON_CHANGE_VIEW' ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
 ENDCLASS.
