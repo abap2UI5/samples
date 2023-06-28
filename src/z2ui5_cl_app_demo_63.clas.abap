@@ -88,7 +88,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
         DATA(game) = NEW z2ui5_cl_app_demo_64( ).
         game->mv_user = ms_popup_input-user.
-        game->mv_name = ms_popup_input-name.
+        game->mv_game = ms_popup_input-name.
         client->nav_app_call( game ).
 *        MODIFY z2ui5_t_demo_01 FROM @( VALUE #(
 *           name = 'TEST02' game = ms_popup_input-name uuid = cast z2ui5_if_app( game )->id ) ).
@@ -123,7 +123,10 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
             name = 'TEST02' AND
           game = @ms_popup_start-name
         INTO @DATA(ls_data).
-        client->nav_app_leave( client->get_app( ls_data-uuid ) ).
+
+        game = cast #( client->get_app( ls_data-uuid ) ).
+        game->mv_user = ms_popup_start-user.
+        client->nav_app_call( game ).
         RETURN.
 
       WHEN 'BACK'.
