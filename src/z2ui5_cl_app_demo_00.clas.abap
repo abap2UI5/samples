@@ -75,6 +75,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
    grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
         )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
+               )->button( text = 'RTTI Table' press = client->_event( 'z2ui5_cl_app_demo_61' )
 *        )->button( text = 'Filter'   press = client->_event( 'z2ui5_cl_app_demo_45' )
     ).
 
@@ -125,6 +126,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     grid->simple_form( title = 'HowTo - Tree Controls'     layout = 'ResponsiveGridLayout' )->content( 'form'
           )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
+
     ).
 
         grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
@@ -146,6 +148,15 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
          )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
          )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
+*         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
+    ).
+
+           grid->simple_form( title = 'HowTo - Draft'     layout = 'ResponsiveGridLayout' )->content( 'form'
+
+         )->button( text = 'Start Values' press = client->_event( 'z2ui5_cl_app_demo_62' )
+         )->button( text = 'Test 02' press = client->_event( 'z2ui5_cl_app_demo_63' )
+*         )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
+*         )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
 *         )->button( text = 'Visualization' press = client->_event( 'z2ui5_cl_app_demo_16' )
     ).
 
