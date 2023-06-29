@@ -4,19 +4,8 @@ CLASS z2ui5_cl_app_demo_61 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    TYPES:
-      BEGIN OF ty_row,
-        selkz    TYPE abap_bool,
-        title    TYPE string,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        editable TYPE abap_bool,
-        checkbox TYPE abap_bool,
-      END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE REF TO data.
     DATA check_editable_active TYPE abap_bool.
     DATA check_initialized TYPE abap_bool.
 
@@ -39,37 +28,55 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      check_editable_active = abap_false.
-      t_tab = VALUE #(
-          ( title = 'entry 01'  value = 'red'    info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 02'  value = 'blue'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true ) ).
+*      TYPES:
+*        BEGIN OF ty_row,
+*          uuid       TYPE string,
+*          timestampl TYPE string,
+*          uuid_prev    TYPE string,
+*        END OF ty_row.
+*      TYPES ty_T_tab TYPE STANDARD TABLE OF ty_Row WITH EMPTY KEY.
+      TYPES ty_T_tab TYPE STANDARD TABLE OF z2ui5_t_draft.
 
-      set_view(  ).
+*      CREATE DATA t_tab TYPE ty_T_Tab.
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_DRAFT').
+*      FIELD-SYMBOLS <any> TYPE any.
+      FIELD-SYMBOLS <tab> TYPE TABLE.
+
+      ASSIGN t_tab->* TO <tab>.
+
+      DATA(ls_row) = VALUE z2ui5_T_draft( uuid = 'test test test'  timestampl = '2023234243'  uuid_prev = 'previous' ).
+      INSERT ls_row INTO TABLE <tab>.
+      INSERT ls_row INTO TABLE <tab>.
+      INSERT ls_row INTO TABLE <tab>.
+      INSERT ls_row INTO TABLE <tab>.
+      INSERT ls_row INTO TABLE <tab>.
+
+
+
 
     ENDIF.
 
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_EDIT'.
-        check_editable_active = xsdbool( check_editable_active = abap_false ).
-        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
-          lr_tab->editable = check_editable_active.
-        ENDLOOP.
-
-      WHEN 'BUTTON_DELETE'.
-        DELETE t_tab WHERE selkz = abap_true.
-
-      WHEN 'BUTTON_ADD'.
-        INSERT VALUE #( ) INTO TABLE t_tab.
+*      WHEN 'BUTTON_EDIT'.
+*        check_editable_active = xsdbool( check_editable_active = abap_false ).
+*        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
+*          lr_tab->editable = check_editable_active.
+*        ENDLOOP.
+*
+*      WHEN 'BUTTON_DELETE'.
+*        DELETE t_tab WHERE selkz = abap_true.
+*
+*      WHEN 'BUTTON_ADD'.
+*        INSERT VALUE #( ) INTO TABLE t_tab.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
     ENDCASE.
+
+    set_view(  ).
 
   ENDMETHOD.
 
@@ -91,45 +98,31 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            items = client->_bind_edit( t_tab->* )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'title of the table'
                 )->toolbar_spacer(
                 )->button(
-                    icon  = 'sap-icon://delete'
-                    text  = 'delete selected row'
-                    press = client->_event( 'BUTTON_DELETE' )
-                )->button(
-                    icon  = 'sap-icon://add'
-                    text  = 'add'
-                    press = client->_event( 'BUTTON_ADD' )
-                )->button(
-                    icon  = 'sap-icon://edit'
-                    text  = SWITCH #( check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
-                    press = client->_event( 'BUTTON_EDIT' )
+                    text  = `server <-> client`
+                    press = client->_event( 'SEND' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
         )->column(
-            )->text( 'Title' )->get_parent(
+            )->text( 'uuid' )->get_parent(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( 'time' )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
-        )->column(
-            )->text( 'Description' )->get_parent(
-        )->column(
-            )->text( 'Checkbox' ).
+            )->text( 'uuid_prev' )->get_parent(
+       ).
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{TITLE}' enabled = `{EDITABLE}`
-          )->input( value = '{VALUE}' enabled = `{EDITABLE}`
-          )->input( value = '{INFO}' enabled = `{EDITABLE}`
-          )->input( value = '{DESCR}' enabled = `{EDITABLE}`
-          )->checkbox( selected = '{CHECKBOX}' enabled = `{EDITABLE}` ).
+          )->input( value = '{UUID}'
+          )->input( value = '{TIMESTAMPL}'
+          )->input( value = '{UUID_PREV}' ).
 
     client->view_display( view->stringify( ) ).
 
