@@ -4,9 +4,7 @@ CLASS z2ui5_cl_app_demo_61 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA t_tab TYPE REF TO data.
-    DATA check_editable_active TYPE abap_bool.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -28,49 +26,17 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-*      TYPES:
-*        BEGIN OF ty_row,
-*          uuid       TYPE string,
-*          timestampl TYPE string,
-*          uuid_prev    TYPE string,
-*        END OF ty_row.
-*      TYPES ty_T_tab TYPE STANDARD TABLE OF ty_Row WITH EMPTY KEY.
-      TYPES ty_T_tab TYPE STANDARD TABLE OF z2ui5_t_draft.
-
-*      CREATE DATA t_tab TYPE ty_T_Tab.
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_DRAFT').
-*      FIELD-SYMBOLS <any> TYPE any.
-      FIELD-SYMBOLS <tab> TYPE TABLE.
 
+      FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-      DATA(ls_row) = VALUE z2ui5_T_draft( uuid = 'test test test'  timestampl = '2023234243'  uuid_prev = 'previous' ).
-      INSERT ls_row INTO TABLE <tab>.
-      INSERT ls_row INTO TABLE <tab>.
-      INSERT ls_row INTO TABLE <tab>.
-      INSERT ls_row INTO TABLE <tab>.
-      INSERT ls_row INTO TABLE <tab>.
-
-
-
+      INSERT VALUE z2ui5_T_draft( uuid = 'test test test'  timestampl = '2023234243'  uuid_prev = 'previous' )
+        INTO TABLE <tab>.
 
     ENDIF.
 
-
     CASE client->get( )-event.
-
-*      WHEN 'BUTTON_EDIT'.
-*        check_editable_active = xsdbool( check_editable_active = abap_false ).
-*        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
-*          lr_tab->editable = check_editable_active.
-*        ENDLOOP.
-*
-*      WHEN 'BUTTON_DELETE'.
-*        DELETE t_tab WHERE selkz = abap_true.
-*
-*      WHEN 'BUTTON_ADD'.
-*        INSERT VALUE #( ) INTO TABLE t_tab.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
@@ -97,8 +63,9 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
                     href = view->hlp_get_source_code_url(  )
         )->get_parent( ).
 
+
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab->* )
+            items = client->_bind_edit(  t_tab->*  )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
