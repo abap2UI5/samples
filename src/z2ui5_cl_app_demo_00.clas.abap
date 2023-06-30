@@ -71,7 +71,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
          )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
-         )->button( text = 'RTTI Table' press = client->_event( 'z2ui5_cl_app_demo_61' ) ).
+         )->button( text = 'Dynamic Types' press = client->_event( 'z2ui5_cl_app_demo_61' ) ).
 
     grid->simple_form( title = 'HowTo - Popups' layout = 'ResponsiveGridLayout' )->content( 'form'
           )->button( text = 'Basic'                        press = client->_event( 'Z2UI5_CL_APP_DEMO_21' )

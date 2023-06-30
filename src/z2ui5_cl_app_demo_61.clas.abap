@@ -64,8 +64,11 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
         )->get_parent( ).
 
 
+    FIELD-SYMBOLS <tab> TYPE table.
+    ASSIGN  t_tab->* TO <tab>.
+
     DATA(tab) = page->table(
-            items = client->_bind_edit(  t_tab->*  )
+            items = client->_bind_edit( <tab> )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
