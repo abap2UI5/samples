@@ -69,7 +69,7 @@
       "max": 20
     },
     "dangerous_statement": false,
-    "db_operation_in_loop": true,
+    "db_operation_in_loop": false,
     "definitions_top": false,
     "description_empty": true,
     "double_space": false,
