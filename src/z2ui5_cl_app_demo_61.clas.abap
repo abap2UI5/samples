@@ -27,11 +27,12 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
       check_initialized = abap_true.
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_DRAFT').
+*      CREATE DATA t_tab TYPE STANDARD TABLE OF ('I_CurrencyText').
 
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_T_draft( uuid = 'test test test'  timestampl = '2023234243'  uuid_prev = 'previous' )
+      INSERT VALUE Z2UI5_T_DRAFT( uuid = 'test test test'  timestampl = '2023234243'  uuid_prev = 'previous' )
         INTO TABLE <tab>.
 
     ENDIF.
@@ -81,7 +82,7 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'uuid' )->get_parent(
+            )->text( 'waers' )->get_parent(
         )->column(
             )->text( 'time' )->get_parent(
         )->column(
@@ -92,7 +93,8 @@ CLASS z2ui5_cl_app_demo_61 IMPLEMENTATION.
       )->cells(
           )->input( value = '{UUID}'
           )->input( value = '{TIMESTAMPL}'
-          )->input( value = '{UUID_PREV}' ).
+          )->input( value = '{UUID_PREV}'
+).
 
     client->view_display( view->stringify( ) ).
 
