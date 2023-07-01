@@ -50,9 +50,9 @@ CLASS z2ui5_cl_app_demo_60 IMPLEMENTATION.
 
         SELECT FROM I_CurrencyText
           FIELDS *
-        WHERE CurrencyName IN @lt_range
-        AND  Language = 'E'
-        INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
+          WHERE CurrencyName IN @lt_range
+          AND  Language = 'E'
+          INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
