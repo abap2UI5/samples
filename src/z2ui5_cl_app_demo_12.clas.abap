@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_APP_DEMO_12 IMPLEMENTATION.
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( client )->shell( ).
     DATA(page) = lo_main->page(
             title          = 'abap2UI5 - Popups'
-            navbuttonpress = client->_event( val = 'BACK' check_view_transit = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
             shownavbutton  = abap_true
             )->header_content(
                 )->link(
@@ -84,11 +84,11 @@ CLASS Z2UI5_CL_APP_DEMO_12 IMPLEMENTATION.
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, no background rendering'
-                press = client->_event( val = 'BUTTON_POPUP_01' check_view_transit = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_01' check_view_destroy = abap_true )
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, background destroyed and rerendering'
-                press = client->_event( val = 'BUTTON_POPUP_02' check_view_transit = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_02' check_view_destroy = abap_true )
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close (no roundtrip)'

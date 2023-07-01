@@ -36,7 +36,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         )->shell( )->page(
         title = 'abap2UI5 - Demo Section'
         class = 'sapUiContentPadding sapUiResponsivePadding--content '
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
         shownavbutton = abap_true
         )->header_content(
             )->toolbar_spacer(
