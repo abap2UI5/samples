@@ -86,7 +86,7 @@ method z2ui5_view_display.
       page1->header_content(
             )->link(
                 text = 'Demo' target = '_blank'
-                href = 'https://twitter.com/abap2UI5/status/1661642823542747138'
+                href = 'https://twitter.com/abap2UI5/status/1674437273943937025'
             )->link(
                 text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
        ).

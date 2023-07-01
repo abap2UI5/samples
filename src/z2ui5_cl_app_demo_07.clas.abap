@@ -73,7 +73,8 @@ CLASS Z2UI5_CL_APP_DEMO_07 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true
             )->header_content(
-                )->link(
+               )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1673320288983842820`
+               )->link(
                     text = 'Source_Code'  target = '_blank'
                     href = view->hlp_get_source_code_url( )
             )->get_parent( ).

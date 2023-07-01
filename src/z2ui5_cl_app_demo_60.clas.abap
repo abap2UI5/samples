@@ -69,7 +69,7 @@ CLASS z2ui5_cl_app_demo_60 IMPLEMENTATION.
        shownavbutton  = abap_true ).
 
     page->header_content(
-             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1675074394710765568`
              )->link( text = 'Source_Code' target = '_blank' href = page->hlp_get_source_code_url( )
          )->get_parent( ).
 
