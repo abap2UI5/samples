@@ -7,7 +7,6 @@ CLASS z2ui5_cl_app_demo_64 DEFINITION PUBLIC.
     DATA mv_user TYPE string.
     DATA mv_game TYPE string.
 
-*    DATA mt_tab TYPE string_table.
     DATA mv_message TYPE string.
     DATA check_db_load TYPE abap_bool.
 
@@ -23,8 +22,6 @@ CLASS z2ui5_cl_app_demo_64 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-
-    DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS call_newest_state
@@ -55,13 +52,9 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
 
       WHEN 'REFRESH' OR 'SEND'.
 
-        IF check_db_load = abap_true.
-          IF call_newest_state( client ).
+        IF check_db_load = abap_true and call_newest_state( client ).
             RETURN.
-          ENDIF.
         ENDIF.
-
-
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
@@ -75,9 +68,6 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
     COMMIT WORK.
 
   ENDMETHOD.
-
-
-
 
   METHOD z2ui5_on_rendering.
 

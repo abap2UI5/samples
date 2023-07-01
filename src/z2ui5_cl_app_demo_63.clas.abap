@@ -4,12 +4,6 @@ CLASS z2ui5_cl_app_demo_63 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA:
-      BEGIN OF screen,
-        check_is_active TYPE abap_bool,
-        colour          TYPE string,
-      END OF screen.
-
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
 
