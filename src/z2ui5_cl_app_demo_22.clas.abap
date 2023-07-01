@@ -117,37 +117,37 @@ CLASS z2ui5_cl_app_demo_22 IMPLEMENTATION.
 
       WHEN 'BUTTON_SCROLL_TOP'.
       client->scroll_position_set( VALUE #(
-             ( name = 'id_page'  )
-             ( name = 'id_text3'  )
+             ( n = 'id_page'  )
+             ( n = 'id_text3'  )
            ) ).
 
       WHEN 'BUTTON_SCROLL_BOTTOM'.
-        client->scroll_position_set( VALUE #( ( name = 'id_page' value = '99999' ) ) ).
+        client->scroll_position_set( VALUE #( ( n = 'id_page' v = '99999' ) ) ).
 
       WHEN 'BUTTON_SCROLL_UP'.
-        DATA(lv_pos) = CONV i( app-s_get-t_scroll_pos[ name = `id_page` ]-value ) - 500.
-        client->scroll_position_set(  VALUE #( (  name = 'id_page'  value = lv_pos ) ) ).
+        DATA(lv_pos) = CONV i( app-s_get-t_scroll_pos[ n = `id_page` ]-v ) - 500.
+        client->scroll_position_set(  VALUE #( (  n = 'id_page'  v = lv_pos ) ) ).
 
       WHEN 'BUTTON_SCROLL_DOWN'.
-        lv_pos = CONV i( VALUE #( app-s_get-t_scroll_pos[ name = `id_page` ]-value OPTIONAL ) ) + 500.
-        client->scroll_position_set(  VALUE #( (  name = 'id_page'  value = lv_pos ) ) ).
+        lv_pos = CONV i( VALUE #( app-s_get-t_scroll_pos[ n = `id_page` ]-v OPTIONAL ) ) + 500.
+        client->scroll_position_set(  VALUE #( (  n = 'id_page'  v = lv_pos ) ) ).
 
       WHEN 'BUTTON_SCROLL_HOLD'.
 
 *       client->set_scroll_pos(  app-s_get-t_scroll_pos ).
 
       WHEN 'BUTTON_FOCUS_FIRST'.
-        client->cursor_set(  VALUE #( id = 'id_text1'  cursorpos = '3' selectionstart = '3' selectionend = '3' ) ).
+        client->cursor_set( id = 'id_text1'  cursorpos = '3' selectionstart = '3' selectionend = '3'  ).
 
       WHEN 'BUTTON_FOCUS_SECOND'.
-        client->cursor_set(  VALUE #( id = 'id_text2'  cursorpos = '5' selectionstart = '5' selectionend = '10' ) ).
+        client->cursor_set(  id = 'id_text2'  cursorpos = '5' selectionstart = '5' selectionend = '10' ).
 
       WHEN 'BUTTON_FOCUS_END'.
-        client->cursor_set(   VALUE #( id = 'id_text3'  cursorpos = '99999' selectionstart = '99999' selectionend = '999999' ) ).
+        client->cursor_set( id = 'id_text3'  cursorpos = '99999' selectionstart = '99999' selectionend = '999999'  ).
 
         client->scroll_position_set(  VALUE #(
-                 ( name = 'id_page'  value = '99999' )
-                 ( name = 'id_text3' value = '99999' )
+                 ( n = 'id_page'  v = '99999' )
+                 ( n = 'id_text3' v = '99999' )
                 ) ).
 
       WHEN 'BACK'.
