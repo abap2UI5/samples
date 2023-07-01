@@ -25,53 +25,33 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_26 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD z2ui5_display_popover.
 
-    me->client = client.
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    view->popover(
+                  title     = 'Popover Title'
+                  placement = mv_placement
+              )->footer( )->overflow_toolbar(
+                  )->toolbar_spacer(
+                  )->button(
+                      text  = 'Cancel'
+                      press = client->_event( 'BUTTON_CANCEL' )
+                  )->button(
+                      text  = 'Confirm'
+                      press = client->_event( 'BUTTON_CONFIRM' )
+                      type  = 'Emphasized'
+                )->get_parent( )->get_parent(
+            )->text(  'make an input here:'
+            )->input( value = 'abcd'
+            ).
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      z2ui5_on_init( ).
-      z2ui5_display_view( ).
-      RETURN.
-    ENDIF.
-
-    z2ui5_on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'POPOVER'.
-        z2ui5_display_popover( `TEST` ).
-
-      WHEN 'BUTTON_CONFIRM'.
-        client->message_toast_display( |confirm| ).
-        client->popover_close( ).
-
-      WHEN 'BUTTON_CANCEL'.
-        client->message_toast_display( |cancel| ).
-        client->popover_close( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_init.
-
-    mv_placement = 'Left'.
-    product  = 'tomato'.
-    quantity = '500'.
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id
+    ).
 
   ENDMETHOD.
 
@@ -133,30 +113,50 @@ CLASS z2ui5_cl_app_demo_26 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
-    view->popover(
-                  title     = 'Popover Title'
-                  placement = mv_placement
-              )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
-                  )->button(
-                      text  = 'Cancel'
-                      press = client->_event( 'BUTTON_CANCEL' )
-                  )->button(
-                      text  = 'Confirm'
-                      press = client->_event( 'BUTTON_CONFIRM' )
-                      type  = 'Emphasized'
-                )->get_parent( )->get_parent(
-            )->text(  'make an input here:'
-            )->input( value = 'abcd'
-            ).
+    me->client = client.
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
-    ).
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      z2ui5_on_init( ).
+      z2ui5_display_view( ).
+      RETURN.
+    ENDIF.
+
+    z2ui5_on_event( ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPOVER'.
+        z2ui5_display_popover( `TEST` ).
+
+      WHEN 'BUTTON_CONFIRM'.
+        client->message_toast_display( |confirm| ).
+        client->popover_close( ).
+
+      WHEN 'BUTTON_CANCEL'.
+        client->message_toast_display( |cancel| ).
+        client->popover_close( ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_init.
+
+    mv_placement = 'Left'.
+    product  = 'tomato'.
+    quantity = '500'.
 
   ENDMETHOD.
 ENDCLASS.

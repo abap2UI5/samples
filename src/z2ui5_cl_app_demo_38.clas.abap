@@ -31,38 +31,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
-      t_msg = VALUE #(
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Error'     group = 'group 01' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 01' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 02' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Success' group = 'group 03' ) ).
-
-      z2ui5_display_view( ).
-
-    ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'POPUP'.
-        z2ui5_display_popup( ).
-        WHEN 'TEST'.
-        z2ui5_display_popover( `test2` ).
-      WHEN 'POPOVER'.
-        z2ui5_display_popover( `test` ).
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-    ENDCASE.
-
-  ENDMETHOD.
 
   METHOD z2ui5_display_popover.
 
@@ -87,6 +57,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     client->popover_display( xml = popup->stringify( ) by_id = id ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_display_popup.
 
@@ -120,6 +91,7 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_display_view.
 
@@ -165,4 +137,34 @@ CLASS z2ui5_cl_app_demo_38 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+
+      t_msg = VALUE #(
+          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Error'     group = 'group 01' )
+          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 01' )
+          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 02' )
+          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Success' group = 'group 03' ) ).
+
+      z2ui5_display_view( ).
+
+    ENDIF.
+
+    CASE client->get( )-event.
+      WHEN 'POPUP'.
+        z2ui5_display_popup( ).
+        WHEN 'TEST'.
+        z2ui5_display_popover( `test2` ).
+      WHEN 'POPOVER'.
+        z2ui5_display_popover( `test` ).
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+    ENDCASE.
+
+  ENDMETHOD.
 ENDCLASS.

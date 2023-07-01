@@ -24,60 +24,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      z2ui5_on_init( ).
-      RETURN.
-    ENDIF.
-
-    z2ui5_on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'SHOW_POPUP'.
-        z2ui5_display_popup_input( ).
-
-      WHEN 'POPUP_CONFIRM'.
-        client->message_toast_display( |confirm| ).
-        client->popup_close( ).
-
-      WHEN 'POPUP_CANCEL'.
-        CLEAR mv_textarea.
-        client->message_toast_display( |cancel| ).
-        client->popup_close( ).
-
-      WHEN 'SHOW_VIEW_MAIN'.
-        z2ui5_display_view_main( ).
-
-      WHEN 'SHOW_VIEW_SECOND'.
-        z2ui5_display_view_second( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_init.
-
-    quantity = '500'.
-    z2ui5_display_view_main( ).
-
-  ENDMETHOD.
+CLASS Z2UI5_CL_APP_DEMO_18 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_popup_input.
@@ -178,6 +125,59 @@ CLASS z2ui5_cl_app_demo_18 IMPLEMENTATION.
                     press = client->_event( 'SHOW_VIEW_MAIN' ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      z2ui5_on_init( ).
+      RETURN.
+    ENDIF.
+
+    z2ui5_on_event( ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'SHOW_POPUP'.
+        z2ui5_display_popup_input( ).
+
+      WHEN 'POPUP_CONFIRM'.
+        client->message_toast_display( |confirm| ).
+        client->popup_close( ).
+
+      WHEN 'POPUP_CANCEL'.
+        CLEAR mv_textarea.
+        client->message_toast_display( |cancel| ).
+        client->popup_close( ).
+
+      WHEN 'SHOW_VIEW_MAIN'.
+        z2ui5_display_view_main( ).
+
+      WHEN 'SHOW_VIEW_SECOND'.
+        z2ui5_display_view_second( ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_init.
+
+    quantity = '500'.
+    z2ui5_display_view_main( ).
 
   ENDMETHOD.
 ENDCLASS.

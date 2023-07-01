@@ -15,38 +15,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_33 IMPLEMENTATION.
 
-
-  METHOD z2ui5_if_app~main.
-    me->client = client.
-
-    mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
-    `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
-  `><li>list item 1</li><li>list item 2<ul><li>sub item 1</li><li>sub item 2</li></ul></li></ul><p>pre:</p><pre>abc    def    ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
-  `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      mv_type = `sapIllus-NoActivities`.
-      display_view( ).
-      RETURN.
-    ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
-
-      WHEN 'BUTTON_MESSAGE_BOX'.
-        client->message_box_display( 'Action of illustrated message' ).
-
-      WHEN OTHERS.
-        mv_type = client->get( )-event.
-
-    ENDCASE.
-
-
-  ENDMETHOD.
 
   METHOD display_view.
 
@@ -95,6 +65,37 @@ CLASS z2ui5_cl_app_demo_33 IMPLEMENTATION.
                 press = client->_event( 'BUTTON_MESSAGE_BOX' ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+    me->client = client.
+
+    mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
+    `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
+  `><li>list item 1</li><li>list item 2<ul><li>sub item 1</li><li>sub item 2</li></ul></li></ul><p>pre:</p><pre>abc    def    ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
+  `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      mv_type = `sapIllus-NoActivities`.
+      display_view( ).
+      RETURN.
+    ENDIF.
+
+    CASE client->get( )-event.
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+
+      WHEN 'BUTTON_MESSAGE_BOX'.
+        client->message_box_display( 'Action of illustrated message' ).
+
+      WHEN OTHERS.
+        mv_type = client->get( )-event.
+
+    ENDCASE.
+
 
   ENDMETHOD.
 ENDCLASS.
