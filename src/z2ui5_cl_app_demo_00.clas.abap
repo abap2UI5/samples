@@ -126,7 +126,9 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - View & Model' layout = 'ResponsiveGridLayout' )->content( 'form'
       )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
       )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
-      )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' ) ).
+      )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
+      )->button( text = 'Nested View' press = client->_event( 'z2ui5_cl_app_demo_65' )
+      ).
 
     grid->simple_form( title = 'HowTo - Draft'     layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Start same app' press = client->_event( 'z2ui5_cl_app_demo_62' )
