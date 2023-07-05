@@ -65,6 +65,8 @@ CLASS z2ui5_cl_app_demo_28 IMPLEMENTATION.
           event_finished = 'TIMER_FINISHED'
         ).
 
+        client->view_model_update( ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 
