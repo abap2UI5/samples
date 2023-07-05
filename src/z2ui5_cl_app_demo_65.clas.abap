@@ -14,7 +14,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_65 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_65 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -54,13 +54,13 @@ CLASS z2ui5_cl_app_demo_65 IMPLEMENTATION.
 
       WHEN 'ALL'.
         client->view_display( lo_view->stringify( ) ).
-        client->view_display_nested( val = lo_view_nested->stringify( ) id = `test` ).
+        client->view_display_nested( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent'  ).
 
       WHEN 'MAIN'.
         client->view_display( lo_view->stringify( ) ).
 
       WHEN 'NEST'.
-        client->view_display_nested( val = lo_view_nested->stringify( ) id = `test` ).
+        client->view_display_nested( val = lo_view_nested->stringify( ) id = `test`  method_insert = 'addContent'  ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
