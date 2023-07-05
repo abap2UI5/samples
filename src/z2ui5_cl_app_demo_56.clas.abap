@@ -380,7 +380,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     DATA(item) = pan->list(
            "   headertext = `Product`
               noData = `no conditions defined`
-             items           = client->_bind( mt_filter )
+             items           = client->_bind_edit( mt_filter )
              selectionchange = client->_event( 'SELCHANGE' )
                 )->custom_list_item( ).
 
@@ -388,7 +388,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
     grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = client->_bind( mt_mapping )
+                 items       = client->_bind_Edit( mt_mapping )
              )->item(
                      key = '{N}'
                      text = '{N}'
