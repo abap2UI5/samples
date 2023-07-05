@@ -18,21 +18,21 @@ CLASS z2ui5_cl_app_demo_66 DEFINITION
       BEGIN OF ts_tree_level3.
         INCLUDE TYPE ts_tree_row_base.
   TYPES END OF ts_tree_level3 .
-    TYPES:
+    TYPES
       tt_tree_level3 TYPE STANDARD TABLE OF ts_tree_level3 WITH KEY object .
-    TYPES:
+    TYPES
       BEGIN OF ts_tree_level2.
         INCLUDE TYPE ts_tree_row_base.
     TYPES   categories TYPE tt_tree_level3.
     TYPES END OF ts_tree_level2 .
-    TYPES:
+    TYPES
       tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object .
     TYPES:
       BEGIN OF ts_tree_level1.
         INCLUDE TYPE ts_tree_row_base.
     TYPES   categories TYPE tt_tree_level2.
     TYPES END OF ts_tree_level1 .
-    TYPES:
+    TYPES
       tt_tree_level1 TYPE STANDARD TABLE OF ts_tree_level1 WITH KEY object .
 
     DATA mt_tree TYPE tt_tree_level1.
