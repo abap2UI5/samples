@@ -58,11 +58,11 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
         ui5_popup_decide( ).
 
       WHEN 'BUTTON_CONFIRM'.
-        client->popup_close( ).
+        client->popup_destroy( ).
         client->message_toast_display( 'confirm pressed' ).
 
       WHEN 'BUTTON_CANCEL'.
-        client->popup_close(  ).
+        client->popup_destroy(  ).
         client->message_toast_display( 'cancel pressed' ).
 
       WHEN 'POPUP_TO_TEXTAREA'.
@@ -77,12 +77,12 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
         ui5_popup_textarea_size( ).
 
       WHEN 'BUTTON_TEXTAREA_CANCEL'.
-        client->popup_close( ).
+        client->popup_destroy( ).
         client->message_toast_display( 'textarea deleted' ).
         CLEAR mv_textarea.
 
       WHEN 'BUTTON_TEXTAREA_CONFIRM'.
-        client->popup_close( ).
+        client->popup_destroy( ).
 
       WHEN 'POPUP_TO_INPUT'.
         ms_popup_input-value1 = 'value1'.
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
         ui5_popup_table( ).
 
       WHEN 'POPUP_TABLE_CONTINUE'.
-        client->popup_close( ).
+        client->popup_destroy( ).
         DELETE t_tab WHERE selkz = abap_false.
         client->message_toast_display( `Entry selected: ` && VALUE #( t_tab[ 1 ]-title DEFAULT `no entry selected` )  ).
 

@@ -143,12 +143,12 @@ CLASS Z2UI5_CL_APP_DEMO_12 IMPLEMENTATION.
 
       WHEN 'POPUP_DECIDE_CONTINUE'.
         mv_main_view = 'MAIN'.
-        client->popup_close( ).
+        client->popup_destroy( ).
         client->message_toast_display( 'continue pressed' ).
 
       WHEN 'POPUP_DECIDE_CANCEL'.
         mv_main_view = 'MAIN'.
-        client->popup_close( ).
+        client->popup_destroy( ).
         client->message_toast_display( 'cancel pressed' ).
 
       WHEN 'BUTTON_POPUP_02'.
