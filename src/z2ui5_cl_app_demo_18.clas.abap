@@ -153,12 +153,12 @@ CLASS Z2UI5_CL_APP_DEMO_18 IMPLEMENTATION.
 
       WHEN 'POPUP_CONFIRM'.
         client->message_toast_display( |confirm| ).
-        client->popup_close( ).
+        client->popup_destroy( ).
 
       WHEN 'POPUP_CANCEL'.
         CLEAR mv_textarea.
         client->message_toast_display( |cancel| ).
-        client->popup_close( ).
+        client->popup_destroy( ).
 
       WHEN 'SHOW_VIEW_MAIN'.
         z2ui5_display_view_main( ).

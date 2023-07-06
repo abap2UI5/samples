@@ -75,10 +75,10 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_CANCEL'.
-        client->popup_close( ).
+        client->popup_destroy( ).
 
       WHEN 'BUTTON_CONFIRM'.
-        client->popup_close( ).
+        client->popup_destroy( ).
 
         DATA(game) = NEW z2ui5_cl_app_demo_64( ).
         game->mv_user = ms_popup_input-user.
@@ -106,10 +106,10 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
         DATA(lt_arg) = client->get( )-t_event_arg.
         ms_popup_start-name = lt_arg[ 1 ].
         popup_display_start( ).
-        client->popup_close( ).
+        client->popup_destroy( ).
 
       WHEN 'BUTTON_START'.
-        client->popup_close( ).
+        client->popup_destroy( ).
 
         SELECT SINGLE FROM z2ui5_t_demo_01
         FIELDS *
