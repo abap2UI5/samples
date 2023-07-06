@@ -18,25 +18,29 @@ CLASS z2ui5_cl_app_demo_66 DEFINITION
       BEGIN OF ts_tree_level3.
         INCLUDE TYPE ts_tree_row_base.
   TYPES END OF ts_tree_level3 .
-    TYPES:
+    TYPES
       tt_tree_level3 TYPE STANDARD TABLE OF ts_tree_level3 WITH KEY object .
-    TYPES:
+    TYPES
       BEGIN OF ts_tree_level2.
-        INCLUDE TYPE ts_tree_row_base.
+    INCLUDE TYPE ts_tree_row_base.
     TYPES   categories TYPE tt_tree_level3.
-    TYPES END OF ts_tree_level2 .
-    TYPES:
-      tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object .
+    TYPES END OF ts_tree_level2.
+
+    TYPES
+      tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object.
     TYPES:
       BEGIN OF ts_tree_level1.
         INCLUDE TYPE ts_tree_row_base.
     TYPES   categories TYPE tt_tree_level2.
     TYPES END OF ts_tree_level1 .
-    TYPES:
+    TYPES
       tt_tree_level1 TYPE STANDARD TABLE OF ts_tree_level1 WITH KEY object .
 
     DATA mt_tree TYPE tt_tree_level1.
     DATA check_initialized TYPE abap_bool .
+
+    DATA mv_check_enabled_01 TYPE abap_bool value abap_true.
+    DATA mv_check_enabled_02 TYPE abap_bool.
 
   PROTECTED SECTION.
 
@@ -79,6 +83,14 @@ CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
 
+
+      when `NEST_TEST`.
+
+      mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
+      mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
+
+      client->nest_view_model_update( ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
     ENDCASE.
@@ -87,9 +99,21 @@ CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client ).
+*    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client ).
 
-    DATA(col_layout) = lr_view->shell( )->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' ).
+      DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+         )->page(
+            title          = 'abap2UI5 - Games'
+            navbuttonpress = client->_event( 'BACK' )
+              shownavbutton = abap_true ).
+
+    page->header_content(
+             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->get_parent( ).
+
+      DATA(col_layout) =  page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' ).
+
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     client->_bind( mt_tree ).
@@ -109,19 +133,34 @@ CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
         )->tree_template(
         )->text( text = '{COL4}').
 
-    client->view_display( lr_view->stringify( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client
-  )->page( title = `Nested View`
-      )->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+
+     data(page) = lo_view_nested->page( title = `Nested View` ).
+
+      page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
       )->input( ).
 
-    client->view_display_nested(
+      page->button(
+            text = 'button 01'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_01 ) ).
+
+        page->button(
+            text = 'button 02'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_02 )
+           ).
+
+    client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = 'addMidColumnPage'

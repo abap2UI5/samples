@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_APP_DEMO_66</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Flexible Column Layout</DESCRIPT>
+    <DESCRIPT>nested view - master detail</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

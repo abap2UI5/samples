@@ -33,7 +33,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_49 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -73,6 +73,8 @@ CLASS z2ui5_cl_app_demo_49 IMPLEMENTATION.
           event_finished = 'TIMER_FINISHED'
         ).
         enddo.
+
+    client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).

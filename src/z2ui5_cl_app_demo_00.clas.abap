@@ -123,16 +123,22 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
          )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' ) ).
 
-    grid->simple_form( title = 'HowTo - View & Model' layout = 'ResponsiveGridLayout' )->content( 'form'
+    grid->simple_form( title = 'HowTo - Model Update' layout = 'ResponsiveGridLayout' )->content( 'form'
       )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
       )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
       )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
-      )->button( text = 'Nested View' press = client->_event( 'z2ui5_cl_app_demo_65' )
       ).
+
+    grid = page->grid( 'L3 M6 S12'
+        )->content( 'layout' ).
 
     grid->simple_form( title = 'HowTo - Draft'     layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Start same app' press = client->_event( 'z2ui5_cl_app_demo_62' )
         )->button( text = 'Call running apps' press = client->_event( 'z2ui5_cl_app_demo_63' ) ).
+
+    grid->simple_form( title = 'HowTo - Nested Views'     layout = 'ResponsiveGridLayout' )->content( 'form'
+        )->button( text = 'Basic' press = client->_event( 'z2ui5_cl_app_demo_65' )
+        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' ) ).
 
     client->view_display( page->stringify( ) ).
 

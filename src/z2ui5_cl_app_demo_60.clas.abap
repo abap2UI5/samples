@@ -54,6 +54,8 @@ CLASS z2ui5_cl_app_demo_60 IMPLEMENTATION.
           AND  Language = 'E'
           INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
 
+       client->view_model_update( ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
 

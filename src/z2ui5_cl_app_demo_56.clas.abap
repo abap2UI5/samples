@@ -60,7 +60,6 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
         get               TYPE z2ui5_if_client=>ty_s_get,
       END OF app.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render.
@@ -79,12 +78,12 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-private section.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
 
 
   METHOD hlp_get_range_by_value.
@@ -94,7 +93,6 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
       WHEN `=`.
         result = VALUE #(  option = `EQ` low = value+1 ).
-
       WHEN `<`.
         IF value+1(1) = `=`.
           result = VALUE #(  option = `LE` low = value+2 ).
@@ -155,9 +153,8 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     CLEAR mt_token.
     LOOP AT ms_filter-product REFERENCE INTO DATA(lr_row).
 
-      DATA(lv_value) = mt_mapping[ name = lr_row->option ]-value.
-
-      REPLACE `{LOW}` IN lv_value WITH lr_row->low.
+      DATA(lv_value) = mt_mapping[ n = lr_row->option ]-v.
+      REPLACE `{LOW}`  IN lv_value WITH lr_row->low.
       REPLACE `{HIGH}` IN lv_value WITH lr_row->high.
 
       INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE mt_token.
@@ -195,12 +192,6 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
         z2ui5_set_data( ).
 
       WHEN `FILTER_UPDATE`.
-
-*        app-next-s_cursor-id = `FILTER`.
-*        app-next-s_cursor-cursorpos = `999`.
-*        app-next-s_cursor-selectionend = `999`.
-*        app-next-s_cursor-selectionstart  = `999`.
-
         IF mv_value IS NOT INITIAL.
           DATA(ls_range) = hlp_get_range_by_value( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
@@ -233,10 +224,6 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
         app-view_popup = `VALUE_HELP`.
 
       WHEN `FILTER_VALUE_HELP`.
-*        app-next-s_cursor-id = `FILTER`.
-**        app-next-s_cursor-cursorpos = `999`.
-*        app-next-s_cursor-selectionend = `999`.
-*        app-next-s_cursor-selectionstart  = `999`.
         app-view_popup = `VALUE_HELP`.
 
         CLEAR mt_filter.
@@ -261,16 +248,16 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     app-view_main = `MAIN`.
 
     mt_mapping = VALUE #(
-    (  name = `EQ`      value = `={LOW}`    )
-    (   name = `LT`     value = `<{LOW}`   )
-    (   name = `LE`     value = `<={LOW}`  )
-    (   name = `GT`     value = `>{LOW}`   )
-    (   name = `GE`     value = `>={LOW}`  )
-    (   name = `CP`     value = `*{LOW}*`  )
-    (   name = `BT`     value = `{LOW}...{HIGH}` )
-    (   name = `NE`     value = `!(={LOW})`    )
-    (   name = `NE`     value = `!(<leer>)`    )
-    (   name = `<leer>` value = `<leer>`    )
+    (   n = `EQ`     v = `={LOW}`    )
+    (   n = `LT`     v = `<{LOW}`   )
+    (   n = `LE`     v = `<={LOW}`  )
+    (   n = `GT`     v = `>{LOW}`   )
+    (   n = `GE`     v = `>={LOW}`  )
+    (   n = `CP`     v = `*{LOW}*`  )
+    (   n = `BT`     v = `{LOW}...{HIGH}` )
+    (   n = `NE`     v = `!(={LOW})`    )
+    (   n = `NE`     v = `!(<leer>)`    )
+    (   n = `<leer>` v = `<leer>`    )
     ).
 
   ENDMETHOD.
@@ -297,17 +284,17 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-       view = view->page( id = `page_main`
-                title          = 'abap2UI5 - List Report Features'
-                navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
-                )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
-           )->get_parent( ).
+    view = view->page( id = `page_main`
+             title          = 'abap2UI5 - List Report Features'
+             navbuttonpress = client->_event( 'BACK' )
+             shownavbutton  = abap_true
+         )->header_content(
+             )->link(
+                 text = 'Demo' target = '_blank'
+                 href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
+             )->link(
+                 text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+        )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
             headerexpanded = abap_true
@@ -336,13 +323,13 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
                     id              = `FILTER`
                     valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
                 )->item(
-                        key = `{KEY}`
+                        key  = `{KEY}`
                         text = `{TEXT}`
                 )->tokens(
                     )->token(
-                        key = `{KEY}`
-                        text = `{TEXT}`
-                        visible = `{VISIBLE}`
+                        key      = `{KEY}`
+                        text     = `{TEXT}`
+                        visible  = `{VISIBLE}`
                         selected = `{SELKZ}`
                         editable = `{EDITABLE}`
         ).
@@ -393,7 +380,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     DATA(item) = pan->list(
            "   headertext = `Product`
               noData = `no conditions defined`
-             items           = client->_bind( mt_filter )
+             items           = client->_bind_edit( mt_filter )
              selectionchange = client->_event( 'SELCHANGE' )
                 )->custom_list_item( ).
 
@@ -401,14 +388,14 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
     grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = client->_bind( mt_mapping )
+                 items       = client->_bind_Edit( mt_mapping )
              )->item(
-                     key = '{NAME}'
-                     text = '{NAME}'
+                     key = '{N}'
+                     text = '{N}'
              )->get_parent(
              )->input( value = `{LOW}`
              )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` t_arg = value #( ( `${KEY}` ) ) )
+             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) )
              ).
 
     lo_popup->footer( )->overflow_toolbar(

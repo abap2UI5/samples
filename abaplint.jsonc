@@ -234,7 +234,7 @@
     "types_naming": false,
     "uncaught_exception": true,
     "unknown_types": true,
-    "unnecessary_chaining": true,
+    "unnecessary_chaining": false,
     "unnecessary_pragma": true,
     "unnecessary_return": true,
     "unreachable_code": true,
