@@ -131,7 +131,7 @@ CLASS Z2UI5_CL_APP_DEMO_12 IMPLEMENTATION.
 
     IF mv_check_popup = abap_true.
       mv_check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_app_demo_20( client->get_app( client->get( )-id_prev_app )  ).
+      DATA(app) = CAST z2ui5_cl_app_demo_20( client->get_app( client->get( )-s_draft-id_prev_app )  ).
       client->message_toast_display( app->mv_event && ` pressed` ).
     ENDIF.
 
@@ -186,7 +186,7 @@ CLASS Z2UI5_CL_APP_DEMO_12 IMPLEMENTATION.
         RETURN.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 

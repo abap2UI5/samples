@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_62 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_62 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_app_demo_62 IMPLEMENTATION.
     z2ui5_on_event( client ).
     z2ui5_on_rendering( client ).
 
-    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-id name = 'TEST01' ) ).
+    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST01' ) ).
     COMMIT WORK.
 
   ENDMETHOD.
@@ -74,11 +74,12 @@ CLASS z2ui5_cl_app_demo_62 IMPLEMENTATION.
 *        CLEAR screen.
 *        client->message_toast_display( 'View initialized' ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_on_rendering.
 

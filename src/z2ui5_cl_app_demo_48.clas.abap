@@ -57,7 +57,7 @@ CLASS Z2UI5_CL_APP_DEMO_48 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
         client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
