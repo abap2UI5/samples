@@ -49,7 +49,7 @@ CLASS z2ui5_cl_app_demo_24 IMPLEMENTATION.
         client->nav_app_call( lo_app_next  ).
 
       WHEN 'BACK'.
-        DATA(lo_prev_stack_app) = client->get_app( client->get( )-id_prev_app_stack ).
+        DATA(lo_prev_stack_app) = client->get_app( client->get( )-s_draft-id_prev_app_stack ).
         client->nav_app_leave( lo_prev_stack_app ).
 
       WHEN OTHERS.

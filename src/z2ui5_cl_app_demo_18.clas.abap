@@ -167,7 +167,7 @@ CLASS Z2UI5_CL_APP_DEMO_18 IMPLEMENTATION.
         z2ui5_display_view_second( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
