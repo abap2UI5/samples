@@ -144,7 +144,7 @@ CLASS Z2UI5_CL_APP_DEMO_58 IMPLEMENTATION.
         app-view_popup = `POPUP_SAVE`.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
   ENDMETHOD.
