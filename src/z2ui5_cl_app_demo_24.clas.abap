@@ -19,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_24 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_24 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -56,13 +56,14 @@ CLASS z2ui5_cl_app_demo_24 IMPLEMENTATION.
 
         CASE mv_backend_event.
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
-            DATA(lo_called_app) = CAST z2ui5_cl_app_demo_25( client->get_app( client->get( )-id_prev_app ) ).
+            DATA(lo_called_app) = CAST z2ui5_cl_app_demo_25( client->get_app( client->get( )-s_draft-id_prev_app ) ).
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
         ENDCASE.
 
     ENDCASE.
 
   ENDMETHOD.
+
 
   METHOD display_view.
 
@@ -94,5 +95,4 @@ CLASS z2ui5_cl_app_demo_24 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
