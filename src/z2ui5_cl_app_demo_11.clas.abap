@@ -60,6 +60,7 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
           lr_tab->editable = check_editable_active.
         ENDLOOP.
 
+
       WHEN 'BUTTON_DELETE'.
         DELETE t_tab WHERE selkz = abap_true.
 
@@ -67,9 +68,11 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
         INSERT VALUE #( ) INTO TABLE t_tab.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
+
+    client->view_model_update( ).
 
   ENDMETHOD.
 

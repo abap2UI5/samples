@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_APP_DEMO_32 IMPLEMENTATION.
         client->message_toast_display( 'MYCC event ' && mv_value ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 

@@ -9,7 +9,8 @@ CLASS z2ui5_cl_app_demo_00 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -17,7 +18,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN OTHERS.
         TRY.

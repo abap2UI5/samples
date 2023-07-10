@@ -138,14 +138,14 @@ CLASS Z2UI5_CL_APP_DEMO_26 IMPLEMENTATION.
 
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).
-        client->popover_close( ).
+        client->popover_destroy( ).
 
       WHEN 'BUTTON_CANCEL'.
         client->message_toast_display( |cancel| ).
-        client->popover_close( ).
+        client->popover_destroy( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 

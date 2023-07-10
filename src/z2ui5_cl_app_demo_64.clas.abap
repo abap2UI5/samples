@@ -41,7 +41,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_64 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -57,17 +57,18 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
         ENDIF.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
     z2ui5_on_rendering( client ).
 
     check_db_load = abap_true.
-    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-id name = 'TEST02' game = mv_game ) ).
+    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST02' game = mv_game ) ).
     COMMIT WORK.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_on_rendering.
 
@@ -112,6 +113,7 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD call_newest_state.
 
     SELECT SINGLE FROM z2ui5_t_demo_01
@@ -120,7 +122,7 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
                 game = @mv_game
           INTO @DATA(ls_data).
 
-    IF sy-subrc = 0 AND ls_data-uuid <> client->get( )-id.
+    IF sy-subrc = 0 AND ls_data-uuid <> client->get( )-s_draft-id.
       SELECT SINGLE FROM z2ui5_t_draft
        FIELDS *
       WHERE uuid = @ls_data-uuid
@@ -140,5 +142,4 @@ CLASS z2ui5_cl_app_demo_64 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.

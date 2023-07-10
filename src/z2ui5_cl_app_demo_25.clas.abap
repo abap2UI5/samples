@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
         client->nav_app_call( NEW z2ui5_cl_app_demo_01( ) ).
 
       WHEN 'BUTTON_READ_PREVIOUS'.
-        DATA(lo_previous_app) = CAST z2ui5_cl_app_demo_24( client->get_app( client->get( )-id_prev_app ) ).
+        DATA(lo_previous_app) = CAST z2ui5_cl_app_demo_24( client->get_app( client->get( )-s_draft-id_prev_app ) ).
         mv_input_previous = lo_previous_app->mv_input2.
         client->message_toast_display( `data of previous app read` ).
 
@@ -41,12 +41,12 @@ CLASS Z2UI5_CL_APP_DEMO_25 IMPLEMENTATION.
         mv_show_view = 'MAIN'.
 
       WHEN 'BACK_WITH_EVENT'.
-        lo_previous_app = CAST z2ui5_cl_app_demo_24( client->get_app( client->get( )-id_prev_app_stack ) ).
+        lo_previous_app = CAST z2ui5_cl_app_demo_24( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         lo_previous_app->mv_backend_event = 'CALL_PREVIOUS_APP_INPUT_RETURN'.
         client->nav_app_leave( lo_previous_app ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN OTHERS.
 

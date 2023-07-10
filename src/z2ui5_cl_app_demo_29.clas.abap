@@ -127,7 +127,7 @@ CLASS Z2UI5_CL_APP_DEMO_29 IMPLEMENTATION.
       DATA(lv_version) = to_upper( client->get( )-s_config-version ).
       IF lv_version CS `OPEN`.
         client->message_box_display( text = `Charts are not avalaible with OpenUI5, change your UI5 library first` type = `error` ).
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
       ENDIF.
 
       render_tab_radial( ).
@@ -136,7 +136,7 @@ CLASS Z2UI5_CL_APP_DEMO_29 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
   ENDMETHOD.

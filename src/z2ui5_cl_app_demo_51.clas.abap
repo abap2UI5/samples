@@ -29,7 +29,7 @@ CLASS Z2UI5_CL_APP_DEMO_51 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
     ENDCASE.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
