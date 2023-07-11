@@ -122,6 +122,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
          )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
+         )->button( text = 'Currency Format' press = client->_event( 'z2ui5_cl_app_demo_67' )
          )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' ) ).
 
     grid->simple_form( title = 'HowTo - Model Update' layout = 'ResponsiveGridLayout' )->content( 'form'
