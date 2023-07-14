@@ -61,10 +61,12 @@ ENDCLASS.
 CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
 
 
-  method SET_SELKZ.
-    loop at mt_table into data(ls_table).
-      ls_table-selkz = iv_selkz.
-      modify mt_table from ls_table.
+  method set_selkz.
+    FIELD-SYMBOLS: <ls_table> type ty_s_tab.
+
+    loop at mt_table ASSIGNING <ls_table>.
+      <ls_table>-selkz = iv_selkz.
+      modify mt_table from <ls_table>.
     endloop.
   endmethod.
 
