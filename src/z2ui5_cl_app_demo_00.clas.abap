@@ -110,7 +110,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' ) ).
 
     grid->simple_form( title = 'HowTo - Tree Controls'     layout = 'ResponsiveGridLayout' )->content( 'form'
-          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' ) ).
+          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
+          )->button( text = 'Popup Select Entry' press = client->_event( 'z2ui5_cl_app_demo_68' ) ).
 
     grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
       )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
