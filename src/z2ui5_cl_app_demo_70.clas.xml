@@ -11,21 +11,6 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
-   <DESCRIPTIONS>
-    <SEOCOMPOTX>
-     <CMPNAME>LV_SELETED_INDEX</CMPNAME>
-     <LANGU>D</LANGU>
-     <DESCRIPT>Ganze Zahl mit Vorzeichen (-2.147.483.648 .. 2.147.483.647)</DESCRIPT>
-    </SEOCOMPOTX>
-   </DESCRIPTIONS>
-   <DESCRIPTIONS_SUB>
-    <SEOSUBCOTX>
-     <CMPNAME>SET_SELKZ</CMPNAME>
-     <SCONAME>IV_SELKZ</SCONAME>
-     <LANGU>D</LANGU>
-     <DESCRIPT>Wahrheitswert: wahr/falsch</DESCRIPT>
-    </SEOSUBCOTX>
-   </DESCRIPTIONS_SUB>
   </asx:values>
  </asx:abap>
 </abapGit>
