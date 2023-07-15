@@ -4,8 +4,7 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -21,8 +20,8 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
         waers            TYPE waers,
         selected         TYPE abap_bool,
       END OF ty_s_tab .
-    TYPES:
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+
     TYPES:
       BEGIN OF ty_S_filter_pop,
         option TYPE string,
@@ -50,7 +49,7 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
 
     METHODS set_selkz
       IMPORTING
-        !iv_selkz TYPE abap_boolean.
+        iv_selkz TYPE abap_boolean.
 
 ENDCLASS.
 
@@ -65,7 +64,6 @@ CLASS z2ui5_cl_app_demo_70 IMPLEMENTATION.
 
     LOOP AT mt_table ASSIGNING <ls_table>.
       <ls_table>-selkz = iv_selkz.
-*      MODIFY mt_table FROM <ls_table>.
     ENDLOOP.
 
   ENDMETHOD.
@@ -207,14 +205,13 @@ CLASS z2ui5_cl_app_demo_70 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( selkz = abap_false row_id = '1' product = 'table' create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' )
-        ( selkz = abap_false row_id = '2' product = 'chair' create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD')
-        ( selkz = abap_false row_id = '3' product = 'sofa' create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' )
+        ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' )
+        ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD')
+        ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' )
         ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' )
-        ( selkz = abap_false row_id = '5' product = 'printer' create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR')
-        ( selkz = abap_false row_id = '6' product = 'table2' create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' )
+        ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR')
+        ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' )
     ).
-
 
   ENDMETHOD.
 
