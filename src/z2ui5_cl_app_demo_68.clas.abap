@@ -28,6 +28,9 @@ CLASS z2ui5_cl_app_demo_68 DEFINITION
 
     DATA prodh_nodes    TYPE ty_prodh_nodes.
     DATA is_initialized TYPE abap_bool.
+    METHODS ui5_display_view
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -51,15 +54,18 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
       is_initialized = abap_true.
       ui5_initialize( ).
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->button( text = 'TEST' press = client->_event( 'POPUP_TREE' )
-        )->stringify( ) ).
+      ui5_display_view( client ).
 
     ENDIF.
 
     CASE client->get( )-event.
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
       WHEN 'POPUP_TREE'.
         ui5_display_popup_tree_select( ).
+
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
         client->message_box_display( `Selected entry is set in the backend` ).
@@ -125,6 +131,24 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
     ).
 
     client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD ui5_display_view.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+         )->page(
+            title          = 'abap2UI5 - Popup Tree select Entry'
+            navbuttonpress = client->_event( 'BACK' )
+              shownavbutton = abap_true ).
+
+    page->header_content(
+*                )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->get_parent( ).
+
+    client->view_display( page->button( text = 'Open Popup here...' press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
 
   ENDMETHOD.
 

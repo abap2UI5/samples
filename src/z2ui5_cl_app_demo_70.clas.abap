@@ -135,12 +135,10 @@ CLASS z2ui5_cl_app_demo_70 IMPLEMENTATION.
     (   n = `<leer>` v = `<leer>`    )
     ).
 
-
-
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page1) = view->page( id = `page_main`
-            title          = 'abap2UI5 - Ui Table Features'
+            title          = 'abap2UI5 - sap.ui.table.Table Features'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true
             class = 'sapUiContentPadding' ).

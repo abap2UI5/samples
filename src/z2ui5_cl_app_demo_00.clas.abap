@@ -64,12 +64,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         )->button( text = 'More Controls'   press = client->_event( 'z2ui5_cl_app_demo_05' )
         )->button( text = 'F4-Value-Help'   press = client->_event( 'Z2UI5_CL_APP_DEMO_09' ) ).
 
-    grid->simple_form( title = 'HowTo - Tables I' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'List I'                    press = client->_event( 'z2ui5_cl_app_demo_03' )
-        )->button( text = 'List II'                   press = client->_event( 'z2ui5_cl_app_demo_48' )
-        )->button( text = 'Toolbar & Container'  press = client->_event( 'z2ui5_cl_app_demo_06' ) ).
-
     grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
+         )->button( text = 'Toolbar & Container'  press = client->_event( 'z2ui5_cl_app_demo_06' )
          )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
          )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
          )->button( text = 'Dynamic Types' press = client->_event( 'z2ui5_cl_app_demo_61' ) ).
@@ -142,6 +138,19 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - Nested Views'     layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Basic' press = client->_event( 'z2ui5_cl_app_demo_65' )
         )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' ) ).
+
+      grid = page->grid( 'L3 M6 S12'
+        )->content( 'layout' ).
+
+    grid->simple_form( title = 'sap.m.List'     layout = 'ResponsiveGridLayout' )->content( 'form'
+            )->button( text = 'List I'                    press = client->_event( 'z2ui5_cl_app_demo_03' )
+        )->button( text = 'List II'                   press = client->_event( 'z2ui5_cl_app_demo_48' )
+        ).
+
+    grid->simple_form( title = 'sap.ui.Table'     layout = 'ResponsiveGridLayout' )->content( 'form'
+            )->button( text = 'Simple'                    press = client->_event( 'z2ui5_cl_app_demo_70' )
+        ).
+
 
     client->view_display( page->stringify( ) ).
 
