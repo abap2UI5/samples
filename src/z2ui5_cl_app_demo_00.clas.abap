@@ -41,6 +41,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         shownavbutton = abap_true
         )->header_content(
             )->toolbar_spacer(
+*            )->button( text = 'TEST'  press = `MessageToast.show('Selected action is test')`
+*            )->button( text = 'TEST2'  press = `URLHelper.triggerTel('01763578')`
             )->link( text = 'SCN'     target = '_blank' href = 'https://blogs.sap.com/tag/abap2ui5/'
             )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'

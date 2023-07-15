@@ -28,18 +28,18 @@ CLASS z2ui5_cl_app_demo_68 DEFINITION
 
     DATA prodh_nodes    TYPE ty_prodh_nodes.
     DATA is_initialized TYPE abap_bool.
+
     METHODS ui5_display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
     METHODS ui5_initialize.
     METHODS ui5_display_popup_tree_select.
 
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -53,9 +53,7 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
     IF is_initialized = abap_false.
       is_initialized = abap_true.
       ui5_initialize( ).
-
       ui5_display_view( client ).
-
     ENDIF.
 
     CASE client->get( )-event.
@@ -72,6 +70,7 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
 
       WHEN 'CANCEL'.
         client->popup_destroy( ).
+
     ENDCASE.
 
   ENDMETHOD.
@@ -83,9 +82,9 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
                prodh = '00100'
                nodes = VALUE #( ( text = 'Pumps'
                                   prodh = '0010000100'
-                                  nodes = VALUE #( ( text = 'Displacement pump'
+                                  nodes = VALUE #( ( text = 'Pump 001'
                                                      prodh = '001000010000000100' )
-                                                   ( text = 'Centrifugal pump'
+                                                   ( text = 'Pump 002'
                                                      prodh = '001000010000000105' )
                                           )
                        ) )
@@ -94,43 +93,41 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
                prodh = '00110'
                nodes = VALUE #( ( text = 'Gloss paints'
                                   prodh = '0011000105'
-                                  nodes = VALUE #( ( text = 'Opaque'
+                                  nodes = VALUE #( ( text = 'Paint 001'
                                                      prodh = '001100010500000100' )
-                                                   ( text = 'Clear'
+                                                   ( text = 'Paint 002'
                                                      prodh = '001100010500000105' )
                                           )
                        ) )
              )
     ).
+
+
   ENDMETHOD.
 
 
   METHOD ui5_display_popup_tree_select.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( client
+        )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
-    DATA(dialog) = popup->dialog( title         = 'choose prod hier'
-                                  contentheight = '50%'
-                                  contentwidth  = '50%' ).
-
-    dialog->tree( mode  = 'SingleSelectMaster'
-                  items = client->_bind_edit( prodh_nodes )
+    dialog->tree(
+        mode  = 'SingleSelectMaster'
+        items = client->_bind_edit( prodh_nodes )
         )->items(
-            )->standard_tree_item( selected = '{IS_SELECTED}'
-            title = '{TEXT}'
-    ).
+            )->standard_tree_item( selected = '{IS_SELECTED}' title = '{TEXT}' ).
+
     dialog->buttons(
-    )->button( text  = 'Continue'
-               icon  = `sap-icon://accept` ##NO_TEXT
+        )->button( text  = 'Continue'
+               icon  = `sap-icon://accept`
                type  = `Accept`
                press = client->_event( 'CONTINUE' )
-    )->button( text  = 'Cancel'
+        )->button( text  = 'Cancel'
                icon  = `sap-icon://decline`
                type  = `Reject`
-               press = client->_event( 'CANCEL' )
-    ).
+               press = client->_event( 'CANCEL' ) ).
 
-    client->popup_display( popup->stringify( ) ).
+    client->popup_display( dialog->stringify( ) ).
 
   ENDMETHOD.
 
