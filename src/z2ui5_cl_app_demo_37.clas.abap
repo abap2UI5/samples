@@ -12,9 +12,9 @@ CLASS z2ui5_cl_app_demo_37 DEFINITION PUBLIC.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+*        view_main         TYPE string,
+*        view_popup        TYPE string,
+*        get               TYPE z2ui5_if_client=>ty_s_get,
       END OF app.
 
     DATA mv_load_cc    TYPE abap_bool.
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_app_demo_37 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-    METHODS z2ui5_on_init.
+    METHODS z2ui5_load_cc.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render.
 
@@ -33,12 +33,12 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_37 IMPLEMENTATION.
 
 
   METHOD get_js_custom_control.
 
-    result = `<script>if(!z2ui5.MyCC){ jQuery.sap.declare("z2ui5.MyCC");` && |\n|  &&
+    result = `<html:script>if(!z2ui5.MyCC){ jQuery.sap.declare("z2ui5.MyCC");` && |\n|  &&
                             `    sap.ui.define( [` && |\n|  &&
                             `        "sap/ui/core/Control",` && |\n|  &&
                             `    ], function (Control) {` && |\n|  &&
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
                             `                oRm.renderControl(oControl.oButton);` && |\n|  &&
                             `            }` && |\n|  &&
                             `    });` && |\n|  &&
-                            `}); } </script>`.
+                            `}); } </html:script>`.
 
 
   ENDMETHOD.
@@ -81,34 +81,31 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    app-get      = client->get( ).
-    app-view_popup = ``.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
     ENDIF.
 
-    IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
+    z2ui5_on_event( ).
     z2ui5_on_render( ).
-
-    CLEAR app-get.
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
+    CASE client->get( )-event.
+
+      WHEN `DISPLAY_VIEW`.
+        z2ui5_on_render( ).
 
       WHEN 'POST'.
-        client->message_toast_display( app-get-t_event_arg[ 1 ] ).
+        data(lt_arg) = client->get( )-t_event_arg.
+        client->message_toast_display( lt_arg[ 1 ] ).
 
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.
+        z2ui5_load_cc( ).
         client->message_box_display( 'Custom Control loaded ' ).
 
       WHEN 'DISPLAY_CC'.
@@ -119,22 +116,31 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
         client->message_toast_display( `Custom Control input: ` && mv_value ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD z2ui5_load_cc.
+
+    client->view_display( z2ui5_cl_xml_view=>factory( client
+         )->zz_plain( get_js_custom_control( )
+         )->stringify( ) ).
+
+    client->timer_set(
+      interval_ms    = '0'
+      event_finished = 'DISPLAY_VIEW'
+    ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_render.
 
-    data(view) = z2ui5_cl_xml_view=>factory( client ).
-    data(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n|  &&
                           `    ><m:Button ` && |\n|  &&
@@ -148,10 +154,10 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
                           `</head>` && |\n|  &&
                           `<body>`.
 
-    IF mv_load_cc = abap_true.
-      mv_load_cc = abap_false.
-      lv_xml = lv_xml && get_js_custom_control( ).
-    ENDIF.
+*    IF mv_load_cc = abap_true.
+*      mv_load_cc = abap_false.
+*      lv_xml = lv_xml && get_js_custom_control( ).
+*    ENDIF.
 
     IF mv_display_cc = abap_true.
       lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( 'MYCC' ) && `"  value="` && client->_bind_edit( mv_value ) && `"/>`.
