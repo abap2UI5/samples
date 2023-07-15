@@ -189,9 +189,7 @@
     "parser_missing_space": false,
     "pragma_style": false,
     "prefer_corresponding": true,
-    "prefer_inline": {
-      "severity": "Warning"
-    },
+    "prefer_inline": false,
     "prefer_is_not": true,
     "prefer_raise_exception_new": true,
     "prefer_returning_to_exporting": false,
@@ -242,10 +240,7 @@
     "unused_ddic": true,
     "unused_methods": true,
     "unused_types": true,
-    "unused_variables": {
-      "severity": "Error",
-      "skipNames": ["lv_dummy", "i_mv_editor"]
-    },
+    "unused_variables": false,
     "use_bool_expression": true,
     "use_class_based_exceptions": true,
     "use_line_exists": true,
