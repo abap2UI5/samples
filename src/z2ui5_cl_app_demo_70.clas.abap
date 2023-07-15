@@ -31,14 +31,11 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
         key    TYPE string,
       END OF ty_S_filter_pop .
 
-    DATA:
-      mt_filter TYPE STANDARD TABLE OF ty_S_filter_pop WITH EMPTY KEY .
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value .
     DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
-    DATA selectedindex TYPE string .
-    DATA lv_seleted_index TYPE i .
     DATA lv_selkz TYPE abap_bool .
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -53,7 +50,8 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
 
     METHODS set_selkz
       IMPORTING
-        !iv_selkz TYPE abap_boolean .
+        !iv_selkz TYPE abap_boolean.
+
 ENDCLASS.
 
 
@@ -62,12 +60,14 @@ CLASS z2ui5_cl_app_demo_70 IMPLEMENTATION.
 
 
   METHOD set_selkz.
+
     FIELD-SYMBOLS: <ls_table> TYPE ty_s_tab.
 
     LOOP AT mt_table ASSIGNING <ls_table>.
       <ls_table>-selkz = iv_selkz.
-      MODIFY mt_table FROM <ls_table>.
+*      MODIFY mt_table FROM <ls_table>.
     ENDLOOP.
+
   ENDMETHOD.
 
 
