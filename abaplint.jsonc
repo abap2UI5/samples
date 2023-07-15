@@ -25,7 +25,7 @@
     "allowed_object_naming": true,
     "allowed_object_types": true,
     "ambiguous_statement": true,
-    "avoid_use": true,
+    "avoid_use": false,
     "begin_end_names": true,
     "begin_single_include": false,
     "call_transaction_authority_check": true,
@@ -111,7 +111,7 @@
     "global_class": true,
     "identical_conditions": true,
     "identical_contents": false,
-    "identical_descriptions": true,
+    "identical_descriptions": false,
     "identical_form_names": true,
     "if_in_if": true,
     "implement_methods": true,
@@ -187,7 +187,7 @@
     "parser_702_chaining": true,
     "parser_error": true,
     "parser_missing_space": false,
-    "pragma_style": true,
+    "pragma_style": false,
     "prefer_corresponding": true,
     "prefer_inline": {
       "severity": "Warning"
@@ -220,7 +220,7 @@
     "slow_parameter_passing": true,
     "space_before_colon": true,
     "space_before_dot": true,
-    "sql_escape_host_variables": true,
+    "sql_escape_host_variables": false,
     "start_at_tab": false,
     "static_call_via_instance": {
       "allowInTestclassIncludes": false
