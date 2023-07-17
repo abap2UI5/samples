@@ -11,18 +11,15 @@ CLASS z2ui5_cl_app_demo_69 DEFINITION
       BEGIN OF ty_t_tree3,
         is_selected TYPE abap_bool,
         text        TYPE string,
-        prodh       TYPE string,
       END OF ty_t_tree3,
       BEGIN OF ty_t_tree2,
         is_selected TYPE abap_bool,
         text        TYPE string,
-        prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_t_tree3 WITH DEFAULT KEY,
       END OF ty_t_tree2,
       BEGIN OF ty_t_tree1,
         is_selected TYPE abap_bool,
         text        TYPE string,
-        prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_t_tree2 WITH DEFAULT KEY,
       END OF ty_t_tree1,
       ty_t_tree TYPE STANDARD TABLE OF ty_t_tree1 WITH DEFAULT KEY.
@@ -59,13 +56,11 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
       check_initialized = abap_true.
 
       mt_tree = VALUE #( ( text = 'Apps'
-                    prodh = '00100'
                     nodes = VALUE #( ( text  = 'Frontend'
                                        nodes = VALUE #( ( text = 'App_001' )
                                                         ( text = 'App_002' )
                   ) ) ) )
                   ( text = 'Configuration'
-                    prodh = '00110'
                     nodes = VALUE #( ( text  = 'User Interface'
                                        nodes = VALUE #( ( text = 'Theme'   )
                                                         ( text = 'Library' )
@@ -111,7 +106,7 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->shell( )->page(
-          title          = 'abap2UI5 - Partly rerendering with nested Views'
+          title          = 'abap2UI5 - Partly rerendering of nested views'
           navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true
           )->header_content(
@@ -167,20 +162,6 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
           text = 'button 01'
           press   = client->_event( `NEST_TEST` )
           enabled = client->_bind( mv_check_enabled_01 ) ).
-
-    page->button(
-        text = 'button 01'
-        press   = client->_event( `NEST_TEST` )
-        enabled = client->_bind( mv_check_enabled_01 ) ).
-
-    page->button(
-        text = 'button 01'
-        press   = client->_event( `NEST_TEST` )
-        enabled = client->_bind( mv_check_enabled_01 ) ).
-    page->button(
-text = 'button 01'
-press   = client->_event( `NEST_TEST` )
-enabled = client->_bind( mv_check_enabled_01 ) ).
 
     page->button(
         text = 'button 02'
