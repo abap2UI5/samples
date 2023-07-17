@@ -39,7 +39,8 @@ CLASS z2ui5_cl_app_demo_69 DEFINITION
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
-    METHODS view_display_detail.
+    METHODS view_display_app_01.
+    METHODS view_display_app_02.
 
   PRIVATE SECTION.
 
@@ -81,12 +82,16 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `UPDATE_DETAIL`.
-        view_display_detail(  ).
+        view_display_app_01(  ).
 
       WHEN `EVENT_ITEM`.
         DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_box_display( `event ` && lt_arg[ 1 ] ).
-        view_display_detail(  ).
+        CASE lt_arg[ 1 ].
+          WHEN 'App_001'.
+            view_display_app_01(  ).
+          WHEN 'App_002'.
+            view_display_app_02(  ).
+        ENDCASE.
 
       WHEN `NEST_TEST`.
         mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
@@ -106,7 +111,7 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->shell( )->page(
-          title          = 'abap2UI5 - Partial Rendering with nested Views'
+          title          = 'abap2UI5 - Partly rerendering with nested Views'
           navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true
           )->header_content(
@@ -127,19 +132,55 @@ CLASS z2ui5_cl_app_demo_69 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display_detail.
+  METHOD view_display_app_01.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
 
-    DATA(page) = lo_view_nested->page( title = `Nested View` ).
+    DATA(page) = lo_view_nested->page( title = `APP_01` ).
 
-    page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
+    page->button( text = 'Update this view' press = client->_event( 'UPDATE_DETAIL' ) ).
+
+    client->nest_view_display(
+      val            = lo_view_nested->stringify( )
+      id             = `test`
+      method_insert  = 'addMidColumnPage'
+      method_destroy = 'removeAllMidColumnPages'
+    ).
+
+  ENDMETHOD.
+
+  METHOD view_display_app_02.
+
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+
+    DATA(page) = lo_view_nested->page( title = `APP_02` ).
+
+    page->button( text = 'Update this view' press = client->_event( 'UPDATE_DETAIL' )
     )->input( ).
 
     page->button(
           text = 'button 01'
           press   = client->_event( `NEST_TEST` )
           enabled = client->_bind( mv_check_enabled_01 ) ).
+
+    page->button(
+          text = 'button 01'
+          press   = client->_event( `NEST_TEST` )
+          enabled = client->_bind( mv_check_enabled_01 ) ).
+
+    page->button(
+        text = 'button 01'
+        press   = client->_event( `NEST_TEST` )
+        enabled = client->_bind( mv_check_enabled_01 ) ).
+
+    page->button(
+        text = 'button 01'
+        press   = client->_event( `NEST_TEST` )
+        enabled = client->_bind( mv_check_enabled_01 ) ).
+    page->button(
+text = 'button 01'
+press   = client->_event( `NEST_TEST` )
+enabled = client->_bind( mv_check_enabled_01 ) ).
 
     page->button(
         text = 'button 02'

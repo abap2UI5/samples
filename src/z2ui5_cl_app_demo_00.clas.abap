@@ -111,6 +111,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
           )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
           )->button( text = 'Popup Select Entry' press = client->_event( 'z2ui5_cl_app_demo_68' ) ).
 
+
     grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
       )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
       )->button( text = 'Donut Chart' press = client->_event( 'z2ui5_cl_app_demo_13' )
@@ -140,7 +141,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     grid->simple_form( title = 'HowTo - Nested Views'     layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Basic' press = client->_event( 'z2ui5_cl_app_demo_65' )
-        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' ) ).
+        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' )
+        )->button( text = 'Master Detail with Tree' press = client->_event( 'z2ui5_cl_app_demo_69' )  ).
 
       grid = page->grid( 'L3 M6 S12'
         )->content( 'layout' ).
