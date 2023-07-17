@@ -115,7 +115,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
       )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
       )->button( text = 'Donut Chart' press = client->_event( 'z2ui5_cl_app_demo_13' )
       )->button( text = 'Line Chart' press = client->_event( 'z2ui5_cl_app_demo_14' )
-      )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' ) ).
+      )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' )
+      )->button( text = 'Monitor' press = client->_event( 'z2ui5_cl_app_demo_41' ) ).
 
     grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )

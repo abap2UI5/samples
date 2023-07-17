@@ -36,7 +36,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_41 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -54,7 +54,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
       z2ui5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+          z2ui5_on_render( ).
 
     CLEAR app-get.
 
@@ -90,10 +90,10 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-        client->timer_set(
-          interval_ms    = '2000'
-          event_finished = 'TIMER_FINISHED'
-        ).
+    client->timer_set(
+      interval_ms    = '2000'
+      event_finished = 'TIMER_FINISHED'
+    ).
 
   ENDMETHOD.
 
@@ -101,7 +101,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
   METHOD z2ui5_on_render.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
-    lo_view->shell( )->page(
+    DATA(lo_view2) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
@@ -113,7 +113,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
          )->get_parent(
           ).
 
-    DATA(point) = lo_View->flex_box(
+    DATA(point) = lo_view2->flex_box(
         width      = '22rem'
         height     = '13rem'
         alignitems = 'Center'
@@ -127,7 +127,7 @@ CLASS Z2UI5_CL_APP_DEMO_41 IMPLEMENTATION.
       point->interact_line_chart_point( label = lr_line->title  value = CONV string( sy-tabix )  ).
     ENDLOOP.
 
-    lo_view->list(
+    lo_view2->list(
          headertext = 'Data auto refresh (2 sec)'
          items      = client->_bind( t_tab )
          )->standard_list_item(
