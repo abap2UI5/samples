@@ -38,16 +38,23 @@ CLASS Z2UI5_CL_APP_DEMO_18 IMPLEMENTATION.
                           height = '100%'
                           width  = '100%'
                           value  = client->_bind_edit( mv_textarea )
-                  )->get_parent(
-                  )->footer( )->overflow_toolbar(
-                      )->toolbar_spacer(
-                      )->button(
+                        )->button(
                           text  = 'Cancel'
                           press = client->_event( 'POPUP_CANCEL' )
                       )->button(
                           text  = 'Confirm'
                           press = client->_event( 'POPUP_CONFIRM' )
-                          type  = 'Emphasized' ).
+                          type  = 'Emphasized'  ).
+*                  )->get_parent(
+*                  )->footer( )->overflow_toolbar(
+*                      )->toolbar_spacer(
+*                      )->button(
+*                          text  = 'Cancel'
+*                          press = client->_event( 'POPUP_CANCEL' )
+*                      )->button(
+*                          text  = 'Confirm'
+*                          press = client->_event( 'POPUP_CONFIRM' )
+*                          type  = 'Emphasized' ).
 
     client->popup_display( view->stringify( ) ).
 

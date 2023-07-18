@@ -23,7 +23,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_47 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_47 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -60,21 +60,20 @@ CLASS Z2UI5_CL_APP_DEMO_47 IMPLEMENTATION.
                 )->content( 'form'
                     )->title( 'Input'
                     )->label( 'integer'
-                    )->input( value = client->_bind( int1 )
-                    )->input( value = client->_bind( int2 )
-                    )->input( enabled = abap_false value = client->_bind( int_sum )
+                    )->input( value = client->_bind_edit( int1 )
+                    )->input( value = client->_bind_edit( int2 )
+                    )->input( enabled = abap_false value = client->_bind_edit( int_sum )
                     )->button( text  = 'calc sum' press = client->_event( 'BUTTON_INT' )
                     )->label( 'decimals'
-                    )->input( client->_bind( dec1 )
-                    )->input( client->_bind( dec2 )
-                    )->input( enabled = abap_false value = client->_bind( dec_sum )
+                    )->input( client->_bind_edit( dec1 )
+                    )->input( client->_bind_edit( dec2 )
+                    )->input( enabled = abap_false value = client->_bind_edit( dec_sum )
                     )->button( text  = 'calc sum' press = client->_event( 'BUTTON_DEC' )
                     )->label( 'date'
-                    )->input( client->_bind( date )
+                    )->input( client->_bind_edit( date )
                     )->label( 'time'
-                    )->input( client->_bind( time )
-         )->get_root( )->xml_get( ) ).
-
+                    )->input( client->_bind_edit( time )
+               )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

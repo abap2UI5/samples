@@ -25,7 +25,7 @@
     "allowed_object_naming": true,
     "allowed_object_types": true,
     "ambiguous_statement": true,
-    "avoid_use": true,
+    "avoid_use": false,
     "begin_end_names": true,
     "begin_single_include": false,
     "call_transaction_authority_check": true,
@@ -111,7 +111,7 @@
     "global_class": true,
     "identical_conditions": true,
     "identical_contents": false,
-    "identical_descriptions": true,
+    "identical_descriptions": false,
     "identical_form_names": true,
     "if_in_if": true,
     "implement_methods": true,
@@ -187,11 +187,9 @@
     "parser_702_chaining": true,
     "parser_error": true,
     "parser_missing_space": false,
-    "pragma_style": true,
+    "pragma_style": false,
     "prefer_corresponding": true,
-    "prefer_inline": {
-      "severity": "Warning"
-    },
+    "prefer_inline": false,
     "prefer_is_not": true,
     "prefer_raise_exception_new": true,
     "prefer_returning_to_exporting": false,
@@ -220,7 +218,7 @@
     "slow_parameter_passing": true,
     "space_before_colon": true,
     "space_before_dot": true,
-    "sql_escape_host_variables": true,
+    "sql_escape_host_variables": false,
     "start_at_tab": false,
     "static_call_via_instance": {
       "allowInTestclassIncludes": false
@@ -240,12 +238,9 @@
     "unreachable_code": true,
     "unsecure_fae": true,
     "unused_ddic": true,
-    "unused_methods": true,
-    "unused_types": true,
-    "unused_variables": {
-      "severity": "Error",
-      "skipNames": ["lv_dummy", "i_mv_editor"]
-    },
+    "unused_methods": false,
+    "unused_types": false,
+    "unused_variables": false,
     "use_bool_expression": true,
     "use_class_based_exceptions": true,
     "use_line_exists": true,

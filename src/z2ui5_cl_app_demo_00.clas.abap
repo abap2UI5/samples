@@ -41,6 +41,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         shownavbutton = abap_true
         )->header_content(
             )->toolbar_spacer(
+*            )->button( text = 'TEST'  press = `MessageToast.show('Selected action is test')`
+*            )->button( text = 'TEST2'  press = `URLHelper.triggerTel('01763578')`
             )->link( text = 'SCN'     target = '_blank' href = 'https://blogs.sap.com/tag/abap2ui5/'
             )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
@@ -64,12 +66,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         )->button( text = 'More Controls'   press = client->_event( 'z2ui5_cl_app_demo_05' )
         )->button( text = 'F4-Value-Help'   press = client->_event( 'Z2UI5_CL_APP_DEMO_09' ) ).
 
-    grid->simple_form( title = 'HowTo - Tables I' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'List I'                    press = client->_event( 'z2ui5_cl_app_demo_03' )
-        )->button( text = 'List II'                   press = client->_event( 'z2ui5_cl_app_demo_48' )
-        )->button( text = 'Toolbar & Container'  press = client->_event( 'z2ui5_cl_app_demo_06' ) ).
-
     grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
+         )->button( text = 'Toolbar & Container'  press = client->_event( 'z2ui5_cl_app_demo_06' )
          )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
          )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
          )->button( text = 'Dynamic Types' press = client->_event( 'z2ui5_cl_app_demo_61' ) ).
@@ -110,18 +108,22 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
          )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' ) ).
 
     grid->simple_form( title = 'HowTo - Tree Controls'     layout = 'ResponsiveGridLayout' )->content( 'form'
-          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' ) ).
+          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
+          )->button( text = 'Popup Select Entry' press = client->_event( 'z2ui5_cl_app_demo_68' ) ).
+
 
     grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
       )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
       )->button( text = 'Donut Chart' press = client->_event( 'z2ui5_cl_app_demo_13' )
       )->button( text = 'Line Chart' press = client->_event( 'z2ui5_cl_app_demo_14' )
-      )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' ) ).
+      )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' )
+      )->button( text = 'Monitor' press = client->_event( 'z2ui5_cl_app_demo_41' ) ).
 
     grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
          )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
          )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
          )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
+         )->button( text = 'Currency Format' press = client->_event( 'z2ui5_cl_app_demo_67' )
          )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' ) ).
 
     grid->simple_form( title = 'HowTo - Model Update' layout = 'ResponsiveGridLayout' )->content( 'form'
@@ -139,7 +141,21 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     grid->simple_form( title = 'HowTo - Nested Views'     layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Basic' press = client->_event( 'z2ui5_cl_app_demo_65' )
-        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' ) ).
+        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' )
+        )->button( text = 'Master Detail with Tree' press = client->_event( 'z2ui5_cl_app_demo_69' )  ).
+
+      grid = page->grid( 'L3 M6 S12'
+        )->content( 'layout' ).
+
+    grid->simple_form( title = 'sap.m.List'     layout = 'ResponsiveGridLayout' )->content( 'form'
+            )->button( text = 'List I'                    press = client->_event( 'z2ui5_cl_app_demo_03' )
+        )->button( text = 'List II'                   press = client->_event( 'z2ui5_cl_app_demo_48' )
+        ).
+
+    grid->simple_form( title = 'sap.ui.Table'     layout = 'ResponsiveGridLayout' )->content( 'form'
+            )->button( text = 'Simple'                    press = client->_event( 'z2ui5_cl_app_demo_70' )
+        ).
+
 
     client->view_display( page->stringify( ) ).
 
