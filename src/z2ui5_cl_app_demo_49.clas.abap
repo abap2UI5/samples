@@ -70,7 +70,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
 
         client->timer_set(
           interval_ms    = '2000'
-          event_finished = 'TIMER_FINISHED'
+          event_finished = client->_event( 'TIMER_FINISHED' )
         ).
         enddo.
 
@@ -93,7 +93,7 @@ CLASS Z2UI5_CL_APP_DEMO_49 IMPLEMENTATION.
 
     client->timer_set(
       interval_ms    = '2000'
-      event_finished = 'TIMER_FINISHED'
+      event_finished = client->_event( 'TIMER_FINISHED' )
     ).
 
   ENDMETHOD.
