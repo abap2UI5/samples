@@ -59,7 +59,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
     grid->simple_form( title = 'HowTo - Basic II' layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Formatted Text'       press = client->_event( 'Z2UI5_CL_APP_DEMO_15' )
         )->button( text = 'Scrolling & Cursor'   press = client->_event( 'z2ui5_cl_app_demo_22' )
-        )->button( text = 'Timer'                press = client->_event( 'z2ui5_cl_app_demo_28' ) ).
+        )->button( text = 'Timer'                press = client->_event( 'z2ui5_cl_app_demo_28' )
+        )->button( text = 'Open new tab'         press = client->_event( 'z2ui5_cl_app_demo_73' ) ).
 
     grid->simple_form( title = 'HowTo - Selection-Screen' layout = 'ResponsiveGridLayout' )->content( 'form'
         )->button( text = 'Basic'           press = client->_event( 'z2ui5_cl_app_demo_02' )
