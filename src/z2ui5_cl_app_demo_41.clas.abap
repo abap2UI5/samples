@@ -72,7 +72,7 @@ CLASS z2ui5_cl_app_demo_41 IMPLEMENTATION.
 
         client->timer_set(
           interval_ms    = '2000'
-          event_finished = 'TIMER_FINISHED'
+          event_finished = client->_event( 'TIMER_FINISHED' )
         ).
 
       WHEN 'BACK'.
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_app_demo_41 IMPLEMENTATION.
 
     client->timer_set(
       interval_ms    = '2000'
-      event_finished = 'TIMER_FINISHED'
+      event_finished = client->_event( 'TIMER_FINISHED' )
     ).
 
   ENDMETHOD.
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_app_demo_41 IMPLEMENTATION.
              icon        = '{ICON}'
              info        = '{INFO}' ).
 
-    client->view_display(  lo_view->get_root( )->xml_get( ) ).
+    client->view_display( lo_view->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -154,6 +154,8 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     grid->simple_form( title = 'sap.ui.Table'     layout = 'ResponsiveGridLayout' )->content( 'form'
             )->button( text = 'Simple'                    press = client->_event( 'z2ui5_cl_app_demo_70' )
+            )->button( text = 'Edit Field'                    press = client->_event( 'z2ui5_cl_app_demo_71' )
+            )->button( text = 'Object Number and State'     press = client->_event( 'z2ui5_cl_app_demo_72' )
         ).
 
 
