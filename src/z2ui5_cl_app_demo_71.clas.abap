@@ -8,18 +8,52 @@ CLASS z2ui5_cl_app_demo_71 DEFINITION
     INTERFACES z2ui5_if_app .
 
     TYPES:
+      BEGIN OF ty_value_map,
+        pc TYPE string,
+        ea TYPE string,
+      END OF ty_value_map.
+
+    TYPES:
+      BEGIN OF ty_column_config,
+        label            TYPE string,
+        property         TYPE string,
+        type             TYPE string,
+        unit             TYPE string,
+        delimiter        TYPE abap_bool,
+        unit_property     TYPE string,
+        width            TYPE string,
+        scale            TYPE i,
+        text_align        TYPE string,
+        display_unit      TYPE string,
+        true_value        TYPE string,
+        false_value       TYPE string,
+        template         TYPE string,
+        input_format      TYPE string,
+        wrap             TYPE abap_bool,
+        auto_scale        TYPE abap_bool,
+        timezone         TYPE string,
+        timezone_property TYPE string,
+        display_timezone  TYPE abap_bool,
+        utc              TYPE abap_bool,
+        value_map        TYPE ty_value_map,
+      END OF ty_column_config.
+
+    DATA: mt_column_config TYPE STANDARD TABLE OF ty_column_config WITH EMPTY KEY.
+    DATA: mv_column_config TYPE string.
+
+    TYPES:
       BEGIN OF ty_s_tab,
-        selkz            TYPE abap_bool,
-        row_id           TYPE string,
-        product          TYPE string,
-        create_date      TYPE string,
-        create_by        TYPE string,
-        storage_location TYPE string,
-        quantity         TYPE i,
-        meins            TYPE meins,
-        price            TYPE p LENGTH 10 DECIMALS 2,
-        waers            TYPE waers,
-        selected         TYPE abap_bool,
+        selkz           TYPE abap_bool,
+        rowid           TYPE string,
+        product         TYPE string,
+        createdate      TYPE string,
+        createby        TYPE string,
+        storagelocation TYPE string,
+        quantity        TYPE i,
+        meins           TYPE meins,
+        price           TYPE p LENGTH 10 DECIMALS 2,
+        waers           TYPE waers,
+        selected        TYPE abap_bool,
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
@@ -38,7 +72,7 @@ CLASS z2ui5_cl_app_demo_71 DEFINITION
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    DATA check_initialized TYPE abap_bool VALUE abap_false.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
@@ -75,7 +109,16 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
+
+      z2ui5_set_data( ).
+
+      client->view_display( z2ui5_cl_xml_view=>factory( client
+        )->cc_export_spreadsheet_get_js( columnconfig = mv_column_config
+        )->stringify( ) ).
+
+      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
+
+
       RETURN.
     ENDIF.
 
@@ -87,9 +130,12 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN 'START'.
+*        z2ui5_set_data( ).
+        z2ui5_on_init( ).
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        client->message_toast_display( 'Search Entries' ).
-        z2ui5_set_data( ).
+*        client->message_toast_display( 'Search Entries' ).
+*        z2ui5_set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
       WHEN 'SORT'.
@@ -119,7 +165,7 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
         ENDIF.
-       WHEN 'ROW_ACTION_ITEM_EDIT'.
+      WHEN 'ROW_ACTION_ITEM_EDIT'.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
@@ -179,12 +225,14 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go`
         press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
+        type = `Emphasized`
+        ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
     DATA(tab) = cont->ui_table( rows = client->_bind( val = mt_table )
                                 editable = abap_false
+                                id = 'exportTable'
                                 alternaterowcolors = abap_true
                                 enablegrouping = abap_false
                                 fixedcolumncount = '1'
@@ -193,16 +241,16 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
                                 sort = client->_event( 'SORT' )
                                 filter = client->_event( 'FILTER' )
                                 customfilter =  client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->cc_export_spreadsheet( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
     DATA(lo_columns) = tab->ui_columns( ).
     lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
-    lo_columns->ui_column( width = '5rem' sortproperty = 'ROW_ID'
-                                          filterproperty = 'ROW_ID' )->text( text = `Index` )->ui_template( )->text(   text = `{ROW_ID}` ).
+    lo_columns->ui_column( width = '5rem' sortproperty = 'ROWID'
+                                          filterproperty = 'ROWID' )->text( text = `Index` )->ui_template( )->text(   text = `{ROWID}` ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'PRODUCT'
                            filterproperty = 'PRODUCT' )->text( text = `Product` )->ui_template( )->input( value = `{PRODUCT}` editable = abap_false ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATE_DATE' filterproperty = 'CREATE_DATE' )->text( text = `Date` )->ui_template( )->text(   text = `{CREATE_DATE}` ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATE_BY' filterproperty = 'CREATE_BY')->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'STORAGE_LOCATION'  filterproperty = 'STORAGE_LOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGE_LOCATION}`).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEDATE' filterproperty = 'CREATEDATE' )->text( text = `Date` )->ui_template( )->text(  '{CREATEDATE}' ).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEBY' filterproperty = 'CREATEBY')->text( text = `Name` )->ui_template( )->text( text = `{CREATEBY}` ).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'STORAGELOCATION'  filterproperty = 'STORAGELOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGELOCATION}`).
     lo_columns->ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
     lo_columns->ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
     lo_columns->ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value = `{PRICE}` currency = `{WAERS}` ).
@@ -210,8 +258,8 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
 
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
     )->ui_row_action_item( type = 'Navigation'
-                           press = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROW_ID}`  ) ) )
-                          )->get_parent( )->ui_row_action_item( icon = 'sap-icon://edit' text = 'Edit' press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}`  ) ) ) ).
+                           press = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROWID}`  ) ) )
+                          )->get_parent( )->ui_row_action_item( icon = 'sap-icon://edit' text = 'Edit' press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROWID}`  ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -221,13 +269,30 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' )
-        ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD')
-        ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' )
-        ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' )
-        ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR')
-        ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' )
+        ( selkz = abap_false rowid = '1' product = 'table'    createdate = `01.01.2023` createby = `Olaf` storagelocation = `AREA_001` quantity = 400  meins = 'PC' price = '1000.50' waers = 'EUR' )
+        ( selkz = abap_false rowid = '2' product = 'chair'    createdate = `01.01.2022` createby = `Karlo` storagelocation = `AREA_001` quantity = 123   meins = 'PC' price = '2000.55' waers = 'USD')
+        ( selkz = abap_false rowid = '3' product = 'sofa'     createdate = `01.05.2021` createby = `Elin` storagelocation = `AREA_002` quantity = 700   meins = 'PC' price = '3000.11' waers = 'CNY' )
+        ( selkz = abap_false rowid = '4' product = 'computer' createdate = `27.01.2023` createby = `Theo` storagelocation = `AREA_002` quantity = 200  meins = 'EA' price = '4000.88' waers = 'USD' )
+        ( selkz = abap_false rowid = '5' product = 'printer'  createdate = `01.01.2023` createby = `Renate` storagelocation = `AREA_003` quantity = 90   meins = 'PC' price = '5000.47' waers = 'EUR')
+        ( selkz = abap_false rowid = '6' product = 'table2'   createdate = `01.01.2023` createby = `Angela` storagelocation = `AREA_003` quantity = 1110  meins = 'PC' price = '6000.33' waers = 'GBP' )
     ).
+
+    mt_column_config = VALUE #(
+      ( label = 'Index'    property = 'ROWID'           type = 'String' )
+      ( label = 'Product'  property = 'PRODUCT'         type = 'String' )
+      ( label = 'Date'     property = 'CREATEDATE'      type = 'String' )
+      ( label = 'Name'     property = 'CREATEBY'        type = 'String' )
+      ( label = 'Location' property = 'STORAGELOCATION' type = 'String' )
+      ( label = 'Quantity' property = 'QUANTITY'        type = 'Number' delimiter = abap_true )
+      ( label = 'Unit'     property = 'MEINS'           type = 'String' )
+      ( label = 'Price'    property = 'PRICE'           type = 'Currency' unit_property = 'WAERS' width = 14 scale = 2 )
+    ).
+
+    mv_column_config =  /ui2/cl_json=>serialize(
+                          data             = mt_column_config
+                          compress         = abap_true
+                          pretty_name      = 'X' "camel_case
+                        ).
 
   ENDMETHOD.
 
