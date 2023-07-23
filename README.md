@@ -1,4 +1,4 @@
-# Demos of abap2UI5
+# Code samples of abap2UI5
 
 * install this project after installing the [**abap2UI5 repository**](https://github.com/oblomov-dev/ABAP2UI5) and try out over 60 demo applications
 * if you have demos, feel free to share it. open a PR or add it to the link list [here](https://github.com/abap2UI5/abap2UI5/blob/main/docs/links.md)
