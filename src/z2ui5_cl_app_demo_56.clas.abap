@@ -285,7 +285,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     view = view->page( id = `page_main`
-             title          = 'abap2UI5 - List Report Features'
+             title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
          )->header_content(
@@ -305,7 +305,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
             )->get( )->dynamic_page_title( ).
 
     header_title->heading( ns = 'f' )->hbox(
-        )->title( `Filter` ).
+        )->title( `Select-Option` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( ns = 'f' ).
 
