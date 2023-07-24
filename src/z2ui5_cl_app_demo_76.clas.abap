@@ -57,7 +57,7 @@ CLASS z2ui5_cl_app_demo_76 DEFINITION
 
     DATA mt_tree TYPE tt_tree_level1 .
     DATA check_initialized TYPE abap_bool .
-    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true ##NO_TEXT.
+    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
     DATA mv_check_enabled_02 TYPE abap_bool .
 
     DATA mv_selected_index TYPE abap_bool .
