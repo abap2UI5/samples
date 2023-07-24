@@ -10,7 +10,7 @@ CLASS lcl_utility DEFINITION..
 
     CLASS-METHODS trans_data_2_xml
       IMPORTING
-        data          TYPE data
+        data        TYPE data
       RETURNING
         VALUE(result) TYPE string.
 
@@ -154,9 +154,9 @@ CLASS lcl_utility IMPLEMENTATION.
 
   METHOD trans_data_2_xml.
 
-    " FIELD-SYMBOLS <object> TYPE any.
-    "  ASSIGN object->* TO <object>.
-    "  raise( when = xsdbool( sy-subrc <> 0 ) ).
+   " FIELD-SYMBOLS <object> TYPE any.
+  "  ASSIGN object->* TO <object>.
+  "  raise( when = xsdbool( sy-subrc <> 0 ) ).
 
     CALL TRANSFORMATION id
        SOURCE data = data

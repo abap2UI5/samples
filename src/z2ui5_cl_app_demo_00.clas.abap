@@ -22,7 +22,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
       WHEN OTHERS.
         TRY.
-
             DATA(lv_classname) = to_upper( client->get( )-event ).
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
@@ -32,17 +31,13 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         ENDTRY.
     ENDCASE.
 
-
     DATA(page) = z2ui5_cl_xml_view=>factory( client
         )->shell( )->page(
         title = 'abap2UI5 - Samples'
-*        class = 'sapUiContentPadding sapUiResponsivePadding--content '
         navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
         shownavbutton = abap_true
         )->header_content(
             )->toolbar_spacer(
-*            )->button( text = 'TEST'  press = `MessageToast.show('Selected action is test')`
-*            )->button( text = 'TEST2'  press = `URLHelper.triggerTel('01763578')`
             )->link( text = 'SCN'     target = '_blank' href = 'https://blogs.sap.com/tag/abap2ui5/'
             )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
@@ -343,27 +338,27 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-   panel = page->panel(
-          expandable = abap_false
-          expanded   = abap_true
-          headertext = `File Import / Export`
-     ).
+    panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `File Import / Export`
+      ).
 
-      panel->generictile(
-      header    = 'Download CSV'
-      subheader = 'Export Table as CSV'
-      press     =  client->_event( 'z2ui5_cl_app_demo_57' )
-      mode      = 'LineMode'
-      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
+    panel->generictile(
+    header    = 'Download CSV'
+    subheader = 'Export Table as CSV'
+    press     =  client->_event( 'z2ui5_cl_app_demo_57' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
-   panel->generictile(
-      header    = 'Upload CSV'
-      subheader = 'Import CSV as internal Table'
-      press     =  client->_event( 'z2ui5_cl_app_demo_74' )
-      mode      = 'LineMode'
-      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
+    panel->generictile(
+       header    = 'Upload CSV'
+       subheader = 'Import CSV as internal Table'
+       press     =  client->_event( 'z2ui5_cl_app_demo_74' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
 
     panel->generictile(
         header    = 'Download XLSX'
@@ -458,48 +453,48 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
- panel->generictile(
-         header    = 'Monitor'
+    panel->generictile(
+            header    = 'Monitor'
 *subheader = 'sap.ui.Table'
-         press     =  client->_event( 'z2ui5_cl_app_demo_41' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+            press     =  client->_event( 'z2ui5_cl_app_demo_41' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
 
-         panel = page->panel(
-            expandable = abap_false
-            expanded   = abap_true
-            headertext = `Layouts`
-       ).
+    panel = page->panel(
+       expandable = abap_false
+       expanded   = abap_true
+       headertext = `Layouts`
+  ).
 
-       panel->generictile(
-           header    = 'Header, Footer, Grid'
-         press     =  client->_event( 'z2ui5_cl_app_demo_10' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generictile(
+        header    = 'Header, Footer, Grid'
+      press     =  client->_event( 'z2ui5_cl_app_demo_10' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
-       panel->generictile(
-           header    = 'Object Page'
-         press     =  client->_event( 'z2ui5_cl_app_demo_17' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generictile(
+        header    = 'Object Page'
+      press     =  client->_event( 'z2ui5_cl_app_demo_17' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
-       panel->generictile(
-           header    = 'Dynamic Page'
-         press     =  client->_event( 'z2ui5_cl_app_demo_30' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generictile(
+        header    = 'Dynamic Page'
+      press     =  client->_event( 'z2ui5_cl_app_demo_30' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
-       panel->generictile(
-           header    = 'Flexible Column Layout'
-        subheader = 'Master Detail with Tree'
-         press     =  client->_event( 'z2ui5_cl_app_demo_69' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generictile(
+        header    = 'Flexible Column Layout'
+     subheader = 'Master Detail with Tree'
+      press     =  client->_event( 'z2ui5_cl_app_demo_69' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
     panel = page->panel(
             expandable = abap_false

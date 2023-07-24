@@ -10,7 +10,7 @@ CLASS z2ui5_cl_app_demo_75 DEFINITION PUBLIC.
     DATA mv_check_edit TYPE abap_bool.
     DATA mv_check_download TYPE abap_bool.
 
-    data mv_file type string.
+    DATA mv_file TYPE string.
 
   PROTECTED SECTION.
 
@@ -97,18 +97,18 @@ CLASS z2ui5_cl_app_demo_75 IMPLEMENTATION.
 
     IF mv_file IS NOT INITIAL.
 
-    page->code_editor(
+      page->code_editor(
 *      EXPORTING
-         value    = client->_bind( mv_file )
+           value    = client->_bind( mv_file )
 *        type     =
 *        height   =
 *        width    =
-        editable = abap_false
+          editable = abap_false
 *      RECEIVING
 *        result   =
-    ).
+      ).
 
-    endif.
+    ENDIF.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
 
