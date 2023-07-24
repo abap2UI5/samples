@@ -175,7 +175,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
           header    = 'Search Field I'
-          subheader = ''
+          subheader = 'Filter with enter'
           press     =  client->_event( 'z2ui5_cl_app_demo_53' )
           mode      = 'LineMode'
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -183,15 +183,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Search Field II'
-        subheader = 'Live Change Event'
+        subheader = 'Filter with Live Change Event'
         press     =  client->_event( 'z2ui5_cl_app_demo_59' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-     header    = 'Input'
-     subheader = 'Suggestion Event Server'
+     header    = 'Input with Suggestion'
+     subheader = 'Read Suggestion Table from the Server'
      press     =  client->_event( 'z2ui5_cl_app_demo_59' )
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -199,7 +199,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
        header    = 'Select-Options'
-       subheader = ''
+       subheader = 'Use multi inputs to create range tables'
        press     =  client->_event( 'z2ui5_cl_app_demo_56' )
        mode      = 'LineMode'
        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -343,18 +343,10 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
-         header    = 'Object Number and State'
- subheader = 'sap.ui.Table'
-         press     =  client->_event( 'z2ui5_cl_app_demo_72' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
    panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
-          headertext = `Data Import / Export`
+          headertext = `File Import / Export`
      ).
 
       panel->generictile(

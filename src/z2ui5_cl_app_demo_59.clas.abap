@@ -36,7 +36,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_59 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_59 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -51,10 +51,6 @@ CLASS z2ui5_cl_app_demo_59 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
-    if mv_key = 'VIEW_REFRESH'.
-       z2ui5_view_display( ).
-    endif.
 
   ENDMETHOD.
 
@@ -75,6 +71,7 @@ CLASS z2ui5_cl_app_demo_59 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
 method z2ui5_view_display.
 
  DATA(view) = z2ui5_cl_xml_view=>factory( client ).
@@ -91,18 +88,6 @@ method z2ui5_view_display.
             )->link(
                 text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
        ).
-
-           page1->segmented_button( client->_bind_edit( mv_key )
-        )->items(
-            )->segmented_button_item(
-                key = 'VIEW_REFRESH'
-*                icon = 'sap-icon://accept'
-                text = 'Old (rerender view)'
-            )->segmented_button_item(
-                key = 'MODEL_ONLY'
-*                icon = 'sap-icon://add-favorite'
-                text = 'New (update only model)'
-            ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
@@ -151,11 +136,13 @@ method z2ui5_view_display.
 
 endmethod.
 
+
   METHOD z2ui5_on_init.
 
      mv_key = 'VIEW_REFRESH'.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_set_data.
 
