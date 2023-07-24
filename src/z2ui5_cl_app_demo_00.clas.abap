@@ -326,13 +326,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
-        header    = 'Edit Field'
-        subheader = 'sap.ui.Table'
-        press     =  client->_event( 'z2ui5_cl_app_demo_71' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
 
     panel->generictile(
          header    = 'Object Number and State'
@@ -341,14 +334,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
-
-    panel->generictile(
-      header    = 'Download CSV'
-*        subheader = 'sap.ui.Table'
-      press     =  client->_event( 'z2ui5_cl_app_demo_57' )
-      mode      = 'LineMode'
-      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
 
     panel->generictile(
         header    = 'Layout'
@@ -366,6 +351,45 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+   panel = page->panel(
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Data Import / Export`
+     ).
+
+      panel->generictile(
+      header    = 'Download CSV'
+      subheader = 'Export Table as CSV'
+      press     =  client->_event( 'z2ui5_cl_app_demo_57' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+   panel->generictile(
+      header    = 'Upload CSV'
+      subheader = 'Import CSV as internal Table'
+      press     =  client->_event( 'z2ui5_cl_app_demo_74' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+        header    = 'Download XLSX'
+        subheader = 'Export Table as XLSX'
+        press     =  client->_event( 'z2ui5_cl_app_demo_71' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'File Uploader'
+        subheader = 'Upload any file to the Backend'
+        press     =  client->_event( 'z2ui5_cl_app_demo_75' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
@@ -374,7 +398,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
            header    = 'Popup'
-*        subheader = 'Use RTTI to send tables to the frontend'
+        subheader = 'Simple Example'
            press     =  client->_event( 'Z2UI5_CL_APP_DEMO_21' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -382,7 +406,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Flow Logic'
-*        subheader = 'sap.ui.Table'
+        subheader = 'Different ways of Popup handling'
         press     =  client->_event( 'z2ui5_cl_app_demo_12' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -390,15 +414,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Popover'
-*        subheader = 'sap.ui.Table'
+        subheader = 'Simple Example'
         press     =  client->_event( 'z2ui5_cl_app_demo_26' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-         header    = 'Item Level'
-*subheader = 'sap.ui.Table'
+         header    = 'Popover Item Level'
+         subheader = 'Create a Popover for a specific entry of a table'
          press     =  client->_event( 'z2ui5_cl_app_demo_52' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
