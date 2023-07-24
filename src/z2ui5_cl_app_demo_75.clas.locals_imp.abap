@@ -1,4 +1,4 @@
-CLASS lcl_utility DEFINITION..
+CLASS lcl_utility DEFINITION.
 
   PUBLIC SECTION.
 
