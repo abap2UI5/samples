@@ -43,8 +43,17 @@ CLASS z2ui5_cl_app_demo_76 DEFINITION
         descr TYPE string,
       END OF ty_row .
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    TYPES: BEGIN OF ts_data2,
+            table_data TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY,
+           END OF ts_data2.
 
+    TYPES: BEGIN OF ts_data1,
+            data2 type ts_data2,
+           END OF ts_data1.
+
+    DATA: BEGIN OF ms_screen,
+            data1 TYPE ts_data1,
+          END OF ms_screen.
 
     DATA mt_tree TYPE tt_tree_level1 .
     DATA check_initialized TYPE abap_bool .
@@ -67,9 +76,8 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
-
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_66_2->VIEW_DISPLAY_DETAIL
+* | Instance Protected Method z2ui5_cl_app_demo_66_3->VIEW_DISPLAY_DETAIL
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail.
@@ -82,7 +90,7 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
     DATA(lr_table) = page->table(
                 headertext = 'Table'
                 mode = 'SingleSelectLeft'
-                items = client->_bind_edit( mt_tab ) ).
+                items = client->_bind_edit( ms_screen-data1-data2-table_data ) ).
 
     lr_table->header_toolbar(
                    )->overflow_toolbar(
@@ -115,7 +123,7 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_66_2->VIEW_DISPLAY_MASTER
+* | Instance Protected Method z2ui5_cl_app_demo_66_3->VIEW_DISPLAY_MASTER
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
@@ -163,7 +171,7 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_APP_DEMO_66_2->Z2UI5_IF_APP~MAIN
+* | Instance Public Method z2ui5_cl_app_demo_66_3->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -189,9 +197,9 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_READ_SEL'.
-        IF NOT line_exists( mt_tab[ selkz = abap_true ] ).
+        IF NOT line_exists( ms_screen-data1-data2-table_data[ selkz = abap_true ] ).
+           data(lv_body) = client->get( )-s_config-body.
           client->message_toast_display( text = 'No line selected' ).
         ELSE.
           client->message_toast_display( text = 'Line Selected' ).
@@ -199,7 +207,7 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
       WHEN 'EVT_TREE_SEL'.
 
-        mt_tab = VALUE #( descr = 'this is a description'
+        ms_screen-data1-data2-table_data = VALUE #( descr = 'this is a description'
        (  title = 'title_01'  value = 'value_01' )
        (  title = 'title_02'  value = 'value_02' )
        (  title = 'title_03'  value = 'value_03' )

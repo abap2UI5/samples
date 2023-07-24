@@ -52,7 +52,7 @@ CLASS Z2UI5_CL_APP_DEMO_73 IMPLEMENTATION.
         client->timer_set(
             interval_ms    = `0`
             event_finished = client->_event_client( action = client->cs_event-open_new_tab
-                                              t_arg = value #( ( `https://www.github.com/abap2UI5` )  )
+                                              t_arg = value #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5` )  )
       ) ).
 
       WHEN 'BACK'.
