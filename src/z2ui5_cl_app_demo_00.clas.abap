@@ -57,7 +57,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          headertext = `General`
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Data Binding'
         subheader = 'Send values to the backend'
         press     = client->_event( 'z2ui5_cl_app_demo_01' )
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Controller'
         subheader = 'Handle events, change the view & errors'
         press     = client->_event( 'z2ui5_cl_app_demo_04' )
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Flow Logic'
         subheader = 'Call other apps & exchange data'
         press     = client->_event( 'z2ui5_cl_app_demo_24' )
@@ -81,7 +81,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-*    panel->generictile(
+*    panel->generic_tile(
 *        header    = 'Scrolling & Cursor'
 *        subheader = ''
 *        press     = client->_event( 'z2ui5_cl_app_demo_22' )
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 *        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 *    ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Timer'
         subheader = 'Wait n MS and call again the server'
         press     = client->_event( 'z2ui5_cl_app_demo_28' )
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'New Tab'
         subheader = 'Open an URL in a new tab'
         press     = client->_event( 'z2ui5_cl_app_demo_73' )
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Expression Binding'
         subheader = 'Use calculations & more functions directly in views'
         press     = client->_event( 'z2ui5_cl_app_demo_27' )
@@ -113,7 +113,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Data Types'
         subheader = 'Use of Integer, Decimals, Dates & Time'
         press     = client->_event( 'z2ui5_cl_app_demo_47' )
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Formatting'
         subheader = 'Currencies'
         press     = client->_event( 'z2ui5_cl_app_demo_67' )
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         headertext = 'Selection Screen'
    ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Basic'
         subheader = 'Explore input controls'
         press     =  client->_event( 'z2ui5_cl_app_demo_02' )
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'More'
         subheader = 'Multi Input, Step Input, Text Are, Range Slider'
         press     =  client->_event( 'z2ui5_cl_app_demo_05' )
@@ -152,7 +152,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'F4-Value-Help'
         subheader = 'Popup for value help'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_09' )
@@ -160,7 +160,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Formatted Text'
         subheader = 'Display HTML'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_15' )
@@ -168,7 +168,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
           header    = 'Search Field I'
           subheader = 'Filter with enter'
           press     =  client->_event( 'z2ui5_cl_app_demo_53' )
@@ -176,7 +176,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Search Field II'
         subheader = 'Filter with Live Change Event'
         press     =  client->_event( 'z2ui5_cl_app_demo_59' )
@@ -184,7 +184,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
      header    = 'Input with Suggestion'
      subheader = 'Read Suggestion Table from the Server'
      press     =  client->_event( 'z2ui5_cl_app_demo_59' )
@@ -192,7 +192,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
-    panel->generictile(
+    panel->generic_tile(
        header    = 'Select-Options'
        subheader = 'Use multi inputs to create range tables'
        press     =  client->_event( 'z2ui5_cl_app_demo_56' )
@@ -206,7 +206,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            headertext = `More Controls`
       ).
 
-    panel->generictile(
+    panel->generic_tile(
   header    = 'List I'
   subheader = 'Basic'
   press     =  client->_event( 'z2ui5_cl_app_demo_03' )
@@ -214,7 +214,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-    panel->generictile(
+    panel->generic_tile(
     header    = 'List II'
     subheader = 'Events & Visualization'
     press     =  client->_event( 'z2ui5_cl_app_demo_48' )
@@ -223,7 +223,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 ).
 
 
-    panel->generictile(
+    panel->generic_tile(
            header    = 'Tree Table I'
          subheader = 'Basic'
            press     =  client->_event( 'Z2UI5_CL_APP_DEMO_07' )
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
        ).
 
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Tree Table II'
         subheader = 'Popup Select Entry'
         press     =  client->_event( 'z2ui5_cl_app_demo_68' )
@@ -240,7 +240,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
       header    = 'Editor'
        subheader = 'Display files'
       press     =  client->_event( 'z2ui5_cl_app_demo_35' )
@@ -248,7 +248,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Message I'
       subheader = 'Toast, Box & Strip'
          press     =  client->_event( 'z2ui5_cl_app_demo_08' )
@@ -257,7 +257,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      ).
 
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Message II'
         subheader = 'Illustrated Message'
         press     =  client->_event( 'z2ui5_cl_app_demo_33' )
@@ -265,7 +265,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
       header    = 'Message III'
         subheader = 'Message Manager'
       press     =  client->_event( 'z2ui5_cl_app_demo_38' )
@@ -280,7 +280,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      ).
 
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Toolbar'
         subheader = 'Add a container & toolbar'
         press     =  client->_event( 'z2ui5_cl_app_demo_06' )
@@ -288,7 +288,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Selection Modes'
         subheader = 'Single Select & Multi Select'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_19' )
@@ -296,7 +296,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Editable'
         subheader = 'Set columns editable'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_11' )
@@ -304,7 +304,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Dynamic Types'
          subheader = 'Use RTTI to send tables to the frontend'
          press     =  client->_event( 'Z2UI5_CL_APP_DEMO_61' )
@@ -312,7 +312,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Visualization'
          subheader = 'Object Number, Object States & Tab Filter'
          press     =  client->_event( 'z2ui5_cl_app_demo_72' )
@@ -320,7 +320,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Layout'
         subheader = 'Save your table layout'
         press     =  client->_event( 'z2ui5_cl_app_demo_58' )
@@ -328,7 +328,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'ui.Table'
         subheader = 'Simple example'
         press     =  client->_event( 'z2ui5_cl_app_demo_70' )
@@ -342,7 +342,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            headertext = `File Import / Export`
       ).
 
-    panel->generictile(
+    panel->generic_tile(
     header    = 'Download CSV'
     subheader = 'Export Table as CSV'
     press     =  client->_event( 'z2ui5_cl_app_demo_57' )
@@ -350,7 +350,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-    panel->generictile(
+    panel->generic_tile(
        header    = 'Upload CSV'
        subheader = 'Import CSV as internal Table'
        press     =  client->_event( 'z2ui5_cl_app_demo_74' )
@@ -358,7 +358,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
    ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Download XLSX'
         subheader = 'Export Table as XLSX'
         press     =  client->_event( 'z2ui5_cl_app_demo_77' )
@@ -366,7 +366,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'File Uploader'
         subheader = 'Upload any file to the Backend'
         press     =  client->_event( 'z2ui5_cl_app_demo_75' )
@@ -381,7 +381,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
           headertext = `Popup & Popover`
      ).
 
-    panel->generictile(
+    panel->generic_tile(
            header    = 'Popup'
         subheader = 'Simple Example'
            press     =  client->_event( 'Z2UI5_CL_APP_DEMO_21' )
@@ -389,7 +389,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Flow Logic'
         subheader = 'Different ways of Popup handling'
         press     =  client->_event( 'z2ui5_cl_app_demo_12' )
@@ -397,7 +397,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Popover'
         subheader = 'Simple Example'
         press     =  client->_event( 'z2ui5_cl_app_demo_26' )
@@ -405,7 +405,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Popover Item Level'
          subheader = 'Create a Popover for a specific entry of a table'
          press     =  client->_event( 'z2ui5_cl_app_demo_52' )
@@ -419,7 +419,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
           headertext = `Visualization`
      ).
 
-    panel->generictile(
+    panel->generic_tile(
            header    = 'Donut Chart'
 *        subheader = 'Use RTTI to send tables to the frontend'
            press     =  client->_event( 'z2ui5_cl_app_demo_13' )
@@ -427,7 +427,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Line Chart'
 *        subheader = 'sap.ui.Table'
         press     =  client->_event( 'z2ui5_cl_app_demo_14' )
@@ -435,7 +435,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Bar Chart'
 *        subheader = 'sap.ui.Table'
         press     =  client->_event( 'z2ui5_cl_app_demo_16' )
@@ -443,7 +443,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Radial Chart'
 *subheader = 'sap.ui.Table'
          press     =  client->_event( 'z2ui5_cl_app_demo_29' )
@@ -451,7 +451,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-    panel->generictile(
+    panel->generic_tile(
             header    = 'Monitor'
 *subheader = 'sap.ui.Table'
             press     =  client->_event( 'z2ui5_cl_app_demo_41' )
@@ -465,7 +465,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
        headertext = `Layouts`
   ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Header, Footer, Grid'
       subheader = 'Split view in different areas'
       press     =  client->_event( 'z2ui5_cl_app_demo_10' )
@@ -473,7 +473,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Object Page'
          subheader = 'Display object details'
       press     =  client->_event( 'z2ui5_cl_app_demo_17' )
@@ -481,7 +481,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Dynamic Page'
         subheader = 'Display items'
         press     =  client->_event( 'z2ui5_cl_app_demo_30' )
@@ -489,7 +489,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Flexible Column Layout'
         subheader = 'Master details with tree'
         press     =  client->_event( 'z2ui5_cl_app_demo_69' )
@@ -503,7 +503,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
             headertext = `Extensions`
        ).
 
-    panel->generictile(
+    panel->generic_tile(
            header    = 'Create Views'
            subheader = 'Compare the three ways normal, generic & xml'
            press     =  client->_event( 'z2ui5_cl_app_demo_23' )
@@ -512,7 +512,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
        ).
 
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Import View'
          subheader = 'Copy & paste views of the UI5 Documentation'
         press     =  client->_event( 'z2ui5_cl_app_demo_31' )
@@ -520,7 +520,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Custom Control'
          subheader = 'Integrate your own JS Custom Control'
         press     =  client->_event( 'z2ui5_cl_app_demo_37' )
@@ -528,7 +528,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Change CSS'
          subheader = 'Send your own CSS to the frontend'
          press     =  client->_event( 'z2ui5_cl_app_demo_50' )
@@ -537,7 +537,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      ).
 
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'HTML, JS, CSS'
         subheader = 'Display normal HTML without UI5'
         press     =  client->_event( 'z2ui5_cl_app_demo_32' )
@@ -545,7 +545,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Canvas & SVG'
          subheader = 'Integrate more HTML5 functionalities'
         press     =  client->_event( 'z2ui5_cl_app_demo_36' )
@@ -553,7 +553,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Ext. Library'
          subheader = 'Load external JS libraries'
          press     =  client->_event( 'z2ui5_cl_app_demo_40' )
@@ -567,7 +567,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
                headertext = `Features`
           ).
 
-    panel->generictile(
+    panel->generic_tile(
       header    = 'Draft I'
       subheader = 'App remembers at startup values of past inputs'
       press     =  client->_event( 'z2ui5_cl_app_demo_62' )
@@ -575,7 +575,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
-    panel->generictile(
+    panel->generic_tile(
          header    = 'Draft II'
          subheader = 'Call the same app with different users'
          press     =  client->_event( 'z2ui5_cl_app_demo_63' )
@@ -584,7 +584,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      ).
 
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Nested Views I'
         subheader = 'Basic Example'
         press     =  client->_event( 'z2ui5_cl_app_demo_65' )
@@ -592,7 +592,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
         header    = 'Nested Views II'
         subheader = 'Master-Detail Page'
         press     =  client->_event( 'z2ui5_cl_app_demo_66' )
@@ -600,7 +600,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
+    panel->generic_tile(
              header    = 'Update Model'
           subheader = 'Model only update vs. View rerendering'
            press     =  client->_event( 'z2ui5_cl_app_demo_69' )
@@ -608,7 +608,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
-          panel->generictile(
+          panel->generic_tile(
              header    = 'Smallest App'
           subheader = 'Demo'
            press     =  client->_event( 'z2ui5_cl_app_demo_44' )
