@@ -44,9 +44,12 @@ CLASS z2ui5_cl_app_demo_78 IMPLEMENTATION.
                                     editable = `{EDITABLE}` ).
 
       client->view_display( view->stringify( ) ).
+
     ENDIF.
 
+
     CASE client->get( )-event.
+
       WHEN 'SUBMIT'.
         INSERT VALUE #( key = mv_value text = mv_value visible = abap_true editable = abap_true ) INTO TABLE mt_token.
         CLEAR mv_value.
