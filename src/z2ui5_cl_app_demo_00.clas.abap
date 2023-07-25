@@ -58,16 +58,16 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     ).
 
     panel->generictile(
-        header    = 'Communication & Data Binding'
-        subheader = ''
+        header    = 'Data Binding'
+        subheader = 'Send values to the backend'
         press     = client->_event( 'z2ui5_cl_app_demo_01' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-        header    = 'Events, Error & Change View'
-        subheader = ''
+        header    = 'Controller'
+        subheader = 'Handle events, change the view & errors'
         press     = client->_event( 'z2ui5_cl_app_demo_04' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -75,31 +75,31 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Flow Logic'
-        subheader = ''
+        subheader = 'Call other apps & exchange data'
         press     = client->_event( 'z2ui5_cl_app_demo_24' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-    panel->generictile(
-        header    = 'Scrolling & Cursor'
-        subheader = ''
-        press     = client->_event( 'z2ui5_cl_app_demo_22' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+*    panel->generictile(
+*        header    = 'Scrolling & Cursor'
+*        subheader = ''
+*        press     = client->_event( 'z2ui5_cl_app_demo_22' )
+*        mode      = 'LineMode'
+*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*    ).
 
     panel->generictile(
         header    = 'Timer'
-        subheader = ''
+        subheader = 'Wait n MS and call again the server'
         press     = client->_event( 'z2ui5_cl_app_demo_28' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-        header    = 'Open new tab'
-        subheader = ''
+        header    = 'New Tab'
+        subheader = 'Open an URL in a new tab'
         press     = client->_event( 'z2ui5_cl_app_demo_73' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -107,23 +107,23 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Expression Binding'
-        subheader = ''
+        subheader = 'Use calculations & more functions directly in views'
         press     = client->_event( 'z2ui5_cl_app_demo_27' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-        header    = 'Integer, Decimals, Dates, Time'
-        subheader = ''
+        header    = 'Data Types'
+        subheader = 'Use of Integer, Decimals, Dates & Time'
         press     = client->_event( 'z2ui5_cl_app_demo_47' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-        header    = 'Currency Format'
-        subheader = ''
+        header    = 'Formatting'
+        subheader = 'Currencies'
         press     = client->_event( 'z2ui5_cl_app_demo_67' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -138,15 +138,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Basic'
-        subheader = ''
+        subheader = 'Explore input controls'
         press     =  client->_event( 'z2ui5_cl_app_demo_02' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generictile(
-        header    = 'More Controls'
-        subheader = ''
+        header    = 'More'
+        subheader = 'Multi Input, Step Input, Text Are, Range Slider'
         press     =  client->_event( 'z2ui5_cl_app_demo_05' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -154,7 +154,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'F4-Value-Help'
-        subheader = ''
+        subheader = 'Popup for value help'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_09' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -162,7 +162,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Formatted Text'
-        subheader = ''
+        subheader = 'Display HTML'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_15' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -208,7 +208,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
   header    = 'List I'
-  subheader = ''
+  subheader = 'Basic'
   press     =  client->_event( 'z2ui5_cl_app_demo_03' )
   mode      = 'LineMode'
   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
     header    = 'List II'
-    subheader = ''
+    subheader = 'Events & Visualization'
     press     =  client->_event( 'z2ui5_cl_app_demo_48' )
     mode      = 'LineMode'
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -224,8 +224,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
     panel->generictile(
-           header    = 'Tree - Simple'
-*        subheader = 'Use RTTI to send tables to the frontend'
+           header    = 'Tree Table I'
+         subheader = 'Basic'
            press     =  client->_event( 'Z2UI5_CL_APP_DEMO_07' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -233,8 +233,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
     panel->generictile(
-        header    = 'Tree - Popup Select Entry'
-*        subheader = 'sap.ui.Table'
+        header    = 'Tree Table II'
+        subheader = 'Popup Select Entry'
         press     =  client->_event( 'z2ui5_cl_app_demo_68' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -242,7 +242,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
       header    = 'Editor'
-*        subheader = 'sap.ui.Table'
+       subheader = 'Display files'
       press     =  client->_event( 'z2ui5_cl_app_demo_35' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -281,8 +281,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
     panel->generictile(
-        header    = 'Toolbar & Container'
-        subheader = ''
+        header    = 'Toolbar'
+        subheader = 'Add a container & toolbar'
         press     =  client->_event( 'z2ui5_cl_app_demo_06' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -290,7 +290,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Selection Modes'
-        subheader = ''
+        subheader = 'Single Select & Multi Select'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_19' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -298,7 +298,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Editable'
-        subheader = ''
+        subheader = 'Set columns editable'
         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_11' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -314,8 +314,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
     panel->generictile(
-        header    = 'Simple'
-        subheader = 'sap.ui.Table'
+        header    = 'ui.Table'
+        subheader = 'Simple example'
         press     =  client->_event( 'z2ui5_cl_app_demo_70' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -324,7 +324,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
          header    = 'Object Number and State'
- subheader = 'sap.ui.Table'
+         subheader = 'sap.ui.Table'
          press     =  client->_event( 'z2ui5_cl_app_demo_72' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -332,7 +332,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Layout'
-        subheader = 'Save table output similiar Fcat'
+        subheader = 'Save your table layout'
         press     =  client->_event( 'z2ui5_cl_app_demo_58' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -469,6 +469,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Header, Footer, Grid'
+      subheader = 'Split view in different areas'
       press     =  client->_event( 'z2ui5_cl_app_demo_10' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -476,6 +477,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Object Page'
+         subheader = 'Display object details'
       press     =  client->_event( 'z2ui5_cl_app_demo_17' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -483,6 +485,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Dynamic Page'
+          subheader = 'Display items'
       press     =  client->_event( 'z2ui5_cl_app_demo_30' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -490,7 +493,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Flexible Column Layout'
-     subheader = 'Master Detail with Tree'
+     subheader = 'Master details with tree'
       press     =  client->_event( 'z2ui5_cl_app_demo_69' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -503,8 +506,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
        ).
 
     panel->generictile(
-           header    = 'Views - Normal, Generic, XML'
-*        subheader = 'Use RTTI to send tables to the frontend'
+           header    = 'Create Views'
+           subheader = 'Compare the three ways normal, generic & xml'
            press     =  client->_event( 'z2ui5_cl_app_demo_23' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -512,8 +515,8 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
     panel->generictile(
-        header    = 'Import UI5-XML-View'
-*        subheader = 'sap.ui.Table'
+        header    = 'Import View'
+         subheader = 'Copy & paste views of the UI5 Documentation'
         press     =  client->_event( 'z2ui5_cl_app_demo_31' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -521,7 +524,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Custom Control'
-*        subheader = 'sap.ui.Table'
+         subheader = 'Integrate your own JS Custom Control'
         press     =  client->_event( 'z2ui5_cl_app_demo_37' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -529,7 +532,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
          header    = 'Change CSS'
-*subheader = 'sap.ui.Table'
+         subheader = 'Send your own CSS to the frontend'
          press     =  client->_event( 'z2ui5_cl_app_demo_50' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -538,7 +541,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'HTML, JS, CSS'
-*        subheader = 'sap.ui.Table'
+        subheader = 'Display normal HTML without UI5'
         press     =  client->_event( 'z2ui5_cl_app_demo_32' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -546,7 +549,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
         header    = 'Canvas & SVG'
-*        subheader = 'sap.ui.Table'
+         subheader = 'Integrate more HTML5 functionalities'
         press     =  client->_event( 'z2ui5_cl_app_demo_36' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -554,20 +557,17 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     panel->generictile(
          header    = 'ext. Library'
-*subheader = 'sap.ui.Table'
+         subheader = 'Load external JS libraries'
          press     =  client->_event( 'z2ui5_cl_app_demo_40' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
-
-
 
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
                headertext = `More Features`
           ).
-
 
     panel->generictile(
       header    = 'Draft I'
