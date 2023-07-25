@@ -30,8 +30,7 @@ CLASS z2ui5_cl_app_demo_28 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
-CLASS z2ui5_cl_app_demo_28 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_28 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -62,7 +61,7 @@ CLASS z2ui5_cl_app_demo_28 IMPLEMENTATION.
 
         client->timer_set(
           interval_ms    = '2000'
-          event_finished = 'TIMER_FINISHED'
+          event_finished = client->_event( 'TIMER_FINISHED' )
         ).
 
         client->view_model_update( ).
@@ -84,7 +83,7 @@ CLASS z2ui5_cl_app_demo_28 IMPLEMENTATION.
 
     client->timer_set(
       interval_ms    = '2000'
-      event_finished = 'TIMER_FINISHED'
+      event_finished = client->_event( 'TIMER_FINISHED' )
     ).
 
   ENDMETHOD.

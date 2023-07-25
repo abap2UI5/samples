@@ -10,7 +10,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -22,7 +22,6 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
       WHEN OTHERS.
         TRY.
-
             DATA(lv_classname) = to_upper( client->get( )-event ).
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
@@ -32,130 +31,584 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
         ENDTRY.
     ENDCASE.
 
-
     DATA(page) = z2ui5_cl_xml_view=>factory( client
         )->shell( )->page(
-        title = 'abap2UI5 - Demo Section'
-        class = 'sapUiContentPadding sapUiResponsivePadding--content '
+        title = 'abap2UI5 - Samples'
         navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
         shownavbutton = abap_true
         )->header_content(
             )->toolbar_spacer(
-*            )->button( text = 'TEST'  press = `MessageToast.show('Selected action is test')`
-*            )->button( text = 'TEST2'  press = `URLHelper.triggerTel('01763578')`
             )->link( text = 'SCN'     target = '_blank' href = 'https://blogs.sap.com/tag/abap2ui5/'
             )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
         )->get_parent( ).
 
-    DATA(grid) = page->grid( 'L3 M6 S12'
-        )->content( 'layout' ).
+    page = page->grid( 'L12 M12 S12'
+         )->content( 'layout' ).
 
-    grid->simple_form( title = 'HowTo - Basic' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Communication & Data Binding' press = client->_event( 'z2ui5_cl_app_demo_01' )
-        )->button( text = 'Events, Error & Change View'  press = client->_event( 'z2ui5_cl_app_demo_04' )
-        )->button( text = 'Flow Logic'                   press = client->_event( 'z2ui5_cl_app_demo_24' ) ).
+    page->formatted_text(
+`<p><strong>Explore and copy code samples!</strong> All samples are abap2UI5 implementations of the <a href="https://sapui5.hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control create an i` &&
+`ssue or send a PR` &&
+`.</p>` ).
 
-    grid->simple_form( title = 'HowTo - Basic II' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Formatted Text'       press = client->_event( 'Z2UI5_CL_APP_DEMO_15' )
-        )->button( text = 'Scrolling & Cursor'   press = client->_event( 'z2ui5_cl_app_demo_22' )
-        )->button( text = 'Timer'                press = client->_event( 'z2ui5_cl_app_demo_28' ) ).
+    DATA(panel) = page->panel(
+         expandable = abap_false
+         expanded   = abap_true
+         headertext = `General`
+    ).
 
-    grid->simple_form( title = 'HowTo - Selection-Screen' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Basic'           press = client->_event( 'z2ui5_cl_app_demo_02' )
-        )->button( text = 'More Controls'   press = client->_event( 'z2ui5_cl_app_demo_05' )
-        )->button( text = 'F4-Value-Help'   press = client->_event( 'Z2UI5_CL_APP_DEMO_09' ) ).
+    panel->generictile(
+        header    = 'Communication & Data Binding'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_01' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Tables II' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'Toolbar & Container'  press = client->_event( 'z2ui5_cl_app_demo_06' )
-         )->button( text = 'Selection Modes'           press = client->_event( 'z2ui5_cl_app_demo_19' )
-         )->button( text = 'Editable' press = client->_event( 'z2ui5_cl_app_demo_11' )
-         )->button( text = 'Dynamic Types' press = client->_event( 'z2ui5_cl_app_demo_61' ) ).
+    panel->generictile(
+        header    = 'Events, Error & Change View'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_04' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Popups' layout = 'ResponsiveGridLayout' )->content( 'form'
-          )->button( text = 'Basic'                        press = client->_event( 'Z2UI5_CL_APP_DEMO_21' )
-          )->button( text = 'Popups & Flow Logic'           press = client->_event( 'z2ui5_cl_app_demo_12' ) ).
+    panel->generictile(
+        header    = 'Flow Logic'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_24' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Popover' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Basic'             press = client->_event( 'z2ui5_cl_app_demo_26' )
-        )->button( text = 'Item Level' press = client->_event( 'z2ui5_cl_app_demo_52' ) ).
+    panel->generictile(
+        header    = 'Scrolling & Cursor'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_22' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Messages' layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Toast, Box & Strip'   press = client->_event( 'z2ui5_cl_app_demo_08' )
-        )->button( text = 'Illustrated Message'  press = client->_event( 'z2ui5_cl_app_demo_33' )
-        )->button( text = 'Message Manager'      press = client->_event( 'z2ui5_cl_app_demo_38' ) ).
+    panel->generictile(
+        header    = 'Timer'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_28' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Layouts' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'Layout (Header, Footer, Grid)' press = client->_event( 'z2ui5_cl_app_demo_10' )
-         )->button( text = 'Object Page' press = client->_event( 'z2ui5_cl_app_demo_17' )
-         )->button( text = 'Dynamic Page' press = client->_event( 'z2ui5_cl_app_demo_30' ) ).
+    panel->generictile(
+        header    = 'Open new tab'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_73' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Extensions I' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'Views - Normal, Generic, XML' press = client->_event( 'z2ui5_cl_app_demo_23' )
-         )->button( text = 'Import UI5-XML-View' press = client->_event( 'z2ui5_cl_app_demo_31' )
-         )->button( text = 'Custom Control' press = client->_event( 'z2ui5_cl_app_demo_37' )
-         )->button( text = 'Change CSS'              press = client->_event( 'z2ui5_cl_app_demo_50' ) ).
+    panel->generictile(
+        header    = 'Expression Binding'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_27' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Extensions II' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'HTML, JS, CSS' press = client->_event( 'z2ui5_cl_app_demo_32' )
-         )->button( text = 'Canvas & SVG' press = client->_event( 'z2ui5_cl_app_demo_36' )
-         )->button( text = 'ext. Library' press = client->_event( 'z2ui5_cl_app_demo_40' ) ).
+    panel->generictile(
+        header    = 'Integer, Decimals, Dates, Time'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_47' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - List Report'     layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'Search Field' press = client->_event( 'z2ui5_cl_app_demo_53' )
-         )->button( text = 'Download CSV' press = client->_event( 'z2ui5_cl_app_demo_57' )
-         )->button( text = 'Filter' press = client->_event( 'z2ui5_cl_app_demo_56' )
-         )->button( text = 'Layout' press = client->_event( 'z2ui5_cl_app_demo_58' ) ).
-
-    grid->simple_form( title = 'HowTo - Tree Controls'     layout = 'ResponsiveGridLayout' )->content( 'form'
-          )->button( text = 'Simple' press = client->_event( 'z2ui5_cl_app_demo_07' )
-          )->button( text = 'Popup Select Entry' press = client->_event( 'z2ui5_cl_app_demo_68' ) ).
+    panel->generictile(
+        header    = 'Currency Format'
+        subheader = ''
+        press     = client->_event( 'z2ui5_cl_app_demo_67' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
 
-    grid->simple_form( title = 'HowTo - Visualization'     layout = 'ResponsiveGridLayout' )->content( 'form'
-      )->button( text = 'Bar Chart' press = client->_event( 'z2ui5_cl_app_demo_16' )
-      )->button( text = 'Donut Chart' press = client->_event( 'z2ui5_cl_app_demo_13' )
-      )->button( text = 'Line Chart' press = client->_event( 'z2ui5_cl_app_demo_14' )
-      )->button( text = 'Radial Chart' press = client->_event( 'z2ui5_cl_app_demo_29' )
-      )->button( text = 'Monitor' press = client->_event( 'z2ui5_cl_app_demo_41' ) ).
+    panel = page->panel(
+        expandable = abap_false
+        expanded   = abap_true
+        headertext = 'Selection Screen'
+   ).
 
-    grid->simple_form( title = 'HowTo - More' layout = 'ResponsiveGridLayout' )->content( 'form'
-         )->button( text = 'App Template' press = client->_event( 'Z2UI5_CL_APP_DEMO_18' )
-         )->button( text = 'Side Effects'         press = client->_event( 'z2ui5_cl_app_demo_27' )
-         )->button( text = 'Integer, Decimals, Dates, Time' press = client->_event( 'z2ui5_cl_app_demo_47' )
-         )->button( text = 'Currency Format' press = client->_event( 'z2ui5_cl_app_demo_67' )
-         )->button( text = 'Editor' press = client->_event( 'z2ui5_cl_app_demo_35' ) ).
+    panel->generictile(
+        header    = 'Basic'
+        subheader = ''
+        press     =  client->_event( 'z2ui5_cl_app_demo_02' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Model Update' layout = 'ResponsiveGridLayout' )->content( 'form'
-      )->button( text = 'Model upd. vs. View Reren.' press = client->_event( 'z2ui5_cl_app_demo_49' )
-      )->button( text = 'Live Change Event' press = client->_event( 'z2ui5_cl_app_demo_59' )
-      )->button( text = 'Suggestion Event' press = client->_event( 'z2ui5_cl_app_demo_60' )
+    panel->generictile(
+        header    = 'More Controls'
+        subheader = ''
+        press     =  client->_event( 'z2ui5_cl_app_demo_05' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'F4-Value-Help'
+        subheader = ''
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_09' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Formatted Text'
+        subheader = ''
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_15' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+          header    = 'Search Field I'
+          subheader = 'Filter with enter'
+          press     =  client->_event( 'z2ui5_cl_app_demo_53' )
+          mode      = 'LineMode'
+          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
-    grid = page->grid( 'L3 M6 S12'
-        )->content( 'layout' ).
+    panel->generictile(
+        header    = 'Search Field II'
+        subheader = 'Filter with Live Change Event'
+        press     =  client->_event( 'z2ui5_cl_app_demo_59' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
-    grid->simple_form( title = 'HowTo - Draft'     layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Start same app' press = client->_event( 'z2ui5_cl_app_demo_62' )
-        )->button( text = 'Call running apps' press = client->_event( 'z2ui5_cl_app_demo_63' ) ).
+    panel->generictile(
+     header    = 'Input with Suggestion'
+     subheader = 'Read Suggestion Table from the Server'
+     press     =  client->_event( 'z2ui5_cl_app_demo_59' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
-    grid->simple_form( title = 'HowTo - Nested Views'     layout = 'ResponsiveGridLayout' )->content( 'form'
-        )->button( text = 'Basic' press = client->_event( 'z2ui5_cl_app_demo_65' )
-        )->button( text = 'Master-Detail Page' press = client->_event(  'z2ui5_cl_app_demo_66' )
-        )->button( text = 'Master Detail with Tree' press = client->_event( 'z2ui5_cl_app_demo_69' )  ).
+    panel->generictile(
+       header    = 'Select-Options'
+       subheader = 'Use multi inputs to create range tables'
+       press     =  client->_event( 'z2ui5_cl_app_demo_56' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
 
-      grid = page->grid( 'L3 M6 S12'
-        )->content( 'layout' ).
+    panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `More Controls`
+      ).
 
-    grid->simple_form( title = 'sap.m.List'     layout = 'ResponsiveGridLayout' )->content( 'form'
-            )->button( text = 'List I'                    press = client->_event( 'z2ui5_cl_app_demo_03' )
-        )->button( text = 'List II'                   press = client->_event( 'z2ui5_cl_app_demo_48' )
+    panel->generictile(
+  header    = 'List I'
+  subheader = ''
+  press     =  client->_event( 'z2ui5_cl_app_demo_03' )
+  mode      = 'LineMode'
+  class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generictile(
+    header    = 'List II'
+    subheader = ''
+    press     =  client->_event( 'z2ui5_cl_app_demo_48' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+
+    panel->generictile(
+           header    = 'Tree - Simple'
+*        subheader = 'Use RTTI to send tables to the frontend'
+           press     =  client->_event( 'Z2UI5_CL_APP_DEMO_07' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+
+    panel->generictile(
+        header    = 'Tree - Popup Select Entry'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_68' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+      header    = 'Editor'
+*        subheader = 'sap.ui.Table'
+      press     =  client->_event( 'z2ui5_cl_app_demo_35' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+         header    = 'Message I'
+      subheader = 'Toast, Box & Strip'
+         press     =  client->_event( 'z2ui5_cl_app_demo_08' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+    panel->generictile(
+         header    = 'Message II'
+        subheader = 'Illustrated Message'
+        press     =  client->_event( 'z2ui5_cl_app_demo_33' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+      header    = 'Message III'
+        subheader = 'Message Manager'
+      press     =  client->_event( 'z2ui5_cl_app_demo_38' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel = page->panel(
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Table`
+     ).
+
+
+    panel->generictile(
+        header    = 'Toolbar & Container'
+        subheader = ''
+        press     =  client->_event( 'z2ui5_cl_app_demo_06' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Selection Modes'
+        subheader = ''
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_19' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Editable'
+        subheader = ''
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_11' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+         header    = 'Dynamic Types'
+         subheader = 'Use RTTI to send tables to the frontend'
+         press     =  client->_event( 'Z2UI5_CL_APP_DEMO_61' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+    panel->generictile(
+        header    = 'Simple'
+        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_70' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+    panel->generictile(
+         header    = 'Object Number and State'
+ subheader = 'sap.ui.Table'
+         press     =  client->_event( 'z2ui5_cl_app_demo_72' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+    panel->generictile(
+        header    = 'Layout'
+        subheader = 'Save table output similiar Fcat'
+        press     =  client->_event( 'z2ui5_cl_app_demo_58' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `File Import / Export`
+      ).
+
+    panel->generictile(
+    header    = 'Download CSV'
+    subheader = 'Export Table as CSV'
+    press     =  client->_event( 'z2ui5_cl_app_demo_57' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generictile(
+       header    = 'Upload CSV'
+       subheader = 'Import CSV as internal Table'
+       press     =  client->_event( 'z2ui5_cl_app_demo_74' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
+
+    panel->generictile(
+        header    = 'Download XLSX'
+        subheader = 'Export Table as XLSX'
+        press     =  client->_event( 'z2ui5_cl_app_demo_71' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'File Uploader'
+        subheader = 'Upload any file to the Backend'
+        press     =  client->_event( 'z2ui5_cl_app_demo_75' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+    panel = page->panel(
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Popup & Popover`
+     ).
+
+    panel->generictile(
+           header    = 'Popup'
+        subheader = 'Simple Example'
+           press     =  client->_event( 'Z2UI5_CL_APP_DEMO_21' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+    panel->generictile(
+        header    = 'Flow Logic'
+        subheader = 'Different ways of Popup handling'
+        press     =  client->_event( 'z2ui5_cl_app_demo_12' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Popover'
+        subheader = 'Simple Example'
+        press     =  client->_event( 'z2ui5_cl_app_demo_26' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+         header    = 'Popover Item Level'
+         subheader = 'Create a Popover for a specific entry of a table'
+         press     =  client->_event( 'z2ui5_cl_app_demo_52' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+    panel = page->panel(
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Visualization`
+     ).
+
+    panel->generictile(
+           header    = 'Donut Chart'
+*        subheader = 'Use RTTI to send tables to the frontend'
+           press     =  client->_event( 'z2ui5_cl_app_demo_13' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+    panel->generictile(
+        header    = 'Line Chart'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_14' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Bar Chart'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_16' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+         header    = 'Radial Chart'
+*subheader = 'sap.ui.Table'
+         press     =  client->_event( 'z2ui5_cl_app_demo_29' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+    panel->generictile(
+            header    = 'Monitor'
+*subheader = 'sap.ui.Table'
+            press     =  client->_event( 'z2ui5_cl_app_demo_41' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
-    grid->simple_form( title = 'sap.ui.Table'     layout = 'ResponsiveGridLayout' )->content( 'form'
-            )->button( text = 'Simple'                    press = client->_event( 'z2ui5_cl_app_demo_70' )
-        ).
+    panel = page->panel(
+       expandable = abap_false
+       expanded   = abap_true
+       headertext = `Layouts`
+  ).
 
+    panel->generictile(
+        header    = 'Header, Footer, Grid'
+      press     =  client->_event( 'z2ui5_cl_app_demo_10' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+        header    = 'Object Page'
+      press     =  client->_event( 'z2ui5_cl_app_demo_17' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+        header    = 'Dynamic Page'
+      press     =  client->_event( 'z2ui5_cl_app_demo_30' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+        header    = 'Flexible Column Layout'
+     subheader = 'Master Detail with Tree'
+      press     =  client->_event( 'z2ui5_cl_app_demo_69' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel = page->panel(
+            expandable = abap_false
+            expanded   = abap_true
+            headertext = `Extension`
+       ).
+
+    panel->generictile(
+           header    = 'Views - Normal, Generic, XML'
+*        subheader = 'Use RTTI to send tables to the frontend'
+           press     =  client->_event( 'z2ui5_cl_app_demo_23' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+
+    panel->generictile(
+        header    = 'Import UI5-XML-View'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_31' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Custom Control'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_37' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+         header    = 'Change CSS'
+*subheader = 'sap.ui.Table'
+         press     =  client->_event( 'z2ui5_cl_app_demo_50' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+    panel->generictile(
+        header    = 'HTML, JS, CSS'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_32' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Canvas & SVG'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_36' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+         header    = 'ext. Library'
+*subheader = 'sap.ui.Table'
+         press     =  client->_event( 'z2ui5_cl_app_demo_40' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+
+    panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
+               headertext = `More Features`
+          ).
+
+
+    panel->generictile(
+      header    = 'Draft I'
+      subheader = 'App remembers at startup values of past inputs'
+      press     =  client->_event( 'z2ui5_cl_app_demo_62' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generictile(
+         header    = 'Draft II'
+         subheader = 'Call the same app with different users'
+         press     =  client->_event( 'z2ui5_cl_app_demo_63' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+    panel->generictile(
+        header    = 'Nested Views I'
+        subheader = 'Basic Example'
+        press     =  client->_event( 'z2ui5_cl_app_demo_65' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+        header    = 'Nested Views II'
+        subheader = 'Master-Detail Page'
+        press     =  client->_event( 'z2ui5_cl_app_demo_66' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generictile(
+             header    = 'Update Model'
+          subheader = 'Model only update vs. View rerendering'
+           press     =  client->_event( 'z2ui5_cl_app_demo_69' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
 
     client->view_display( page->stringify( ) ).
 

@@ -19,6 +19,8 @@ CLASS z2ui5_cl_app_demo_72 DEFINITION
         Depth        TYPE string,
         Height       TYPE string,
         DimUnit      TYPE meins,
+        state_price   type string,
+        state_measure type string,
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
@@ -127,13 +129,14 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
              )->object_identifier( text = '{PRODUCTNAME}' title =  '{PRODUCTID}' )->get_parent(
              )->text( text = '{SUPPLIERNAME}' )->get_parent(
              )->text( text = '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
-             )->object_number( number = '{MEASURE}' unit =  '{UNIT}'
+             )->object_number( number = '{MEASURE}' unit =  '{UNIT}' state = '{STATE_MEASURE}'
 *               state = `{ parts: [ { path : 'MEASURE' } ,  { path : 'UNIT' } ] } `
 *               state = `{ parts: [ { path : 'MEASURE' } ,  { path : 'UNIT' } ] , formatter: 'sap.m.sample.Table.Formatter.weightState' } `
 *             )->object_number( number = `{ parts: [ { path : 'PRICE' } , { path : 'UNIT' } ] , type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}  } `
 *                              unit =  '{WAERS}'
              )->object_number( "number = '{MEASURE}' unit =  '{UNIT}'
-                   number = `{ parts: [ { path : 'PRICE' } , { path : 'UNIT' } ] }`  " , type: 'sap.ui.model.type.Currency , formatOptions: { currencyCode : false } } `
+                   state = '{STATE_PRICE}'
+                   number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ",  type: 'sap.ui.model.type.Currency , formatOptions: { currencyCode : false } } `
 *                  number = `{ parts: [ { path : 'PRICE' } , { path : 'UNIT' } ] , ype: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}  } `
 *                    unit = `{UNIT}`
 *)->object_number( number = `{ parts: [ '` && client->_bind_edit( val = '{PRICE}' path = abap_true ) && `', '` && client->_bind_edit( val = '{WAERS}' path = abap_true )
@@ -147,12 +150,12 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
     mt_table = VALUE #(
-        ( Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR' )
-        ( Productid = '2' productname = 'chair' suppliername = 'Company 2'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 123   unit = 'ST' price = '2000.55' waers = 'USD')
-        ( Productid = '3' productname = 'sofa'  suppliername = 'Company 3'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' )
-        ( Productid = '4' productname = 'computer' suppliername = 'Company 4'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' )
-        ( Productid = '5' productname = 'printer' suppliername = 'Company 5'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR')
-        ( Productid = '6' productname = 'table2'  suppliername = 'Company 6'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' )
+        ( Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`  )
+        ( Productid = '2' productname = 'chair' suppliername = 'Company 2'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` state_measure = `Warning`  )
+        ( Productid = '3' productname = 'sofa'  suppliername = 'Company 3'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` state_measure = `Warning`  )
+        ( Productid = '4' productname = 'computer' suppliername = 'Company 4'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` state_measure = `Success`  )
+        ( Productid = '5' productname = 'printer' suppliername = 'Company 5'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` state_measure = `Warning`  )
+        ( Productid = '6' productname = 'table2'  suppliername = 'Company 6'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`  )
     ).
 
     lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).

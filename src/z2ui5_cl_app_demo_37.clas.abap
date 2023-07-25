@@ -125,7 +125,7 @@ CLASS z2ui5_cl_app_demo_37 IMPLEMENTATION.
 
     client->timer_set(
       interval_ms    = '0'
-      event_finished = 'DISPLAY_VIEW'
+      event_finished = client->_event( 'DISPLAY_VIEW' )
     ).
 
   ENDMETHOD.
