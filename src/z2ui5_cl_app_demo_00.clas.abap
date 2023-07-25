@@ -608,6 +608,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
+          panel->generictile(
+             header    = 'Smallest App'
+          subheader = 'Demo'
+           press     =  client->_event( 'z2ui5_cl_app_demo_44' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
