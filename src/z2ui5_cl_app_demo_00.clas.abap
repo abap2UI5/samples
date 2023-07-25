@@ -192,6 +192,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+     panel->generic_tile(
+       header    = 'Multi Input'
+       subheader = ''
+       press     =  client->_event( 'z2ui5_cl_app_demo_78' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
+
+
     panel->generic_tile(
        header    = 'Select-Options'
        subheader = 'Use multi inputs to create range tables'
