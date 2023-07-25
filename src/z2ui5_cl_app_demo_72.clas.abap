@@ -8,19 +8,19 @@ CLASS z2ui5_cl_app_demo_72 DEFINITION
 
     TYPES:
       BEGIN OF ty_s_tab,
-        productid    TYPE string,
-        productname  TYPE string,
-        Suppliername TYPE string,
-        Measure      TYPE p LENGTH 10 DECIMALS 2,
-        unit         TYPE string, "meins,
-        price        TYPE p LENGTH 14 DECIMALS 3, "p LENGTH 10 DECIMALS 2,
-        waers        TYPE waers,
-        Width        TYPE string,
-        Depth        TYPE string,
-        Height       TYPE string,
-        DimUnit      TYPE meins,
-        state_price   type string,
-        state_measure type string,
+        productid     TYPE string,
+        productname   TYPE string,
+        Suppliername  TYPE string,
+        Measure       TYPE p LENGTH 10 DECIMALS 2,
+        unit          TYPE string, "meins,
+        price         TYPE p LENGTH 14 DECIMALS 3, "p LENGTH 10 DECIMALS 2,
+        waers         TYPE waers,
+        Width         TYPE string,
+        Depth         TYPE string,
+        Height        TYPE string,
+        DimUnit       TYPE meins,
+        state_price   TYPE string,
+        state_measure TYPE string,
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
@@ -93,23 +93,19 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
     page->header_content(
           )->link(
               text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
-    DATA(lo_items) = page->icontabbar( class = 'sapUiResponsiveContentPadding' selectedKey = client->_bind_edit( lv_selectedKey )  select = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
-    lo_items->icontabfilter( count = client->_bind_edit( lv_cnt_total ) text = 'Products' key = 'ALL' showall = abap_true ).
-    lo_items->icontabseparator(  ).
-    lo_items->icontabfilter( icon = 'sap-icon://begin'     iconcolor = 'Positive' count = client->_bind_edit( lv_cnt_pos ) text = 'OK' key = 'OK'  ).
-    lo_items->icontabfilter( icon = 'sap-icon://compare'   iconcolor = 'Critical' count = client->_bind_edit( lv_cnt_heavy ) text = 'Heavy' key = 'HEAVY'  ).
-    lo_items->icontabfilter( icon = 'sap-icon://inventory' iconcolor = 'Negative' count = client->_bind_edit( lv_cnt_neg ) text = 'Overweight' key = 'OVERWEIGHT'  ).
+    DATA(lo_items) = page->icon_tab_bar( class = 'sapUiResponsiveContentPadding' selectedKey = client->_bind_edit( lv_selectedKey )  select = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
+    lo_items->icon_tab_filter( count = client->_bind_edit( lv_cnt_total ) text = 'Products' key = 'ALL' showall = abap_true ).
+    lo_items->icon_tab_separator(  ).
+    lo_items->icon_tab_filter( icon = 'sap-icon://begin'     iconcolor = 'Positive' count = client->_bind_edit( lv_cnt_pos ) text = 'OK' key = 'OK'  ).
+    lo_items->icon_tab_filter( icon = 'sap-icon://compare'   iconcolor = 'Critical' count = client->_bind_edit( lv_cnt_heavy ) text = 'Heavy' key = 'HEAVY'  ).
+    lo_items->icon_tab_filter( icon = 'sap-icon://inventory' iconcolor = 'Negative' count = client->_bind_edit( lv_cnt_neg ) text = 'Overweight' key = 'OVERWEIGHT'  ).
 
     DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
        )->table(
            inset = abap_false
            showSeparators = 'Inner'
            headerText = 'Products'
-*            growing             = abap_true
-*            growingthreshold    = '20'
-*            growingscrolltoload = abap_true
            items               = client->_bind( mt_table ) ).
-*            sticky              = 'ColumnHeaders,HeaderToolbar' ).
 
     tab->columns(
         )->column( width = '12em'
@@ -130,19 +126,11 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
              )->text( text = '{SUPPLIERNAME}' )->get_parent(
              )->text( text = '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}' unit =  '{UNIT}' state = '{STATE_MEASURE}'
-*               state = `{ parts: [ { path : 'MEASURE' } ,  { path : 'UNIT' } ] } `
-*               state = `{ parts: [ { path : 'MEASURE' } ,  { path : 'UNIT' } ] , formatter: 'sap.m.sample.Table.Formatter.weightState' } `
-*             )->object_number( number = `{ parts: [ { path : 'PRICE' } , { path : 'UNIT' } ] , type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}  } `
-*                              unit =  '{WAERS}'
-             )->object_number( "number = '{MEASURE}' unit =  '{UNIT}'
+             )->object_number(
                    state = '{STATE_PRICE}'
-                   number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ",  type: 'sap.ui.model.type.Currency , formatOptions: { currencyCode : false } } `
-*                  number = `{ parts: [ { path : 'PRICE' } , { path : 'UNIT' } ] , ype: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}  } `
-*                    unit = `{UNIT}`
-*)->object_number( number = `{ parts: [ '` && client->_bind_edit( val = '{PRICE}' path = abap_true ) && `', '` && client->_bind_edit( val = '{WAERS}' path = abap_true )
-*                 && `' ] , type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: false}  } `
-*                              unit =  '{WAERS}'
+                   number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } `
               ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

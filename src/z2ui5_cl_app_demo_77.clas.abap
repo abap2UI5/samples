@@ -134,6 +134,7 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
             class = 'sapUiContentPadding' ).
 
     page1->header_content(
+       )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1683753816716345345`
        )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
