@@ -384,6 +384,14 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     ).
 
 
+    panel->generic_tile(
+        header    = 'PDF Viewer'
+        subheader = 'Display PDFs via iframe'
+        press     =  client->_event( 'z2ui5_cl_app_demo_79' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true

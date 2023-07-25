@@ -33,7 +33,8 @@ CLASS z2ui5_cl_app_demo_78 IMPLEMENTATION.
                                showclearicon    = abap_true
                                value            = client->_bind_edit( mv_value )
                                submit           = client->_event( 'SUBMIT' )
-                               valueHelpRequest = client->_event( 'FILTER_VALUE_HELP' )
+                               tokenupdate      = client->_event( 'SUBMIT' )
+*                               valueHelpRequest = client->_event( 'FILTER_VALUE_HELP' )
                       )->item( key  = `{KEY}`
                                text = `{TEXT}`
                       )->tokens(
