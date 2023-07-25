@@ -101,8 +101,6 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
         )->stringify( ) ).
 
       client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
-
-
       RETURN.
     ENDIF.
 
@@ -120,7 +118,6 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
         client->view_model_update( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -137,9 +134,7 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
             class = 'sapUiContentPadding' ).
 
     page1->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
-     ).
+       )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
@@ -149,11 +144,10 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween`
+         )->flex_box( alignitems = `Start` ).
 
     DATA(cont) = page->content( ns = 'f' ).
-
-
 
     DATA(tab) = cont->table(
               id = `exportTable`
@@ -195,55 +189,6 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
           ).
 
     client->view_display( view->stringify( ) ).
-    RETURN.
-*
-*    DATA(tab) = cont->ui_table(
-*        rows = client->_bind( val = mt_table )
-*                                editable = abap_false
-*                                id = 'exportTable'
-*                                alternaterowcolors = abap_true
-*                                enablegrouping = abap_false
-*                                fixedcolumncount = '1'
-*                                rowactioncount = '2'
-*                                selectionmode = 'None'
-*                                sort = client->_event( 'SORT' )
-*                                filter = client->_event( 'FILTER' )
-*                                customfilter =  client->_event( 'CUSTOMFILTER' ) ).
-*
-*    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products'
-*        )->toolbar_spacer(
-*        )->cc_export_spreadsheet(
-*                tableid = 'exportTable'
-*                icon = 'sap-icon://excel-attachment'
-*                type = 'Emphasized' ).
-*
-*    DATA(lo_columns) = tab->ui_columns( ).
-*    lo_columns->ui_column( width = '5rem' sortproperty = 'ROWID' filterproperty = 'ROWID'
-*        )->text( text = `Index` )->ui_template(
-*            )->text(   text = `{ROWID}` ).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'PRODUCT' filterproperty = 'PRODUCT'
-*        )->text( text = `Product` )->ui_template(
-*            )->text( text = `{PRODUCT}` ).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEDATE' filterproperty = 'CREATEDATE'
-*        )->text( text = `Date` )->ui_template(
-*            )->text(  '{CREATEDATE}' ).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEBY' filterproperty = 'CREATEBY'
-*        )->text( text = `Name` )->ui_template(
-*            )->text( text = `{CREATEBY}` ).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'STORAGELOCATION'  filterproperty = 'STORAGELOCATION'
-*        )->text( text = `Location` )->ui_template(
-*            )->text( text = `{STORAGELOCATION}`).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY'
-*        )->text( text = `Quantity` )->ui_template(
-*            )->text( text = `{QUANTITY}`).
-*    lo_columns->ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS'
-*        )->text( text = `Unit` )->ui_template(
-*            )->text( text = `{MEINS}`).
-*    lo_columns->ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE'
-*        )->text( text = `Price` )->ui_template(
-*            )->currency( value = `{PRICE}` currency = `{WAERS}` ).
-*
-*
 
   ENDMETHOD.
 
@@ -267,14 +212,12 @@ CLASS z2ui5_cl_app_demo_77 IMPLEMENTATION.
       ( label = 'Location' property = 'STORAGELOCATION' type = 'String' )
       ( label = 'Quantity' property = 'QUANTITY'        type = 'Number' delimiter = abap_true )
       ( label = 'Unit'     property = 'MEINS'           type = 'String' )
-      ( label = 'Price'    property = 'PRICE'           type = 'Currency' unit_property = 'WAERS' width = 14 scale = 2 )
-    ).
+      ( label = 'Price'    property = 'PRICE'           type = 'Currency' unit_property = 'WAERS' width = 14 scale = 2 ) ).
 
     mv_column_config =  /ui2/cl_json=>serialize(
                           data             = mt_column_config
                           compress         = abap_true
-                          pretty_name      = 'X' "camel_case
-                        ).
+                          pretty_name      = 'X' ).
 
   ENDMETHOD.
 
