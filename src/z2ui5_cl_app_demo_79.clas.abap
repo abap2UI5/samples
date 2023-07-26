@@ -10,7 +10,8 @@ CLASS z2ui5_cl_app_demo_79 DEFINITION
     DATA check_initialized TYPE abap_bool.
 
     METHODS get_example_pdf
-      RETURNING VALUE(result) TYPE string.
+      RETURNING
+        VALUE(result) TYPE string.
 
 ENDCLASS.
 

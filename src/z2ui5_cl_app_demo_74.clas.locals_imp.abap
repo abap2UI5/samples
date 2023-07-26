@@ -1,5 +1,4 @@
-CLASS lcl_utility DEFINITION
-  FINAL.
+CLASS lcl_utility DEFINITION.
 
   PUBLIC SECTION.
 
@@ -11,7 +10,7 @@ CLASS lcl_utility DEFINITION
 
     CLASS-METHODS trans_data_2_xml
       IMPORTING
-        data        TYPE data
+        data          TYPE data
       RETURNING
         VALUE(result) TYPE string.
 
@@ -155,9 +154,9 @@ CLASS lcl_utility IMPLEMENTATION.
 
   METHOD trans_data_2_xml.
 
-   " FIELD-SYMBOLS <object> TYPE any.
-  "  ASSIGN object->* TO <object>.
-  "  raise( when = xsdbool( sy-subrc <> 0 ) ).
+    " FIELD-SYMBOLS <object> TYPE any.
+    "  ASSIGN object->* TO <object>.
+    "  raise( when = xsdbool( sy-subrc <> 0 ) ).
 
     CALL TRANSFORMATION id
        SOURCE data = data
@@ -205,6 +204,8 @@ CLASS lcl_utility IMPLEMENTATION.
           p_unique     = abap_false ).
 
     CREATE DATA result TYPE HANDLE o_table_desc.
+    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+    ASSIGN result->* TO <tab>.
 
     DELETE lt_rows WHERE table_line IS INITIAL.
 
@@ -215,12 +216,12 @@ CLASS lcl_utility IMPLEMENTATION.
       CREATE DATA lr_row TYPE HANDLE struc.
 
       LOOP AT lt_cols REFERENCE INTO lr_col.
-        ASSIGN COMPONENT sy-tabix OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+        ASSIGN lr_row->* TO FIELD-SYMBOL(<row>).
+        ASSIGN COMPONENT sy-tabix OF STRUCTURE <row> TO FIELD-SYMBOL(<field>).
         <field> = lr_col->*.
       ENDLOOP.
-      FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-      ASSIGN result->* TO <tab>.
-      INSERT lr_row->* INTO TABLE <tab>.
+
+      INSERT <row> INTO TABLE <tab>.
     ENDLOOP.
 
   ENDMETHOD.
@@ -294,7 +295,8 @@ CLASS lcl_utility IMPLEMENTATION.
 
       DATA(lv_index) = 1.
       DO.
-        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+        ASSIGN lr_row->* TO FIELD-SYMBOL(<row>).
+        ASSIGN COMPONENT lv_index OF STRUCTURE <row> TO FIELD-SYMBOL(<field>).
         IF sy-subrc <> 0.
           EXIT.
         ENDIF.
