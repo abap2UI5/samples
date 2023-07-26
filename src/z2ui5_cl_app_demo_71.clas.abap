@@ -15,27 +15,27 @@ CLASS z2ui5_cl_app_demo_71 DEFINITION
 
     TYPES:
       BEGIN OF ty_column_config,
-        label            TYPE string,
-        property         TYPE string,
-        type             TYPE string,
-        unit             TYPE string,
-        delimiter        TYPE abap_bool,
+        label             TYPE string,
+        property          TYPE string,
+        type              TYPE string,
+        unit              TYPE string,
+        delimiter         TYPE abap_bool,
         unit_property     TYPE string,
-        width            TYPE string,
-        scale            TYPE i,
+        width             TYPE string,
+        scale             TYPE i,
         text_align        TYPE string,
         display_unit      TYPE string,
         true_value        TYPE string,
         false_value       TYPE string,
-        template         TYPE string,
+        template          TYPE string,
         input_format      TYPE string,
-        wrap             TYPE abap_bool,
+        wrap              TYPE abap_bool,
         auto_scale        TYPE abap_bool,
-        timezone         TYPE string,
+        timezone          TYPE string,
         timezone_property TYPE string,
         display_timezone  TYPE abap_bool,
-        utc              TYPE abap_bool,
-        value_map        TYPE ty_value_map,
+        utc               TYPE abap_bool,
+        value_map         TYPE ty_value_map,
       END OF ty_column_config.
 
     DATA: mt_column_config TYPE STANDARD TABLE OF ty_column_config WITH EMPTY KEY.
@@ -89,7 +89,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_71 IMPLEMENTATION.
 
 
   METHOD set_selkz.
@@ -159,18 +159,21 @@ CLASS Z2UI5_CL_APP_DEMO_71 IMPLEMENTATION.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
         ENDIF.
+
       WHEN 'ROW_ACTION_ITEM_NAVIGATION'.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
         ENDIF.
+
       WHEN 'ROW_ACTION_ITEM_EDIT'.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
         ENDIF.
+
     ENDCASE.
 
   ENDMETHOD.

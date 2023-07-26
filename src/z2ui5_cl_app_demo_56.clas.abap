@@ -23,6 +23,7 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
       END OF ty_S_token.
 
     DATA mv_value       TYPE string.
+    DATA mv_value2      TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
@@ -290,9 +291,6 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
              shownavbutton  = abap_true
          )->header_content(
              )->link(
-                 text = 'Demo' target = '_blank'
-                 href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
-             )->link(
                  text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
         )->get_parent( ).
 
@@ -312,8 +310,8 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-    lo_box->vbox(
-        )->text(  `Product:`
+    data(vbox) = lo_box->vbox( ).
+        vbox->text(  `Product:`
         )->multi_input(
                     tokens          = client->_bind( mt_token )
                     showclearicon   = abap_true
@@ -331,8 +329,7 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
                         text     = `{TEXT}`
                         visible  = `{VISIBLE}`
                         selected = `{SELKZ}`
-                        editable = `{EDITABLE}`
-        ).
+                        editable = `{EDITABLE}` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`

@@ -19,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_35 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -59,6 +59,7 @@ CLASS z2ui5_cl_app_demo_35 IMPLEMENTATION.
 
 
   ENDMETHOD.
+
 
   METHOD view_display.
 
@@ -118,5 +119,4 @@ CLASS z2ui5_cl_app_demo_35 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.

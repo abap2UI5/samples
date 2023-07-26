@@ -79,9 +79,8 @@ CLASS Z2UI5_CL_APP_DEMO_07 IMPLEMENTATION.
                     href = view->hlp_get_source_code_url( )
             )->get_parent( ).
 
-    client->_bind( mt_tree ).
     DATA(tab) = page->tree_table(
-      rows = `{path:'/MT_TREE', parameters: {arrayNames:['CATEGORIES']}}` ).
+      rows = `{path:'` && client->_bind( val = mt_tree path = abap_true ) && `', parameters: {arrayNames:['CATEGORIES']}}` ).
     tab->tree_columns(
     )->tree_column( label = 'Object'
         )->tree_template(
