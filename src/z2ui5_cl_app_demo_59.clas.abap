@@ -72,6 +72,52 @@ CLASS Z2UI5_CL_APP_DEMO_59 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD z2ui5_on_init.
+
+     mv_key = 'VIEW_REFRESH'.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_set_data.
+
+    mt_table = VALUE #(
+        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
+    ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_set_search.
+
+    IF mv_search_value IS NOT INITIAL.
+
+      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
+        DATA(lv_row) = ``.
+        DATA(lv_index) = 1.
+        DO.
+          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+          IF sy-subrc <> 0.
+            EXIT.
+          ENDIF.
+          lv_row = lv_row && <field>.
+          lv_index = lv_index + 1.
+        ENDDO.
+
+        IF lv_row NS mv_search_value.
+          DELETE mt_table.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+
+  ENDMETHOD.
+
+
 method z2ui5_view_display.
 
  DATA(view) = z2ui5_cl_xml_view=>factory( client ).
@@ -135,50 +181,4 @@ method z2ui5_view_display.
     client->view_display( view->stringify( ) ).
 
 endmethod.
-
-
-  METHOD z2ui5_on_init.
-
-     mv_key = 'VIEW_REFRESH'.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_set_data.
-
-    mt_table = VALUE #(
-        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
-    ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_set_search.
-
-    IF mv_search_value IS NOT INITIAL.
-
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
-        DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
-
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
-    ENDIF.
-
-  ENDMETHOD.
 ENDCLASS.

@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_37 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
 
 
   METHOD get_js_custom_control.
@@ -85,6 +85,20 @@ CLASS z2ui5_cl_app_demo_37 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD z2ui5_load_cc.
+
+    client->view_display( z2ui5_cl_xml_view=>factory( client
+         )->zz_plain( get_js_custom_control( )
+         )->stringify( ) ).
+
+    client->timer_set(
+      interval_ms    = '0'
+      event_finished = client->_event( 'DISPLAY_VIEW' )
+    ).
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
@@ -113,20 +127,6 @@ CLASS z2ui5_cl_app_demo_37 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_load_cc.
-
-    client->view_display( z2ui5_cl_xml_view=>factory( client
-         )->zz_plain( get_js_custom_control( )
-         )->stringify( ) ).
-
-    client->timer_set(
-      interval_ms    = '0'
-      event_finished = client->_event( 'DISPLAY_VIEW' )
-    ).
 
   ENDMETHOD.
 

@@ -84,7 +84,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
 
   METHOD hlp_get_range_by_value.

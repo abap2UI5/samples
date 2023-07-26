@@ -13,31 +13,14 @@ CLASS z2ui5_cl_app_demo_79 DEFINITION
       RETURNING
         VALUE(result) TYPE string.
 
+protected section.
+private section.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_app_demo_79 IMPLEMENTATION.
 
-  METHOD z2ui5_if_app~main.
+CLASS Z2UI5_CL_APP_DEMO_79 IMPLEMENTATION.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
-      DATA(view) = z2ui5_cl_xml_view=>factory( client )->page( title = 'PDF Output'
-               )->_generic(
-                ns = `html`
-                name = `iframe`
-                t_prop = VALUE #(
-                    ( n = `src`    v = get_example_pdf( ) )
-                    ( n = `height` v = `90%` )
-                    ( n = `width`  v = `90%` )
-                ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    ENDIF.
-
-  ENDMETHOD.
 
   METHOD get_example_pdf.
 
@@ -63,4 +46,25 @@ CLASS z2ui5_cl_app_demo_79 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD z2ui5_if_app~main.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+
+      DATA(view) = z2ui5_cl_xml_view=>factory( client )->page( title = 'PDF Output'
+               )->_generic(
+                ns = `html`
+                name = `iframe`
+                t_prop = VALUE #(
+                    ( n = `src`    v = get_example_pdf( ) )
+                    ( n = `height` v = `90%` )
+                    ( n = `width`  v = `90%` )
+                ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
+
+  ENDMETHOD.
 ENDCLASS.

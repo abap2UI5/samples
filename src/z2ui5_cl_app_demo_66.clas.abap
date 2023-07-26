@@ -55,47 +55,40 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_66 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD view_display_detail.
 
-    me->client = client.
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+     data(page) = lo_view_nested->page( title = `Nested View` ).
 
-      mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
-                                                                                                     ( object = '1.1.2') ) )
-                                                                               ( object = '1.2' ) ) )
-                         ( object = '2' categories = VALUE #( ( object = '2.1' )
-                                                              ( object = '2.2' ) ) )
-                         ( object = '3' categories = VALUE #( ( object = '3.1' )
-                                                              ( object = '3.2' ) ) ) ).
+      page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
+      )->input( ).
 
-      view_display_master(  ).
-      view_display_detail(  ).
+      page->button(
+            text = 'button 01'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_01 ) ).
 
-    ENDIF.
+        page->button(
+            text = 'button 02'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_02 )
+           ).
 
-    CASE client->get( )-event.
-
-      WHEN `UPDATE_DETAIL`.
-        view_display_detail(  ).
-
-
-      when `NEST_TEST`.
-
-      mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
-      mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
-
-      client->nest_view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-    ENDCASE.
+    client->nest_view_display(
+      val            = lo_view_nested->stringify( )
+      id             = `test`
+      method_insert  = 'addMidColumnPage'
+      method_destroy = 'removeAllMidColumnPages'
+    ).
 
   ENDMETHOD.
+
 
   METHOD view_display_master.
 
@@ -138,35 +131,42 @@ CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD view_display_detail.
+  METHOD z2ui5_if_app~main.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+    me->client = client.
 
-     data(page) = lo_view_nested->page( title = `Nested View` ).
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
 
-      page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
-      )->input( ).
+      mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
+                                                                                                     ( object = '1.1.2') ) )
+                                                                               ( object = '1.2' ) ) )
+                         ( object = '2' categories = VALUE #( ( object = '2.1' )
+                                                              ( object = '2.2' ) ) )
+                         ( object = '3' categories = VALUE #( ( object = '3.1' )
+                                                              ( object = '3.2' ) ) ) ).
 
-      page->button(
-            text = 'button 01'
-*            type    = 'Transparent'
-            press   = client->_event( `NEST_TEST` )
-            enabled = client->_bind( mv_check_enabled_01 ) ).
+      view_display_master(  ).
+      view_display_detail(  ).
 
-        page->button(
-            text = 'button 02'
-*            type    = 'Transparent'
-            press   = client->_event( `NEST_TEST` )
-            enabled = client->_bind( mv_check_enabled_02 )
-           ).
+    ENDIF.
 
-    client->nest_view_display(
-      val            = lo_view_nested->stringify( )
-      id             = `test`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages'
-    ).
+    CASE client->get( )-event.
+
+      WHEN `UPDATE_DETAIL`.
+        view_display_detail(  ).
+
+
+      when `NEST_TEST`.
+
+      mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
+      mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
+
+      client->nest_view_model_update( ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    ENDCASE.
 
   ENDMETHOD.
-
 ENDCLASS.

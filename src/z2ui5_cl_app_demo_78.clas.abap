@@ -18,10 +18,14 @@ CLASS z2ui5_cl_app_demo_78 DEFINITION
     DATA mv_value          TYPE string.
     DATA mt_token          TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
+protected section.
+private section.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_app_demo_78 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_APP_DEMO_78 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 

@@ -22,6 +22,38 @@ ENDCLASS.
 CLASS Z2UI5_CL_APP_DEMO_24 IMPLEMENTATION.
 
 
+  METHOD display_view.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    view->shell(
+        )->page( title = 'abap2UI5 - flow logic - APP 01' navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
+        )->header_content(
+            )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
+            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+        )->get_parent(
+
+       )->grid( 'L6 M12 S12' )->content( 'layout'
+
+       )->simple_form( 'Controller' )->content( 'form'
+
+         )->label( 'Demo'
+         )->button( text = 'call new app (first View)' press = client->_event( 'CALL_NEW_APP' )
+         )->label( 'Demo'
+         )->button( text = 'call new app (second View)' press = client->_event( 'CALL_NEW_APP_VIEW' )
+         )->label( 'Demo'
+         )->button( text = 'call new app (set Event)' press = client->_event( 'CALL_NEW_APP_EVENT' )
+         )->label( 'Demo'
+         )->input( client->_bind_edit( mv_input )
+         )->button( text = 'call new app (set data)' press = client->_event( 'CALL_NEW_APP_READ' )
+              )->label( 'some data, you can read it in the next app'
+         )->input( client->_bind_edit( mv_input2 )
+    ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_if_app~main.
 
     IF client->get( )-check_on_navigated = abap_true.
@@ -61,38 +93,6 @@ CLASS Z2UI5_CL_APP_DEMO_24 IMPLEMENTATION.
         ENDCASE.
 
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD display_view.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    view->shell(
-        )->page( title = 'abap2UI5 - flow logic - APP 01' navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
-        )->header_content(
-            )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
-        )->get_parent(
-
-       )->grid( 'L6 M12 S12' )->content( 'layout'
-
-       )->simple_form( 'Controller' )->content( 'form'
-
-         )->label( 'Demo'
-         )->button( text = 'call new app (first View)' press = client->_event( 'CALL_NEW_APP' )
-         )->label( 'Demo'
-         )->button( text = 'call new app (second View)' press = client->_event( 'CALL_NEW_APP_VIEW' )
-         )->label( 'Demo'
-         )->button( text = 'call new app (set Event)' press = client->_event( 'CALL_NEW_APP_EVENT' )
-         )->label( 'Demo'
-         )->input( client->_bind_edit( mv_input )
-         )->button( text = 'call new app (set data)' press = client->_event( 'CALL_NEW_APP_READ' )
-              )->label( 'some data, you can read it in the next app'
-         )->input( client->_bind_edit( mv_input2 )
-    ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
