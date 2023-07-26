@@ -67,7 +67,7 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
 
     panel->generic_tile(
         header    = 'Controller'
-        subheader = 'Handle events, change the view & errors'
+        subheader = 'Handle events & change the view'
         press     = client->_event( 'z2ui5_cl_app_demo_04' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
