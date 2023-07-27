@@ -288,7 +288,6 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
           headertext = `Table`
      ).
 
-
     panel->generic_tile(
         header    = 'Toolbar'
         subheader = 'Add a container & toolbar'

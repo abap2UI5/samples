@@ -46,16 +46,17 @@ CLASS z2ui5_cl_app_demo_76 DEFINITION
     DATA client TYPE REF TO z2ui5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_load_formatter.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
   PRIVATE SECTION.
 
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_76 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -63,8 +64,7 @@ CLASS Z2UI5_CL_APP_DEMO_76 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
+      z2ui5_load_formatter( ).
       RETURN.
     ENDIF.
 
@@ -76,6 +76,9 @@ CLASS Z2UI5_CL_APP_DEMO_76 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN `FORMATTER_LOADED`.
+        z2ui5_display_view( ).
+        z2ui5_set_data( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
@@ -83,8 +86,21 @@ CLASS Z2UI5_CL_APP_DEMO_76 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD z2ui5_load_formatter.
 
+    client->view_display( z2ui5_cl_xml_view=>factory( client
+         )->zz_plain( `<html:script> debugger; sap.z2ui5.oController.fnTimeConverter = function (sTimestamp) {` && |\n|  &&
+                      `  return new sap.gantt.misc.Format.abapTimestampToDate(sTimestamp); }; </html:script>`
+         )->stringify( ) ).
+
+    client->timer_set(
+      interval_ms    = `0`
+      event_finished = client->_event( `FORMATTER_LOADED` )
+    ).
+
+  ENDMETHOD.
+
+  METHOD z2ui5_display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
@@ -93,8 +109,6 @@ CLASS Z2UI5_CL_APP_DEMO_76 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true
             class = 'sapUiContentPadding' ).
-
-
 
     DATA(gantt) = page->gantt_chart_container(
       )->gantt_chart_with_table( id = `gantt` shapeselectionmode = `Single`
