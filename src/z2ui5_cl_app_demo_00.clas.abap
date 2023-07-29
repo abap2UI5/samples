@@ -10,7 +10,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -192,13 +192,13 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
-     panel->generic_tile(
-       header    = 'Multi Input'
-       subheader = ''
-       press     =  client->_event( 'z2ui5_cl_app_demo_78' )
-       mode      = 'LineMode'
-       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-   ).
+    panel->generic_tile(
+      header    = 'Multi Input'
+      subheader = ''
+      press     =  client->_event( 'z2ui5_cl_app_demo_78' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
 
     panel->generic_tile(
@@ -475,6 +475,20 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
+    panel->generic_tile(
+        header    = 'Gantt Chart'
+        press     =  client->_event( 'z2ui5_cl_app_demo_76' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Planning Calender'
+        press     =  client->_event( 'z2ui5_cl_app_demo_80' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     panel = page->panel(
        expandable = abap_false
        expanded   = abap_true
@@ -624,13 +638,13 @@ CLASS Z2UI5_CL_APP_DEMO_00 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
-          panel->generic_tile(
-             header    = 'Smallest App'
-          subheader = 'Demo'
-           press     =  client->_event( 'z2ui5_cl_app_demo_44' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
+    panel->generic_tile(
+       header    = 'Smallest App'
+    subheader = 'Demo'
+     press     =  client->_event( 'z2ui5_cl_app_demo_44' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
 
     client->view_display( page->stringify( ) ).
