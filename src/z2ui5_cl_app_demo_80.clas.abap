@@ -60,13 +60,9 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method Z2UI5_CL_APP_DEMO_PC_TEST->SET_FILTER
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD set_filter.
 *    z2ui5_set_data( ).
 *    CASE lv_selectedkey.
@@ -81,11 +77,6 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_APP_DEMO_PC_TEST->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
     me->client     = client.
 
@@ -101,10 +92,6 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_PC_TEST->Z2UI5_ON_EVENT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
@@ -117,10 +104,6 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_PC_TEST->Z2UI5_ON_INIT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_on_init.
     DATA: lv_date TYPE p.
     DATA: lv_time TYPE t.
@@ -128,7 +111,7 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
     lv_time = '060000'.
     lv_date = '20200410'.
     CONVERT DATE lv_date TIME lv_time INTO TIME STAMP DATA(lv_ts_start) TIME ZONE sy-zonlo.
-    DATA(lv_s_date) =  '2020-04-23T06:00:00'.
+    DATA(lv_s_date) =  '2023-04-22T08:15:00'.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->page( id = `page_main`
@@ -144,6 +127,7 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
 *                                                          startdate = '{= Date.createObject(${LV_S_DATE})}'
+                                                          startdate = '{= Date.createObject($' && client->_bind( lv_s_date ) && ') }'
 *                                                          rows = `{path: 'LT_PEOPLE'}`
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
 *                                                          appointmentsVisualization = 'Filled'
@@ -181,10 +165,6 @@ CLASS z2ui5_cl_app_demo_80 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_PC_TEST->Z2UI5_SET_DATA
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_set_data.
     DATA: lv_date TYPE p.
     DATA: lv_time TYPE t.
