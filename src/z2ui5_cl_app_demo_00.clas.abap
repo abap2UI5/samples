@@ -6,6 +6,8 @@ CLASS z2ui5_cl_app_demo_00 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
+    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value.
+
 ENDCLASS.
 
 
@@ -14,6 +16,12 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
+    IF client->get( )-check_on_navigated = abap_true.
+      client->scroll_position_set( mt_scroll ).
+    ELSE.
+      mt_scroll = client->get( )-t_scroll_pos.
+    ENDIF.
 
     CASE client->get( )-event.
 
@@ -129,6 +137,12 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+    panel->generic_tile(
+        header    = 'Scrolling'
+        press     = client->_event( 'z2ui5_cl_app_demo_22' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
     panel = page->panel(
         expandable = abap_false

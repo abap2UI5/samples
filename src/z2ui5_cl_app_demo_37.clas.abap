@@ -134,7 +134,7 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
   METHOD z2ui5_on_render.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    DATA(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
+    DATA(lv_xml) = `<mvc:View` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n|  &&
                           `    ><m:Button ` && |\n|  &&
@@ -156,7 +156,7 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
       `</html> ` && |\n|  &&
         `</mvc:View>`.
 
-    client->view_display( view->hlp_replace_controller_name( lv_xml ) ).
+    client->view_display( lv_xml ).
 
   ENDMETHOD.
 ENDCLASS.
