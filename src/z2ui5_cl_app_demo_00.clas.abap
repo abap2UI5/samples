@@ -18,9 +18,10 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->get( )-check_on_navigated = abap_true.
+      IF mt_scroll IS INITIAL.
+        mt_scroll = VALUE #( ( n = `page` ) ).
+      ENDIF.
       client->scroll_position_set( mt_scroll ).
-    ELSE.
-      mt_scroll = client->get( )-t_scroll_pos.
     ENDIF.
 
     CASE client->get( )-event.
@@ -34,6 +35,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
             client->nav_app_call( li_app ).
+            mt_scroll = client->get( )-t_scroll_pos.
             RETURN.
           CATCH cx_root.
         ENDTRY.
@@ -41,6 +43,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client
         )->shell( )->page(
+        id = `page`
         title = 'abap2UI5 - Samples'
         navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
         shownavbutton = abap_true
