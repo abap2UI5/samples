@@ -19,6 +19,8 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
         price            TYPE p LENGTH 10 DECIMALS 2,
         waers            TYPE waers,
         selected         TYPE abap_bool,
+        process          type string,
+        process_state    type string,
       END OF ty_s_tab .
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
@@ -34,7 +36,6 @@ CLASS z2ui5_cl_app_demo_70 DEFINITION
     DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
     DATA lv_selkz TYPE abap_bool .
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -113,6 +114,18 @@ CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
         ENDIF.
+      WHEN 'ROW_ACTION_ITEM_NAVIGATION'.
+        lt_arg = client->get( )-t_event_arg.
+        READ TABLE lt_arg INTO ls_arg INDEX 1.
+        IF sy-subrc = 0.
+          client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
+        ENDIF.
+      WHEN 'ROW_ACTION_ITEM_EDIT'.
+        lt_arg = client->get( )-t_event_arg.
+        READ TABLE lt_arg INTO ls_arg INDEX 1.
+        IF sy-subrc = 0.
+          client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
+        ENDIF.
     ENDCASE.
 
   ENDMETHOD.
@@ -174,6 +187,7 @@ CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
     DATA(tab) = cont->ui_table( rows = client->_bind( val = mt_table )
                                 editable = abap_false
                                 alternaterowcolors = abap_true
+                                rowactioncount = '2'
                                 enablegrouping = abap_false
                                 fixedcolumncount = '1'
                                 selectionmode = 'None'
@@ -185,6 +199,8 @@ CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
     lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
     lo_columns->ui_column( width = '5rem' sortproperty = 'ROW_ID'
                                           filterproperty = 'ROW_ID' )->text( text = `Index` )->ui_template( )->text(   text = `{ROW_ID}` ).
+    lo_columns->Ui_column( width = '11rem' sortproperty = 'PROCESS' filterproperty = 'PROCESS' )->text( text = `Process Indicator`
+    )->ui_template( )->progress_indicator( class = 'sapUiSmallMarginBottom' percentValue = `{PROCESS}` displayValue = '{PROCESS} %'  showvalue = 'true' state = '{PROCESS_STATE}' ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'PRODUCT'
                            filterproperty = 'PRODUCT' )->text( text = `Product` )->ui_template( )->input( value = `{PRODUCT}` editable = abap_false ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'CREATE_DATE' filterproperty = 'CREATE_DATE' )->text( text = `Date` )->ui_template( )->text(   text = `{CREATE_DATE}` ).
@@ -193,9 +209,16 @@ CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
     lo_columns->Ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
     lo_columns->Ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
     lo_columns->Ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value = `{PRICE}` currency = `{WAERS}` ).
-    lo_columns->Ui_column( width = '4rem' )->text( )->ui_template( )->overflow_toolbar( )->overflow_toolbar_button(
-    icon = 'sap-icon://edit' type = 'Transparent' press = client->_event(
-    val = `ROWEDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+    lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
+    )->ui_row_action_item( type = 'Navigation'
+                           press = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROW_ID}`  ) ) )
+                          )->get_parent( )->ui_row_action_item( icon = 'sap-icon://edit' text = 'Edit' press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}`  ) ) ) ).
+*
+*
+*
+*    lo_columns->Ui_column( width = '4rem' )->text( )->ui_template( )->overflow_toolbar( )->overflow_toolbar_button(
+*    icon = 'sap-icon://edit' type = 'Transparent' press = client->_event(
+*    val = `ROWEDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -205,12 +228,12 @@ CLASS Z2UI5_CL_APP_DEMO_70 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' )
-        ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD')
-        ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' )
-        ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' )
-        ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR')
-        ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' )
+        ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
+        ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD' process = '20' process_state = 'Warning' )
+        ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' process = '30' process_state = 'Success' )
+        ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' process = '40' process_state = 'Information' )
+        ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR' process = '70' process_state = 'Warning' )
+        ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' )
     ).
 
   ENDMETHOD.
