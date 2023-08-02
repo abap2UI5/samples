@@ -1,8 +1,32 @@
-CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
+CLASS z2ui5_cl_app_demo_83 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_S_tab_01,
+        screen_name TYPE string,
+      END OF ty_S_tab_01.
+
+    DATA mt_01 TYPE STANDARD TABLE OF ty_s_tab_01 WITH EMPTY KEY.
+
+    TYPES:
+      BEGIN OF ty_S_tab_02,
+        screen_name TYPE string,
+        field       TYPE string,
+        field_doma  TYPE string,
+      END OF ty_S_tab_02.
+
+    DATA mt_02 TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
+    data mt_02_display TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
+    TYPES:
+      BEGIN OF ty_S_tab_02_input,
+        name        TYPE string,
+        value       TYPE string,
+      END OF ty_S_tab_02_input.
+
+    DATA mt_tab_02_input TYPE STANDARD TABLE OF ty_s_tab_02_input WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_S_filter_pop,
@@ -28,18 +52,18 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
 
     DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
 
-    TYPES:
-      BEGIN OF ty_s_tab,
-        selkz            TYPE abap_bool,
-        product          TYPE string,
-        create_date      TYPE string,
-        create_by        TYPE string,
-        storage_location TYPE string,
-        quantity         TYPE i,
-      END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+*    TYPES:
+*      BEGIN OF ty_s_tab,
+*        selkz            TYPE abap_bool,
+*        product          TYPE string,
+*        create_date      TYPE string,
+*        create_by        TYPE string,
+*        storage_location TYPE string,
+*        quantity         TYPE i,
+*      END OF ty_s_tab.
+*    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table.
+*    DATA mt_table TYPE ty_t_table.
 
     TYPES ty_t_range TYPE RANGE OF string.
     TYPES ty_s_range TYPE LINE OF ty_T_range.
@@ -49,21 +73,17 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
       END OF ty_S_filter.
 
     DATA ms_filter TYPE ty_s_filter.
+    DATA mv_name TYPE string.
+
+    DATA mt_table TYPE REF TO data.
 
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA:
-      BEGIN OF app,
-        check_initialized TYPE abap_bool,
-        view_main         TYPE string,
-        view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
-      END OF app.
+    DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
     METHODS z2ui5_set_data.
@@ -80,11 +100,13 @@ CLASS z2ui5_cl_app_demo_56 DEFINITION PUBLIC.
         VALUE(result) TYPE string.
 
   PRIVATE SECTION.
+    DATA mt_cols TYPE string_table.
+
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_83 IMPLEMENTATION.
 
 
   METHOD hlp_get_range_by_value.
@@ -167,36 +189,32 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
-    app-get        = client->get( ).
-    app-view_popup = ``.
 
-    IF app-check_initialized = abap_false.
-      app-check_initialized = abap_true.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
       z2ui5_on_init( ).
+      RETURN.
     ENDIF.
 
-    IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
-    z2ui5_on_render( ).
-    CLEAR app-get.
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
+    CASE client->get( )-event.
 
-      WHEN `BUTTON_START`.
-        z2ui5_set_data( ).
+      WHEN 'BUTTON_POST'.
 
-*      WHEN `FILTER_UPDATE`.
-*        IF mv_value IS NOT INITIAL.
-*          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
-*          INSERT ls_range INTO TABLE ms_filter-product.
-*        ENDIF.
+        CREATE DATA mt_table TYPE (mv_name).
+        z2ui5_on_render_main( ).
+
+      WHEN `FILTER_UPDATE`.
+        IF mv_value IS NOT INITIAL.
+          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
+          INSERT ls_range INTO TABLE ms_filter-product.
+        ENDIF.
 
       WHEN `FILTER_VALUE_HELP_OK`.
         CLEAR ms_filter-product.
@@ -209,23 +227,23 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
            ) INTO TABLE ms_filter-product.
         ENDLOOP.
 
+        client->popup_destroy( ).
+
       WHEN `POPUP_ADD`.
         INSERT VALUE #( key = hlp_get_uuid( ) ) INTO TABLE mt_filter.
-        app-view_popup = `VALUE_HELP`.
+        client->popup_model_update( ).
 
       WHEN `POPUP_DELETE`.
-        DELETE mt_filter WHERE key = app-get-t_event_arg[ 1 ].
-        app-view_popup = `VALUE_HELP`.
+        DATA(lt_item) = client->get( )-t_event_arg.
+        DELETE mt_filter WHERE key = lt_item[ 1 ].
+        client->popup_model_update( ).
 
       WHEN `POPUP_DELETE_ALL`.
         mt_filter = VALUE #( ).
-        app-view_popup = `VALUE_HELP`.
-
-      WHEN `POPUP_REFRESH`.
-        app-view_popup = `VALUE_HELP`.
+        client->popup_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
-        app-view_popup = `VALUE_HELP`.
+        z2ui5_on_render_pop_filter( ).
 
         CLEAR mt_filter.
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
@@ -237,6 +255,7 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
            ) INTO TABLE mt_filter.
 
         ENDLOOP.
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
@@ -246,7 +265,19 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    app-view_main = `MAIN`.
+    mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
+
+    mt_02 = VALUE #(
+    ( screen_name = `screen_01` field_doma = `CHAR30` field = `MATNR` )
+    ( screen_name = `screen_01` field_doma = `STRING` field = `LGNUM` )
+    ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` )
+    ).
+
+
+
+    mv_name = `screen_01`.
+
+    z2ui5_on_render_main( ).
 
     mt_mapping = VALUE #(
     (   n = `EQ`     v = `={LOW}`    )
@@ -262,24 +293,6 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     ).
 
   ENDMETHOD.
-
-
-  METHOD z2ui5_on_render.
-
-    map_range_to_token( ).
-
-    CASE app-view_popup.
-      WHEN `VALUE_HELP`.
-        z2ui5_on_render_pop_filter( ).
-    ENDCASE.
-
-    CASE app-view_main.
-      WHEN 'MAIN'.
-        z2ui5_on_render_main( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
 
   METHOD z2ui5_on_render_main.
 
@@ -310,48 +323,133 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
 
-    data(vbox) = lo_box->vbox( ).
-        vbox->text(  `Product:`
-        )->multi_input(
-                    tokens          = client->_bind( mt_token )
-                    showclearicon   = abap_true
-*                    value           = client->_bind( mv_value )
-*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
-*                    submit          = client->_event( 'FILTER_UPDATE' )
-*                    id              = `FILTER`
-                    valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
-                )->item(
-                        key  = `{KEY}`
-                        text = `{TEXT}`
-                )->tokens(
-                    )->token(
-                        key      = `{KEY}`
-                        text     = `{TEXT}`
-                        visible  = `{VISIBLE}`
-                        selected = `{SELKZ}`
-                        editable = `{EDITABLE}` ).
+    DATA(vbox) = lo_box->vbox( ).
+    vbox->simple_form(  editable = abap_true
+            )->content( `form`
+                )->title( 'Table'
+                )->label( 'Name' ).
 
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+    vbox->input( client->_bind_edit( mv_name  ) ).
+
+    vbox->button(
+                text  = 'read'
+                press = client->_event( 'BUTTON_POST' )
+            ).
+
+  vbox = lo_box->vbox( ).
+
+    IF mt_02 IS not INITIAL.
+
+    mt_02_display = mt_02.
+    delete mt_02_display where screen_name <> mv_name.
+
+
+
+*      FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*      ASSIGN mt_table->* TO <tab>.
+
+*      mt_cols = z2ui5_tool_cl_utility=>get_fieldlist_by_table( mt_02 ).
+
+      mt_tab_02_input = VALUE #( FOR line IN mt_cols ( name = line ) ).
+
+        loop at mt_02_display REFERENCE INTO data(lr_tab).
+            insert value #(
+                name = lr_tab->field
+*                value = lr_tab->field_doma
+                     ) into table mt_tab_02_input.
+        endloop.
+*
+      vbox->list(
+        items = client->_bind( mt_tab_02_input )
+        headertext      = `Filter`
+        )->custom_list_item(
+            )->hbox(
+                )->text( `{NAME}`
+*                )->input( value = `{VALUE}` enabled = abap_true
+
+            )->multi_input(
+                tokens          = client->_bind( mt_token )
+                showclearicon   = abap_true
+                value           = `{VALUE}`
+                tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
+                submit          = client->_event( 'FILTER_UPDATE' )
+                id              = `FILTER`
+                valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+            )->item(
+                    key  = `{KEY}`
+                    text = `{TEXT}`
+            )->tokens(
+                )->token(
+                    key      = `{KEY}`
+                    text     = `{TEXT}`
+                    visible  = `{VISIBLE}`
+                    selected = `{SELKZ}`
+                    editable = `{EDITABLE}`
+
         ).
 
-    DATA(cont) = page->content( ns = 'f' ).
+*      DATA(tab) = view->get_parent( )->get_parent( )->simple_form( editable = abap_true
+*                )->content( 'form' )->table(
+*                  items = client->_bind( val = mt_02 )
+*              ).
+*
+*      DATA(lo_columns) = tab->columns( ).
+*
+*
+*      LOOP AT mt_cols INTO DATA(lv_field) FROM 2.
+*        lo_columns->column( )->text( lv_field ).
+*      ENDLOOP.
+*
+*      DATA(lo_cells) = tab->items( )->column_list_item( selected = '{SELKZ}' )->cells( ).
+*      LOOP AT mt_cols INTO lv_field FROM 2.
+*        lo_cells->input( `{` && lv_field && `}` ).
+*      ENDLOOP.
 
-    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+    ENDIF.
 
-    DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{PRODUCT}` ).
-    lo_cells->text( `{CREATE_DATE}` ).
-    lo_cells->text( `{CREATE_BY}` ).
-    lo_cells->text( `{STORAGE_LOCATION}` ).
-    lo_cells->text( `{QUANTITY}` ).
+*    DATA(vbox) = lo_box->vbox( ).
+*    vbox->text(  `Product:`
+*    )->multi_input(
+*                tokens          = client->_bind( mt_token )
+*                showclearicon   = abap_true
+*                value           = client->_bind( mv_value )
+*                tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
+*                submit          = client->_event( 'FILTER_UPDATE' )
+*                id              = `FILTER`
+*                valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
+*            )->item(
+*                    key  = `{KEY}`
+*                    text = `{TEXT}`
+*            )->tokens(
+*                )->token(
+*                    key      = `{KEY}`
+*                    text     = `{TEXT}`
+*                    visible  = `{VISIBLE}`
+*                    selected = `{SELKZ}`
+*                    editable = `{EDITABLE}` ).
+*
+*    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+*        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+*        ).
+
+*    DATA(cont) = page->content( ns = 'f' ).
+
+*    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+*
+*    DATA(lo_columns) = tab->columns( ).
+*    lo_columns->column( )->text( text = `Product` ).
+*    lo_columns->column( )->text( text = `Date` ).
+*    lo_columns->column( )->text( text = `Name` ).
+*    lo_columns->column( )->text( text = `Location` ).
+*    lo_columns->column( )->text( text = `Quantity` ).
+*
+*    DATA(lo_cells) = tab->items( )->column_list_item( ).
+*    lo_cells->text( `{PRODUCT}` ).
+*    lo_cells->text( `{CREATE_DATE}` ).
+*    lo_cells->text( `{CREATE_BY}` ).
+*    lo_cells->text( `{STORAGE_LOCATION}` ).
+*    lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 
@@ -416,18 +514,18 @@ CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     "replace this with a db select here...
-    mt_table = VALUE #(
-        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+*    mt_table = VALUE #(
+*        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+*    ).
 
     "put the range in the where clause of your abap sql command
     "using internal table instead
-    DELETE mt_table WHERE product NOT IN ms_filter-product.
+*    DELETE mt_table WHERE product NOT IN ms_filter-product.
 
   ENDMETHOD.
 ENDCLASS.
