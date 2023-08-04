@@ -96,7 +96,8 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'AppSelected' .
-        client->message_toast_display( |Event AppSelected| ).
+        data(ls_client) = client->get( ).
+        client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
@@ -131,7 +132,7 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 *                                                          rows = `{path: 'LT_PEOPLE'}`
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
 *                                                          appointmentsVisualization = 'Filled'
-                                                          appointmentselect = client->_event( val = 'AppSelected' )
+                                                          appointmentselect = client->_event( val = 'AppSelected' t_arg = value #( ( `${$parameters>/appointment/mProperties/title}`) ) )
 *                                                          showEmptyIntervalHeaders = abap_false
                                                           showweeknumbers = abap_true ).
     DATA(lo_rows) = lo_planningcalendar->rows( ).
