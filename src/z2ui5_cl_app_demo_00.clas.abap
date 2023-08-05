@@ -6,7 +6,7 @@ CLASS z2ui5_cl_app_demo_00 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value.
+    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value_int.
 
 ENDCLASS.
 
