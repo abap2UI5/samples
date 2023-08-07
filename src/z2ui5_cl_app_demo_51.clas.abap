@@ -102,7 +102,8 @@ CLASS z2ui5_cl_app_demo_51 IMPLEMENTATION.
     layout->input(
                 id              = `input1`
                 required        = abap_true
-                value           = client->_bind_edit( screen-input1 ) ).
+*                value           = client->_bind_edit( screen-input1 )
+                ).
 
 
     layout->label( text = 'Input bold' labelfor = `input2` design = `Bold` ).
