@@ -106,6 +106,7 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
             class = 'sapUiContentPadding' ).
 
     page->header_content(
+          )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1688451062137573376`
           )->link(
               text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
