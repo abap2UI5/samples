@@ -55,27 +55,11 @@ PUBLIC
     DATA lv_ts5 TYPE timestamp .
     DATA lv_ts6 TYPE timestamp .
 
-    METHODS set_filter .
 ENDCLASS.
 
 
 
 CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
-
-
-  METHOD set_filter.
-*    z2ui5_set_data( ).
-*    CASE lv_selectedkey.
-*      WHEN 'ALL'.
-*      WHEN 'OK'.
-*        DELETE mt_table WHERE  NOT measure BETWEEN 0 AND 100.
-*      WHEN 'HEAVY'.
-*        DELETE mt_table WHERE NOT measure BETWEEN 101 AND 500.
-*      WHEN 'OVERWEIGHT'.
-*        DELETE mt_table WHERE NOT measure > 500 .
-*    ENDCASE.
-  ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
     me->client     = client.
@@ -127,13 +111,9 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
-*                                                          startdate = '{= Date.createObject(${LV_S_DATE})}'
                                                           startdate = '{= Date.createObject($' && client->_bind( lv_s_date ) && ') }'
-*                                                          rows = `{path: 'LT_PEOPLE'}`
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
-*                                                          appointmentsVisualization = 'Filled'
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = value #( ( `${$parameters>/appointment/mProperties/title}`) ) )
-*                                                          showEmptyIntervalHeaders = abap_false
                                                           showweeknumbers = abap_true ).
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
@@ -159,7 +139,7 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
                                                                       title = '{TITLE}'
                                                                       text = '{INFO}'
                                                                       type = '{TYPE}'
-                                                                       ).
+                                                        ).
 
     client->view_display( view->stringify(  ) ).
 
