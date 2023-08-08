@@ -4,7 +4,6 @@ PUBLIC
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
     INTERFACES z2ui5_if_app .
 
     TYPES:
@@ -43,7 +42,7 @@ PUBLIC
     DATA client TYPE REF TO z2ui5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_on_init .
+    METHODS z2ui5_display_view .
     METHODS z2ui5_on_event .
     METHODS z2ui5_set_data .
   PRIVATE SECTION.
@@ -68,7 +67,10 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       z2ui5_set_data( ).
-      z2ui5_on_init( ).
+    ENDIF.
+
+    IF client->get( )-check_on_navigated = abap_true.
+      z2ui5_display_view( ).
       RETURN.
     ENDIF.
 
@@ -92,7 +94,8 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD z2ui5_display_view.
+
     DATA: lv_date TYPE p.
     DATA: lv_time TYPE t.
 
@@ -117,7 +120,7 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
                                                           startdate = '{= Date.createObject($' && client->_bind( lv_s_date ) && ') }'
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
-                                                          appointmentselect = client->_event( val = 'AppSelected' t_arg = value #( ( `${$parameters>/appointment/mProperties/title}`) ) )
+                                                          appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers = abap_true )->_generic( name = 'toolbarContent'
                                                           )->button(  text = 'Call Appl' press = client->_event( val = 'CALLAPP'  ) )->get_parent( ).
 
@@ -153,6 +156,7 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
+
     DATA: lv_date TYPE p.
     DATA: lv_time TYPE t.
 
