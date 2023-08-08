@@ -61,6 +61,7 @@ ENDCLASS.
 
 CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
+
   METHOD z2ui5_if_app~main.
     me->client     = client.
 
@@ -79,8 +80,10 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN 'CALLAPP'.
+        client->nav_app_call( NEW z2ui5_cl_app_demo_25( ) ).
       WHEN 'AppSelected' .
-        data(ls_client) = client->get( ).
+        DATA(ls_client) = client->get( ).
         client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -115,7 +118,9 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
                                                           startdate = '{= Date.createObject($' && client->_bind( lv_s_date ) && ') }'
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = value #( ( `${$parameters>/appointment/mProperties/title}`) ) )
-                                                          showweeknumbers = abap_true ).
+                                                          showweeknumbers = abap_true )->_generic( name = 'toolbarContent'
+                                                          )->button(  text = 'Call Appl' press = client->_event( val = 'CALLAPP'  ) )->get_parent( ).
+
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
                                                      appointments = `{path:'APPOINTMENTS'}`
