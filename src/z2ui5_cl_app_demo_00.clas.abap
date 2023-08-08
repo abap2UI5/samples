@@ -169,6 +169,13 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+     panel->generic_tile(
+        header    = 'Label'
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_51' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     panel->generic_tile(
         header    = 'F4-Value-Help'
         subheader = 'Popup for value help'
@@ -442,6 +449,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          header    = 'Popover Item Level'
          subheader = 'Create a Popover for a specific entry of a table'
          press     =  client->_event( 'z2ui5_cl_app_demo_52' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+    panel->generic_tile(
+         header    = 'Popover with List'
+         subheader = 'List to select in Popover'
+         press     =  client->_event( 'z2ui5_cl_app_demo_81' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
