@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>Z2UI5_CL_APP_DEMO_85</CLSNAME>
+    <LANGU>D</LANGU>
+    <DESCRIPT>tree - tree and nested views</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CMPNAME>LV_LAYOUT</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>&apos;OneColumn&apos;</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CMPNAME>LV_SORT_DESC</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>boolsche Variable (X=true, -=false, space=unknown)</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
