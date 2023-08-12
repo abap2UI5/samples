@@ -285,7 +285,7 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
         z2ui5_display_popup( ).
       WHEN 'BUTTON_SEND'.
 
-        REFRESH t_msg.
+        CLEAR t_msg.
 
         DATA(lt_message_manager) = client->get( )-t_message_manager.
 
