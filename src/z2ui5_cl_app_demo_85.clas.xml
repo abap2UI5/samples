@@ -11,18 +11,6 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
-   <DESCRIPTIONS>
-    <SEOCOMPOTX>
-     <CMPNAME>LV_LAYOUT</CMPNAME>
-     <LANGU>D</LANGU>
-     <DESCRIPT>&apos;OneColumn&apos;</DESCRIPT>
-    </SEOCOMPOTX>
-    <SEOCOMPOTX>
-     <CMPNAME>LV_SORT_DESC</CMPNAME>
-     <LANGU>D</LANGU>
-     <DESCRIPT>boolsche Variable (X=true, -=false, space=unknown)</DESCRIPT>
-    </SEOCOMPOTX>
-   </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
 </abapGit>
