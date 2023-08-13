@@ -198,7 +198,7 @@
     "prefix_is_current_class": {
       "severity": "Warning"
     },
-    "reduce_string_templates": true,
+    "reduce_string_templates": false,
     "release_idoc": true,
     "remove_descriptions": {
       "exclude": [],
