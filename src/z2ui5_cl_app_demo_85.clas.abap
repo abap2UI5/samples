@@ -1,15 +1,15 @@
-class Z2UI5_CL_APP_DEMO_85 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_app_demo_85 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_s_tab,
+    TYPES:
+      BEGIN OF ty_s_tab,
         key           TYPE string,
         productid     TYPE i,
         productname   TYPE string,
@@ -28,8 +28,8 @@ public section.
         rating        TYPE string,
         process       TYPE string,
       END OF ty_s_tab .
-  types:
-    BEGIN OF ty_s_tab_supplier,
+    TYPES:
+      BEGIN OF ty_s_tab_supplier,
         Suppliername TYPE string,
         email        TYPE string,
         phone        TYPE string,
@@ -38,15 +38,15 @@ public section.
         street       TYPE string,
         country      TYPE string,
       END OF ty_s_tab_supplier .
-  types:
-    ty_t_table          TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
-  types:
-    ty_t_table_supplier TYPE STANDARD TABLE OF ty_s_tab_supplier WITH EMPTY KEY .
+    TYPES:
+      ty_t_table          TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+    TYPES:
+      ty_t_table_supplier TYPE STANDARD TABLE OF ty_s_tab_supplier WITH EMPTY KEY .
 
-  data MT_TABLE type TY_T_TABLE .
-  data MT_TABLE_SUPPLIER type TY_T_TABLE_SUPPLIER .
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  data MV_SEARCH_VALUE type STRING .
+    DATA mt_table TYPE ty_t_table .
+    DATA mt_table_supplier TYPE ty_t_table_supplier .
+    DATA check_initialized TYPE abap_bool .
+    DATA mv_search_value TYPE string.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client .
@@ -57,23 +57,24 @@ public section.
     METHODS z2ui5_on_event .
     METHODS z2ui5_on_init .
     METHODS z2ui5_set_search.
-private section.
+  PRIVATE SECTION.
 
-  data LV_LAYOUT type STRING .
-  data LS_DETAIL type TY_S_TAB .
-  data LV_SORT_DESC type BOOLEAN value ABAP_TRUE ##NO_TEXT.
-  data C_PIC_URL type STRING value 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/' ##NO_TEXT.
-  data LS_DETAIL_SUPPLIER type TY_S_TAB_SUPPLIER .
+    DATA lv_layout TYPE string .
+    DATA ls_detail TYPE ty_s_tab .
+    DATA lv_sort_desc TYPE boolean VALUE abap_true ##NO_TEXT.
+    DATA c_pic_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/' ##NO_TEXT.
+    DATA ls_detail_supplier TYPE ty_s_tab_supplier .
+    DATA check_detail_active TYPE abap_bool.
 
-  methods SORT .
+    METHODS sort .
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_85 IMPLEMENTATION.
 
 
-  METHOD SORT.
+  METHOD sort.
     IF lv_sort_desc = abap_true.
       SORT mt_table BY productid ASCENDING.
       lv_sort_desc = abap_false.
@@ -84,7 +85,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD VIEW_DISPLAY_DETAIL.
+  METHOD view_display_detail.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
 
@@ -277,7 +278,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
               ).
 
 
-
+    check_detail_active = abap_true.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `Detail`
@@ -288,7 +289,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD VIEW_DISPLAY_MASTER.
+  METHOD view_display_master.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->shell( )->page(
@@ -348,7 +349,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -370,7 +371,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
       WHEN 'ONGOTOSUPPLIER' .
@@ -393,6 +394,7 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
         lv_layout = 'OneColumn'.
         view_display_master( ).
         view_display_detail(  ).
+        check_detail_active = abap_false.
         client->nest_view_model_update( ).
         client->message_toast_display( |Event Close Detail | ).
       WHEN 'ONPRESSSUPPLIER'.
@@ -408,7 +410,9 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
         READ TABLE mt_table WITH KEY key = lt_arg[ 1 ] INTO ls_detail.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
         lv_layout = 'TwoColumnsMidExpanded'.
-        view_display_master( ).
+        IF check_detail_active = abap_false.
+          view_display_master( ).
+        ENDIF.
         view_display_detail(  ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
@@ -434,13 +438,13 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
     view_display_master( ) .
-    view_display_detail( ).
+*    view_display_detail( ).
   ENDMETHOD.
 
 
-  METHOD Z2UI5_SET_DATA.
+  METHOD z2ui5_set_data.
     mt_table = VALUE #(
         ( key = '1' Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30'
           DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
@@ -476,25 +480,25 @@ CLASS Z2UI5_CL_APP_DEMO_85 IMPLEMENTATION.
           DimUnit = 'CM' Measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Information` state_measure = `Success`
           Pic = 'HT-1085.jpg' rating = '5'  process = '46' ) ).
 *Rungestraße 79-78, 18055 RostockMarktstraße, 03046 CottbusMarktpl. 1, 06108 Halle (Saale)
-   mt_table_supplier = VALUE #(
-        ( suppliername = 'Company 1' email = 'company1@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Dresden' street = 'Neumarkt' zipcode = '01067' )
-        ( suppliername = 'Company 2' email = 'company2@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Erfurt' street = 'Domplatz' zipcode = '99084' )
-        ( suppliername = 'Company 3' email = 'company3@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Suhl' street = 'Carl-Fiedler-Straße 58' zipcode = '98527' )
-        ( suppliername = 'Company 4' email = 'company4@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Hildburgheusen' street = 'Markt' zipcode = '98646' )
-        ( suppliername = 'Company 5' email = 'company5@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Sonneberg' street = 'Beethovenstraße 10' zipcode = '96515' )
-        ( suppliername = 'Company 6' email = 'company6@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Meiningen' street = 'Schloßplatz 1' zipcode = '98617' )
-        ( suppliername = 'Company 7' email = 'company7@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Leipzig' street = 'Pfaffendorfer Str. 29' zipcode = '04105' )
-        ( suppliername = 'Company 8' email = 'company8@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Magdeburg' street = 'Am Dom 1' zipcode = '39104' )
-        ( suppliername = 'Company 9' email = 'company9@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Schwerin' street = 'Lennéstraße 1' zipcode = '19053' )
-        ( suppliername = 'Company 10' email = 'company10@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Rostock' street = 'Rungestraße 79-78' zipcode = '18055' )
-        ( suppliername = 'Company 11' email = 'company11@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Cottbus' street = 'Marktstraße' zipcode = '03046' )
-        ( suppliername = 'Company 12' email = 'company12@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Halle (Saale)' street = 'Marktpl. 1' zipcode = '06108' ) ).
+    mt_table_supplier = VALUE #(
+         ( suppliername = 'Company 1' email = 'company1@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Dresden' street = 'Neumarkt' zipcode = '01067' )
+         ( suppliername = 'Company 2' email = 'company2@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Erfurt' street = 'Domplatz' zipcode = '99084' )
+         ( suppliername = 'Company 3' email = 'company3@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Suhl' street = 'Carl-Fiedler-Straße 58' zipcode = '98527' )
+         ( suppliername = 'Company 4' email = 'company4@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Hildburgheusen' street = 'Markt' zipcode = '98646' )
+         ( suppliername = 'Company 5' email = 'company5@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Sonneberg' street = 'Beethovenstraße 10' zipcode = '96515' )
+         ( suppliername = 'Company 6' email = 'company6@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Meiningen' street = 'Schloßplatz 1' zipcode = '98617' )
+         ( suppliername = 'Company 7' email = 'company7@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Leipzig' street = 'Pfaffendorfer Str. 29' zipcode = '04105' )
+         ( suppliername = 'Company 8' email = 'company8@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Magdeburg' street = 'Am Dom 1' zipcode = '39104' )
+         ( suppliername = 'Company 9' email = 'company9@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Schwerin' street = 'Lennéstraße 1' zipcode = '19053' )
+         ( suppliername = 'Company 10' email = 'company10@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Rostock' street = 'Rungestraße 79-78' zipcode = '18055' )
+         ( suppliername = 'Company 11' email = 'company11@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Cottbus' street = 'Marktstraße' zipcode = '03046' )
+         ( suppliername = 'Company 12' email = 'company12@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Halle (Saale)' street = 'Marktpl. 1' zipcode = '06108' ) ).
 
     ls_detail = mt_table[ 1 ].
   ENDMETHOD.
 
 
-  METHOD Z2UI5_SET_SEARCH.
+  METHOD z2ui5_set_search.
 
     IF mv_search_value IS NOT INITIAL.
 
