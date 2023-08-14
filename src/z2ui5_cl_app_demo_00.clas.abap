@@ -177,12 +177,12 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-     panel->generic_tile(
-        header    = 'Label'
-        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_51' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+    panel->generic_tile(
+       header    = 'Label'
+       press     =  client->_event( 'Z2UI5_CL_APP_DEMO_51' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
 
     panel->generic_tile(
         header    = 'F4-Value-Help'
@@ -672,14 +672,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-        header    = 'Nested Views III'
-        subheader = 'Example App'
-        press     =  client->_event( 'z2ui5_cl_app_demo_85' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-    panel->generic_tile(
              header    = 'Update Model'
           subheader = 'Model only update vs. View rerendering'
            press     =  client->_event( 'z2ui5_cl_app_demo_69' )
@@ -695,6 +687,20 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+
+    panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
+               headertext = `Demos`
+          ).
+
+    panel->generic_tile(
+        header    = 'Demo I'
+        subheader = 'Nested View, Object Page, App Navigation, Tables, Lists, Images, Progress & Rating Indicator'
+        press     =  client->_event( 'z2ui5_cl_app_demo_85' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
     client->view_display( page->stringify( ) ).
 
