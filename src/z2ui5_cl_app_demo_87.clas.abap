@@ -132,15 +132,12 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    popup = popup->_generic( name = `TableSelectDialog`
-                      t_prop = VALUE #(
-                                        ( n = `noDataText`      v = `No Products Found` )
-                                        ( n = `title`      v = `Select Product` )
-                                        ( n = `search`      v = client->_event( val = 'SEARCH' t_arg = VALUE #( ( `${$parameters>/value}` ) ( `${$parameters>/clearButtonPressed}`  ) ) ) )
-                                        ( n = `confirm`      v = client->_event( val = 'CONFIRM' t_arg = VALUE #( ( `${$parameters>/selectedContexts[0]/sPath}` ) ) ) )
-                                        ( n = `cancel`      v = client->_event( 'CANCEL' ) )
-                                        ( n = `items`      v = `{path:'` && client->_bind_edit( val = mt_f4_table path = abap_true ) && `', sorter : { path : 'STORAGE_LOCATION', descending : false } }` )
-                                      ) ).
+    popup = popup->table_select_dialog(
+              items              =  `{path:'` && client->_bind_edit( val = mt_f4_table path = abap_true ) && `', sorter : { path : 'STORAGE_LOCATION', descending : false } }`
+              cancel             = client->_event( 'CANCEL' )
+              search             = client->_event( val = 'SEARCH' t_arg = VALUE #( ( `${$parameters>/value}` ) ( `${$parameters>/clearButtonPressed}`  ) ) )
+              confirm            = client->_event( val = 'CONFIRM' t_arg = VALUE #( ( `${$parameters>/selectedContexts[0]/sPath}` ) ) )
+            ).
 
     popup = popup->column_list_item( valign = `Top` selected = `{SELKZ}`
               )->cells(
