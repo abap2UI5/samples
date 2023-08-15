@@ -25,20 +25,8 @@ CLASS z2ui5_cl_app_demo_87 DEFINITION
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mv_product TYPE string.
+    DATA mt_f4_table TYPE ty_t_table .
 
-    TYPES:
-      BEGIN OF ty_S_filter_pop,
-        option TYPE string,
-        low    TYPE string,
-        high   TYPE string,
-        key    TYPE string,
-      END OF ty_S_filter_pop .
-
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA mt_table1 TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -47,7 +35,7 @@ CLASS z2ui5_cl_app_demo_87 DEFINITION
     METHODS z2ui5_view_display.
     METHODS z2ui5_on_event.
     METHODS z2ui5_f4_set_data.
-    METHODS z2ui5_set_f4.
+    METHODS z2ui5_display_f4_popup.
 
   PRIVATE SECTION.
 
@@ -81,11 +69,11 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN 'F4'.
-        z2ui5_set_f4( ).
+        z2ui5_display_f4_popup( ).
 
       WHEN 'CONFIRM'.
-        DELETE mt_table1 WHERE selkz <> abap_true.
-        mv_product = VALUE #( mt_table1[ 1 ]-product OPTIONAL ).
+        DELETE mt_f4_table WHERE selkz <> abap_true.
+        mv_product = VALUE #( mt_f4_table[ 1 ]-product OPTIONAL ).
         client->view_model_update( ).
 
       WHEN 'CANCEL'.
@@ -95,11 +83,11 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
         z2ui5_f4_set_data( ).
-        LOOP AT mt_table1 INTO DATA(ls_tab).
+        LOOP AT mt_f4_table INTO DATA(ls_tab).
           IF ls_tab-product CS ls_arg.
             CONTINUE.
           ENDIF.
-          DELETE mt_table1.
+          DELETE mt_f4_table.
         ENDLOOP.
         client->popup_model_update( ).
 
@@ -129,7 +117,7 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
 
   METHOD z2ui5_f4_set_data.
 
-    mt_table = VALUE #(
+    mt_f4_table = VALUE #(
         ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
         ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD' process = '20' process_state = 'Warning' )
         ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' process = '30' process_state = 'Success' )
@@ -138,11 +126,9 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
         ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' )
     ).
 
-    mt_table1 = mt_table.
-
   ENDMETHOD.
 
-  METHOD z2ui5_set_f4.
+  METHOD z2ui5_display_f4_popup.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
@@ -153,7 +139,7 @@ CLASS z2ui5_cl_app_demo_87 IMPLEMENTATION.
                                         ( n = `search`      v = client->_event( val = 'SEARCH' t_arg = VALUE #( ( `${$parameters>/value}` ) ( `${$parameters>/clearButtonPressed}`  ) ) ) )
                                         ( n = `confirm`      v = client->_event( val = 'CONFIRM' t_arg = VALUE #( ( `${$parameters>/selectedContexts[0]/sPath}` ) ) ) )
                                         ( n = `cancel`      v = client->_event( 'CANCEL' ) )
-                                        ( n = `items`      v = `{path:'` && client->_bind_edit( val = mt_table1 path = abap_true ) && `', sorter : { path : 'STORAGE_LOCATION', descending : false } }` )
+                                        ( n = `items`      v = `{path:'` && client->_bind_edit( val = mt_f4_table path = abap_true ) && `', sorter : { path : 'STORAGE_LOCATION', descending : false } }` )
                                       ) ).
 
     popup = popup->column_list_item( valign = `Top` selected = `{SELKZ}`
