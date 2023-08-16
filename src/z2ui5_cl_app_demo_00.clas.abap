@@ -217,9 +217,17 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-     header    = 'Input with Suggestion'
-     subheader = 'Read Suggestion Table from the Server'
+     header    = 'Input with Filter'
+     subheader = 'Filter Table on the Server'
      press     =  client->_event( 'z2ui5_cl_app_demo_59' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
+    panel->generic_tile(
+     header    = 'Input with Suggestion'
+     subheader = 'Create Suggestion Table on the Server'
+     press     =  client->_event( 'z2ui5_cl_app_demo_60' )
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
