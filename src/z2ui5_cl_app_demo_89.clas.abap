@@ -128,9 +128,9 @@ CLASS z2ui5_cl_app_demo_89 IMPLEMENTATION.
                                          )->icon_tab_filter( key = `page33` text = `User 3`
                                       )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                                 )->main_contents(
-                                )->button( text = `page1` press = client->_event_client( action = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page1` ) ) )
-                                )->button( text = `page2` press = client->_event_client( action = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page2` ) ) )
-                                )->button( text = `page3` press = client->_event_client( action = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page3` ) ) )
+                                )->button( text = `page1` press = client->_event_client( val = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page1` ) ) )
+                                )->button( text = `page2` press = client->_event_client( val = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page2` ) ) )
+                                )->button( text = `page3` press = client->_event_client( val = 'NAV_TO' t_arg  = value #( ( `NavCon` ) ( `page3` ) ) )
                                   )->nav_container( id = `NavCon` initialPage = mv_page defaulttransitionname = `flip`
                                      )->pages(
                                      )->page(
