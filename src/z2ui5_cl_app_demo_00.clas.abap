@@ -150,7 +150,7 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     panel->generic_tile(
         header    = 'Input Validation'
         subheader = `Message Manager`
-        press     = client->_event( 'z2ui5_cl_app_demo_22' )
+        press     = client->_event( 'z2ui5_cl_app_demo_84' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).

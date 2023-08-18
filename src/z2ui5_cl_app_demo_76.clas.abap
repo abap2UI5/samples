@@ -87,7 +87,7 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Helper'}` ) ).
+    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - Gantt'
