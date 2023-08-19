@@ -89,6 +89,7 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
     IF mv_load_lib = abap_true.
       mv_load_lib = abap_false.
       lv_xml = lv_xml && `<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"> </script>`.
+*      lv_xml = lv_xml && `<script>` && lcl_repository=>get_js_barcode_lib( )  && `</script>`.
     ENDIF.
 
     if mv_barcode is not initial.
