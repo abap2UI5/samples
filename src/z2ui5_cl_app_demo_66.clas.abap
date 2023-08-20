@@ -96,7 +96,7 @@ CLASS Z2UI5_CL_APP_DEMO_66 IMPLEMENTATION.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
          )->page(
-            title          = 'abap2UI5 - Games'
+            title          = 'abap2UI5 - Master Detail Page with Nested View'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
