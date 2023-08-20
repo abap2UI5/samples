@@ -46,14 +46,6 @@ PUBLIC
     METHODS z2ui5_on_event .
     METHODS z2ui5_set_data .
   PRIVATE SECTION.
-
-    DATA lv_ts1 TYPE timestamp .
-    DATA lv_ts2 TYPE timestamp .
-    DATA lv_ts3 TYPE timestamp .
-    DATA lv_ts4 TYPE timestamp .
-    DATA lv_ts5 TYPE timestamp .
-    DATA lv_ts6 TYPE timestamp .
-
 ENDCLASS.
 
 
@@ -80,33 +72,24 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-
     CASE client->get( )-event.
-      WHEN 'CALLAPP'.
-        client->nav_app_call( NEW z2ui5_cl_app_demo_25( ) ).
       WHEN 'AppSelected' .
         DATA(ls_client) = client->get( ).
         client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_display_view.
-
-    DATA: lv_date TYPE p.
-    DATA: lv_time TYPE t.
-
-    lv_time = '060000'.
-    lv_date = '20200410'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP DATA(lv_ts_start) TIME ZONE sy-zonlo.
     DATA(lv_s_date) =  '2023-04-22T08:15:00'.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
+    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
+
     DATA(page) = view->page( id = `page_main`
-            title          = 'abap2UI5 - Planing Calendar'
+            title          = 'abap2UI5 - Planning Calendar'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true
             class = 'sapUiContentPadding' ).
@@ -118,11 +101,11 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
-                                                          startdate = '{= Date.createObject($' && client->_bind( lv_s_date ) && ') }'
+                                                          startdate = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && ') }'
                                                           rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
-                                                          showweeknumbers = abap_true )->_generic( name = 'toolbarContent'
-                                                          )->button(  text = 'Call Appl' press = client->_event( val = 'CALLAPP'  ) )->get_parent( ).
+                                                          showweeknumbers = abap_true ).
+
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
@@ -133,8 +116,8 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
                                                      intervalheaders = `{path:'HEADERS'}`
                                                      ).
     lo_planningcalendarrow->appointments( )->calendar_appointment(
-                                                                  startdate = '{= Date.createObject(${START})}'
-                                                                  enddate   = '{= Date.createObject(${END})}'
+                                                                  startdate = `{= Helper.DateCreateObject(${START} ) }`
+                                                                  enddate   = `{= Helper.DateCreateObject(${END} ) }`
                                                                   icon = '{PIC}'
                                                                   title = '{TITLE}'
                                                                   text = '{INFO}'
@@ -142,8 +125,8 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
                                                                   tentative = '{TENTATIVE}' ).
 
     lo_planningcalendarrow->interval_headers( )->calendar_appointment(
-                                                                      startdate = '{= Date.createObject(${START})}'
-                                                                      enddate   = '{= Date.createObject(${END})}'
+                                                                      startdate = `{= Helper.DateCreateObject(${START} ) }`
+                                                                      enddate   = `{= Helper.DateCreateObject(${END} ) }`
                                                                       icon = '{PIC}'
                                                                       title = '{TITLE}'
                                                                       text = '{INFO}'
@@ -156,35 +139,6 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
-
-    DATA: lv_date TYPE p.
-    DATA: lv_time TYPE t.
-
-    lv_date = '20200422'.
-    lv_time = '081500'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts1 TIME ZONE sy-zonlo.
-
-    lv_date = '20200423'.
-    lv_time = '081500'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts2 TIME ZONE sy-zonlo.
-
-    lv_date = '20200425'.
-    lv_time = '103000'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts3 TIME ZONE sy-zonlo.
-
-    lv_date = '20200426'.
-    lv_time = '113000'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts4 TIME ZONE sy-zonlo.
-
-
-    lv_date = '20200410'.
-    lv_time = '103000'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts5 TIME ZONE sy-zonlo.
-
-    lv_date = '20200411'.
-    lv_time = '113000'.
-    CONVERT DATE lv_date TIME lv_time INTO TIME STAMP lv_ts6 TIME ZONE sy-zonlo.
-
     lt_people = VALUE #(
      ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
