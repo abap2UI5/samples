@@ -48,7 +48,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_21 IMPLEMENTATION.
+
 
   METHOD ui5_handle_event.
 
@@ -109,57 +110,16 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD ui5_init.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
-                )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
-           )->get_parent( ).
-
-    DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
-
-    grid->simple_form( 'Decide' )->content( 'form'
-        )->label( '01'
-        )->button(
-            text  = 'Popup to decide'
-            press = client->_event( 'POPUP_TO_DECIDE' ) ).
-
-    grid->simple_form( 'TextArea' )->content( 'form'
-        )->label( '01'
-        )->button(
-            text  = 'Popup with textarea input'
-            press = client->_event( 'POPUP_TO_TEXTAREA' )
-        )->label( '02'
-        )->button(
-            text  = 'Popup with textarea input (size)'
-            press = client->_event( 'POPUP_TO_TEXTAREA_SIZE' )
-        )->label( '03'
-        )->button(
-            text  = 'Popup with textarea input (stretched)'
-            press = client->_event( 'POPUP_TO_TEXTAREA_STRETCH' ) ).
-
-    grid->simple_form( 'Inputs' )->content( 'form'
-        )->label( '01'
-        )->button(
-            text  = 'Popup Get Input Values'
-            press = client->_event( 'POPUP_TO_INPUT' ) ).
-
-    grid->simple_form( 'Tables' )->content( 'form'
-        )->label( '02'
-        )->button(
-            text  = 'Popup to select'
-            press = client->_event( 'POPUP_TABLE' ) ).
-
-    client->view_display( view->stringify( ) ).
+    t_bapiret = VALUE #(
+      ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
+      ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
+      ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
+      ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
+      ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
+      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
+       ).
 
   ENDMETHOD.
 
@@ -307,6 +267,61 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD ui5_view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) = view->shell(
+        )->page(
+                title          = 'abap2UI5 - Popups'
+                navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                shownavbutton  = abap_true
+            )->header_content(
+                )->link(
+                    text = 'Demo' target = '_blank'
+                    href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
+                )->link(
+                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+           )->get_parent( ).
+
+    DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
+
+    grid->simple_form( 'Decide' )->content( 'form'
+        )->label( '01'
+        )->button(
+            text  = 'Popup to decide'
+            press = client->_event( 'POPUP_TO_DECIDE' ) ).
+
+    grid->simple_form( 'TextArea' )->content( 'form'
+        )->label( '01'
+        )->button(
+            text  = 'Popup with textarea input'
+            press = client->_event( 'POPUP_TO_TEXTAREA' )
+        )->label( '02'
+        )->button(
+            text  = 'Popup with textarea input (size)'
+            press = client->_event( 'POPUP_TO_TEXTAREA_SIZE' )
+        )->label( '03'
+        )->button(
+            text  = 'Popup with textarea input (stretched)'
+            press = client->_event( 'POPUP_TO_TEXTAREA_STRETCH' ) ).
+
+    grid->simple_form( 'Inputs' )->content( 'form'
+        )->label( '01'
+        )->button(
+            text  = 'Popup Get Input Values'
+            press = client->_event( 'POPUP_TO_INPUT' ) ).
+
+    grid->simple_form( 'Tables' )->content( 'form'
+        )->label( '02'
+        )->button(
+            text  = 'Popup to select'
+            press = client->_event( 'POPUP_TABLE' ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -323,19 +338,4 @@ CLASS z2ui5_cl_app_demo_21 IMPLEMENTATION.
     ui5_handle_event( ).
 
   ENDMETHOD.
-
-
-  METHOD ui5_init.
-
-    t_bapiret = VALUE #(
-      ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-      ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-      ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-      ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-      ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-       ).
-
-  ENDMETHOD.
-
 ENDCLASS.

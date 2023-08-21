@@ -44,66 +44,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF is_initialized = abap_false.
-      is_initialized = abap_true.
-      ui5_initialize( ).
-      ui5_display_view( client ).
-    ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-      WHEN 'POPUP_TREE'.
-        ui5_display_popup_tree_select( ).
-
-      WHEN 'CONTINUE'.
-        client->popup_destroy( ).
-        client->message_box_display( `Selected entry is set in the backend` ).
-
-      WHEN 'CANCEL'.
-        client->popup_destroy( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD ui5_initialize.
-    prodh_nodes =
-    VALUE #( ( text = 'Machines'
-               prodh = '00100'
-               nodes = VALUE #( ( text = 'Pumps'
-                                  prodh = '0010000100'
-                                  nodes = VALUE #( ( text = 'Pump 001'
-                                                     prodh = '001000010000000100' )
-                                                   ( text = 'Pump 002'
-                                                     prodh = '001000010000000105' )
-                                          )
-                       ) )
-             )
-             ( text = 'Paints'
-               prodh = '00110'
-               nodes = VALUE #( ( text = 'Gloss paints'
-                                  prodh = '0011000105'
-                                  nodes = VALUE #( ( text = 'Paint 001'
-                                                     prodh = '001100010500000100' )
-                                                   ( text = 'Paint 002'
-                                                     prodh = '001100010500000105' )
-                                          )
-                       ) )
-             )
-    ).
-
-
-  ENDMETHOD.
+CLASS Z2UI5_CL_APP_DEMO_68 IMPLEMENTATION.
 
 
   METHOD ui5_display_popup_tree_select.
@@ -149,4 +90,63 @@ CLASS z2ui5_cl_app_demo_68 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD ui5_initialize.
+    prodh_nodes =
+    VALUE #( ( text = 'Machines'
+               prodh = '00100'
+               nodes = VALUE #( ( text = 'Pumps'
+                                  prodh = '0010000100'
+                                  nodes = VALUE #( ( text = 'Pump 001'
+                                                     prodh = '001000010000000100' )
+                                                   ( text = 'Pump 002'
+                                                     prodh = '001000010000000105' )
+                                          )
+                       ) )
+             )
+             ( text = 'Paints'
+               prodh = '00110'
+               nodes = VALUE #( ( text = 'Gloss paints'
+                                  prodh = '0011000105'
+                                  nodes = VALUE #( ( text = 'Paint 001'
+                                                     prodh = '001100010500000100' )
+                                                   ( text = 'Paint 002'
+                                                     prodh = '001100010500000105' )
+                                          )
+                       ) )
+             )
+    ).
+
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF is_initialized = abap_false.
+      is_initialized = abap_true.
+      ui5_initialize( ).
+      ui5_display_view( client ).
+    ENDIF.
+
+    CASE client->get( )-event.
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+      WHEN 'POPUP_TREE'.
+        ui5_display_popup_tree_select( ).
+
+      WHEN 'CONTINUE'.
+        client->popup_destroy( ).
+        client->message_box_display( `Selected entry is set in the backend` ).
+
+      WHEN 'CANCEL'.
+        client->popup_destroy( ).
+
+    ENDCASE.
+
+  ENDMETHOD.
 ENDCLASS.

@@ -21,6 +21,7 @@ CLASS z2ui5_cl_app_demo_72 DEFINITION
         DimUnit       TYPE meins,
         state_price   TYPE string,
         state_measure TYPE string,
+        rating        TYPE string,
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
@@ -48,7 +49,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_72 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
     me->client     = client.
@@ -117,7 +119,9 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
         )->column( minScreenWidth = 'Desktop' demandPopin = abap_true hAlign = 'Center'
             )->text( 'Weight' )->get_parent(
          )->column( hAlign = 'End'
-            )->text( 'Price' ).
+            )->text( 'Price' )->get_parent(
+         )->column( hAlign = 'End'
+             )->text( 'Rating' ) .
 
     tab->items(
         )->column_list_item(
@@ -129,7 +133,7 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
              )->object_number(
                    state = '{STATE_PRICE}'
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } `
-              ).
+             )->rating_indicator( VALUE = '{RATING}'  class = 'sapUiSmallMarginBottom' iconSize = '12px' maxvalue ='6' enabled = 'false' ).
 
     client->view_display( view->stringify( ) ).
 
@@ -138,14 +142,19 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
     mt_table = VALUE #(
-        ( Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`  )
-        ( Productid = '2' productname = 'chair' suppliername = 'Company 2'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` state_measure = `Warning`  )
-        ( Productid = '3' productname = 'sofa'  suppliername = 'Company 3'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` state_measure = `Warning`  )
-        ( Productid = '4' productname = 'computer' suppliername = 'Company 4'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` state_measure = `Success`  )
-        ( Productid = '5' productname = 'printer' suppliername = 'Company 5'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` state_measure = `Warning`  )
-        ( Productid = '6' productname = 'table2'  suppliername = 'Company 6'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`  )
+        ( Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning`  )
+        ( Productid = '2' productname = 'chair' suppliername = 'Company 2'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning`  )
+        ( Productid = '3' productname = 'sofa'  suppliername = 'Company 3'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` rating = '2'  state_measure =
+`Warning`  )
+        ( Productid = '4' productname = 'computer' suppliername = 'Company 4'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` rating = '3'  state_measure =
+`Success`  )
+        ( Productid = '5' productname = 'printer' suppliername = 'Company 5'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` rating = '4'  state_measure =
+`Warning`  )
+        ( Productid = '6' productname = 'table2'  suppliername = 'Company 6'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` rating = '5' state_measure =
+`Information`  )
     ).
 
+    DESCRIBE TABLE mt_table lines lv_cnt_total.
     lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
     lv_cnt_heavy = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT i = i + 1 ).
     lv_cnt_neg = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT i = i + 1 ).
@@ -166,4 +175,3 @@ CLASS z2ui5_cl_app_demo_72 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.
-

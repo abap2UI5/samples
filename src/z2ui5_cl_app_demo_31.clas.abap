@@ -78,7 +78,7 @@ CLASS Z2UI5_CL_APP_DEMO_31 IMPLEMENTATION.
 
 data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
 
-    data(lv_xml) = `<mvc:View controllerName="sap.m.sample.GenericTileAsLaunchTile.Page"` && |\n|  &&
+    data(lv_xml) = `<mvc:View ` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n|  &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n|  &&
@@ -160,7 +160,7 @@ data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
                         `   </GenericTile>` && |\n|  &&
                         `</mvc:View>`.
 
-     client->view_display(  view->hlp_replace_controller_name( lv_xml ) ).
+     client->view_display( lv_xml ).
 
   ENDMETHOD.
 

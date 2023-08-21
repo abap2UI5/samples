@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
 
   METHOD z2ui5_on_render.
 
-    data(lv_xml) = `<mvc:View controllerName="project1.controller.View1"` && |\n|  &&
+    data(lv_xml) = `<mvc:View ` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n|  &&
                           `    ><m:Button ` && |\n|  &&
@@ -77,26 +77,29 @@ CLASS Z2UI5_CL_APP_DEMO_40 IMPLEMENTATION.
                           `</head>` && |\n|  &&
                           `<body>` && |\n|  &&
                           `<m:Button text="LoadJSBarcode" press="` && client->_event( 'LOAD_BC' ) && `" />` && |\n|  &&
-                          `<m:Input value="` && client->_bind( mv_barcode ) && `" />` && |\n|  &&
+                          `<m:Input value="` && client->_bind_edit( mv_barcode ) && `" />` && |\n|  &&
                          `<m:Button text="Display Barcode" press="` && client->_event( 'DISPLAY_BC' ) && `" />` && |\n|  &&
                           `<h1>JSBarcode Library</h1>` && |\n|  &&
-                          `  <svg class="barcode"` && |\n|  &&
-                          `  jsbarcode-format="upc"` && |\n|  &&
-                          `  jsbarcode-value="` && mv_barcode && `"` && |\n|  &&
-                          `  jsbarcode-textmargin="0"` && |\n|  &&
-                          `  jsbarcode-fontoptions="bold">` && |\n|  &&
+                          `  <svg id="barcode">` && |\n|  &&
+*                          `  jsbarcode-format="upc"` && |\n|  &&
+*                          `  jsbarcode-value="` && mv_barcode && `"` && |\n|  &&
+*                          `  jsbarcode-textmargin="0"` && |\n|  &&
+*                          `  jsbarcode-fontoptions="bold">` && |\n|  &&
                           `</svg>` && |\n|.
     IF mv_load_lib = abap_true.
       mv_load_lib = abap_false.
       lv_xml = lv_xml && `<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"> </script>`.
+*      lv_xml = lv_xml && `<script>` && lcl_repository=>get_js_barcode_lib( )  && `</script>`.
     ENDIF.
 
-    lv_xml = lv_xml && `<script> JsBarcode(".barcode").init(); </script>` &&
-           `</body>` && |\n|  &&
+    if mv_barcode is not initial.
+        lv_xml = lv_xml && `<script>  $("#" + sap.z2ui5.oView.createId( 'barcode' ) ).JsBarcode("` && mv_barcode && `") </script>`.
+    endif.
+         lv_xml = lv_xml &&  `</body>` && |\n|  &&
            `</html> ` && |\n|  &&
              `</mvc:View>`.
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client )->hlp_replace_controller_name( lv_xml ) ).
+    client->view_display( lv_xml ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -82,7 +82,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
 
       WHEN 'XML'.
 
-        DATA(lv_xml) = `<mvc:View controllerName="zzdummy" displayBlock="true" height="100%" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.co` &&
+        DATA(lv_xml) = `<mvc:View displayBlock="true" height="100%" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.co` &&
     `re.mvc" xmlns:editor="sap.ui.codeeditor" xmlns:ui="sap.ui.table" xmlns="sap.m" xmlns:uxap="sap.uxap" xmlns:mchart="sap.suite.ui.microchart" xmlns:z2ui5="z2ui5" xmlns:webc="sap.ui.webc.main" xmlns:text="sap.ui.richtexteditor" > <Shell> <Page ` && |\n|
     &&
                               `  title="abap2UI5 - XML XML XML" ` && |\n|  &&
@@ -113,7 +113,7 @@ CLASS Z2UI5_CL_APP_DEMO_23 IMPLEMENTATION.
                               `  text="XML" ` && |\n|  &&
                               ` /></f:content></f:SimpleForm></Page></Shell></mvc:View>`.
 
-        client->view_display( lo_view->hlp_replace_controller_name( lv_xml ) ).
+        client->view_display( lv_xml ).
 
       WHEN 'NORMAL'.
 

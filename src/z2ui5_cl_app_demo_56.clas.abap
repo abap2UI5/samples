@@ -84,7 +84,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_56 IMPLEMENTATION.
 
 
   METHOD hlp_get_range_by_value.
@@ -192,11 +192,11 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
       WHEN `BUTTON_START`.
         z2ui5_set_data( ).
 
-      WHEN `FILTER_UPDATE`.
-        IF mv_value IS NOT INITIAL.
-          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
-          INSERT ls_range INTO TABLE ms_filter-product.
-        ENDIF.
+*      WHEN `FILTER_UPDATE`.
+*        IF mv_value IS NOT INITIAL.
+*          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
+*          INSERT ls_range INTO TABLE ms_filter-product.
+*        ENDIF.
 
       WHEN `FILTER_VALUE_HELP_OK`.
         CLEAR ms_filter-product.
@@ -315,10 +315,10 @@ CLASS z2ui5_cl_app_demo_56 IMPLEMENTATION.
         )->multi_input(
                     tokens          = client->_bind( mt_token )
                     showclearicon   = abap_true
-                    value           = client->_bind( mv_value )
-                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
-                    submit          = client->_event( 'FILTER_UPDATE' )
-                    id              = `FILTER`
+*                    value           = client->_bind( mv_value )
+*                    tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
+*                    submit          = client->_event( 'FILTER_UPDATE' )
+*                    id              = `FILTER`
                     valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
                 )->item(
                         key  = `{KEY}`

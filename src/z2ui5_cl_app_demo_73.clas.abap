@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_APP_DEMO_73 IMPLEMENTATION.
       WHEN 'BUTTON_OPEN_NEW_TAB'.
         client->timer_set(
             interval_ms    = `0`
-            event_finished = client->_event_client( action = client->cs_event-open_new_tab
+            event_finished = client->_event_client( val = client->cs_event-open_new_tab
                                               t_arg = value #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5` )  )
       ) ).
 

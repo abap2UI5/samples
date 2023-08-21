@@ -29,52 +29,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_11 IMPLEMENTATION.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
-      check_editable_active = abap_false.
-      t_tab = VALUE #(
-          ( title = 'entry 01'  value = 'red'    info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 02'  value = 'blue'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true ) ).
-
-      set_view(  ).
-
-    ENDIF.
-
-
-    CASE client->get( )-event.
-
-      WHEN 'BUTTON_EDIT'.
-        check_editable_active = xsdbool( check_editable_active = abap_false ).
-        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
-          lr_tab->editable = check_editable_active.
-        ENDLOOP.
-
-
-      WHEN 'BUTTON_DELETE'.
-        DELETE t_tab WHERE selkz = abap_true.
-
-      WHEN 'BUTTON_ADD'.
-        INSERT VALUE #( ) INTO TABLE t_tab.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-    client->view_model_update( ).
-
-  ENDMETHOD.
 
   METHOD set_view.
 
@@ -138,4 +94,48 @@ CLASS z2ui5_cl_app_demo_11 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+
+      check_editable_active = abap_false.
+      t_tab = VALUE #(
+          ( title = 'entry 01'  value = 'red'    info = 'completed'  descr = 'this is a description' checkbox = abap_true )
+          ( title = 'entry 02'  value = 'blue'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
+          ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
+          ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = 'this is a description' checkbox = abap_true )
+          ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true ) ).
+
+      set_view(  ).
+
+    ENDIF.
+
+
+    CASE client->get( )-event.
+
+      WHEN 'BUTTON_EDIT'.
+        check_editable_active = xsdbool( check_editable_active = abap_false ).
+        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
+          lr_tab->editable = check_editable_active.
+        ENDLOOP.
+
+
+      WHEN 'BUTTON_DELETE'.
+        DELETE t_tab WHERE selkz = abap_true.
+
+      WHEN 'BUTTON_ADD'.
+        INSERT VALUE #( ) INTO TABLE t_tab.
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+    client->view_model_update( ).
+
+  ENDMETHOD.
 ENDCLASS.

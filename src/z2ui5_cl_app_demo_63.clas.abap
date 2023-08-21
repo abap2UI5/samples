@@ -44,7 +44,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_63 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -130,6 +130,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_on_rendering.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
@@ -184,6 +185,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD popup_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
@@ -212,6 +214,7 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD popup_display_start.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
@@ -239,5 +242,4 @@ CLASS z2ui5_cl_app_demo_63 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.

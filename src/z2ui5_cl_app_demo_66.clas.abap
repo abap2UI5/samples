@@ -55,7 +55,80 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_66 IMPLEMENTATION.
+
+
+  METHOD view_display_detail.
+
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+
+     data(page) = lo_view_nested->page( title = `Nested View` ).
+
+      page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
+      )->input( ).
+
+      page->button(
+            text = 'button 01'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_01 ) ).
+
+        page->button(
+            text = 'button 02'
+*            type    = 'Transparent'
+            press   = client->_event( `NEST_TEST` )
+            enabled = client->_bind( mv_check_enabled_02 )
+           ).
+
+    client->nest_view_display(
+      val            = lo_view_nested->stringify( )
+      id             = `test`
+      method_insert  = 'addMidColumnPage'
+      method_destroy = 'removeAllMidColumnPages'
+    ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display_master.
+
+*    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client ).
+
+      DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+         )->page(
+            title          = 'abap2UI5 - Master Detail Page with Nested View'
+            navbuttonpress = client->_event( 'BACK' )
+              shownavbutton = abap_true ).
+
+    page->header_content(
+             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->get_parent( ).
+
+      DATA(col_layout) =  page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' ).
+
+    DATA(lr_master) = col_layout->begin_column_pages( ).
+
+    client->_bind( mt_tree ).
+    DATA(tab) = lr_master->tree_table(
+      rows = `{path:'/MT_TREE', parameters: {arrayNames:['CATEGORIES']}}` ).
+    tab->tree_columns(
+    )->tree_column( label = 'Object'
+        )->tree_template(
+        )->text( text = '{OBJECT}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column2'
+        )->tree_template(
+        )->text( text = '{COL2}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column3'
+        )->tree_template(
+        )->text( text = '{COL3}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column4'
+        )->tree_template(
+        )->text( text = '{COL4}').
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
@@ -96,77 +169,4 @@ CLASS z2ui5_cl_app_demo_66 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
-
-  METHOD view_display_master.
-
-*    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client ).
-
-      DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
-         )->page(
-            title          = 'abap2UI5 - Games'
-            navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = abap_true ).
-
-    page->header_content(
-             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
-         )->get_parent( ).
-
-      DATA(col_layout) =  page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' ).
-
-    DATA(lr_master) = col_layout->begin_column_pages( ).
-
-    client->_bind( mt_tree ).
-    DATA(tab) = lr_master->tree_table(
-      rows = `{path:'/MT_TREE', parameters: {arrayNames:['CATEGORIES']}}` ).
-    tab->tree_columns(
-    )->tree_column( label = 'Object'
-        )->tree_template(
-        )->text( text = '{OBJECT}')->get_parent( )->get_parent(
-        )->tree_column( label = 'Column2'
-        )->tree_template(
-        )->text( text = '{COL2}')->get_parent( )->get_parent(
-        )->tree_column( label = 'Column3'
-        )->tree_template(
-        )->text( text = '{COL3}')->get_parent( )->get_parent(
-        )->tree_column( label = 'Column4'
-        )->tree_template(
-        )->text( text = '{COL4}').
-
-    client->view_display( page->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display_detail.
-
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
-
-     data(page) = lo_view_nested->page( title = `Nested View` ).
-
-      page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
-      )->input( ).
-
-      page->button(
-            text = 'button 01'
-*            type    = 'Transparent'
-            press   = client->_event( `NEST_TEST` )
-            enabled = client->_bind( mv_check_enabled_01 ) ).
-
-        page->button(
-            text = 'button 02'
-*            type    = 'Transparent'
-            press   = client->_event( `NEST_TEST` )
-            enabled = client->_bind( mv_check_enabled_02 )
-           ).
-
-    client->nest_view_display(
-      val            = lo_view_nested->stringify( )
-      id             = `test`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages'
-    ).
-
-  ENDMETHOD.
-
 ENDCLASS.

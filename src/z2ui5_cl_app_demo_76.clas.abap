@@ -38,7 +38,7 @@ CLASS z2ui5_cl_app_demo_76 DEFINITION
              root TYPE t_root6,
            END OF t_json1.
 
-    DATA mt_table TYPE t_json1.
+    DATA mt_table TYPE t_root6.
 
   PROTECTED SECTION.
 
@@ -48,7 +48,6 @@ CLASS z2ui5_cl_app_demo_76 DEFINITION
     METHODS z2ui5_on_init .
     METHODS z2ui5_on_event .
     METHODS z2ui5_set_data .
-  PRIVATE SECTION.
 
 ENDCLASS.
 
@@ -56,11 +55,13 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
+
   METHOD z2ui5_if_app~main.
-    me->client     = client.
+    me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
+
       z2ui5_set_data( ).
       z2ui5_on_init( ).
       RETURN.
@@ -86,6 +87,8 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
+    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
+
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - Gantt'
             navbuttonpress = client->_event( 'BACK' )
@@ -105,16 +108,17 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
       )->gantt_table(
         )->tree_table( rows = `{path: '` && client->_bind( val = mt_table path = abap_true ) && `', parameters: {arrayNames: ['CHILDREN'],numberOfExpandedLevels: 1}}`
           )->tree_columns(
-            )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{ID}` )->get_parent( )->get_parent( )->get_parent(
+            )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
 *            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
           )->row_settings_template(
-            )->gantt_row_settings( rowid = `{ID}` shapes1 = `{path: '{TASK}', templateShareable:false}` shapes2 = `{path: '{SUBTASK}', templateShareable:false}`
+            )->gantt_row_settings( rowid = `{ID}` shapes1 = `{TASK}` shapes2 = `{SUBTASK}`
               )->shapes1(
-*                )->task( time = `{path: 'starttime'}` endtime = `{path: 'endtime'}` type = `SummaryExpanded` color = `sapUiAccent5` )->get_parent( )->get_parent(
-                )->task( time = `{path: '{STARTTIME}', formatter: '.fnTimeConverter'}` endtime = `{path: '{ENDTIME}', formatter: '.fnTimeConverter'}` type = `SummaryExpanded` color = `sapUiAccent5` )->get_parent( )->get_parent(
+                )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
+                endtime = `{= Helper.DateCreateObject(${ENDTIME} ) }` type = `SummaryExpanded` color = `sapUiAccent5` )->get_parent( )->get_parent(
+
               )->shapes2(
-*                )->task( time = `{path: 'starttime'}` endtime = `{path: 'endtime'}` ).
-                )->task( time = `{path: '{STARTTIME}', formatter: '.fnTimeConverter'}` endtime = `{path: '{ENDTIME}', formatter: '.fnTimeConverter'}` ).
+                )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
+                endtime = `{= Helper.DateCreateObject(${ENDTIME} ) }` ).
 
 
     client->view_display( view->stringify( ) ).
@@ -124,26 +128,17 @@ CLASS z2ui5_cl_app_demo_76 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    mt_table = VALUE #( root = VALUE #( children = VALUE #( ( id = `line`
-                                                              text = `Level 1`
-                                                              task = VALUE #( ( id = `rectangle1` starttime = `20181101090000` endtime = `20181127090000`
-                                                           ) )
-                                                           children = VALUE #( ( id = `line2` text = `Level 2`
-                                                                                    subtask = VALUE #( ( id = `chevron1` starttime = `20181101090000` endtime = `20181113090000` )
-                                                                                                       ( id = `chevron2` starttime = `20181115090000` endtime = `20181127090000` ) )
 
-                                                           ) ) ) ) ) ).
+    mt_table = VALUE #( children = VALUE #( ( id = `line`
+   text = `Level 1`
+   task = VALUE #( ( id = `rectangle1` starttime = `2018-11-01T09:00:00` endtime = `2018-11-27T09:00:00`
+) )
+children = VALUE #( ( id = `line2` text = `Level 2`
+                         subtask = VALUE #( ( id = `chevron1` starttime = `2018-11-01T09:00:00` endtime = `2018-11-13T09:00:00` )
+                                            ( id = `chevron2` starttime = `2018-11-15T09:00:00` endtime = `2018-11-27T09:00:00` ) )
 
-*    mt_table = VALUE #( children = VALUE #( ( id = `line`
-*                                                              text = `Level 1`
-*                                                              task = VALUE #( ( id = `rectangle1` starttime = `20181101090000` endtime = `20181127090000`
-*                                                           ) )
-*                                                           children = VALUE #( ( id = `line2` text = `Level 2`
-*                                                                                    subtask = VALUE #( ( id = `chevron1` starttime = `20181101090000` endtime = `20181113090000` )
-*                                                                                                       ( id = `chevron2` starttime = `20181115090000` endtime = `20181127090000` ) )
-*
-*                                                           ) ) ) ) ) .
-
+) ) ) ) ) .
 
   ENDMETHOD.
+
 ENDCLASS.

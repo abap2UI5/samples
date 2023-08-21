@@ -9,11 +9,10 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_44 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_44 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory( client )->label( `Hello World!` )->stringify( ) ).
   ENDMETHOD.
-
 ENDCLASS.
