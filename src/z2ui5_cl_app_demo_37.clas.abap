@@ -66,7 +66,7 @@ CLASS Z2UI5_CL_APP_DEMO_37 IMPLEMENTATION.
                              `                oRm.renderControl(oControl.oButton);` && |\n|  &&
                              `            }` && |\n|  &&
                              `    });` && |\n|  &&
-                             `}); </html:script>`.
+                             `}); jQuery.sap.require("z2ui5.MyCC"); </html:script>`.
 
   ENDMETHOD.
 
