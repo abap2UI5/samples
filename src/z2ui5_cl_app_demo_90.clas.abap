@@ -44,7 +44,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_90 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_90 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -100,11 +100,15 @@ CLASS Z2UI5_CL_APP_DEMO_90 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client
-      )->page( title = `P13N`
-        )->button( text = `Open P13N Dialog` press = client->_event( 'P13N_OPEN' ) ).
+    DATA(page) =  z2ui5_cl_xml_view=>factory( client )->page(
+        title          = 'abap2UI5 - P13N Dialog'
+        navbuttonpress = client->_event( 'BACK' )
+        shownavbutton  = abap_true
+        class = 'sapUiContentPadding' ).
 
-    client->view_display( view->stringify( ) ).
+    page->button( text = `Open P13N Dialog` press = client->_event( 'P13N_OPEN' ) ).
+
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 

@@ -38,13 +38,9 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_97->VIEW_DISPLAY_DETAIL
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
@@ -81,14 +77,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_APP_DEMO_97->VIEW_DISPLAY_MASTER
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
-
-*    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client ).
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client
        )->page(
@@ -123,12 +112,6 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_APP_DEMO_97->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -145,7 +128,6 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
         ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
       ).
 
-
       view_display_master(  ).
       view_display_detail(  ).
 
@@ -158,7 +140,6 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-
         APPEND ls_sel TO t_tab2.
 
         client->nest_view_model_update( ).

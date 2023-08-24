@@ -487,6 +487,14 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+         panel->generic_tile(
+         header    = 'p13n Dialog'
+         subheader = 'Popup for F4 Helps'
+         press     =  client->_event( 'z2ui5_cl_app_demo_90' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
@@ -543,6 +551,13 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     panel->generic_tile(
         header    = 'Planning Calender'
         press     =  client->_event( 'z2ui5_cl_app_demo_80' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Process Flow'
+        press     =  client->_event( 'z2ui5_cl_app_demo_91' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
