@@ -11,6 +11,8 @@ CLASS z2ui5_cl_app_demo_96 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
 
+    DATA mr_data TYPE REF TO data.
+
     METHODS display_view
       CHANGING xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
 
