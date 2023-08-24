@@ -84,7 +84,7 @@ CLASS z2ui5_cl_app_demo_88 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    DATA(tool_page) = view->tool_page(
+    DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
 
