@@ -51,6 +51,9 @@ CLASS z2ui5_cl_app_demo_95 IMPLEMENTATION.
       WHEN 'BUTTON_SAVE'.
         client->message_box_display( `event main app` ).
 
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
     ENDCASE.
 
   ENDMETHOD.
@@ -86,19 +89,25 @@ CLASS z2ui5_cl_app_demo_95 IMPLEMENTATION.
   METHOD view_build.
 
     page = z2ui5_cl_xml_view=>factory( client )->shell(
-          )->page(
-             title  = `test`
-              ).
+         )->page(
+            title          = 'abap2UI5 - Main App with Sub App'
+            navbuttonpress = client->_event( 'BACK' )
+              shownavbutton = abap_true ).
+
+    page->header_content(
+*       )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1683753816716345345`
+       )->link( text = 'Source_Code' target = '_blank' href = page->hlp_get_source_code_url(  ) ).
+
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-  data(content) = o_grid->simple_form( title = 'Input'
-        )->content( 'form' ).
-          content->label( 'main app'
-            )->input(
-                value  = client->_bind_edit( ms_screen-input )
-                submit = client->_event( 'INPUT' )  ).
+    DATA(content) = o_grid->simple_form( title = 'Input'
+          )->content( 'form' ).
+    content->label( 'main app'
+      )->input(
+          value  = client->_bind_edit( ms_screen-input )
+          submit = client->_event( 'INPUT' )  ).
 
     mo_grid_sub = page->grid( 'L12 M12 S12'
         )->content( 'layout' ).

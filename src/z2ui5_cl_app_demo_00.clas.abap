@@ -487,13 +487,13 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-         panel->generic_tile(
-         header    = 'p13n Dialog'
-         subheader = 'Popup for F4 Helps'
-         press     =  client->_event( 'z2ui5_cl_app_demo_90' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generic_tile(
+    header    = 'p13n Dialog'
+    subheader = 'Popup for F4 Helps'
+    press     =  client->_event( 'z2ui5_cl_app_demo_90' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
           expandable = abap_false
@@ -555,12 +555,12 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        panel->generic_tile(
-        header    = 'Process Flow'
-        press     =  client->_event( 'z2ui5_cl_app_demo_91' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+    panel->generic_tile(
+    header    = 'Process Flow'
+    press     =  client->_event( 'z2ui5_cl_app_demo_91' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
        expandable = abap_false
@@ -667,6 +667,42 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
+               headertext = `Partial Rerendering`
+          ).
+
+    panel->generic_tile(
+        header    = 'Nested Views I'
+        subheader = 'Basic Example'
+        press     =  client->_event( 'z2ui5_cl_app_demo_65' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Nested Views II'
+        subheader = 'Master-Detail Page'
+        press     =  client->_event( 'z2ui5_cl_app_demo_66' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Nav Container I'
+        press     =  client->_event( 'z2ui5_cl_app_demo_88' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Nav Container II'
+        press     =  client->_event( 'z2ui5_cl_app_demo_89' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
                headertext = `Features`
           ).
 
@@ -686,23 +722,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-
-    panel->generic_tile(
-        header    = 'Nested Views I'
-        subheader = 'Basic Example'
-        press     =  client->_event( 'z2ui5_cl_app_demo_65' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-    panel->generic_tile(
-        header    = 'Nested Views II'
-        subheader = 'Master-Detail Page'
-        press     =  client->_event( 'z2ui5_cl_app_demo_66' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
     panel->generic_tile(
              header    = 'Update Model'
           subheader = 'Model only update vs. View rerendering'
@@ -719,6 +738,12 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+     panel->generic_tile(
+       header    = 'Main App with Sub App'
+     press     =  client->_event( 'z2ui5_cl_app_demo_95' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     panel = page->panel(
                expandable = abap_false

@@ -116,7 +116,7 @@ CLASS Z2UI5_CL_APP_DEMO_91 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    DATA(page) = view->page(
+    DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - Process Flow'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = abap_true

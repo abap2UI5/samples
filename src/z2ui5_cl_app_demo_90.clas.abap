@@ -100,7 +100,7 @@ CLASS z2ui5_cl_app_demo_90 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(page) =  z2ui5_cl_xml_view=>factory( client )->page(
+    DATA(page) =  z2ui5_cl_xml_view=>factory( client )->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = abap_true

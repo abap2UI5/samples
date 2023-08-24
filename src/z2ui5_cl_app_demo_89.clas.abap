@@ -85,12 +85,15 @@ CLASS z2ui5_cl_app_demo_89 IMPLEMENTATION.
     DATA(tool_page) = view->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
+                                     )->button( text = `Back` press = client->_event( 'BACK' )
+                            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+
                               )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
                                         height = `1.5rem`
                                         class = `sapUiSmallMarginBegin`
 
                               )->title( level = `H1`
-                                        text  = `Product Name`
+                                        text  = `Nav Container II`
                               )->title( level = `H3`
                                         text  = `Second Title`
                               )->toolbar_spacer(
