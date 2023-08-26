@@ -50,7 +50,6 @@ CLASS z2ui5_cl_app_demo_91 DEFINITION
 
 
   PRIVATE SECTION.
-    DATA mv_page TYPE string.
 
 ENDCLASS.
 
