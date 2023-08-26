@@ -53,9 +53,8 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
 
     grid = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 
-    grid->simple_form( 'Editor' )->content( 'form'
-            )->scroll_container( '75%'
-                )->code_editor(
+
+         page->code_editor(
                     type  = mv_type
                     editable = mv_check_editable
                     value = client->_bind( mv_editor ) ).
@@ -105,6 +104,8 @@ CLASS Z2UI5_CL_APP_DEMO_35 IMPLEMENTATION.
             WHEN mv_path CS 'js'   THEN lcl_mime_api=>read_js( )
             ).
         client->message_toast_display( 'Download successfull' ).
+
+        client->view_model_update( ).
 
       WHEN 'DB_SAVE'.
         lcl_mime_api=>save_data( ).

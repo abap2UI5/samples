@@ -97,8 +97,11 @@ CLASS Z2UI5_CL_APP_DEMO_74 IMPLEMENTATION.
 
     IF mr_table IS NOT INITIAL.
 
+FIELD-SYMBOLS <tab> type table.
+assign mr_table->* to <tab>.
+
       DATA(tab) = page->table(
-              items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( mr_table->* ) ELSE client->_bind_edit( mr_table->* ) )
+              items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
           )->header_toolbar(
               )->overflow_toolbar(
                   )->title( 'CSV Content'
@@ -106,7 +109,7 @@ CLASS Z2UI5_CL_APP_DEMO_74 IMPLEMENTATION.
           )->get_parent( )->get_parent( ).
 
 
-      DATA(lr_fields) = lcl_utility=>get_fieldlist_by_table( mr_table->* ).
+      DATA(lr_fields) = lcl_utility=>get_fieldlist_by_table( <tab> ).
       DATA(lo_cols) = tab->columns( ).
       LOOP AT lr_fields REFERENCE INTO DATA(lr_col).
         lo_cols->column( )->text( lr_col->* ).
