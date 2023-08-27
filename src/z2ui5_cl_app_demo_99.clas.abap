@@ -174,7 +174,12 @@ CLASS z2ui5_cl_app_demo_99 IMPLEMENTATION.
       ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
       ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-    t_tab_group = t_tab_sort = VALUE #(
+    t_tab_group = VALUE #(
+       ( text = `Title`       key = `title` )
+       ( text = `Info`        key = `info`  )
+       ( text = `Description` key = `descr` ) ).
+
+    t_tab_sort = VALUE #(
        ( text = `Title`       key = `title` )
        ( text = `Info`        key = `info`  )
        ( text = `Description` key = `descr` ) ).
