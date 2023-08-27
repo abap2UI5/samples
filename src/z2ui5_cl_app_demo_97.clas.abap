@@ -23,7 +23,7 @@ CLASS z2ui5_cl_app_demo_97 DEFINITION
     DATA t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA check_initialized TYPE abap_bool .
-    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true ##NO_TEXT.
+    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
     DATA mv_check_enabled_02 TYPE abap_bool .
   PROTECTED SECTION.
 

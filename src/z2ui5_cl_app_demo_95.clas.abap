@@ -77,7 +77,7 @@ CLASS z2ui5_cl_app_demo_95 IMPLEMENTATION.
 
   METHOD on_init_sub.
 
-    CREATE OBJECT mo_app_sub.
+    mo_app_sub = new #( ).
     mo_app_sub->mo_view_parent = mo_grid_sub.
     mo_app_sub->z2ui5_if_app~main( client = client ).
 
