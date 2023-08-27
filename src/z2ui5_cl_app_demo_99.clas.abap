@@ -125,9 +125,7 @@ CLASS Z2UI5_CL_APP_DEMO_99 IMPLEMENTATION.
             LOOP AT lt_values INTO DATA(lv_val).
               mv_filter = mv_filter && `{path:'` && lv_field && `',operator: 'EQ',value1:'` && lv_val && `'},`.
             ENDLOOP.
-          ELSE.
-
-          ENDIF.
+          endif.
           DATA(mv_filter_len) = strlen( mv_filter ) - 1.
           mv_filter = mv_filter+0(mv_filter_len).
 
