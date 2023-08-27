@@ -55,7 +55,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_99 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_99 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -125,7 +125,7 @@ CLASS Z2UI5_CL_APP_DEMO_99 IMPLEMENTATION.
             LOOP AT lt_values INTO DATA(lv_val).
               mv_filter = mv_filter && `{path:'` && lv_field && `',operator: 'EQ',value1:'` && lv_val && `'},`.
             ENDLOOP.
-          endif.
+          ENDIF.
           DATA(mv_filter_len) = strlen( mv_filter ) - 1.
           mv_filter = mv_filter+0(mv_filter_len).
 
@@ -172,19 +172,16 @@ CLASS Z2UI5_CL_APP_DEMO_99 IMPLEMENTATION.
       ( title = 'row_03'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
       ( title = 'row_04'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
       ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-    ).
+      ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
     t_tab_group = t_tab_sort = VALUE #(
        ( text = `Title`       key = `title` )
        ( text = `Info`        key = `info`  )
-       ( text = `Description` key = `descr` )
-     ).
+       ( text = `Description` key = `descr` ) ).
 
     t_tab_filter_title = VALUE #(
-      ( text = `Info`        key = `Completed` )
-      ( text = `Info`        key = `Incompleted` )
-    ).
+      ( text = `Info`  key = `Completed` )
+      ( text = `Info`  key = `Incompleted` ) ).
 
 
   ENDMETHOD.
