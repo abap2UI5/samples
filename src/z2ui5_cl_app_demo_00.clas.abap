@@ -687,6 +687,14 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
     ).
 
         panel->generic_tile(
+        header    = 'Nested Views III'
+        subheader = 'Head & Item Table'
+        press     =  client->_event( 'z2ui5_cl_app_demo_97' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
         header    = 'Nav Container I'
         press     =  client->_event( 'z2ui5_cl_app_demo_88' )
         mode      = 'LineMode'
