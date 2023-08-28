@@ -4,7 +4,6 @@ class Z2UI5_CL_APP_DEMO_102 definition
 
 public section.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
   interfaces Z2UI5_IF_APP .
 
   types:
@@ -139,7 +138,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 2.
 * ---------- Grid 2--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_2->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_2->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -154,7 +153,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 3.
 * ---------- Grid 3--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_3->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_3->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -169,7 +168,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 4.
 * ---------- Grid 4--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_4->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_4->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -191,7 +190,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 * ---------- Set column ---------------------------------------------------------------------------
     LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
-      lr_columns->column( )->text( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+      lr_columns->column( )->text( <ls_fielddescr>-rollname ).
     ENDLOOP.
 
 * ---------- Build export parameter list ----------------------------------------------------------
