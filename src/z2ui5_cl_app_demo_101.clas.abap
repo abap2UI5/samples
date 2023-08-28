@@ -85,14 +85,17 @@ CLASS Z2UI5_CL_APP_DEMO_101 IMPLEMENTATION.
              shownavbutton  = abap_true
          ).
 
-    DATA(fi) = page->feed_input( post = client->_event( 'POST' )
+    DATA(fi) = page->vbox(
+      )->feed_input( post = client->_event( 'POST' )
 *                             icon = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
                              growing = abap_true
+                             rows = `6`
                              icondensityaware = abap_false
                              class = `sapUiSmallMarginTopBottom`
-      )->get_parent(
+      )->get_parent( )->get_parent(
       )->list(
         items = client->_bind_edit( mt_feed )
+        showSeparators = `Inner`
           )->feed_list_item(
             sender = `{AUTHOR}`
 *            icon   = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
