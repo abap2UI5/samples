@@ -163,7 +163,7 @@ CLASS Z2UI5_CL_APP_DEMO_02 IMPLEMENTATION.
     lv_test->label( 'Combobox'
       )->combobox(
           selectedkey = client->_bind_edit( screen-combo_key )
-          items       = client->_bind( VALUE ty_t_combo(
+          items       = client->_bind_local( VALUE ty_t_combo(
                   ( key = 'BLUE'  text = 'green' )
                   ( key = 'GREEN' text = 'blue' )
                   ( key = 'BLACK' text = 'red' )
@@ -176,7 +176,7 @@ CLASS Z2UI5_CL_APP_DEMO_02 IMPLEMENTATION.
     lv_test->label( 'Combobox2'
       )->combobox(
           selectedkey = client->_bind_edit( screen-combo_key2 )
-          items       = client->_bind( VALUE ty_t_combo(
+          items       = client->_bind_local( VALUE ty_t_combo(
                   ( key = 'BLUE'  text = 'green' )
                   ( key = 'GREEN' text = 'blue' )
                   ( key = 'BLACK' text = 'red' )

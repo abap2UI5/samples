@@ -84,19 +84,23 @@ CLASS z2ui5_cl_app_demo_88 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    DATA(tool_page) = view->tool_page(
+    DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
+
+                            )->button( text = `Back` press = client->_event( 'BACK' )
+                            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+
                               )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
                                         height = `1.5rem`
                                         class = `sapUiSmallMarginBegin`
 
                               )->title( level = `H1`
-                                        text  = `Product Name`
+                                        text  = `Nav Container I`
                               )->title( level = `H3`
                                         text  = `Second Title`
                               )->toolbar_spacer(
-                              )->overflow_toolbar_button( text = `Search`
+                              )->overflow_Toolbar_Button( text = `Search`
                                                           tooltip = `Search`
                                                           icon = `sap-icon://search`
                                                           type = `Transparent`

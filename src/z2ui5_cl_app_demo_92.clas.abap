@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_app_demo_91 DEFINITION
+CLASS z2ui5_cl_app_demo_92 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -55,7 +55,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_91 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_92 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -113,41 +113,19 @@ CLASS Z2UI5_CL_APP_DEMO_91 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_view=>factory( client ).
 
-    DATA(page) = view->shell( )->page(
-        title          = 'abap2UI5 - Process Flow'
-        navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = abap_true
-        class = 'sapUiContentPadding' ).
-
-    DATA(process_flow) = page->process_flow(
-        id = `processflow1`
-        scrollable = abap_true
-        wheelzoomable = abap_false
-        foldedcorners = abap_true
-        nodepress = client->_event( val = `NODE_PRESS` )
-        nodes = client->_bind_edit( mt_nodes )
-        lanes = client->_bind_edit( mt_lanes )
-      )->nodes(
-        )->process_flow_node(
-          laneid = `{LANE}`
-          nodeid = `{ID}`
-          title = `{TITLE}`
-          titleabbreviation = `{TITLEABBREVIATION}`
-          children = `{CHILDREN}`
-          state = `{STATE}`
-          statetext = `{STATETEXT}`
-*          texts = `{TEXTS}`
-          highlighted = `{HIGHLIGHTED}`
-          focused = `{FOCUSED}`
-        )->get_parent( )->get_parent(
-      )->lanes(
-        )->process_flow_lane_header(
-          laneid = `{ID}`
-          iconsrc = `{ICON}`
-          text = `{LABEL}`
-          position = `{POSITION}` ).
+*    z2ui5_cl_view=>factory( client
+*        )->c( `Shell`
+*           )->c( `Page` )->p( n = `title` v = `abap2UI5 - z2ui5_cl_app_hello_world`
+*               )->c( `SimpleForm`
+*                        )->p( n = `title`    v = `Hello World`
+*                        )->p( n = `editable` v = abap_true )->boolean(
+*                        )->p( n = `editable` v = abap_true )->bind_edit(
+*                        )->p( n = `editable` v = abap_true )->bind(
+*                        )->p( n = `editable` v = abap_true )->bind_local(
+*           )->g( `Page`
+*           )->up->.
 
     client->view_display( view->stringify( ) ).
 
