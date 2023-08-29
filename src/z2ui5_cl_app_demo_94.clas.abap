@@ -60,7 +60,7 @@ CLASS z2ui5_cl_app_demo_94 IMPLEMENTATION.
 
     ms_screen-ty_s_02-ty_s_03-ty_s_04-input = `struc deep switch guid name - working`.
 
-    CREATE OBJECT mo_app.
+    mo_app = new #( ).
     mo_app->mv_val = `instance attribute val - working`.
     mo_app->ms_screen-input = `instance attribute struc - working`.
 

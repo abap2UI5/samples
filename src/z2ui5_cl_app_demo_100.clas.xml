@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_APP_DEMO_97</CLSNAME>
+    <CLSNAME>Z2UI5_CL_APP_DEMO_100</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>nested view - tables</DESCRIPT>
+    <DESCRIPT>demo - smallest app</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
