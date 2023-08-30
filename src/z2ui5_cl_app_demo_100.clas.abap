@@ -37,7 +37,6 @@ CLASS z2ui5_cl_app_demo_100 DEFINITION
     METHODS z2ui5_view_vm_popup.
     METHODS z2ui5_on_event.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 

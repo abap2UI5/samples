@@ -7,16 +7,26 @@ public section.
   interfaces IF_SERIALIZABLE_OBJECT .
   interfaces Z2UI5_IF_APP .
 
+*  types:
+*    BEGIN OF ts_shlp_fields,
+*        mc_name1 TYPE  bu_mcname1,
+*        mc_name2 TYPE  bu_mcname2,
+*        bu_sort1 TYPE  bu_sort1,
+*        bu_sort2 TYPE  bu_sort2,
+*        partner  TYPE  bu_partner,
+*        type     TYPE  bu_type,
+*        valdt    TYPE  bu_valdt_s,
+*      END OF ts_shlp_fields .
+
+
   types:
     BEGIN OF ts_shlp_fields,
-        mc_name1 TYPE  bu_mcname1,
-        mc_name2 TYPE  bu_mcname2,
-        bu_sort1 TYPE  bu_sort1,
-        bu_sort2 TYPE  bu_sort2,
-        partner  TYPE  bu_partner,
-        type     TYPE  bu_type,
-        valdt    TYPE  bu_valdt_s,
+        name        TYPE seoclsname,
+        language    TYPE spras,
+        description TYPE seodescr,
       END OF ts_shlp_fields .
+
+
 
   data MV_CHECK_INITIALIZED type ABAP_BOOL .
   data:
@@ -167,7 +177,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 2.
 * ---------- Grid 2--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_2->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_2->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -182,7 +192,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 3.
 * ---------- Grid 3--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_3->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_3->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -197,7 +207,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         WHEN 4.
 * ---------- Grid 4--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_4->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_4->label( <ls_fielddescr>-rollname ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           CASE <ls_fielddescr>-datatype.
@@ -228,7 +238,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      lr_columns->column( )->text( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+      lr_columns->column( )->text( <ls_fielddescr>-rollname ).
     ENDLOOP.
 
 * ---------- Build export parameter list ----------------------------------------------------------
@@ -458,7 +468,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
       lr_grid->simple_form( 'Input'
           )->content( 'form'
               )->label( 'Input with value help'
-              )->input( value = client->_bind_edit( me->ms_screen-selfield )
+              )->input( value = client->_bind_edit( ms_screen-selfield )
                       showvaluehelp    = abap_true
                       valuehelprequest = client->_event( 'F4_POPUP_OPEN' ) ).
 
@@ -495,7 +505,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         generate_ddic_shlp( ir_parent                 = lr_dialog_content
                             ir_client                 = client
                             ir_controller             = me
-                            iv_shlp_id                = 'BUPAP'
+                            iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
                             iv_result_itab_name       = 'MT_SHLP_RESULT'
                             iv_result_itab_event      = 'F4_POPUP_CLOSE'
                             iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS' ).
@@ -514,7 +524,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 * ---------- Set search field value ---------------------------------------------------------------
         IF line_exists( lt_arg[ 1 ] ).
-          me->ms_screen-selfield = lt_arg[ 1 ].
+          ms_screen-selfield = lt_arg[ 1 ].
           client->view_model_update( ).
         ENDIF.
 
@@ -524,7 +534,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         CLEAR: me->mt_shlp_result.
 * ---------- Fetch searchhelp result ----------------------------------------------------------
         select_ddic_shlp( ir_controller             = me
-                          iv_shlp_id                = 'BUPAP'
+                          iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
                           iv_result_itab_name       = 'MT_SHLP_RESULT'
                           iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS' ).
 
