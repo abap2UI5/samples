@@ -101,18 +101,18 @@ CLASS z2ui5_cl_app_demo_85 IMPLEMENTATION.
     header_title->expanded_heading(
             )->hbox(
 *                )->title( Text = |Product Id |
-                )->info_label( text = |Product Id | && client->_bind( val = ls_detail-productid ) colorScheme = '9'
+                )->info_label( text = |Product Id | && client->_bind_local( val = ls_detail-productid ) colorScheme = '9'
                                width = '200px' icon = 'sap-icon://home-share' ) .
 
     header_title->snapped_heading(
             )->flex_box( alignitems = `Center`
               )->avatar( src = c_pic_url && ls_detail-pic class = 'sapUiTinyMarginEnd'
-                )->info_label( text = |Product Id | && client->_bind( val = ls_detail-productid ) colorScheme = '9'
+                )->info_label( text = |Product Id | && client->_bind_local( val = ls_detail-productid ) colorScheme = '9'
                                width = '200px' icon = 'sap-icon://home-share' ) .
 
-    header_title->expanded_content( ns = `uxap` )->text( client->_bind( val = ls_detail-productname ) ).
-    header_title->snapped_Content( ns = `uxap` )->text( client->_bind( val = ls_detail-productname  ) ).
-    header_title->snapped_Title_On_Mobile( )->title(  client->_bind( val = ls_detail-productname )  ).
+    header_title->expanded_content( ns = `uxap` )->text( client->_bind_local( val = ls_detail-productname ) ).
+    header_title->snapped_Content( ns = `uxap` )->text( client->_bind_local( val = ls_detail-productname  ) ).
+    header_title->snapped_Title_On_Mobile( )->title(  client->_bind_local( val = ls_detail-productname )  ).
 
     header_title->actions( ns = `uxap` )->overflow_toolbar(
          )->overflow_toolbar_button(
