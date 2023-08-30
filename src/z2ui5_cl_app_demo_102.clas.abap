@@ -4,18 +4,29 @@ class Z2UI5_CL_APP_DEMO_102 definition
 
 public section.
 
+  interfaces IF_SERIALIZABLE_OBJECT .
   interfaces Z2UI5_IF_APP .
+
+*  types:
+*    BEGIN OF ts_shlp_fields,
+*        mc_name1 TYPE  bu_mcname1,
+*        mc_name2 TYPE  bu_mcname2,
+*        bu_sort1 TYPE  bu_sort1,
+*        bu_sort2 TYPE  bu_sort2,
+*        partner  TYPE  bu_partner,
+*        type     TYPE  bu_type,
+*        valdt    TYPE  bu_valdt_s,
+*      END OF ts_shlp_fields .
+
 
   types:
     BEGIN OF ts_shlp_fields,
-        mc_name1 TYPE  bu_mcname1,
-        mc_name2 TYPE  bu_mcname2,
-        bu_sort1 TYPE  bu_sort1,
-        bu_sort2 TYPE  bu_sort2,
-        partner  TYPE  bu_partner,
-        type     TYPE  bu_type,
-        valdt    TYPE  bu_valdt_s,
+        name        TYPE seoclsname,
+        language    TYPE spras,
+        description TYPE seodescr,
       END OF ts_shlp_fields .
+
+
 
   data MV_CHECK_INITIALIZED type ABAP_BOOL .
   data:
@@ -51,6 +62,17 @@ ENDCLASS.
 CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_APP_DEMO_102=>GENERATE_DDIC_SHLP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IR_PARENT                      TYPE REF TO Z2UI5_CL_XML_VIEW
+* | [--->] IR_CLIENT                      TYPE REF TO Z2UI5_IF_CLIENT
+* | [--->] IR_CONTROLLER                  TYPE REF TO OBJECT
+* | [--->] IV_SHLP_ID                     TYPE        CHAR30
+* | [--->] IV_RESULT_ITAB_NAME            TYPE        CLIKE
+* | [--->] IV_RESULT_ITAB_EVENT           TYPE        CLIKE
+* | [--->] IV_SHLP_FIELDS_STRUC_NAME      TYPE        CLIKE
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD generate_ddic_shlp.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
@@ -61,13 +83,16 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
           lv_arg_fieldname    TYPE stringval,
           lv_cell_fieldname   TYPE stringval,
           lv_path_result_itab TYPE stringval,
-          lv_path_shlp_fields TYPE stringval.
+          lv_path_shlp_fields TYPE stringval,
+          lt_FIELDPROP_SEL    TYPE ddshfprops,
+          lt_FIELDPROP_LIS    TYPE ddshfprops.
 
-    FIELD-SYMBOLS: <ls_fielddescr>  TYPE dfies,
-                   <ls_fieldprop>   TYPE ddshfprop,
-                   <lt_result_itab> TYPE ANY TABLE,
-                   <ls_shlp_fields> TYPE any,
-                   <lv_field>       TYPE any.
+    FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
+                   <ls_fieldprop_sel> TYPE ddshfprop,
+                   <ls_fieldprop_lis> TYPE ddshfprop,
+                   <lt_result_itab>   TYPE ANY TABLE,
+                   <ls_shlp_fields>   TYPE any,
+                   <lv_field>         TYPE any.
 
 * ---------- Get result itab reference ------------------------------------------------------------
     lv_path_result_itab = 'IR_CONTROLLER->' && iv_result_itab_name.
@@ -82,6 +107,21 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+* ---------- Get searchhelp description -----------------------------------------------------------
+    CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+      EXPORTING
+        shlpname = iv_shlp_id
+      IMPORTING
+        shlp     = ls_shlp.
+
+* ---------- Set Selection and List properties ----------------------------------------------------
+    lt_fieldprop_sel = ls_shlp-fieldprop.
+    lt_fieldprop_lis = ls_shlp-fieldprop.
+    DELETE lt_fieldprop_sel WHERE shlpselpos IS INITIAL.
+    DELETE lt_fieldprop_lis WHERE shlplispos IS INITIAL.
+    SORT lt_fieldprop_sel BY shlpselpos.
+    SORT lt_fieldprop_lis BY shlplispos.
+
 * -------------------------------------------------------------------------------------------------
 * Searchfield Grid
 * -------------------------------------------------------------------------------------------------
@@ -93,16 +133,15 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
     DATA(lr_form_shlp_3) = lr_grid_shlp->simple_form( )->content( 'form' ).
     DATA(lr_form_shlp_4) = lr_grid_shlp->simple_form( )->content( 'form' ).
 
-* ---------- Get searchhelp description -----------------------------------------------------------
-    CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
-      EXPORTING
-        shlpname = iv_shlp_id
-      IMPORTING
-        shlp     = ls_shlp.
-
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
+    LOOP AT lt_fieldprop_sel ASSIGNING <ls_fieldprop_sel>.
 * ---------- Init loop data -----------------------------------------------------------------------
-      UNASSIGN: <lv_field>.
+      UNASSIGN: <lv_field>, <ls_fielddescr>.
+
+* ---------- Get corresponding field description --------------------------------------------------
+      ASSIGN ls_shlp-fielddescr[ fieldname = <ls_fieldprop_sel>-fieldname ] TO <ls_fielddescr>.
+      IF <ls_fielddescr> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
 
 * ---------- Get field reference ------------------------------------------------------------------
       ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_shlp_fields> TO <lv_field>.
@@ -189,17 +228,26 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
     DATA(lr_columns) = lr_table->columns( ).
 
 * ---------- Set column ---------------------------------------------------------------------------
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
+    LOOP AT lt_fieldprop_lis ASSIGNING <ls_fieldprop_lis>.
+* ---------- Init loop data -----------------------------------------------------------------------
+      UNASSIGN: <ls_fielddescr>.
+
+* ---------- Get corresponding field description --------------------------------------------------
+      ASSIGN ls_shlp-fielddescr[ fieldname = <ls_fieldprop_lis>-fieldname ] TO <ls_fielddescr>.
+      IF <ls_fielddescr> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+
       lr_columns->column( )->text( <ls_fielddescr>-rollname ).
     ENDLOOP.
 
 * ---------- Build export parameter list ----------------------------------------------------------
-    LOOP AT ls_shlp-fieldprop ASSIGNING <ls_FIELDPROP> WHERE shlpoutput = abap_true.
+    LOOP AT lt_fieldprop_lis ASSIGNING <ls_fieldprop_lis> WHERE shlpoutput = abap_true.
 * ---------- Init loop data -----------------------------------------------------------------------
       CLEAR: lv_arg_fieldname.
 
 * ---------- Build parameter name -----------------------------------------------------------------
-      lv_arg_fieldname = `${` && <ls_FIELDPROP>-fieldname && `}`.
+      lv_arg_fieldname = `${` && <ls_fieldprop_lis>-fieldname && `}`.
 
 * ---------- Collect output fields ----------------------------------------------------------------
       APPEND lv_arg_fieldname TO lt_arg.
@@ -210,17 +258,26 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
                                                                              t_arg  = lt_arg ) ).
 
 * ---------- Set cell content ---------------------------------------------------------------------
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
+    LOOP AT lt_fieldprop_lis ASSIGNING <ls_fieldprop_lis>.
 * ---------- Init loop data -----------------------------------------------------------------------
       CLEAR: lv_cell_fieldname.
 
 * ---------- Build cell name ----------------------------------------------------------------------
-      lv_cell_fieldname = `{` && <ls_fielddescr>-fieldname && `}`.
+      lv_cell_fieldname = `{` && <ls_fieldprop_lis>-fieldname && `}`.
       lr_item->cells( )->text( lv_cell_fieldname ).
     ENDLOOP.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Static Public Method Z2UI5_CL_APP_DEMO_102=>SELECT_DDIC_SHLP
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] IR_CONTROLLER                  TYPE REF TO OBJECT
+* | [--->] IV_SHLP_ID                     TYPE        CHAR30
+* | [--->] IV_RESULT_ITAB_NAME            TYPE        CLIKE
+* | [--->] IV_SHLP_FIELDS_STRUC_NAME      TYPE        CLIKE
+* | [--->] IV_MAXROWS                     TYPE        I (default =150)
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD select_ddic_shlp.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
@@ -230,14 +287,20 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
           lv_path_shlp_fields TYPE stringval,
           lt_RETURN_VALUES    TYPE TABLE OF ddshretval,
           lt_record_tab       TYPE TABLE OF seahlpres,
-          lv_convexit_name    TYPE rs38l_fnam.
+          lv_convexit_name    TYPE rs38l_fnam,
+          lv_offset           TYPE i,
+          lv_length           TYPE i,
+          lt_FIELDPROP_SEL    TYPE ddshfprops,
+          lt_FIELDPROP_LIS    TYPE ddshfprops.
 
-    FIELD-SYMBOLS: <ls_fielddescr>  TYPE dfies,
-                   <ls_record_tab>  TYPE seahlpres,
-                   <lt_result>      TYPE STANDARD TABLE,
-                   <ls_result>      TYPE any,
-                   <ls_shlp_fields> TYPE any,
-                   <lv_field>       TYPE any.
+    FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
+                   <ls_record_tab>    TYPE seahlpres,
+                   <lt_result>        TYPE STANDARD TABLE,
+                   <ls_result>        TYPE any,
+                   <ls_shlp_fields>   TYPE any,
+                   <lv_field>         TYPE any,
+                   <ls_fieldprop_sel> TYPE ddshfprop,
+                   <ls_fieldprop_lis> TYPE ddshfprop.
 
 * ---------- Get result itab reference ------------------------------------------------------------
     lv_path_result_itab = 'IR_CONTROLLER->' && iv_result_itab_name.
@@ -259,10 +322,24 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
       IMPORTING
         shlp     = ls_shlp.
 
+* ---------- Set Selection and List properties ----------------------------------------------------
+    lt_fieldprop_sel = ls_shlp-fieldprop.
+    lt_fieldprop_lis = ls_shlp-fieldprop.
+    DELETE lt_fieldprop_sel WHERE shlpselpos IS INITIAL.
+    DELETE lt_fieldprop_lis WHERE shlplispos IS INITIAL.
+    SORT lt_fieldprop_sel BY shlpselpos.
+    SORT lt_fieldprop_lis BY shlplispos.
+
 * ---------- Set filter criteria ------------------------------------------------------------------
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
+    LOOP AT lt_fieldprop_sel ASSIGNING <ls_fieldprop_sel>.
 * ---------- Init loop data -----------------------------------------------------------------------
-      UNASSIGN <lv_field>.
+      UNASSIGN: <lv_field>, <ls_fielddescr>.
+
+* ---------- Get corresponding field description --------------------------------------------------
+      ASSIGN ls_shlp-fielddescr[ fieldname = <ls_fieldprop_sel>-fieldname ] TO <ls_fielddescr>.
+      IF <ls_fielddescr> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
 
 * ---------- Get reference of given fieldname -----------------------------------------------------
       ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_shlp_fields> TO <lv_field>.
@@ -289,20 +366,33 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 * ---------- Map string into structure ------------------------------------------------------------
     LOOP AT lt_record_tab ASSIGNING <ls_record_tab>.
+* ---------- Create initial result record ---------------------------------------------------------
       APPEND INITIAL LINE TO <lt_result> ASSIGNING <ls_result>.
-      <ls_result> = <ls_record_tab>-string.
 
-      LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
-* ---------- Init loop data ------------------------------------------------------------------------
-        CLEAR: lv_convexit_name.
-        UNASSIGN: <lv_field>.
+* ---------- Perform data mapping -----------------------------------------------------------------
+      LOOP AT lt_fieldprop_lis ASSIGNING <ls_fieldprop_lis>.
+* ---------- Init loop data -----------------------------------------------------------------------
+        CLEAR: lv_convexit_name, lv_offset, lv_length.
+        UNASSIGN: <lv_field>, <ls_fielddescr>.
 
-        ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_result> TO <lv_field>.
-
-        IF <lv_field> IS NOT ASSIGNED OR
-          <lv_field> IS INITIAL.
+* ---------- Get corresponding field description --------------------------------------------------
+        ASSIGN ls_shlp-fielddescr[ fieldname = <ls_fieldprop_lis>-fieldname ] TO <ls_fielddescr>.
+        IF <ls_fielddescr> IS NOT ASSIGNED.
           CONTINUE.
         ENDIF.
+
+* ---------- Assign target field ------------------------------------------------------------------
+        ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_result> TO <lv_field>.
+        IF <lv_field> IS NOT ASSIGNED.
+          CONTINUE.
+        ENDIF.
+
+* ---------- Set offset and length ---------------------------------------------------------------
+        lv_offset = <ls_fielddescr>-offset / 2. "For any reason offset shows always double values ;-)
+        lv_length = <ls_fielddescr>-leng.
+
+* ---------- Map data via offset -----------------------------------------------------------------
+        <lv_field> = <ls_record_tab>-string+lv_offset(lv_length).
 
 * ---------- Set intial values for date and time (if needed) ---------------------------------------
         CASE <ls_fielddescr>-datatype.
@@ -315,6 +405,10 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
               <lv_field> = '000000'.
             ENDIF.
         ENDCASE.
+
+        IF <lv_field> IS INITIAL.
+          CONTINUE.
+        ENDIF.
 
 * ---------- Perform conversion exit ---------------------------------------------------------------
         IF <ls_fielddescr>-convexit IS NOT INITIAL.
@@ -344,6 +438,11 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
   ENDMETHOD.
 
 
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method Z2UI5_CL_APP_DEMO_102->Z2UI5_IF_APP~MAIN
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
+* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
 * -------------------------------------------------------------------------------------------------
 * INITIALIZATION
@@ -369,7 +468,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
       lr_grid->simple_form( 'Input'
           )->content( 'form'
               )->label( 'Input with value help'
-              )->input( value = client->_bind_edit( me->ms_screen-selfield )
+              )->input( value = client->_bind_edit( ms_screen-selfield )
                       showvaluehelp    = abap_true
                       valuehelprequest = client->_event( 'F4_POPUP_OPEN' ) ).
 
@@ -406,7 +505,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         generate_ddic_shlp( ir_parent                 = lr_dialog_content
                             ir_client                 = client
                             ir_controller             = me
-                            iv_shlp_id                = 'BUPAP'
+                            iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
                             iv_result_itab_name       = 'MT_SHLP_RESULT'
                             iv_result_itab_event      = 'F4_POPUP_CLOSE'
                             iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS' ).
@@ -425,7 +524,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 * ---------- Set search field value ---------------------------------------------------------------
         IF line_exists( lt_arg[ 1 ] ).
-          me->ms_screen-selfield = lt_arg[ 1 ].
+          ms_screen-selfield = lt_arg[ 1 ].
           client->view_model_update( ).
         ENDIF.
 
@@ -435,7 +534,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         CLEAR: me->mt_shlp_result.
 * ---------- Fetch searchhelp result ----------------------------------------------------------
         select_ddic_shlp( ir_controller             = me
-                          iv_shlp_id                = 'BUPAP'
+                          iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
                           iv_result_itab_name       = 'MT_SHLP_RESULT'
                           iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS' ).
 

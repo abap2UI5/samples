@@ -322,6 +322,14 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
+
+      panel->generic_tile(
+      header    = 'Feed Input'
+      press     =  client->_event( 'z2ui5_cl_app_demo_101' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
@@ -600,6 +608,15 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+    panel->generic_tile(
+        header    = 'Splitting Container'
+        press     =  client->_event( 'Z2UI5_CL_APP_DEMO_103' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
+
     panel = page->panel(
             expandable = abap_false
             expanded   = abap_true
@@ -729,14 +746,6 @@ CLASS z2ui5_cl_app_demo_00 IMPLEMENTATION.
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
-
-    panel->generic_tile(
-             header    = 'Update Model'
-          subheader = 'Model only update vs. View rerendering'
-           press     =  client->_event( 'z2ui5_cl_app_demo_69' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
 
     panel->generic_tile(
        header    = 'Smallest App'
