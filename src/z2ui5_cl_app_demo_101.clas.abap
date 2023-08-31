@@ -16,6 +16,7 @@ CLASS z2ui5_cl_app_demo_101 DEFINITION
       END OF ty_feed.
 
     DATA mt_feed TYPE TABLE OF ty_feed.
+    DATA ms_feed TYPE ty_feed.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -54,6 +55,20 @@ CLASS Z2UI5_CL_APP_DEMO_101 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
+      WHEN 'POST'.
+        DATA(lt_arg) = client->get( )-t_event_arg.
+        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+        IF ls_arg IS NOT INITIAL.
+          CLEAR ms_feed.
+          ms_feed-author = 'choper725'.
+          ms_feed-type = 'Respond'.
+          ms_feed-text = ls_arg.
+
+          INSERT ms_feed INTO mt_feed INDEX 1.
+
+          client->view_model_update( ).
+
+        ENDIF.
     ENDCASE.
   ENDMETHOD.
 
@@ -86,10 +101,10 @@ CLASS Z2UI5_CL_APP_DEMO_101 IMPLEMENTATION.
          ).
 
     DATA(fi) = page->vbox(
-      )->feed_input( post = client->_event( 'POST' )
+      )->feed_input( post = client->_event( val = 'POST' t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
 *                             icon = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
                              growing = abap_true
-                             rows = `6`
+                             rows = `4`
                              icondensityaware = abap_false
                              class = `sapUiSmallMarginTopBottom`
       )->get_parent( )->get_parent(

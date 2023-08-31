@@ -101,8 +101,8 @@ CLASS Z2UI5_CL_APP_DEMO_80 IMPLEMENTATION.
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
-                                                          startdate = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind( val = lt_people path = abap_true ) && `'}`
+                                                          startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
+                                                          rows = `{path: '` && client->_bind_local( val = lt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers = abap_true ).
 
