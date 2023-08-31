@@ -1,58 +1,63 @@
-class Z2UI5_CL_APP_DEMO_102 definition
-  public
-  create public .
+CLASS z2ui5_cl_app_demo_102 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-*  types:
-*    BEGIN OF ts_shlp_fields,
-*        mc_name1 TYPE  bu_mcname1,
-*        mc_name2 TYPE  bu_mcname2,
-*        bu_sort1 TYPE  bu_sort1,
-*        bu_sort2 TYPE  bu_sort2,
-*        partner  TYPE  bu_partner,
-*        type     TYPE  bu_type,
-*        valdt    TYPE  bu_valdt_s,
-*      END OF ts_shlp_fields .
+    DATA ms_shlp TYPE shlp_descr.
 
-
-  types:
-    BEGIN OF ts_shlp_fields,
-        name        TYPE seoclsname,
-        language    TYPE spras,
-        description TYPE seodescr,
+    TYPES:
+      BEGIN OF ts_shlp_fields,
+        mc_name1 TYPE  bu_mcname1,
+        mc_name2 TYPE  bu_mcname2,
+        bu_sort1 TYPE  bu_sort1,
+        bu_sort2 TYPE  bu_sort2,
+        partner  TYPE  bu_partner,
+        type     TYPE  bu_type,
+        valdt    TYPE  bu_valdt_s,
       END OF ts_shlp_fields .
 
 
+    TYPES:
+      BEGIN OF ts_shlp_fields_xml,
+        name        TYPE seoclsname,
+        language    TYPE spras,
+        description TYPE seodescr,
+      END OF ts_shlp_fields_xml .
 
-  data MV_CHECK_INITIALIZED type ABAP_BOOL .
-  data:
-    BEGIN OF ms_screen,
-        selfield TYPE stringval,
+
+
+    DATA mv_check_initialized TYPE abap_bool .
+    DATA:
+      BEGIN OF ms_screen,
+        selfield  TYPE string,
+        selfield2 TYPE string,
       END OF ms_screen .
-  data MS_SHLP_FIELDS type TS_SHLP_FIELDS .
-  data:
-    mt_shlp_result TYPE STANDARD TABLE OF TS_SHLP_fields WITH EMPTY KEY .
+    DATA ms_shlp_fields TYPE ts_shlp_fields .
+    DATA ms_shlp_fields_xml TYPE ts_shlp_fields_xml .
+    DATA:
+      mt_shlp_result     TYPE STANDARD TABLE OF ts_shlp_fields WITH EMPTY KEY,
+      mt_shlp_result_xml TYPE STANDARD TABLE OF ts_shlp_fields_xml WITH EMPTY KEY.
 
-  class-methods GENERATE_DDIC_SHLP
-    importing
-      !IR_PARENT type ref to Z2UI5_CL_XML_VIEW
-      !IR_CLIENT type ref to Z2UI5_IF_CLIENT
-      !IR_CONTROLLER type ref to OBJECT
-      !IV_SHLP_ID type CHAR30
-      !IV_RESULT_ITAB_NAME type CLIKE
-      !IV_RESULT_ITAB_EVENT type CLIKE
-      !IV_SHLP_FIELDS_STRUC_NAME type CLIKE .
-  class-methods SELECT_DDIC_SHLP
-    importing
-      !IR_CONTROLLER type ref to OBJECT
-      !IV_SHLP_ID type CHAR30
-      !IV_RESULT_ITAB_NAME type CLIKE
-      !IV_SHLP_FIELDS_STRUC_NAME type CLIKE
-      !IV_MAXROWS type I default 150 .
+    CLASS-METHODS generate_ddic_shlp
+      IMPORTING
+        !ir_parent                 TYPE REF TO z2ui5_cl_xml_view
+        !ir_client                 TYPE REF TO z2ui5_if_client
+        !ir_controller             TYPE REF TO object
+        !iv_shlp_id                TYPE char30
+        !iv_result_itab_name       TYPE clike
+        !iv_result_itab_event      TYPE clike
+        !iv_shlp_fields_struc_name TYPE clike .
+    CLASS-METHODS select_ddic_shlp
+      IMPORTING
+        !ir_controller             TYPE REF TO object
+        !iv_shlp_id                TYPE char30
+        !iv_result_itab_name       TYPE clike
+        !iv_shlp_fields_struc_name TYPE clike
+        !iv_maxrows                TYPE i DEFAULT 150 .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -62,30 +67,19 @@ ENDCLASS.
 CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Static Public Method Z2UI5_CL_APP_DEMO_102=>GENERATE_DDIC_SHLP
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] IR_PARENT                      TYPE REF TO Z2UI5_CL_XML_VIEW
-* | [--->] IR_CLIENT                      TYPE REF TO Z2UI5_IF_CLIENT
-* | [--->] IR_CONTROLLER                  TYPE REF TO OBJECT
-* | [--->] IV_SHLP_ID                     TYPE        CHAR30
-* | [--->] IV_RESULT_ITAB_NAME            TYPE        CLIKE
-* | [--->] IV_RESULT_ITAB_EVENT           TYPE        CLIKE
-* | [--->] IV_SHLP_FIELDS_STRUC_NAME      TYPE        CLIKE
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD generate_ddic_shlp.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
     DATA: ls_shlp             TYPE  shlp_descr,
           lv_grid_form_no     TYPE i,
-          lt_arg              TYPE TABLE OF stringval,
-          lv_arg_fieldname    TYPE stringval,
-          lv_cell_fieldname   TYPE stringval,
-          lv_path_result_itab TYPE stringval,
-          lv_path_shlp_fields TYPE stringval,
-          lt_FIELDPROP_SEL    TYPE ddshfprops,
-          lt_FIELDPROP_LIS    TYPE ddshfprops.
+          lt_arg              TYPE TABLE OF string,
+          lv_arg_fieldname    TYPE string,
+          lv_cell_fieldname   TYPE string,
+          lv_path_result_itab TYPE string,
+          lv_path_shlp_fields TYPE string,
+          lt_fieldprop_sel    TYPE ddshfprops,
+          lt_fieldprop_lis    TYPE ddshfprops.
 
     FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
                    <ls_fieldprop_sel> TYPE ddshfprop,
@@ -269,29 +263,20 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Static Public Method Z2UI5_CL_APP_DEMO_102=>SELECT_DDIC_SHLP
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] IR_CONTROLLER                  TYPE REF TO OBJECT
-* | [--->] IV_SHLP_ID                     TYPE        CHAR30
-* | [--->] IV_RESULT_ITAB_NAME            TYPE        CLIKE
-* | [--->] IV_SHLP_FIELDS_STRUC_NAME      TYPE        CLIKE
-* | [--->] IV_MAXROWS                     TYPE        I (default =150)
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD select_ddic_shlp.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
     DATA: ls_shlp             TYPE shlp_descr,
-          lv_path_result_itab TYPE stringval,
-          lv_path_shlp_fields TYPE stringval,
-          lt_RETURN_VALUES    TYPE TABLE OF ddshretval,
+          lv_path_result_itab TYPE string,
+          lv_path_shlp_fields TYPE string,
+          lt_return_values    TYPE TABLE OF ddshretval,
           lt_record_tab       TYPE TABLE OF seahlpres,
           lv_convexit_name    TYPE rs38l_fnam,
           lv_offset           TYPE i,
           lv_length           TYPE i,
-          lt_FIELDPROP_SEL    TYPE ddshfprops,
-          lt_FIELDPROP_LIS    TYPE ddshfprops.
+          lt_fieldprop_sel    TYPE ddshfprops,
+          lt_fieldprop_lis    TYPE ddshfprops.
 
     FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
                    <ls_record_tab>    TYPE seahlpres,
@@ -358,7 +343,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
     CALL FUNCTION 'F4IF_SELECT_VALUES'
       EXPORTING
         shlp           = ls_shlp
-        maxrows        = iv_MAXROWS
+        maxrows        = iv_maxrows
         call_shlp_exit = abap_true
       TABLES
         record_tab     = lt_record_tab
@@ -438,11 +423,6 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_APP_DEMO_102->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
 * -------------------------------------------------------------------------------------------------
 * INITIALIZATION
@@ -470,7 +450,11 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
               )->label( 'Input with value help'
               )->input( value = client->_bind_edit( ms_screen-selfield )
                       showvaluehelp    = abap_true
-                      valuehelprequest = client->_event( 'F4_POPUP_OPEN' ) ).
+                      valuehelprequest = client->_event( 'F4_POPUP_OPEN' )
+              )->label( 'Input with value help from xml view class'
+              )->input( value = client->_bind_edit( ms_screen-selfield2 )
+                        showvaluehelp = abap_true
+                        valuehelprequest = client->_event( 'F4_POPUP_OPEN_XML_VIEW' ) ).
 
 * ---------- Set View -----------------------------------------------------------------------------
       client->view_display( lr_view->stringify( ) ).
@@ -480,6 +464,47 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 * EVENTS
 * -------------------------------------------------------------------------------------------------
     CASE client->get( )-event.
+      WHEN 'F4_POPUP_OPEN_XML_VIEW'.
+
+        DATA(lr_popup1) = z2ui5_cl_xml_view=>factory_popup( client ).
+
+* ---------- Create Dialog ------------------------------------------------------------------------
+        DATA(lr_dialog1) = lr_popup1->dialog( title     = 'DDIC SHLP Generator'
+                                            resizable = abap_true ).
+
+* ---------- Create Popup content -----------------------------------------------------------------
+        DATA(lr_dialog_content1) = lr_dialog1->content( ).
+
+* ---------- Create "Go" button -------------------------------------------------------------------
+        DATA(lr_toolbar1) = lr_dialog_content1->toolbar( ).
+        lr_toolbar1->toolbar_spacer( ).
+        lr_toolbar1->button(
+                      text    = 'Go'
+                      type    = 'Emphasized'
+                      press   = client->_event( 'F4_POPUP_GO_XML' )
+                 )->get_parent( ).
+
+        CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+          EXPORTING
+            shlpname = 'SEO_CLASSES_INTERFACES'
+          IMPORTING
+            shlp     = ms_shlp.
+
+
+        lr_toolbar1 = lr_toolbar1->generate_ddic_shlp( irparent = lr_dialog_content1
+                                                       irclient = client
+                                                       resultitabevent = 'F4_POPUP_CLOSE_XML_VIEW'
+                                                       resultitabname = 'MT_SHLP_RESULT_XML'
+                                                       ircontroller = me
+                                                       shlpid = 'SEO_CLASSES_INTERFACES'
+                                                       shlpfieldsstrucname = 'MS_SHLP_FIELDS_XML'
+                                                       isshlp = ms_shlp ).
+        lr_dialog1->buttons( )->button(
+                      text    = 'Close'
+                      press   = client->_event( 'F4_POPUP_CLOSE_XML_VIEW' ) ).
+
+        client->popup_display( lr_popup1->stringify( ) ).
+
       WHEN 'F4_POPUP_OPEN'.
 * ---------- Create Popup -------------------------------------------------------------------------
         DATA(lr_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
@@ -530,6 +555,18 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 
         client->popup_destroy( ).
 
+      WHEN 'F4_POPUP_CLOSE_XML_VIEW'.
+* ---------- Retrieve the event parameter ---------------------------------------------------------
+        DATA(lt_arg1) = client->get( )-t_event_arg.
+
+* ---------- Set search field value ---------------------------------------------------------------
+        IF line_exists( lt_arg1[ 1 ] ).
+          ms_screen-selfield2 = lt_arg1[ 1 ].
+          client->view_model_update( ).
+        ENDIF.
+
+        client->popup_destroy( ).
+
       WHEN 'F4_POPUP_GO'.
         CLEAR: me->mt_shlp_result.
 * ---------- Fetch searchhelp result ----------------------------------------------------------
@@ -537,6 +574,17 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
                           iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
                           iv_result_itab_name       = 'MT_SHLP_RESULT'
                           iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS' ).
+
+* ---------- Update popup model binding -----------------------------------------------------------
+        client->popup_model_update( ).
+
+      WHEN 'F4_POPUP_GO_XML'.
+        CLEAR: me->mt_shlp_result_xml.
+* ---------- Fetch searchhelp result ----------------------------------------------------------
+        select_ddic_shlp( ir_controller             = me
+                          iv_shlp_id                = 'SEO_CLASSES_INTERFACES'
+                          iv_result_itab_name       = 'MT_SHLP_RESULT_XML'
+                          iv_shlp_fields_struc_name = 'MS_SHLP_FIELDS_XML' ).
 
 * ---------- Update popup model binding -----------------------------------------------------------
         client->popup_model_update( ).
