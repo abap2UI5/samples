@@ -77,7 +77,7 @@ CLASS Z2UI5_CL_APP_DEMO_74 IMPLEMENTATION.
   METHOD ui5_view_init_display.
 
     client->view_display( z2ui5_cl_xml_view=>factory( client
-         )->cc_file_uploader_get_js(
+         )->zcc_file_uploader_js(
          )->stringify( ) ).
 
   ENDMETHOD.
@@ -122,7 +122,7 @@ assign mr_table->* to <tab>.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
 
-    footer->cc_file_uploader(
+    footer->zcc_file_uploader(
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'

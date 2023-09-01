@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_APP_DEMO_50 IMPLEMENTATION.
                     href = Z2UI5_CL_XML_VIEW=>factory( client )->hlp_get_source_code_url( )
                     target = '_blank'
             )->get_parent(
-            )->zz_plain( `<html:style> .sapMInput {` && |\n|  &&
+            )->zcc_plain_xml( `<html:style> .sapMInput {` && |\n|  &&
                          `    height: 80px !important;` && |\n|  &&
                          `    font-size: 2.5rem !important;` && |\n|  &&
                          `}` && |\n|  &&

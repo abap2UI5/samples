@@ -195,7 +195,7 @@ CLASS Z2UI5_CL_APP_DEMO_57 IMPLEMENTATION.
       DATA(lv_csv) = hlp_get_csv_by_tab( mt_table ).
       DATA(lv_base64) = hlp_get_base64( lv_csv ).
 
-      view->zz_plain( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
+      view->zcc_plain_xml( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
 
     ENDIF.
 
