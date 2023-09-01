@@ -10,24 +10,11 @@ CLASS z2ui5_cl_app_demo_102 DEFINITION
     DATA ms_shlp TYPE shlp_descr.
 
     TYPES:
-      BEGIN OF ts_shlp_fields,
-        mc_name1 TYPE  bu_mcname1,
-        mc_name2 TYPE  bu_mcname2,
-        bu_sort1 TYPE  bu_sort1,
-        bu_sort2 TYPE  bu_sort2,
-        partner  TYPE  bu_partner,
-        type     TYPE  bu_type,
-        valdt    TYPE  bu_valdt_s,
-      END OF ts_shlp_fields .
-
-
-    TYPES:
       BEGIN OF ts_shlp_fields_xml,
         name        TYPE seoclsname,
         language    TYPE spras,
         description TYPE seodescr,
       END OF ts_shlp_fields_xml .
-
 
 
     DATA mv_check_initialized TYPE abap_bool .
@@ -36,10 +23,10 @@ CLASS z2ui5_cl_app_demo_102 DEFINITION
         selfield  TYPE string,
         selfield2 TYPE string,
       END OF ms_screen .
-    DATA ms_shlp_fields TYPE ts_shlp_fields .
+    DATA ms_shlp_fields TYPE ts_shlp_fields_xml .
     DATA ms_shlp_fields_xml TYPE ts_shlp_fields_xml .
     DATA:
-      mt_shlp_result     TYPE STANDARD TABLE OF ts_shlp_fields WITH EMPTY KEY,
+      mt_shlp_result     TYPE STANDARD TABLE OF ts_shlp_fields_xml WITH EMPTY KEY,
       mt_shlp_result_xml TYPE STANDARD TABLE OF ts_shlp_fields_xml WITH EMPTY KEY.
 
     CLASS-METHODS generate_ddic_shlp
@@ -472,18 +459,19 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
         DATA(lr_dialog1) = lr_popup1->dialog( title     = 'DDIC SHLP Generator'
                                             resizable = abap_true ).
 
-* ---------- Create Popup content -----------------------------------------------------------------
-        DATA(lr_dialog_content1) = lr_dialog1->content( ).
+** ---------- Create Popup content -----------------------------------------------------------------
+*        DATA(lr_dialog_content1) = lr_dialog1->content( ).
+*
+** ---------- Create "Go" button -------------------------------------------------------------------
+*        DATA(lr_toolbar1) = lr_dialog_content1->toolbar( ).
+*        lr_toolbar1->toolbar_spacer( ).
+*        lr_toolbar1->button(
+*                      text    = 'Go'
+*                      type    = 'Emphasized'
+*                      press   = client->_event( 'F4_POPUP_GO_XML' )
+*                 )->get_parent( ).
 
-* ---------- Create "Go" button -------------------------------------------------------------------
-        DATA(lr_toolbar1) = lr_dialog_content1->toolbar( ).
-        lr_toolbar1->toolbar_spacer( ).
-        lr_toolbar1->button(
-                      text    = 'Go'
-                      type    = 'Emphasized'
-                      press   = client->_event( 'F4_POPUP_GO_XML' )
-                 )->get_parent( ).
-
+        "get shlp data
         CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
           EXPORTING
             shlpname = 'SEO_CLASSES_INTERFACES'
@@ -491,17 +479,20 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
             shlp     = ms_shlp.
 
 
-        lr_toolbar1 = lr_toolbar1->generate_ddic_shlp( irparent = lr_dialog_content1
-                                                       irclient = client
-                                                       resultitabevent = 'F4_POPUP_CLOSE_XML_VIEW'
-                                                       resultitabname = 'MT_SHLP_RESULT_XML'
-                                                       ircontroller = me
-                                                       shlpid = 'SEO_CLASSES_INTERFACES'
-                                                       shlpfieldsstrucname = 'MS_SHLP_FIELDS_XML'
-                                                       isshlp = ms_shlp ).
-        lr_dialog1->buttons( )->button(
-                      text    = 'Close'
-                      press   = client->_event( 'F4_POPUP_CLOSE_XML_VIEW' ) ).
+*        lr_toolbar1 = lr_toolbar1->generate_ddic_shlp( irparent = lr_dialog_content1
+        DATA(popup_f4) = lr_dialog1->zfc_ddic_search_help( irparent = lr_dialog1
+                                                      irclient = client
+                                                      resultitabevent = 'F4_POPUP_CLOSE_XML_VIEW'
+                                                      resultitabname = 'MT_SHLP_RESULT_XML'
+                                                      shlpfieldsstrucname = 'MS_SHLP_FIELDS_XML'
+                                                      isshlp = ms_shlp
+                                                      closebuttontext = `Close`
+                                                      searchbuttontext = 'Search'
+                                                      ircontroller = me
+                                                      searchevent = 'F4_POPUP_GO_XML' ).
+*       lr_dialog1->buttons( )->button(
+*                      text    = 'Close'
+*                      press   = client->_event( 'F4_POPUP_CLOSE_XML_VIEW' ) ).
 
         client->popup_display( lr_popup1->stringify( ) ).
 

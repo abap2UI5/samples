@@ -38,7 +38,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
+CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
 
   METHOD view_display_detail.
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
     DATA(tab) = page->ui_table( rows = client->_bind_edit( val = t_tab2 )
                                 editable = abap_false
                                 alternaterowcolors = abap_true
-                                rowactioncount = '2'
+                                rowactioncount = '1'
                                 enablegrouping = abap_false
                                 fixedcolumncount = '1'
                                 selectionmode = 'None'
@@ -62,11 +62,11 @@ CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
 *    lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
     lo_columns->ui_column(  sortproperty = 'TITLE'
                                           filterproperty = 'TITLE' )->text( text = `Index` )->ui_template( )->text(   text = `{TITLE}` ).
-    lo_columns->ui_column(  sortproperty = 'VALUE'
-                           filterproperty = 'VALUE' )->text( text = `VALUE` )->ui_template( )->input( value = `{VALUE}` editable = abap_false ).
     lo_columns->ui_column(  sortproperty = 'DESCR' filterproperty = 'DESCR' )->text( text = `DESCR` )->ui_template( )->text(   text = `{DESCR}` ).
     lo_columns->ui_column(  sortproperty = 'INFO' filterproperty = 'INFO')->text( text = `INFO` )->ui_template( )->text( text = `{INFO}` ).
-
+    lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
+       )->ui_row_action_item( icon = `sap-icon://delete`
+                           press = client->_event( val = 'ROW_DELETE' t_arg = VALUE #( ( `${TITLE}`  ) ) ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -76,6 +76,7 @@ CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
     ).
 
   ENDMETHOD.
+
 
   METHOD view_display_master.
 
@@ -112,12 +113,15 @@ CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
+
+      client->title_set( 'Changed Title Here' ).
 
       t_tab = VALUE #(
         ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
@@ -134,6 +138,14 @@ CLASS z2ui5_cl_app_demo_97 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'ROW_DELETE'.
+        DATA(lt_arg) = client->get( )-t_event_arg.
+        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+        IF ls_arg IS NOT INITIAL.
+          DELETE t_tab2 WHERE title = ls_arg.
+        ENDIF.
+
+        client->nest_view_model_update( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
