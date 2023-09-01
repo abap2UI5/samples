@@ -488,6 +488,7 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
                                                       isshlp = ms_shlp
                                                       closebuttontext = `Close`
                                                       searchbuttontext = 'Search'
+                                                      ircontroller = me
                                                       searchevent = 'F4_POPUP_GO_XML' ).
 *       lr_dialog1->buttons( )->button(
 *                      text    = 'Close'
