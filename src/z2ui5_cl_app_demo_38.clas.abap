@@ -38,15 +38,18 @@ CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    popup = popup->popover(
-              placement = `Top`
-              title = `Messages`
-              contentheight = '50%'
-              contentwidth = '50%' ).
+*    popup = popup->popover(
+*              placement = `Top`
+*              title = `Messages`
+*              contentheight = '50%'
+*              contentwidth = '50%' ).
 
-    popup->message_view(
+    popup->message_popover(
             items      = client->_bind_edit( t_msg )
             groupitems = abap_true
+            placement = `Top`
+            initiallyexpanded = abap_false
+            beforeclose = client->_event( 'POPOVER_CLOSE' )
         )->message_item(
             type        = `{TYPE}`
             title       = `{TITLE}`
@@ -156,6 +159,8 @@ CLASS Z2UI5_CL_APP_DEMO_38 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'POPOVER_CLOSE'.
+        client->popover_destroy( ).
       WHEN 'POPUP'.
         z2ui5_display_popup( ).
         WHEN 'TEST'.

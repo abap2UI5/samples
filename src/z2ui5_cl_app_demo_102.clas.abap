@@ -472,11 +472,11 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
 *                 )->get_parent( ).
 
         "get shlp data
-        CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
-          EXPORTING
-            shlpname = 'SEO_CLASSES_INTERFACES'
-          IMPORTING
-            shlp     = ms_shlp.
+*        CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+*          EXPORTING
+*            shlpname = 'SEO_CLASSES_INTERFACES'
+*          IMPORTING
+*            shlp     = ms_shlp.
 
 
 *        lr_toolbar1 = lr_toolbar1->generate_ddic_shlp( irparent = lr_dialog_content1
@@ -485,7 +485,8 @@ CLASS Z2UI5_CL_APP_DEMO_102 IMPLEMENTATION.
                                                       resultitabevent = 'F4_POPUP_CLOSE_XML_VIEW'
                                                       resultitabname = 'MT_SHLP_RESULT_XML'
                                                       shlpfieldsstrucname = 'MS_SHLP_FIELDS_XML'
-                                                      isshlp = ms_shlp
+*                                                      isshlp = ms_shlp
+                                                      shlpid = 'SEO_CLASSES_INTERFACES'
                                                       closebuttontext = `Close`
                                                       searchbuttontext = 'Search'
                                                       ircontroller = me
