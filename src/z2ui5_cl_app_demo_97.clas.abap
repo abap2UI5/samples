@@ -21,7 +21,7 @@ CLASS z2ui5_cl_app_demo_97 DEFINITION
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-
+    DATA mv_layout TYPE string.
     DATA check_initialized TYPE abap_bool .
     DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
     DATA mv_check_enabled_02 TYPE abap_bool .
@@ -91,7 +91,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
              )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
          )->get_parent( ).
 
-    DATA(col_layout) =  page->flexible_column_layout( layout = 'TwoColumnsMidExpanded' id ='test' ).
+    DATA(col_layout) =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).
 
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
@@ -132,6 +132,8 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
         ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
       ).
 
+      mv_layout = `OneColumn`.
+
       view_display_master(  ).
       view_display_detail(  ).
 
@@ -146,6 +148,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
         ENDIF.
 
         client->nest_view_model_update( ).
+        client->view_model_update( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
@@ -153,6 +156,8 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
         APPEND ls_sel TO t_tab2.
+
+        mv_layout = `TwoColumnsMidExpanded`.
 
         client->nest_view_model_update( ).
         client->view_model_update( ).
