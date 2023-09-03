@@ -58,6 +58,18 @@ CLASS z2ui5_cl_app_demo_84 DEFINITION
       t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY .
     DATA check_initialized TYPE abap_bool .
 
+    DATA: mv_id TYPE string,
+          mv_message TYPE string,
+          mv_description TYPE string,
+          mv_descriptionUrl TYPE string,
+          mv_additionalText TYPE string,
+          mv_type TYPE string,
+          mv_code TYPE string.
+
+
+
+
+
     METHODS z2ui5_display_view .
     METHODS z2ui5_display_popup .
     METHODS z2ui5_display_popover
@@ -225,6 +237,7 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
 
 
          )->get_parent( )->get_parent( )->get_parent(
+         )->vbox( justifycontent = `SpaceBetween`
          )->panel( headertext = `sap.ui.model.type.Float`
              )->vbox(
               )->title( text = `FORMAT OPTIONS and CONSTRAINTS` level = `H3`
@@ -236,7 +249,39 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
 *         )->get_parent( )->get_parent( )->get_parent( ).
-         )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
+         )->get_parent(
+         )->get_parent(
+         )->get_parent(
+
+         )->panel( headertext = `Add messages to Message Manager`
+          )->vbox(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `id`
+              )->input( value = client->_bind_edit( mv_id ) editable = abap_true class = `sapUiTinyMarginBeginEnd` )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `message`
+              )->input( value = client->_bind_edit( mv_message ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `description`
+              )->input( value = client->_bind_edit( mv_description ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `descriptionUrl`
+              )->input( value = client->_bind_edit( mv_descriptionUrl ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `additionalText`
+              )->input( value = client->_bind_edit( mv_additionalText ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `type`
+              )->input( value = client->_bind_edit( mv_type ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
+              )->label( text = `code`
+              )->input( value = client->_bind_edit( mv_code ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
+            )->hbox( class = `sapUiTinyMarginTop` justifycontent = `Center`
+              )->button( text = `Insert to Message Manager` press = client->_event( 'ADD_MESSAGE' )
+              )->get_parent( )->get_parent(
+
+
+         )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
           )->label( text = 'input an error and Send to Server to get the errors back in Messages button' design = 'Bold' )->get_parent( ).
 
     page->footer( )->overflow_toolbar(
@@ -281,6 +326,9 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'ADD_MESSAGE'.
+        "add message to message manager here
+
       WHEN 'POPUP'.
         z2ui5_display_popup( ).
       WHEN 'BUTTON_SEND'.
