@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_085 DEFINITION
+CLASS z2ui5_CL_DEMO_APP_085 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -71,7 +71,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
 
 
   METHOD sort.
@@ -375,7 +375,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
       WHEN 'ONGOTOSUPPLIER' .
-        DATA(lo_app_next) = NEW z2ui5_cl_demo_app_086( ).
+        DATA(lo_app_next) = NEW z2ui5_CL_DEMO_APP_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
       WHEN 'ONEXITFULLSCREENMODE' .
@@ -401,7 +401,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE mt_table_supplier WITH KEY suppliername = lt_arg[ 1 ] INTO ls_detail_supplier.
         client->message_toast_display( |Event Press Supplier List Name: { lt_arg[ 1 ] } | ).
-        lo_app_next = NEW z2ui5_cl_demo_app_086( ).
+        lo_app_next = NEW z2ui5_CL_DEMO_APP_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
       WHEN `ONPRESSMASTER`.

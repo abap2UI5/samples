@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_063 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_063 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -44,7 +44,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_063 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -80,7 +80,7 @@ CLASS Z2UI5_cl_demo_app_063 IMPLEMENTATION.
       WHEN 'BUTTON_CONFIRM'.
         client->popup_destroy( ).
 
-        DATA(game) = NEW z2ui5_cl_demo_app_064( ).
+        DATA(game) = NEW z2ui5_CL_DEMO_APP_064( ).
         game->mv_user = ms_popup_input-user.
         game->mv_game = ms_popup_input-name.
         client->nav_app_call( game ).

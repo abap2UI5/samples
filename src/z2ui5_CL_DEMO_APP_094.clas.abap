@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_094 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
     DATA ms_screen TYPE ty_s_01.
     DATA mr_input  TYPE REF TO data.
     DATA mr_screen TYPE REF TO data.
-    DATA mo_app    TYPE REF TO z2ui5_cl_demo_app_094.
+    DATA mo_app    TYPE REF TO z2ui5_CL_DEMO_APP_094.
     DATA mv_val    TYPE string.
 
     DATA client      TYPE REF TO z2ui5_if_client.
@@ -37,7 +37,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_094 IMPLEMENTATION.
 
 
   METHOD on_init.

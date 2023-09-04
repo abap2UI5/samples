@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_051 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -28,11 +28,11 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_cl_demo_app_002->Z2UI5_IF_APP~MAIN
+* | Instance Public Method Z2UI5_CL_DEMO_APP_002->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_002->Z2UI5_ON_EVENT
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_002->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_002->Z2UI5_ON_INIT
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_002->Z2UI5_ON_INIT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_on_init.
@@ -81,7 +81,7 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_002->Z2UI5_ON_RENDERING
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_002->Z2UI5_ON_RENDERING
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>

@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -41,7 +41,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_064 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -129,7 +129,7 @@ CLASS Z2UI5_cl_demo_app_064 IMPLEMENTATION.
      INTO @DATA(ls_draft).
 
       IF sy-subrc = 0.
-        DATA(app) = CAST z2ui5_cl_demo_app_064( i_client->get_app( ls_draft-uuid ) ).
+        DATA(app) = CAST z2ui5_CL_DEMO_APP_064( i_client->get_app( ls_draft-uuid ) ).
         app->mv_user = mv_user.
 
         IF mv_message IS NOT INITIAL and client->get( )-event = 'SEND'.

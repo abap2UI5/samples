@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_095 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
       END OF ty_s_01.
     DATA ms_screen TYPE ty_s_01.
 
-    DATA mo_app_sub TYPE REF TO z2ui5_cl_demo_app_096.
+    DATA mo_app_sub TYPE REF TO z2ui5_CL_DEMO_APP_096.
 
     DATA client      TYPE REF TO z2ui5_if_client.
     DATA mv_init     TYPE abap_bool.
@@ -41,7 +41,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
 
 
   METHOD on_event.

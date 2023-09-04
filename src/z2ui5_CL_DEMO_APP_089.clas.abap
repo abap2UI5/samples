@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_089 DEFINITION
+CLASS z2ui5_CL_DEMO_APP_089 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -27,11 +27,11 @@ CLASS z2ui5_cl_demo_app_089 DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_089 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_cl_demo_app_088->Z2UI5_IF_APP~MAIN
+* | Instance Public Method Z2UI5_CL_DEMO_APP_088->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_089 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_088->Z2UI5_ON_EVENT
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_on_event.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_089 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_088->Z2UI5_VIEW_DISPLAY
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_VIEW_DISPLAY
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_view_display.
@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_089 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_cl_demo_app_088->Z2UI5_VIEW_NEST
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_VIEW_NEST
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_view_nest.

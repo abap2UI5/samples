@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -20,7 +20,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_004 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -40,7 +40,7 @@ CLASS Z2UI5_cl_demo_app_004 IMPLEMENTATION.
         client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
 
       WHEN 'BUTTON_RESTART'.
-        client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
+        client->nav_app_leave( NEW z2ui5_CL_DEMO_APP_004( ) ).
 
       WHEN 'BUTTON_CHANGE_VIEW'.
         CASE mv_view_main.

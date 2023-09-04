@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_cl_demo_app_064</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_064</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>draft - test 03</DESCRIPT>
     <STATE>1</STATE>

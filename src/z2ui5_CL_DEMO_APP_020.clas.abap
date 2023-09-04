@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_020 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
         i_confirm_text  TYPE string
         i_confirm_event TYPE string
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
+        VALUE(result)   TYPE REF TO z2ui5_CL_DEMO_APP_020.
 
     DATA check_initialized TYPE abap_bool.
 
@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_020 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
 
 
   METHOD factory.

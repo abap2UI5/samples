@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_025 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_025 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -16,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_025 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -27,13 +27,13 @@ CLASS Z2UI5_cl_demo_app_025 IMPLEMENTATION.
         client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
 
       WHEN 'BUTTON_RESTART'.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_025( ) ).
+        client->nav_app_call( NEW z2ui5_CL_DEMO_APP_025( ) ).
 
       WHEN 'BUTTON_CHANGE_APP'.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_001( ) ).
+        client->nav_app_call( NEW z2ui5_CL_DEMO_APP_001( ) ).
 
       WHEN 'BUTTON_READ_PREVIOUS'.
-        DATA(lo_previous_app) = CAST z2ui5_cl_demo_app_024( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+        DATA(lo_previous_app) = CAST z2ui5_CL_DEMO_APP_024( client->get_app( client->get( )-s_draft-id_prev_app ) ).
         mv_input_previous = lo_previous_app->mv_input2.
         client->message_toast_display( `data of previous app read` ).
 
@@ -41,7 +41,7 @@ CLASS Z2UI5_cl_demo_app_025 IMPLEMENTATION.
         mv_show_view = 'MAIN'.
 
       WHEN 'BACK_WITH_EVENT'.
-        lo_previous_app = CAST z2ui5_cl_demo_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        lo_previous_app = CAST z2ui5_CL_DEMO_APP_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         lo_previous_app->mv_backend_event = 'CALL_PREVIOUS_APP_INPUT_RETURN'.
         client->nav_app_leave( lo_previous_app ).
 

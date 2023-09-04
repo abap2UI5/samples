@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_024 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_024 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -19,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_024 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -63,20 +63,20 @@ CLASS Z2UI5_cl_demo_app_024 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'CALL_NEW_APP'.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_025( ) ).
+        client->nav_app_call( NEW z2ui5_CL_DEMO_APP_025( ) ).
 
       WHEN 'CALL_NEW_APP_VIEW'.
-        DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
+        DATA(lo_app) = NEW z2ui5_CL_DEMO_APP_025( ).
         lo_app->mv_show_view = 'SECOND'.
         client->nav_app_call( lo_app ).
 
       WHEN 'CALL_NEW_APP_READ'.
-        DATA(lo_app_next) = NEW z2ui5_cl_demo_app_025( ).
+        DATA(lo_app_next) = NEW z2ui5_CL_DEMO_APP_025( ).
         lo_app_next->mv_input_previous_set = mv_input.
         client->nav_app_call( lo_app_next ).
 
       WHEN 'CALL_NEW_APP_EVENT'.
-        lo_app_next = NEW z2ui5_cl_demo_app_025( ).
+        lo_app_next = NEW z2ui5_CL_DEMO_APP_025( ).
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
         client->nav_app_call( lo_app_next  ).
 
@@ -88,7 +88,7 @@ CLASS Z2UI5_cl_demo_app_024 IMPLEMENTATION.
 
         CASE mv_backend_event.
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
-            DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            DATA(lo_called_app) = CAST z2ui5_CL_DEMO_APP_025( client->get_app( client->get( )-s_draft-id_prev_app ) ).
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
         ENDCASE.
 

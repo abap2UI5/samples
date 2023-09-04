@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_096 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
+CLASS z2ui5_CL_DEMO_APP_096 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 

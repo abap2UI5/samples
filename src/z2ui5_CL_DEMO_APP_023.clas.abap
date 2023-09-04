@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_023 DEFINITION PUBLIC.
+CLASS z2ui5_CL_DEMO_APP_023 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_023 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -92,7 +92,7 @@ CLASS Z2UI5_cl_demo_app_023 IMPLEMENTATION.
                               ` > <Link ` && |\n|  &&
                               `  text="Source_Code" ` && |\n|  &&
                               `  target="_blank" ` && |\n|  &&
-                              `  href="&lt;system&gt;sap/bc/adt/oo/classes/Z2UI5_cl_demo_app_023/source/main" ` && |\n|  &&
+                              `  href="&lt;system&gt;sap/bc/adt/oo/classes/Z2UI5_CL_DEMO_APP_023/source/main" ` && |\n|  &&
                               ` /></headerContent> <f:SimpleForm ` && |\n|  &&
                               `  title="Form Title" ` && |\n|  &&
                               ` > <f:content ` && |\n|  &&
