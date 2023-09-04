@@ -325,7 +325,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
       panel->generic_tile(
       header    = 'Feed Input'
-      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_0101' )
+      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
@@ -610,7 +610,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile(
         header    = 'Splitting Container'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_0103' )
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_103' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
