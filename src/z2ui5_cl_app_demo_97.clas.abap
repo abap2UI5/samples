@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 
-    DATA(tab) = page->ui_table( rows = client->_bind_edit( val = t_tab2 )
+    DATA(tab) = page->ui_table( rows = client->_bind_edit( val = t_tab2 view = client->cs_view-nested )
                                 editable = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount = '1'
@@ -97,7 +97,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
     DATA(lr_list) = lr_master->list(
           headertext      = 'List Ouput'
-          items           = client->_bind_edit( t_tab )
+          items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( 'SELCHANGE' )
           )->standard_list_item(
@@ -140,6 +140,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+
       WHEN 'ROW_DELETE'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
@@ -148,7 +149,6 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
         ENDIF.
 
         client->nest_view_model_update( ).
-        client->view_model_update( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
@@ -164,6 +164,7 @@ CLASS Z2UI5_CL_APP_DEMO_97 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
     ENDCASE.
 
   ENDMETHOD.
