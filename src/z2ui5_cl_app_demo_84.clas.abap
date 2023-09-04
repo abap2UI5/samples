@@ -7,30 +7,30 @@ CLASS z2ui5_cl_app_demo_84 DEFINITION
     INTERFACES z2ui5_if_app .
 
     "string - constraints
-    DATA: mv_maxLength_string TYPE string,
-          mv_minLength_string TYPE string,
-          mv_startsWith_string  TYPE string,
-          mv_startsWithIgnoreCase_string TYPE string,
-          mv_endsWith_string TYPE string,
-          mv_endsWithIgnoreCase_string  TYPE string,
-          mv_contains_string  TYPE string,
-          mv_equals_string   TYPE string,
-          mv_search_string  TYPE string.
+    DATA: mv_maxlength_string            TYPE string,
+          mv_minlength_string            TYPE string,
+          mv_startswith_string           TYPE string,
+          mv_startswithignorecase_string TYPE string,
+          mv_endswith_string             TYPE string,
+          mv_endswithignorecase_string   TYPE string,
+          mv_contains_string             TYPE string,
+          mv_equals_string               TYPE string,
+          mv_search_string               TYPE string.
 
     "integer - formatOptions
-    DATA: mv_minIntegerDigits_int TYPE string,
-          mv_maxIntegerDigits_int TYPE string,
-          mv_groupingEnabled_int TYPE string,
-          mv_groupingSeparator_int TYPE string.
+    DATA: mv_minintegerdigits_int  TYPE string,
+          mv_maxintegerdigits_int  TYPE string,
+          mv_groupingenabled_int   TYPE string,
+          mv_groupingseparator_int TYPE string.
 
     "integer - constraints
     DATA: mv_maximum_int TYPE string,
-          mv_minimum_int  TYPE string.
+          mv_minimum_int TYPE string.
 
     "integer - formatOptions
-    DATA: mv_minFractionDigits_float TYPE string,
-          mv_maxFractionDigits_float TYPE string,
-          mv_decimalSeparator_float TYPE string.
+    DATA: mv_minfractiondigits_float TYPE string,
+          mv_maxfractiondigits_float TYPE string,
+          mv_decimalseparator_float  TYPE string.
 
     "integer - constraints
     DATA: mv_maximum_float TYPE string,
@@ -58,18 +58,6 @@ CLASS z2ui5_cl_app_demo_84 DEFINITION
       t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY .
     DATA check_initialized TYPE abap_bool .
 
-    DATA: mv_id TYPE string,
-          mv_message TYPE string,
-          mv_description TYPE string,
-          mv_descriptionUrl TYPE string,
-          mv_additionalText TYPE string,
-          mv_type TYPE string,
-          mv_code TYPE string.
-
-
-
-
-
     METHODS z2ui5_display_view .
     METHODS z2ui5_display_popup .
     METHODS z2ui5_display_popover
@@ -84,7 +72,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
+CLASS z2ui5_cl_app_demo_84 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_popover.
@@ -164,125 +152,92 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
                     href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
 
-"string
-   page->flex_box( justifycontent = `SpaceAround` )->panel( headertext = `sap.ui.model.type.String`
-      )->vbox(
-        )->title( text = `CONSTRAINTS` level = `H3`
-        )->vbox(
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `maxLength (5)`
-            )->input( id = `testINPUT` value = `{path:'` && client->_bind_edit( val = mv_maxLength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ maxLength: 5 } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+    "string
+    page->flex_box( justifycontent = `SpaceAround` )->panel( headertext = `sap.ui.model.type.String`
+       )->vbox(
+         )->title( text = `CONSTRAINTS` level = `H3`
+         )->vbox(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `maxLength (5)`
+             )->input( id = `testINPUT` value = `{path:'` && client->_bind_edit( val = mv_maxlength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ maxLength: 5 } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `minLength (3)`
-            )->input( value = `{path:'` && client->_bind_edit( val = mv_minlength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ minLength: 3 } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `minLength (3)`
+             )->input( value = `{path:'` && client->_bind_edit( val = mv_minlength_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ minLength: 3 } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `startsWith (a2ui5)`
-            )->input( value = `{path:'` && client->_bind_edit( val = mv_startswith_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ startsWith: 'a2ui5' } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `startsWith (a2ui5)`
+             )->input( value = `{path:'` && client->_bind_edit( val = mv_startswith_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ startsWith: 'a2ui5' } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `startsWithIgnoreCase (a2ui5)`
-            )->input( value = `{path:'` && client->_bind_edit( val = mv_startsWithIgnoreCase_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ startsWithIgnoreCase: 'a2ui5' } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `startsWithIgnoreCase (a2ui5)`
+             )->input( value = `{path:'` && client->_bind_edit( val = mv_startswithignorecase_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ startsWithIgnoreCase: 'a2ui5' } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `endsWith (a2ui5)`
-            )->input( value = `{path:'` && client->_bind_edit( val = mv_endswith_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ endsWith: 'a2ui5' } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `endsWith (a2ui5)`
+             )->input( value = `{path:'` && client->_bind_edit( val = mv_endswith_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ endsWith: 'a2ui5' } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-          )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-            )->label( text = `endsWithIgnoreCase (a2ui5)`
-            )->input( value = `{path:'` && client->_bind_edit( val = mv_endswithignorecase_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ endsWithIgnoreCase: 'a2ui5' } }`
-                      editable = abap_true
-                      class = `sapUiTinyMarginBeginEnd` )->get_parent(
+           )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+             )->label( text = `endsWithIgnoreCase (a2ui5)`
+             )->input( value = `{path:'` && client->_bind_edit( val = mv_endswithignorecase_string path = abap_true ) && `',type: 'sap.ui.model.type.String', constraints:{ endsWithIgnoreCase: 'a2ui5' } }`
+                       editable = abap_true
+                       class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
-"integer
+ "integer
+           )->get_parent( )->get_parent( )->get_parent(
+           )->panel( headertext = `sap.ui.model.type.Integer`
+              )->vbox(
+               )->title( text = `FORMAT OPTIONS and CONSTRAINTS` level = `H3`
+               )->vbox(
+                 )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+                   )->label( text = `minIntegerDigits (1)`
+                   )->input( value = `{path:'` && client->_bind_edit( val = mv_minintegerdigits_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ minIntegerDigits: 1 }, constraints:{ maximum: 10 } }`
+                             editable = abap_true
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
+
+                 )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+                   )->label( text = `maxIntegerDigits (3)`
+                   )->input( value = `{path:'` && client->_bind_edit( val = mv_maxintegerdigits_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ maxIntegerDigits: 3 }, constraints:{ minimum: 100 }  }`
+                             editable = abap_true
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
+
+                 )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+                   )->label( text = `groupingEnabled`
+                   )->input( value = `{path:'` && client->_bind_edit( val = mv_groupingenabled_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ groupingEnabled: true } }`
+                             editable = abap_true
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
+
+                 )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+                   )->label( text = `groupingSeparator (-)`
+                   )->input( value = `{path:'` && client->_bind_edit( val = mv_groupingseparator_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ groupingEnabled: true, groupingSeparator: '-' } }`
+                             editable = abap_true
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
+
+
           )->get_parent( )->get_parent( )->get_parent(
-          )->panel( headertext = `sap.ui.model.type.Integer`
-             )->vbox(
-              )->title( text = `FORMAT OPTIONS and CONSTRAINTS` level = `H3`
+          )->panel( headertext = `sap.ui.model.type.Float`
               )->vbox(
-                )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-                  )->label( text = `minIntegerDigits (1)`
-                  )->input( value = `{path:'` && client->_bind_edit( val = mv_minIntegerDigits_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ minIntegerDigits: 1 }, constraints:{ maximum: 10 } }`
-                            editable = abap_true
-                            class = `sapUiTinyMarginBeginEnd` )->get_parent(
-
-                )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-                  )->label( text = `maxIntegerDigits (3)`
-                  )->input( value = `{path:'` && client->_bind_edit( val = mv_maxIntegerDigits_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ maxIntegerDigits: 3 }, constraints:{ minimum: 100 }  }`
-                            editable = abap_true
-                            class = `sapUiTinyMarginBeginEnd` )->get_parent(
-
-                )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-                  )->label( text = `groupingEnabled`
-                  )->input( value = `{path:'` && client->_bind_edit( val = mv_groupingEnabled_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ groupingEnabled: true } }`
-                            editable = abap_true
-                            class = `sapUiTinyMarginBeginEnd` )->get_parent(
-
-                )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-                  )->label( text = `groupingSeparator (-)`
-                  )->input( value = `{path:'` && client->_bind_edit( val = mv_groupingSeparator_int path = abap_true ) && `',type: 'sap.ui.model.type.Integer', formatOptions:{ groupingEnabled: true, groupingSeparator: '-' } }`
-                            editable = abap_true
-                            class = `sapUiTinyMarginBeginEnd` )->get_parent(
-
-
-         )->get_parent( )->get_parent( )->get_parent(
-         )->vbox( justifycontent = `SpaceBetween`
-         )->panel( headertext = `sap.ui.model.type.Float`
-             )->vbox(
-              )->title( text = `FORMAT OPTIONS and CONSTRAINTS` level = `H3`
-              )->vbox(
-                )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
-                  )->label( text = `minFractionDigits (2)`
-                  )->input( value = `{path:'` && client->_bind_edit( val = mv_minfractiondigits_float path = abap_true ) && `',type: 'sap.ui.model.type.Float', formatOptions:{ minFractionDigits: 2 } }`
-                            editable = abap_true
-                            class = `sapUiTinyMarginBeginEnd` )->get_parent(
+               )->title( text = `FORMAT OPTIONS and CONSTRAINTS` level = `H3`
+               )->vbox(
+                 )->hbox( class = `sapUiTinyMarginTopBottom` alignitems = `Center`
+                   )->label( text = `minFractionDigits (2)`
+                   )->input( value = `{path:'` && client->_bind_edit( val = mv_minfractiondigits_float path = abap_true ) && `',type: 'sap.ui.model.type.Float', formatOptions:{ minFractionDigits: 2 } }`
+                             editable = abap_true
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
 
 *         )->get_parent( )->get_parent( )->get_parent( ).
-         )->get_parent(
-         )->get_parent(
-         )->get_parent(
-
-         )->panel( headertext = `Add messages to Message Manager`
-          )->vbox(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `id`
-              )->input( value = client->_bind_edit( mv_id ) editable = abap_true class = `sapUiTinyMarginBeginEnd` )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `message`
-              )->input( value = client->_bind_edit( mv_message ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `description`
-              )->input( value = client->_bind_edit( mv_description ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `descriptionUrl`
-              )->input( value = client->_bind_edit( mv_descriptionUrl ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `additionalText`
-              )->input( value = client->_bind_edit( mv_additionalText ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `type`
-              )->input( value = client->_bind_edit( mv_type ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` alignitems = `Center`
-              )->label( text = `code`
-              )->input( value = client->_bind_edit( mv_code ) editable = abap_true class = `sapUiTinyMarginBeginEnd`  )->get_parent(
-            )->hbox( class = `sapUiTinyMarginTop` justifycontent = `Center`
-              )->button( text = `Insert to Message Manager` press = client->_event( 'ADD_MESSAGE' )
-              )->get_parent( )->get_parent(
-
-
-         )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
-          )->label( text = 'input an error and Send to Server to get the errors back in Messages button' design = 'Bold' )->get_parent( ).
+          )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
+           )->label( text = 'input an error and Send to Server to get the errors back in Messages button' design = 'Bold' )->get_parent( ).
 
     page->footer( )->overflow_toolbar(
          )->button(
@@ -297,6 +252,14 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
                                     visible = abap_true
                                     key = 'badge' )->get_parent( )->get_parent(
          )->toolbar_spacer(
+         )->button(
+             text  = 'REMOVE_MSG'
+             press = client->_event( 'REMOVE_MSG' )
+             type  = 'Success'
+         )->button(
+             text  = 'ADD_MSG'
+             press = client->_event( 'ADD_MSG' )
+             type  = 'Success'
          )->button(
              text  = 'Send to Server'
              press = client->_event( 'BUTTON_SEND' )
@@ -325,14 +288,21 @@ CLASS Z2UI5_CL_APP_DEMO_84 IMPLEMENTATION.
 
     ENDIF.
 
+
+
+
     CASE client->get( )-event.
-      WHEN 'ADD_MESSAGE'.
-        "add message to message manager here
+
+      when `REMOVE_MSG`.
+           client->message_manager_clear( ).
+
+      when `ADD_MSG`.
+         client->message_manager_add( VALUE #( ( message = `this is a message` type = `Error` ) ) ).
 
       WHEN 'POPUP'.
         z2ui5_display_popup( ).
-      WHEN 'BUTTON_SEND'.
 
+      WHEN 'BUTTON_SEND'.
         CLEAR t_msg.
 
         DATA(lt_message_manager) = client->get( )-t_message_manager.
