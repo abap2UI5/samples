@@ -12,6 +12,8 @@ CLASS Z2UI5_CL_DEMO_APP_006 DEFINITION PUBLIC.
         icon     TYPE string,
         info     TYPE string,
         checkbox TYPE abap_bool,
+        percentage(5) TYPE p DECIMALS 2,
+        valueColor TYPE string,
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
@@ -33,7 +35,10 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
     DO 1000 TIMES.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = 'red'
         info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-        descr = 'this is a description' checkbox = abap_true ).
+        descr = 'this is a description' checkbox = abap_true
+        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
+        valuecolor = `Good`
+        ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
@@ -160,15 +165,18 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
             )->text( 'Description' )->get_parent(
         )->column(
             )->text( 'Checkbox' )->get_parent(
-         )->column(
-            )->text( 'Counter' ).
+        )->column(
+            )->text( 'Counter' )->get_parent(
+        )->column(
+            )->text( 'Radial Micro Chart' ).
 
     tab->items( )->column_list_item( )->cells(
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
-       )->text( '{COUNT}' ).
+       )->text( '{COUNT}'
+       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valueColor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
 
