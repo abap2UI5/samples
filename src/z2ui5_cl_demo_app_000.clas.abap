@@ -2,20 +2,20 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA mt_scroll TYPE Z2UI5_if_client=>ty_t_name_value_int.
+    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value_int.
 
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF client->get( )-check_on_navigated = abap_true.
       IF mt_scroll IS INITIAL.
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       WHEN OTHERS.
         TRY.
             DATA(lv_classname) = to_upper( client->get( )-event ).
-            DATA li_app TYPE REF TO Z2UI5_if_app.
+            DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
             client->nav_app_call( li_app ).
             mt_scroll = client->get( )-t_scroll_pos.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ENDTRY.
     ENDCASE.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client
+    DATA(page) = z2ui5_cl_xml_view=>factory( client
         )->shell( )->page(
         id = `page`
         title = 'abap2UI5 - Samples'
@@ -323,12 +323,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
   ).
 
 
-      panel->generic_tile(
-      header    = 'Feed Input'
-      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
-      mode      = 'LineMode'
-      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
+    panel->generic_tile(
+    header    = 'Feed Input'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
           expandable = abap_false
@@ -703,20 +703,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        panel->generic_tile(
-        header    = 'Nested Views III'
-        subheader = 'Head & Item Table'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_097' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+    panel->generic_tile(
+    header    = 'Nested Views III'
+    subheader = 'Head & Item Table'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_097' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
-        panel->generic_tile(
-        header    = 'Nav Container I'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_088' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+    panel->generic_tile(
+    header    = 'Nav Container I'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_088' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel->generic_tile(
         header    = 'Nav Container II'
@@ -755,12 +755,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
-     panel->generic_tile(
-       header    = 'Main App with Sub App'
-     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_095' )
-     mode      = 'LineMode'
-     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
- ).
+    panel->generic_tile(
+      header    = 'Main App with Sub App'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_095' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+     header    = 'Speed Test'
+   press     =  client->_event( 'Z2UI5_CL_DEMO_APP_082' )
+   mode      = 'LineMode'
+   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
                expandable = abap_false
@@ -780,4 +787,3 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
   ENDMETHOD.
 ENDCLASS.
-
