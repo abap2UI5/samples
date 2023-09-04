@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_app_demo_000 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_app_demo_000 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
@@ -780,3 +780,4 @@ CLASS z2ui5_cl_app_demo_000 IMPLEMENTATION.
 
   ENDMETHOD.
 ENDCLASS.
+
