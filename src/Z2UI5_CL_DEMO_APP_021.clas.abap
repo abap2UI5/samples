@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_021 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_021 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -31,7 +31,7 @@ CLASS z2ui5_CL_DEMO_APP_021 DEFINITION PUBLIC.
     DATA t_bapiret TYPE bapirettab.
 
     DATA check_initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     METHODS ui5_view_display.
     METHODS ui5_popup_decide.
@@ -126,7 +126,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_popup_decide.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
                 title = 'Title'
                 icon = 'sap-icon://question-mark'
             )->content(
@@ -150,7 +150,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_popup_input.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
        contentheight = '500px'
        contentwidth  = '500px'
        title = 'Title'
@@ -183,7 +183,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_popup_table.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog( 'abap2UI5 - Popup to select entry'
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog( 'abap2UI5 - Popup to select entry'
            )->table(
                mode = 'SingleSelectLeft'
                items = client->_bind_edit( t_tab )
@@ -214,7 +214,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_popup_textarea.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
               stretch = mv_stretch_active
               title = 'Title'
               icon = 'sap-icon://edit'
@@ -241,7 +241,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_popup_textarea_size.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
                contentheight = '100px'
                contentwidth  = '1200px'
                title         = 'Title'
@@ -269,7 +269,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
@@ -322,7 +322,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

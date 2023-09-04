@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_079 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_079 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_value          TYPE string.
     DATA check_initialized TYPE abap_bool.
@@ -47,12 +47,12 @@ CLASS Z2UI5_CL_DEMO_APP_079 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( client )->page( title = 'PDF Output'
+      DATA(view) = Z2UI5_cl_xml_view=>factory( client )->page( title = 'PDF Output'
                )->_generic(
                 ns = `html`
                 name = `iframe`

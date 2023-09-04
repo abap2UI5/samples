@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_083 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_083 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_S_tab_01,
@@ -50,7 +50,7 @@ CLASS z2ui5_CL_DEMO_APP_083 DEFINITION PUBLIC.
     DATA mv_value2      TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
+    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value.
 
 *    TYPES:
 *      BEGIN OF ty_s_tab,
@@ -79,14 +79,14 @@ CLASS z2ui5_CL_DEMO_APP_083 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_pop_filter.
-    METHODS z2ui5_set_data.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render_main.
+    METHODS Z2UI5_on_render_pop_filter.
+    METHODS Z2UI5_set_data.
     METHODS map_range_to_token.
 
     CLASS-METHODS hlp_get_range_by_value
@@ -106,7 +106,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
 
 
   METHOD hlp_get_range_by_value.
@@ -186,29 +186,29 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
 
         CREATE DATA mt_table TYPE (mv_name).
-        z2ui5_on_render_main( ).
+        Z2UI5_on_render_main( ).
 
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
@@ -243,7 +243,7 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
         client->popup_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
-        z2ui5_on_render_pop_filter( ).
+        Z2UI5_on_render_pop_filter( ).
 
         CLEAR mt_filter.
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
@@ -263,7 +263,7 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
 
@@ -277,7 +277,7 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
 
     mv_name = `screen_01`.
 
-    z2ui5_on_render_main( ).
+    Z2UI5_on_render_main( ).
 
     mt_mapping = VALUE #(
     (   n = `EQ`     v = `={LOW}`    )
@@ -294,9 +294,9 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_main.
+  METHOD Z2UI5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     view = view->page( id = `page_main`
              title          = 'abap2UI5 - Select-Options'
@@ -348,7 +348,7 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
 *      FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
 *      ASSIGN mt_table->* TO <tab>.
 
-*      mt_cols = z2ui5_tool_cl_utility=>get_fieldlist_by_table( mt_02 ).
+*      mt_cols = Z2UI5_tool_cl_utility=>get_fieldlist_by_table( mt_02 ).
 
       mt_tab_02_input = VALUE #( FOR line IN mt_cols ( name = line ) ).
 
@@ -456,9 +456,9 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_pop_filter.
+  METHOD Z2UI5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     lo_popup = lo_popup->dialog(
     contentheight = `50%`
@@ -511,7 +511,7 @@ CLASS z2ui5_CL_DEMO_APP_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     "replace this with a db select here...
 *    mt_table = VALUE #(

@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_101 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_101 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_feed,
@@ -19,12 +19,12 @@ CLASS z2ui5_CL_DEMO_APP_101 DEFINITION
     DATA ms_feed TYPE ty_feed.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_set_data.
+    METHODS Z2UI5_view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -34,23 +34,23 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+      Z2UI5_set_data( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -73,7 +73,7 @@ CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_feed = VALUE #(
                       ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
@@ -91,8 +91,8 @@ CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+  METHOD Z2UI5_view_display.
+    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'

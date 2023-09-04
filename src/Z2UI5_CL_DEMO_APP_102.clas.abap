@@ -1,11 +1,11 @@
-CLASS z2ui5_CL_DEMO_APP_102 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_102 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     DATA ms_shlp TYPE shlp_descr.
 
@@ -31,8 +31,8 @@ CLASS z2ui5_CL_DEMO_APP_102 DEFINITION
 
     CLASS-METHODS generate_ddic_shlp
       IMPORTING
-        !ir_parent                 TYPE REF TO z2ui5_cl_xml_view
-        !ir_client                 TYPE REF TO z2ui5_if_client
+        !ir_parent                 TYPE REF TO Z2UI5_cl_xml_view
+        !ir_client                 TYPE REF TO Z2UI5_if_client
         !ir_controller             TYPE REF TO object
         !iv_shlp_id                TYPE char30
         !iv_result_itab_name       TYPE clike
@@ -410,7 +410,7 @@ CLASS Z2UI5_CL_DEMO_APP_102 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 * -------------------------------------------------------------------------------------------------
 * INITIALIZATION
 * -------------------------------------------------------------------------------------------------
@@ -422,7 +422,7 @@ CLASS Z2UI5_CL_DEMO_APP_102 IMPLEMENTATION.
 * RENDERING
 * -------------------------------------------------------------------------------------------------
 * ---------- Set view -----------------------------------------------------------------------------
-      DATA(lr_view) = z2ui5_cl_xml_view=>factory( client = client ).
+      DATA(lr_view) = Z2UI5_cl_xml_view=>factory( client = client ).
 
       DATA(lr_page) = lr_view->page(
             title          = 'abap2UI5 - DDIC Searchhelp generator'
@@ -453,7 +453,7 @@ CLASS Z2UI5_CL_DEMO_APP_102 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'F4_POPUP_OPEN_XML_VIEW'.
 
-        DATA(lr_popup1) = z2ui5_cl_xml_view=>factory_popup( client ).
+        DATA(lr_popup1) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
 * ---------- Create Dialog ------------------------------------------------------------------------
         DATA(lr_dialog1) = lr_popup1->dialog( title     = 'DDIC SHLP Generator'
@@ -499,7 +499,7 @@ CLASS Z2UI5_CL_DEMO_APP_102 IMPLEMENTATION.
 
       WHEN 'F4_POPUP_OPEN'.
 * ---------- Create Popup -------------------------------------------------------------------------
-        DATA(lr_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+        DATA(lr_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
 * ---------- Create Dialog ------------------------------------------------------------------------
         DATA(lr_dialog) = lr_popup->dialog( title     = 'DDIC SHLP Generator'

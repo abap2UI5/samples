@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_072 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_072 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -36,12 +36,12 @@ CLASS z2ui5_CL_DEMO_APP_072 DEFINITION
     CONSTANTS c_rcb TYPE string VALUE '}' ##NO_TEXT.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO Z2UI5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS Z2UI5_on_init .
+    METHODS Z2UI5_on_event .
+    METHODS Z2UI5_set_data .
   PRIVATE SECTION.
 
     METHODS set_filter .
@@ -52,22 +52,22 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
+      Z2UI5_set_data( ).
+      Z2UI5_on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
       WHEN 'OnSelectIconTabBar' .
@@ -81,10 +81,10 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - IconTabBar'
@@ -140,7 +140,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
     mt_table = VALUE #(
         ( Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning`  )
         ( Productid = '2' productname = 'chair' suppliername = 'Company 2'  Width = '10' Depth = '20' Height = '30' DimUnit = 'CM' Measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning`  )
@@ -163,7 +163,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
 
   METHOD set_filter.
-    z2ui5_set_data( ).
+    Z2UI5_set_data( ).
     CASE lv_selectedkey.
       WHEN 'ALL'.
       WHEN 'OK'.

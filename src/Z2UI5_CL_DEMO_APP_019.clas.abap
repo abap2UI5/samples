@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_019 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_019 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -26,7 +26,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
         IF check_initialized = abap_false.
           check_initialized = abap_true.

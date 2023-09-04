@@ -1,11 +1,11 @@
-CLASS z2ui5_CL_DEMO_APP_089 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_089 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
 
     DATA mv_selected_key TYPE string.
@@ -13,12 +13,12 @@ CLASS z2ui5_CL_DEMO_APP_089 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_nest.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_view_nest.
+    METHODS Z2UI5_on_event.
 
 
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ CLASS z2ui5_CL_DEMO_APP_089 DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_089 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -35,18 +35,18 @@ CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       mv_page = `page1`.
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
@@ -55,7 +55,7 @@ CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -64,11 +64,11 @@ CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 
       WHEN 'OnSelectIconTabBar' .
         client->message_toast_display( |Event SelectedTabBar Key {  mv_selected_key } | ).
-        z2ui5_view_nest( ).
+        Z2UI5_view_nest( ).
 
       WHEN OTHERS.
         mv_page = client->get( )-event.
-        z2ui5_view_display( ).
+        Z2UI5_view_display( ).
 
     ENDCASE.
 
@@ -79,9 +79,9 @@ CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_VIEW_DISPLAY
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
@@ -160,9 +160,9 @@ CLASS z2ui5_CL_DEMO_APP_089 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_088->Z2UI5_VIEW_NEST
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_view_nest.
+  METHOD Z2UI5_view_nest.
 
-*    DATA(nest_view) = z2ui5_cl_xml_view=>factory( client
+*    DATA(nest_view) = Z2UI5_cl_xml_view=>factory( client
 *      )->scroll_container( id = `page2`
 *                            horizontal = abap_false
 *                            vertical = abap_true

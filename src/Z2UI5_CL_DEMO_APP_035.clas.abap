@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_035 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_035 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_type TYPE string.
     DATA mv_path TYPE string.
@@ -10,7 +10,7 @@ CLASS z2ui5_CL_DEMO_APP_035 DEFINITION PUBLIC.
     DATA mv_check_editable TYPE abap_bool.
     DATA check_initialized TYPE abap_bool.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     METHODS view_display.
   PROTECTED SECTION.
@@ -24,7 +24,7 @@ CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell( )->page(
     title = 'abap2UI5 - File Editor'
     navbuttonpress = client->_event( 'BACK' )
@@ -81,7 +81,7 @@ CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

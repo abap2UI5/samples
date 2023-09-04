@@ -1,24 +1,24 @@
-CLASS z2ui5_CL_DEMO_APP_039 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_039 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_value    TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render_main.
+    METHODS Z2UI5_on_render_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -28,29 +28,29 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_039 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     app-get = client->get( ).
     me->client = client.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
+    Z2UI5_on_render_main( ).
+    Z2UI5_on_render_popup( ).
 
     CLEAR app-get.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE app-get-event.
 
@@ -64,14 +64,14 @@ CLASS Z2UI5_CL_DEMO_APP_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     mv_value  = '200'.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD Z2UI5_on_render_main.
 
     data(lv_xml) = `<mvc:View` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&
@@ -158,7 +158,7 @@ CLASS Z2UI5_CL_DEMO_APP_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_popup.
+  METHOD Z2UI5_on_render_popup.
 
    client->popup_display( `<core:FragmentDefinition` && |\n|  &&
                          `  xmlns="sap.m"` && |\n|  &&

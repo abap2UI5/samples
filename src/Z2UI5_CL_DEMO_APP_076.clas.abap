@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_076 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_076 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES: BEGIN OF t_subtask5,
              id        TYPE string,
@@ -42,37 +42,37 @@ CLASS z2ui5_CL_DEMO_APP_076 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO Z2UI5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS Z2UI5_on_init .
+    METHODS Z2UI5_on_event .
+    METHODS Z2UI5_set_data .
 
 ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_076 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
+      Z2UI5_set_data( ).
+      Z2UI5_on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -82,10 +82,10 @@ CLASS z2ui5_CL_DEMO_APP_076 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
 
@@ -126,7 +126,7 @@ CLASS z2ui5_CL_DEMO_APP_076 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
 
     mt_table = VALUE #( children = VALUE #( ( id = `line`

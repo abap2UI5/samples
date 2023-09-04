@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_099 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_099 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_row,
@@ -38,16 +38,16 @@ CLASS z2ui5_CL_DEMO_APP_099 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_sort_popup.
-    METHODS z2ui5_view_filter_popup.
-    METHODS z2ui5_view_group_popup.
-    METHODS z2ui5_view_settings_popup.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_set_data.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_view_sort_popup.
+    METHODS Z2UI5_view_filter_popup.
+    METHODS Z2UI5_view_group_popup.
+    METHODS Z2UI5_view_settings_popup.
+    METHODS Z2UI5_on_event.
 
 
   PRIVATE SECTION.
@@ -55,40 +55,40 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      z2ui5_set_data( ).
+      Z2UI5_set_data( ).
 
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
       WHEN 'ALL'.
-        z2ui5_view_settings_popup( ).
+        Z2UI5_view_settings_popup( ).
       WHEN 'SORT'.
-        z2ui5_view_sort_popup( ).
+        Z2UI5_view_sort_popup( ).
       WHEN 'FILTER'.
-        z2ui5_view_filter_popup( ).
+        Z2UI5_view_filter_popup( ).
       WHEN 'GROUP'.
-        z2ui5_view_group_popup( ).
+        Z2UI5_view_group_popup( ).
       WHEN 'CONFIRM_SORT'.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
@@ -130,7 +130,7 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
           mv_filter = mv_filter+0(mv_filter_len).
 
 
-          z2ui5_view_display( ).
+          Z2UI5_view_display( ).
 
         ENDIF.
 
@@ -154,7 +154,7 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
 
           ENDIF.
 
-          z2ui5_view_display( ).
+          Z2UI5_view_display( ).
 
         ENDIF.
 
@@ -164,7 +164,7 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     t_tab = VALUE #(
       ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
@@ -192,9 +192,9 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
@@ -241,9 +241,9 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_filter_popup.
+  METHOD Z2UI5_view_filter_popup.
 
-    DATA(popup_filter) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_filter) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     DATA(filter_view) = popup_filter->view_settings_dialog( filteritems = client->_bind_edit( t_tab_filter_title )
                                                             confirm = client->_event( val = `CONFIRM_FILTER` t_arg = VALUE #( ( `${$parameters>/filterString}` ) ) )
@@ -261,9 +261,9 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_group_popup.
+  METHOD Z2UI5_view_group_popup.
 
-    DATA(popup_group) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_group) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     DATA(group_view) = popup_group->view_settings_dialog( confirm = client->_event( val = `CONFIRM_GROUP` t_arg = VALUE #( ( `${$parameters>/groupItem/mProperties/key}` ) ) )
                                                           reset = client->_event( `RESET_GROUP` )
@@ -279,8 +279,8 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_settings_popup.
-    DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( client ).
+  METHOD Z2UI5_view_settings_popup.
+    DATA(popup_settings) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     popup_settings = popup_settings->view_settings_dialog(
                                     confirm = client->_event( 'ALL_EVENT' )
@@ -300,9 +300,9 @@ CLASS z2ui5_CL_DEMO_APP_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_sort_popup.
+  METHOD Z2UI5_view_sort_popup.
 
-    DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     DATA(sort_view) = popup_sort->view_settings_dialog(
                                     confirm = client->_event( val = `CONFIRM_SORT` t_arg = VALUE #( ( `${$parameters>/sortItem/mProperties/key}` ) ) )

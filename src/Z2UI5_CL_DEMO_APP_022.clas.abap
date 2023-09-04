@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_022 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_022 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -19,9 +19,9 @@ CLASS z2ui5_CL_DEMO_APP_022 DEFINITION PUBLIC.
 
     DATA:
       BEGIN OF app,
-        client            TYPE REF TO z2ui5_if_client,
+        client            TYPE REF TO Z2UI5_if_client,
         check_initialized TYPE abap_bool,
-        s_get             TYPE z2ui5_if_client=>ty_s_get,
+        s_get             TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
   PROTECTED SECTION.
@@ -31,10 +31,10 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_022 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_022 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     app-client     = client.
     app-s_get      = client->get( ).
@@ -52,7 +52,7 @@ CLASS z2ui5_CL_DEMO_APP_022 IMPLEMENTATION.
                ( n = 'id_text3'  )
              ) ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
+      DATA(view) = Z2UI5_cl_xml_view=>factory( client )->shell( ).
       DATA(page) = view->page(
           id = 'id_page'
           title = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'

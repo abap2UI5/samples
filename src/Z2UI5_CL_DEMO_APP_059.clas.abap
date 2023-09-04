@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_059 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -22,14 +22,14 @@ CLASS z2ui5_CL_DEMO_APP_059 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_search.
-    METHODS z2ui5_set_data.
-    methods z2ui5_view_display.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_set_search.
+    METHODS Z2UI5_set_data.
+    methods Z2UI5_view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,29 +39,29 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
-      z2ui5_view_display( ).
+      Z2UI5_on_init( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        z2ui5_set_data( ).
-        z2ui5_set_search( ).
+        Z2UI5_set_data( ).
+        Z2UI5_set_search( ).
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -72,14 +72,14 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
      mv_key = 'VIEW_REFRESH'.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_table = VALUE #(
         ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -93,7 +93,7 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD Z2UI5_set_search.
 
     IF mv_search_value IS NOT INITIAL.
 
@@ -118,9 +118,9 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-method z2ui5_view_display.
+method Z2UI5_view_display.
 
- DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+ DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     data(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'

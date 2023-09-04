@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_055 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_055 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
 *    IF check_initialized = abap_false.
 *      check_initialized = abap_true.
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
 *
 *  IF mv_check_popover = abap_false.
 *
-*    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+*    DATA(page) = Z2UI5_cl_xml_view=>factory( )->shell(
 *        )->page(
 *            title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
 *            navbuttonpress = client->_event( 'BACK' )
@@ -109,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
 *
 *      mv_check_popover = abap_false.
 *
-*      DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
+*      DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 *
 *      lo_popup->popover( placement = `Bottom` title = 'abap2UI5 - Layout'  contentwidth = `50%`
 *         " )->input( description = `Name` value = client->_bind( mv_layout_name )

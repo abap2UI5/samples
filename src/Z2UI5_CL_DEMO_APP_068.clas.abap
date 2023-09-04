@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_068 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_068 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
@@ -31,11 +31,11 @@ CLASS z2ui5_CL_DEMO_APP_068 DEFINITION
 
     METHODS ui5_display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     METHODS ui5_initialize.
     METHODS ui5_display_popup_tree_select.
 
@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
   METHOD ui5_display_popup_tree_select.
 
-    DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( client
+    DATA(dialog) = Z2UI5_cl_xml_view=>factory_popup( client
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
     dialog->tree(
@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
   METHOD ui5_display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Popup Tree select Entry'
             navbuttonpress = client->_event( 'BACK' )
@@ -121,7 +121,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

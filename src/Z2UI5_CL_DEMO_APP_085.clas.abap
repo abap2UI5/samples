@@ -1,4 +1,4 @@
-CLASS z2ui5_CL_DEMO_APP_085 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_085 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -6,7 +6,7 @@ CLASS z2ui5_CL_DEMO_APP_085 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -49,14 +49,14 @@ CLASS z2ui5_CL_DEMO_APP_085 DEFINITION
     DATA mv_search_value TYPE string.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO Z2UI5_if_client .
 
     METHODS view_display_master .
     METHODS view_display_detail .
-    METHODS z2ui5_set_data .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_set_search.
+    METHODS Z2UI5_set_data .
+    METHODS Z2UI5_on_event .
+    METHODS Z2UI5_on_init .
+    METHODS Z2UI5_set_search.
   PRIVATE SECTION.
 
     DATA lv_layout TYPE string .
@@ -71,7 +71,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
 
   METHOD sort.
@@ -87,7 +87,7 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = lo_view_nested->object_page_layout(
             showtitleinheadercontent = abap_true
@@ -290,7 +290,7 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
 
 
   METHOD view_display_master.
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Master Detail'
@@ -349,15 +349,15 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_set_data( ).
+      Z2UI5_set_data( ).
       sort( ).
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
       RETURN.
     ENDIF.
 
@@ -367,15 +367,15 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
       WHEN 'ONGOTOSUPPLIER' .
-        DATA(lo_app_next) = NEW z2ui5_CL_DEMO_APP_086( ).
+        DATA(lo_app_next) = NEW Z2UI5_CL_DEMO_APP_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
       WHEN 'ONEXITFULLSCREENMODE' .
@@ -401,7 +401,7 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE mt_table_supplier WITH KEY suppliername = lt_arg[ 1 ] INTO ls_detail_supplier.
         client->message_toast_display( |Event Press Supplier List Name: { lt_arg[ 1 ] } | ).
-        lo_app_next = NEW z2ui5_CL_DEMO_APP_086( ).
+        lo_app_next = NEW Z2UI5_CL_DEMO_APP_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
       WHEN `ONPRESSMASTER`.
@@ -428,8 +428,8 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
         client->nest_view_model_update( ).
       WHEN 'ONSEARCH' .
         client->message_toast_display( 'Search Entries' ).
-        z2ui5_set_data( ).
-        z2ui5_set_search( ).
+        Z2UI5_set_data( ).
+        Z2UI5_set_search( ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
       WHEN 'BACK'.
@@ -438,13 +438,13 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
     view_display_master( ) .
 *    view_display_detail( ).
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
     mt_table = VALUE #(
         ( key = '1' Productid = '1' productname = 'table' suppliername = 'Company 1' Width = '10' Depth = '20' Height = '30'
           DimUnit = 'CM' Measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
@@ -498,7 +498,7 @@ CLASS z2ui5_CL_DEMO_APP_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD Z2UI5_set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

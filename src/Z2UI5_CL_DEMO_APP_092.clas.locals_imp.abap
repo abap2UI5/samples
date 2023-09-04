@@ -1,26 +1,26 @@
-CLASS z2ui5_cl_view DEFINITION
+CLASS Z2UI5_cl_view DEFINITION
   FINAL
   CREATE PROTECTED.
 
   PUBLIC SECTION.
 
-    data up type ref to z2ui5_cl_view.
-    data down type ref to z2ui5_cl_view.
+    data up type ref to Z2UI5_cl_view.
+    data down type ref to Z2UI5_cl_view.
 
     CLASS-METHODS factory
       IMPORTING
-        !tns          TYPE z2ui5_if_client=>ty_t_name_value OPTIONAL
-        !client       TYPE REF TO z2ui5_if_client OPTIONAL
+        !tns          TYPE Z2UI5_if_client=>ty_t_name_value OPTIONAL
+        !client       TYPE REF TO Z2UI5_if_client OPTIONAL
           PREFERRED PARAMETER client
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     CLASS-METHODS factorypopup
       IMPORTING
-        !tns          TYPE z2ui5_if_client=>ty_t_name_value OPTIONAL
-        !client       TYPE REF TO z2ui5_if_client
+        !tns          TYPE Z2UI5_if_client=>ty_t_name_value OPTIONAL
+        !client       TYPE REF TO Z2UI5_if_client
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS constructor.
 
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_view DEFINITION
         !class        TYPE clike OPTIONAL
         !width        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS dynamicpage
       IMPORTING
@@ -59,17 +59,17 @@ CLASS z2ui5_cl_view DEFINITION
         !headerpinned             TYPE clike OPTIONAL
         !toggleheaderontitleclick TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)             TYPE REF TO z2ui5_cl_view.
+        VALUE(result)             TYPE REF TO Z2UI5_cl_view.
 
     METHODS dynamicpagetitle
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS dynamicpageheader
       IMPORTING
         !pinnable     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS illustratedmessage
       IMPORTING
@@ -80,11 +80,11 @@ CLASS z2ui5_cl_view DEFINITION
         !description                  TYPE clike OPTIONAL
         !illustrationsize             TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)                 TYPE REF TO z2ui5_cl_view.
+        VALUE(result)                 TYPE REF TO Z2UI5_cl_view.
 
     METHODS additionalcontent
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS flexbox
       IMPORTING
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_view DEFINITION
         !wrap           TYPE clike OPTIONAL
         !visible        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view.
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view.
 
     METHODS popover
       IMPORTING
@@ -109,14 +109,14 @@ CLASS z2ui5_cl_view DEFINITION
         !contentwidth  TYPE clike OPTIONAL
         !contentheight TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view.
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view.
 
     METHODS listitem
       IMPORTING
         !text           TYPE clike OPTIONAL
         !additionaltext TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view.
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view.
 
     METHODS table
       IMPORTING
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_view DEFINITION
         !showseparators      TYPE clike OPTIONAL
           PREFERRED PARAMETER items
       RETURNING
-        VALUE(result)        TYPE REF TO z2ui5_cl_view.
+        VALUE(result)        TYPE REF TO Z2UI5_cl_view.
 
     METHODS messagestrip
       IMPORTING
@@ -146,13 +146,13 @@ CLASS z2ui5_cl_view DEFINITION
         !class        TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS footer
       IMPORTING
         !ns           TYPE string OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS messagepage
       IMPORTING
@@ -162,7 +162,7 @@ CLASS z2ui5_cl_view DEFINITION
         !description         TYPE clike OPTIONAL
         !icon                TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)        TYPE REF TO z2ui5_cl_view.
+        VALUE(result)        TYPE REF TO Z2UI5_cl_view.
 
     METHODS objectpagelayout
       IMPORTING
@@ -171,11 +171,11 @@ CLASS z2ui5_cl_view DEFINITION
         !editheaderbuttonpress    TYPE clike OPTIONAL
         !uppercaseanchorbar       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)             TYPE REF TO z2ui5_cl_view.
+        VALUE(result)             TYPE REF TO Z2UI5_cl_view.
 
     METHODS objectpagedynheadertitle
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS generictile
       IMPORTING
@@ -186,7 +186,7 @@ CLASS z2ui5_cl_view DEFINITION
         !frametype    TYPE clike OPTIONAL
         !subheader    TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS numericcontent
       IMPORTING
@@ -194,73 +194,73 @@ CLASS z2ui5_cl_view DEFINITION
         !icon         TYPE clike OPTIONAL
         !withmargin   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS imagecontent
       IMPORTING
         !src          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS tilecontent
       IMPORTING
         !unit         TYPE clike OPTIONAL
         !footer       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS expandedheading
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS snappedheading
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS expandedcontent
       IMPORTING
         !ns           TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS snappedcontent
       IMPORTING
         !ns           TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS heading
       IMPORTING
         !ns           TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS actions
       IMPORTING
         !ns           TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS snappedtitleonmobile
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS header
       IMPORTING
         !ns           TYPE clike DEFAULT `f`
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS navigationactions
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS avatar
       IMPORTING
         !src          TYPE clike OPTIONAL
         !class        TYPE clike OPTIONAL
         !displaysize  TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS headertitle
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS sections
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS objectpagesection
       IMPORTING
         !titleuppercase TYPE clike OPTIONAL
@@ -268,29 +268,29 @@ CLASS z2ui5_cl_view DEFINITION
         !importance     TYPE clike OPTIONAL
         !id             TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS subsections
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS objectpagesubsection
       IMPORTING
         !id           TYPE clike OPTIONAL
         !title        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS shell
       IMPORTING
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS blocks
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS layoutdata
       IMPORTING
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS flexitemdata
       IMPORTING
         !growfactor       TYPE clike OPTIONAL
@@ -298,7 +298,7 @@ CLASS z2ui5_cl_view DEFINITION
         !backgrounddesign TYPE clike OPTIONAL
         !styleclass       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)     TYPE REF TO z2ui5_cl_view .
+        VALUE(result)     TYPE REF TO Z2UI5_cl_view .
     METHODS codeeditor
       IMPORTING
         !value        TYPE clike OPTIONAL
@@ -307,22 +307,22 @@ CLASS z2ui5_cl_view DEFINITION
         !width        TYPE clike OPTIONAL
         !editable     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS suggestionitems
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS suggestioncolumns
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS suggestionrows
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS verticallayout
       IMPORTING
         !class        TYPE clike OPTIONAL
         !width        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS multiinput
       IMPORTING
         !showclearicon    TYPE clike OPTIONAL
@@ -338,10 +338,10 @@ CLASS z2ui5_cl_view DEFINITION
         !enabled          TYPE clike OPTIONAL
         !class            TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)     TYPE REF TO z2ui5_cl_view .
+        VALUE(result)     TYPE REF TO Z2UI5_cl_view .
     METHODS tokens
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS token
       IMPORTING
         !key          TYPE clike OPTIONAL
@@ -350,7 +350,7 @@ CLASS z2ui5_cl_view DEFINITION
         !visible      TYPE clike OPTIONAL
         !editable     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS input
       IMPORTING
         !id                           TYPE clike OPTIONAL
@@ -381,7 +381,7 @@ CLASS z2ui5_cl_view DEFINITION
         !valuehelponly                TYPE clike OPTIONAL
           PREFERRED PARAMETER value
       RETURNING
-        VALUE(result)                 TYPE REF TO z2ui5_cl_view .
+        VALUE(result)                 TYPE REF TO Z2UI5_cl_view .
     METHODS dialog
       IMPORTING
         !title         TYPE clike OPTIONAL
@@ -393,40 +393,40 @@ CLASS z2ui5_cl_view DEFINITION
         !resizable     TYPE clike OPTIONAL
           PREFERRED PARAMETER title
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
     METHODS carousel
       IMPORTING
         !height       TYPE clike OPTIONAL
         !class        TYPE clike OPTIONAL
         !loop         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS buttons
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS getroot
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS getparent
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS get
       IMPORTING
         name          TYPE string OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS getchild
       IMPORTING
         !index        TYPE i DEFAULT 1
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
 
     METHODS columns
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS column
       IMPORTING
         !width          TYPE clike OPTIONAL
@@ -435,10 +435,10 @@ CLASS z2ui5_cl_view DEFINITION
         !halign         TYPE clike OPTIONAL
           PREFERRED PARAMETER width
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS items
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS interactdonutchart
       IMPORTING
         !selectionchanged  TYPE clike OPTIONAL
@@ -448,10 +448,10 @@ CLASS z2ui5_cl_view DEFINITION
         !displayedsegments TYPE clike OPTIONAL
         !press             TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)      TYPE REF TO z2ui5_cl_view .
+        VALUE(result)      TYPE REF TO Z2UI5_cl_view .
     METHODS segments
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS interactdonutchartsegment
       IMPORTING
         !label          TYPE clike OPTIONAL
@@ -459,7 +459,7 @@ CLASS z2ui5_cl_view DEFINITION
         !displayedvalue TYPE clike OPTIONAL
         !selected       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS interactbarchart
       IMPORTING
         !selectionchanged  TYPE clike OPTIONAL
@@ -469,10 +469,10 @@ CLASS z2ui5_cl_view DEFINITION
         !errormessagetitle TYPE clike OPTIONAL
         !showerror         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)      TYPE REF TO z2ui5_cl_view .
+        VALUE(result)      TYPE REF TO Z2UI5_cl_view .
     METHODS bars
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS interactbarchartbar
       IMPORTING
         !label          TYPE clike OPTIONAL
@@ -480,7 +480,7 @@ CLASS z2ui5_cl_view DEFINITION
         !displayedvalue TYPE clike OPTIONAL
         !selected       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS interactlinechart
       IMPORTING
         !selectionchanged  TYPE clike OPTIONAL
@@ -491,10 +491,10 @@ CLASS z2ui5_cl_view DEFINITION
         !errormessagetitle TYPE clike OPTIONAL
         !showerror         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)      TYPE REF TO z2ui5_cl_view .
+        VALUE(result)      TYPE REF TO Z2UI5_cl_view .
     METHODS points
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS interactlinechartpoint
       IMPORTING
         !label          TYPE clike OPTIONAL
@@ -503,7 +503,7 @@ CLASS z2ui5_cl_view DEFINITION
         !displayedvalue TYPE clike OPTIONAL
         !selected       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS radialmicrochart
       IMPORTING
         !sice         TYPE clike OPTIONAL
@@ -511,7 +511,7 @@ CLASS z2ui5_cl_view DEFINITION
         !press        TYPE clike OPTIONAL
         !valuecolor   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS columnlistitem
       IMPORTING
         !valign       TYPE clike OPTIONAL
@@ -519,43 +519,43 @@ CLASS z2ui5_cl_view DEFINITION
         !type         TYPE clike OPTIONAL
         !press        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS cells
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS bar
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS contentleft
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS contentmiddle
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS contentright
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS customheader
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS headercontent
       IMPORTING
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS subheader
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS customdata
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS badgecustomdata
       IMPORTING
         !key          TYPE clike OPTIONAL
         !value        TYPE clike OPTIONAL
         !visible      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS togglebutton
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -565,7 +565,7 @@ CLASS z2ui5_cl_view DEFINITION
         !press        TYPE clike OPTIONAL
         !class        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS button
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -578,7 +578,7 @@ CLASS z2ui5_cl_view DEFINITION
         !id           TYPE clike OPTIONAL
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS searchfield
       IMPORTING
         !search       TYPE clike OPTIONAL
@@ -589,19 +589,19 @@ CLASS z2ui5_cl_view DEFINITION
         !livechange   TYPE clike OPTIONAL
         !autocomplete TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS messageview
       IMPORTING
         !items        TYPE clike OPTIONAL
         !groupitems   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS messagepopover
       IMPORTING
         !items        TYPE clike OPTIONAL
         !groupitems   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS messageitem
       IMPORTING
         !type              TYPE clike OPTIONAL
@@ -611,7 +611,7 @@ CLASS z2ui5_cl_view DEFINITION
         !groupname         TYPE clike OPTIONAL
         !markupdescription TYPE abap_bool OPTIONAL
       RETURNING
-        VALUE(result)      TYPE REF TO z2ui5_cl_view .
+        VALUE(result)      TYPE REF TO Z2UI5_cl_view .
     METHODS page
       IMPORTING
         !title          TYPE clike OPTIONAL
@@ -623,14 +623,14 @@ CLASS z2ui5_cl_view DEFINITION
         !ns             TYPE clike OPTIONAL
           PREFERRED PARAMETER title
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS panel
       IMPORTING
         !expandable   TYPE clike OPTIONAL
         !expanded     TYPE clike OPTIONAL
         !headertext   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS vbox
       IMPORTING
         !height         TYPE clike OPTIONAL
@@ -643,7 +643,7 @@ CLASS z2ui5_cl_view DEFINITION
         !wrap           TYPE clike OPTIONAL
           PREFERRED PARAMETER class
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS hbox
       IMPORTING
         !class          TYPE clike OPTIONAL
@@ -654,7 +654,7 @@ CLASS z2ui5_cl_view DEFINITION
         !height         TYPE clike OPTIONAL
         !wrap           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS scrollcontainer
       IMPORTING
         !height       TYPE clike OPTIONAL
@@ -664,7 +664,7 @@ CLASS z2ui5_cl_view DEFINITION
         !focusable    TYPE clike OPTIONAL
           PREFERRED PARAMETER height
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS simpleform
       IMPORTING
         !title        TYPE clike OPTIONAL
@@ -675,18 +675,18 @@ CLASS z2ui5_cl_view DEFINITION
         !columnsm     TYPE clike OPTIONAL
           PREFERRED PARAMETER title
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS zzplain
       IMPORTING
         !val          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS content
       IMPORTING
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS title
       IMPORTING
@@ -696,19 +696,19 @@ CLASS z2ui5_cl_view DEFINITION
         !level        TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS tabcontainer
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS tab
       IMPORTING
         !text         TYPE clike OPTIONAL
         !selected     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS overflowtoolbar
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS overflowtoolbartogglebutton
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -718,7 +718,7 @@ CLASS z2ui5_cl_view DEFINITION
         !press        TYPE clike OPTIONAL
         !tooltip      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS overflowtoolbarbutton
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -728,7 +728,7 @@ CLASS z2ui5_cl_view DEFINITION
         !press        TYPE clike OPTIONAL
         !tooltip      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS overflowtoolbarmenubutton
       IMPORTING
         !text          TYPE clike OPTIONAL
@@ -739,19 +739,19 @@ CLASS z2ui5_cl_view DEFINITION
         !tooltip       TYPE clike OPTIONAL
         !defaultaction TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
     METHODS menuitem
       IMPORTING
         !press        TYPE clike OPTIONAL
         !text         TYPE clike OPTIONAL
         !icon         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS toolbarspacer
       IMPORTING
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS label
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -759,7 +759,7 @@ CLASS z2ui5_cl_view DEFINITION
         !design       TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS image
       IMPORTING
@@ -767,7 +767,7 @@ CLASS z2ui5_cl_view DEFINITION
         !class        TYPE clike OPTIONAL
         !height       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS datepicker
       IMPORTING
         !value                 TYPE clike OPTIONAL
@@ -781,7 +781,7 @@ CLASS z2ui5_cl_view DEFINITION
         !showcurrentdatebutton TYPE clike OPTIONAL
           PREFERRED PARAMETER value
       RETURNING
-        VALUE(result)          TYPE REF TO z2ui5_cl_view .
+        VALUE(result)          TYPE REF TO Z2UI5_cl_view .
     METHODS timepicker
       IMPORTING
         !value         TYPE clike OPTIONAL
@@ -792,7 +792,7 @@ CLASS z2ui5_cl_view DEFINITION
         !valueformat   TYPE clike OPTIONAL
           PREFERRED PARAMETER value
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
     METHODS datetimepicker
       IMPORTING
         !value        TYPE clike OPTIONAL
@@ -801,7 +801,7 @@ CLASS z2ui5_cl_view DEFINITION
         !valuestate   TYPE clike OPTIONAL
           PREFERRED PARAMETER value
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS link
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -812,7 +812,7 @@ CLASS z2ui5_cl_view DEFINITION
         !id           TYPE clike OPTIONAL
         !ns           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS list
       IMPORTING
         !headertext      TYPE clike OPTIONAL
@@ -821,15 +821,15 @@ CLASS z2ui5_cl_view DEFINITION
         !selectionchange TYPE clike OPTIONAL
         !nodata          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)    TYPE REF TO z2ui5_cl_view .
+        VALUE(result)    TYPE REF TO Z2UI5_cl_view .
     METHODS customlistitem
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS inputlistitem
       IMPORTING
         !label        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS standardlistitem
       IMPORTING
         !title        TYPE clike OPTIONAL
@@ -841,20 +841,20 @@ CLASS z2ui5_cl_view DEFINITION
         !selected     TYPE clike OPTIONAL
         !counter      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS item
       IMPORTING
         !key          TYPE clike OPTIONAL
         !text         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS segmentedbuttonitem
       IMPORTING
         !icon         TYPE clike OPTIONAL
         !key          TYPE clike OPTIONAL
         !text         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS combobox
       IMPORTING
         !selectedkey   TYPE clike OPTIONAL
@@ -863,7 +863,7 @@ CLASS z2ui5_cl_view DEFINITION
         !items         TYPE clike OPTIONAL
         !change        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
     METHODS multicombobox
       IMPORTING
         !selectionchange     TYPE clike OPTIONAL
@@ -875,20 +875,20 @@ CLASS z2ui5_cl_view DEFINITION
         !selectedkeys        TYPE clike OPTIONAL
         !items               TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)        TYPE REF TO z2ui5_cl_view .
+        VALUE(result)        TYPE REF TO Z2UI5_cl_view .
     METHODS grid
       IMPORTING
         !class        TYPE clike OPTIONAL
         !defaultspan  TYPE clike OPTIONAL
           PREFERRED PARAMETER defaultspan
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS griddata
       IMPORTING
         !span         TYPE clike OPTIONAL
           PREFERRED PARAMETER span
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS textarea
       IMPORTING
         !value           TYPE clike OPTIONAL
@@ -903,7 +903,7 @@ CLASS z2ui5_cl_view DEFINITION
         !id              TYPE clike OPTIONAL
           PREFERRED PARAMETER value
       RETURNING
-        VALUE(result)    TYPE REF TO z2ui5_cl_view.
+        VALUE(result)    TYPE REF TO Z2UI5_cl_view.
 
     METHODS rangeslider
       IMPORTING
@@ -918,7 +918,7 @@ CLASS z2ui5_cl_view DEFINITION
         !class         TYPE clike OPTIONAL
         !id            TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view.
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view.
 
     METHODS generictag
       IMPORTING
@@ -928,13 +928,13 @@ CLASS z2ui5_cl_view DEFINITION
         !status         TYPE clike OPTIONAL
         !class          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
     METHODS objectattribute
       IMPORTING
         !title        TYPE clike OPTIONAL
         !text         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS objectnumber
       IMPORTING
@@ -943,7 +943,7 @@ CLASS z2ui5_cl_view DEFINITION
         !number       TYPE clike OPTIONAL
         !unit         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS switch
       IMPORTING
@@ -954,7 +954,7 @@ CLASS z2ui5_cl_view DEFINITION
         !change        TYPE clike OPTIONAL
         !type          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
 
     METHODS stepinput
       IMPORTING
@@ -966,7 +966,7 @@ CLASS z2ui5_cl_view DEFINITION
         !enabled      TYPE clike OPTIONAL
         !description  TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS progressindicator
       IMPORTING
         !class        TYPE clike OPTIONAL
@@ -975,13 +975,13 @@ CLASS z2ui5_cl_view DEFINITION
         !showvalue    TYPE clike OPTIONAL
         !state        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS segmentedbutton
       IMPORTING
         !selectedkey     TYPE clike
         !selectionchange TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)    TYPE REF TO z2ui5_cl_view .
+        VALUE(result)    TYPE REF TO Z2UI5_cl_view .
     METHODS checkbox
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -990,13 +990,13 @@ CLASS z2ui5_cl_view DEFINITION
         !select       TYPE clike OPTIONAL
           PREFERRED PARAMETER selected
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS headertoolbar
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS toolbar
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS text
       IMPORTING
         !text         TYPE clike OPTIONAL
@@ -1004,34 +1004,34 @@ CLASS z2ui5_cl_view DEFINITION
         !ns           TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS formattedtext
       IMPORTING
         !htmltext     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS c
       IMPORTING
         !n            TYPE clike
         !ns           TYPE clike OPTIONAL
-        !p            TYPE z2ui5_if_client=>ty_t_name_value OPTIONAL
+        !p            TYPE Z2UI5_if_client=>ty_t_name_value OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS p
       IMPORTING
         n type clike
         v type clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS pb
       IMPORTING
         n type clike
         v type clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS ccfileuploader
       IMPORTING
@@ -1040,11 +1040,11 @@ CLASS z2ui5_cl_view DEFINITION
         !placeholder  TYPE clike OPTIONAL
         !upload       TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS ccfileuploadergetjs
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS xmlget
       RETURNING
@@ -1063,30 +1063,30 @@ CLASS z2ui5_cl_view DEFINITION
         !selectionbehavior      TYPE clike DEFAULT 'RowSelector'
         !selectedindex          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)           TYPE REF TO z2ui5_cl_view .
+        VALUE(result)           TYPE REF TO Z2UI5_cl_view .
     METHODS treecolumns
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS treecolumn
       IMPORTING
         !label        TYPE clike
         !template     TYPE clike OPTIONAL
         !halign       TYPE clike DEFAULT 'Begin'
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS treetemplate
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS filterbar
       IMPORTING
         !usetoolbar   TYPE clike DEFAULT 'false'
         !search       TYPE clike OPTIONAL
         !filterchange TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS filtergroupitems
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS filtergroupitem
       IMPORTING
         !name               TYPE clike
@@ -1094,27 +1094,27 @@ CLASS z2ui5_cl_view DEFINITION
         !groupname          TYPE clike
         !visibleinfilterbar TYPE clike DEFAULT 'true'
       RETURNING
-        VALUE(result)       TYPE REF TO z2ui5_cl_view .
+        VALUE(result)       TYPE REF TO Z2UI5_cl_view .
     METHODS filtercontrol
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS flexiblecolumnlayout
       IMPORTING
         !layout       TYPE clike
         !id           TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS begincolumnpages
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS midcolumnpages
       IMPORTING
         !id           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS endcolumnpages
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS uitable
       IMPORTING
         !rows                     TYPE clike OPTIONAL
@@ -1146,7 +1146,7 @@ CLASS z2ui5_cl_view DEFINITION
         !id                       TYPE clike OPTIONAL
           PREFERRED PARAMETER rows
       RETURNING
-        VALUE(result)             TYPE REF TO z2ui5_cl_view .
+        VALUE(result)             TYPE REF TO Z2UI5_cl_view .
     METHODS uicolumn
       IMPORTING
         !width               TYPE clike OPTIONAL
@@ -1156,28 +1156,28 @@ CLASS z2ui5_cl_view DEFINITION
         !showfiltermenuentry TYPE clike OPTIONAL
           PREFERRED PARAMETER width
       RETURNING
-        VALUE(result)        TYPE REF TO z2ui5_cl_view .
+        VALUE(result)        TYPE REF TO Z2UI5_cl_view .
     METHODS uicolumns
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS uiextension
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS uitemplate
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS currency
       IMPORTING
         !value        TYPE clike
         !currency     TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS uirowaction
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS uirowactiontemplate
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS uirowactionitem
       IMPORTING
@@ -1186,7 +1186,7 @@ CLASS z2ui5_cl_view DEFINITION
         !type         TYPE clike OPTIONAL
         !press        TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
     METHODS radiobutton
       IMPORTING
         !activehandling TYPE clike OPTIONAL
@@ -1201,7 +1201,7 @@ CLASS z2ui5_cl_view DEFINITION
         !valuestate     TYPE clike OPTIONAL
         !width          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_view .
+        VALUE(result)   TYPE REF TO Z2UI5_cl_view .
 
     METHODS radiobuttongroup
       IMPORTING
@@ -1214,7 +1214,7 @@ CLASS z2ui5_cl_view DEFINITION
         !valuestate    TYPE clike OPTIONAL
         !width         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
 
     METHODS dynamicsidecontent
       IMPORTING
@@ -1225,14 +1225,14 @@ CLASS z2ui5_cl_view DEFINITION
         !containerquery        TYPE clike OPTIONAL
           PREFERRED PARAMETER id
       RETURNING
-        VALUE(result)          TYPE REF TO z2ui5_cl_view.
+        VALUE(result)          TYPE REF TO Z2UI5_cl_view.
 
     METHODS sidecontent
       IMPORTING
         !width        TYPE clike OPTIONAL
           PREFERRED PARAMETER width
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS planningcalendar
       IMPORTING
@@ -1246,7 +1246,7 @@ CLASS z2ui5_cl_view DEFINITION
         !legend                    TYPE clike OPTIONAL
           PREFERRED PARAMETER rows
       RETURNING
-        VALUE(result)              TYPE REF TO z2ui5_cl_view .
+        VALUE(result)              TYPE REF TO Z2UI5_cl_view .
 
     METHODS planningcalendarrow
       IMPORTING
@@ -1267,7 +1267,7 @@ CLASS z2ui5_cl_view DEFINITION
         !appointmentresize             TYPE clike OPTIONAL
           PREFERRED PARAMETER appointments
       RETURNING
-        VALUE(result)                  TYPE REF TO z2ui5_cl_view.
+        VALUE(result)                  TYPE REF TO Z2UI5_cl_view.
 
     METHODS planningcalendarlegend
       IMPORTING
@@ -1277,7 +1277,7 @@ CLASS z2ui5_cl_view DEFINITION
         !standarditems    TYPE clike OPTIONAL
           PREFERRED PARAMETER items
       RETURNING
-        VALUE(result)     TYPE REF TO z2ui5_cl_view .
+        VALUE(result)     TYPE REF TO Z2UI5_cl_view .
 
     METHODS calendarlegenditem
       IMPORTING
@@ -1287,11 +1287,11 @@ CLASS z2ui5_cl_view DEFINITION
         !color        TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS appointmentitems
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS infolabel
       IMPORTING
@@ -1305,15 +1305,15 @@ CLASS z2ui5_cl_view DEFINITION
         !width         TYPE clike OPTIONAL
           PREFERRED PARAMETER text
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view .
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view .
 
     METHODS rows
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS appointments
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS calendarappointment
       IMPORTING
@@ -1327,23 +1327,23 @@ CLASS z2ui5_cl_view DEFINITION
         !key          TYPE clike OPTIONAL
           PREFERRED PARAMETER startdate
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS intervalheaders
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS blocklayout
       IMPORTING
         !background   TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS blocklayoutrow
       IMPORTING
         !rowcolorset  TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS blocklayoutcell
       IMPORTING
@@ -1355,7 +1355,7 @@ CLASS z2ui5_cl_view DEFINITION
         !width                TYPE clike OPTIONAL
         !class                TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)         TYPE REF TO z2ui5_cl_view .
+        VALUE(result)         TYPE REF TO Z2UI5_cl_view .
 
     METHODS objectidentifier
       IMPORTING
@@ -1367,7 +1367,7 @@ CLASS z2ui5_cl_view DEFINITION
         !visible            TYPE clike OPTIONAL
         !titlepress         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)       TYPE REF TO z2ui5_cl_view .
+        VALUE(result)       TYPE REF TO Z2UI5_cl_view .
 
     METHODS objectstatus
       IMPORTING
@@ -1383,7 +1383,7 @@ CLASS z2ui5_cl_view DEFINITION
         !title                 TYPE clike OPTIONAL
         !press                 TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)          TYPE REF TO z2ui5_cl_view .
+        VALUE(result)          TYPE REF TO Z2UI5_cl_view .
 
     METHODS tree
       IMPORTING
@@ -1395,7 +1395,7 @@ CLASS z2ui5_cl_view DEFINITION
         !inset                  TYPE abap_bool OPTIONAL
         !width                  TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)           TYPE REF TO z2ui5_cl_view .
+        VALUE(result)           TYPE REF TO Z2UI5_cl_view .
 
     METHODS standardtreeitem
       IMPORTING
@@ -1407,7 +1407,7 @@ CLASS z2ui5_cl_view DEFINITION
         !selected     TYPE clike OPTIONAL
         !counter      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS icontabbar
       IMPORTING
@@ -1418,7 +1418,7 @@ CLASS z2ui5_cl_view DEFINITION
         !expanded     TYPE abap_bool OPTIONAL
         !selectedkey  TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS icontabfilter
       IMPORTING
@@ -1430,18 +1430,18 @@ CLASS z2ui5_cl_view DEFINITION
         !text         TYPE clike OPTIONAL
         !key          TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS icontabseparator
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
 
     METHODS ccexportspreadsheetgetjs
       IMPORTING
         !columnconfig TYPE clike
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS ccexportspreadsheet
       IMPORTING
@@ -1450,11 +1450,11 @@ CLASS z2ui5_cl_view DEFINITION
         !text         TYPE clike OPTIONAL
         !icon         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS ganttchartcontainer
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS containertoolbar
       IMPORTING
@@ -1471,41 +1471,41 @@ CLASS z2ui5_cl_view DEFINITION
         !zoomcontroltype           TYPE clike OPTIONAL
         !zoomlevel                 TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)              TYPE REF TO z2ui5_cl_view .
+        VALUE(result)              TYPE REF TO Z2UI5_cl_view .
 
     METHODS ganttchartwithtable
       IMPORTING
         !id                 TYPE clike OPTIONAL
         !shapeselectionmode TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)       TYPE REF TO z2ui5_cl_view .
+        VALUE(result)       TYPE REF TO Z2UI5_cl_view .
 
     METHODS axistimestrategy
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS proportionzoomstrategy
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS totalhorizon
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS timehorizon
       IMPORTING
         !starttime    TYPE clike OPTIONAL
         !endtime      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS visiblehorizon
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS rowsettingstemplate
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS ganttrowsettings
       IMPORTING
@@ -1513,15 +1513,15 @@ CLASS z2ui5_cl_view DEFINITION
         !shapes1      TYPE clike OPTIONAL
         !shapes2      TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS shapes1
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS shapes2
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS task
       IMPORTING
@@ -1532,11 +1532,11 @@ CLASS z2ui5_cl_view DEFINITION
         !title        TYPE clike OPTIONAL
         !showtitle    TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS gantttable
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view .
+        VALUE(result) TYPE REF TO Z2UI5_cl_view .
 
     METHODS ratingindicator
       IMPORTING
@@ -1551,11 +1551,11 @@ CLASS z2ui5_cl_view DEFINITION
         !id           TYPE clike OPTIONAL
         !editable     TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS gantttoolbar
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS baserectangle
       IMPORTING
@@ -1583,15 +1583,15 @@ CLASS z2ui5_cl_view DEFINITION
         !highlighted             TYPE clike OPTIONAL
         !highlightable           TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)            TYPE REF TO z2ui5_cl_view.
+        VALUE(result)            TYPE REF TO Z2UI5_cl_view.
 
     METHODS toolpage
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS toolheader
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS icontabheader
       IMPORTING
@@ -1600,7 +1600,7 @@ CLASS z2ui5_cl_view DEFINITION
         !select       TYPE clike OPTIONAL
         !mode         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS navcontainer
       IMPORTING
@@ -1608,16 +1608,16 @@ CLASS z2ui5_cl_view DEFINITION
         !id                    TYPE clike OPTIONAL
         !defaulttransitionname TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)          TYPE REF TO z2ui5_cl_view.
+        VALUE(result)          TYPE REF TO Z2UI5_cl_view.
 
     METHODS pages
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
 
     METHODS maincontents
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS tableselectdialog
       IMPORTING
@@ -1643,7 +1643,7 @@ CLASS z2ui5_cl_view DEFINITION
         !confirm            TYPE clike OPTIONAL
         !selectionchange    TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)       TYPE REF TO z2ui5_cl_view.
+        VALUE(result)       TYPE REF TO Z2UI5_cl_view.
 
     METHODS processflow
       IMPORTING
@@ -1660,15 +1660,15 @@ CLASS z2ui5_cl_view DEFINITION
         !lanes         TYPE clike OPTIONAL
         !nodes         TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)  TYPE REF TO z2ui5_cl_view.
+        VALUE(result)  TYPE REF TO Z2UI5_cl_view.
 
     METHODS nodes
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS lanes
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
     METHODS processflownode
       IMPORTING
@@ -1686,7 +1686,7 @@ CLASS z2ui5_cl_view DEFINITION
         !tag               TYPE clike OPTIONAL
         !type              TYPE clike OPTIONAL
       RETURNING
-        VALUE(result)      TYPE REF TO z2ui5_cl_view.
+        VALUE(result)      TYPE REF TO Z2UI5_cl_view.
 
     METHODS processflowlaneheader
       IMPORTING
@@ -1697,20 +1697,20 @@ CLASS z2ui5_cl_view DEFINITION
         !text         TYPE clike OPTIONAL
         !zoomlevel    TYPE clike OPTIONAL
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_view.
+        VALUE(result) TYPE REF TO Z2UI5_cl_view.
 
   PROTECTED SECTION.
 
     DATA mvname  TYPE string.
     DATA mvns     TYPE string.
-    DATA mtprop  TYPE z2ui5_if_client=>ty_t_name_value.
+    DATA mtprop  TYPE Z2UI5_if_client=>ty_t_name_value.
 
-    DATA moroot   TYPE REF TO z2ui5_cl_view.
-    DATA moprevious   TYPE REF TO z2ui5_cl_view.
-    DATA moparent TYPE REF TO z2ui5_cl_view.
-    DATA mtchild  TYPE STANDARD TABLE OF REF TO z2ui5_cl_view WITH EMPTY KEY.
+    DATA moroot   TYPE REF TO Z2UI5_cl_view.
+    DATA moprevious   TYPE REF TO Z2UI5_cl_view.
+    DATA moparent TYPE REF TO Z2UI5_cl_view.
+    DATA mtchild  TYPE STANDARD TABLE OF REF TO Z2UI5_cl_view WITH EMPTY KEY.
 
-    DATA miclient TYPE REF TO z2ui5_if_client.
+    DATA miclient TYPE REF TO Z2UI5_if_client.
 
   PRIVATE SECTION.
 
@@ -1719,7 +1719,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_view IMPLEMENTATION.
+CLASS Z2UI5_cl_view IMPLEMENTATION.
 
 
   METHOD actions.
@@ -1763,7 +1763,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `BadgeCustomData`
               p = VALUE #( ( n = `key`      v = key )
                                 ( n = `value`    v = value )
-                                ( n = `visible`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( visible ) ) ) ).
+                                ( n = `visible`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( visible ) ) ) ).
   ENDMETHOD.
 
 
@@ -1784,7 +1784,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                        ns     = 'gantt'
                        p = VALUE #( ( n = `time`                      v = time )
                                          ( n = `endtime`                   v = endtime )
-                                         ( n = `selectable`                v = z2ui5_cl_fw_utility=>boolean_abap_2_json( selectable ) )
+                                         ( n = `selectable`                v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( selectable ) )
                                          ( n = `selectedFill`              v = selectedfill )
                                          ( n = `fill`                      v = fill )
                                          ( n = `height`                    v = height )
@@ -1793,18 +1793,18 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `alignShape`                v = alignshape )
                                          ( n = `color`                     v = color   )
                                          ( n = `fontSize`                  v = fontsize )
-                                         ( n = `connectable`               v = z2ui5_cl_fw_utility=>boolean_abap_2_json( connectable ) )
+                                         ( n = `connectable`               v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( connectable ) )
                                          ( n = `fontFamily`                v = fontfamily )
                                          ( n = `filter`                    v = filter )
                                          ( n = `transform`                 v = transform )
-                                         ( n = `countInBirdEye`            v = z2ui5_cl_fw_utility=>boolean_abap_2_json( countinbirdeye ) )
+                                         ( n = `countInBirdEye`            v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( countinbirdeye ) )
                                          ( n = `fontWeight`                v = fontweight   )
-                                         ( n = `showTitle`                 v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtitle ) )
-                                         ( n = `selected`                  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( selected ) )
-                                         ( n = `resizable`                 v = z2ui5_cl_fw_utility=>boolean_abap_2_json( resizable ) )
+                                         ( n = `showTitle`                 v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtitle ) )
+                                         ( n = `selected`                  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( selected ) )
+                                         ( n = `resizable`                 v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( resizable ) )
                                          ( n = `horizontalTextAlignment`   v = horizontaltextalignment )
-                                         ( n = `highlighted`               v = z2ui5_cl_fw_utility=>boolean_abap_2_json( highlighted ) )
-                                         ( n = `highlightable`             v = z2ui5_cl_fw_utility=>boolean_abap_2_json( highlightable ) ) ) ).
+                                         ( n = `highlighted`               v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( highlighted ) )
+                                         ( n = `highlightable`             v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( highlightable ) ) ) ).
   ENDMETHOD.
 
 
@@ -1858,8 +1858,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
               ns     = ns
               p = VALUE #( ( n = `press`   v = press )
                                 ( n = `text`    v = text )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
-                                ( n = `visible` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( visible ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `visible` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( visible ) )
                                 ( n = `icon`    v = icon )
                                 ( n = `type`    v = type )
                                 ( n = `id`      v = id )
@@ -1901,7 +1901,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD carousel.
 
     result = c( n   = `Carousel`
-                       p = VALUE #( ( n = `loop`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( loop ) )
+                       p = VALUE #( ( n = `loop`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( loop ) )
                                          ( n = `class`  v = class )
                                          ( n = `height`  v = height )
                ) ).
@@ -2145,7 +2145,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `CheckBox`
               p = VALUE #( ( n = `text`     v = text )
                                 ( n = `selected` v = selected )
-                                ( n = `enabled`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `select`   v = select ) ) ).
   ENDMETHOD.
 
@@ -2156,7 +2156,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
               ns     = `editor`
               p = VALUE #( ( n = `value`   v = value )
                                 ( n = `type`    v = type )
-                                ( n = `editable`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                                ( n = `editable`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
                                 ( n = `height` v = height )
                                 ( n = `width`  v = width ) ) ).
   ENDMETHOD.
@@ -2167,7 +2167,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                        p = VALUE #( ( n = `width` v = width )
                                          ( n = `minScreenWidth` v = minscreenwidth )
                                          ( n = `halign` v = halign )
-                                         ( n = `demandPopin` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( demandpopin ) ) ) ).
+                                         ( n = `demandPopin` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( demandpopin ) ) ) ).
   ENDMETHOD.
 
 
@@ -2187,7 +2187,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
   METHOD combobox.
     result = c( n   = `ComboBox`
-                       p = VALUE #( (  n = `showClearIcon` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
+                       p = VALUE #( (  n = `showClearIcon` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
                                          (  n = `selectedKey`   v = selectedkey )
                                          (  n = `items`         v = items )
                                          (  n = `label`         v = label )
@@ -2230,14 +2230,14 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `ContainerToolbar`
                        ns     = `gantt`
                        p = VALUE #( ( n = `showSearchButton`          v = showsearchbutton )
-                                         ( n = `alignCustomContentToRight` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( aligncustomcontenttoright ) )
+                                         ( n = `alignCustomContentToRight` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( aligncustomcontenttoright ) )
                                          ( n = `findMode`                  v = findmode )
                                          ( n = `infoOfSelectItems`         v = infoofselectitems )
-                                         ( n = `showBirdEyeButton`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showbirdeyebutton ) )
-                                         ( n = `showDisplayTypeButton`     v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showdisplaytypebutton ) )
-                                         ( n = `showLegendButton`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showlegendbutton ) )
-                                         ( n = `showSettingButton`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showsettingbutton ) )
-                                         ( n = `showTimeZoomControl`       v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtimezoomcontrol ) )
+                                         ( n = `showBirdEyeButton`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showbirdeyebutton ) )
+                                         ( n = `showDisplayTypeButton`     v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showdisplaytypebutton ) )
+                                         ( n = `showLegendButton`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showlegendbutton ) )
+                                         ( n = `showSettingButton`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showsettingbutton ) )
+                                         ( n = `showTimeZoomControl`       v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtimezoomcontrol ) )
                                          ( n = `stepCountOfSlider`         v = stepcountofslider )
                                          ( n = `zoomControlType`           v = zoomcontroltype )
                                          ( n = `zoomLevel`                 v = zoomlevel )
@@ -2299,12 +2299,12 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
               p = VALUE #( ( n = `value`                 v = value )
                                 ( n = `displayFormat`         v = displayformat )
                                 ( n = `valueFormat`           v = valueformat )
-                                ( n = `required`              v = z2ui5_cl_fw_utility=>boolean_abap_2_json( required ) )
+                                ( n = `required`              v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( required ) )
                                 ( n = `valueState`            v = valuestate )
                                 ( n = `valueStateText`        v = valuestatetext )
                                 ( n = `placeholder`           v = placeholder )
-                                ( n = `enabled`               v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
-                                ( n = `showCurrentDateButton` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showcurrentdatebutton ) ) ) ).
+                                ( n = `enabled`               v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `showCurrentDateButton` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showcurrentdatebutton ) ) ) ).
   ENDMETHOD.
 
 
@@ -2313,7 +2313,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `DateTimePicker`
               p = VALUE #( ( n = `value` v = value )
                                 ( n = `placeholder`  v = placeholder )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `valueState` v = valuestate ) ) ).
   ENDMETHOD.
 
@@ -2327,7 +2327,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `showHeader`  v = showheader )
                                          ( n = `contentWidth`  v = contentwidth )
                                          ( n = `contentHeight`  v = contentheight )
-                                         ( n = `resizable`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( resizable ) ) ) ).
+                                         ( n = `resizable`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( resizable ) ) ) ).
 
   ENDMETHOD.
 
@@ -2336,9 +2336,9 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `DynamicPage`
                        ns     = `f`
                        p = VALUE #(
-                           (  n = `headerExpanded`           v = z2ui5_cl_fw_utility=>boolean_abap_2_json( headerexpanded ) )
-                           (  n = `headerPinned`           v = z2ui5_cl_fw_utility=>boolean_abap_2_json( headerpinned ) )
-                           (  n = `showFooter`           v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showfooter ) )
+                           (  n = `headerExpanded`           v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( headerexpanded ) )
+                           (  n = `headerPinned`           v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( headerpinned ) )
+                           (  n = `showFooter`           v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showfooter ) )
                            (  n = `toggleHeaderOnTitleClick` v = toggleheaderontitleclick ) ) ).
   ENDMETHOD.
 
@@ -2347,7 +2347,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c(
                  n   = `DynamicPageHeader`
                  ns     = `f`
-                 p = VALUE #( (  n = `pinnable`           v = z2ui5_cl_fw_utility=>boolean_abap_2_json( pinnable ) ) ) ).
+                 p = VALUE #( (  n = `pinnable`           v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( pinnable ) ) ) ).
   ENDMETHOD.
 
 
@@ -2477,7 +2477,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `width`  v = width )
                                          ( n = `height`  v = height )
                                          ( n = `alignItems`  v = alignitems )
-                                         ( n = `fitContainer`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( fitcontainer ) )
+                                         ( n = `fitContainer`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( fitcontainer ) )
                                          ( n = `justifyContent`  v = justifycontent )
                                          ( n = `wrap`  v = wrap )
                                          ( n = `visible`  v = visible ) ) ).
@@ -2583,7 +2583,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
       result = moparent.
     ELSE.
       IF moroot = me.
-        RAISE EXCEPTION TYPE z2ui5_cx_fw_error
+        RAISE EXCEPTION TYPE Z2UI5_cx_fw_error
           EXPORTING
             val = `NOCONTROLFOUNDWITHNAME` && name.
       ENDIF.
@@ -2673,15 +2673,15 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD hlpgetappurl.
 
     IF classname IS NOT SUPPLIED.
-      classname = z2ui5_cl_fw_utility=>rtti_get_classname_by_ref( miclient->get( )-s_draft-app ).
+      classname = Z2UI5_cl_fw_utility=>rtti_get_classname_by_ref( miclient->get( )-s_draft-app ).
     ENDIF.
 
     DATA(lvurl) = to_lower( miclient->get( )-s_config-origin && miclient->get( )-s_config-pathname ) && `?`.
-    DATA(ltparam) = z2ui5_cl_fw_utility=>url_param_get_tab( miclient->get( )-s_config-search ).
+    DATA(ltparam) = Z2UI5_cl_fw_utility=>url_param_get_tab( miclient->get( )-s_config-search ).
     DELETE ltparam WHERE n = `appstart`.
     INSERT VALUE #( n = `appstart` v = to_lower( classname ) ) INTO TABLE ltparam.
 
-    result = lvurl && z2ui5_cl_fw_utility=>url_param_create_url( ltparam ).
+    result = lvurl && Z2UI5_cl_fw_utility=>url_param_create_url( ltparam ).
 
   ENDMETHOD.
 
@@ -2692,14 +2692,14 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     DATA(lsconfig) = moroot->miclient->get( )-s_config.
 
     result = lsconfig-origin && `/sap/bc/adt/oo/classes/`
-       && z2ui5_cl_fw_utility=>rtti_get_classname_by_ref( lsdraft-app ) && `/source/main`.
+       && Z2UI5_cl_fw_utility=>rtti_get_classname_by_ref( lsdraft-app ) && `/source/main`.
 
   ENDMETHOD.
 
 
   METHOD hlpgeturlparam.
 
-    result = z2ui5_cl_fw_utility=>url_param_get(
+    result = Z2UI5_cl_fw_utility=>url_param_get(
       val = val
       url = miclient->get( )-s_config-search ).
 
@@ -2708,7 +2708,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
   METHOD hlpseturlparam.
 
-    DATA(result) = z2ui5_cl_fw_utility=>url_param_set(
+    DATA(result) = Z2UI5_cl_fw_utility=>url_param_set(
       url   = miclient->get( )-s_config-search
       name  = n
       value = v ).
@@ -2774,7 +2774,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `IllustratedMessage`
                        p = VALUE #( ( n = `enableVerticalResponsiveness` v = enableverticalresponsiveness )
                        ( n = `illustrationType`             v = illustrationtype )
-                       ( n = `enableFormattedText`             v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enableformattedtext ) )
+                       ( n = `enableFormattedText`             v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enableformattedtext ) )
                        ( n = `illustrationSize`             v = illustrationsize )
                        ( n = `description`             v = description )
                        ( n = `title`             v = title )
@@ -2824,26 +2824,26 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
               p = VALUE #( ( n = `id`               v = id )
                                 ( n = `placeholder`      v = placeholder )
                                 ( n = `type`             v = type )
-                                ( n = `showClearIcon`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
+                                ( n = `showClearIcon`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
                                 ( n = `description`      v = description )
-                                ( n = `editable`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
-                                ( n = `enabled`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
-                                ( n = `visible`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( visible ) )
-                                ( n = `showTableSuggestionValueHelp`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtablesuggestionvaluehelp ) )
+                                ( n = `editable`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                                ( n = `enabled`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `visible`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( visible ) )
+                                ( n = `showTableSuggestionValueHelp`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtablesuggestionvaluehelp ) )
                                 ( n = `valueState`       v = valuestate )
                                 ( n = `valueStateText`   v = valuestatetext )
                                 ( n = `value`            v = value )
-                                ( n = `required`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( required ) )
+                                ( n = `required`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( required ) )
                                 ( n = `suggest`          v = suggest )
                                 ( n = `suggestionItems`  v = suggestionitems )
                                 ( n = `suggestionRows`   v = suggestionrows )
-                                ( n = `showSuggestion`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showsuggestion ) )
+                                ( n = `showSuggestion`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showsuggestion ) )
                                 ( n = `valueHelpRequest` v = valuehelprequest )
-                                ( n = `autocomplete`     v = z2ui5_cl_fw_utility=>boolean_abap_2_json( autocomplete ) )
-                                ( n = `valueLiveUpdate`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( valueliveupdate ) )
-                                ( n = `submit`           v = z2ui5_cl_fw_utility=>boolean_abap_2_json( submit ) )
-                                ( n = `showValueHelp`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showvaluehelp ) )
-                                ( n = `valueHelpOnly`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( valuehelponly ) )
+                                ( n = `autocomplete`     v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( autocomplete ) )
+                                ( n = `valueLiveUpdate`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( valueliveupdate ) )
+                                ( n = `submit`           v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( submit ) )
+                                ( n = `showValueHelp`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showvaluehelp ) )
+                                ( n = `valueHelpOnly`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( valuehelponly ) )
                                 ( n = `class`            v = class )
                                 ( n = `maxSuggestionWidth` v = maxsuggestionwidth )
                                 ( n = `fieldWidth`          v = fieldwidth ) ) ).
@@ -2882,7 +2882,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `InteractiveDonutChart`
                        ns     = `mchart`
                        p = VALUE #( ( n = `selectionChanged`  v = selectionchanged )
-                                         ( n = `showError`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showerror ) )
+                                         ( n = `showError`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showerror ) )
                                          ( n = `errorMessageTitle` v = errormessagetitle )
                                          ( n = `errorMessage`      v = errormessage )
                                          ( n = `displayedSegments` v = displayedsegments )
@@ -2904,7 +2904,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `InteractiveLineChart`
                        ns     = `mchart`
                        p = VALUE #( ( n = `selectionChanged`  v = selectionchanged )
-                                         ( n = `showError`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showerror ) )
+                                         ( n = `showError`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showerror ) )
                                          ( n = `press`             v = press )
                                          ( n = `errorMessageTitle` v = errormessagetitle )
                                          ( n = `errorMessage`      v = errormessage )
@@ -2920,7 +2920,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `secondaryLabel` v = secondarylabel )
                                          ( n = `value`          v = value )
                                          ( n = `displayedValue` v = displayedvalue )
-                                         ( n = `selected`       v = z2ui5_cl_fw_utility=>boolean_abap_2_json( selected ) ) ) ).
+                                         ( n = `selected`       v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( selected ) ) ) ).
   ENDMETHOD.
 
 
@@ -2973,7 +2973,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                 ( n = `href`    v = href )
                                 ( n = `press`   v = press )
                                 ( n = `id`      v = id )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) ) ) ).
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) ) ) ).
   ENDMETHOD.
 
 
@@ -3019,18 +3019,18 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `subtitle`    v = subtitle )
                                          ( n = `description` v = description )
                                          ( n = `groupName`   v = groupname )
-                                         ( n = `markupDescription`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( markupdescription ) ) ) ).
+                                         ( n = `markupDescription`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( markupdescription ) ) ) ).
   ENDMETHOD.
 
 
   METHOD messagepage.
     result = c( n   = `MessagePage`
                        p = VALUE #(
-                           ( n = `showHeader`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showheader ) )
+                           ( n = `showHeader`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showheader ) )
                            ( n = `description`         v = description )
                            ( n = `icon`                v = icon )
                            ( n = `text`                v = text )
-                           ( n = `enableFormattedText` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enableformattedtext ) )
+                           ( n = `enableFormattedText` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enableformattedtext ) )
                             ) ).
   ENDMETHOD.
 
@@ -3038,7 +3038,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD messagepopover.
     result = c( n   = `MessagePopover`
                        p = VALUE #( ( n = `items`      v = items )
-                                         ( n = `groupItems` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( groupitems ) ) ) ).
+                                         ( n = `groupItems` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( groupitems ) ) ) ).
   ENDMETHOD.
 
 
@@ -3047,7 +3047,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `MessageStrip`
               p = VALUE #( ( n = `text`     v = text )
                                 ( n = `type`     v = type )
-                                ( n = `showIcon` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showicon ) )
+                                ( n = `showIcon` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showicon ) )
                                 ( n = `class`    v = class ) ) ).
   ENDMETHOD.
 
@@ -3056,7 +3056,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
     result = c( n   = `MessageView`
                        p = VALUE #( ( n = `items`      v = items )
-                                         ( n = `groupItems` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( groupitems ) ) ) ).
+                                         ( n = `groupItems` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( groupitems ) ) ) ).
   ENDMETHOD.
 
 
@@ -3085,9 +3085,9 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD multiinput.
     result = c( n   = `MultiInput`
                        p = VALUE #( ( n = `tokens` v = tokens )
-                                         ( n = `showClearIcon` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
-                                         ( n = `showValueHelp` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showvaluehelp ) )
-                                         ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                         ( n = `showClearIcon` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showclearicon ) )
+                                         ( n = `showValueHelp` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showvaluehelp ) )
+                                         ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                          ( n = `suggestionItems` v = suggestionitems )
                                          ( n = `tokenUpdate` v = tokenupdate )
                                          ( n = `submit` v = submit )
@@ -3127,7 +3127,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `NumericContent`
                        p = VALUE #( ( n = `value`      v = value )
                                          ( n = `icon`       v = icon )
-                                         ( n = `withMargin` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( withmargin ) ) ) ).
+                                         ( n = `withMargin` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( withmargin ) ) ) ).
 
   ENDMETHOD.
 
@@ -3156,7 +3156,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD objectnumber.
     result = me.
     c( n   = `ObjectNumber`
-              p = VALUE #( ( n = `emphasized`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( emphasized ) )
+              p = VALUE #( ( n = `emphasized`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( emphasized ) )
                                 ( n = `number`      v = number )
                                 ( n = `state`       v = state )
                                 ( n = `unit`        v = unit ) ) ).
@@ -3174,8 +3174,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                  n   = `ObjectPageLayout`
                  ns     = `uxap`
                  p = VALUE #(
-                     ( n = `showTitleInHeaderContent` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtitleinheadercontent ) )
-                     ( n = `showEditHeaderButton`     v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showeditheaderbutton ) )
+                     ( n = `showTitleInHeaderContent` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtitleinheadercontent ) )
+                     ( n = `showEditHeaderButton`     v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showeditheaderbutton ) )
                      ( n = `editHeaderButtonPress`    v = editheaderbuttonpress )
                      ( n = `upperCaseAnchorBar`       v = uppercaseanchorbar ) ) ).
   ENDMETHOD.
@@ -3184,7 +3184,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
   METHOD objectpagesection.
     result = c( n   = `ObjectPageSection`
                        ns     = `uxap`
-                       p = VALUE #( ( n = `titleUppercase`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( titleuppercase ) )
+                       p = VALUE #( ( n = `titleUppercase`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( titleuppercase ) )
                                          ( n = `title`           v = title )
                                          ( n = `id`              v = id )
                                          ( n = `importance`      v = importance ) ) ).
@@ -3225,7 +3225,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `OverflowToolbarButton`
               p = VALUE #( ( n = `press`   v = press )
                                 ( n = `text`    v = text )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `icon`    v = icon )
                                 ( n = `type`    v = type )
                                 ( n = `tooltip` v = tooltip ) ) ).
@@ -3237,7 +3237,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                        p = VALUE #( ( n = `buttonMode` v = buttonmode )
                                          ( n = `defaultAction` v = defaultaction )
                                          ( n = `text`    v = text )
-                                         ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                         ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                          ( n = `icon`    v = icon )
                                          ( n = `type`    v = type )
                                          ( n = `tooltip` v = tooltip ) ) ).
@@ -3249,7 +3249,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `OverflowToolbarToggleButton`
               p = VALUE #( ( n = `press`   v = press )
                                 ( n = `text`    v = text )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `icon`    v = icon )
                                 ( n = `type`    v = type )
                                 ( n = `tooltip` v = tooltip ) ) ).
@@ -3260,9 +3260,9 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `Page`
                        ns     = ns
                        p = VALUE #( ( n = `title` v = title )
-                                         ( n = `showNavButton`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( shownavbutton ) )
+                                         ( n = `showNavButton`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( shownavbutton ) )
                                          ( n = `navButtonPress` v = navbuttonpress )
-                                         ( n = `showHeader` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showheader ) )
+                                         ( n = `showHeader` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showheader ) )
                                          ( n = `class` v = class )
                                          ( n = `id` v = id ) ) ).
   ENDMETHOD.
@@ -3350,11 +3350,11 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `ProcessFlow`
                    ns     = 'commons'
                    p = VALUE #( ( n = `id`               v = id )
-                                     ( n = `foldedCorners`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( foldedcorners ) )
-                                     ( n = `scrollable`       v = z2ui5_cl_fw_utility=>boolean_abap_2_json( scrollable ) )
-                                     ( n = `showLabels`       v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showlabels ) )
-                                     ( n = `visible`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( visible ) )
-                                     ( n = `wheelZoomable`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( wheelzoomable ) )
+                                     ( n = `foldedCorners`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( foldedcorners ) )
+                                     ( n = `scrollable`       v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( scrollable ) )
+                                     ( n = `showLabels`       v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showlabels ) )
+                                     ( n = `visible`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( visible ) )
+                                     ( n = `wheelZoomable`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( wheelzoomable ) )
                                      ( n = `headerPress`      v = headerpress )
                                      ( n = `labelPress`       v = labelpress )
                                      ( n = `nodePress`        v = nodepress )
@@ -3388,9 +3388,9 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                      ( n = `state`                v = state )
                                      ( n = `stateText`            v = statetext )
                                      ( n = `texts`                v = texts )
-                                     ( n = `highlighted`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( highlighted )  )
-                                     ( n = `focused`              v = z2ui5_cl_fw_utility=>boolean_abap_2_json( focused ) )
-                                     ( n = `selected`             v = z2ui5_cl_fw_utility=>boolean_abap_2_json( selected ) )
+                                     ( n = `highlighted`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( highlighted )  )
+                                     ( n = `focused`              v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( focused ) )
+                                     ( n = `selected`             v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( selected ) )
                                      ( n = `tag`                  v = tag )
                                      ( n = `texts`                v = texts )
                                      ( n = `type`                 v = type ) ) ).
@@ -3403,7 +3403,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
               p = VALUE #( ( n = `class`        v = class )
                                 ( n = `percentValue` v = percentvalue )
                                 ( n = `displayValue` v = displayvalue )
-                                ( n = `showValue`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showvalue ) )
+                                ( n = `showValue`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showvalue ) )
                                 ( n = `state`        v = state ) ) ).
   ENDMETHOD.
 
@@ -3427,11 +3427,11 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
   METHOD radiobutton.
     result = c( n = `RadioButton`
-                   p   = VALUE #( ( n = `activeHandling`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( activehandling ) )
-                                     ( n = `editable`        v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
-                                     ( n = `enabled`         v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
-                                     ( n = `selected`        v = z2ui5_cl_fw_utility=>boolean_abap_2_json( selected ) )
-                                     ( n = `useEntireWidth`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( useentirewidth ) )
+                   p   = VALUE #( ( n = `activeHandling`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( activehandling ) )
+                                     ( n = `editable`        v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                                     ( n = `enabled`         v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                     ( n = `selected`        v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( selected ) )
+                                     ( n = `useEntireWidth`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( useentirewidth ) )
                                      ( n = `text`            v = text )
                                      ( n = `textDirection`   v = textdirection )
                                      ( n = `textAlign`       v = textalign )
@@ -3446,8 +3446,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `RadioButtonGroup`
                        p = VALUE #( ( n = `id`             v = id )
                                          ( n = `columns`        v = columns )
-                                         ( n = `editable`       v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
-                                         ( n = `enabled`        v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                         ( n = `editable`       v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                                         ( n = `enabled`        v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                          ( n = `selectedIndex`  v = selectedindex )
                                          ( n = `textDirection`  v = textdirection )
                                          ( n = `valueState`     v = valuestate )
@@ -3466,7 +3466,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                 ( n = `labelInterval`  v = labelinterval )
                                 ( n = `max`   v = max )
                                 ( n = `min`   v = min )
-                                ( n = `showTickmarks`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtickmarks ) )
+                                ( n = `showTickmarks`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtickmarks ) )
                                 ( n = `startValue`   v = startvalue )
                                 ( n = `step`   v = step )
                                 ( n = `width`   v = width ) ) ).
@@ -3505,9 +3505,9 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = c( n   = `ScrollContainer`
                        p = VALUE #( ( n = `height`      v = height )
                                          ( n = `width`       v = width )
-                                         ( n = `vertical`    v = z2ui5_cl_fw_utility=>boolean_abap_2_json( vertical ) )
-                                         ( n = `horizontal`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( horizontal ) )
-                                         ( n = `focusable`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( focusable ) ) ) ).
+                                         ( n = `vertical`    v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( vertical ) )
+                                         ( n = `horizontal`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( horizontal ) )
+                                         ( n = `focusable`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( focusable ) ) ) ).
   ENDMETHOD.
 
 
@@ -3519,7 +3519,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                 ( n = `value`  v = value )
                                 ( n = `id`     v = id )
                                 ( n = `change` v = change )
-                                ( n = `autocomplete` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( autocomplete ) )
+                                ( n = `autocomplete` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( autocomplete ) )
                                 ( n = `liveChange` v = livechange ) ) ).
   ENDMETHOD.
 
@@ -3587,7 +3587,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `columnsXL`   v = columnsxl )
                                          ( n = `columnsL`   v = columnsl )
                                          ( n = `columnsM`   v = columnsm )
-                                         ( n = `editable` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) ) ) ).
+                                         ( n = `editable` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) ) ) ).
   ENDMETHOD.
 
 
@@ -3646,7 +3646,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                 ( n = `step` v = step )
                                 ( n = `value` v = value )
                                 ( n = `valueState` v = valuestate )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `description` v = description ) ) ).
   ENDMETHOD.
 
@@ -3690,7 +3690,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = me.
     c( n   = `Switch`
               p = VALUE #( ( n = `type`           v = type )
-                                ( n = `enabled`        v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled`        v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `state`          v = state )
                                 ( n = `change`         v = change )
                                 ( n = `customTextOff`  v = customtextoff )
@@ -3721,8 +3721,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                            ( n = `width`            v = width )
                            ( n = `id`            v = id )
                            ( n = `selectionChange`  v = selectionchange )
-                           ( n = `alternateRowColors`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( alternaterowcolors ) )
-                           ( n = `autoPopinMode`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( autopopinmode ) ) ) ).
+                           ( n = `alternateRowColors`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( alternaterowcolors ) )
+                           ( n = `autoPopinMode`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( autopopinmode ) ) ) ).
   ENDMETHOD.
 
 
@@ -3732,15 +3732,15 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                p = VALUE #( ( n = `confirmButtonText`    v = confirmbuttontext )
                                  ( n = `contentHeight`        v = contentheight )
                                  ( n = `contentWidth`         v = contentwidth )
-                                 ( n = `draggable`            v = z2ui5_cl_fw_utility=>boolean_abap_2_json( draggable ) )
-                                 ( n = `growing`              v = z2ui5_cl_fw_utility=>boolean_abap_2_json( growing ) )
+                                 ( n = `draggable`            v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( draggable ) )
+                                 ( n = `growing`              v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( growing ) )
                                  ( n = `growingThreshold`     v = growingthreshold )
-                                 ( n = `multiSelect`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( multiselect ) )
+                                 ( n = `multiSelect`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( multiselect ) )
                                  ( n = `noDataText`           v = nodatatext )
-                                 ( n = `rememberSelections`   v = z2ui5_cl_fw_utility=>boolean_abap_2_json( rememberselections ) )
-                                 ( n = `resizable`            v = z2ui5_cl_fw_utility=>boolean_abap_2_json( resizable ) )
+                                 ( n = `rememberSelections`   v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( rememberselections ) )
+                                 ( n = `resizable`            v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( resizable ) )
                                  ( n = `searchPlaceholder`    v = searchplaceholder )
-                                 ( n = `showClearButton`      v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showclearbutton ) )
+                                 ( n = `showClearButton`      v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showclearbutton ) )
                                  ( n = `title`                v = title )
                                  ( n = `titleAlignment`       v = titlealignment )
                                  ( n = `items`                v = items )
@@ -3749,7 +3749,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                  ( n = `cancel`               v = cancel )
                                  ( n = `liveChange`           v = livechange )
                                  ( n = `selectionChange`      v = selectionchange )
-                                 ( n = `visible`              v = z2ui5_cl_fw_utility=>boolean_abap_2_json( visible ) ) ) ).
+                                 ( n = `visible`              v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( visible ) ) ) ).
   ENDMETHOD.
 
 
@@ -3766,7 +3766,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                                          ( n = `endTime` v = endtime )
                                          ( n = `type` v = type )
                                          ( n = `title` v = title )
-                                         ( n = `showTitle` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showtitle ) )
+                                         ( n = `showTitle` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showtitle ) )
                                          ( n = `color` v = color ) ) ).
   ENDMETHOD.
 
@@ -3785,13 +3785,13 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `TextArea`
               p = VALUE #( ( n = `value` v = value )
                                 ( n = `rows` v = rows )
-                                ( n = `valueLiveUpdate` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( valueliveupdate ) )
+                                ( n = `valueLiveUpdate` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( valueliveupdate ) )
                                 ( n = `height` v = height )
                                 ( n = `width` v = width )
-                                ( n = `editable` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `editable` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `id` v = id )
-                                ( n = `growing` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( growing ) )
+                                ( n = `growing` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( growing ) )
                                 ( n = `growingMaxLines` v = growingmaxlines ) ) ).
   ENDMETHOD.
 
@@ -3821,7 +3821,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `TimePicker`
               p = VALUE #( ( n = `value` v = value )
                                 ( n = `placeholder`  v = placeholder )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `valueState` v = valuestate )
                                 ( n = `displayFormat` v = displayformat )
                                 ( n = `valueFormat` v = valueformat ) ) ).
@@ -3835,7 +3835,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
         c( ns     = ns
               n   = lvname
               p = VALUE #( ( n = `text`     v = text )
-                                ( n = `wrapping` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( wrapping ) )
+                                ( n = `wrapping` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( wrapping ) )
                                 ( n = `level` v = level ) ) ).
   ENDMETHOD.
 
@@ -3846,7 +3846,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     c( n   = `ToggleButton`
               p = VALUE #( ( n = `press`   v = press )
                                 ( n = `text`    v = text )
-                                ( n = `enabled` v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
+                                ( n = `enabled` v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enabled ) )
                                 ( n = `icon`    v = icon )
                                 ( n = `type`    v = type )
                                 ( n = `class`   v = class ) ) ).
@@ -3914,8 +3914,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                            ( n = `footerText`       v = footertext )
                            ( n = `mode`             v = mode )
                            ( n = `width`            v = width )
-                           ( n = `includeItemInSelection`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( includeiteminselection ) )
-                           ( n = `inset`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( inset ) )
+                           ( n = `includeItemInSelection`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( includeiteminselection ) )
+                           ( n = `inset`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( inset ) )
              ) ).
   ENDMETHOD.
 
@@ -4018,12 +4018,12 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                        ns     = `table`
                        p = VALUE #(
                            ( n = `rows`                      v = rows )
-                           ( n = `alternateRowColors`        v = z2ui5_cl_fw_utility=>boolean_abap_2_json( alternaterowcolors ) )
+                           ( n = `alternateRowColors`        v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( alternaterowcolors ) )
                            ( n = `columnHeaderVisible`       v = columnheadervisible )
-                           ( n = `editable`                  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( editable ) )
-                           ( n = `enableCellFilter`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enablecellfilter ) )
-                           ( n = `enableGrouping`            v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enablegrouping ) )
-                           ( n = `senableSelectAll`          v = z2ui5_cl_fw_utility=>boolean_abap_2_json( enableselectall ) )
+                           ( n = `editable`                  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( editable ) )
+                           ( n = `enableCellFilter`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enablecellfilter ) )
+                           ( n = `enableGrouping`            v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enablegrouping ) )
+                           ( n = `senableSelectAll`          v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( enableselectall ) )
                            ( n = `firstVisibleRow`           v = firstvisiblerow )
                            ( n = `fixedBottomRowCount`       v = fixedbottomrowcount )
                            ( n = `fixedColumnCount`          v = fixedcolumncount )
@@ -4034,8 +4034,8 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
                            ( n = `rowHeight`                 v = rowheight )
                            ( n = `selectedIndex`             v = selectedindex )
                            ( n = `selectionMode`             v = selectionmode )
-                           ( n = `showColumnVisibilityMenu`  v = z2ui5_cl_fw_utility=>boolean_abap_2_json( showcolumnvisibilitymenu ) )
-                           ( n = `showNoData`                v = z2ui5_cl_fw_utility=>boolean_abap_2_json( shownodata ) )
+                           ( n = `showColumnVisibilityMenu`  v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( showcolumnvisibilitymenu ) )
+                           ( n = `showNoData`                v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( shownodata ) )
                            ( n = `threshold`                 v = threshold )
                            ( n = `visibleRowCount`           v = visiblerowcount )
                            ( n = `visibleRowCountMode`       v = visiblerowcountmode )
@@ -4114,7 +4114,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
     result = |{ result }>|.
 
     LOOP AT mtchild INTO DATA(lrchild).
-      result = result && CAST z2ui5_cl_view( lrchild )->xmlget( ).
+      result = result && CAST Z2UI5_cl_view( lrchild )->xmlget( ).
     ENDLOOP.
 
     DATA(lvns) = COND #( WHEN mvns <> || THEN |{ mvns }:| ).
@@ -4132,7 +4132,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
   METHOD c.
 
-    DATA(result2) = NEW z2ui5_cl_view( ).
+    DATA(result2) = NEW Z2UI5_cl_view( ).
     result2->mvname   = n.
     result2->mvns     = ns.
     result2->mtprop  = p.
@@ -4147,7 +4147,7 @@ CLASS z2ui5_cl_view IMPLEMENTATION.
 
   METHOD pb.
 
-    INSERT value #( n = n v = z2ui5_cl_fw_utility=>boolean_abap_2_json( v ) ) INTO TABLE mtprop.
+    INSERT value #( n = n v = Z2UI5_cl_fw_utility=>boolean_abap_2_json( v ) ) INTO TABLE mtprop.
     result = me.
 
   ENDMETHOD.

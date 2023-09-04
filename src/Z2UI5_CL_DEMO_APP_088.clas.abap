@@ -1,11 +1,11 @@
-CLASS z2ui5_CL_DEMO_APP_088 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_088 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
 
     DATA mv_selected_key TYPE string.
@@ -13,11 +13,11 @@ CLASS z2ui5_CL_DEMO_APP_088 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_on_event.
 
 
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_088 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -35,18 +35,18 @@ CLASS z2ui5_CL_DEMO_APP_088 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       mv_page = `page1`.
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
@@ -55,7 +55,7 @@ CLASS z2ui5_CL_DEMO_APP_088 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_089->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -66,11 +66,11 @@ CLASS z2ui5_CL_DEMO_APP_088 IMPLEMENTATION.
         client->message_toast_display( |Event SelectedTabBar Key {  mv_selected_key } | ).
 
         client->_event_client( val = 'NAV_TO' t_arg  = VALUE #( ( `NavCon` ) ( mv_selected_key ) ) ).
-        z2ui5_view_display( ).
+        Z2UI5_view_display( ).
 
       WHEN OTHERS.
         mv_page = client->get( )-event.
-        z2ui5_view_display( ).
+        Z2UI5_view_display( ).
 
     ENDCASE.
 
@@ -81,9 +81,9 @@ CLASS z2ui5_CL_DEMO_APP_088 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_089->Z2UI5_VIEW_DISPLAY
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(

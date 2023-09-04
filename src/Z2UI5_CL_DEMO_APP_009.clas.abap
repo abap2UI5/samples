@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_009 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -48,20 +48,20 @@ CLASS z2ui5_CL_DEMO_APP_009 DEFINITION PUBLIC.
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
     METHODS popup_f4_table_custom
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS Z2UI5_on_rendering
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
-    METHODS z2ui5_on_event
+    METHODS Z2UI5_on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_init.
+        client TYPE REF TO Z2UI5_if_client.
+    METHODS Z2UI5_on_init.
 
 
   PRIVATE SECTION.
@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     popup->dialog( 'abap2UI5 - F4 Value Help'
     )->table(
@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table_custom.
 
-    DATA(popup2) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup2) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     popup2 = popup2->dialog( 'abap2UI5 - F4 Value Help' ).
 
@@ -159,22 +159,22 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     CLEAR mv_view_popup.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
-    z2ui5_on_event( client ).
+    Z2UI5_on_event( client ).
 
-    z2ui5_on_rendering( client ).
+    Z2UI5_on_rendering( client ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -222,7 +222,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     mt_suggestion = VALUE #(
         ( descr = 'this is the color Green'  value = 'GREEN' )
@@ -295,9 +295,9 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD Z2UI5_on_rendering.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Value Help Examples'

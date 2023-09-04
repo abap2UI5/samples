@@ -1,25 +1,25 @@
-CLASS z2ui5_CL_DEMO_APP_036 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_036 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_value TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
     app-get      = client->get( ).
@@ -37,21 +37,21 @@ CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    Z2UI5_on_render( ).
 
     CLEAR app-get.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE app-get-event.
 
@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     app-view_main = 'VIEW_MAIN'.
     mv_value = 'test'.
@@ -77,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD Z2UI5_on_render.
 
     data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
     data(lv_xml) = `<mvc:View` && |\n|  &&

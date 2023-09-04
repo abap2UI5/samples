@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_051 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_051 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -15,20 +15,20 @@ CLASS z2ui5_CL_DEMO_APP_051 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS Z2UI5_on_rendering
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
+        client TYPE REF TO Z2UI5_if_client.
+    METHODS Z2UI5_on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_init.
+        client TYPE REF TO Z2UI5_if_client.
+    METHODS Z2UI5_on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -36,15 +36,15 @@ CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
-      z2ui5_on_rendering( client ).
+      Z2UI5_on_init( ).
+      Z2UI5_on_rendering( client ).
     ENDIF.
 
-    z2ui5_on_event( client ).
+    Z2UI5_on_event( client ).
 
   ENDMETHOD.
 
@@ -54,7 +54,7 @@ CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -75,7 +75,7 @@ CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_002->Z2UI5_ON_INIT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
   ENDMETHOD.
 
@@ -85,9 +85,9 @@ CLASS z2ui5_CL_DEMO_APP_051 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_rendering.
+  METHOD Z2UI5_on_rendering.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Label Example'
             navbuttonpress = client->_event( 'BACK' )

@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_064 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_user TYPE string.
     DATA mv_game TYPE string.
@@ -22,18 +22,18 @@ CLASS z2ui5_CL_DEMO_APP_064 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     METHODS call_newest_state
       IMPORTING
-                i_client      TYPE REF TO z2ui5_if_client
+                i_client      TYPE REF TO Z2UI5_if_client
       RETURNING VALUE(result) TYPE abap_bool.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS Z2UI5_on_rendering
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
 
   PRIVATE SECTION.
@@ -44,7 +44,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
@@ -61,18 +61,18 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
     ENDCASE.
 
-    z2ui5_on_rendering( client ).
+    Z2UI5_on_rendering( client ).
 
     check_db_load = abap_true.
-    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST02' game = mv_game ) ).
+    MODIFY Z2UI5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST02' game = mv_game ) ).
     COMMIT WORK.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD Z2UI5_on_rendering.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Game Example'
             navbuttonpress = client->_event( 'BACK' )
@@ -116,20 +116,20 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
   METHOD call_newest_state.
 
-    SELECT SINGLE FROM z2ui5_t_demo_01
+    SELECT SINGLE FROM Z2UI5_t_demo_01
           FIELDS *
           WHERE name = 'TEST02' AND
                 game = @mv_game
           INTO @DATA(ls_data).
 
     IF sy-subrc = 0 AND ls_data-uuid <> client->get( )-s_draft-id.
-      SELECT SINGLE FROM z2ui5_t_draft
+      SELECT SINGLE FROM Z2UI5_t_draft
        FIELDS *
       WHERE uuid = @ls_data-uuid
      INTO @DATA(ls_draft).
 
       IF sy-subrc = 0.
-        DATA(app) = CAST z2ui5_CL_DEMO_APP_064( i_client->get_app( ls_draft-uuid ) ).
+        DATA(app) = CAST Z2UI5_CL_DEMO_APP_064( i_client->get_app( ls_draft-uuid ) ).
         app->mv_user = mv_user.
 
         IF mv_message IS NOT INITIAL and client->get( )-event = 'SEND'.

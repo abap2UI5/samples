@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_057 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_057 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -20,22 +20,22 @@ CLASS z2ui5_CL_DEMO_APP_057 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render.
+    METHODS Z2UI5_on_render_main.
 
-    METHODS z2ui5_set_data.
+    METHODS Z2UI5_set_data.
 
   PRIVATE SECTION.
 
@@ -117,33 +117,33 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
     app-get        = client->get( ).
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    Z2UI5_on_render( ).
 
     CLEAR app-get.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE app-get-event.
 
       WHEN 'BUTTON_START'.
-        z2ui5_set_data( ).
+        Z2UI5_set_data( ).
 
       WHEN `BUTTON_DOWNLOAD`.
         mv_check_download = abap_true.
@@ -156,26 +156,26 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     app-view_main = `MAIN`.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD Z2UI5_on_render.
 
     CASE app-view_main.
       WHEN 'MAIN'.
-        z2ui5_on_render_main( ).
+        Z2UI5_on_render_main( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD Z2UI5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
       view = view->page( id = `page_main`
                 title          = 'abap2UI5 - List Report Features'
@@ -246,7 +246,7 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_table = VALUE #(
         ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

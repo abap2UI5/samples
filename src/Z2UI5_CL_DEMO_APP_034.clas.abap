@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_034 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_034 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA t_bapiret TYPE bapirettab.
     DATA check_initialized TYPE abap_bool.
@@ -12,10 +12,10 @@ CLASS z2ui5_CL_DEMO_APP_034 DEFINITION PUBLIC.
 
     METHODS view_main
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
     METHODS view_popup_bal
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

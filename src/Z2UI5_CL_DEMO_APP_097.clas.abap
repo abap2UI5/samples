@@ -1,4 +1,4 @@
-CLASS z2ui5_CL_DEMO_APP_097 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_097 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -6,7 +6,7 @@ CLASS z2ui5_CL_DEMO_APP_097 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_row,
@@ -27,7 +27,7 @@ CLASS z2ui5_CL_DEMO_APP_097 DEFINITION
     DATA mv_check_enabled_02 TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     METHODS view_display_master.
     METHODS view_display_detail.
@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 
@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client
        )->page(
           title          = 'abap2UI5 - Master Detail Page with Nested View'
           navbuttonpress = client->_event( 'BACK' )
@@ -114,7 +114,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

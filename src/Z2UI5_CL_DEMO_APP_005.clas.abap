@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_005 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_005 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -42,10 +42,10 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_005 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_005 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF screen-check_initialized = abap_false.
       screen-check_initialized = abap_true.
@@ -99,7 +99,7 @@ CLASS z2ui5_CL_DEMO_APP_005 IMPLEMENTATION.
 
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Selection-Screen more Controls'

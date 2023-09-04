@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_028 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_028 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -18,13 +18,13 @@ CLASS z2ui5_CL_DEMO_APP_028 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_view_display.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -34,24 +34,24 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_028 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
-      z2ui5_view_display( ).
+      Z2UI5_on_init( ).
+      Z2UI5_view_display( ).
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_028 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     mv_counter = 1.
 
@@ -90,9 +90,9 @@ CLASS Z2UI5_CL_DEMO_APP_028 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )

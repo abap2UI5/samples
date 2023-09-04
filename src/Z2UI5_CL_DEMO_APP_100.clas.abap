@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_100 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_100 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -29,13 +29,13 @@ CLASS z2ui5_CL_DEMO_APP_100 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_vm_popup.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_set_data.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_view_vm_popup.
+    METHODS Z2UI5_on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -45,25 +45,25 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      z2ui5_set_data( ).
+      Z2UI5_set_data( ).
 
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
@@ -89,9 +89,9 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
@@ -144,9 +144,9 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_vm_popup.
+  METHOD Z2UI5_view_vm_popup.
 
-    DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
 
     client->popup_display( popup_sort->stringify( ) ).

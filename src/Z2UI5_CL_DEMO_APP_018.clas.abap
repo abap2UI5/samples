@@ -1,23 +1,23 @@
-CLASS z2ui5_CL_DEMO_APP_018 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_018 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA quantity TYPE string.
     DATA mv_textarea TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
 
-    METHODS z2ui5_display_view_main.
-    METHODS z2ui5_display_view_second.
-    METHODS z2ui5_display_popup_input.
+    METHODS Z2UI5_display_view_main.
+    METHODS Z2UI5_display_view_second.
+    METHODS Z2UI5_display_popup_input.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -27,9 +27,9 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_popup_input.
+  METHOD Z2UI5_display_popup_input.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
     view->dialog(
              title = 'Title'
              icon = 'sap-icon://edit'
@@ -61,9 +61,9 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view_main.
+  METHOD Z2UI5_display_view_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
@@ -103,9 +103,9 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view_second.
+  METHOD Z2UI5_display_view_second.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
@@ -136,27 +136,27 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
       WHEN 'SHOW_POPUP'.
-        z2ui5_display_popup_input( ).
+        Z2UI5_display_popup_input( ).
 
       WHEN 'POPUP_CONFIRM'.
         client->message_toast_display( |confirm| ).
@@ -168,10 +168,10 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
         client->popup_destroy( ).
 
       WHEN 'SHOW_VIEW_MAIN'.
-        z2ui5_display_view_main( ).
+        Z2UI5_display_view_main( ).
 
       WHEN 'SHOW_VIEW_SECOND'.
-        z2ui5_display_view_second( ).
+        Z2UI5_display_view_second( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -181,10 +181,10 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     quantity = '500'.
-    z2ui5_display_view_main( ).
+    Z2UI5_display_view_main( ).
 
   ENDMETHOD.
 ENDCLASS.

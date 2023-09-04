@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_016 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_016 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA check_initialized TYPE abap_bool.
 
@@ -30,7 +30,7 @@ CLASS z2ui5_CL_DEMO_APP_016 DEFINITION PUBLIC.
 
     METHODS render_tab_bar.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
 
   METHOD render_tab_bar.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(container) = view->shell(
         )->page(
@@ -121,7 +121,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

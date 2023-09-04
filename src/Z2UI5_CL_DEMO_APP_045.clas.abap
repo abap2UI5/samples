@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_045 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_045 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
     ENDCASE.
 
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
+                    href = Z2UI5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
         )->get_parent( ).
 
     page->simple_form( title = 'Form Title' editable = abap_true

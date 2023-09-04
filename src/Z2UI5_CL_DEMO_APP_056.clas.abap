@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_056 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_056 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_S_filter_pop,
@@ -26,7 +26,7 @@ CLASS z2ui5_CL_DEMO_APP_056 DEFINITION PUBLIC.
     DATA mv_value2      TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
 
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
+    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -52,21 +52,21 @@ CLASS z2ui5_CL_DEMO_APP_056 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_pop_filter.
-    METHODS z2ui5_set_data.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render.
+    METHODS Z2UI5_on_render_main.
+    METHODS Z2UI5_on_render_pop_filter.
+    METHODS Z2UI5_set_data.
     METHODS map_range_to_token.
 
     CLASS-METHODS hlp_get_range_by_value
@@ -164,7 +164,7 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
     app-get        = client->get( ).
@@ -172,25 +172,25 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    Z2UI5_on_render( ).
     CLEAR app-get.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE app-get-event.
 
       WHEN `BUTTON_START`.
-        z2ui5_set_data( ).
+        Z2UI5_set_data( ).
 
 *      WHEN `FILTER_UPDATE`.
 *        IF mv_value IS NOT INITIAL.
@@ -244,7 +244,7 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     app-view_main = `MAIN`.
 
@@ -264,26 +264,26 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD Z2UI5_on_render.
 
     map_range_to_token( ).
 
     CASE app-view_popup.
       WHEN `VALUE_HELP`.
-        z2ui5_on_render_pop_filter( ).
+        Z2UI5_on_render_pop_filter( ).
     ENDCASE.
 
     CASE app-view_main.
       WHEN 'MAIN'.
-        z2ui5_on_render_main( ).
+        Z2UI5_on_render_main( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD Z2UI5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     view = view->page( id = `page_main`
              title          = 'abap2UI5 - Select-Options'
@@ -358,9 +358,9 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_pop_filter.
+  METHOD Z2UI5_on_render_pop_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     lo_popup = lo_popup->dialog(
     contentheight = `50%`
@@ -413,7 +413,7 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     "replace this with a db select here...
     mt_table = VALUE #(

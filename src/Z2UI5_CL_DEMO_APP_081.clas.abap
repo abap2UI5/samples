@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_081 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_081 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
@@ -19,16 +19,16 @@ CLASS z2ui5_CL_DEMO_APP_081 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_display_view.
+    METHODS Z2UI5_display_popover
       IMPORTING
         id TYPE string.
-    METHODS z2ui5_display_popover_list
+    METHODS Z2UI5_display_popover_list
       IMPORTING
         id TYPE string.
 
@@ -37,7 +37,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
@@ -45,9 +45,9 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] ID                             TYPE        STRING
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_display_popover.
+  METHOD Z2UI5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
     view->popover(
                   title     = 'Popover Title'
                   placement = mv_placement
@@ -78,9 +78,9 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] ID                             TYPE        STRING
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_display_popover_list.
+  METHOD Z2UI5_display_popover_list.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
       view->popover(
                   title     = 'Popover Title'
                   placement = mv_placement
@@ -107,9 +107,9 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_DISPLAY_VIEW
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_display_view.
+  METHOD Z2UI5_display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     view->shell(
       )->page(
               title          = 'abap2UI5 - Popover with List'
@@ -162,18 +162,18 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
-      z2ui5_display_view( ).
+      Z2UI5_on_init( ).
+      Z2UI5_display_view( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
@@ -182,7 +182,7 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -191,10 +191,10 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
         DELETE lt_sel WHERE selected IS INITIAL.
 
       WHEN 'POPOVER_LIST'.
-        z2ui5_display_popover_list( `TEST` ).
+        Z2UI5_display_popover_list( `TEST` ).
 
       WHEN 'POPOVER'.
-        z2ui5_display_popover( `TEST` ).
+        Z2UI5_display_popover( `TEST` ).
 
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).
@@ -216,7 +216,7 @@ CLASS z2ui5_CL_DEMO_APP_081 IMPLEMENTATION.
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_026->Z2UI5_ON_INIT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     mv_placement = 'Left'.
     product  = 'tomato'.

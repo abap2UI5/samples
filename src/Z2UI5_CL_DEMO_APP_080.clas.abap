@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_080 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_080 DEFINITION
 PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_s_appointments,
@@ -39,12 +39,12 @@ PUBLIC
       lt_people TYPE STANDARD TABLE OF ty_s_people .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO Z2UI5_if_client .
     DATA check_initialized TYPE abap_bool .
 
-    METHODS z2ui5_display_view .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS Z2UI5_display_view .
+    METHODS Z2UI5_on_event .
+    METHODS Z2UI5_set_data .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -53,25 +53,25 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_set_data( ).
+      Z2UI5_set_data( ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      z2ui5_display_view( ).
+      Z2UI5_display_view( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
     CASE client->get( )-event.
       WHEN 'AppSelected' .
         DATA(ls_client) = client->get( ).
@@ -82,9 +82,9 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view.
+  METHOD Z2UI5_display_view.
     DATA(lv_s_date) =  '2023-04-22T08:15:00'.
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
 
@@ -138,7 +138,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
     lt_people = VALUE #(
      ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(

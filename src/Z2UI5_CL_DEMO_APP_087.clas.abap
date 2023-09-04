@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_087 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_087 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -29,13 +29,13 @@ CLASS z2ui5_CL_DEMO_APP_087 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_f4_set_data.
-    METHODS z2ui5_display_f4_popup.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_f4_set_data.
+    METHODS Z2UI5_display_f4_popup.
 
   PRIVATE SECTION.
 
@@ -43,25 +43,25 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_087 IMPLEMENTATION.
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_f4_set_data( ).
-      z2ui5_view_display( ).
+      Z2UI5_f4_set_data( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -69,7 +69,7 @@ CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN 'F4'.
-        z2ui5_display_f4_popup( ).
+        Z2UI5_display_f4_popup( ).
 
       WHEN 'CONFIRM'.
         DELETE mt_f4_table WHERE selkz <> abap_true.
@@ -82,7 +82,7 @@ CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
       WHEN 'SEARCH'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-        z2ui5_f4_set_data( ).
+        Z2UI5_f4_set_data( ).
         LOOP AT mt_f4_table INTO DATA(ls_tab).
           IF ls_tab-product CS ls_arg.
             CONTINUE.
@@ -96,9 +96,9 @@ CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Table Select Dialog'
@@ -115,7 +115,7 @@ CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD z2ui5_f4_set_data.
+  METHOD Z2UI5_f4_set_data.
 
     mt_f4_table = VALUE #(
         ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
@@ -128,9 +128,9 @@ CLASS z2ui5_CL_DEMO_APP_087 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD z2ui5_display_f4_popup.
+  METHOD Z2UI5_display_f4_popup.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     popup = popup->table_select_dialog(
               items              =  `{path:'` && client->_bind_edit( val = mt_f4_table path = abap_true ) && `', sorter : { path : 'STORAGE_LOCATION', descending : false } }`

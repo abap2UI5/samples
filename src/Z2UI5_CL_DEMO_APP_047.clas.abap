@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_047 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_047 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA int1    TYPE i.
     DATA int2    TYPE i.
@@ -26,7 +26,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
     ENDCASE.
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client )->shell(
+    client->view_display( Z2UI5_cl_xml_view=>factory( client )->shell(
         )->page(
                 title          = 'abap2UI5 - Integer and Decimals'
                 navbuttonpress = client->_event( 'BACK' )
@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    href = z2ui5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
+                    href = Z2UI5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
                     target = '_blank'
             )->get_parent(
             )->simple_form( title = 'Integer and Decimals' editable = abap_true

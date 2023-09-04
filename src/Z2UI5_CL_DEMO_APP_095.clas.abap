@@ -1,7 +1,7 @@
-CLASS z2ui5_CL_DEMO_APP_095 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_095 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_01,
@@ -18,11 +18,11 @@ CLASS z2ui5_CL_DEMO_APP_095 DEFINITION PUBLIC.
       END OF ty_s_01.
     DATA ms_screen TYPE ty_s_01.
 
-    DATA mo_app_sub TYPE REF TO z2ui5_CL_DEMO_APP_096.
+    DATA mo_app_sub TYPE REF TO Z2UI5_CL_DEMO_APP_096.
 
-    DATA client      TYPE REF TO z2ui5_if_client.
+    DATA client      TYPE REF TO Z2UI5_if_client.
     DATA mv_init     TYPE abap_bool.
-    DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
+    DATA mo_grid_sub TYPE REF TO Z2UI5_cl_xml_view.
 
     DATA mr_input  TYPE REF TO data.
     DATA mr_screen TYPE REF TO data.
@@ -35,13 +35,13 @@ CLASS z2ui5_CL_DEMO_APP_095 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA: page TYPE REF TO z2ui5_cl_xml_view.
+    DATA: page TYPE REF TO Z2UI5_cl_xml_view.
 
 ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
 
 
   METHOD on_event.
@@ -62,7 +62,7 @@ CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
   METHOD on_event_sub.
 
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->Z2UI5_if_app~main( client = client ).
 
   ENDMETHOD.
 
@@ -79,7 +79,7 @@ CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
 
     mo_app_sub = new #( ).
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->Z2UI5_if_app~main( client = client ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 
@@ -88,7 +88,7 @@ CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
 
   METHOD view_build.
 
-    page = z2ui5_cl_xml_view=>factory( client )->shell(
+    page = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Main App with Sub App'
             navbuttonpress = client->_event( 'BACK' )
@@ -132,7 +132,7 @@ CLASS z2ui5_CL_DEMO_APP_095 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_090 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_090 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES: BEGIN OF t_items2,
              columnkey TYPE string,
@@ -29,12 +29,12 @@ CLASS z2ui5_CL_DEMO_APP_090 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_p13n.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_view_p13n.
+    METHODS Z2UI5_on_event.
 
 
   PRIVATE SECTION.
@@ -44,10 +44,10 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_090 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
@@ -72,16 +72,16 @@ CLASS z2ui5_CL_DEMO_APP_090 IMPLEMENTATION.
                            ( columnkey = `supplierName` showifgrouped = abap_false )
                          ).
 
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -89,7 +89,7 @@ CLASS z2ui5_CL_DEMO_APP_090 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN 'P13N_OPEN'.
-        z2ui5_view_p13n( ).
+        Z2UI5_view_p13n( ).
 
       WHEN 'OK' OR 'CANCEL'.
         client->popup_destroy( ).
@@ -98,9 +98,9 @@ CLASS z2ui5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(page) =  z2ui5_cl_xml_view=>factory( client )->shell( )->page(
+    DATA(page) =  Z2UI5_cl_xml_view=>factory( client )->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = abap_true
@@ -113,9 +113,9 @@ CLASS z2ui5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_p13n.
+  METHOD Z2UI5_view_p13n.
 
-    DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(p13n_dialog) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     DATA(p13n) = p13n_dialog->_generic( name = `P13nDialog`
     t_prop = VALUE #(

@@ -1,11 +1,11 @@
-CLASS z2ui5_CL_DEMO_APP_063 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_063 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA check_initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     DATA:
       BEGIN OF ms_popup_input,
@@ -32,12 +32,12 @@ CLASS z2ui5_CL_DEMO_APP_063 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS Z2UI5_on_rendering
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
+        client TYPE REF TO Z2UI5_if_client.
+    METHODS Z2UI5_on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -47,7 +47,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
@@ -57,12 +57,12 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      z2ui5_on_rendering( client ).
+      Z2UI5_on_rendering( client ).
     ENDIF.
 
-    z2ui5_on_event( client ).
+    Z2UI5_on_event( client ).
 
-    SELECT FROM z2ui5_t_demo_01
+    SELECT FROM Z2UI5_t_demo_01
         FIELDS *
         WHERE name = 'TEST02'
         INTO CORRESPONDING FIELDS OF TABLE @mt_data.
@@ -70,7 +70,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -80,12 +80,12 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
       WHEN 'BUTTON_CONFIRM'.
         client->popup_destroy( ).
 
-        DATA(game) = NEW z2ui5_CL_DEMO_APP_064( ).
+        DATA(game) = NEW Z2UI5_CL_DEMO_APP_064( ).
         game->mv_user = ms_popup_input-user.
         game->mv_game = ms_popup_input-name.
         client->nav_app_call( game ).
-*        MODIFY z2ui5_t_demo_01 FROM @( VALUE #(
-*           name = 'TEST02' game = ms_popup_input-name uuid = cast z2ui5_if_app( game )->id ) ).
+*        MODIFY Z2UI5_t_demo_01 FROM @( VALUE #(
+*           name = 'TEST02' game = ms_popup_input-name uuid = cast Z2UI5_if_app( game )->id ) ).
 *        COMMIT WORK.
 
 
@@ -97,7 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
         DELETE lt_entry WHERE selkz = abap_false.
 
         LOOP AT lt_entry INTO DATA(ls_entry).
-          DELETE FROM z2ui5_t_demo_01 WHERE
+          DELETE FROM Z2UI5_t_demo_01 WHERE
               game = @ls_entry-game.
         ENDLOOP.
         COMMIT WORK AND WAIT.
@@ -111,7 +111,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
       WHEN 'BUTTON_START'.
         client->popup_destroy( ).
 
-        SELECT SINGLE FROM z2ui5_t_demo_01
+        SELECT SINGLE FROM Z2UI5_t_demo_01
         FIELDS *
         WHERE
             name = 'TEST02' AND
@@ -131,9 +131,9 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD Z2UI5_on_rendering.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Games'
             navbuttonpress = client->_event( 'BACK' )
@@ -188,7 +188,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
           contentheight = '500px'
           contentwidth  = '500px'
           title = 'Title'
@@ -217,7 +217,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
   METHOD popup_display_start.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
           contentheight = '500px'
           contentwidth  = '500px'
           title = 'Title'

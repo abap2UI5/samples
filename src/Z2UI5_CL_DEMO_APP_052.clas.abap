@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_052 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_052 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -17,14 +17,14 @@ CLASS z2ui5_CL_DEMO_APP_052 DEFINITION PUBLIC.
 
     DATA mt_table TYPE ty_T_table.
     DATA check_initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     DATA mv_check_popover TYPE abap_bool.
     DATA mv_product TYPE string.
 
-    METHODS  z2ui5_set_data.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS  Z2UI5_set_data.
+    METHODS Z2UI5_display_view.
+    METHODS Z2UI5_display_popover
       IMPORTING
         id TYPE string.
 
@@ -37,9 +37,9 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD Z2UI5_display_popover.
 
-    DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popover) = Z2UI5_cl_xml_view=>factory_popup( client ).
 
     lo_popover->popover( placement = `Right` title = `abap2UI5 - Popover - ` && mv_product  contentwidth = `50%`
       )->simple_form( editable = abap_true
@@ -66,9 +66,9 @@ CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view.
+  METHOD Z2UI5_display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     data(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
@@ -128,13 +128,13 @@ CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_display_view( ).
+      Z2UI5_display_view( ).
       RETURN.
     ENDIF.
 
@@ -145,10 +145,10 @@ CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
         DATA(lv_open_by_id) = lt_arg[ 1 ].
         mv_check_popover = abap_true.
         mv_product = lt_arg[ 2 ].
-        z2ui5_display_popover( lv_open_by_id ).
+        Z2UI5_display_popover( lv_open_by_id ).
 
       WHEN 'BUTTON_START'.
-        z2ui5_set_data( ).
+        Z2UI5_set_data( ).
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -160,7 +160,7 @@ CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_table = VALUE #(
         ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

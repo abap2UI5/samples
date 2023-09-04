@@ -34,7 +34,7 @@ CLASS lcl_db IMPLEMENTATION.
 
 ENDCLASS.
 
-CLASS z2ui5_lcl_utility DEFINITION INHERITING FROM cx_no_check.
+CLASS Z2UI5_lcl_utility DEFINITION INHERITING FROM cx_no_check.
 
   PUBLIC SECTION.
 
@@ -158,7 +158,7 @@ CLASS z2ui5_lcl_utility DEFINITION INHERITING FROM cx_no_check.
 ENDCLASS.
 
 
-CLASS z2ui5_lcl_utility IMPLEMENTATION.
+CLASS Z2UI5_lcl_utility IMPLEMENTATION.
 
   METHOD get_trim_upper.
     result = CONV #( val ).
@@ -433,7 +433,7 @@ CLASS z2ui5_lcl_utility IMPLEMENTATION.
     IF when = abap_false.
       RETURN.
     ENDIF.
-    RAISE EXCEPTION TYPE z2ui5_lcl_utility EXPORTING val = v.
+    RAISE EXCEPTION TYPE Z2UI5_lcl_utility EXPORTING val = v.
 
   ENDMETHOD.
 ENDCLASS.

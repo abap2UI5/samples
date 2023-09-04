@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_075 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_075 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_path TYPE string.
     DATA mv_value TYPE string.
@@ -14,7 +14,7 @@ CLASS z2ui5_CL_DEMO_APP_075 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS ui5_on_init.
@@ -77,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client
+    client->view_display( Z2UI5_cl_xml_view=>factory( client
          )->zcc_file_uploader_js(
          )->stringify( ) ).
 
@@ -86,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
   METHOD ui5_view_main_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - Upload Files'
             navbuttonpress = client->_event( 'BACK' )
@@ -124,7 +124,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 

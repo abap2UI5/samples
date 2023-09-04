@@ -1,24 +1,24 @@
-CLASS z2ui5_CL_DEMO_APP_023 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_023 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        s_get             TYPE z2ui5_if_client=>ty_s_get,
+        s_get             TYPE Z2UI5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
+    METHODS Z2UI5_on_init.
+    METHODS Z2UI5_on_event.
+    METHODS Z2UI5_on_render_main.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -29,28 +29,28 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
     app-s_get  = client->get( ).
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      Z2UI5_on_init( ).
     ENDIF.
 
     IF app-s_get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      Z2UI5_on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
+    Z2UI5_on_render_main( ).
 
     CLEAR app-s_get.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE app-s_get-event.
 
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD Z2UI5_on_init.
 
     product  = 'tomato'.
     quantity = '500'.
@@ -74,9 +74,9 @@ CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD Z2UI5_on_render_main.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
 
     CASE app-view_main.
 

@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_062 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_062 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -11,16 +11,16 @@ CLASS z2ui5_CL_DEMO_APP_062 DEFINITION PUBLIC.
       END OF screen.
 
     DATA check_initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS Z2UI5_on_rendering
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
+        client TYPE REF TO Z2UI5_if_client.
+    METHODS Z2UI5_on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO Z2UI5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -30,20 +30,20 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_062 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      SELECT SINGLE FROM z2ui5_t_demo_01
+      SELECT SINGLE FROM Z2UI5_t_demo_01
         FIELDS *
         WHERE name = 'TEST01'
         INTO @DATA(ls_data).
 
       IF sy-subrc = 0.
-        SELECT SINGLE FROM z2ui5_t_draft
+        SELECT SINGLE FROM Z2UI5_t_draft
          FIELDS *
         WHERE uuid = @ls_data-uuid
        INTO @DATA(ls_draft).
@@ -55,16 +55,16 @@ CLASS Z2UI5_CL_DEMO_APP_062 IMPLEMENTATION.
       ENDIF.
     ENDIF.
 
-    z2ui5_on_event( client ).
-    z2ui5_on_rendering( client ).
+    Z2UI5_on_event( client ).
+    Z2UI5_on_rendering( client ).
 
-    MODIFY z2ui5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST01' ) ).
+    MODIFY Z2UI5_t_demo_01 FROM @( VALUE #( uuid = client->get( )-s_draft-id name = 'TEST01' ) ).
     COMMIT WORK.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -81,9 +81,9 @@ CLASS Z2UI5_CL_DEMO_APP_062 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD Z2UI5_on_rendering.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
          )->page(
             title          = 'abap2UI5 - Start app with values Demo'
             navbuttonpress = client->_event( 'BACK' )

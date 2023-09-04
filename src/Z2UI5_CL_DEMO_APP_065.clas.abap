@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_065 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_065 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA mv_input_main  TYPE string.
     DATA mv_input_nest  TYPE string.
@@ -17,7 +17,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
 
       data(lo_view) = Z2UI5_CL_XML_VIEW=>factory( client ).
@@ -39,7 +39,7 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
                 )->button( text = 'Rerender only nested view' press = client->_event( 'NEST' )
                 )->input( value = client->_bind_edit( mv_input_main )  ).
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client
+    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client
           )->page( title = `Nested View`
               )->button( text = 'event' press = client->_event( 'TEST' )
               )->input( value = client->_bind_edit( mv_input_nest ) ).

@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_091 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_091 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES: children_array TYPE STANDARD TABLE OF int4 WITH NON-UNIQUE KEY table_line.
     TYPES: texts_array TYPE STANDARD TABLE OF string WITH NON-UNIQUE KEY table_line.
@@ -41,12 +41,12 @@ CLASS z2ui5_CL_DEMO_APP_091 DEFINITION
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
+    METHODS Z2UI5_set_data.
+    METHODS Z2UI5_view_display.
+    METHODS Z2UI5_on_event.
 
 
   PRIVATE SECTION.
@@ -58,25 +58,25 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      z2ui5_set_data( ).
+      Z2UI5_set_data( ).
 
-      z2ui5_view_display( ).
+      Z2UI5_view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    Z2UI5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
 
@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD Z2UI5_set_data.
 
     mt_nodes = VALUE #( ( id = `1` lane = `0` title = `Sales Order 1` titleabbreviation = `SO 1` children = VALUE #( ( 10 ) ( 11 ) ( 12 ) ) state = `Positive` statetext = `OK status` focused = abap_true
                           highlighted = abap_false texts = VALUE #( ( `Sales Order Document Overdue long text for the wrap up all the aspects` ) ( `Not cleared` ) ) )
@@ -111,9 +111,9 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD Z2UI5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - Process Flow'

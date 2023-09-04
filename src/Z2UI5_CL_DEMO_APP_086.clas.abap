@@ -1,11 +1,11 @@
-CLASS z2ui5_CL_DEMO_APP_086 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_086 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES Z2UI5_if_app .
 
     TYPES:
       BEGIN OF ty_s_tab_supplier,
@@ -25,10 +25,10 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_086 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -36,7 +36,7 @@ CLASS z2ui5_CL_DEMO_APP_086 IMPLEMENTATION.
     ENDCASE.
 
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
                title          = 'abap2UI5 - Flow Logic - APP 85'

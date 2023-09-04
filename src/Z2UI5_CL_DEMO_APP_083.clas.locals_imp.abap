@@ -1,4 +1,4 @@
-CLASS z2ui5_tool_cl_utility DEFINITION
+CLASS Z2UI5_tool_cl_utility DEFINITION
   FINAL
   CREATE public.
 

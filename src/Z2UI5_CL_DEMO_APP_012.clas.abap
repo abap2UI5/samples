@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_012 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_012 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
     DATA mv_check_popup TYPE abap_bool.
     METHODS ui5_popup_decide.
@@ -17,12 +17,12 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
 
   METHOD ui5_popup_decide.
 
-    DATA(popup)  = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
     popup->dialog( 'Popup - Decide'
             )->vbox(
                 )->text( 'this is a popup to decide, you have to make a decision now...'
@@ -44,7 +44,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_popup_info_frontend_close.
 
-    DATA(popup)  = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
     popup->dialog( 'Popup - Info'
             )->vbox(
                 )->text( 'this is an information, press close to go back to the main view without a server roundtrip'
@@ -63,7 +63,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(lo_main) = z2ui5_cl_xml_view=>factory( client )->shell( ).
+    DATA(lo_main) = Z2UI5_cl_xml_view=>factory( client )->shell( ).
     DATA(page) = lo_main->page(
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
@@ -109,7 +109,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
@@ -119,7 +119,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
 
     IF mv_check_popup = abap_true.
       mv_check_popup = abap_false.
-      DATA(app) = CAST z2ui5_CL_DEMO_APP_020( client->get_app( client->get( )-s_draft-id_prev_app )  ).
+      DATA(app) = CAST Z2UI5_CL_DEMO_APP_020( client->get_app( client->get( )-s_draft-id_prev_app )  ).
       client->message_toast_display( app->mv_event && ` pressed` ).
     ENDIF.
 
@@ -151,7 +151,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
       WHEN 'BUTTON_POPUP_05'.
         mv_check_popup = abap_true.
         client->view_destroy( ).
-        client->nav_app_call( z2ui5_CL_DEMO_APP_020=>factory(
+        client->nav_app_call( Z2UI5_CL_DEMO_APP_020=>factory(
           i_text          = '(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back'
           i_cancel_text   = 'Cancel '
           i_cancel_event  = 'POPUP_DECIDE_CANCEL'
@@ -161,7 +161,7 @@ CLASS z2ui5_CL_DEMO_APP_012 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_06'.
         mv_check_popup = abap_true.
-        client->nav_app_call( z2ui5_CL_DEMO_APP_020=>factory(
+        client->nav_app_call( Z2UI5_CL_DEMO_APP_020=>factory(
           i_text          = '(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back'
           i_cancel_text   = 'Cancel'
           i_cancel_event  = 'POPUP_DECIDE_CANCEL'

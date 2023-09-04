@@ -1,10 +1,10 @@
-CLASS z2ui5_CL_DEMO_APP_048 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_048 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -31,7 +31,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -60,7 +60,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
         )->page(
             title          = 'abap2UI5 - List'
             navbuttonpress = client->_event( 'BACK' )
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1657279838586109953`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
+                    href = Z2UI5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
             )->get_parent( ).
 
     page->list(

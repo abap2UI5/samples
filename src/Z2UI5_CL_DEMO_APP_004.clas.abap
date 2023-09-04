@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_004 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
 
 
@@ -11,9 +11,9 @@ CLASS z2ui5_CL_DEMO_APP_004 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_view_main_display.
-    METHODS z2ui5_view_second_display.
-    DATA client TYPE REF TO z2ui5_if_client.
+    METHODS Z2UI5_view_main_display.
+    METHODS Z2UI5_view_second_display.
+    DATA client TYPE REF TO Z2UI5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -23,13 +23,13 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_view_main_display( ).
+      Z2UI5_view_main_display( ).
       client->message_box_display( 'app started, init values set' ).
       RETURN.
     ENDIF.
@@ -40,14 +40,14 @@ CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
         client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
 
       WHEN 'BUTTON_RESTART'.
-        client->nav_app_leave( NEW z2ui5_CL_DEMO_APP_004( ) ).
+        client->nav_app_leave( NEW Z2UI5_CL_DEMO_APP_004( ) ).
 
       WHEN 'BUTTON_CHANGE_VIEW'.
         CASE mv_view_main.
           WHEN 'MAIN'.
-            z2ui5_view_second_display( ).
+            Z2UI5_view_second_display( ).
           WHEN 'SECOND'.
-            z2ui5_view_main_display( ).
+            Z2UI5_view_main_display( ).
         ENDCASE.
 
       WHEN 'BUTTON_ERROR'.
@@ -61,11 +61,11 @@ CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_main_display.
+  METHOD Z2UI5_view_main_display.
 
     mv_view_main = 'MAIN'.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Controller'
@@ -102,11 +102,11 @@ CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_second_display.
+  METHOD Z2UI5_view_second_display.
 
     mv_view_main = 'SECOND'.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell( )->page(
      title          = 'abap2UI5 - Controller'
      navbuttonpress = client->_event( 'BACK' )

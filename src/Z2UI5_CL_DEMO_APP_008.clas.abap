@@ -1,8 +1,8 @@
-CLASS z2ui5_CL_DEMO_APP_008 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_008 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES Z2UI5_if_app.
 
     DATA check_strip_active TYPE abap_bool.
     DATA strip_type TYPE string.
@@ -16,7 +16,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_008 IMPLEMENTATION.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_if_app~main.
 
         CASE client->get( )-event.
 
