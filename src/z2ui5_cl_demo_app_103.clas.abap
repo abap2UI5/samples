@@ -1,4 +1,4 @@
-class Z2UI5_cl_demo_app_0103 definition
+class Z2UI5_cl_demo_app_103 definition
   public
   create public .
 
@@ -19,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_0103 IMPLEMENTATION.
+CLASS Z2UI5_cl_demo_app_103 IMPLEMENTATION.
 
 
   METHOD Z2UI5_IF_APP~MAIN.

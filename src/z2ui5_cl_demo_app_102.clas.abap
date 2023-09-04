@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_0102 DEFINITION
+CLASS z2ui5_cl_demo_app_102 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -51,7 +51,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_cl_demo_app_0102 IMPLEMENTATION.
+CLASS Z2UI5_cl_demo_app_102 IMPLEMENTATION.
 
 
   METHOD generate_ddic_shlp.
