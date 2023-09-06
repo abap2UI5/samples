@@ -569,12 +569,12 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
     DATA: lt_event_arg TYPE string_table,
-          ls_range     TYPE zcl_cc_abap2ui5_util=>ts_range.
+          ls_range     TYPE ts_range.
 
     FIELD-SYMBOLS: <lt_field_token> TYPE STANDARD TABLE,
                    <ls_field_token> TYPE any,
                    <lv_field>       TYPE any,
-                   <ls_filter>      TYPE zcl_cc_abap2ui5_util=>ts_filter_pop,
+                   <ls_filter>      TYPE ts_filter_pop,
                    <ls_shlp_fields> TYPE any.
 
 * ---------- Get event parameters -----------------------------------------------------------------
@@ -641,14 +641,14 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
             ENDIF.
 
 * ---------- Convert token into range format ------------------------------------------------------
-            ls_range = zcl_cc_abap2ui5_util=>hlp_get_range_by_value( iv_value = <lv_field> ).
+            ls_range = me->get_shlp_range_by_value( iv_value = <lv_field> ).
             IF ls_range IS INITIAL.
               CONTINUE.
             ENDIF.
 
 * ---------- Build new filter record --------------------------------------------------------------
             APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
-            <ls_filter>-key     = zcl_cc_abap2ui5_util=>hlp_get_uuid( ).
+            <ls_filter>-key     = me->get_shlp_uuid( ).
             <ls_filter>-option  = ls_range-option.
             <ls_filter>-low     = ls_range-low.
             <ls_filter>-high    = ls_range-high.
@@ -830,7 +830,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
           lv_length           TYPE i,
           lt_FIELDPROP_SEL    TYPE ddshfprops,
           lt_FIELDPROP_LIS    TYPE ddshfprops,
-          ls_range            TYPE zcl_cc_abap2ui5_util=>ts_range,
+          ls_range            TYPE ts_range,
           lv_date_out         TYPE sy-datum,
           lv_time_out         TYPE sy-uzeit.
 
@@ -897,7 +897,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
         CLEAR: ls_range, lv_date_out.
 
 * ---------- Convert token into range format ------------------------------------------------------
-        ls_range = zcl_cc_abap2ui5_util=>hlp_get_range_by_value( iv_value = <ls_token>-key ).
+        ls_range = me->get_shlp_range_by_value( iv_value = <ls_token>-key ).
         IF ls_range IS INITIAL.
           CONTINUE.
         ENDIF.
