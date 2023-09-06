@@ -286,7 +286,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
         WHEN 2.
 * ---------- Grid 2--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_2->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_2->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field> )
@@ -304,7 +304,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
         WHEN 3.
 * ---------- Grid 3--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_3->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_3->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field> )
@@ -322,7 +322,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
         WHEN 4.
 * ---------- Grid 4--------------------------------------------------------------------------------
 * ---------- Set field label ----------------------------------------------------------------------
-          lr_form_shlp_4->label( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+          lr_form_shlp_4->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field> )
@@ -355,7 +355,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      lr_columns->column( )->text( zcl_gu=>get_data_element_labels( iv_data_element = <ls_fielddescr>-rollname ) ).
+      lr_columns->column( )->text( <ls_fielddescr>-scrtext_l ).
     ENDLOOP.
 
 * ---------- Build export parameter list ----------------------------------------------------------
@@ -415,7 +415,7 @@ CLASS Z2UI5_CL_APP_DEMO_104 IMPLEMENTATION.
 * ---------- Create Dialog ------------------------------------------------------------------------
     DATA(lr_dialog) = lr_popup->dialog( contentheight = `50%`
                                   contentwidth = `50%`
-                                  title = TEXT-t22 ).
+                                  title = TEXT-t02 ).
 
 * ---------- Create Vbox --------------------------------------------------------------------------
     DATA(lr_vbox) = lr_dialog->content( )->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
