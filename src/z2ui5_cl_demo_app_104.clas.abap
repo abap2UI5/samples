@@ -593,8 +593,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
       WHEN mc_evt_shlp_go.
 * ---------- Init search result first -------------------------------------------------------------
         FIELD-SYMBOLS <any> TYPE any.
+        UNASSIGN <any>.
         ASSIGN me->mr_shlp_result->* TO <any>.
-        CLEAR <any>.
+        IF <any> IS ASSIGNED.
+          CLEAR <any>.
+        ENDIF.
 *        CLEAR: me->mr_shlp_result->*.
 
 * ---------- Fetch searchhelp result --------------------------------------------------------------
