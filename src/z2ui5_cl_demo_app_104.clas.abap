@@ -272,7 +272,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_1->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
                                         showclearicon     = abap_true
                                         valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -289,7 +289,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_2->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
                                         showclearicon     = abap_true
                                         valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -307,7 +307,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_3->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
                                         showclearicon     = abap_true
                                         valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -325,7 +325,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_4->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
                                         showclearicon     = abap_true
                                         valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -423,7 +423,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * ---------- Create Panel -------------------------------------------------------------------------
     DATA(lr_panel)  = lr_vbox->panel( expandable = abap_false
                                       expanded   = abap_true
-                                      headertext = ir_client->_bind( ls_fielddescr-scrtext_l ) ).
+                                      headertext = ir_client->_bind_local( ls_fielddescr-scrtext_l ) ).
 
 * ---------- Create List item ---------------------------------------------------------------------
     DATA(lr_item) = lr_panel->list(
@@ -592,12 +592,12 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         RETURN.
       WHEN mc_evt_shlp_go.
 * ---------- Init search result first -------------------------------------------------------------
-        FIELD-SYMBOLS <any> TYPE any.
-        UNASSIGN <any>.
-        ASSIGN me->mr_shlp_result->* TO <any>.
-        IF <any> IS ASSIGNED.
-          CLEAR <any>.
-        ENDIF.
+*        FIELD-SYMBOLS <any> TYPE any.
+*        UNASSIGN <any>.
+*        ASSIGN me->mr_shlp_result->* TO <any>.
+*        IF <any> IS ASSIGNED.
+*          CLEAR <any>.
+*        ENDIF.
 *        CLEAR: me->mr_shlp_result->*.
 
 * ---------- Fetch searchhelp result --------------------------------------------------------------
