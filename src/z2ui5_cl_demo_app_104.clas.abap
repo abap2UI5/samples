@@ -1,109 +1,161 @@
-CLASS z2ui5_cl_demo_app_104 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+class z2ui5_cl_demo_app_104 definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+  interfaces IF_SERIALIZABLE_OBJECT .
+  interfaces Z2UI5_IF_APP .
 
-    TYPES:
-      BEGIN OF ts_token,
+  types:
+    BEGIN OF ts_token,
         key      TYPE string,
         text     TYPE string,
         visible  TYPE abap_bool,
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
       END OF ts_token .
-    TYPES:
-      tt_token TYPE STANDARD TABLE OF ts_token WITH EMPTY KEY .
-    TYPES:
-      tt_range TYPE RANGE OF string .
-    TYPES:
-      ts_range TYPE LINE OF tt_range .
-    TYPES:
-      BEGIN OF ts_filter_pop,
+  types:
+    tt_token TYPE STANDARD TABLE OF ts_token WITH EMPTY KEY .
+  types:
+    tt_range TYPE RANGE OF string .
+  types:
+    ts_range TYPE LINE OF tt_range .
+  types:
+    BEGIN OF ts_filter_pop,
         option TYPE string,
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
       END OF ts_filter_pop .
-    TYPES:
-      BEGIN OF ts_selopt_mapping,
+  types:
+    BEGIN OF ts_selopt_mapping,
         key   TYPE string,
         text  TYPE string,
         value TYPE string,
       END OF ts_selopt_mapping .
-    TYPES:
-      tt_selopt_mapping TYPE STANDARD TABLE OF ts_selopt_mapping WITH KEY key .
+  types:
+    tt_selopt_mapping TYPE STANDARD TABLE OF ts_selopt_mapping WITH KEY key .
+  types:
+    BEGIN OF ts_shlp_descr.
+        INCLUDE TYPE shlp_descr. "Can be replaced by local def. for downport
+    TYPES: END OF ts_shlp_descr .
+  types:
+    tt_shlp_descr TYPE STANDARD TABLE OF ts_shlp_descr WITH DEFAULT KEY .
 
-    DATA mv_check_initialized TYPE abap_bool .
-    DATA mv_shlp_id TYPE char30 .
-    DATA mv_popup_title TYPE string .
-    DATA mv_shlp_result TYPE string .
-    DATA mr_shlp_result TYPE REF TO data .
-    DATA mr_shlp_fields TYPE REF TO data .
-    DATA:
-      mt_filter TYPE STANDARD TABLE OF ts_filter_pop WITH EMPTY KEY .
-    DATA mt_mapping TYPE tt_selopt_mapping .
-    CONSTANTS mc_evt_shlp_close TYPE string VALUE 'EVT_SHLP_CLOSE' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_go TYPE string VALUE 'EVT_SHLP_GO' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_open TYPE string VALUE 'EVT_SHLP_SELOPT_OPEN' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_token TYPE string VALUE 'EVT_SHLP_SELOPT_TOKEN' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_add TYPE string VALUE 'EVT_SHLP_SELOPT_ADD' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_cancel TYPE string VALUE 'EVT_SHLP_SELOPT_CANCEL' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_ok TYPE string VALUE 'EVT_SHLP_SELOPT_OK' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_delete TYPE string VALUE 'EVT_SHLP_SELOPT_DELETE' ##NO_TEXT.
-    CONSTANTS mc_evt_shlp_selopt_delete_all TYPE string VALUE 'EVT_SHLP_SELOPT_DELETE_ALL' ##NO_TEXT.
+  data MV_CHECK_INITIALIZED type ABAP_BOOL .
+  data MV_SHLP_ID type CHAR30 .
+  data MV_POPUP_TITLE type STRING .
+  data MV_SHLP_RESULT type STRING .
+  data:
+    mt_filter TYPE STANDARD TABLE OF ts_filter_pop WITH EMPTY KEY .
+  data MT_MAPPING type TT_SELOPT_MAPPING .
+  data:
+    BEGIN OF ms_screen,
+        shlp_selkey TYPE char30,
+      END OF ms_screen .
+  data MR_SHLP_FIELDS_1 type ref to DATA .
+  data MR_SHLP_FIELDS_2 type ref to DATA .
+  data MR_SHLP_FIELDS_3 type ref to DATA .
+  data MR_SHLP_FIELDS_4 type ref to DATA .
+  data MR_SHLP_FIELDS_5 type ref to DATA .
+  data MR_SHLP_FIELDS_6 type ref to DATA .
+  data MR_SHLP_FIELDS_7 type ref to DATA .
+  data MR_SHLP_FIELDS_8 type ref to DATA .
+  data MR_SHLP_FIELDS_9 type ref to DATA .
+  data MR_SHLP_FIELDS_10 type ref to DATA .
+  data MR_SHLP_RESULT_1 type ref to DATA .
+  data MR_SHLP_RESULT_2 type ref to DATA .
+  data MR_SHLP_RESULT_3 type ref to DATA .
+  data MR_SHLP_RESULT_4 type ref to DATA .
+  data MR_SHLP_RESULT_5 type ref to DATA .
+  data MR_SHLP_RESULT_6 type ref to DATA .
+  data MR_SHLP_RESULT_7 type ref to DATA .
+  data MR_SHLP_RESULT_8 type ref to DATA .
+  data MR_SHLP_RESULT_9 type ref to DATA .
+  data MR_SHLP_RESULT_10 type ref to DATA .
+  constants MC_EVT_SHLP_CLOSE type STRING value 'EVT_SHLP_CLOSE' ##NO_TEXT.
+  constants MC_EVT_SHLP_GO type STRING value 'EVT_SHLP_GO' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELECT type STRING value 'EVT_SHLP_SELECT' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_OPEN type STRING value 'EVT_SHLP_SELOPT_OPEN' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_TOKEN type STRING value 'EVT_SHLP_SELOPT_TOKEN' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_ADD type STRING value 'EVT_SHLP_SELOPT_ADD' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_CANCEL type STRING value 'EVT_SHLP_SELOPT_CANCEL' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_OK type STRING value 'EVT_SHLP_SELOPT_OK' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_DELETE type STRING value 'EVT_SHLP_SELOPT_DELETE' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_DELETE_ALL type STRING value 'EVT_SHLP_SELOPT_DELETE_ALL' ##NO_TEXT.
+  constants MC_SHLP_FIELDS_REF_NAME type STRING value 'MR_SHLP_FIELDS_' ##NO_TEXT.
+  constants MC_SHLP_RESULT_REF_NAME type STRING value 'MR_SHLP_FIELDS_' ##NO_TEXT.
 
-    CLASS-METHODS factory
-      IMPORTING
-        !iv_shlp_id     TYPE clike
-        !iv_popup_title TYPE clike
-      RETURNING
-        VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_104 .
-  PROTECTED SECTION.
+  class-methods FACTORY
+    importing
+      !IV_SHLP_ID type CLIKE
+      !IV_POPUP_TITLE type CLIKE
+    returning
+      value(RESULT) type ref to z2ui5_cl_demo_app_104 .
+protected section.
 
-    DATA mv_selopt_fieldname TYPE string .
+  data MV_SELOPT_FIELDNAME type STRING .
+  data MT_SHLP_DESCR type TT_SHLP_DESCR .
 
-    METHODS on_rendering
-      IMPORTING
-        !ir_client TYPE REF TO z2ui5_if_client .
-    METHODS on_event
-      IMPORTING
-        !ir_client TYPE REF TO z2ui5_if_client .
-    METHODS generate_ddic_shlp
-      IMPORTING
-        !ir_parent  TYPE REF TO z2ui5_cl_xml_view
-        !ir_client  TYPE REF TO z2ui5_if_client
-        !iv_shlp_id TYPE char30 .
-    METHODS select_ddic_shlp
-      IMPORTING
-        !ir_controller TYPE REF TO object
-        !iv_shlp_id    TYPE char30
-        !iv_maxrows    TYPE i DEFAULT 150 .
-    METHODS build_data_ref
-      IMPORTING
-        !ir_client TYPE REF TO z2ui5_if_client .
-    METHODS generate_ddic_shlp_selopt
-      IMPORTING
-        !ir_client    TYPE REF TO z2ui5_if_client
-        !iv_fieldname TYPE clike
-        !iv_shlp_id   TYPE char30 .
-    METHODS get_shlp_range_by_value
-      IMPORTING
-        !iv_value        TYPE string
-      RETURNING
-        VALUE(rs_result) TYPE ts_range .
-    METHODS get_shlp_uuid
-      RETURNING
-        VALUE(rv_result) TYPE string .
-    METHODS get_selopt_mapping
-      RETURNING
-        VALUE(rt_mapping) TYPE tt_selopt_mapping .
-    METHODS on_init
-      IMPORTING
-        !ir_client TYPE REF TO z2ui5_if_client .
+  methods ON_RENDERING
+    importing
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
+  methods ON_EVENT
+    importing
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
+  methods GENERATE_DDIC_SHLP
+    importing
+      !IR_PARENT type ref to Z2UI5_CL_XML_VIEW
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT
+      !IV_SHLP_ID type CHAR30 .
+  methods SELECT_DDIC_SHLP
+    importing
+      !IR_CONTROLLER type ref to OBJECT
+      !IV_SHLP_ID type CHAR30
+      !IV_MAXROWS type I default 150 .
+  methods BUILD_DATA_REF
+    importing
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT
+      !IT_SHLP_DESCR type TT_SHLP_DESCR .
+  methods GENERATE_DDIC_SHLP_SELOPT
+    importing
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT
+      !IV_FIELDNAME type CLIKE
+      !IV_SHLP_ID type CHAR30 .
+  methods GET_SHLP_RANGE_BY_VALUE
+    importing
+      !IV_VALUE type STRING
+    returning
+      value(RS_RESULT) type TS_RANGE .
+  methods GET_SHLP_UUID
+    returning
+      value(RV_RESULT) type STRING .
+  methods GET_SELOPT_MAPPING
+    returning
+      value(RT_MAPPING) type TT_SELOPT_MAPPING .
+  methods ON_INIT
+    importing
+      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
+  methods EXPAND_SEARCHHELP
+    importing
+      !IV_SHLP_ID type CHAR30
+    exporting
+      value(ET_SHLP_DESCR) type TT_SHLP_DESCR
+      !EV_SHLP_SELKEY type CHAR30 .
+  methods GET_DATA_REF
+    importing
+      !IV_INDEX type I optional
+      !IV_SHLP_ID type CHAR30 optional
+    exporting
+      !ER_SHLP_FIELDS type ref to DATA
+      !ER_SHLP_RESULT type ref to DATA .
+  methods CREATE_DATA_REF
+    importing
+      !IV_INDEX type I
+      !IR_STRUC_TYPE type ref to CL_ABAP_STRUCTDESCR
+      !IR_TABLE_TYPE type ref to CL_ABAP_TABLEDESCR .
+  methods INIT_DATA_REF .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -116,66 +168,69 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
-    DATA: ls_shlp        TYPE shlp_descr,
-          lt_comp        TYPE cl_abap_structdescr=>component_table,
-          lr_struct_type TYPE REF TO cl_abap_structdescr,
-          lr_table_type  TYPE REF TO cl_abap_tabledescr.
+    DATA: lt_comp                    TYPE cl_abap_structdescr=>component_table,
+          lr_shlp_fields_struct_type TYPE REF TO cl_abap_structdescr,
+          lr_shlp_result_struct_type TYPE REF TO cl_abap_structdescr,
+          lr_shlp_result_table_type  TYPE REF TO cl_abap_tabledescr,
+          lt_token                   TYPE tt_token,
+          lv_tabix                   TYPE i.
 
-    FIELD-SYMBOLS: <ls_fielddescr> TYPE dfies,
-                   <ls_comp>       LIKE LINE OF lt_comp.
+    FIELD-SYMBOLS: <ls_fielddescr>      TYPE dfies,
+                   <ls_comp>            LIKE LINE OF lt_comp,
+                   <ls_shlp_descr>      TYPE ts_shlp_descr.
 
-* ---------- Get searchhelp description -----------------------------------------------------------
-    CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
-      EXPORTING
-        shlpname = me->mv_shlp_id
-      IMPORTING
-        shlp     = ls_shlp.
+* ---------- Init data reference ------------------------------------------------------------------
+    me->init_data_ref( ).
 
-* -------------------------------------------------------------------------------------------------
-* Build up search result component table
-* -------------------------------------------------------------------------------------------------
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
-      APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
-      <ls_comp>-name = <ls_fielddescr>-fieldname.
-      <ls_comp>-type ?= cl_abap_datadescr=>describe_by_name( <ls_fielddescr>-rollname ).
-    ENDLOOP.
+* ---------- Loop over all searchhelps (max 10) ---------------------------------------------------
+    LOOP AT it_shlp_descr ASSIGNING <ls_shlp_descr> TO 10.
+* ---------- Init loop data -----------------------------------------------------------------------
+      CLEAR: lt_comp, lr_shlp_fields_struct_type, lr_shlp_result_struct_type,
+             lr_shlp_result_table_type, lv_tabix.
+      UNASSIGN: <ls_comp>.
 
-* ---------- Create Dynamic table using component table -------------------------------------------
-    lr_struct_type = cl_abap_structdescr=>create( lt_comp ).
-    lr_table_type  = cl_abap_tabledescr=>create( p_line_type = lr_struct_type ).
-
-* ---------- Create Dynamic Internal table --------------------------------------------------------
-    CREATE DATA me->mr_shlp_result TYPE HANDLE lr_table_type.
-
-    CLEAR: lt_comp, lr_struct_type,lr_table_type.
-    UNASSIGN: <ls_comp>.
+* ---------- Keep table index ---------------------------------------------------------------------
+      lv_tabix = sy-tabix.
 
 * -------------------------------------------------------------------------------------------------
 * Build up search fields component table
 * -------------------------------------------------------------------------------------------------
-    DATA: lt_token TYPE tt_token.
-
-    LOOP AT ls_shlp-fielddescr ASSIGNING <ls_fielddescr>.
-      APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
-      <ls_comp>-name = <ls_fielddescr>-fieldname.
-      <ls_comp>-type ?= cl_abap_datadescr=>describe_by_data( lt_token ).
-    ENDLOOP.
+      CLEAR: lt_comp.
+      UNASSIGN: <ls_comp>.
+      LOOP AT <ls_shlp_descr>-fielddescr ASSIGNING <ls_fielddescr>.
+        APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
+        <ls_comp>-name = <ls_fielddescr>-fieldname.
+        <ls_comp>-type ?= cl_abap_datadescr=>describe_by_data( lt_token ).
+      ENDLOOP.
 
 * ---------- Create structure using component table -----------------------------------------------
-    lr_struct_type = cl_abap_structdescr=>create( lt_comp ).
+      lr_shlp_fields_struct_type = cl_abap_structdescr=>create( lt_comp ).
 
-* ---------- Create Dynamic structure -------------------------------------------------------------
-    CREATE DATA me->mr_shlp_fields TYPE HANDLE lr_struct_type.
+* -------------------------------------------------------------------------------------------------
+* Build up search result component table
+* -------------------------------------------------------------------------------------------------
+      CLEAR: lt_comp.
+      UNASSIGN: <ls_comp>.
+      LOOP AT <ls_shlp_descr>-fielddescr ASSIGNING <ls_fielddescr>.
+        APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
+        <ls_comp>-name = <ls_fielddescr>-fieldname.
+        <ls_comp>-type ?= cl_abap_datadescr=>describe_by_name( <ls_fielddescr>-rollname ).
+      ENDLOOP.
 
+* ---------- Create Dynamic table using component table -------------------------------------------
+      lr_shlp_result_struct_type = cl_abap_structdescr=>create( lt_comp ).
+      lr_shlp_result_table_type  = cl_abap_tabledescr=>create( p_line_type = lr_shlp_result_struct_type ).
 
+* ---------- Create Dynamic searchhelp structure and table ----------------------------------------
+      me->create_data_ref(  iv_index       = lv_tabix
+                            ir_struc_type  = lr_shlp_fields_struct_type
+                            ir_table_type  = lr_shlp_result_table_type ).
 
-
-
-
+    ENDLOOP.
   ENDMETHOD.
 
 
-  METHOD factory.
+  METHOD FACTORY.
 
     result = NEW #( ).
 
@@ -193,21 +248,23 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lt_arg            TYPE TABLE OF stringval,
           lv_arg_fieldname  TYPE stringval,
           lv_cell_fieldname TYPE stringval,
-          lt_fieldprop_sel  TYPE ddshfprops,
-          lt_fieldprop_lis  TYPE ddshfprops.
+          lt_FIELDPROP_SEL  TYPE ddshfprops,
+          lt_FIELDPROP_LIS  TYPE ddshfprops.
 
     FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
                    <ls_fieldprop_sel> TYPE ddshfprop,
                    <ls_fieldprop_lis> TYPE ddshfprop,
-                   <lt_result_itab>   TYPE ANY TABLE,
+                   <lt_result_itab>   TYPE STANDARD TABLE,
                    <ls_shlp_fields>   TYPE any,
                    <lv_field>         TYPE any.
 
-* ---------- Get result itab reference ------------------------------------------------------------
-    ASSIGN me->mr_shlp_result->* TO <lt_result_itab>.
+* ---------- Get searchhelp data references -------------------------------------------------------
+    me->get_data_ref( EXPORTING iv_shlp_id       = iv_shlp_id
+                      IMPORTING er_shlp_fields = DATA(lr_shlp_fields)
+                                er_shlp_result = DATA(lr_shlp_result) ).
 
-* ---------- Get searchhelp input fields structure reference --------------------------------------
-    ASSIGN me->mr_shlp_fields->* TO <ls_shlp_fields>.
+    ASSIGN lr_shlp_fields->* TO <ls_shlp_fields>.
+    ASSIGN lr_shlp_result->* TO <lt_result_itab>.
 
     IF  <lt_result_itab>  IS NOT ASSIGNED OR
         <ls_shlp_fields>  IS NOT ASSIGNED.
@@ -272,9 +329,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_1->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
+          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind( <lv_field> )
                                         showclearicon     = abap_true
-                                        valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
+                                        valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
                                                   text = `{TEXT}`
@@ -289,9 +346,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_2->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
+          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field> )
                                         showclearicon     = abap_true
-                                        valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
+                                        valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
                                                   text = `{TEXT}`
@@ -307,9 +364,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_3->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
+          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field> )
                                         showclearicon     = abap_true
-                                        valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
+                                        valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
                                                   text = `{TEXT}`
@@ -325,9 +382,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_4->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind_local( <lv_field> )
+          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field> )
                                         showclearicon     = abap_true
-                                        valuehelprequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
+                                        valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
                                                   text = `{TEXT}`
@@ -340,7 +397,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     ENDLOOP.
 
 * ---------- Create table -------------------------------------------------------------------------
-    DATA(lr_table) = ir_parent->table( items = ir_client->_bind_edit( <lt_result_itab> ) ).
+    DATA(lr_table) = ir_parent->table( items = ir_client->_bind( <lt_result_itab> ) ).
 * ---------- Create Columns -----------------------------------------------------------------------
     DATA(lr_columns) = lr_table->columns( ).
 
@@ -386,12 +443,12 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD generate_ddic_shlp_selopt.
+  METHOD GENERATE_DDIC_SHLP_SELOPT.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
     DATA: ls_shlp       TYPE  shlp_descr,
-          ls_fielddescr TYPE dfies.
+          ls_FIELDDESCR TYPE dfies.
 
 * ---------- Get searchhelp description -----------------------------------------------------------
     CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
@@ -418,16 +475,16 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
                                   title = TEXT-t02 ).
 
 * ---------- Create Vbox --------------------------------------------------------------------------
-    DATA(lr_vbox) = lr_dialog->content( )->vbox( height = `100%` justifycontent = 'SpaceBetween' ).
+    DATA(lr_vbox) = lr_dialog->content( )->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
 
 * ---------- Create Panel -------------------------------------------------------------------------
     DATA(lr_panel)  = lr_vbox->panel( expandable = abap_false
                                       expanded   = abap_true
-                                      headertext = ir_client->_bind_local( ls_fielddescr-scrtext_l ) ).
+                                      headertext = ir_client->_bind( ls_fielddescr-scrtext_l ) ).
 
 * ---------- Create List item ---------------------------------------------------------------------
     DATA(lr_item) = lr_panel->list(
-              nodata = `no conditions defined`
+              noData = `no conditions defined`
              items           = ir_client->_bind_edit( me->mt_filter )
                 )->custom_list_item( ).
 
@@ -437,7 +494,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * ---------- Create Combobox ----------------------------------------------------------------------
     lr_grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = ir_client->_bind_edit( me->mt_mapping )
+                 items       = ir_client->_bind_Edit( me->mt_mapping )
              )->item( key = '{KEY}'
                       text = '{TEXT}' ).
 
@@ -472,44 +529,44 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD get_selopt_mapping.
+  METHOD GET_SELOPT_MAPPING.
     rt_mapping = VALUE #(
   (   key = 'EQ'
-      text = TEXT-l01
+      text = text-l01
       value = `={LOW}`    )
 
   (   key = 'LT'
-      text = TEXT-l02
+      text = text-l02
       value = `<{LOW}`   )
 
   (   key = 'LE'
-      text = TEXT-l03
+      text = text-l03
       value = `<={LOW}`  )
 
   (   key = 'GT'
-      text = TEXT-l04
+      text = text-l04
       value = `>{LOW}`   )
 
   (   key = 'GE'
-      text = TEXT-l05
+      text = text-l05
       value = `>={LOW}`  )
 
   (   key = 'CP'
-      text = TEXT-l06
+      text = text-l06
       value = `*{LOW}*`  )
 
   (   key = 'BT'
-      text = TEXT-l07
+      text = text-l07
       value = `{LOW}...{HIGH}` )
 
   (   key = 'NE'
-      text = TEXT-l08
+      text = text-l08
       value = `!(={LOW})`    )
   ).
   ENDMETHOD.
 
 
-  METHOD get_shlp_range_by_value.
+  METHOD GET_SHLP_RANGE_BY_VALUE.
     DATA(lv_length) = strlen( iv_value ) - 1.
     CASE iv_value(1).
       WHEN `=`.
@@ -542,7 +599,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD get_shlp_uuid.
+  method GET_SHLP_UUID.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -561,7 +618,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     ENDTRY.
 
     rv_result = uuid.
-  ENDMETHOD.
+  endmethod.
 
 
   METHOD on_event.
@@ -575,10 +632,26 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
                    <ls_field_token> TYPE any,
                    <lv_field>       TYPE any,
                    <ls_filter>      TYPE ts_filter_pop,
-                   <ls_shlp_fields> TYPE any.
+                   <ls_shlp_fields> TYPE any,
+                   <ls_shlp_result> TYPE any.
 
 * ---------- Get event parameters -----------------------------------------------------------------
     lt_event_arg = ir_client->get( )-t_event_arg.
+
+* ----------- Get searchhelp record for requested searchhelp id -----------------------------------
+    IF me->ms_screen-shlp_selkey IS NOT INITIAL.
+* ---------- Get searchhelp data references -------------------------------------------------------
+      me->get_data_ref( EXPORTING iv_shlp_id       = me->ms_screen-shlp_selkey
+                        IMPORTING er_shlp_fields = DATA(lr_shlp_fields)
+                                  er_shlp_result = DATA(lr_shlp_result) ).
+
+      ASSIGN lr_shlp_fields->* TO <ls_shlp_fields>.
+      ASSIGN lr_shlp_result->* TO <ls_shlp_result>.
+      IF <ls_shlp_fields> IS NOT ASSIGNED OR
+         <ls_shlp_result> IS NOT ASSIGNED.
+        RETURN.
+      ENDIF.
+    ENDIF.
 
     CASE ir_client->get( )-event.
       WHEN mc_evt_shlp_close.
@@ -592,18 +665,20 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         RETURN.
       WHEN mc_evt_shlp_go.
 * ---------- Init search result first -------------------------------------------------------------
-*        FIELD-SYMBOLS <any> TYPE any.
-*        UNASSIGN <any>.
-*        ASSIGN me->mr_shlp_result->* TO <any>.
-*        IF <any> IS ASSIGNED.
-*          CLEAR <any>.
-*        ENDIF.
-*        CLEAR: me->mr_shlp_result->*.
+        CLEAR: <ls_shlp_result>.
+* ---------- Update popup model binding -----------------------------------------------------------
+        ir_client->popup_model_update( ).
 
 * ---------- Fetch searchhelp result --------------------------------------------------------------
-        me->select_ddic_shlp( ir_controller             = me
-                              iv_shlp_id                = me->mv_shlp_id ).
+        me->select_ddic_shlp( ir_controller  = me
+                              iv_shlp_id     = me->ms_screen-shlp_selkey ).
 
+* ---------- Update popup model binding -----------------------------------------------------------
+        ir_client->popup_model_update( ).
+
+      WHEN mc_evt_shlp_select.
+* ---------- Init search result first -------------------------------------------------------------
+        CLEAR: <ls_shlp_result>.
 * ---------- Update popup model binding -----------------------------------------------------------
         ir_client->popup_model_update( ).
 
@@ -616,13 +691,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * ---------- Set select-option field name and title -----------------------------------------------
         CLEAR: me->mv_selopt_fieldname.
         me->mv_selopt_fieldname = lt_event_arg[ 1 ].
-
-* ---------- Get searchhelp input fields structure reference --------------------------------------
-        ASSIGN me->mr_shlp_fields->* TO <ls_shlp_fields>.
-
-        IF <ls_shlp_fields> IS NOT ASSIGNED.
-          RETURN.
-        ENDIF.
 
 * ---------- Assign current select-option field ---------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
@@ -664,18 +732,10 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * ---------- Handle select-option popup opening ---------------------------------------------------
         me->generate_ddic_shlp_selopt( ir_client    = ir_client
                                        iv_fieldname = me->mv_selopt_fieldname
-                                       iv_shlp_id   = me->mv_shlp_id ).
+                                       iv_shlp_id   = me->ms_screen-shlp_selkey ).
 
       WHEN mc_evt_shlp_selopt_token.
         ir_client->popup_model_update( ).
-
-* ---------- Get searchhelp input fields structure reference --------------------------------------
-        ASSIGN me->mr_shlp_fields->* TO <ls_shlp_fields>.
-
-        IF <ls_shlp_fields> IS NOT ASSIGNED.
-          RETURN.
-        ENDIF.
-
 * ---------- Assign current select-option field ---------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
         IF <lt_field_token> IS NOT ASSIGNED.
@@ -694,13 +754,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         me->on_rendering( ir_client = ir_client ).
 
       WHEN mc_evt_shlp_selopt_ok.
-* ---------- Get searchhelp input fields structure reference --------------------------------------
-        ASSIGN me->mr_shlp_fields->* TO <ls_shlp_fields>.
-
-        IF <ls_shlp_fields> IS NOT ASSIGNED.
-          RETURN.
-        ENDIF.
-
+* ---------- Assign current select-option field ---------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
         IF <lt_field_token> IS NOT ASSIGNED.
           RETURN.
@@ -769,18 +823,22 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   METHOD on_init.
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
+* ---------- Get searchhelp description -----------------------------------------------------------
+      me->expand_searchhelp( EXPORTING iv_shlp_id     = me->mv_shlp_id
+                             IMPORTING et_shlp_descr  = me->mt_shlp_descr
+                                       ev_shlp_selkey = me->ms_screen-shlp_selkey ).
+      IF me->mt_shlp_descr IS INITIAL.
+        RETURN.
+      ENDIF.
 
 * ---------- Prefill select-option mapping table --------------------------------------------------
       me->mt_mapping = me->get_selopt_mapping( ).
 
 * ---------- Build searchhelp data references -----------------------------------------------------
-      me->build_data_ref( ir_client = ir_client ).
+      me->build_data_ref( ir_client = ir_client
+                          it_shlp_descr = me->mt_shlp_descr ).
 
-      IF me->mr_shlp_result IS NOT BOUND OR
-         me->mr_shlp_fields IS NOT BOUND.
-        RETURN.
-      ENDIF.
-
+* ---------- Perform searchhelp popup rendering ---------------------------------------------------
       me->on_rendering( ir_client = ir_client ).
     ENDIF.
 
@@ -789,6 +847,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
   METHOD on_rendering.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    FIELD-SYMBOLS: <ls_shlp_descr> TYPE ts_shlp_descr.
+
 * ---------- Create Popup -------------------------------------------------------------------------
     DATA(lr_popup) = z2ui5_cl_xml_view=>factory_popup( ir_client ).
 
@@ -805,19 +868,30 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     lr_toolbar->button(
                   text    = TEXT-t01
                   type    = 'Emphasized'
-                  press   = ir_client->_event( 'EVT_SHLP_GO' ) ).
+                  press   = ir_client->_event( mc_evt_shlp_go ) ).
 
-* -------------------------------------------------------------------------------------------------
-* Generate Partner Searchfield
-* -------------------------------------------------------------------------------------------------
-    me->generate_ddic_shlp( ir_parent                 = lr_dialog_content
-                            ir_client                 = ir_client
-                            iv_shlp_id                = me->mv_shlp_id ).
+* ---------- Create icon filter tab bar -----------------------------------------------------------
+    DATA(lr_icon_tab_bar) = lr_dialog_content->icon_tab_bar( selectedkey = ir_client->_bind_edit( me->ms_screen-shlp_selkey )
+                                                            select = ir_client->_event( mc_evt_shlp_select ) )->items( ).
+
+* ---------- Build for each searchhelp an own icon tab --------------------------------------------
+    LOOP AT me->mt_shlp_descr ASSIGNING <ls_shlp_descr>.
+
+* ---------- Create searchhelp icon tab -----------------------------------------------------------
+      DATA(lr_icon_tab) = lr_icon_tab_bar->icon_tab_filter(  key   = <ls_shlp_descr>-shlpname
+                                                             text  = <ls_shlp_descr>-intdescr-ddtext ).
+
+* ---------- Generate searchfields ----------------------------------------------------------------
+      me->generate_ddic_shlp( ir_parent                 = lr_icon_tab
+                              ir_client                 = ir_client
+                              iv_shlp_id                = <ls_shlp_descr>-shlpname ).
+
+    ENDLOOP.
 
 * ---------- Create Button ------------------------------------------------------------------------
     lr_dialog->buttons( )->button(
                   text    = TEXT-t00
-                  press   = ir_client->_event( 'EVT_SHLP_CLOSE' ) ).
+                  press   = ir_client->_event( mc_evt_shlp_close ) ).
 
 * ---------- Display popup window -----------------------------------------------------------------
     ir_client->popup_display( lr_popup->stringify( ) ).
@@ -829,13 +903,13 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
     DATA: ls_shlp          TYPE shlp_descr,
-          lt_return_values TYPE TABLE OF ddshretval,
+          lt_RETURN_VALUES TYPE TABLE OF ddshretval,
           lt_record_tab    TYPE TABLE OF seahlpres,
           lv_convexit_name TYPE rs38l_fnam,
           lv_offset        TYPE i,
           lv_length        TYPE i,
-          lt_fieldprop_sel TYPE ddshfprops,
-          lt_fieldprop_lis TYPE ddshfprops,
+          lt_FIELDPROP_SEL TYPE ddshfprops,
+          lt_FIELDPROP_LIS TYPE ddshfprops,
           ls_range         TYPE ts_range,
           lv_date_out      TYPE sy-datum,
           lv_time_out      TYPE sy-uzeit.
@@ -851,11 +925,13 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
                    <ls_fieldprop_lis> TYPE ddshfprop,
                    <lt_result_itab>   TYPE STANDARD TABLE.
 
-* ---------- Get result itab reference ------------------------------------------------------------
-    ASSIGN me->mr_shlp_result->* TO <lt_result_itab>.
+* ---------- Get searchhelp data references -------------------------------------------------------
+    me->get_data_ref( EXPORTING iv_shlp_id       = iv_shlp_id
+                      IMPORTING er_shlp_fields = DATA(lr_shlp_fields)
+                                er_shlp_result = DATA(lr_shlp_result) ).
 
-* ---------- Get searchhelp input fields structure reference --------------------------------------
-    ASSIGN me->mr_shlp_fields->* TO <ls_shlp_fields>.
+    ASSIGN lr_shlp_fields->* TO <ls_shlp_fields>.
+    ASSIGN lr_shlp_result->* TO <lt_result_itab>.
 
     IF <lt_result_itab> IS NOT ASSIGNED OR
       <ls_shlp_fields> IS NOT ASSIGNED.
@@ -990,7 +1066,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     CALL FUNCTION 'F4IF_SELECT_VALUES'
       EXPORTING
         shlp           = ls_shlp
-        maxrows        = iv_maxrows
+        maxrows        = iv_MAXROWS
         call_shlp_exit = abap_true
       TABLES
         record_tab     = lt_record_tab
@@ -1070,11 +1146,212 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD Z2UI5_IF_APP~MAIN.
 
     me->on_init( ir_client = client ).
 
     me->on_event( ir_client = client ).
 
+  ENDMETHOD.
+
+
+  METHOD create_data_ref.
+* -------------------------------------------------------------------------------------------------
+* Heap References and Stack References issue!
+* Internal tables are dynamic data objects and have a special role because they have their own
+* memory management. They allocate and release memory regardless of the statement CREATE and
+* Garbage Collector. This means that heap references to rows in internal tables can become invalid.
+* Therfore I had to create fix amount of reference variables (placeholders),
+* instead of ITAB with references.
+* -------------------------------------------------------------------------------------------------
+    CASE iv_index.
+      WHEN 1.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_1 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_1 TYPE HANDLE ir_table_type.
+
+      WHEN 2.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_2 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_2 TYPE HANDLE ir_table_type.
+      WHEN 3.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_3 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_3 TYPE HANDLE ir_table_type.
+
+      WHEN 4.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_4 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_4 TYPE HANDLE ir_table_type.
+
+      WHEN 5.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_5 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_5 TYPE HANDLE ir_table_type.
+
+      WHEN 6.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_6 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_6 TYPE HANDLE ir_table_type.
+
+      WHEN 7.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_7 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_7 TYPE HANDLE ir_table_type.
+
+      WHEN 8.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_8 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_8 TYPE HANDLE ir_table_type.
+
+      WHEN 9.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_9 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_9 TYPE HANDLE ir_table_type.
+
+      WHEN 10.
+* ---------- Create Dynamic structure and table ---------------------------------------------------
+        CREATE DATA me->mr_shlp_fields_10 TYPE HANDLE ir_struc_type.
+        CREATE DATA me->mr_shlp_result_10 TYPE HANDLE ir_table_type.
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD expand_searchhelp.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    DATA: ls_shlp TYPE  shlp_descr.
+
+* ---------- Get searchhelp description for given ID ----------------------------------------------
+    CALL FUNCTION 'F4IF_GET_SHLP_DESCR'
+      EXPORTING
+        shlpname = iv_shlp_id
+      IMPORTING
+        shlp     = ls_shlp.
+
+    IF ls_shlp IS INITIAL.
+      RETURN.
+    ENDIF.
+
+* ---------- Get all elementary shlps for given collective shlp -----------------------------------
+    CALL FUNCTION 'F4IF_EXPAND_SEARCHHELP'
+      EXPORTING
+        shlp_top = ls_shlp
+      IMPORTING
+        shlp_tab = et_shlp_descr.
+
+* ---------- Set default searchhelp ---------------------------------------------------------------
+    IF line_exists( et_shlp_descr[ 1 ] ).
+      ev_shlp_selkey = et_shlp_descr[ 1 ]-shlpname.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD get_data_ref.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    DATA: lv_index TYPE i.
+
+* ---------- Check import parameter ---------------------------------------------------------------
+    IF iv_index IS NOT INITIAL.
+* ---------- Set index to local variable ----------------------------------------------------------
+      lv_index = iv_index.
+    ELSEIF iv_shlp_id IS NOT INITIAL.
+* ---------- Get searchhelp index from shlp id ----------------------------------------------------
+      lv_index = line_index( me->mt_shlp_descr[ shlpname = iv_shlp_id ] ).
+    ELSE.
+      RETURN.
+    ENDIF.
+
+* -------------------------------------------------------------------------------------------------
+* Heap References and Stack References issue!
+* Internal tables are dynamic data objects and have a special role because they have their own
+* memory management. They allocate and release memory regardless of the statement CREATE and
+* Garbage Collector. This means that heap references to rows in internal tables can become invalid.
+* Therfore I had to create fix amount of reference variables (placeholders),
+* instead of ITAB with references.
+* -------------------------------------------------------------------------------------------------
+    CASE lv_index.
+      WHEN 1.
+        er_shlp_fields = me->mr_shlp_fields_1 .
+        er_shlp_result = me->mr_shlp_result_1 .
+
+      WHEN 2.
+        er_shlp_fields = me->mr_shlp_fields_2 .
+        er_shlp_result = me->mr_shlp_result_2 .
+
+      WHEN 3.
+        er_shlp_fields = me->mr_shlp_fields_3 .
+        er_shlp_result = me->mr_shlp_result_3 .
+
+      WHEN 4.
+        er_shlp_fields = me->mr_shlp_fields_4 .
+        er_shlp_result = me->mr_shlp_result_4 .
+
+      WHEN 5.
+        er_shlp_fields = me->mr_shlp_fields_5 .
+        er_shlp_result = me->mr_shlp_result_5 .
+
+      WHEN 6.
+        er_shlp_fields = me->mr_shlp_fields_6 .
+        er_shlp_result = me->mr_shlp_result_6 .
+
+      WHEN 7.
+        er_shlp_fields = me->mr_shlp_fields_7 .
+        er_shlp_result = me->mr_shlp_result_7 .
+
+      WHEN 8.
+        er_shlp_fields = me->mr_shlp_fields_8 .
+        er_shlp_result = me->mr_shlp_result_8 .
+
+      WHEN 9.
+        er_shlp_fields = me->mr_shlp_fields_9 .
+        er_shlp_result = me->mr_shlp_result_9 .
+
+      WHEN 10.
+        er_shlp_fields = me->mr_shlp_fields_10 .
+        er_shlp_result = me->mr_shlp_result_10 .
+
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD init_data_ref.
+* -------------------------------------------------------------------------------------------------
+* Heap References and Stack References issue!
+* Internal tables are dynamic data objects and have a special role because they have their own
+* memory management. They allocate and release memory regardless of the statement CREATE and
+* Garbage Collector. This means that heap references to rows in internal tables can become invalid.
+* Therfore I had to create fix amount of reference variables (placeholders),
+* instead of ITAB with references.
+* -------------------------------------------------------------------------------------------------
+
+* ---------- Init searchhelp field references -----------------------------------------------------
+    CLEAR:
+    mr_shlp_fields_1,
+    mr_shlp_fields_2,
+    mr_shlp_fields_3,
+    mr_shlp_fields_4,
+    mr_shlp_fields_5,
+    mr_shlp_fields_6,
+    mr_shlp_fields_7,
+    mr_shlp_fields_8,
+    mr_shlp_fields_9,
+    mr_shlp_fields_10.
+
+* ---------- Init searchhelp result references ----------------------------------------------------
+    CLEAR:
+    mr_shlp_result_1,
+    mr_shlp_result_2,
+    mr_shlp_result_3,
+    mr_shlp_result_4,
+    mr_shlp_result_5,
+    mr_shlp_result_6,
+    mr_shlp_result_7,
+    mr_shlp_result_8,
+    mr_shlp_result_9,
+    mr_shlp_result_10.
   ENDMETHOD.
 ENDCLASS.
