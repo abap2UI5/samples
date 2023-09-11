@@ -1,4 +1,4 @@
-CLASS Z2UI5_CL_DEMO_APP_073 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_093 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -14,7 +14,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
@@ -26,6 +26,9 @@ CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
       quantity = '500'.
 
       DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+
+      view->zcc_plain_xml( `<html:script> sap.z2ui5.myFunction(); </html:script>`).
+
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
@@ -39,22 +42,22 @@ CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
                 )->get_parent(
                 )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
+                        )->title( 'Input'
+                        )->label( 'quantity'
+                        )->input( client->_bind_edit( quantity )
+                        )->label( `product`
+                        )->input( value = product enabled = abap_false
                         )->button(
-                            text  = 'open new tab'
-                            press = client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
+                            text  = 'post'
+                            press = client->_event( val = 'BUTTON_POST' )
              )->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_OPEN_NEW_TAB'.
-        client->timer_set(
-            interval_ms    = `0`
-            event_finished = client->_event_client( val = client->cs_event-open_new_tab
-                                              t_arg = value #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123` )  )
-*                                              t_arg = value #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5` )  )
-      ) ).
+      WHEN 'BUTTON_POST'.
+        client->message_toast_display( |{ product } { quantity } - send to the server| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).

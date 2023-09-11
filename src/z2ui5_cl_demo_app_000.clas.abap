@@ -681,6 +681,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+    panel->generic_tile(
+         header    = 'Custom Function'
+         subheader = 'Call imported function'
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_093' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
@@ -707,6 +715,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
     header    = 'Nested Views III'
     subheader = 'Head & Item Table'
     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_097' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+    header    = 'Nested Views IV'
+    subheader = 'Head & Item Table & Detail'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_098' )
     mode      = 'LineMode'
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).

@@ -285,7 +285,7 @@ CLASS Z2UI5_CL_DEMO_APP_056 IMPLEMENTATION.
 
     DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
 
-    view = view->page( id = `page_main`
+    view = view->shell( )->page( id = `page_main`
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true

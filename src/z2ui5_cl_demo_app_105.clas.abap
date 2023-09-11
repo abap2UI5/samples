@@ -59,7 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_105 IMPLEMENTATION.
         mv_check_popup = abap_true.
         ir_client->nav_app_call( z2ui5_cl_demo_app_104=>factory(
           iv_popup_title = 'THIS is the DDIC SHLP title'
-          iv_shlp_id = 'BUPAP' ) ).
+          iv_shlp_id = 'F4SHLP_ACMDTUI_DDLSOURCE' ) ).
 
       WHEN 'BACK'.
         ir_client->nav_app_leave( ir_client->get_app( ir_client->get( )-s_draft-id_prev_app_stack ) ).
