@@ -826,6 +826,9 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           RETURN.
         ENDIF.
 
+* ---------- Init token first ---------------------------------------------------------------------
+        CLEAR: <lt_field_token>.
+
 * ---------- Fill token ---------------------------------------------------------------------------
         me->fill_token( EXPORTING it_filter = me->mt_filter
                         CHANGING ct_token  = <lt_field_token> ).
