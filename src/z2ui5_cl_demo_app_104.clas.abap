@@ -90,6 +90,7 @@ public section.
   data MV_RESULT_FILTER_EXIT type STRING .
   data MV_SELOPT_PREFILL_EXIT type STRING .
   constants MC_EVT_SHLP_SELOPT_CHANGE type STRING value 'EVT_SHLP_SELOPT_CHANGE' ##NO_TEXT.
+  constants MC_TOKEN_UPD_TYPE_REMOVE type STRING value 'removed' ##NO_TEXT.
 
   class-methods FACTORY
     importing
@@ -647,7 +648,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 
   (   key = 'CP'
       text = text-l06
-      value = `*{LOW}*`  )
+      value = `{LOW}`  )
 
   (   key = 'BT'
       text = text-l07
@@ -660,7 +661,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD GET_SHLP_RANGE_BY_VALUE.
+  METHOD get_shlp_range_by_value.
     DATA(lv_length) = strlen( iv_value ) - 1.
     CASE iv_value(1).
       WHEN `=`.
@@ -678,13 +679,15 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           rs_result = VALUE #( sign = `I` option = `GT` low = iv_value+1 ).
         ENDIF.
 
-      WHEN `*`.
-        rs_result = VALUE #( sign = `I` option = `CP` low = iv_value ).
-
       WHEN OTHERS.
         IF iv_value CS '...'.
           SPLIT iv_value AT '...' INTO rs_result-low rs_result-high.
           rs_result-option = `BT`.
+        ELSEIF iv_value CS `*`.
+          rs_result = VALUE #( sign = `I` option = `CP` low = iv_value ).
+        ELSEIF iv_value CS `+`.
+          rs_result = VALUE #( sign = `I` option = `CP` low = iv_value ).
+
         ELSE.
           rs_result = VALUE #( sign = `I` option = `EQ` low = iv_value  ).
         ENDIF.
@@ -860,19 +863,13 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
         ENDIF.
 
 * ---------- Set filter based on the input field value --------------------------------------------
-        IF <lv_input_field> CS '*'.
-          APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
-          <ls_filter>-key     = me->get_shlp_uuid( ).
-          <ls_filter>-option  = 'CP'.
-          <ls_filter>-low     = <lv_input_field>.
-          CLEAR: <lv_input_field>.
-        ELSE.
-          APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
-          <ls_filter>-key     = me->get_shlp_uuid( ).
-          <ls_filter>-option  = 'EQ'.
-          <ls_filter>-low     = <lv_input_field>.
-          CLEAR: <lv_input_field>.
-        ENDIF.
+        ls_range = me->get_shlp_range_by_value( iv_value = <lv_input_field> ).
+        APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
+        <ls_filter>-key     = me->get_shlp_uuid( ).
+        <ls_filter>-option  = ls_range-option.
+        <ls_filter>-low     = ls_range-low.
+        <ls_filter>-high    = ls_range-high.
+        CLEAR: <lv_input_field>.
 
 * ---------- Assign current token field -----------------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
@@ -880,14 +877,15 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           RETURN.
         ENDIF.
 
-        CLEAR: <lt_field_token>.
-
 * ---------- Fill token ---------------------------------------------------------------------------
         me->fill_token( EXPORTING it_filter = me->mt_filter
                         CHANGING ct_token  = <lt_field_token> ).
 
-* ---------- Handle searchhelp popup opening ------------------------------------------------------
-        me->on_rendering( ir_client = ir_client ).
+* ---------- Init filter again --------------------------------------------------------------------
+        CLEAR: me->mt_filter.
+
+* ---------- Update popup data model --------------------------------------------------------------
+        ir_client->popup_model_update( ).
 
       WHEN mc_evt_shlp_selopt_token_upd.
         IF  NOT line_exists( lt_event_arg[ 1 ] ) OR
@@ -896,7 +894,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           RETURN.
         ENDIF.
 
-* ---------- Retirve event parameters -------------------------------------------------------------
+* ---------- Retieve event parameters -------------------------------------------------------------
         CLEAR: me->mv_selopt_fieldname.
         me->mv_selopt_fieldname = lt_event_arg[ 1 ].
         DATA(lv_token_upd_type) = lt_event_arg[ 2 ].
@@ -909,7 +907,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
         ENDIF.
 
         CASE lv_token_upd_type.
-          WHEN 'removed'.
+          WHEN MC_TOKEN_UPD_TYPE_REMOVE.
             me->delete_token( EXPORTING iv_token_key  = lv_token_key
                               CHANGING ct_token       = <lt_field_token>  ).
 
@@ -1579,9 +1577,6 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
     FIELD-SYMBOLS: <ls_filter>      TYPE ts_filter_pop,
                    <ls_field_token> TYPE ts_token,
                    <lv_field>       TYPE any.
-
-* ---------- Init ---------------------------------------------------------------------------------
-    CLEAR: ct_token.
 
 * ---------- Fill token ---------------------------------------------------------------------------
     LOOP AT it_filter REFERENCE INTO DATA(lr_filter).
