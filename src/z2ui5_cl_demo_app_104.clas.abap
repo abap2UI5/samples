@@ -567,7 +567,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * ---------- Create Dialog ------------------------------------------------------------------------
     DATA(lr_dialog) = lr_popup->dialog( contentheight = `50%`
                                   contentwidth = `50%`
-                                  title = TEXT-t02 ).
+                                  title = TEXT-t02 && ` ` && ls_fielddescr-scrtext_l ).
 
 * ---------- Create Vbox --------------------------------------------------------------------------
     DATA(lr_vbox) = lr_dialog->content( )->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
