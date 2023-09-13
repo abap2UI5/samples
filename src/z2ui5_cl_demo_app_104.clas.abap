@@ -392,7 +392,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           lr_form_shlp_1->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind_edit( <lv_field_token> )
+          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_false
                                         tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
@@ -419,7 +419,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
-                                        showclearicon     = abap_true
+                                        showclearicon     = abap_false
                                         tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
                                                                                t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
                                                                                                  ( `$event.mParameters.type` )
@@ -445,7 +445,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
-                                        showclearicon     = abap_true
+                                        showclearicon     = abap_false
                                         tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
                                                                                t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
                                                                                                  ( `$event.mParameters.type` )
@@ -471,7 +471,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * ---------- Set input field ----------------------------------------------------------------------
           lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
-                                        showclearicon     = abap_true
+                                        showclearicon     = abap_false
                                         tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
                                                                                t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
                                                                                                  ( `$event.mParameters.type` )
