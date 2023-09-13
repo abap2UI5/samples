@@ -538,7 +538,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD GENERATE_DDIC_SHLP_SELOPT.
+  METHOD generate_ddic_shlp_selopt.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -606,18 +606,19 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
         lr_grid->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }` ).
     ENDCASE.
 
-    lr_grid->button( icon = 'sap-icon://decline'
-                     type = `Transparent`
-                     press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE t_arg = VALUE #( ( `${KEY}` ) ) ) ).
+    lr_grid->hbox( justifycontent = `End`
+        )->button( icon = 'sap-icon://decline'
+                   type = `Transparent`
+                   press = ir_client->_event( val = mc_evt_shlp_selopt_delete t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lr_panel->hbox( justifycontent = `End`
-        )->button( text = text-t03 icon = `sap-icon://add` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_ADD ) ).
+        )->button( text = TEXT-t03 icon = `sap-icon://add` press = ir_client->_event( val = mc_evt_shlp_selopt_add ) ).
 
 * --------- Create footer buttons -----------------------------------------------------------------
     lr_dialog->buttons(
-        )->button( text = text-t04 icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE_ALL )
-        )->button( text = text-t05 press = ir_client->_event( MC_EVT_SHLP_SELOPT_OK ) type  = 'Emphasized'
-        )->button( text = text-t00 press = ir_client->_event( MC_EVT_SHLP_SELOPT_CANCEL ) ).
+        )->button( text = TEXT-t04 icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = mc_evt_shlp_selopt_delete_all )
+        )->button( text = TEXT-t05 press = ir_client->_event( mc_evt_shlp_selopt_ok ) type  = 'Emphasized'
+        )->button( text = TEXT-t00 press = ir_client->_event( mc_evt_shlp_selopt_cancel ) ).
 
 * ---------- Display popup window -----------------------------------------------------------------
     ir_client->popup_display( lr_popup->stringify( ) ).
