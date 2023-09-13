@@ -6,26 +6,6 @@ CLASS Z2UI5_CL_DEMO_APP_029 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     DATA mv_tab_radial_active TYPE abap_bool.
 
     METHODS render_tab_radial.
@@ -68,46 +48,46 @@ CLASS Z2UI5_CL_DEMO_APP_029 IMPLEMENTATION.
     grid->vertical_layout(
         )->horizontal_layout(
             )->radial_micro_chart(
-                sice       = 'M'
+                size       = 'M'
                 percentage = '45'
                 press      = client->_event( 'RADIAL_PRESS' )
             )->radial_micro_chart(
-                sice       = 'S'
+                size       = 'S'
                 percentage = '45'
                 press      = client->_event( 'RADIAL_PRESS' )
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
-                sice       = 'M'
+                size       = 'M'
                 percentage = '99.9'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Good'
             )->radial_micro_chart(
-                sice       = 'S'
+                size       = 'S'
                 percentage = '99.9'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Good'
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
-                sice       = 'M'
+                size       = 'M'
                 percentage = '0'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Error'
             )->radial_micro_chart(
-                sice       = 'S'
+                size       = 'S'
                 percentage = '0'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Error'
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
-                sice       = 'M'
+                size       = 'M'
                 percentage = '0.1'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Critical'
             )->radial_micro_chart(
-                sice       = 'S'
+                size       = 'S'
                 percentage = '0.1'
                 press      = client->_event( 'RADIAL_PRESS' )
                 valueColor = 'Critical' ).
