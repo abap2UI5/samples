@@ -1,4 +1,4 @@
-class Z2UI5_CL_DEMO_APP_104 definition
+class z2ui5_cl_demo_app_104 definition
   public
   create public .
 
@@ -99,7 +99,7 @@ public section.
       !IV_RESULT_FILTER_EXIT type CLIKE optional
       !IV_SELOPT_PREFILL_EXIT type CLIKE optional
     returning
-      value(RESULT) type ref to Z2UI5_CL_DEMO_APP_104 .
+      value(RESULT) type ref to z2ui5_cl_demo_app_104 .
 protected section.
 
   data MV_SELOPT_FIELDNAME type STRING .
@@ -611,13 +611,13 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
                      press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lr_panel->hbox( justifycontent = `End`
-        )->button( text = `Add` icon = `sap-icon://add` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_ADD ) ).
+        )->button( text = text-t03 icon = `sap-icon://add` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_ADD ) ).
 
 * --------- Create footer buttons -----------------------------------------------------------------
     lr_dialog->buttons(
-        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE_ALL )
-        )->button( text  = 'OK' press = ir_client->_event( MC_EVT_SHLP_SELOPT_OK ) type  = 'Emphasized'
-        )->button( text  = 'Cancel' press = ir_client->_event( MC_EVT_SHLP_SELOPT_CANCEL ) ).
+        )->button( text = text-t04 icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE_ALL )
+        )->button( text = text-t05 press = ir_client->_event( MC_EVT_SHLP_SELOPT_OK ) type  = 'Emphasized'
+        )->button( text = text-t00 press = ir_client->_event( MC_EVT_SHLP_SELOPT_CANCEL ) ).
 
 * ---------- Display popup window -----------------------------------------------------------------
     ir_client->popup_display( lr_popup->stringify( ) ).
@@ -910,7 +910,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
         ENDIF.
 
         CASE lv_token_upd_type.
-          WHEN MC_TOKEN_UPD_TYPE_REMOVE.
+          WHEN mc_token_upd_type_remove.
             me->delete_token( EXPORTING iv_token_key  = lv_token_key
                               CHANGING ct_token       = <lt_field_token>  ).
 
