@@ -1,4 +1,4 @@
-class z2ui5_cl_demo_app_104 definition
+class Z2UI5_CL_DEMO_APP_104 definition
   public
   create public .
 
@@ -79,7 +79,7 @@ public section.
   constants MC_EVT_SHLP_GO type STRING value 'EVT_SHLP_GO' ##NO_TEXT.
   constants MC_EVT_SHLP_SELECT type STRING value 'EVT_SHLP_SELECT' ##NO_TEXT.
   constants MC_EVT_SHLP_SELOPT_OPEN type STRING value 'EVT_SHLP_SELOPT_OPEN' ##NO_TEXT.
-  constants MC_EVT_SHLP_SELOPT_TOKEN type STRING value 'EVT_SHLP_SELOPT_TOKEN' ##NO_TEXT.
+  constants MC_EVT_SHLP_SELOPT_TOKEN_UPD type STRING value 'EVT_SHLP_SELOPT_TOKEN_UPD' ##NO_TEXT.
   constants MC_EVT_SHLP_SELOPT_ADD type STRING value 'EVT_SHLP_SELOPT_ADD' ##NO_TEXT.
   constants MC_EVT_SHLP_SELOPT_CANCEL type STRING value 'EVT_SHLP_SELOPT_CANCEL' ##NO_TEXT.
   constants MC_EVT_SHLP_SELOPT_OK type STRING value 'EVT_SHLP_SELOPT_OK' ##NO_TEXT.
@@ -89,6 +89,7 @@ public section.
   constants MC_SHLP_RESULT_REF_NAME type STRING value 'MR_SHLP_FIELDS_' ##NO_TEXT.
   data MV_RESULT_FILTER_EXIT type STRING .
   data MV_SELOPT_PREFILL_EXIT type STRING .
+  constants MC_EVT_SHLP_SELOPT_CHANGE type STRING value 'EVT_SHLP_SELOPT_CHANGE' ##NO_TEXT.
 
   class-methods FACTORY
     importing
@@ -393,12 +394,12 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind_edit( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_false
-                                        tokenUpdate       = ir_client->_event( val    = 'TOKEN_UPDATE'
+                                        tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
                                                                                t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
                                                                                                  ( `$event.mParameters.type` )
                                                                                                  ( `$event.mParameters.removedTokens[0].mProperties.key` ) ) )
 
-                                        change            = ir_client->_event( val    = 'CHANGE'
+                                        change            = ir_client->_event( val    = mc_evt_shlp_selopt_change
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -418,7 +419,12 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
-                                        change            = ir_client->_event( val    = 'CHANGE'
+                                        tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
+                                                                               t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
+                                                                                                 ( `$event.mParameters.type` )
+                                                                                                 ( `$event.mParameters.removedTokens[0].mProperties.key` ) ) )
+
+                                        change            = ir_client->_event( val    = mc_evt_shlp_selopt_change
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -439,7 +445,12 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
-                                        change            = ir_client->_event( val    = 'CHANGE'
+                                        tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
+                                                                               t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
+                                                                                                 ( `$event.mParameters.type` )
+                                                                                                 ( `$event.mParameters.removedTokens[0].mProperties.key` ) ) )
+
+                                        change            = ir_client->_event( val    = mc_evt_shlp_selopt_change
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -460,7 +471,12 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
           lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
                                         value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
-                                        change            = ir_client->_event( val    = 'CHANGE'
+                                        tokenUpdate       = ir_client->_event( val    = mc_evt_shlp_selopt_token_upd
+                                                                               t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
+                                                                                                 ( `$event.mParameters.type` )
+                                                                                                 ( `$event.mParameters.removedTokens[0].mProperties.key` ) ) )
+
+                                        change            = ir_client->_event( val    = mc_evt_shlp_selopt_change
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
@@ -789,14 +805,6 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
                                        iv_fieldname = me->mv_selopt_fieldname
                                        iv_shlp_id   = me->ms_screen-shlp_selkey ).
 
-      WHEN mc_evt_shlp_selopt_token.
-        ir_client->popup_model_update( ).
-* ---------- Assign current token field -----------------------------------------------------------
-        ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
-        IF <lt_field_token> IS NOT ASSIGNED.
-          RETURN.
-        ENDIF.
-
       WHEN mc_evt_shlp_selopt_add.
         INSERT VALUE #( key = me->get_shlp_uuid( ) ) INTO TABLE me->mt_filter.
 
@@ -836,7 +844,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
         me->mt_filter = VALUE #( ).
         ir_client->popup_model_update( ).
 
-      WHEN 'CHANGE'.
+      WHEN mc_evt_shlp_selopt_change.
         IF NOT line_exists( lt_event_arg[ 1 ] ).
           RETURN.
         ENDIF.
@@ -881,7 +889,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * ---------- Handle searchhelp popup opening ------------------------------------------------------
         me->on_rendering( ir_client = ir_client ).
 
-      WHEN 'TOKEN_UPDATE'.
+      WHEN mc_evt_shlp_selopt_token_upd.
         IF  NOT line_exists( lt_event_arg[ 1 ] ) OR
             NOT line_exists( lt_event_arg[ 2 ] ) OR
             NOT line_exists( lt_event_arg[ 3 ] ).
