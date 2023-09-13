@@ -16,7 +16,7 @@ public section.
         editable TYPE abap_bool,
       END OF ts_token .
   types:
-    tt_token TYPE STANDARD TABLE OF ts_token WITH EMPTY KEY .
+    tt_token TYPE STANDARD TABLE OF ts_token WITH key key .
   types:
     tt_range TYPE RANGE OF string .
   types:
@@ -28,6 +28,8 @@ public section.
         high   TYPE string,
         key    TYPE string,
       END OF ts_filter_pop .
+  types:
+    tt_filter_prop TYPE STANDARD TABLE OF ts_filter_pop WITH EMPTY KEY .
   types:
     BEGIN OF ts_selopt_mapping,
         key   TYPE string,
@@ -47,8 +49,7 @@ public section.
   data MV_SHLP_ID type CHAR30 .
   data MV_POPUP_TITLE type STRING .
   data MV_SHLP_RESULT type STRING .
-  data:
-    mt_filter TYPE STANDARD TABLE OF ts_filter_pop WITH EMPTY KEY .
+  data MT_FILTER type TT_FILTER_PROP .
   data MT_MAPPING type TT_SELOPT_MAPPING .
   data:
     BEGIN OF ms_screen,
@@ -86,13 +87,17 @@ public section.
   constants MC_EVT_SHLP_SELOPT_DELETE_ALL type STRING value 'EVT_SHLP_SELOPT_DELETE_ALL' ##NO_TEXT.
   constants MC_SHLP_FIELDS_REF_NAME type STRING value 'MR_SHLP_FIELDS_' ##NO_TEXT.
   constants MC_SHLP_RESULT_REF_NAME type STRING value 'MR_SHLP_FIELDS_' ##NO_TEXT.
+  data MV_RESULT_FILTER_EXIT type STRING .
+  data MV_SELOPT_PREFILL_EXIT type STRING .
 
   class-methods FACTORY
     importing
       !IV_SHLP_ID type CLIKE
       !IV_POPUP_TITLE type CLIKE
+      !IV_RESULT_FILTER_EXIT type CLIKE optional
+      !IV_SELOPT_PREFILL_EXIT type CLIKE optional
     returning
-      value(RESULT) type ref to z2ui5_cl_demo_app_104 .
+      value(RESULT) type ref to Z2UI5_CL_DEMO_APP_104 .
 protected section.
 
   data MV_SELOPT_FIELDNAME type STRING .
@@ -156,15 +161,35 @@ protected section.
       !IR_STRUC_TYPE type ref to CL_ABAP_STRUCTDESCR
       !IR_TABLE_TYPE type ref to CL_ABAP_TABLEDESCR .
   methods INIT_DATA_REF .
-  PRIVATE SECTION.
+  methods FILL_TOKEN
+    importing
+      !IT_FILTER type TT_FILTER_PROP
+    changing
+      !CT_TOKEN type TT_TOKEN .
+  methods FILL_FILTER
+    importing
+      !IT_TOKEN type TT_TOKEN
+    changing
+      !CT_FILTER type TT_FILTER_PROP .
+  methods GET_INPUT_FIELDNAME
+    importing
+      !IV_FIELDNAME type CHAR30
+    returning
+      value(RV_INPUT_FIELDNAME) type CHAR30 .
+  methods DELETE_TOKEN
+    importing
+      !IV_TOKEN_KEY type CLIKE
+    changing
+      !CT_TOKEN type TT_TOKEN .
+private section.
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 
 
-  METHOD build_data_ref.
+  METHOD BUILD_DATA_REF.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -175,9 +200,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lt_token                   TYPE tt_token,
           lv_tabix                   TYPE i.
 
-    FIELD-SYMBOLS: <ls_fielddescr>      TYPE dfies,
-                   <ls_comp>            LIKE LINE OF lt_comp,
-                   <ls_shlp_descr>      TYPE ts_shlp_descr.
+    FIELD-SYMBOLS: <ls_fielddescr> TYPE dfies,
+                   <ls_comp>       LIKE LINE OF lt_comp,
+                   <ls_shlp_descr> TYPE ts_shlp_descr.
 
 * ---------- Init data reference ------------------------------------------------------------------
     me->init_data_ref( ).
@@ -201,6 +226,10 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
         <ls_comp>-name = <ls_fielddescr>-fieldname.
         <ls_comp>-type ?= cl_abap_datadescr=>describe_by_data( lt_token ).
+        UNASSIGN: <ls_comp>.
+        APPEND INITIAL LINE TO lt_comp ASSIGNING <ls_comp>.
+        <ls_comp>-name = me->get_input_fieldname( iv_fieldname = <ls_fielddescr>-fieldname ) .
+        <ls_comp>-type ?= cl_abap_datadescr=>describe_by_name( 'STRING' ).
       ENDLOOP.
 
 * ---------- Create structure using component table -----------------------------------------------
@@ -230,16 +259,41 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD FACTORY.
-
+  METHOD factory.
+* ---------- Create new DDIC searchhelp instance --------------------------------------------------
     result = NEW #( ).
 
-    result->mv_shlp_id      = iv_shlp_id.
-    result->mv_popup_title  = iv_popup_title.
+* ---------- Set searchhelp ID --------------------------------------------------------------------
+    result->mv_shlp_id             = iv_shlp_id.
+
+* ---------- Set searchhelp poup title ------------------------------------------------------------
+    result->mv_popup_title         = iv_popup_title.
+
+* -------------------------------------------------------------------------------------------------
+* Set exit optional parameters (CLASS NAME=>METHOD NAME)
+* Example
+* Parameter value:
+*   ZCL_EXIT_HANDLER_CLASS=>SELOPT_PREFILL_EXIT
+* Method definition:
+*class-methods FILTER_RESULT_EXIT
+*    importing
+*      !IV_SHLP_ID type CHAR30 optional
+*    changing
+*      !CT_RESULT type TABLE .
+*
+*  class-methods SELOPT_PREFILL_EXIT
+*    importing
+*      !IV_SHLP_ID type CHAR30 optional
+*    changing
+*      !CT_SELOPT type TABLE .
+* -------------------------------------------------------------------------------------------------
+    result->mv_selopt_prefill_exit = iV_SELOPT_PREFILL_EXIT.
+    result->mv_result_filter_exit  = iv_result_filter_exit.
+
   ENDMETHOD.
 
 
-  METHOD generate_ddic_shlp.
+  METHOD GENERATE_DDIC_SHLP.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -256,7 +310,8 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
                    <ls_fieldprop_lis> TYPE ddshfprop,
                    <lt_result_itab>   TYPE STANDARD TABLE,
                    <ls_shlp_fields>   TYPE any,
-                   <lv_field>         TYPE any.
+                   <lv_field_token>   TYPE any,
+                   <lv_field_input>   TYPE any.
 
 * ---------- Get searchhelp data references -------------------------------------------------------
     me->get_data_ref( EXPORTING iv_shlp_id       = iv_shlp_id
@@ -299,7 +354,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     LOOP AT lt_fieldprop_sel ASSIGNING <ls_fieldprop_sel>.
 * ---------- Init loop data -----------------------------------------------------------------------
-      UNASSIGN: <lv_field>, <ls_fielddescr>.
+      UNASSIGN: <lv_field_token>, <lv_field_input>, <ls_fielddescr>.
 
 * ---------- Get corresponding field description --------------------------------------------------
       ASSIGN ls_shlp-fielddescr[ fieldname = <ls_fieldprop_sel>-fieldname ] TO <ls_fielddescr>.
@@ -307,9 +362,15 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-* ---------- Get field reference ------------------------------------------------------------------
-      ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_shlp_fields> TO <lv_field>.
-      IF <lv_field> IS NOT ASSIGNED.
+* ---------- Get token field reference ------------------------------------------------------------
+      ASSIGN COMPONENT <ls_fielddescr>-fieldname OF STRUCTURE <ls_shlp_fields> TO <lv_field_token>.
+      IF <lv_field_token> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+
+* ---------- Get input field reference ------------------------------------------------------------
+      ASSIGN COMPONENT me->get_input_fieldname( <ls_fielddescr>-fieldname ) OF STRUCTURE <ls_shlp_fields> TO <lv_field_input>.
+      IF <lv_field_input> IS NOT ASSIGNED.
         CONTINUE.
       ENDIF.
 
@@ -329,8 +390,16 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_1->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind( <lv_field> )
-                                        showclearicon     = abap_true
+          lr_form_shlp_1->multi_input(  tokens            = ir_client->_bind_edit( <lv_field_token> )
+                                        value             = ir_client->_bind_edit( <lv_field_input> )
+                                        showclearicon     = abap_false
+                                        tokenUpdate       = ir_client->_event( val    = 'TOKEN_UPDATE'
+                                                                               t_arg  = value #( (  CONV #( <ls_fieldprop_sel>-fieldname ) )
+                                                                                                 ( `$event.mParameters.type` )
+                                                                                                 ( `$event.mParameters.removedTokens[0].mProperties.key` ) ) )
+
+                                        change            = ir_client->_event( val    = 'CHANGE'
+                                                                               t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
@@ -346,8 +415,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_2->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_2->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
+                                        value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
+                                        change            = ir_client->_event( val    = 'CHANGE'
+                                                                               t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
@@ -364,8 +436,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_3->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_3->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
+                                        value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
+                                        change            = ir_client->_event( val    = 'CHANGE'
+                                                                               t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
@@ -382,8 +457,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lr_form_shlp_4->label( <ls_fielddescr>-scrtext_l ).
 
 * ---------- Set input field ----------------------------------------------------------------------
-          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field> )
+          lr_form_shlp_4->multi_input(  tokens            = ir_client->_bind( <lv_field_token> )
+                                        value             = ir_client->_bind_edit( <lv_field_input> )
                                         showclearicon     = abap_true
+                                        change            = ir_client->_event( val    = 'CHANGE'
+                                                                               t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         valueHelpRequest  = ir_client->_event( val    = mc_evt_shlp_selopt_open
                                                                                t_arg  = VALUE #( (  CONV #( <ls_fieldprop_sel>-fieldname ) ) ) )
                                         )->item(  key  = `{KEY}`
@@ -480,7 +558,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 * ---------- Create Panel -------------------------------------------------------------------------
     DATA(lr_panel)  = lr_vbox->panel( expandable = abap_false
                                       expanded   = abap_true
-                                      headertext = ir_client->_bind( ls_fielddescr-scrtext_l ) ).
+                                      headertext = ir_client->_bind_local( ls_fielddescr-scrtext_l ) ).
 
 * ---------- Create List item ---------------------------------------------------------------------
     DATA(lr_item) = lr_panel->list(
@@ -513,16 +591,16 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     lr_grid->button( icon = 'sap-icon://decline'
                      type = `Transparent`
-                     press = ir_client->_event( val = 'EVT_SHLP_SELOPT_DELETE' t_arg = VALUE #( ( `${KEY}` ) ) ) ).
+                     press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lr_panel->hbox( justifycontent = `End`
-        )->button( text = `Add` icon = `sap-icon://add` press = ir_client->_event( val = 'EVT_SHLP_SELOPT_ADD' ) ).
+        )->button( text = `Add` icon = `sap-icon://add` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_ADD ) ).
 
 * --------- Create footer buttons -----------------------------------------------------------------
     lr_dialog->buttons(
-        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = 'EVT_SHLP_SELOPT_DELETE_ALL' )
-        )->button( text  = 'OK' press = ir_client->_event( 'EVT_SHLP_SELOPT_OK' ) type  = 'Emphasized'
-        )->button( text  = 'Cancel' press = ir_client->_event( 'EVT_SHLP_SELOPT_CANCEL' ) ).
+        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = ir_client->_event( val = MC_EVT_SHLP_SELOPT_DELETE_ALL )
+        )->button( text  = 'OK' press = ir_client->_event( MC_EVT_SHLP_SELOPT_OK ) type  = 'Emphasized'
+        )->button( text  = 'Cancel' press = ir_client->_event( MC_EVT_SHLP_SELOPT_CANCEL ) ).
 
 * ---------- Display popup window -----------------------------------------------------------------
     ir_client->popup_display( lr_popup->stringify( ) ).
@@ -629,6 +707,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           ls_range     TYPE ts_range.
 
     FIELD-SYMBOLS: <lt_field_token> TYPE STANDARD TABLE,
+                   <lv_input_field> TYPE any,
                    <ls_field_token> TYPE any,
                    <lv_field>       TYPE any,
                    <ls_filter>      TYPE ts_filter_pop,
@@ -692,43 +771,19 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         CLEAR: me->mv_selopt_fieldname.
         me->mv_selopt_fieldname = lt_event_arg[ 1 ].
 
-* ---------- Assign current select-option field ---------------------------------------------------
+* ---------- Assign current token field -----------------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
         IF <lt_field_token> IS NOT ASSIGNED.
           RETURN.
         ENDIF.
 
-* ---------- Init select-option variables ---------------------------------------------------------
-        CLEAR: me->mt_filter.
-
 * ---------- Close searchhelp Popup window --------------------------------------------------------
         ir_client->popup_destroy( ).
 
-        IF <lt_field_token> IS NOT INITIAL.
-          LOOP AT <lt_field_token> ASSIGNING <ls_field_token>.
+* ---------- Fill select-option filter ------------------------------------------------------------
+        me->fill_filter( EXPORTING it_token  = <lt_field_token>
+                         CHANGING  ct_filter = me->mt_filter ).
 
-* ---------- Get key value from token -------------------------------------------------------------
-            UNASSIGN: <lv_field>.
-            ASSIGN COMPONENT 'KEY' OF STRUCTURE <ls_field_token> TO <lv_field>.
-            IF <lv_field> IS NOT ASSIGNED.
-              CONTINUE.
-            ENDIF.
-
-* ---------- Convert token into range format ------------------------------------------------------
-            ls_range = me->get_shlp_range_by_value( iv_value = <lv_field> ).
-            IF ls_range IS INITIAL.
-              CONTINUE.
-            ENDIF.
-
-* ---------- Build new filter record --------------------------------------------------------------
-            APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
-            <ls_filter>-key     = me->get_shlp_uuid( ).
-            <ls_filter>-option  = ls_range-option.
-            <ls_filter>-low     = ls_range-low.
-            <ls_filter>-high    = ls_range-high.
-
-          ENDLOOP.
-        ENDIF.
 * ---------- Handle select-option popup opening ---------------------------------------------------
         me->generate_ddic_shlp_selopt( ir_client    = ir_client
                                        iv_fieldname = me->mv_selopt_fieldname
@@ -736,7 +791,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
       WHEN mc_evt_shlp_selopt_token.
         ir_client->popup_model_update( ).
-* ---------- Assign current select-option field ---------------------------------------------------
+* ---------- Assign current token field -----------------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
         IF <lt_field_token> IS NOT ASSIGNED.
           RETURN.
@@ -754,51 +809,15 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         me->on_rendering( ir_client = ir_client ).
 
       WHEN mc_evt_shlp_selopt_ok.
-* ---------- Assign current select-option field ---------------------------------------------------
+* ---------- Assign current token field -----------------------------------------------------------
         ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
         IF <lt_field_token> IS NOT ASSIGNED.
           RETURN.
         ENDIF.
 
-        CLEAR: <lt_field_token>.
-
 * ---------- Fill token ---------------------------------------------------------------------------
-        LOOP AT me->mt_filter REFERENCE INTO DATA(lr_filter).
-          DATA(lv_value) = me->mt_mapping[ key = lr_filter->option ]-value.
-          REPLACE `{LOW}`  IN lv_value WITH lr_filter->low.
-          REPLACE `{HIGH}` IN lv_value WITH lr_filter->high.
-
-          APPEND INITIAL LINE TO <lt_field_token> ASSIGNING <ls_field_token>.
-
-          UNASSIGN: <lv_field>.
-          ASSIGN COMPONENT 'KEY' OF STRUCTURE <ls_field_token> TO <lv_field>.
-          IF <lv_field> IS NOT ASSIGNED.
-            CONTINUE.
-          ENDIF.
-          <lv_field> = lv_value.
-
-          UNASSIGN: <lv_field>.
-          ASSIGN COMPONENT 'TEXT' OF STRUCTURE <ls_field_token> TO <lv_field>.
-          IF <lv_field> IS NOT ASSIGNED.
-            CONTINUE.
-          ENDIF.
-          <lv_field> = lv_value.
-
-          UNASSIGN: <lv_field>.
-          ASSIGN COMPONENT 'VISIBLE' OF STRUCTURE <ls_field_token> TO <lv_field>.
-          IF <lv_field> IS NOT ASSIGNED.
-            CONTINUE.
-          ENDIF.
-          <lv_field> = abap_true.
-
-          UNASSIGN: <lv_field>.
-          ASSIGN COMPONENT 'EDITABLE' OF STRUCTURE <ls_field_token> TO <lv_field>.
-          IF <lv_field> IS NOT ASSIGNED.
-            CONTINUE.
-          ENDIF.
-          <lv_field> = abap_false.
-
-        ENDLOOP.
+        me->fill_token( EXPORTING it_filter = me->mt_filter
+                        CHANGING ct_token  = <lt_field_token> ).
 
 * ---------- Close select-option Popup window -----------------------------------------------------
         ir_client->popup_destroy( ).
@@ -816,11 +835,87 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
       WHEN mc_evt_shlp_selopt_delete_all.
         me->mt_filter = VALUE #( ).
         ir_client->popup_model_update( ).
+
+      WHEN 'CHANGE'.
+        IF NOT line_exists( lt_event_arg[ 1 ] ).
+          RETURN.
+        ENDIF.
+
+* ---------- Set select-option field name ---------------------------------------------------------
+        CLEAR: me->mv_selopt_fieldname.
+        me->mv_selopt_fieldname = lt_event_arg[ 1 ].
+
+* ---------- Assign current input field -----------------------------------------------------------
+        ASSIGN COMPONENT me->get_input_fieldname( CONV #( me->mv_selopt_fieldname ) ) OF STRUCTURE <ls_shlp_fields> TO <lv_input_field>.
+        IF <lv_input_field> IS NOT ASSIGNED.
+          RETURN.
+        ENDIF.
+
+* ---------- Set filter based on the input field value --------------------------------------------
+        IF <lv_input_field> CS '*'.
+          APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
+          <ls_filter>-key     = me->get_shlp_uuid( ).
+          <ls_filter>-option  = 'CP'.
+          <ls_filter>-low     = <lv_input_field>.
+          CLEAR: <lv_input_field>.
+        ELSE.
+          APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
+          <ls_filter>-key     = me->get_shlp_uuid( ).
+          <ls_filter>-option  = 'EQ'.
+          <ls_filter>-low     = <lv_input_field>.
+          CLEAR: <lv_input_field>.
+        ENDIF.
+
+* ---------- Assign current token field -----------------------------------------------------------
+        ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
+        IF <lt_field_token> IS NOT ASSIGNED.
+          RETURN.
+        ENDIF.
+
+        CLEAR: <lt_field_token>.
+
+* ---------- Fill token ---------------------------------------------------------------------------
+        me->fill_token( EXPORTING it_filter = me->mt_filter
+                        CHANGING ct_token  = <lt_field_token> ).
+
+* ---------- Handle searchhelp popup opening ------------------------------------------------------
+        me->on_rendering( ir_client = ir_client ).
+
+      WHEN 'TOKEN_UPDATE'.
+        IF  NOT line_exists( lt_event_arg[ 1 ] ) OR
+            NOT line_exists( lt_event_arg[ 2 ] ) OR
+            NOT line_exists( lt_event_arg[ 3 ] ).
+          RETURN.
+        ENDIF.
+
+* ---------- Retirve event parameters -------------------------------------------------------------
+        CLEAR: me->mv_selopt_fieldname.
+        me->mv_selopt_fieldname = lt_event_arg[ 1 ].
+        DATA(lv_token_upd_type) = lt_event_arg[ 2 ].
+        DATA(lv_token_key) = lt_event_arg[ 3 ].
+
+* ---------- Assign current token field -----------------------------------------------------------
+        ASSIGN COMPONENT me->mv_selopt_fieldname OF STRUCTURE <ls_shlp_fields> TO <lt_field_token>.
+        IF <lt_field_token> IS NOT ASSIGNED.
+          RETURN.
+        ENDIF.
+
+        CASE lv_token_upd_type.
+          WHEN 'removed'.
+            me->delete_token( EXPORTING iv_token_key  = lv_token_key
+                              CHANGING ct_token       = <lt_field_token>  ).
+
+          WHEN OTHERS.
+
+        ENDCASE.
+
+* ---------- Update popup data model --------------------------------------------------------------
+        ir_client->popup_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD ON_INIT.
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
 * ---------- Get searchhelp description -----------------------------------------------------------
@@ -846,7 +941,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_rendering.
+  METHOD ON_RENDERING.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -912,7 +1007,10 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           lt_FIELDPROP_LIS TYPE ddshfprops,
           ls_range         TYPE ts_range,
           lv_date_out      TYPE sy-datum,
-          lv_time_out      TYPE sy-uzeit.
+          lv_time_out      TYPE sy-uzeit,
+          lt_param         TYPE abap_parmbind_tab,
+          lv_class_name    TYPE string,
+          lv_meth_name     TYPE string.
 
     FIELD-SYMBOLS: <ls_fielddescr>    TYPE dfies,
                    <ls_record_tab>    TYPE seahlpres,
@@ -1062,6 +1160,24 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
       ENDLOOP.
     ENDLOOP.
 
+* ---------- Call select-option prefill exit ------------------------------------------------------
+    IF me->mv_selopt_prefill_exit IS NOT INITIAL.
+* ---------- Split exit name into class and method ------------------------------------------------
+      SPLIT me->mv_selopt_prefill_exit AT '=>' INTO lv_class_name lv_meth_name.
+
+* ---------- Push result list table to the parameter list -----------------------------------------
+      lt_param = VALUE #( ( name = 'CT_SELOPT'
+                            kind = cl_abap_objectdescr=>changing
+                            value = REF #( ls_shlp-selopt ) )
+                          ( name = 'IV_SHLP_ID'
+                            kind = cl_abap_objectdescr=>exporting
+                            value = REF #( iv_shlp_id ) ) ).
+
+* ---------- Call exit ----------------------------------------------------------------------------
+      CALL METHOD (lv_class_name)=>(lv_meth_name)
+        PARAMETER-TABLE lt_param.
+    ENDIF.
+
 * ---------- Fetch data from searchhelp -----------------------------------------------------------
     CALL FUNCTION 'F4IF_SELECT_VALUES'
       EXPORTING
@@ -1143,6 +1259,24 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         ENDIF.
       ENDLOOP.
     ENDLOOP.
+
+* ---------- Call result filter exit --------------------------------------------------------------
+    IF me->mv_result_filter_exit IS NOT INITIAL.
+* ---------- Split exit name into class and method ------------------------------------------------
+      SPLIT me->mv_result_filter_exit AT '=>' INTO lv_class_name lv_meth_name.
+
+* ---------- Push result list table to the parameter list -----------------------------------------
+      lt_param = VALUE #( ( name = 'CT_RESULT'
+                            kind = cl_abap_objectdescr=>changing
+                            value = REF #( <lt_result_itab> ) )
+                           ( name = 'IV_SHLP_ID'
+                            kind = cl_abap_objectdescr=>exporting
+                            value = REF #( iv_shlp_id ) ) ).
+
+* ---------- Call exit ----------------------------------------------------------------------------
+      CALL METHOD (lv_class_name)=>(lv_meth_name)
+        PARAMETER-TABLE lt_param.
+    ENDIF.
   ENDMETHOD.
 
 
@@ -1155,7 +1289,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD create_data_ref.
+  METHOD CREATE_DATA_REF.
 * -------------------------------------------------------------------------------------------------
 * Heap References and Stack References issue!
 * Internal tables are dynamic data objects and have a special role because they have their own
@@ -1217,7 +1351,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD expand_searchhelp.
+  METHOD EXPAND_SEARCHHELP.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -1248,7 +1382,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD get_data_ref.
+  METHOD GET_DATA_REF.
 *----------------------------------------------------------------------*
 * LOCAL DATA DEFINITION
 *----------------------------------------------------------------------*
@@ -1318,7 +1452,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD init_data_ref.
+  METHOD INIT_DATA_REF.
 * -------------------------------------------------------------------------------------------------
 * Heap References and Stack References issue!
 * Internal tables are dynamic data objects and have a special role because they have their own
@@ -1353,5 +1487,135 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     mr_shlp_result_8,
     mr_shlp_result_9,
     mr_shlp_result_10.
+  ENDMETHOD.
+
+
+  METHOD delete_token.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    FIELD-SYMBOLS: <ls_filter>      TYPE ts_filter_pop,
+                   <ls_field_token> TYPE ts_token,
+                   <lv_field>       TYPE any.
+
+    LOOP AT ct_token ASSIGNING <ls_field_token>.
+* ---------- Init loop data -----------------------------------------------------------------------
+      UNASSIGN: <lv_field>.
+
+* ---------- Get token key assignment -------------------------------------------------------------
+      ASSIGN COMPONENT 'KEY' OF STRUCTURE <ls_field_token> TO <lv_field>.
+      IF <lv_field> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+
+* ---------- Check token key to be deleted --------------------------------------------------------
+      IF <lv_field> <> IV_TOKEN_KEY.
+        CONTINUE.
+      ENDIF.
+
+* ---------- Delete token -------------------------------------------------------------------------
+      DELETE TABLE ct_token FROM <ls_field_token>.
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD FILL_FILTER.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    DATA: ls_range TYPE ts_range.
+
+    FIELD-SYMBOLS: <ls_filter>      TYPE ts_filter_pop,
+                   <ls_field_token> TYPE ts_token,
+                   <lv_field>       TYPE any.
+
+* ---------- Init ---------------------------------------------------------------------------------
+    CLEAR: ct_filter.
+
+* ---------- Fill filter --------------------------------------------------------------------------
+    IF it_token IS NOT INITIAL.
+      LOOP AT it_token ASSIGNING <ls_field_token>.
+* ---------- Init loop data -----------------------------------------------------------------------
+        CLEAR: ls_range.
+        UNASSIGN: <lv_field>.
+
+* ---------- Get key value from token -------------------------------------------------------------
+        ASSIGN COMPONENT 'KEY' OF STRUCTURE <ls_field_token> TO <lv_field>.
+        IF <lv_field> IS NOT ASSIGNED.
+          CONTINUE.
+        ENDIF.
+
+* ---------- Convert token into range format ------------------------------------------------------
+        ls_range = me->get_shlp_range_by_value( iv_value = <lv_field> ).
+        IF ls_range IS INITIAL.
+          CONTINUE.
+        ENDIF.
+
+* ---------- Build new filter record --------------------------------------------------------------
+        APPEND INITIAL LINE TO me->mt_filter ASSIGNING <ls_filter>.
+        <ls_filter>-key     = me->get_shlp_uuid( ).
+        <ls_filter>-option  = ls_range-option.
+        <ls_filter>-low     = ls_range-low.
+        <ls_filter>-high    = ls_range-high.
+
+      ENDLOOP.
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD FILL_TOKEN.
+*----------------------------------------------------------------------*
+* LOCAL DATA DEFINITION
+*----------------------------------------------------------------------*
+    FIELD-SYMBOLS: <ls_filter>      TYPE ts_filter_pop,
+                   <ls_field_token> TYPE ts_token,
+                   <lv_field>       TYPE any.
+
+* ---------- Init ---------------------------------------------------------------------------------
+    CLEAR: ct_token.
+
+* ---------- Fill token ---------------------------------------------------------------------------
+    LOOP AT it_filter REFERENCE INTO DATA(lr_filter).
+      DATA(lv_value) = me->mt_mapping[ key = lr_filter->option ]-value.
+      REPLACE `{LOW}`  IN lv_value WITH lr_filter->low.
+      REPLACE `{HIGH}` IN lv_value WITH lr_filter->high.
+
+      APPEND INITIAL LINE TO ct_token ASSIGNING <ls_field_token>.
+
+      UNASSIGN: <lv_field>.
+      ASSIGN COMPONENT 'KEY' OF STRUCTURE <ls_field_token> TO <lv_field>.
+      IF <lv_field> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+      <lv_field> = lv_value.
+
+      UNASSIGN: <lv_field>.
+      ASSIGN COMPONENT 'TEXT' OF STRUCTURE <ls_field_token> TO <lv_field>.
+      IF <lv_field> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+      <lv_field> = lv_value.
+
+      UNASSIGN: <lv_field>.
+      ASSIGN COMPONENT 'VISIBLE' OF STRUCTURE <ls_field_token> TO <lv_field>.
+      IF <lv_field> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+      <lv_field> = abap_true.
+
+      UNASSIGN: <lv_field>.
+      ASSIGN COMPONENT 'EDITABLE' OF STRUCTURE <ls_field_token> TO <lv_field>.
+      IF <lv_field> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+      <lv_field> = abap_true.
+
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD GET_INPUT_FIELDNAME.
+    rv_input_fieldname = |{ iv_fieldname }_INPUT|.
   ENDMETHOD.
 ENDCLASS.
