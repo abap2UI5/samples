@@ -75,11 +75,6 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_090->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
@@ -154,10 +149,6 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_090->Z2UI5_ON_EVENT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
@@ -179,15 +170,11 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_090->Z2UI5_VIEW_DISPLAY
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_view_display.
 
-    client->_bind_edit( mt_columns_p13n ).
-    client->_bind_edit( mt_sort_p13n ).
-    client->_bind_edit( mt_groups_p13n ).
+    client->_bind_edit( val = mt_columns_p13n pretty_name = 'L' ).
+    client->_bind_edit( val = mt_sort_p13n pretty_name = 'L'  ).
+    client->_bind_edit( val = mt_groups_p13n pretty_name = 'L' ).
 
     DATA(page) =  z2ui5_cl_xml_view=>factory( client ).
 
@@ -237,10 +224,6 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_090->Z2UI5_VIEW_P13N
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_view_p13n.
 
 
@@ -292,10 +275,6 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_090->Z2UI5_VIEW_P13N_POPUP
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD z2ui5_view_p13n_popup.
 
 
