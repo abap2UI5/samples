@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_043 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    SELECT carrid connid fldate price FROM sflight INTO TABLE mt_flight UP TO 500 ROWS.
+    SELECT carrid connid fldate price FROM sflight INTO TABLE mt_flight UP TO 50 ROWS.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( client )->page(
             )->scroll_container( height = '70%' vertical = abap_true ).
