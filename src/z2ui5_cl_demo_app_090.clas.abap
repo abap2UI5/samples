@@ -130,8 +130,18 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `    oGroupPanel.setP13nData(oView.getModel().oData.EDIT.MT_GROUPS_P13N);` && |\n| &&
                          `    var oPopup = oView.byId("p13nPopup");` && |\n| &&
                          `    oPopup.open();` && |\n| &&
+                         `};` && |\n| &&
+                         `sap.z2ui5.updateData = (oReason) => {` && |\n| &&
+                         `  if( oReason === "Ok" ) {` && |\n| &&
+                         `    var oView = sap.z2ui5.oView` && |\n| &&
+                         `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
+                         `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
+                         `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
+                         `    oView.getModel().oData.EDIT.MT_COLUMNS_P13N = oSelectionPanel.getP13nData();` && |\n| &&
+                         `    oView.getModel().oData.EDIT.MT_SORT_P13N = oSortPanel.getP13nData();` && |\n| &&
+                         `    oView.getModel().oData.EDIT.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
+                         `  };` && |\n| &&
                          `};`.
-
     client->view_display( Z2UI5_cl_xml_view=>factory( client
       )->zcc_plain_xml( `<html:script>` && lv_custom_js && `</html:script>`
       )->stringify( ) ).
@@ -173,7 +183,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
     client->_bind_edit( val = mt_columns_p13n pretty_name = 'L' ).
-    client->_bind_edit( val = mt_sort_p13n pretty_name = 'L'  ).
+    client->_bind_edit( val = mt_sort_p13n pretty_name = 'L' ).
     client->_bind_edit( val = mt_groups_p13n pretty_name = 'L' ).
 
     DATA(page) =  z2ui5_cl_xml_view=>factory( client ).
@@ -188,7 +198,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
     page->_generic( name = `Popup` ns = `p13n`
                           t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
-*                                            ( n = `close` v = client->_event( 'P13N_CLOSE' ) )
+                                            ( n = `close` v = `sap.z2ui5.updateData(${$parameters>/reason})` )
 *                                            ( n = `warningText`  v = `Are you sure?` )
                                             ( n = `id`  v = `p13nPopup` )
 *                                            ( n = `reset`  v = client->_event( `P13N_RESET` ) )
@@ -203,6 +213,11 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                           )->_generic( name = `SortPanel` ns = `p13n`
                                        t_prop = VALUE #( ( n = `id`  v = `sortPanel` )
                                                          ( n = `title` v = `Sort` )
+                                                        )
+                                                    )->get_parent(
+                          )->_generic( name = `P13nFilterPanel` ns = ``
+                                       t_prop = VALUE #( ( n = `id`  v = `filterPanel` )
+                                                         ( n = `title` v = `Filter` )
                                                         )
                                                     )->get_parent(
                          )->_generic( name = `GroupPanel` ns = `p13n`
