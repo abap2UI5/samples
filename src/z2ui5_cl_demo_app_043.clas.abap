@@ -4,15 +4,15 @@ CLASS z2ui5_cl_demo_app_043 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    TYPES:
-      BEGIN OF t_flight,
-        carrid TYPE string,
-        connid TYPE string,
-        fldate TYPE sflight-fldate,
-        price  TYPE sflight-price,
-      END OF t_flight.
-    DATA: mt_flight TYPE STANDARD TABLE OF t_flight.
-    DATA mv_key TYPE string.
+*    TYPES:
+*      BEGIN OF t_flight,
+*        carrid TYPE string,
+*        connid TYPE string,
+*        fldate TYPE sflight-fldate,
+*        price  TYPE sflight-price,
+*      END OF t_flight.
+*    DATA: mt_flight TYPE STANDARD TABLE OF t_flight.
+*    DATA mv_key TYPE string.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_043 IMPLEMENTATION.
