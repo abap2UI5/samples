@@ -152,7 +152,6 @@ method Z2UI5_view_display.
          livechange = client->_event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH`
-         autocomplete = abap_false
          ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
