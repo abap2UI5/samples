@@ -155,6 +155,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+    panel->generic_tile(
+        header    = 'Mask Input'
+        subheader = ``
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_110' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
@@ -290,9 +298,17 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-      header    = 'Editor'
+      header    = 'Code Editor'
        subheader = 'Display files'
       press     =  client->_event( 'Z2UI5_CL_DEMO_APP_035' )
+      mode      = 'LineMode'
+      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
+
+    panel->generic_tile(
+      header    = 'Rich Text Editor'
+       subheader = 'Display files'
+      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_106' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
@@ -486,6 +502,13 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+    panel->generic_tile(
+         header    = 'Popover with Quick View'
+         subheader = ''
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_109' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
 
     panel->generic_tile(
          header    = 'Table Select Dialog'
@@ -615,7 +638,12 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-
+    panel->generic_tile(
+        header    = 'Side Panel'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_108' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
 
     panel = page->panel(
             expandable = abap_false

@@ -1,34 +1,30 @@
-CLASS Z2UI5_CL_DEMO_APP_035 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_035 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
-    DATA mv_type TYPE string.
-    DATA mv_path TYPE string.
-    DATA mv_editor TYPE string.
+    DATA mv_type           TYPE string.
+    DATA mv_path           TYPE string.
+    DATA mv_editor         TYPE string.
     DATA mv_check_editable TYPE abap_bool.
     DATA check_initialized TYPE abap_bool.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client            TYPE REF TO Z2UI5_if_client.
 
     METHODS view_display.
+
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
-
-
+CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
   METHOD view_display.
-
     DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
-    DATA(page) = view->shell( )->page(
-    title = 'abap2UI5 - File Editor'
-    navbuttonpress = client->_event( 'BACK' )
-    shownavbutton = abap_true
+    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
+                                       navbuttonpress = client->_event( 'BACK' )
+                                       shownavbutton  = abap_true
             )->header_content(
                 )->link( text = 'Demo'        target = '_blank' href = 'https://twitter.com/abap2UI5/status/1631562906570575875'
                 )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
@@ -40,49 +36,39 @@ CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option'
-         )->input(
-                value           = client->_bind_edit( mv_type )
-                suggestionitems = client->_bind( lcl_mime_api=>get_editor_type( ) ) )->get(
+         )->input( value           = client->_bind_edit( mv_type )
+                   suggestionitems = client->_bind_local( lcl_mime_api=>get_editor_type( ) ) )->get(
             )->suggestion_items(
                 )->list_item( text = '{NAME}' additionaltext = '{VALUE}'
          )->get_parent( )->get_parent(
-         )->button(
-                text  = 'Download'
-                press = client->_event( 'DB_LOAD' )
-                icon  = 'sap-icon://download-from-cloud' ).
+         )->button( text  = 'Download'
+                    press = client->_event( 'DB_LOAD' )
+                    icon  = 'sap-icon://download-from-cloud' ).
 
     grid = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 
-
-         page->code_editor(
-                    type  = mv_type
-                    editable = mv_check_editable
-                    value = client->_bind( mv_editor ) ).
+    page->code_editor( type     = mv_type
+                       editable = mv_check_editable
+                       value    = client->_bind( mv_editor ) ).
 
     page->footer( )->overflow_toolbar(
-        )->button(
-             text = 'Clear'
-             press = client->_event( 'CLEAR' )
-             icon  = 'sap-icon://delete'
+        )->button( text  = 'Clear'
+                   press = client->_event( 'CLEAR' )
+                   icon  = 'sap-icon://delete'
         )->toolbar_spacer(
-        )->button(
-            text  = 'Edit'
-            press = client->_event( 'EDIT' )
-            icon = 'sap-icon://edit'
-        )->button(
-            text  = 'Upload'
-            press = client->_event( 'DB_SAVE' )
-            type  = 'Emphasized'
-            icon = 'sap-icon://upload-to-cloud'
-            enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
+        )->button( text  = 'Edit'
+                   press = client->_event( 'EDIT' )
+                   icon  = 'sap-icon://edit'
+        )->button( text    = 'Upload'
+                   press   = client->_event( 'DB_SAVE' )
+                   type    = 'Emphasized'
+                   icon    = 'sap-icon://upload-to-cloud'
+                   enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
-
   METHOD Z2UI5_if_app~main.
-
     me->client = client.
 
     IF check_initialized = abap_false.
@@ -101,14 +87,15 @@ CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
             WHEN mv_path CS 'json' THEN lcl_mime_api=>read_json( )
             WHEN mv_path CS 'yaml' THEN lcl_mime_api=>read_yaml( )
             WHEN mv_path CS 'text' THEN lcl_mime_api=>read_text( )
-            WHEN mv_path CS 'js'   THEN lcl_mime_api=>read_js( )
-            ).
+            WHEN mv_path CS 'js'   THEN lcl_mime_api=>read_js( ) ).
+        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
         client->message_toast_display( 'Download successfull' ).
 
         client->view_model_update( ).
 
       WHEN 'DB_SAVE'.
         lcl_mime_api=>save_data( ).
+        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
         client->message_box_display( text = 'Upload successfull. File saved!' type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
@@ -117,7 +104,5 @@ CLASS Z2UI5_CL_DEMO_APP_035 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
-
-
   ENDMETHOD.
 ENDCLASS.
