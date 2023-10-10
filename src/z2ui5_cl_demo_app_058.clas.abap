@@ -299,7 +299,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
                )->label( 'sel mode'
                )->combobox(
                    selectedkey = client->_bind_edit( ms_layout-selmode )
-                   items       = client->_bind( VALUE ty_t_combo(
+                   items       = client->_bind_local( VALUE ty_t_combo(
                        ( key = 'None'  text = 'None' )
                        ( key = 'SingleSelect' text = 'SingleSelect' )
                        ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )
