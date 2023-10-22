@@ -143,7 +143,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `  };` && |\n| &&
                          `};`.
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-      )->zcc_plain_xml( `<html:script>` && lv_custom_js && `</html:script>`
+      )->_cc_plain_xml( `<html:script>` && lv_custom_js && `</html:script>`
       )->stringify( ) ).
 
     client->timer_set(

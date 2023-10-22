@@ -403,14 +403,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-    panel->generic_tile(
-    header    = 'p13n Dialog'
-    subheader = 'Popup for F4 Helps'
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_090' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
-
    page = page2->panel(
          expandable = abap_true
          expanded   = abap_false
@@ -834,6 +826,37 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
+
+    panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `Apps with add. Javascript`
+      ).
+
+   panel->generic_tile(
+    header    = 'p13n Dialog'
+    subheader = 'Popup for F4 Helps'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_090' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+
+   panel->generic_tile(
+    header    = 'Upload Set'
+    subheader = ''
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_107' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+   panel->generic_tile(
+    header    = 'Smart Variant Management'
+    subheader = ''
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_111' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
            expandable = abap_false

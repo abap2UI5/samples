@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_037 IMPLEMENTATION.
   METHOD Z2UI5_load_cc.
 
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-         )->zcc_plain_xml( get_js_custom_control( )
+         )->_cc_plain_xml( get_js_custom_control( )
          )->stringify( ) ).
 
     client->timer_set(
