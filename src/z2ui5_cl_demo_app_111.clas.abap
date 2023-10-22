@@ -133,7 +133,7 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->zcc_plain_xml( `<html:script>` && lv_script && `</html:script>`
+        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
         )->stringify( ) ).
 
       client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
@@ -215,7 +215,7 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->zcc_plain_xml( `<html:script> sap.z2ui5.InitSvm(); </html:script>` ).
+    view->_cc_plain_xml( `<html:script> sap.z2ui5.InitSvm(); </html:script>` ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'

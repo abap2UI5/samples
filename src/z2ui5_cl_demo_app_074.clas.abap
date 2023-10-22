@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_074 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_path TYPE string.
     DATA mv_value TYPE string.
@@ -12,7 +12,7 @@ CLASS Z2UI5_CL_DEMO_APP_074 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS ui5_on_init.
@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_074 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
 
   METHOD ui5_on_event.
@@ -76,8 +76,9 @@ CLASS Z2UI5_CL_DEMO_APP_074 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-    client->view_display( Z2UI5_cl_xml_view=>factory( client
-         )->zcc_file_uploader_js(
+    client->view_display( z2ui5_cl_xml_view=>factory( client
+*         )->zcc_file_uploader_js(
+         )->_cc( )->ui5_file_uploader( )->load_cc(
          )->stringify( ) ).
 
   ENDMETHOD.
@@ -85,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_074 IMPLEMENTATION.
 
   METHOD ui5_view_main_display.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - CSV to ABAP internal Table'
             navbuttonpress = client->_event( 'BACK' )
@@ -97,8 +98,8 @@ CLASS Z2UI5_CL_DEMO_APP_074 IMPLEMENTATION.
 
     IF mr_table IS NOT INITIAL.
 
-FIELD-SYMBOLS <tab> type table.
-assign mr_table->* to <tab>.
+      FIELD-SYMBOLS <tab> TYPE table.
+      ASSIGN mr_table->* TO <tab>.
 
       DATA(tab) = page->table(
               items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
@@ -116,24 +117,30 @@ assign mr_table->* to <tab>.
       ENDLOOP.
       DATA(lo_cells) = tab->items( )->column_list_item( )->cells( ).
       LOOP AT lr_fields REFERENCE INTO lr_col.
-          lo_cells->text( `{` && lr_col->* && `}` ).
+        lo_cells->text( `{` && lr_col->* && `}` ).
       ENDLOOP.
     ENDIF.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
 
-    footer->zcc_file_uploader(
+    footer->_cc( )->ui5_file_uploader( )->control(
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'
       upload      = client->_event( 'UPLOAD' ) ).
+
+*    footer->zcc_file_uploader(
+*      value       = client->_bind_edit( mv_value )
+*      path        = client->_bind_edit( mv_path )
+*      placeholder = 'filepath here...'
+*      upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
