@@ -4,6 +4,15 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
+    data:
+     begin of ms_check_expanded,
+        basics type abap_bool,
+        more type abap_bool,
+        features type abap_bool,
+        extensions type abap_bool,
+        demos type abap_bool,
+      end of ms_check_expanded.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value_int.
@@ -66,7 +75,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
         page = page->panel(
          expandable = abap_true
-         expanded   = abap_false
+         expanded   = client->_bind_edit( ms_check_expanded-basics ) "abap_false
          stickyheader = abap_true
 *         height = `500px`
          headertext = `Basics - Input, Output & Popups`
@@ -405,8 +414,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
    page = page2->panel(
          expandable = abap_true
-         expanded   = abap_false
-
+     expanded   = client->_bind_edit( ms_check_expanded-more )
          headertext = `More - Tables, Visualization & Layouts`
     ).
 
@@ -636,7 +644,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
    page = page2->panel(
          expandable = abap_true
-         expanded   = abap_false
+          expanded   = client->_bind_edit( ms_check_expanded-features )
          headertext = `Features - Partial Rerendering & More`
     ).
 
@@ -751,7 +759,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
    page = page2->panel(
          expandable = abap_true
-         expanded   = abap_false
+          expanded   = client->_bind_edit( ms_check_expanded-extensions )
          headertext = `Extensions`
     ).
 
@@ -903,10 +911,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+    panel->generic_tile(
+        header    = 'Generate Barcodes'
+        subheader = 'bwip-js'
+        press     =  client->_event( 'z2ui5_cl_demo_app_102' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
    page = page2->panel(
          expandable = abap_true
-         expanded   = abap_false
+          expanded   = client->_bind_edit( ms_check_expanded-demos )
          headertext = `Demos`
     ).
 
