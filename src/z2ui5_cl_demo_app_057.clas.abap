@@ -1,23 +1,26 @@
-CLASS Z2UI5_CL_DEMO_APP_057 DEFINITION PUBLIC.
+class Z2UI5_CL_DEMO_APP_057 definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES Z2UI5_if_app.
+  interfaces Z2UI5_IF_APP .
+  interfaces IF_SERIALIZABLE_OBJECT .
 
-    TYPES:
-      BEGIN OF ty_s_tab,
+  types:
+    BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
         product          TYPE string,
         create_date      TYPE string,
         create_by        TYPE string,
         storage_location TYPE string,
         quantity         TYPE i,
-      END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+      END OF ty_s_tab .
+  types:
+    ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
-    DATA mt_table TYPE ty_t_table.
-    DATA mv_check_download TYPE abap_bool.
-
+  data MT_TABLE type TY_T_TABLE .
+  data MV_CHECK_DOWNLOAD type ABAP_BOOL .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO Z2UI5_if_client.

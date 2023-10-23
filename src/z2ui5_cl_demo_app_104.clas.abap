@@ -192,10 +192,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
         APPEND ls_sel TO t_tab2.
 
-        IF classname IS NOT INITIAL.
-          client->_bind_clear( ).
-          view_display_master( ).
-        ENDIF.
         classname = ls_sel-info.
 
         mv_layout = `TwoColumnsMidExpanded`.

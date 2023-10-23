@@ -72,11 +72,12 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
           contentwidth = '50%' ).
 
     popup->message_view(
-            items = client->_bind_edit( t_msg )
+            items = client->_bind_edit( val = t_msg pretty_name =  /ui2/cl_json=>pretty_mode-low_case
+             )
             groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
-            title       = `{TITLE}`
+            title       = `{title}`
             subtitle    = `{SUBTITLE}`
             description = `{DESCRIPTION}`
             groupname   = `{GROUP}` ).
