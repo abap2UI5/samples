@@ -50,11 +50,11 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A->ON_EVENT_SUB
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_104->ON_EVENT_SUB
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD on_event_sub.
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A->ON_INIT_SUB
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_104->ON_INIT_SUB
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD on_init_sub.
@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method Z2UI5_CL_DEMO_APP_A->VIEW_DISPLAY_DETAIL
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_104->VIEW_DISPLAY_DETAIL
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail.
@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Private Method Z2UI5_CL_DEMO_APP_A->VIEW_DISPLAY_MASTER
+* | Instance Protected Method Z2UI5_CL_DEMO_APP_104->VIEW_DISPLAY_MASTER
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A->Z2UI5_IF_APP~MAIN
+* | Instance Public Method Z2UI5_CL_DEMO_APP_104->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -192,6 +192,10 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
         APPEND ls_sel TO t_tab2.
 
+        IF classname IS NOT INITIAL.
+          CALL METHOD mo_app_sub->('BIND_CLEAR') EXPORTING client = client.
+          view_display_master( ).
+        ENDIF.
         classname = ls_sel-info.
 
         mv_layout = `TwoColumnsMidExpanded`.

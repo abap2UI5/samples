@@ -14,6 +14,10 @@ CLASS z2ui5_cl_demo_app_105 DEFINITION
     DATA mr_data TYPE REF TO data .
 
     METHODS on_init .
+    METHODS bind_clear
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event .
     METHODS display_view
       CHANGING
@@ -25,11 +29,23 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_105 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A_B->DISPLAY_VIEW
+* | Instance Public Method Z2UI5_CL_DEMO_APP_105->BIND_CLEAR
+* +-------------------------------------------------------------------------------------------------+
+* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
+* +--------------------------------------------------------------------------------------</SIGNATURE>
+  METHOD bind_clear.
+
+    client->_bind_clear( `MO_APP_SUB` ).
+
+  ENDMETHOD.
+
+
+* <SIGNATURE>---------------------------------------------------------------------------------------+
+* | Instance Public Method Z2UI5_CL_DEMO_APP_105->DISPLAY_VIEW
 * +-------------------------------------------------------------------------------------------------+
 * | [<-->] XML                            TYPE REF TO Z2UI5_CL_XML_VIEW(optional)
 * +--------------------------------------------------------------------------------------</SIGNATURE>
@@ -41,7 +57,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A_B->ON_EVENT
+* | Instance Public Method Z2UI5_CL_DEMO_APP_105->ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD on_event.
@@ -57,7 +73,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A_B->ON_INIT
+* | Instance Public Method Z2UI5_CL_DEMO_APP_105->ON_INIT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD on_init.
@@ -69,7 +85,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_A_B->Z2UI5_IF_APP~MAIN
+* | Instance Public Method Z2UI5_CL_DEMO_APP_105->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
