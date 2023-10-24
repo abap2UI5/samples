@@ -64,35 +64,35 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popup.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
-
-    popup = popup->dialog(
-          title = `Messages`
-          contentheight = '50%'
-          contentwidth = '50%' ).
-
-    popup->message_view(
-            items = client->_bind_edit( val = t_msg
-             )
-            groupitems = abap_true
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}` ).
-
-    popup->footer( )->overflow_toolbar(
-      )->toolbar_spacer(
-      )->button(
-          id    = `test2`
-          text  = 'test'
-          press = client->_event( `TEST` )
-      )->button(
-          text  = 'close'
-          press = client->_event_client( client->cs_event-popup_close ) ).
-
-    client->popup_display( popup->stringify( ) ).
+*    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+*
+*    popup = popup->dialog(
+*          title = `Messages`
+*          contentheight = '50%'
+*          contentwidth = '50%' ).
+*
+*    popup->message_view(
+*            items = client->_bind_edit( val = t_msg
+*             )
+*            groupitems = abap_true
+*        )->message_item(
+*            type        = `{TYPE}`
+*            title       = `{TITLE}`
+*            subtitle    = `{SUBTITLE}`
+*            description = `{DESCRIPTION}`
+*            groupname   = `{GROUP}` ).
+*
+*    popup->footer( )->overflow_toolbar(
+*      )->toolbar_spacer(
+*      )->button(
+*          id    = `test2`
+*          text  = 'test'
+*          press = client->_event( `TEST` )
+*      )->button(
+*          text  = 'close'
+*          press = client->_event_client( client->cs_event-popup_close ) ).
+*
+*    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
@@ -114,7 +114,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
                     text = 'Source_Code'  target = '_blank'
                     href = view->hlp_get_source_code_url(  )
             )->get_parent( ).
-    page->button( text = 'Messages' press = client->_event( 'POPUP' )  ).
+*    page->button( text = 'Messages in Popup' press = client->_event( 'POPUP' )  ).
     page->message_view(
         items = client->_bind_edit( t_msg )
         groupitems = abap_true
@@ -162,8 +162,8 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POPOVER_CLOSE'.
         client->popover_destroy( ).
-      WHEN 'POPUP'.
-        Z2UI5_display_popup( ).
+*      WHEN 'POPUP'.
+*        Z2UI5_display_popup( ).
         WHEN 'TEST'.
         Z2UI5_display_popover( `test2` ).
       WHEN 'POPOVER'.
