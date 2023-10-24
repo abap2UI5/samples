@@ -76,7 +76,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         page = page->panel(
          expandable = abap_true
          expanded   = client->_bind_edit( ms_check_expanded-basics ) "abap_false
-         stickyheader = abap_true
 *         height = `500px`
          headertext = `Basics - Input, Output & Popups`
     ).
