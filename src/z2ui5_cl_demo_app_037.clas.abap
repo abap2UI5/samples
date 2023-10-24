@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_037 IMPLEMENTATION.
   METHOD get_js_custom_control.
 
     result = `<html:script>jQuery.sap.declare("z2ui5.MyCC");` && |\n|  &&
-                             `    sap.ui.define( [` && |\n|  &&
+                             `    sap.ui.require( [` && |\n|  &&
                              `        "sap/ui/core/Control",` && |\n|  &&
                              `    ], function (Control) {` && |\n|  &&
                              `        "use strict";` && |\n|  &&
