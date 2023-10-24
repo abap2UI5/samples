@@ -1,4 +1,4 @@
-CLASS Z2UI5_CL_DEMO_APP_101 DEFINITION
+CLASS Z2UI5_CL_DEMO_APP_113 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -31,7 +31,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_113 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
@@ -95,35 +95,67 @@ CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
     DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'Feed Input'
+             title          = 'Timeline'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
                     )->header_content(
                     )->link( text = 'Source_Code' target = '_blank' href = lo_view->hlp_get_source_code_url(  )
             )->get_parent( ).
 
-    DATA(fi) = page->vbox(
-      )->feed_input( post = client->_event( val = 'POST' t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
-                             growing = abap_true
-                             rows = `4`
-                             icondensityaware = abap_false
-                             class = `sapUiSmallMarginTopBottom`
-      )->get_parent( )->get_parent(
-      )->list(
-        items = client->_bind_edit( mt_feed )
-        showSeparators = `Inner`
-          )->feed_list_item(
-            sender = `{AUTHOR}`
-*            icon   = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
-            senderpress   = client->_event( 'SENDER_PRESS' )
-            iconpress   = client->_event( 'ICON_PRESS' )
-            icondensityaware   = abap_false
-            showicon = abap_false
-            info = `Reply`
-*            timestamp = `{DATE}`
-            text = `{TEXT}`
-            convertlinkstoanchortags = `All`
-).
+   data(timeline) = page->timeline(
+*      EXPORTING
+*        id                =
+*        enabledoublesided =
+*        groupby           =
+*        growingthreshold  =
+*        filtertitle       =
+*        sortoldestfirst   =
+*        alignment         =
+*        axisorientation   =
+         content           = client->_bind( mt_feed )
+*      RECEIVING
+*        result            =
+    ).
+
+    timeline->content( ns = `commons` )->timelineitem(
+*      EXPORTING
+*        id                =
+*        datetime          =
+        title             = `{AUTHOR}`
+*        usernameclickable =
+*        usernameclicked   =
+*        select            =
+*        userpicture       =
+        text              = `{TEXT}`
+*        username          =
+*        filtervalue       =
+*        icon              =
+*      RECEIVING
+*        result            =
+    ).
+
+*    DATA(fi) = page->vbox(
+*      )->feed_input( post = client->_event( val = 'POST' t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
+*                             growing = abap_true
+*                             rows = `4`
+*                             icondensityaware = abap_false
+*                             class = `sapUiSmallMarginTopBottom`
+*      )->get_parent( )->get_parent(
+*      )->list(
+*        items = client->_bind_edit( mt_feed )
+*        showSeparators = `Inner`
+*          )->feed_list_item(
+*            sender = `{AUTHOR}`
+**            icon   = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
+*            senderpress   = client->_event( 'SENDER_PRESS' )
+*            iconpress   = client->_event( 'ICON_PRESS' )
+*            icondensityaware   = abap_false
+*            showicon = abap_false
+*            info = `Reply`
+**            timestamp = `{DATE}`
+*            text = `{TEXT}`
+*            convertlinkstoanchortags = `All`
+*).
 
     client->view_display( lo_view->stringify( ) ).
 

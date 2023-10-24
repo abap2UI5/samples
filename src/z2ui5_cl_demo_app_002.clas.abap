@@ -125,7 +125,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    grid->simple_form( 'Input'
+    grid->simple_form( title = 'Input' editable = abap_true
         )->content( 'form'
             )->label( 'Input with value help'
             )->input(
@@ -138,7 +138,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
                         text = '{VALUE}'
                         additionaltext = '{DESCR}' ).
 
-    grid->simple_form( 'Time Inputs'
+    grid->simple_form( title = 'Time Inputs' editable = abap_true
         )->content( 'form'
             )->label( 'Date'
             )->date_picker( client->_bind_edit( screen-date )
@@ -151,7 +151,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
     DATA(form) = grid->get_parent( )->get_parent( )->grid( 'L12 M12 S12'
         )->content( 'layout'
-            )->simple_form( 'Input with select options'
+            )->simple_form( title = 'Input with select options' editable = abap_true
                 )->content( 'form' ).
 
     DATA(lv_test) = form->label( 'Checkbox'
