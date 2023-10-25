@@ -7,6 +7,9 @@ CLASS Z2UI5_CL_DEMO_APP_066 DEFINITION
 
     INTERFACES Z2UI5_if_app .
 
+    DATA mv_input_master TYPE string.
+    DATA mv_input_detail TYPE string.
+
     TYPES:
       BEGIN OF ts_tree_row_base,
         object TYPE string,
@@ -65,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
      data(page) = lo_view_nested->page( title = `Nested View` ).
 
       page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
-      )->input( ).
+      )->input( value = client->_bind_edit( val = mv_input_detail view = client->cs_view-nested ) ).
 
       page->button(
             text = 'button 01'
@@ -110,7 +113,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     client->_bind( mt_tree ).
-    DATA(tab) = lr_master->tree_table(
+    DATA(tab) = lr_master->vbox( )->tree_table(
       rows = `{path:'/MT_TREE', parameters: {arrayNames:['CATEGORIES']}}` ).
     tab->tree_columns(
     )->tree_column( label = 'Object'
@@ -126,7 +129,13 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
         )->tree_template(
         )->text( text = '{COL4}').
 
+     tab->get_parent( )->label( text = `input master` )->input( value = client->_bind_edit( val = mv_input_master view = client->cs_view-main )
+      )->button( press = client->_event( `TEST` ) text = `button` ).
+
+
     client->view_display( page->stringify( ) ).
+
+
 
   ENDMETHOD.
 
@@ -156,13 +165,17 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
 
-
+      WHEN 'TEST'.
+*        client->view_model_update( ).
+        client->message_toast_display( mv_input_master ).
       when `NEST_TEST`.
 
       mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
       mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
 
-      client->nest_view_model_update( ).
+      client->message_toast_display( mv_input_detail ).
+
+*      client->nest_view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
