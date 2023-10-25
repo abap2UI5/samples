@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
      data(page) = lo_view_nested->page( title = `Nested View` ).
 
       page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
-      )->input( value = client->_bind_edit( val = mv_input_detail ) ).
+      )->input( value = client->_bind_edit( val = mv_input_detail view = client->cs_view-nested ) ).
 
       page->button(
             text = 'button 01'
@@ -129,7 +129,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
         )->tree_template(
         )->text( text = '{COL4}').
 
-     tab->get_parent( )->label( text = `input master` )->input( value = client->_bind_edit( val = mv_input_master )
+     tab->get_parent( )->label( text = `input master` )->input( value = client->_bind_edit( val = mv_input_master view = client->cs_view-main )
       )->button( press = client->_event( `TEST` ) text = `button` ).
 
 
