@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
       mv_scale_x = `5`.
       mv_scale_y = `7`.
 
-      mt_barcode = NEW z2ui5_cl_fw_cc_bwipjs( )->get_t_barcode_types( ).
+      mt_barcode = z2ui5_cl_fw_cc_bwipjs=>get_t_barcode_types( ).
       ms_barcode = mt_barcode[ 1 ].
 
       view_display( client = client check_init = abap_false ).
