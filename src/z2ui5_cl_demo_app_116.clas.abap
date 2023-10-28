@@ -10,6 +10,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
 
     DATA mv_classname TYPE string.
     DATA mv_output    TYPE string.
+    DATA mv_time      TYPE string.
     DATA mv_check_init TYPE abap_bool.
 
     METHODS display_demo_output
@@ -66,14 +67,30 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                       href = view->hlp_get_source_code_url(  )
                       target = '_blank'
                  )->get_parent(
-                 )->simple_form( title = 'Console Output Starter' editable = abap_true
-                    )->content( 'form'
+              )->sub_header(
+                 )->overflow_toolbar(
                         )->label( 'Classname'
-                        )->input( client->_bind_edit( mv_classname )
+
+
+                        )->input( value = client->_bind_edit( mv_classname ) width = `20%`
                         )->button(
-                            text  = 'run'
+                            text  = 'Run'
                             press = client->_event( val = 'BUTTON_POST' )
-            )->get_parent( )->get_parent(
+                        )->toolbar_spacer(
+                        )->input( value = client->_bind_edit( mv_time ) width = `5%`
+                        )->button(
+                            text  = 'Timer Run'
+                            press = client->_event( val = 'BUTTON_POST' )
+                        )->toolbar_spacer(
+                        )->button(
+                            text  = 'Clear'
+                            press = client->_event( val = 'BUTTON_CLEAR' )
+              )->get_parent( )->get_parent(
+*                 )->simple_form( title = 'Console Output Starter' editable = abap_true
+*                    )->content( 'form'
+*
+
+*            )->get_parent( )->get_parent(
             )->_cc( )->gui_demo_output( )->control( client->_bind( mv_output )
             )->stringify( ) ).
 
