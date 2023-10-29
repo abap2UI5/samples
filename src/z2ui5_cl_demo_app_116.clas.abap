@@ -18,6 +18,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
         client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+    METHODS run_class.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -31,18 +32,27 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
       mv_classname = `Z2UI5_CL_DEMO_APP_117`.
+      mv_time = `10000`.
       display_demo_output( client ).
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-        DATA li_classrun TYPE REF TO if_oo_adt_classrun.
-        CREATE OBJECT li_classrun TYPE (mv_classname).
-        li_classrun->main( out = me ).
-        mv_output = cl_demo_output=>get( ).
+        run_class( ).
+        display_demo_output( client ).
+
+      WHEN 'BUTTON_CLEAR'.
+        mv_output = ``.
+        display_demo_output( client ).
+
+      WHEN `BUTTON_TIMER`.
+        client->timer_set(
+         interval_ms    = mv_time
+         event_finished = client->_event( 'BUTTON_TIMER' ) ).
+
+        run_class( ).
         client->view_model_update( ).
-*        display_demo_output( client ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
@@ -72,25 +82,22 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                         )->label( 'Classname'
 
 
-                        )->input( value = client->_bind_edit( mv_classname ) width = `20%`
+                        )->input( value = client->_bind_edit( mv_classname ) width = `20%`               submit = client->_event( val = 'BUTTON_POST' )
                         )->button(
                             text  = 'Run'
                             press = client->_event( val = 'BUTTON_POST' )
                         )->toolbar_spacer(
-                        )->input( value = client->_bind_edit( mv_time ) width = `5%`
+                        )->input(
+                                value = client->_bind_edit( mv_time ) width = `5%`
+
                         )->button(
-                            text  = 'Timer Run'
-                            press = client->_event( val = 'BUTTON_POST' )
+                            text  = 'Timer Run (MS)'
+                            press = client->_event( val = 'BUTTON_TIMER' )
                         )->toolbar_spacer(
                         )->button(
                             text  = 'Clear'
                             press = client->_event( val = 'BUTTON_CLEAR' )
               )->get_parent( )->get_parent(
-*                 )->simple_form( title = 'Console Output Starter' editable = abap_true
-*                    )->content( 'form'
-*
-
-*            )->get_parent( )->get_parent(
             )->_cc( )->gui_demo_output( )->control( client->_bind( mv_output )
             )->stringify( ) ).
 
@@ -146,6 +153,16 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   METHOD if_oo_adt_intrnl_classrun~write_text.
 
     cl_demo_output=>write_text( text ).
+
+  ENDMETHOD.
+
+
+  METHOD run_class.
+
+    DATA li_classrun TYPE REF TO if_oo_adt_classrun.
+    CREATE OBJECT li_classrun TYPE (mv_classname).
+    li_classrun->main( out = me ).
+    mv_output = cl_demo_output=>get( ).
 
   ENDMETHOD.
 

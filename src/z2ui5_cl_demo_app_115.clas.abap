@@ -60,7 +60,8 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
     cl_demo_output=>write_text( 'Unten' ).
 
 * alles anzeigen
-    SELECT * FROM usr01 INTO TABLE @DATA(it_mara).
+    SELECT * FROM t100 INTO TABLE @DATA(it_mara)
+    up to 50 rows.
 
     cl_demo_output=>write_data( it_mara ).
 

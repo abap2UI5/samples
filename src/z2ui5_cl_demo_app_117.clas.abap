@@ -58,7 +58,7 @@ CLASS Z2UI5_CL_DEMO_APP_117 IMPLEMENTATION.
      out->write_text( 'Unten' ).
 
 * alles anzeigen
-    SELECT * FROM usr01 INTO TABLE @DATA(it_mara).
+    SELECT * FROM t100 INTO TABLE @DATA(it_mara) up to 20 rows.
 
      out->write_data( it_mara ).
 
