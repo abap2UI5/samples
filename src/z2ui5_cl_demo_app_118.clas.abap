@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->_cc( )->load_font_awsome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` )->get_parent( ).
+    view->_cc( )->load_font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` )->get_parent( ).
 
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - FontAwsome Fonts'
@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->load_font_awsome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
+        )->_cc( )->load_font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
         )->stringify( ) ).
 
 
