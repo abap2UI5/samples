@@ -80,9 +80,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
               )->sub_header(
                  )->overflow_toolbar(
                         )->label( 'Classname'
-
-
-                        )->input( value = client->_bind_edit( mv_classname ) width = `20%`               submit = client->_event( val = 'BUTTON_POST' )
+                        )->input( value = client->_bind_edit( mv_classname )
+                                  width = `20%`
+                                  submit = client->_event( val = 'BUTTON_POST' )
                         )->button(
                             text  = 'Run'
                             press = client->_event( val = 'BUTTON_POST' )
