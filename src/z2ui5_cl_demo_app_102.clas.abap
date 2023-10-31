@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_102 DEFINITION
 
     DATA mv_check_init TYPE abap_bool.
 
-    DATA mt_barcode TYPE z2ui5_cl_fw_cc_bwipjs=>ty_t_barcode.
-    DATA ms_barcode TYPE z2ui5_cl_fw_cc_bwipjs=>ty_s_barcode.
+    DATA mt_barcode TYPE z2ui5_cl_cc_bwipjs=>ty_t_barcode.
+    DATA ms_barcode TYPE z2ui5_cl_cc_bwipjs=>ty_s_barcode.
 
   PROTECTED SECTION.
 
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
       mv_scale_x = `5`.
       mv_scale_y = `7`.
 
-      mt_barcode = z2ui5_cl_fw_cc_bwipjs=>get_t_barcode_types( ).
+      mt_barcode = z2ui5_cl_cc_bwipjs=>get_t_barcode_types( ).
       ms_barcode = mt_barcode[ 1 ].
 
       view_display( client = client check_init = abap_false ).

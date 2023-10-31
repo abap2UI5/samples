@@ -40,14 +40,18 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
              )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
          )->get_parent( ).
 
-
     page->vbox( height = `100%` justifycontent = `Center` alignitems = `Center`
           )->hbox( )->button( text = `text` icon = `sap-icon://fa-brands/xbox`
-    )->_generic( name = `Icon` ns = `core` t_prop = VALUE #( ( n = `src` v = `sap-icon://fa-regular/face-smile` )
-                                                             ( n = `size` v = `6rem` )
-                                                             ( n = `color` v = `red` )
-                                                             ( n = `class` v = `fa-bounce` )
-                                                              ) ).
+    )->icon(
+        src    = `sap-icon://fa-regular/face-smile`
+        size   =  `6rem`
+        color  = `red`
+        class  = `fa-bounce`
+    )->icon(
+        size   =  `13rem`
+        color  = `black`
+        class  = `fa-brands fa-github-square`
+        ).
 
     client->view_display( view->stringify( ) ).
 

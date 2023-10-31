@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_119 DEFINITION
     DATA quantity TYPE string .
     DATA check_initialized TYPE abap_bool .
 
-    DATA ms_drive_config TYPE z2ui5_cl_fw_driver_js=>ty_config.
+    DATA ms_drive_config TYPE z2ui5_cl_cc_driver_js=>ty_config.
 
     METHODS view_main.
   PROTECTED SECTION.
@@ -21,14 +21,14 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
 
 
   METHOD view_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_fw_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
+    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
 
     client->view_display( view->shell(
           )->page(
@@ -86,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
       WHEN 'START'.
 
-       view_main( ).
+        view_main( ).
 
       WHEN 'BUTTON_POST'.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).

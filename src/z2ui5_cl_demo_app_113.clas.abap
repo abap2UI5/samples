@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 *        result            =
      ).
 
-    timeline->content( ns = `commons` )->timelineitem(
+    timeline->content( ns = `commons` )->timeline_item(
         datetime          = `{DATETIME}`
         title             = `{TITLE}`
         userpicture       = `{AUTHORPIC}`

@@ -116,7 +116,7 @@ CLASS Z2UI5_CL_DEMO_APP_089 IMPLEMENTATION.
                                                           icon = `sap-icon://grid`
                                                           type = `Transparent`
                               )->get_parent(
-                            )->get_parent( )->subheader(
+                            )->get_parent( )->sub_header( ns = `tnt`
                             )->tool_header(
                               )->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
                                                   select = client->_event( `OnSelectIconTabBar` )
