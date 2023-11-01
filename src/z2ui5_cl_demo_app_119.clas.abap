@@ -72,14 +72,16 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
       DATA ls_steps TYPE z2ui5_cl_cc_driver_js=>ty_config_steps.
 
-      ms_drive_config-show_progress = abap_true.
+      ms_drive_config-show_progress = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_true ).
       ms_drive_config-popover_class = 'driverjs-theme'.
       ms_drive_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
+      ms_drive_config-allow_close = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_false ).
+
 *      ls_steps-element = '#__xmlview5--choper725'.
       ls_steps-element = 'choper725'.
       ls_steps-elementview = client->cs_view-main.
-      ls_steps-popover-title = 'Animated Tour Example'.
-      ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
+      ls_steps-popover-title = '&#39;&lt;strong&gt;Animated Tour Example&lt;/&lt;strong&gt;&#39;'.
+*      ls_steps-popover-description = `Here is the code example showing animated tour. <span style=color:red;>Let's walk you through it.</span>'`.
       ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-left.
       ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
       APPEND ls_steps TO ms_drive_config-steps.
