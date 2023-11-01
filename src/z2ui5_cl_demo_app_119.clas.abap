@@ -30,6 +30,12 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
     view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
 
+    client->view_display( z2ui5_cl_xml_view=>factory( client
+    )->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config
+    )->stringify( ) ).
+
+    view->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config )->get_parent( ).
+
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - DriverJs'
@@ -65,31 +71,32 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
       ms_drive_config-show_progress = abap_true.
 
-      ls_steps-element = '#__xmlview5--choper725'.
-*      ls_steps-element = 'choper725'.
+*      ls_steps-element = '#__xmlview5--choper725'.
+      ls_steps-element = 'choper725'.
       ls_steps-elementview = client->cs_view-main.
       ls_steps-popover-title = 'Animated Tour Example'.
       ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
-      ls_steps-popover-side = `left`.
-      ls_steps-popover-align = `start`.
+      ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-left.
+      ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
       APPEND ls_steps TO ms_drive_config-steps.
 
-      ls_steps-element = '#__xmlview5--choper725-1'.
-*      ls_steps-element = 'choper725-1'.
+*      ls_steps-element = '#__xmlview5--choper725-1'.
+      ls_steps-element = 'choper725-1'.
       ls_steps-elementview = client->cs_view-main.
       ls_steps-popover-title = 'Animated Tour Example'.
       ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
-      ls_steps-popover-side = `left`.
-      ls_steps-popover-align = `start`.
+      ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-left.
+      ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
       APPEND ls_steps TO ms_drive_config-steps.
 
-      ls_steps-element = '#__xmlview5--choper725-2'.
-*      ls_steps-element = 'choper725-2'.
+*      ls_steps-element = '#__xmlview5--choper725-2'.
+      ls_steps-element = 'choper725-2'.
       ls_steps-elementview = client->cs_view-main.
       ls_steps-popover-title = 'Import the Library'.
       ls_steps-popover-description = `It works the same in vanilla JavaScript as well as frameworks.'`.
-      ls_steps-popover-side = `bottom`.
-      ls_steps-popover-align = `start`.
+      ls_steps-popover-disable_buttons = z2ui5_cl_cc_driver_js=>buttons-previous.
+      ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-bottom.
+      ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
       APPEND ls_steps TO ms_drive_config-steps.
 
 
@@ -100,17 +107,18 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
         )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
         )->stringify( ) ).
 
-      client->timer_set( event_finished = client->_event( `LOAD_DRIVE_CONFIG` ) interval_ms = `0` ).
+*      client->timer_set( event_finished = client->_event( `LOAD_DRIVE_CONFIG` ) interval_ms = `0` ).
+      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN 'LOAD_DRIVE_CONFIG'.
-        client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config
-        )->stringify( ) ).
-
-        client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
+*        client->view_display( z2ui5_cl_xml_view=>factory( client
+*        )->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config
+*        )->stringify( ) ).
+*
+*        client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
       WHEN 'START'.
 
