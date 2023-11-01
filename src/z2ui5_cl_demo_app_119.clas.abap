@@ -21,7 +21,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
 
   METHOD view_main.
@@ -61,6 +61,38 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
+      DATA ls_steps TYPE z2ui5_cl_cc_driver_js=>ty_config_steps.
+
+      ms_drive_config-show_progress = abap_true.
+
+      ls_steps-element = '#__xmlview5--choper725'.
+*      ls_steps-element = 'choper725'.
+      ls_steps-elementview = client->cs_view-main.
+      ls_steps-popover-title = 'Animated Tour Example'.
+      ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
+      ls_steps-popover-side = `left`.
+      ls_steps-popover-align = `start`.
+      APPEND ls_steps TO ms_drive_config-steps.
+
+      ls_steps-element = '#__xmlview5--choper725-1'.
+*      ls_steps-element = 'choper725-1'.
+      ls_steps-elementview = client->cs_view-main.
+      ls_steps-popover-title = 'Animated Tour Example'.
+      ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
+      ls_steps-popover-side = `left`.
+      ls_steps-popover-align = `start`.
+      APPEND ls_steps TO ms_drive_config-steps.
+
+      ls_steps-element = '#__xmlview5--choper725-2'.
+*      ls_steps-element = 'choper725-2'.
+      ls_steps-elementview = client->cs_view-main.
+      ls_steps-popover-title = 'Import the Library'.
+      ls_steps-popover-description = `It works the same in vanilla JavaScript as well as frameworks.'`.
+      ls_steps-popover-side = `bottom`.
+      ls_steps-popover-align = `start`.
+      APPEND ls_steps TO ms_drive_config-steps.
+
+
       product  = 'tomato'.
       quantity = '500'.
 
@@ -77,10 +109,6 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
         client->view_display( z2ui5_cl_xml_view=>factory( client
         )->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config
         )->stringify( ) ).
-
-*      client->view_display( z2ui5_cl_xml_view=>factory( client
-*        )->_cc_plain_xml( z2ui5_cl_fw_driver_js=>start_drive( )
-*        )->stringify( ) ).
 
         client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
