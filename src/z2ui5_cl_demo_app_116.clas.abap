@@ -6,7 +6,6 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-    INTERFACES if_oo_adt_intrnl_classrun.
 
     DATA mv_classname TYPE string.
     DATA mv_output    TYPE string.
@@ -31,7 +30,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
-      mv_classname = `Z2UI5_CL_DEMO_APP_117`.
+      mv_classname = `LCL_DEMO_APP_117`.
       mv_time = `10000`.
       display_demo_output( client ).
     ENDIF.
@@ -103,66 +102,13 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD if_oo_adt_intrnl_classrun~begin_section.
-
-    cl_demo_output=>begin_section( ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~display.
-
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~end_section.
-
-    cl_demo_output=>end_section( ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~get.
-
-    cl_demo_output=>get( ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~line.
-
-    cl_demo_output=>line(  ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~next_section.
-
-    cl_demo_output=>next_section( title ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~write.
-
-    cl_demo_output=>write_data( data ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~write_data.
-
-    cl_demo_output=>write_data( value ).
-
-  ENDMETHOD.
-
-  METHOD if_oo_adt_intrnl_classrun~write_text.
-
-    cl_demo_output=>write_text( text ).
-
-  ENDMETHOD.
-
 
   METHOD run_class.
-
+    data(writer) = new lcl_adt_writer( ).
     DATA li_classrun TYPE REF TO if_oo_adt_classrun.
     CREATE OBJECT li_classrun TYPE (mv_classname).
-    li_classrun->main( out = me ).
-    mv_output = cl_demo_output=>get( ).
+    li_classrun->main( out = writer ).
+    mv_output = writer->get_output( ).
 
   ENDMETHOD.
 
