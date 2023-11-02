@@ -25,14 +25,21 @@ CLASS lcl_demo_app_125 DEFINITION
              val_10 TYPE string,
            END OF ty_s_value.
 
-
+    TYPES:
+      BEGIN OF ty_s_dfies,
+        rollname  TYPE string,
+        scrtext_s TYPE string,
+        fieldname TYPE string,
+        keyflag   TYPE string,
+        scrtext_m TYPE string,
+      END OF ty_s_dfies.
     DATA mv_search_value  TYPE string.
     DATA mt_table         TYPE REF TO data.
     DATA mt_comp          TYPE abap_component_tab.
     DATA mt_table_del     TYPE REF TO data.
     DATA ms_value         TYPE ty_s_value.
     DATA mv_table         TYPE string VALUE `USR01`.
-    DATA mt_dfies         TYPE STANDARD TABLE OF dfies.
+    DATA mt_dfies         TYPE STANDARD TABLE OF ty_s_dfies.
     DATA mv_activ_row     TYPE string.
     DATA mv_edit          TYPE abap_bool.
 
@@ -759,7 +766,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 ENDCLASS.
 
 
-CLASS lcL_demo_app_126 DEFINITION
+CLASS lcl_demo_app_126 DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -767,8 +774,8 @@ CLASS lcL_demo_app_126 DEFINITION
     INTERFACES z2ui5_if_app.
 
     DATA mv_selectedkey     TYPE string.
-    DATA mv_selectedkey_TMP TYPE string.
-    DATA mo_APP_SIMPLE_VIEW TYPE REF TO lcl_demo_app_125.
+    DATA mv_selectedkey_tmp TYPE string.
+    DATA mo_app_simple_view TYPE REF TO lcl_demo_app_125.
 
 
   PROTECTED SECTION.
@@ -779,7 +786,7 @@ CLASS lcL_demo_app_126 DEFINITION
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_Main.
+    METHODS render_main.
 
     METHODS get_count
       IMPORTING
@@ -793,7 +800,7 @@ ENDCLASS.
 
 
 
-CLASS lcL_demo_app_126 IMPLEMENTATION.
+CLASS lcl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -807,7 +814,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
       on_init( ).
 
-         CREATE OBJECT mo_app_simple_view.
+      CREATE OBJECT mo_app_simple_view.
 
 
     ENDIF.
@@ -820,7 +827,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
       WHEN space.
 
-        render_Main( ).
+        render_main( ).
 
 
 
@@ -834,7 +841,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
         mo_app_simple_view->set_table( table = mv_selectedkey ).
 
-        render_Main( ).
+        render_main( ).
 
         mo_app_simple_view->mo_parent_view = mo_main_page.
 
@@ -874,7 +881,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD render_Main.
+  METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
 
@@ -887,7 +894,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
-                                         selectedKey = client->_bind_edit( mv_selectedkey )
+                                         selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( val = 'ONSELECTICONTABBAR' )
                                                        )->items( ).
 
