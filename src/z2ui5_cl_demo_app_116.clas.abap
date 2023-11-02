@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5 - if_oo_adt_classrun'
+                  title          = 'abap2UI5 - if_oo_adt_classrun - TODO uncomment the code first'
                   navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                   shownavbutton  = abap_true
               )->header_content(
@@ -104,11 +104,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD run_class.
-    data(writer) = new lcl_adt_writer( ).
-    DATA li_classrun TYPE REF TO if_oo_adt_classrun.
-    CREATE OBJECT li_classrun TYPE (mv_classname).
-    li_classrun->main( out = writer ).
-    mv_output = writer->get_output( ).
+
+*    data(writer) = new lcl_adt_writer( ).
+*    DATA li_classrun TYPE REF TO if_oo_adt_classrun.
+*    CREATE OBJECT li_classrun TYPE (mv_classname).
+*    li_classrun->main( out = writer ).
+*    mv_output = writer->get_output( ).
 
   ENDMETHOD.
 
