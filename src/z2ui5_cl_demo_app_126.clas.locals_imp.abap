@@ -675,7 +675,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
       READ TABLE mt_dfies INTO DATA(dfies) WITH KEY fieldname = comp->name.
-      IF sy-subrc NE 0.
+      IF sy-subrc <> 0.
         dfies-scrtext_m = comp->name.
       ENDIF.
 
