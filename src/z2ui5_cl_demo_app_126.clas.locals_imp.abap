@@ -404,7 +404,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
     LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
-      CHECK comp->name NE `MANDT`.
+      CHECK comp->name <> `MANDT`.
 
 
 
@@ -427,7 +427,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     LOOP AT mt_comp REFERENCE INTO comp.
 
 
-      CHECK comp->name NE `MANDT`.
+      CHECK comp->name <> `MANDT`.
 
       READ TABLE mt_dfies INTO dfies WITH KEY fieldname = comp->name.
 
@@ -604,14 +604,14 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 *    ENDIF.
 
 
-    DATA: lcl_abap_structdescr TYPE REF TO cl_abap_structdescr,
-          lt_ddic_info         TYPE ddfields.
+*    DATA: lcl_abap_structdescr TYPE REF TO cl_abap_structdescr.
+*          lt_ddic_info         TYPE ddfields.
 
-    FIELD-SYMBOLS: <ddic_info> TYPE LINE OF ddfields.
+*    FIELD-SYMBOLS: <ddic_info> TYPE LINE OF ddfields.
 
-    lcl_abap_structdescr ?= cl_abap_structdescr=>describe_by_name( CONV ddobjname( mv_table ) ).
+*    lcl_abap_structdescr ?= cl_abap_structdescr=>describe_by_name(  mv_table ).
 
-    lt_ddic_info = lcl_abap_structdescr->get_ddic_field_list( ).
+*    data(lt_ddic_info) = lcl_abap_structdescr->get_ddic_field_list( ).
 
 
 
@@ -686,8 +686,10 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
           index = index + 1.
 
-          DATA(enabled) = COND #( WHEN dfies-keyflag = abap_true AND mv_edit = abap_true THEN abap_false ELSE abap_true ).
-          DATA(visible) = COND #( WHEN dfies-fieldname = 'MANDT' THEN abap_false ELSE abap_true ).
+*          DATA(enabled) = COND #( WHEN dfies-keyflag = abap_true AND mv_edit = abap_true THEN abap_false ELSE abap_true ).
+          DATA(enabled) = xsdbool( dfies-keyflag = abap_false or mv_edit = abap_false ). " THEN abap_false ELSE abap_true ).
+*          DATA(visible) = COND #( WHEN dfies-fieldname = 'MANDT' THEN abap_false ELSE abap_true ).
+          DATA(visible) = xsdbool( dfies-fieldname <> 'MANDT' ). "  THEN abap_false ELSE abap_true ).
 
           ASSIGN COMPONENT index OF STRUCTURE ms_value TO FIELD-SYMBOL(<val>).
 
@@ -809,7 +811,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
       on_init( ).
 
-      CREATE OBJECT mo_app_simple_view.
+      mo_app_simple_view = new #( ).
 
 
     ENDIF.
@@ -828,9 +830,9 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
       WHEN OTHERS.
 
-        IF mv_selectedkey NE mv_selectedkey_tmp.
+        IF mv_selectedkey <> mv_selectedkey_tmp.
 
-          CREATE OBJECT mo_app_simple_view.
+           mo_app_simple_view = new #( ).
 
         ENDIF.
 
