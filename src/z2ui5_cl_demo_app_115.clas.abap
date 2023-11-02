@@ -16,7 +16,27 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
+
+
+  METHOD display_demo_output.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    client->view_display( view->shell(
+          )->page(
+                  title          = 'abap2UI5 - CL_DEMO_OUTPUT'
+                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  shownavbutton  = abap_true
+              )->header_content(
+                  )->link(
+                      text = 'Source_Code'
+                      href = view->hlp_get_source_code_url(  )
+                      target = '_blank'
+                 )->get_parent(
+            )->_cc( )->gui_demo_output( )->control( cl_demo_output=>get( )
+            )->stringify( ) ).
+
+  ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
@@ -110,26 +130,4 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
     display_demo_output( client ).
 
   ENDMETHOD.
-
-
-
-  METHOD display_demo_output.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-    client->view_display( view->shell(
-          )->page(
-                  title          = 'abap2UI5 - CL_DEMO_OUTPUT'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
-                      target = '_blank'
-                 )->get_parent(
-            )->_cc( )->gui_demo_output( )->control( cl_demo_output=>get( )
-            )->stringify( ) ).
-
-  ENDMETHOD.
-
 ENDCLASS.

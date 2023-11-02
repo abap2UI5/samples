@@ -2,205 +2,6 @@
 *"* local helper classes, interface definitions and type
 *"* declarations
 
-CLASS zcl_text_helper_99 DEFINITION
-  FINAL
-  CREATE PUBLIC .
-
-  PUBLIC SECTION.
-
-    CLASS-DATA:
-      mt_dd04t TYPE STANDARD TABLE OF dd04t WITH EMPTY KEY .
-    CLASS-DATA:
-      mt_t100 TYPE STANDARD TABLE OF t100 WITH EMPTY KEY .
-    CLASS-DATA:
-      MT_dd02t TYPE STANDARD TABLE OF dd02t WITH EMPTY KEY .
-
-
-    CLASS-METHODS get_dd04t_l
-      IMPORTING
-        !iv_rollname  TYPE rollname
-        !iv_langu     TYPE sy-langu OPTIONAL
-      RETURNING
-        VALUE(result) TYPE string .
-    CLASS-METHODS get_dd04t
-      IMPORTING
-        !iv_type      TYPE char1 DEFAULT 'S'
-        !iv_rollname  TYPE rollname
-        !iv_langu     TYPE sy-langu OPTIONAL
-      RETURNING
-        VALUE(result) TYPE string .
-
-    CLASS-METHODS get_dd02t
-      IMPORTING
-        !IV_tabname   TYPE string
-        !iv_langu     TYPE sy-langu OPTIONAL
-      RETURNING
-        VALUE(result) TYPE string.
-
-    CLASS-METHODS get_t100
-    importing
-     !iv_ARBGB type string
-     !iv_MSGNR type string
-        !iv_langu     TYPE sy-langu OPTIONAL
-      RETURNING
-        VALUE(result) TYPE string.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-
-
-CLASS ZCL_TEXT_HELPER_99 IMPLEMENTATION.
-
-
-  METHOD get_dd02t.
-
-    IF iv_langu IS INITIAL.
-      DATA(langu) = sy-langu.
-    ENDIF.
-
-    READ TABLE mt_dd02t INTO DATA(dd02t)
-             WITH KEY tabname   = iv_tabname
-                      ddlanguage = langu.
-    IF sy-subrc NE 0.
-
-      SELECT SINGLE * FROM dd02t INTO dd02t
-                        WHERE tabname   = iv_tabname
-                        AND   ddlanguage = langu.
-      IF sy-subrc = 0.
-        APPEND dd02t TO mt_dd02t.
-
-      ELSE.
-
-        SELECT SINGLE * FROM dd02t INTO dd02t
-                        WHERE tabname   = iv_tabname
-                        AND   ddlanguage = 'E'.
-        IF sy-subrc = 0.
-          APPEND dd02t TO mt_dd02t.
-        ENDIF.
-      ENDIF.
-
-    ENDIF.
-
-    IF dd02t IS NOT INITIAL.
-      result = dd02t-ddtext.
-    ELSE.
-      result = iv_tabname.
-    ENDIF.
-
-
-  ENDMETHOD.
-
-
-  METHOD get_dd04t.
-
-
-    IF iv_langu IS INITIAL.
-      DATA(langu) = sy-langu.
-    ENDIF.
-
-
-    READ TABLE mt_dd04t INTO DATA(dd04t)
-             WITH KEY rollname   = iv_rollname
-                      ddlanguage = langu.
-    IF sy-subrc NE 0.
-
-      SELECT SINGLE * FROM dd04t INTO dd04t
-                        WHERE rollname   = iv_rollname
-                        AND   ddlanguage = langu.
-      IF sy-subrc = 0.
-        APPEND dd04t TO mt_dd04t.
-
-      ELSE.
-
-        SELECT SINGLE * FROM dd04t INTO dd04t
-                        WHERE rollname   = iv_rollname
-                        AND   ddlanguage = 'E'.
-        IF sy-subrc = 0.
-          APPEND dd04t TO mt_dd04t.
-        ENDIF.
-      ENDIF.
-
-    ENDIF.
-
-    IF dd04t IS NOT INITIAL.
-      CASE iv_type.
-        WHEN 'S'."Feldbezeichner kurz
-          result = dd04t-scrtext_s.
-        WHEN 'M'."Feldbezeichner mittel
-          result = dd04t-scrtext_m.
-        WHEN 'L'."Feldbezeichner lang
-          result = dd04t-scrtext_l.
-        WHEN 'R'."Überschrift
-          result = dd04t-reptext.
-        WHEN 'D'."Kurzbeschreibung von Repository-Objekten
-          result = dd04t-ddtext.
-        WHEN ''.
-          result = dd04t-scrtext_s.
-        WHEN OTHERS.
-          result = dd04t-scrtext_s.
-      ENDCASE.
-    ENDIF.
-
-    IF result IS INITIAL.
-      result = '???'.
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD get_dd04t_l.
-
-    zcl_text_helper_99=>get_dd04t(
-      EXPORTING
-        iv_type     = 'L'
-        iv_rollname = iv_rollname
-        iv_langu    = iv_langu
-      RECEIVING
-        result      = result
-    ).
-
-  ENDMETHOD.
-
-
-  METHOD get_t100.
-
-      IF iv_langu IS INITIAL.
-      DATA(langu) = sy-langu.
-    ENDIF.
-
-    READ TABLE mt_t100 INTO DATA(t100)
-             WITH KEY arbgb   = iv_arbgb
-                      msgnr   = iv_msgnr
-                      SPRSL   = langu.
-    IF sy-subrc NE 0.
-
-      SELECT SINGLE * FROM t100 INTO t100
-                        WHERE arbgb    = iv_arbgb
-                        and   msgnr    = iv_msgnr
-                        AND   SPRSL    = langu.
-      IF sy-subrc = 0.
-        APPEND t100 TO mt_t100.
-
-      ELSE.
-
-        SELECT SINGLE * FROM t100 INTO t100
-                        WHERE arbgb   = iv_arbgb
-                        and   msgnr   = iv_msgnr
-                        AND   SPRSL   = 'E'.
-        IF sy-subrc = 0.
-          APPEND t100 TO mt_t100.
-        ENDIF.
-      ENDIF.
-
-    ENDIF.
-
-      result = t100-text.
-
-
-  ENDMETHOD.
-ENDCLASS.
-
 
 CLASS lcl_demo_app_125 DEFINITION
   CREATE PUBLIC .
@@ -262,21 +63,12 @@ CLASS lcl_demo_app_125 DEFINITION
     METHODS render_main.
 
   PRIVATE SECTION.
+
     METHODS data_to_table
       CHANGING
         row TYPE any.
+
     METHODS popup_add_edit.
-
-    METHODS get_txt
-      IMPORTING
-                roll          TYPE string
-                type          TYPE char1 OPTIONAL
-      RETURNING VALUE(result) TYPE string.
-
-    METHODS get_txt_l
-      IMPORTING
-                roll          TYPE string
-      RETURNING VALUE(result) TYPE string.
 
     METHODS button_save.
 
@@ -407,9 +199,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
         IF sy-subrc = 0.
           COMMIT WORK AND WAIT.
 
-          client->message_toast_display( zcl_text_helper_99=>get_t100(
-                                           iv_arbgb = '/SCWM/IT_DEVKIT'
-                                           iv_msgnr = '012'   ) ).
+          client->message_toast_display( `message toast message` ).
         ENDIF.
 
         client->view_model_update( ).
@@ -572,7 +362,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
 
 
-      DATA(page) = view->page( title          = zcl_text_helper_99=>get_dd02t( mv_table )
+      DATA(page) = view->page( title          =  mv_table
                                navbuttonpress = client->_event( 'BACK' )
                                shownavbutton  = abap_true
                                class          = 'sapUiContentPadding' ).
@@ -592,11 +382,11 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
                    growing    ='true'
                    width      ='auto'
                    items      = client->_bind( val = <tab> )
-                   headertext = zcl_text_helper_99=>get_dd02t( mv_table )
+                   headertext = mv_table
                 )->header_toolbar(
                 )->overflow_toolbar(
                 )->title(   level ='H1'
-                            text = zcl_text_helper_99=>get_dd02t( mv_table )
+                            text = mv_table
                 )->toolbar_spacer(
                 )->search_field(
                                  value  = client->_bind_edit( mv_search_value )
@@ -651,16 +441,16 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
                     )->toolbar_spacer(
                     )->button(
                         icon    = 'sap-icon://add'
-                        text    =  get_txt( 'RSLPO_GUI_ADDPART' )
+                        text    =   'RSLPO_GUI_ADDPART'
                         press   = client->_event( 'BUTTON_ADD' )
                         type    = 'Default'
                      )->button(
                         icon    = 'sap-icon://refresh'
-                        text    = get_txt( '/SCMB/LOC_REFRESH' )
+                        text    = '/SCMB/LOC_REFRESH'
                         press   = client->_event( 'BUTTON_REFRESH' )
                         type    = 'Default'
                      )->button(
-                        text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
+                        text    = '/SCWM/DE_LM_LOGSAVE'
                         press   = client->_event( 'BUTTON_SAVE' )
                         type    = 'Success' ).
 
@@ -869,7 +659,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    DATA(title) = COND #( WHEN mv_edit = abap_true THEN get_txt( 'CRMST_UIU_EDIT' ) ELSE get_txt( 'RSLPO_GUI_ADDPART' ) ).
+    DATA(title) = COND #( WHEN mv_edit = abap_true THEN 'CRMST_UIU_EDIT' ELSE 'RSLPO_GUI_ADDPART' ).
 
     DATA(simple_form) =  popup->dialog( title = title contentwidth = '40%'
           )->simple_form(
@@ -924,20 +714,20 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
      ).
 
     toolbar->button(
-      text  = get_txt( 'BRF_TERMINATE_PS' )
+      text  = 'BRF_TERMINATE_PS'
       press = client->_event( 'POPUP_ADD_CLOSE' )
     ).
 
     IF mv_edit = abap_true.
       toolbar->button(
-        text  = get_txt( 'MLCCS_D_XDELETE' )
+        text  =  'MLCCS_D_XDELETE'
         type  = 'Reject'
         icon  = 'sap-icon://delete'
         press = client->_event( val = 'ROW_ACTION_DELETE' t_arg = VALUE #( ( mv_activ_row ) ) ) ).
     ENDIF.
 
     toolbar->button(
-      text  = get_txt( 'FB_TEXT_PROC_STATUS_SUCCSS_ALV' )
+      text  = 'FB_TEXT_PROC_STATUS_SUCCSS_ALV'
       press = client->_event( event )
       type  = 'Emphasized'
 *     enabled = `{= $` && client->_bind_edit( mv_screen_name ) && ` !== '' && $` && client->_bind_edit( mv_screen_descr ) && ` !== '' }`
@@ -946,28 +736,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
-
-
-  METHOD get_txt.
-
-    zcl_text_helper_99=>get_dd04t(
-      EXPORTING
-        iv_rollname = CONV #( roll )
-      RECEIVING
-        result      = result ).
-
-  ENDMETHOD.
-  METHOD get_txt_l.
-
-    zcl_text_helper_99=>get_dd04t(
-      EXPORTING
-        iv_rollname = CONV #( roll )
-        iv_type     = 'L'
-      RECEIVING
-        result      = result ).
-
-  ENDMETHOD.
-
 
 
   METHOD get_xml.
