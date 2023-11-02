@@ -213,12 +213,12 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   METHOD popup_add_edit.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX mv_activ_row.
-
-    data_to_table( CHANGING row = <row> ).
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX mv_activ_row.
+*
+*    data_to_table( CHANGING row = <row> ).
 
   ENDMETHOD.
 
@@ -226,29 +226,29 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   METHOD data_to_table.
 
-    DATA index TYPE int4.
-
-    LOOP AT mt_dfies INTO DATA(dfies).
-
-      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE row TO FIELD-SYMBOL(<value>).
-
-      index = index + 1.
-
-      DATA(val) = 'MS_VALUE-VAL_' && index.
-
-      ASSIGN (val) TO FIELD-SYMBOL(<val>).
-
-      IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
-        <value> = <val>.
-      ENDIF.
-
-    ENDLOOP.
-
-    CLEAR: ms_value.
-
-    set_row_id( ).
-    client->popup_destroy( ).
-    client->view_model_update( ).
+*    DATA index TYPE int4.
+*
+*    LOOP AT mt_dfies INTO DATA(dfies).
+*
+*      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE row TO FIELD-SYMBOL(<value>).
+*
+*      index = index + 1.
+*
+*      DATA(val) = 'MS_VALUE-VAL_' && index.
+*
+*      ASSIGN (val) TO FIELD-SYMBOL(<val>).
+*
+*      IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
+*        <value> = <val>.
+*      ENDIF.
+*
+*    ENDLOOP.
+*
+*    CLEAR: ms_value.
+*
+*    set_row_id( ).
+*    client->popup_destroy( ).
+*    client->view_model_update( ).
 
   ENDMETHOD.
 
@@ -256,40 +256,40 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   METHOD row_action_edit.
 
-    mv_edit = abap_true.
-
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    DATA(lt_arg) = client->get( )-t_event_arg.
-    READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-    IF sy-subrc = 0.
-
-      READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX ls_arg.
-      IF sy-subrc = 0.
-
-        mv_activ_row = ls_arg.
-
-        LOOP AT mt_dfies INTO DATA(dfies).
-
-          ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value>).
-
-          DATA(val) = 'MS_VALUE-VAL_' && sy-tabix.
-
-          ASSIGN (val) TO FIELD-SYMBOL(<val>).
-
-          IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
-            <val> = <value>.
-          ENDIF.
-
-        ENDLOOP.
-
-        render_popup(  ).
-
-        client->view_model_update( ).
-
-      ENDIF.
-    ENDIF.
+*    mv_edit = abap_true.
+*
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    DATA(lt_arg) = client->get( )-t_event_arg.
+*    READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+*    IF sy-subrc = 0.
+*
+*      READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX ls_arg.
+*      IF sy-subrc = 0.
+*
+*        mv_activ_row = ls_arg.
+*
+*        LOOP AT mt_dfies INTO DATA(dfies).
+*
+*          ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value>).
+*
+*          DATA(val) = 'MS_VALUE-VAL_' && sy-tabix.
+*
+*          ASSIGN (val) TO FIELD-SYMBOL(<val>).
+*
+*          IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
+*            <val> = <value>.
+*          ENDIF.
+*
+*        ENDLOOP.
+*
+*        render_popup(  ).
+*
+*        client->view_model_update( ).
+*
+*      ENDIF.
+*    ENDIF.
 
   ENDMETHOD.
 
@@ -331,12 +331,12 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   METHOD popup_add_add.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
-
-    data_to_table( CHANGING row = <row> ).
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
+*
+*    data_to_table( CHANGING row = <row> ).
 
 
   ENDMETHOD.
@@ -610,24 +610,24 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
 
 
-    LOOP AT mt_dfies REFERENCE INTO DATA(d).
-
-      READ TABLE lt_ddic_info REFERENCE INTO DATA(f) WITH KEY rollname = d->rollname.
-
-      IF d->scrtext_s IS INITIAL.
-        d->scrtext_s = f->scrtext_s.
-      ENDIF.
-      IF d->scrtext_m IS INITIAL.
-        d->scrtext_m = f->scrtext_m.
-      ENDIF.
-      IF d->scrtext_l IS INITIAL.
-        d->scrtext_l = f->scrtext_l.
-      ENDIF.
-      IF d->reptext IS INITIAL.
-        d->reptext   = f->reptext.
-      ENDIF.
-
-    ENDLOOP.
+*    LOOP AT mt_dfies REFERENCE INTO DATA(d).
+*
+*      READ TABLE lt_ddic_info REFERENCE INTO DATA(f) WITH KEY rollname = d->rollname.
+*
+*      IF d->scrtext_s IS INITIAL.
+*        d->scrtext_s = f->scrtext_s.
+*      ENDIF.
+*      IF d->scrtext_m IS INITIAL.
+*        d->scrtext_m = f->scrtext_m.
+*      ENDIF.
+*      IF d->scrtext_l IS INITIAL.
+*        d->scrtext_l = f->scrtext_l.
+*      ENDIF.
+*      IF d->reptext IS INITIAL.
+*        d->reptext   = f->reptext.
+*      ENDIF.
+*
+*    ENDLOOP.
 
   ENDMETHOD.
 
