@@ -169,7 +169,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD button_save.
 
 *    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
@@ -221,7 +220,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD popup_add_edit.
 
 *    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
@@ -232,7 +230,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 *    data_to_table( CHANGING row = <row> ).
 
   ENDMETHOD.
-
 
 
   METHOD data_to_table.
@@ -262,7 +259,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 *    client->view_model_update( ).
 
   ENDMETHOD.
-
 
 
   METHOD row_action_edit.
@@ -305,7 +301,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD row_action_delete.
 
     DATA index TYPE int4.
@@ -339,7 +334,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD popup_add_add.
 
 *    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
@@ -353,8 +347,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
-
   METHOD on_init.
 
     get_data(  ).
@@ -365,7 +357,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
 
   ENDMETHOD.
-
 
 
   METHOD render_main.
