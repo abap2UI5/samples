@@ -6,6 +6,9 @@ CLASS z2ui5_cl_demo_app_115 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
+
+    data mv_output type string.
+
     METHODS display_demo_output
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -32,7 +35,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
                       href = view->hlp_get_source_code_url(  )
                       target = '_blank'
                  )->get_parent(
-            )->_cc( )->gui_demo_output( )->control( cl_demo_output=>get( )
+            )->_cc( )->gui_demo_output( )->control( mv_output
             )->stringify( ) ).
 
   ENDMETHOD.
@@ -125,7 +128,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
 *    CALL TRANSFORMATION id SOURCE itab = itab2
 *                           RESULT XML json_writer.
 *    DATA(json) = json_writer->get_output( ).
-*
+*    mv_output = cl_demo_output=>get( ).
 *    display_demo_output( client ).
 
   ENDMETHOD.

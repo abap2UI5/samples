@@ -61,7 +61,6 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD display_demo_output.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
