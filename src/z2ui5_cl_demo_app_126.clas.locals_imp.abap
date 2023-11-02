@@ -147,7 +147,9 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
       WHEN 'POPUP_INPUT_SCREEN'.
 
-        CHECK mv_edit = abap_true.
+        if mv_edit = abap_false.
+        return.
+        endif.
 
       WHEN 'POPUP_ADD_CLOSE'.
 
@@ -166,53 +168,55 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+
   METHOD button_save.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-    FIELD-SYMBOLS <del> TYPE STANDARD TABLE.
-    ASSIGN mt_table_del->* TO <del>.
-
-
-    TRY.
-
-        DATA(type_desc) = cl_abap_typedescr=>describe_by_name( mv_table ).
-        DATA(struct_desc) = CAST cl_abap_structdescr( type_desc ).
-
-        DATA(table_desc) = cl_abap_tabledescr=>create(
-          p_line_type  = struct_desc
-          p_table_kind = cl_abap_tabledescr=>tablekind_std ).
-
-        DATA: o_table TYPE REF TO data.
-        CREATE DATA o_table TYPE HANDLE table_desc.
-
-        FIELD-SYMBOLS <table> TYPE ANY TABLE.
-        ASSIGN o_table->* TO <table>.
-
-        MOVE-CORRESPONDING <del> TO <table>.
-
-        IF <del> IS NOT INITIAL.
-
-          DELETE (mv_table) FROM TABLE <table>.
-          IF sy-subrc = 0.
-            COMMIT WORK AND WAIT.
-            CLEAR: mt_table_del.
-          ENDIF.
-        ENDIF.
-
-        MOVE-CORRESPONDING <tab> TO <table>.
-
-        MODIFY (mv_table) FROM TABLE <table>.
-        IF sy-subrc = 0.
-          COMMIT WORK AND WAIT.
-
-          client->message_toast_display( `message toast message` ).
-        ENDIF.
-
-        client->view_model_update( ).
-
-      CATCH cx_root.
-    ENDTRY.
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*    FIELD-SYMBOLS <del> TYPE STANDARD TABLE.
+*    ASSIGN mt_table_del->* TO <del>.
+*
+*
+*    TRY.
+*
+*        DATA(type_desc) = cl_abap_typedescr=>describe_by_name( mv_table ).
+*        DATA(struct_desc) = CAST cl_abap_structdescr( type_desc ).
+*
+*        DATA(table_desc) = cl_abap_tabledescr=>create(
+*          p_line_type  = struct_desc
+*          p_table_kind = cl_abap_tabledescr=>tablekind_std ).
+*
+*        DATA: o_table TYPE REF TO data.
+*        CREATE DATA o_table TYPE HANDLE table_desc.
+*
+*        FIELD-SYMBOLS <table> TYPE ANY TABLE.
+*        ASSIGN o_table->* TO <table>.
+*
+*        MOVE-CORRESPONDING <del> TO <table>.
+*
+*        IF <del> IS NOT INITIAL.
+*
+*          DELETE (mv_table) FROM TABLE <table>.
+*          IF sy-subrc = 0.
+*            COMMIT WORK AND WAIT.
+*            CLEAR: mt_table_del.
+*          ENDIF.
+*        ENDIF.
+*
+*        MOVE-CORRESPONDING <tab> TO <table>.
+*
+*        MODIFY (mv_table) FROM TABLE <table>.
+*        IF sy-subrc = 0.
+*          COMMIT WORK AND WAIT.
+*
+*          client->message_toast_display( `message toast message` ).
+*        ENDIF.
+*
+*        client->view_model_update( ).
+*
+*      CATCH cx_root.
+*    ENDTRY.
 
   ENDMETHOD.
 
@@ -362,6 +366,8 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+
   METHOD render_main.
 
     IF mo_parent_view IS INITIAL.
@@ -492,6 +498,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     result = uuid.
 
   ENDMETHOD.
+
   METHOD search.
 
 
@@ -639,7 +646,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD set_row_id.
 
 
@@ -656,8 +662,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
-
-
 
 
   METHOD render_popup.
