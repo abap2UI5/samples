@@ -25,14 +25,21 @@ CLASS lcl_demo_app_125 DEFINITION
              val_10 TYPE string,
            END OF ty_s_value.
 
-
+    TYPES:
+      BEGIN OF ty_s_dfies,
+        rollname  TYPE string,
+        scrtext_s TYPE string,
+        fieldname TYPE string,
+        keyflag   TYPE string,
+        scrtext_m TYPE string,
+      END OF ty_s_dfies.
     DATA mv_search_value  TYPE string.
     DATA mt_table         TYPE REF TO data.
     DATA mt_comp          TYPE abap_component_tab.
     DATA mt_table_del     TYPE REF TO data.
     DATA ms_value         TYPE ty_s_value.
     DATA mv_table         TYPE string VALUE `USR01`.
-    DATA mt_dfies         TYPE STANDARD TABLE OF dfies.
+    DATA mt_dfies         TYPE STANDARD TABLE OF ty_s_dfies.
     DATA mv_activ_row     TYPE string.
     DATA mv_edit          TYPE abap_bool.
 
@@ -140,7 +147,9 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
       WHEN 'POPUP_INPUT_SCREEN'.
 
-        CHECK mv_edit = abap_true.
+        if mv_edit = abap_false.
+        return.
+        endif.
 
       WHEN 'POPUP_ADD_CLOSE'.
 
@@ -159,140 +168,137 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD button_save.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-    FIELD-SYMBOLS <del> TYPE STANDARD TABLE.
-    ASSIGN mt_table_del->* TO <del>.
-
-
-    TRY.
-
-        DATA(type_desc) = cl_abap_typedescr=>describe_by_name( mv_table ).
-        DATA(struct_desc) = CAST cl_abap_structdescr( type_desc ).
-
-        DATA(table_desc) = cl_abap_tabledescr=>create(
-          p_line_type  = struct_desc
-          p_table_kind = cl_abap_tabledescr=>tablekind_std ).
-
-        DATA: o_table TYPE REF TO data.
-        CREATE DATA o_table TYPE HANDLE table_desc.
-
-        FIELD-SYMBOLS <table> TYPE ANY TABLE.
-        ASSIGN o_table->* TO <table>.
-
-        MOVE-CORRESPONDING <del> TO <table>.
-
-        IF <del> IS NOT INITIAL.
-
-          DELETE (mv_table) FROM TABLE <table>.
-          IF sy-subrc = 0.
-            COMMIT WORK AND WAIT.
-            CLEAR: mt_table_del.
-          ENDIF.
-        ENDIF.
-
-        MOVE-CORRESPONDING <tab> TO <table>.
-
-        MODIFY (mv_table) FROM TABLE <table>.
-        IF sy-subrc = 0.
-          COMMIT WORK AND WAIT.
-
-          client->message_toast_display( `message toast message` ).
-        ENDIF.
-
-        client->view_model_update( ).
-
-      CATCH cx_root.
-    ENDTRY.
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*    FIELD-SYMBOLS <del> TYPE STANDARD TABLE.
+*    ASSIGN mt_table_del->* TO <del>.
+*
+*
+*    TRY.
+*
+*        DATA(type_desc) = cl_abap_typedescr=>describe_by_name( mv_table ).
+*        DATA(struct_desc) = CAST cl_abap_structdescr( type_desc ).
+*
+*        DATA(table_desc) = cl_abap_tabledescr=>create(
+*          p_line_type  = struct_desc
+*          p_table_kind = cl_abap_tabledescr=>tablekind_std ).
+*
+*        DATA: o_table TYPE REF TO data.
+*        CREATE DATA o_table TYPE HANDLE table_desc.
+*
+*        FIELD-SYMBOLS <table> TYPE ANY TABLE.
+*        ASSIGN o_table->* TO <table>.
+*
+*        MOVE-CORRESPONDING <del> TO <table>.
+*
+*        IF <del> IS NOT INITIAL.
+*
+*          DELETE (mv_table) FROM TABLE <table>.
+*          IF sy-subrc = 0.
+*            COMMIT WORK AND WAIT.
+*            CLEAR: mt_table_del.
+*          ENDIF.
+*        ENDIF.
+*
+*        MOVE-CORRESPONDING <tab> TO <table>.
+*
+*        MODIFY (mv_table) FROM TABLE <table>.
+*        IF sy-subrc = 0.
+*          COMMIT WORK AND WAIT.
+*
+*          client->message_toast_display( `message toast message` ).
+*        ENDIF.
+*
+*        client->view_model_update( ).
+*
+*      CATCH cx_root.
+*    ENDTRY.
 
   ENDMETHOD.
-
 
 
   METHOD popup_add_edit.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX mv_activ_row.
-
-    data_to_table( CHANGING row = <row> ).
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX mv_activ_row.
+*
+*    data_to_table( CHANGING row = <row> ).
 
   ENDMETHOD.
-
 
 
   METHOD data_to_table.
 
-    DATA index TYPE int4.
-
-    LOOP AT mt_dfies INTO DATA(dfies).
-
-      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE row TO FIELD-SYMBOL(<value>).
-
-      index = index + 1.
-
-      DATA(val) = 'MS_VALUE-VAL_' && index.
-
-      ASSIGN (val) TO FIELD-SYMBOL(<val>).
-
-      IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
-        <value> = <val>.
-      ENDIF.
-
-    ENDLOOP.
-
-    CLEAR: ms_value.
-
-    set_row_id( ).
-    client->popup_destroy( ).
-    client->view_model_update( ).
+*    DATA index TYPE int4.
+*
+*    LOOP AT mt_dfies INTO DATA(dfies).
+*
+*      ASSIGN COMPONENT dfies-fieldname OF STRUCTURE row TO FIELD-SYMBOL(<value>).
+*
+*      index = index + 1.
+*
+*      DATA(val) = 'MS_VALUE-VAL_' && index.
+*
+*      ASSIGN (val) TO FIELD-SYMBOL(<val>).
+*
+*      IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
+*        <value> = <val>.
+*      ENDIF.
+*
+*    ENDLOOP.
+*
+*    CLEAR: ms_value.
+*
+*    set_row_id( ).
+*    client->popup_destroy( ).
+*    client->view_model_update( ).
 
   ENDMETHOD.
-
 
 
   METHOD row_action_edit.
 
-    mv_edit = abap_true.
-
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    DATA(lt_arg) = client->get( )-t_event_arg.
-    READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-    IF sy-subrc = 0.
-
-      READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX ls_arg.
-      IF sy-subrc = 0.
-
-        mv_activ_row = ls_arg.
-
-        LOOP AT mt_dfies INTO DATA(dfies).
-
-          ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value>).
-
-          DATA(val) = 'MS_VALUE-VAL_' && sy-tabix.
-
-          ASSIGN (val) TO FIELD-SYMBOL(<val>).
-
-          IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
-            <val> = <value>.
-          ENDIF.
-
-        ENDLOOP.
-
-        render_popup(  ).
-
-        client->view_model_update( ).
-
-      ENDIF.
-    ENDIF.
+*    mv_edit = abap_true.
+*
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    DATA(lt_arg) = client->get( )-t_event_arg.
+*    READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+*    IF sy-subrc = 0.
+*
+*      READ TABLE <tab> ASSIGNING FIELD-SYMBOL(<row>) INDEX ls_arg.
+*      IF sy-subrc = 0.
+*
+*        mv_activ_row = ls_arg.
+*
+*        LOOP AT mt_dfies INTO DATA(dfies).
+*
+*          ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value>).
+*
+*          DATA(val) = 'MS_VALUE-VAL_' && sy-tabix.
+*
+*          ASSIGN (val) TO FIELD-SYMBOL(<val>).
+*
+*          IF <val> IS ASSIGNED AND <value> IS ASSIGNED.
+*            <val> = <value>.
+*          ENDIF.
+*
+*        ENDLOOP.
+*
+*        render_popup(  ).
+*
+*        client->view_model_update( ).
+*
+*      ENDIF.
+*    ENDIF.
 
   ENDMETHOD.
-
 
 
   METHOD row_action_delete.
@@ -328,20 +334,17 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD popup_add_add.
 
-    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    ASSIGN mt_table->* TO <tab>.
-
-    APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
-
-    data_to_table( CHANGING row = <row> ).
+*    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+*    ASSIGN mt_table->* TO <tab>.
+*
+*    APPEND INITIAL LINE TO <tab> ASSIGNING FIELD-SYMBOL(<row>).
+*
+*    data_to_table( CHANGING row = <row> ).
 
 
   ENDMETHOD.
-
-
 
 
   METHOD on_init.
@@ -354,6 +357,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
 
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -400,7 +404,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
     LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
-      CHECK comp->name NE `MANDT`.
+      CHECK comp->name <> `MANDT`.
 
 
 
@@ -423,7 +427,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     LOOP AT mt_comp REFERENCE INTO comp.
 
 
-      CHECK comp->name NE `MANDT`.
+      CHECK comp->name <> `MANDT`.
 
       READ TABLE mt_dfies INTO dfies WITH KEY fieldname = comp->name.
 
@@ -485,6 +489,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     result = uuid.
 
   ENDMETHOD.
+
   METHOD search.
 
 
@@ -599,38 +604,37 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 *    ENDIF.
 
 
-    DATA: lcl_abap_structdescr TYPE REF TO cl_abap_structdescr,
-          lt_ddic_info         TYPE ddfields.
+*    DATA: lcl_abap_structdescr TYPE REF TO cl_abap_structdescr.
+*          lt_ddic_info         TYPE ddfields.
 
-    FIELD-SYMBOLS: <ddic_info> TYPE LINE OF ddfields.
+*    FIELD-SYMBOLS: <ddic_info> TYPE LINE OF ddfields.
 
-    lcl_abap_structdescr ?= cl_abap_structdescr=>describe_by_name( CONV ddobjname( mv_table ) ).
+*    lcl_abap_structdescr ?= cl_abap_structdescr=>describe_by_name(  mv_table ).
 
-    lt_ddic_info = lcl_abap_structdescr->get_ddic_field_list( ).
+*    data(lt_ddic_info) = lcl_abap_structdescr->get_ddic_field_list( ).
 
 
 
-    LOOP AT mt_dfies REFERENCE INTO DATA(d).
-
-      READ TABLE lt_ddic_info REFERENCE INTO DATA(f) WITH KEY rollname = d->rollname.
-
-      IF d->scrtext_s IS INITIAL.
-        d->scrtext_s = f->scrtext_s.
-      ENDIF.
-      IF d->scrtext_m IS INITIAL.
-        d->scrtext_m = f->scrtext_m.
-      ENDIF.
-      IF d->scrtext_l IS INITIAL.
-        d->scrtext_l = f->scrtext_l.
-      ENDIF.
-      IF d->reptext IS INITIAL.
-        d->reptext   = f->reptext.
-      ENDIF.
-
-    ENDLOOP.
+*    LOOP AT mt_dfies REFERENCE INTO DATA(d).
+*
+*      READ TABLE lt_ddic_info REFERENCE INTO DATA(f) WITH KEY rollname = d->rollname.
+*
+*      IF d->scrtext_s IS INITIAL.
+*        d->scrtext_s = f->scrtext_s.
+*      ENDIF.
+*      IF d->scrtext_m IS INITIAL.
+*        d->scrtext_m = f->scrtext_m.
+*      ENDIF.
+*      IF d->scrtext_l IS INITIAL.
+*        d->scrtext_l = f->scrtext_l.
+*      ENDIF.
+*      IF d->reptext IS INITIAL.
+*        d->reptext   = f->reptext.
+*      ENDIF.
+*
+*    ENDLOOP.
 
   ENDMETHOD.
-
 
 
   METHOD set_row_id.
@@ -649,8 +653,6 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
-
-
 
 
   METHOD render_popup.
@@ -673,7 +675,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
     LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
       READ TABLE mt_dfies INTO DATA(dfies) WITH KEY fieldname = comp->name.
-      IF sy-subrc NE 0.
+      IF sy-subrc <> 0.
         dfies-scrtext_m = comp->name.
       ENDIF.
 
@@ -684,8 +686,10 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
           index = index + 1.
 
-          DATA(enabled) = COND #( WHEN dfies-keyflag = abap_true AND mv_edit = abap_true THEN abap_false ELSE abap_true ).
-          DATA(visible) = COND #( WHEN dfies-fieldname = 'MANDT' THEN abap_false ELSE abap_true ).
+*          DATA(enabled) = COND #( WHEN dfies-keyflag = abap_true AND mv_edit = abap_true THEN abap_false ELSE abap_true ).
+          DATA(enabled) = xsdbool( dfies-keyflag = abap_false or mv_edit = abap_false ). " THEN abap_false ELSE abap_true ).
+*          DATA(visible) = COND #( WHEN dfies-fieldname = 'MANDT' THEN abap_false ELSE abap_true ).
+          DATA(visible) = xsdbool( dfies-fieldname <> 'MANDT' ). "  THEN abap_false ELSE abap_true ).
 
           ASSIGN COMPONENT index OF STRUCTURE ms_value TO FIELD-SYMBOL(<val>).
 
@@ -759,7 +763,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 ENDCLASS.
 
 
-CLASS lcL_demo_app_126 DEFINITION
+CLASS lcl_demo_app_126 DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -767,8 +771,8 @@ CLASS lcL_demo_app_126 DEFINITION
     INTERFACES z2ui5_if_app.
 
     DATA mv_selectedkey     TYPE string.
-    DATA mv_selectedkey_TMP TYPE string.
-    DATA mo_APP_SIMPLE_VIEW TYPE REF TO lcl_demo_app_125.
+    DATA mv_selectedkey_tmp TYPE string.
+    DATA mo_app_simple_view TYPE REF TO lcl_demo_app_125.
 
 
   PROTECTED SECTION.
@@ -779,7 +783,7 @@ CLASS lcL_demo_app_126 DEFINITION
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_Main.
+    METHODS render_main.
 
     METHODS get_count
       IMPORTING
@@ -793,7 +797,7 @@ ENDCLASS.
 
 
 
-CLASS lcL_demo_app_126 IMPLEMENTATION.
+CLASS lcl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -807,7 +811,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
       on_init( ).
 
-         CREATE OBJECT mo_app_simple_view.
+      mo_app_simple_view = new #( ).
 
 
     ENDIF.
@@ -820,21 +824,21 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
       WHEN space.
 
-        render_Main( ).
+        render_main( ).
 
 
 
       WHEN OTHERS.
 
-        IF mv_selectedkey NE mv_selectedkey_tmp.
+        IF mv_selectedkey <> mv_selectedkey_tmp.
 
-          CREATE OBJECT mo_app_simple_view.
+           mo_app_simple_view = new #( ).
 
         ENDIF.
 
         mo_app_simple_view->set_table( table = mv_selectedkey ).
 
-        render_Main( ).
+        render_main( ).
 
         mo_app_simple_view->mo_parent_view = mo_main_page.
 
@@ -874,7 +878,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD render_Main.
+  METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
 
@@ -887,7 +891,7 @@ CLASS lcL_demo_app_126 IMPLEMENTATION.
 
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
-                                         selectedKey = client->_bind_edit( mv_selectedkey )
+                                         selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( val = 'ONSELECTICONTABBAR' )
                                                        )->items( ).
 
