@@ -4,14 +4,14 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    data:
-     begin of ms_check_expanded,
-        basics type abap_bool,
-        more type abap_bool,
-        features type abap_bool,
-        extensions type abap_bool,
-        demos type abap_bool,
-      end of ms_check_expanded.
+    DATA:
+      BEGIN OF ms_check_expanded,
+        basics     TYPE abap_bool,
+        more       TYPE abap_bool,
+        features   TYPE abap_bool,
+        extensions TYPE abap_bool,
+        demos      TYPE abap_bool,
+      END OF ms_check_expanded.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -71,14 +71,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 `ssue or send a PR` &&
 `.</p>` ).
 
-    data(page2) = page.
+    DATA(page2) = page.
 
-        page = page->panel(
-         expandable = abap_true
-         expanded   = client->_bind_edit( ms_check_expanded-basics ) "abap_false
+    page = page->panel(
+     expandable = abap_true
+     expanded   = client->_bind_edit( ms_check_expanded-basics ) "abap_false
 *         height = `500px`
-         headertext = `Basics - Input, Output & Popups`
-    ).
+     headertext = `Basics - Input, Output & Popups`
+).
 
     DATA(panel) = page->panel(
          expandable = abap_false
@@ -341,25 +341,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
    ).
 
-       panel->generic_tile(
-    header    = 'Feed Input'
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    panel->generic_tile(
+ header    = 'Feed Input'
+ press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-       panel->generic_tile(
-    header    = 'Timeline'
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_113' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    panel->generic_tile(
+ header    = 'Timeline'
+ press     =  client->_event( 'Z2UI5_CL_DEMO_APP_113' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
- panel = page->panel(
-          expandable = abap_false
-          expanded   = abap_true
-          headertext = `Popup & Popover`
-     ).
+    panel = page->panel(
+             expandable = abap_false
+             expanded   = abap_true
+             headertext = `Popup & Popover`
+        ).
 
     panel->generic_tile(
            header    = 'Popup'
@@ -418,11 +418,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-   page = page2->panel(
-         expandable = abap_true
-     expanded   = client->_bind_edit( ms_check_expanded-more )
-         headertext = `More - Tables, Visualization & Layouts`
-    ).
+    page = page2->panel(
+          expandable = abap_true
+      expanded   = client->_bind_edit( ms_check_expanded-more )
+          headertext = `More - Tables, Visualization & Layouts`
+     ).
 
     panel = page->panel(
           expandable = abap_false
@@ -648,11 +648,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-   page = page2->panel(
-         expandable = abap_true
-          expanded   = client->_bind_edit( ms_check_expanded-features )
-         headertext = `Features - Partial Rerendering & More`
-    ).
+    page = page2->panel(
+          expandable = abap_true
+           expanded   = client->_bind_edit( ms_check_expanded-features )
+          headertext = `Features - Partial Rerendering & More`
+     ).
 
     panel = page->panel(
                expandable = abap_false
@@ -743,8 +743,22 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
  ).
 
     panel->generic_tile(
-      header    = 'Main App with Sub App'
+      header    = 'Main App with Sub App I'
     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_095' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+      header    = 'Main App with Sub App II'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_104' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+      header    = 'Main App with Sub App III'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_126' )
     mode      = 'LineMode'
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
@@ -756,24 +770,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-*    panel->generic_tile(
-*     header    = 'Generic Search Help'
-*   press     =  client->_event( 'Z2UI5_CL_DEMO_APP_105' )
-*   mode      = 'LineMode'
-*   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-*).
+    page = page2->panel(
+          expandable = abap_true
+           expanded   = client->_bind_edit( ms_check_expanded-extensions )
+          headertext = `Extensions`
+     ).
 
-   page = page2->panel(
-         expandable = abap_true
-          expanded   = client->_bind_edit( ms_check_expanded-extensions )
-         headertext = `Extensions`
-    ).
-
- panel = page->panel(
-            expandable = abap_false
-            expanded   = abap_true
-            headertext = `General`
-       ).
+    panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
+               headertext = `General`
+          ).
 
     panel->generic_tile(
            header    = 'Create Views'
@@ -847,30 +854,30 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
            headertext = `Apps with add. Javascript`
       ).
 
-   panel->generic_tile(
-    header    = 'p13n Dialog'
-    subheader = 'Popup for F4 Helps'
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_090' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
+    panel->generic_tile(
+     header    = 'p13n Dialog'
+     subheader = 'Popup for F4 Helps'
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_090' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
 
-   panel->generic_tile(
-    header    = 'Upload Set'
-    subheader = ''
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_107' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
+    panel->generic_tile(
+     header    = 'Upload Set'
+     subheader = ''
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_107' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
-   panel->generic_tile(
-    header    = 'Smart Variant Management'
-    subheader = ''
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_111' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
+    panel->generic_tile(
+     header    = 'Smart Variant Management'
+     subheader = ''
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_111' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     panel = page->panel(
            expandable = abap_false
@@ -925,11 +932,50 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-   page = page2->panel(
-         expandable = abap_true
-          expanded   = client->_bind_edit( ms_check_expanded-demos )
-         headertext = `Demos`
+    panel->generic_tile(
+        header    = 'Tours & Contectual Help'
+        subheader = 'driver.js'
+        press     =  client->_event( 'z2ui5_cl_demo_app_119' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
+
+    panel = page->panel(
+            expandable = abap_false
+            expanded   = abap_true
+            headertext = `Device Capabilities & More`
+       ).
+
+    panel->generic_tile(
+header    = 'Geolocation'
+subheader = ''
+press     =  client->_event( 'z2ui5_cl_demo_app_120' )
+mode      = 'LineMode'
+class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+header    = 'Frontend Infos'
+subheader = ''
+press     =  client->_event( 'z2ui5_cl_demo_app_122' )
+mode      = 'LineMode'
+class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+
+    panel->generic_tile(
+ header    = 'Barcode Scanner'
+ subheader = 'ndc.Barcode'
+ press     =  client->_event( 'z2ui5_cl_demo_app_124' )
+ mode      = 'LineMode'
+ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    page = page2->panel(
+          expandable = abap_true
+           expanded   = client->_bind_edit( ms_check_expanded-demos )
+          headertext = `Demos`
+     ).
 
 *    panel = page->panel(
 *               expandable = abap_false
