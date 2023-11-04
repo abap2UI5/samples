@@ -11,7 +11,9 @@ CLASS z2ui5_cl_demo_app_119 DEFINITION
     DATA quantity TYPE string .
     DATA check_initialized TYPE abap_bool .
 
-    DATA ms_drive_config TYPE z2ui5_cl_cc_driver_js=>ty_config.
+    DATA ms_steps_config TYPE z2ui5_cl_cc_driver_js=>ty_config.
+    DATA ms_hightlight_config TYPE z2ui5_cl_cc_driver_js=>ty_config_steps.
+    DATA ms_hightlight_driver_config TYPE z2ui5_cl_cc_driver_js=>ty_config.
     DATA mv_custom_css TYPE string.
 
     METHODS view_main.
@@ -33,11 +35,10 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
     view->_cc_plain_xml( `<html:style>` && mv_custom_css && `</html:style>` )->get_parent( ).
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client
-    )->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config
-    )->stringify( ) ).
-
-    view->_cc( )->driver_js( )->set_drive_config( config = ms_drive_config )->get_parent( ).
+    view->_cc( )->driver_js( )->set_driver_configs( steps_config            = ms_steps_config
+                                                    highlight_config        = ms_hightlight_config
+                                                    highlight_driver_config = ms_hightlight_driver_config
+                                                )->get_parent( ).
 
     client->view_display( view->shell(
           )->page(
@@ -49,9 +50,10 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                       text = 'Source_Code'
                       href = view->hlp_get_source_code_url(  )
                       target = '_blank'
-                  )->button( text = `TOUR` press = client->_event_client( val = `DRIVE` )
+                  )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
+                  )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )
               )->get_parent(
-              )->simple_form( title = 'Form Title' editable = abap_true
+              )->simple_form( title = 'Form Title' editable = abap_true id = `choper725-highlight`
                   )->content( 'form'
                       )->title( 'Input'
                       )->label( 'quantity'
@@ -60,6 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                       )->input( value = product enabled = abap_false id = `choper725-1`
                       )->button( id = `choper725-2`
                           text  = 'post'
+                          type  = `Emphasized`
                           press = client->_event( val = 'BUTTON_POST' )
            )->stringify( ) ).
   ENDMETHOD.
@@ -72,69 +75,85 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
       DATA ls_steps TYPE z2ui5_cl_cc_driver_js=>ty_config_steps.
 
-      ms_drive_config-show_progress = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_true ).
-      ms_drive_config-popover_class = 'driverjs-theme'.
-      ms_drive_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
-      ms_drive_config-allow_close = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_false ).
+      "highlight driver config
+      ms_hightlight_driver_config-popover_class = 'driverjs-theme'.
 
-*      ls_steps-element = '#__xmlview5--choper725'.
+      "highlight config
+      "ID of sapui5 control only! other selectors are not supported
+      ms_hightlight_config-element = `choper725-highlight`.
+      ms_hightlight_config-elementview = client->cs_view-main.
+      ms_hightlight_config-popover-title = `<strong>this is highlight title</strong>`.
+      ms_hightlight_config-popover-description = `<em>this is <span style='background-color: yellow;'>highlight</span> description</em>`.
+
+      "steps
+      ms_steps_config-show_progress = abap_true.
+      ms_steps_config-popover_class = 'driverjs-theme'.
+      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
+      ms_steps_config-allow_close = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_false ).
+      ms_steps_config-progress_text = `{{current}} of {{total}} steps`.
+
+      ms_steps_config-on_next_click = `alert("this is an event function here !");` && |\n| &&
+                                      `driverObj.moveNext();`.
+
+*      ID of sapui5 control only! other selectors are not supported
       ls_steps-element = 'choper725'.
       ls_steps-elementview = client->cs_view-main.
-      ls_steps-popover-title = '&#39;&lt;strong&gt;Animated Tour Example&lt;/&lt;strong&gt;&#39;'.
-*      ls_steps-popover-description = `Here is the code example showing animated tour. <span style=color:red;>Let's walk you through it.</span>'`.
+      ls_steps-popover-title = '<strong>Animated Tour Example</strong>'.
       ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-left.
       ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
-      APPEND ls_steps TO ms_drive_config-steps.
+      APPEND ls_steps TO ms_steps_config-steps.
 
-*      ls_steps-element = '#__xmlview5--choper725-1'.
+*      ID of sapui5 control only! other selectors are not supported
       ls_steps-element = 'choper725-1'.
       ls_steps-elementview = client->cs_view-main.
-      ls_steps-popover-title = 'Animated Tour Example'.
-      ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.'`.
+      ls_steps-popover-title = '<u>Animated Tour <mark>Example</mark></u>'.
+      ls_steps-popover-description = `Here is the code example showing animated tour. Let's walk you through it.`.
       ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-left.
       ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
-      APPEND ls_steps TO ms_drive_config-steps.
+      APPEND ls_steps TO ms_steps_config-steps.
 
-*      ls_steps-element = '#__xmlview5--choper725-2'.
+*      ID of sapui5 control only! other selectors are not supported
       ls_steps-element = 'choper725-2'.
       ls_steps-elementview = client->cs_view-main.
-      ls_steps-popover-title = 'Import the Library'.
+      ls_steps-popover-title = '<em>Import the Library</em>'.
       ls_steps-popover-description = `It works the same in vanilla JavaScript as well as frameworks.'`.
       ls_steps-popover-disable_buttons = z2ui5_cl_cc_driver_js=>buttons-previous.
       ls_steps-popover-side = z2ui5_cl_cc_driver_js=>side-bottom.
       ls_steps-popover-align = z2ui5_cl_cc_driver_js=>align-start.
-      APPEND ls_steps TO ms_drive_config-steps.
+      APPEND ls_steps TO ms_steps_config-steps.
 
 
       mv_custom_css = `.driver-popover.driverjs-theme {` && |\n| &&
-                      ` background-color: #fde047;` && |\n| &&
-                      ` color: #000;` && |\n| &&
+                      ` background-color: #F5F6F7;` && |\n| &&
+                      ` color: #000` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-title {` && |\n| &&
                       ` font-size: 20px;` && |\n| &&
+                      ` color: #000` && |\n| &&
                       `}` && |\n| &&
                       `driver-popover.driverjs-theme .driver-popover-title,` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-description,` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-progress-text {` && |\n| &&
-                      ` color: #000;` && |\n| &&
+                      ` color: #000` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme button {` && |\n| &&
-                      ` flex: 1;` && |\n| &&
+*                      ` flex: 1;` && |\n| &&
+                      `direction: ltr;` && |\n| &&
                       ` text-align: center;` && |\n| &&
-                      ` background-color: #000;` && |\n| &&
-                      ` color: #ffffff;` && |\n| &&
-                      ` border: 2px solid #000;` && |\n| &&
+                      ` background-color: #fff;` && |\n| &&
+                      ` color: #0064d9;` && |\n| &&
+*                      ` border-color: #0070f2` && |\n| &&
                       ` text-shadow: none;` && |\n| &&
                       ` font-size: 14px;` && |\n| &&
                       ` padding: 5px 8px;` && |\n| &&
                       ` border-radius: 6px;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme button:hover {` && |\n| &&
-                      ` background-color: #000;` && |\n| &&
+                      ` background-color: #0070f2;` && |\n| &&
                       ` color: #ffffff;` && |\n| &&
                       `}` && |\n| &&
-                      `driver-popover.driverjs-theme .driver-popover-navigation-btns {` && |\n| &&
-                      ` justify-content: space-between;` && |\n| &&
+                      `.driver-popover.driverjs-theme .driver-popover-navigation-btns {` && |\n| &&
+                      ` justify-content: space-around;` && |\n| &&
                       ` gap: 3px;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-close-btn {` && |\n| &&
@@ -144,18 +163,17 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                       ` color: #000;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-arrow-side-left.driver-popover-arrow {` && |\n| &&
-                      ` border-left-color: #fde047;` && |\n| &&
+                      ` border-left-color: red;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-arrow-side-right.driver-popover-arrow {` && |\n| &&
-                      ` border-right-color: #fde047;` && |\n| &&
+                      ` border-right-color: red;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-arrow-side-top.driver-popover-arrow {` && |\n| &&
-                      ` border-top-color: #fde047;` && |\n| &&
+                      ` border-top-color: red;` && |\n| &&
                       `}` && |\n| &&
                       `.driver-popover.driverjs-theme .driver-popover-arrow-side-bottom.driver-popover-arrow {` && |\n| &&
-                      ` border-bottom-color: #fde047;` && |\n| &&
+                      ` border-bottom-color: red;` && |\n| &&
                       `}`.
-
 
       product  = 'tomato'.
       quantity = '500'.
