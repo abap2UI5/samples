@@ -133,7 +133,8 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
+*        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
         )->stringify( ) ).
 
       client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).

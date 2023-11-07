@@ -142,8 +142,10 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `    oView.getModel().oData.EDIT.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
                          `  };` && |\n| &&
                          `};`.
+
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-      )->_cc_plain_xml( `<html:script>` && lv_custom_js && `</html:script>`
+      )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
+      "val = `<html:script>` && lv_custom_js && `</html:script>`
       )->stringify( ) ).
 
     client->timer_set(
