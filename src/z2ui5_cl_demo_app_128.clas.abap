@@ -1,4 +1,4 @@
-CLASS Z2UI5_CL_DEMO_APP_001 DEFINITION PUBLIC.
+CLASS Z2UI5_CL_DEMO_APP_128 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -14,7 +14,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_128 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
       DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
       client->view_display( view->shell(
             )->page(
-                    title          = 'abap2UI5 - First Example'
+                    title          = 'abap2UI5 -  Cross App Navigation App 128'
                     navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                     shownavbutton  = abap_true
                 )->header_content(
@@ -44,9 +44,14 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
                         )->input( client->_bind_edit( quantity )
                         )->label( `product`
                         )->input( value = product enabled = abap_false
+                          )->button(
+                            text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
-                            text  = 'post'
-                            press = client->_event( val = 'BUTTON_POST' )
+                            text  = 'go to app 127'
+                            press = client->_event_client(
+            val    = client->cs_event-cross_app_nav_to_ext
+            t_arg  = value #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_127",  action: "Z2UI5_CL_DEMO_APP_127" }` )  )
+        )
              )->stringify( ) ).
 
     ENDIF.
@@ -54,7 +59,8 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-      client->message_toast_display( |{ product } { quantity } - send to the server| ).
+
+*        client->message_toast_display( |{ product } { quantity } - send to the server| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
