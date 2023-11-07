@@ -31,9 +31,12 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
+*    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
+  view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) )->get_parent( ).
 
-    view->_cc_plain_xml( `<html:style>` && mv_custom_css && `</html:style>` )->get_parent( ).
+*    view->_cc_plain_xml( `<html:style>` && mv_custom_css && `</html:style>` )->get_parent( ).
+    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css )->get_parent( ).
+
 
     view->_cc( )->driver_js( )->set_driver_configs( steps_config            = ms_steps_config
                                                     highlight_config        = ms_hightlight_config
