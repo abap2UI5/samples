@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_127 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_127 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
@@ -14,10 +14,12 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_127 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
+
+    data(lt_startup_params) = client->get( )-s_config-t_startup_params.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -25,7 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_127 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( client ).
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - Cross App Navigation App 127'
@@ -40,18 +42,16 @@ CLASS Z2UI5_CL_DEMO_APP_127 IMPLEMENTATION.
                 )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
-                        )->label( 'quantity'
+                        )->label( 'Product'
+                        )->input( client->_bind_edit( product )
+                        )->label( `Quantity`
                         )->input( client->_bind_edit( quantity )
-                        )->label( `product`
-                        )->input( value = product enabled = abap_false
-                              )->button(
-                            text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
-
+                        )->button(  text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
                             text  = 'go to app 128'
                             press = client->_event_client(
             val    = client->cs_event-cross_app_nav_to_ext
-            t_arg  = value #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` )  )
+            t_arg  = VALUE #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` )  )
         )
              )->stringify( ) ).
 

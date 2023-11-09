@@ -1,12 +1,14 @@
-CLASS Z2UI5_CL_DEMO_APP_128 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_128 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
+    DATA product_url  TYPE string.
     DATA quantity TYPE string.
     DATA check_initialized TYPE abap_bool.
+    DATA check_launchpad_active TYPE abap_bool.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -14,18 +16,28 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_128 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
+
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    product_url = view->hlp_get_url_param(  `product` ).
+    view->hlp_set_url_param( n = `product` v = `ABC` ).
+    check_launchpad_active = client->get( )-s_config-check_launchpad_active.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
+
+*    client->url_param_set( val =  ).
+
       product  = 'tomato'.
       quantity = '500'.
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+
+
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 -  Cross App Navigation App 128'
@@ -40,21 +52,27 @@ CLASS Z2UI5_CL_DEMO_APP_128 IMPLEMENTATION.
                 )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
-                        )->label( 'quantity'
+                        )->label( 'product'
+                        )->input( client->_bind_edit( product )
+                        )->label( `quantity`
                         )->input( client->_bind_edit( quantity )
-                        )->label( `product`
-                        )->input( value = product enabled = abap_false
-                          )->button(
-                            text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
+                        )->label( `url param product`
+                        )->input( product_url
+                        )->label( `CHECK_LAUNCHPAD_ACTIVE`
+                        )->input( check_launchpad_active
+                        )->button( press = client->_event(  )
+                        )->button( text = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
                             text  = 'go to app 127'
                             press = client->_event_client(
             val    = client->cs_event-cross_app_nav_to_ext
-            t_arg  = value #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_127",  action: "Z2UI5_CL_DEMO_APP_127" }` )  )
+            t_arg  = VALUE #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_127",  action: "Z2UI5_CL_DEMO_APP_127" }` ) ( `{ ProductID : "123234" }`) )
         )
              )->stringify( ) ).
 
     ENDIF.
+
+    client->view_model_update( ).
 
     CASE client->get( )-event.
 
