@@ -95,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
       ms_steps_config-allow_close = z2ui5_cl_fw_utility=>boolean_abap_2_json( abap_false ).
       ms_steps_config-progress_text = `{{current}} of {{total}} steps`.
 
-      ms_steps_config-on_next_click = `alert("this is an event function here !");` && |\n| &&
+      ms_steps_config-on_next_click = `//alert("this is an event function here !");` && |\n| &&
                                       `driverObj.moveNext();`.
 
 *      ID of sapui5 control only! other selectors are not supported
