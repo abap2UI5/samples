@@ -25,7 +25,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+      DATA(view) = Z2UI5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = view->hlp_get_source_code_url(  )
+                        href = z2ui5_cl_sample_utility=>factory( client )->app_get_url( )
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Form Title' editable = abap_true

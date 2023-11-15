@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_002 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -40,36 +40,36 @@ CLASS Z2UI5_CL_DEMO_APP_002 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    METHODS Z2UI5_on_rendering
+    METHODS z2ui5_on_rendering
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_event
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_event
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_init.
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
-      Z2UI5_on_rendering( client ).
+      z2ui5_on_init( ).
+      z2ui5_on_rendering( client ).
     ENDIF.
 
-    Z2UI5_on_event( client ).
+    z2ui5_on_event( client ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
@@ -86,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     screen = VALUE #(
         check_is_active = abap_true
@@ -109,18 +109,19 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_rendering.
+  METHOD z2ui5_on_rendering.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
-       page->header_content(
-                )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-                )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
-            )->get_parent( ).
+    page->header_content(
+             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_sample_utility=>factory( client )->app_get_url( )
+*             )->link( text = 'Source_Code' target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->get_parent( ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
@@ -145,7 +146,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
             )->label( 'Date and Time'
             )->date_time_picker( client->_bind_edit( screen-date_time )
             )->label( 'Time Begin/End'
-            )->time_picker( client->_bind_Edit( screen-time_start )
+            )->time_picker( client->_bind_edit( screen-time_start )
             )->time_picker( client->_bind_edit( screen-time_end ) ).
 
 

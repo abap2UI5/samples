@@ -99,7 +99,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
     page = page->text( text = client->_bind( mv_title ) ).
 
 
-    client->nest_view_display2(
+    client->nest2_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = 'addEndColumnPage'
