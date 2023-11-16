@@ -43,10 +43,10 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = lcl_utility=>decode_x_base64( lv_data ).
-            DATA(lv_ready) = lcl_utility=>get_string_by_xstring( lv_data2 ).
+            DATA(lv_data2) = z2ui5_cl_demo_utility=>decode_x_base64( lv_data ).
+            DATA(lv_ready) = z2ui5_cl_demo_utility=>get_string_by_xstring( lv_data2 ).
 
-            mr_table = lcl_utility=>get_table_by_csv( lv_ready ).
+            mr_table = z2ui5_cl_demo_utility=>get_table_by_csv( lv_ready ).
             client->message_box_display( `CSV loaded to table` ).
 
             ui5_view_main_display( ).
@@ -77,7 +77,6 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
   METHOD ui5_view_init_display.
 
     client->view_display( z2ui5_cl_xml_view=>factory( client
-*         )->zcc_file_uploader_js(
          )->_cc( )->ui5_file_uploader( )->load_cc(
          )->stringify( ) ).
 
@@ -110,7 +109,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
           )->get_parent( )->get_parent( ).
 
 
-      DATA(lr_fields) = lcl_utility=>get_fieldlist_by_table( <tab> ).
+      DATA(lr_fields) = z2ui5_cl_demo_utility=>get_fieldlist_by_table( <tab> ).
       DATA(lo_cols) = tab->columns( ).
       LOOP AT lr_fields REFERENCE INTO DATA(lr_col).
         lo_cols->column( )->text( lr_col->* ).
@@ -128,12 +127,6 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'
       upload      = client->_event( 'UPLOAD' ) ).
-
-*    footer->zcc_file_uploader(
-*      value       = client->_bind_edit( mv_value )
-*      path        = client->_bind_edit( mv_path )
-*      placeholder = 'filepath here...'
-*      upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
 

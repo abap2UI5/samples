@@ -46,35 +46,28 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
     ENDCASE.
 
 
-    "render view
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
-
-    client->view_display( view->shell(
+    client->view_display( client->factory_view( )->_ns_m( )->shell(
           )->page(
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                   shownavbutton  = abap_true
-              )->header_content(
+              )->headercontent(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
                       target = '_blank'
-              )->get_parent(
-              )->simple_form( title = 'Information' editable = abap_true
-                  )->content( 'form'
+              )->_go_up( )->_ns_ui(
+              )->simpleform( title = 'Information' editable = abap_true
+                  )->content( )->_ns_m(
                       )->label( 'mv_scan_input'
                       )->input( client->_bind_edit( mv_scan_input )
                       )->label( `mv_scan_type`
                       )->input( client->_bind_edit( mv_scan_type )
-                      )->label( `scanner`
-                      )->barcode_scanner_button(
-*                        id              =
+                      )->label( `scanner` )->_ns_ndc(
+                      )->barcodescannerbutton(
                         scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = value #( ( `${$event>/text}` ) ( `${$event>/type}` ) ) )
-*                        scanfail        =
-*                        inputliveupdate =
                         dialogtitle     = `Barcode Scanner`
-
-           )->stringify( ) ).
+           )->_stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
