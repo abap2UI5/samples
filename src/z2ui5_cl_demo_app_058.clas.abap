@@ -127,7 +127,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
       WHEN `POPUP_LAYOUT_LOAD`.
         DATA(ls_layout2) = mt_db_layout[ selkz = abap_true ].
-        Z2UI5_lcl_utility=>trans_xml_2_object(
+        z2ui5_cl_demo_utility=>trans_xml_2_object(
           EXPORTING
             xml  = ls_layout2-data
           IMPORTING
@@ -137,7 +137,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
       WHEN `BUTTON_SAVE_LAYOUT`.
         DATA(ls_layout) = VALUE ty_s_db_layout(
-          data = Z2UI5_lcl_utility=>trans_data_2_xml( ms_layout )
+          data = z2ui5_cl_demo_utility=>trans_data_2_xml( ms_layout )
           name = mv_layout
           ).
         INSERT ls_layout INTO TABLE mt_db_layout.
@@ -195,7 +195,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1662821284873396225'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
            )->get_parent( ).
 
     DATA(page) = view->dynamic_page(

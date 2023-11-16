@@ -45,8 +45,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = lcl_utility=>decode_x_base64( lv_data ).
-            mv_file = lcl_utility=>get_string_by_xstring( lv_data2 ).
+            DATA(lv_data2) = z2ui5_cl_demo_utility=>decode_x_base64( lv_data ).
+            mv_file = z2ui5_cl_demo_utility=>get_string_by_xstring( lv_data2 ).
 
             client->message_box_display( `CSV loaded to table` ).
 
@@ -70,7 +70,6 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   METHOD ui5_on_init.
 
     ui5_view_init_display( ).
-    client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
   ENDMETHOD.
 
@@ -78,7 +77,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   METHOD ui5_view_init_display.
 
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-         )->_cc( )->ui5_file_uploader( )->load_cc( "zcc_file_uploader_js(
+         )->_cc( )->timer( )->control( client->_event( `START` )
+         )->_cc( )->ui5_file_uploader( )->load_cc(
          )->stringify( ) ).
 
   ENDMETHOD.
@@ -93,20 +93,14 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
             shownavbutton  = abap_true
         )->header_content(
             )->toolbar_spacer(
-            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     IF mv_file IS NOT INITIAL.
 
       page->code_editor(
-*      EXPORTING
-           value    = client->_bind( mv_file )
-*        type     =
-*        height   =
-*        width    =
+          value    = client->_bind( mv_file )
           editable = abap_false
-*      RECEIVING
-*        result   =
       ).
 
     ENDIF.

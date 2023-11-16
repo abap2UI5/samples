@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
                    navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
                )->header_content(
                    )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-                   )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                   )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                )->get_parent( ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'
@@ -98,7 +98,7 @@ CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
                     navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
                 )->header_content(
                     )->link( text = 'Demo'        href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-                    )->link( text = 'Source_Code' href = view->hlp_get_source_code_url(  )
+                    )->link( text = 'Source_Code' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                 )->get_parent( ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'

@@ -113,11 +113,9 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
       Z2UI5_set_data( ).
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->_cc( )->ui5_spreadsheet( )->load_cc( columnconfig = mv_column_config
+        )->_cc( )->ui5_spreadsheet( )->load_cc( mv_column_config
+        )->_cc( )->timer( )->control( client->_event( 'START' )
         )->stringify( ) ).
-
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
-
 
       RETURN.
     ENDIF.
@@ -204,7 +202,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
     page1->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

@@ -6,27 +6,11 @@ CLASS Z2UI5_CL_DEMO_APP_016 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-
-
-
     DATA mv_sel1 TYPE abap_bool.
     DATA mv_sel2 TYPE abap_bool.
     DATA mv_sel3 TYPE abap_bool.
 
-
-
-
-
-
-
-
-
-
-
     DATA mv_tab_bar_active TYPE abap_bool.
-
-
-
 
     METHODS render_tab_bar.
 
@@ -52,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
             shownavbutton = abap_true
             )->header_content(
                 )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1639191954285113344`
-                )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent(
         )->tab_container( ).
 

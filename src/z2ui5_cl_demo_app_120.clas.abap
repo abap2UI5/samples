@@ -30,10 +30,11 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
+        )->_cc( )->timer( )->control( client->_event(  )
         )->_cc( )->geolocation( )->load_cc(  )->stringify( ) ).
 
 
-      client->timer_set( client->_event( ) ).
+*      client->timer_set( client->_event( ) ).
       RETURN.
     ENDIF.
 
@@ -63,7 +64,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
               )->get_parent(
               )->_cc( )->geolocation( )->control(

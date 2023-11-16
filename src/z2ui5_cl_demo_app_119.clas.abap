@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
                   )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
                   )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )
@@ -182,10 +182,11 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
       quantity = '500'.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
+        )->_cc( )->timer( )->control( client->_event( `START` )
         )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
         )->stringify( ) ).
 
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
+*      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
     ENDIF.
 
     CASE client->get( )-event.

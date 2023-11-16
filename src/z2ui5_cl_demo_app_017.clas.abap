@@ -22,7 +22,6 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
 
         ENDIF.
 
-
         CASE client->get( )-event.
 
           WHEN 'BUTTON_ROUNDTRIP'.

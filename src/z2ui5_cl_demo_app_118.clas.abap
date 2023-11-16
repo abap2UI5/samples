@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    view->_cc( )->load_font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` )->get_parent( ).
+    view->_cc( )->font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` ).
 
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - FontAwsome Fonts'
@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
          )->get_parent( ).
 
     page->vbox( height = `100%` justifycontent = `Center` alignitems = `Center`
@@ -66,11 +66,12 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->load_font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
+        )->_cc( )->timer( )->control( client->_event( `START` )
+        )->_cc( )->font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
         )->stringify( ) ).
 
 
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
+*      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
     ENDIF.
 

@@ -66,10 +66,10 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
             INTO TABLE t_tab.
 
-        client->timer_set(
-          interval_ms    = '2000'
-          event_finished = client->_event( 'TIMER_FINISHED' )
-        ).
+*        client->timer_set(
+*          interval_ms    = '2000'
+*          event_finished = client->_event( 'TIMER_FINISHED' )
+*        ).
         enddo.
 
     client->view_model_update( ).
@@ -89,10 +89,10 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-    client->timer_set(
-      interval_ms    = '2000'
-      event_finished = client->_event( 'TIMER_FINISHED' )
-    ).
+*    client->timer_set(
+*      interval_ms    = '2000'
+*      event_finished = client->_event( 'TIMER_FINISHED' )
+*    ).
 
   ENDMETHOD.
 
@@ -100,6 +100,7 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
   METHOD Z2UI5_view_display.
 
     DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
+    lo_view->_cc( )->timer( )->control( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
@@ -108,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
              )->link( text = 'Demo'    target = '_blank' href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
-                 href = lo_view->hlp_get_source_code_url( )
+                 href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
          )->get_parent(
           ).
 

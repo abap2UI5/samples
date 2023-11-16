@@ -133,11 +133,11 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
-*        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
+        )->_cc( )->timer( )->control( client->_event( `START` )
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
         )->stringify( ) ).
 
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
+*      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
 
       RETURN.
@@ -233,7 +233,7 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
               text = 'Demo' target = '_blank'
               href = 'https://twitter.com/abap2UI5/status/1674437273943937025'
           )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

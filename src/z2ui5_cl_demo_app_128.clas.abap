@@ -24,8 +24,8 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 *    product_url = view->hlp_get_url_param(  `product` ).
-     product_url = z2ui5_cl_sample_utility=>factory( client )->url_param_get(  `product` ).
-    z2ui5_cl_sample_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).
+     product_url = z2ui5_cl_demo_utility=>factory( client )->url_param_get(  `product` ).
+    z2ui5_cl_demo_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).
 *    view->hlp_set_url_param( n = `product` v = `ABC` ).
     check_launchpad_active = client->get( )-s_config-check_launchpad_active.
 
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = view->hlp_get_source_code_url(  )
+                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Form Title' editable = abap_true

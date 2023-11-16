@@ -94,7 +94,7 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
               shownavbutton = abap_true ).
 
     page->header_content(
-         )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
          )->get_parent( ).
 
     DATA(layout) = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).

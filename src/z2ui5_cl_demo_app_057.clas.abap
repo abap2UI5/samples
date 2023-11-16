@@ -189,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1661723127595016194'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
            )->get_parent( ).
 
     IF mv_check_download = abap_true.
@@ -198,7 +198,8 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
       DATA(lv_csv) = hlp_get_csv_by_tab( mt_table ).
       DATA(lv_base64) = hlp_get_base64( lv_csv ).
 
-      view->_cc_plain_xml( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
+      view->_generic( ns = `html` name = `iframe` t_prop = value #( ( n = `src` v = `data:text/csv;base64,` && lv_base64 ) ( n = `hidden` v = `hidden` ) ) ).
+*      ->_cc_plain_xml( `<html:iframe src= hidden="hidden" />`).
 
     ENDIF.
 

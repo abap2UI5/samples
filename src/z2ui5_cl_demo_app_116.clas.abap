@@ -46,12 +46,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         display_demo_output( client ).
 
       WHEN `BUTTON_TIMER`.
-        client->timer_set(
-         interval_ms    = mv_time
-         event_finished = client->_event( 'BUTTON_TIMER' ) ).
-
-        run_class( ).
-        client->view_model_update( ).
+*        client->timer_set(
+*         interval_ms    = mv_time
+*         event_finished = client->_event( 'BUTTON_TIMER' ) ).
+*
+*        run_class( ).
+*        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
                  )->get_parent(
               )->sub_header(

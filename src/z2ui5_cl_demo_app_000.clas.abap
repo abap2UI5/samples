@@ -125,6 +125,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+        panel->generic_tile(
+        header    = 'Browser Title'
+        press     = client->_event( 'z2ui5_cl_demo_app_125' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     panel->generic_tile(
         header    = 'New Tab'
         subheader = 'Open an URL in a new tab'

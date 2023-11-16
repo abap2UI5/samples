@@ -304,7 +304,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
              shownavbutton  = abap_true
          )->header_content(
              )->link(
-                 text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                 text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
