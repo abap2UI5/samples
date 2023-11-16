@@ -280,7 +280,7 @@ CLASS Z2UI5_CL_DEMO_APP_021 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
            )->get_parent( ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).

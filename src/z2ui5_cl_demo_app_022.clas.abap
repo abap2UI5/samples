@@ -60,7 +60,7 @@ CLASS Z2UI5_CL_DEMO_APP_022 IMPLEMENTATION.
           shownavbutton = abap_true
           ).
 
-      page->header_content( )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( ) ).
+      page->header_content( )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( ) ).
 
       DATA(tab) = page->table( sticky = 'ColumnHeaders,HeaderToolbar' headertext = 'Table with some entries' items = client->_bind( t_tab ) ).
 

@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
               )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  href = view->hlp_get_source_code_url( )
+                  href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
           )->get_parent(
           )->simple_form( 'Popover'
               )->content( 'form'

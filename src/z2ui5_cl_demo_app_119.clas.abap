@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
                       target = '_blank'
                   )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
                   )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )

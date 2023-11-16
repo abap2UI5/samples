@@ -132,7 +132,7 @@ method Z2UI5_view_display.
                 text = 'Demo' target = '_blank'
                 href = 'https://twitter.com/abap2UI5/status/1674437273943937025'
             )->link(
-                text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+                text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
        ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

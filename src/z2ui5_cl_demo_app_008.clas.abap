@@ -61,7 +61,7 @@ CLASS Z2UI5_CL_DEMO_APP_008 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'  target = '_blank'
-                        href = view->hlp_get_source_code_url(  )
+                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
                 )->get_parent( ).
 
         IF check_strip_active = abap_true.

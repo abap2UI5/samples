@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url(  )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
                       target = '_blank'
               )->get_parent(
               )->simple_form( title = 'Form Title' editable = abap_true

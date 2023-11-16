@@ -87,7 +87,7 @@ CLASS Z2UI5_CL_DEMO_APP_036 IMPLEMENTATION.
                           `  text="back" ` && |\n|  &&
                           `  press="` && client->_event( 'BACK' ) && `" ` && |\n|  &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n|  &&
-                   `       <m:Link target="_blank" text="Source_Code" href="` && view->hlp_get_source_code_url( ) && `"/>` && |\n|  &&
+                   `       <m:Link target="_blank" text="Source_Code" href="` && z2ui5_cl_demo_utility=>factory( client )->app_get_url( ) && `"/>` && |\n|  &&
                           `<html><head><style>` && |\n|  &&
                           `body {background-color: powderblue;}` && |\n|  &&
                           `h1   {color: blue;}` && |\n|  &&

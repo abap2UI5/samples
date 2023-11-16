@@ -89,7 +89,7 @@ CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
                             )->tool_header(
 
                             )->button( text = `Back` press = client->_event( 'BACK' )
-                            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+                            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
 
                               )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
                                         height = `1.5rem`
