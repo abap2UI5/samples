@@ -1,6 +1,7 @@
-CLASS lcl_mime_api DEFINITION FINAL.
+CLASS lcl_file_api DEFINITION FINAL.
 
   PUBLIC SECTION.
+
     CLASS-METHODS read_abap
       RETURNING
         VALUE(r_result) TYPE string.
@@ -27,7 +28,7 @@ CLASS lcl_mime_api DEFINITION FINAL.
     CLASS-METHODS get_editor_type
       RETURNING
         VALUE(r_result) TYPE ty_t_suggest.
-    CLASS-METHODS save_data.
+
 
   PROTECTED SECTION.
 
@@ -35,7 +36,7 @@ CLASS lcl_mime_api DEFINITION FINAL.
 
 ENDCLASS.
 
-CLASS lcl_mime_api IMPLEMENTATION.
+CLASS lcl_file_api IMPLEMENTATION.
 
 
   METHOD read_abap.
@@ -182,9 +183,5 @@ r_result = `METHOD SELECT_FILES.` && |\n| &&
 
   ENDMETHOD.
 
-
-  METHOD save_data.
-        "save data here
-  ENDMETHOD.
 
 ENDCLASS.

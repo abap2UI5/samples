@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option'
          )->input( value           = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lcl_mime_api=>get_editor_type( ) ) )->get(
+                   suggestionitems = client->_bind_local( lcl_file_api=>get_editor_type( ) ) )->get(
             )->suggestion_items(
                 )->list_item( text = '{NAME}' additionaltext = '{VALUE}'
          )->get_parent( )->get_parent(
@@ -83,19 +83,17 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
       WHEN 'DB_LOAD'.
 
         mv_editor = COND #(
-            WHEN mv_path CS 'abap' THEN lcl_mime_api=>read_abap( )
-            WHEN mv_path CS 'json' THEN lcl_mime_api=>read_json( )
-            WHEN mv_path CS 'yaml' THEN lcl_mime_api=>read_yaml( )
-            WHEN mv_path CS 'text' THEN lcl_mime_api=>read_text( )
-            WHEN mv_path CS 'js'   THEN lcl_mime_api=>read_js( ) ).
-        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
+            WHEN mv_path CS 'abap' THEN lcl_file_api=>read_abap( )
+            WHEN mv_path CS 'json' THEN lcl_file_api=>read_json( )
+            WHEN mv_path CS 'yaml' THEN lcl_file_api=>read_yaml( )
+            WHEN mv_path CS 'text' THEN lcl_file_api=>read_text( )
+            WHEN mv_path CS 'js'   THEN lcl_file_api=>read_js( ) ).
+
         client->message_toast_display( 'Download successfull' ).
 
         client->view_model_update( ).
 
       WHEN 'DB_SAVE'.
-        lcl_mime_api=>save_data( ).
-        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
         client->message_box_display( text = 'Upload successfull. File saved!' type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).

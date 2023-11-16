@@ -6,27 +6,11 @@ CLASS Z2UI5_CL_DEMO_APP_016 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-
-
-
     DATA mv_sel1 TYPE abap_bool.
     DATA mv_sel2 TYPE abap_bool.
     DATA mv_sel3 TYPE abap_bool.
 
-
-
-
-
-
-
-
-
-
-
     DATA mv_tab_bar_active TYPE abap_bool.
-
-
-
 
     METHODS render_tab_bar.
 

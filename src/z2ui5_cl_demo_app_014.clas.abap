@@ -6,16 +6,6 @@ CLASS Z2UI5_CL_DEMO_APP_014 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-
-
-
-
-
-
-
-
-
-
     DATA mv_sel7 TYPE abap_bool.
     DATA mv_sel8 TYPE abap_bool.
     DATA mv_sel9 TYPE abap_bool.
@@ -23,14 +13,8 @@ CLASS Z2UI5_CL_DEMO_APP_014 DEFINITION PUBLIC.
     DATA mv_sel11 TYPE abap_bool.
     DATA mv_sel12 TYPE abap_bool.
 
-
-
     DATA mv_tab_line_active TYPE abap_bool.
-
-
     METHODS render_tab_line.
-
-
     DATA client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
