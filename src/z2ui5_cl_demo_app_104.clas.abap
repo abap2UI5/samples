@@ -168,8 +168,6 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->title_set( 'Changed Title Here' ).
-
       t_tab = VALUE #(
         ( title = 'Class 1'  info = 'z2ui5_cl_demo_app_105'   descr = 'this is a description' icon = 'sap-icon://account' )
         ( title = 'Class 2'  info = 'z2ui5_cl_demo_app_112' descr = 'this is a description' icon = 'sap-icon://account' )

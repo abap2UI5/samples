@@ -70,7 +70,6 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   METHOD ui5_on_init.
 
     ui5_view_init_display( ).
-    client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
 
   ENDMETHOD.
 
@@ -78,7 +77,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
   METHOD ui5_view_init_display.
 
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-         )->_cc( )->ui5_file_uploader( )->load_cc( "zcc_file_uploader_js(
+         )->_cc( )->timer( )->control( client->_event( `START` )
+         )->_cc( )->ui5_file_uploader( )->load_cc(
          )->stringify( ) ).
 
   ENDMETHOD.

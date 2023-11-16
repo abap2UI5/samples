@@ -121,8 +121,6 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->title_set( 'Changed Title Here' ).
-
       t_tab = VALUE #(
         ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
         ( title = 'row_02'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )

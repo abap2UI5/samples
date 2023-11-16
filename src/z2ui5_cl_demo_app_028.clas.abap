@@ -97,6 +97,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     lo_view->_cc( )->timer( )->control(
         finished = client->_event( 'TIMER_FINISHED' )
         delayms  = `2000`
+        checkrepeat = abap_true
     ).
 
     DATA(page) = lo_view->shell( )->page(

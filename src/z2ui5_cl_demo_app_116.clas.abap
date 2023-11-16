@@ -46,12 +46,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         display_demo_output( client ).
 
       WHEN `BUTTON_TIMER`.
-        client->timer_set(
-         interval_ms    = mv_time
-         event_finished = client->_event( 'BUTTON_TIMER' ) ).
-
-        run_class( ).
-        client->view_model_update( ).
+*        client->timer_set(
+*         interval_ms    = mv_time
+*         event_finished = client->_event( 'BUTTON_TIMER' ) ).
+*
+*        run_class( ).
+*        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).

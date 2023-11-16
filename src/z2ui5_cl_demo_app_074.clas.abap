@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS ui5_on_init.
     METHODS ui5_on_event.
 
     METHODS ui5_view_main_display.
@@ -66,17 +65,10 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_on_init.
-
-    ui5_view_init_display( ).
-    client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
-
-  ENDMETHOD.
-
-
   METHOD ui5_view_init_display.
 
     client->view_display( z2ui5_cl_xml_view=>factory( client
+         )->_cc( )->timer( )->control( client->_event( `START` )
          )->_cc( )->ui5_file_uploader( )->load_cc(
          )->stringify( ) ).
 
@@ -139,7 +131,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      ui5_on_init( ).
+      ui5_view_init_display( ).
       RETURN.
     ENDIF.
 

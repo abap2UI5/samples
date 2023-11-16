@@ -30,10 +30,11 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
+        )->_cc( )->timer( )->control( client->_event(  )
         )->_cc( )->geolocation( )->load_cc(  )->stringify( ) ).
 
 
-      client->timer_set( client->_event( ) ).
+*      client->timer_set( client->_event( ) ).
       RETURN.
     ENDIF.
 
