@@ -198,7 +198,8 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
       DATA(lv_csv) = hlp_get_csv_by_tab( mt_table ).
       DATA(lv_base64) = hlp_get_base64( lv_csv ).
 
-      view->_cc_plain_xml( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
+      view->_generic( ns = `html` name = `iframe` t_prop = value #( ( n = `src` v = `data:text/csv;base64,` && lv_base64 ) ( n = `hidden` v = `hidden` ) ) ).
+*      ->_cc_plain_xml( `<html:iframe src= hidden="hidden" />`).
 
     ENDIF.
 
