@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
                 )->button( text = 'Display Table' press = client->_event( 'TABLE' )
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_CL_XML_VIEW=>factory( client )->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
             )->get_parent( ).
 
     CASE mv_display.
