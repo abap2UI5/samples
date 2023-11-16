@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_utility DEFINITION
 
     METHODS app_get_url
       IMPORTING
-        VALUE(classname) TYPE string OPTIONAL
+        classname TYPE string OPTIONAL
       RETURNING
         VALUE(result)    TYPE string.
 
@@ -133,15 +133,14 @@ CLASS z2ui5_cl_demo_utility IMPLEMENTATION.
 
   METHOD factory.
 
-    CREATE OBJECT r_result.
-
+    r_result = new #( ).
     r_result->mi_client = client.
 
   ENDMETHOD.
 
   METHOD app_get_url.
 
-    result = z2ui5_cl_fw_utility=>app_get_url( mi_client ).
+    result = z2ui5_cl_fw_utility=>app_get_url( classname = classname client = mi_client ).
 
   ENDMETHOD.
 
