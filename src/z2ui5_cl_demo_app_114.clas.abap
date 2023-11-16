@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
                     )->header_content(
-                    )->link( text = 'Source_Code' target = '_blank' href = lo_z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
+                    )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
             )->get_parent( ).
 
     page->flex_box(
