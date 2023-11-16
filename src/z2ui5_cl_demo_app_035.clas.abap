@@ -35,12 +35,16 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(grid) = page->_ns_ui( )->grid( 'L7 M12 S12' )->content( `sap.ui.layout` ).
 
-    grid->simpleform( title = 'File' editable = abap_true )->content( )->_ns_m(
+   data(temp) = grid->simpleform( title = 'File' editable = abap_true )->content( )->_ns_m(
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
-         )->label( 'Option'
-         )->input( value           = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lcl_file_api=>get_editor_type( ) ) )->_go_new( )->_ns_m(
+         )->label( 'Option' ).
+
+    data(temp3) = temp->input( value           = client->_bind_edit( mv_type )
+                   suggestionitems = client->_bind_local( lcl_file_api=>get_editor_type( ) ) ).
+     data(temp2) =  temp3->_go_new( ).
+
+          temp2->_ns_m(
             )->suggestionitems( )->_ns_ui(
                 )->listitem( text = '{NAME}' additionaltext = '{VALUE}'
          )->_go_up( )->_go_up( )->_ns_m(
@@ -48,7 +52,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                     press = client->_event( 'DB_LOAD' )
                     icon  = 'sap-icon://download-from-cloud' ).
 
-    grid = page->_ns_ui( )->grid( 'L12 M12 S12' )->content( ).
+    grid = page->_ns_ui( )->grid( 'L12 M12 S12' )->content( `sap.ui.layout` ).
 
     page->_ns_ui( )->codeeditor( type     = mv_type
                        editable = mv_check_editable
