@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1647175810917318657`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
     page->link( text = 'Documentation'  target = '_blank' href = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
     page->button( text = 'NoActivities' press = client->_event( 'sapIllus-NoActivities' ) ).

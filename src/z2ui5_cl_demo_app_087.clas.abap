@@ -105,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_087 IMPLEMENTATION.
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton  = abap_true
             )->header_content(
-                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
+                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
            )->get_parent( ).
 
     page->input( value = client->_bind_edit( mv_product ) editable = abap_true

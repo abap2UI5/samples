@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                     target = '_blank'
             )->get_parent(
             )->simple_form( title = 'Integer and Decimals' editable = abap_true
