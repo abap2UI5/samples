@@ -1,104 +1,100 @@
-class Z2UI5_CL_DEMO_APP_999 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_130 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_s_token,
+    TYPES:
+      BEGIN OF ty_s_token,
         key      TYPE string,
         text     TYPE string,
         visible  TYPE abap_bool,
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
-      END OF ty_S_token .
-  types:
-    ty_t_token TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY .
-  types:
-    ty_t_range    TYPE RANGE OF string .
-  types:
-    ty_s_range    TYPE LINE OF ty_T_range .
-  types:
-    BEGIN OF ty_S_filter_pop,
+      END OF ty_s_token .
+    TYPES:
+      ty_t_token TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY .
+    TYPES:
+      ty_t_range    TYPE RANGE OF string .
+    TYPES:
+      ty_s_range    TYPE LINE OF ty_t_range .
+    TYPES:
+      BEGIN OF ty_s_filter_pop,
         option TYPE string,
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
-      END OF ty_S_filter_pop .
-  types:
-    ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
-  types:
-    BEGIN OF ty_s_fieldsdb,
-SCREEN_NAME type char10,
-FIELD   type char10,
-FIELD_DOMA  type char10,
-END OF ty_s_fieldsdb .
-  types:
-    ty_t_fieldsdb type STANDARD TABLE OF ty_s_fieldsdb with DEFAULT KEY .
-  types:
-    BEGIN OF ty_s_fields.
+      END OF ty_s_filter_pop .
+    TYPES:
+      ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
+    TYPES:
+      BEGIN OF ty_s_fieldsdb,
+        screen_name TYPE char10,
+        field       TYPE char10,
+        field_doma  TYPE char10,
+      END OF ty_s_fieldsdb .
+    TYPES:
+      ty_t_fieldsdb TYPE STANDARD TABLE OF ty_s_fieldsdb WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_s_fields.
         INCLUDE TYPE ty_s_fieldsdb.
-    TYPES: t_token  TYPE ty_t_token,
+        TYPES: t_token  TYPE ty_t_token,
         t_filter TYPE ty_t_filter_pop,
-      END OF ty_S_fields .
-  types:
-    begin of ty_s_var_val,
-SCREEN_NAME type char10,
-VAR     type     char10,
-FIELD   type     char10,
-GUID    type     string,
-SIGN    type char1,
-OPT     type char2,
-LOW     type char255,
-HIGH    type char255,
-end of ty_s_var_val .
-  types:
-    ty_t_var_val type STANDARD TABLE OF ty_s_var_val with DEFAULT KEY .
-  types:
-    BEGIN OF ty_s_variants,
-  screen_name type char10,
-  var       type char10,
-  descr     type string,
-END OF ty_s_variants .
-  types:
-    ty_t_variants type STANDARD TABLE OF ty_s_variants with DEFAULT KEY .
-  types:
-    BEGIN OF ty_s_var_pop.
+      END OF ty_s_fields .
+    TYPES:
+      BEGIN OF ty_s_var_val,
+        screen_name TYPE char10,
+        var         TYPE     char10,
+        field       TYPE     char10,
+        guid        TYPE     string,
+        sign        TYPE char1,
+        opt         TYPE char2,
+        low         TYPE char255,
+        high        TYPE char255,
+      END OF ty_s_var_val .
+    TYPES:
+      ty_t_var_val TYPE STANDARD TABLE OF ty_s_var_val WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_s_variants,
+        screen_name TYPE char10,
+        var         TYPE char10,
+        descr       TYPE string,
+      END OF ty_s_variants .
+    TYPES:
+      ty_t_variants TYPE STANDARD TABLE OF ty_s_variants WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_s_var_pop.
         INCLUDE TYPE ty_s_variants.
-    TYPES: selkz TYPE xfeld,
-      END OF ty_S_var_pop .
-  types:
-    BEGIN OF ty_s_screens,
-  screen_name type char10,
-  descr       type string,
-END OF ty_s_screens .
+        TYPES: selkz TYPE xfeld,
+      END OF ty_s_var_pop .
+    TYPES:
+      BEGIN OF ty_s_screens,
+        screen_name TYPE char10,
+        descr       TYPE string,
+      END OF ty_s_screens .
 
-  data:
-    mt_filter       TYPE STANDARD TABLE OF ty_S_filter_pop WITH EMPTY KEY .
-  data MT_MAPPING type Z2UI5_IF_CLIENT=>TY_T_NAME_VALUE .
-  data:
-    mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY .
-  data:
-    mt_variants     TYPE STANDARD TABLE OF ty_s_variants WITH EMPTY KEY .
-  data:
-    mt_variants_POP TYPE STANDARD TABLE OF ty_s_var_pop WITH EMPTY KEY .
-  data MV_ACTIV_ELEMNT type STRING .
-  data MV_SCREEN type STRING .
-  data MV_BUTTON_ACTIVE type ABAP_BOOL .
-  data MV_DESCRIPTION type STRING .
-  data MV_SCREEN_DESCR type STRING .
-  data MV_VARIANT type STRING .
-  data MV_DESCRIPTION_COPY type STRING .
-  data MV_VARIANT_COPY type STRING .
-  data MO_PARENT_VIEW type ref to Z2UI5_CL_XML_VIEW .
+    DATA:
+      mt_filter       TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
+    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value .
+    DATA:
+      mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY .
+    DATA:
+      mt_variants     TYPE STANDARD TABLE OF ty_s_variants WITH EMPTY KEY .
+    DATA:
+      mt_variants_pop TYPE STANDARD TABLE OF ty_s_var_pop WITH EMPTY KEY .
+    DATA mv_activ_elemnt TYPE string .
+    DATA mv_screen TYPE string .
+    DATA mv_button_active TYPE abap_bool .
+    DATA mv_description TYPE string .
+    DATA mv_screen_descr TYPE string .
+    DATA mv_variant TYPE string .
+    DATA mv_description_copy TYPE string .
+    DATA mv_variant_copy TYPE string .
+    DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view .
   PROTECTED SECTION.
-
-
-
-
 
     METHODS on_init.
 
@@ -106,7 +102,7 @@ END OF ty_s_screens .
 
     METHODS render_main.
 
-    METHODS render_POPUP_FILTER.
+    METHODS render_popup_filter.
 
     METHODS get_fields.
 
@@ -122,7 +118,7 @@ END OF ty_s_screens .
       IMPORTING
         VALUE(value)  TYPE string
       RETURNING
-        VALUE(result) TYPE ty_S_range.
+        VALUE(result) TYPE ty_s_range.
 
     CLASS-METHODS hlp_get_uuid
       RETURNING
@@ -165,28 +161,28 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_999 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
 
-  METHOD GET_FIELDS.
+  METHOD get_fields.
 
 
-DATA(db_fields) = value ty_t_fieldsdb(
+    DATA(db_fields) = VALUE ty_t_fieldsdb(
 
-( SCreen_name = 'INV'        FIELD =  'LGNUM'   FIELD_DOMA = '/SCWM/LGNUM'      )
-( SCreen_name = 'LAGP'       FIELD =  'LGNUM'   FIELD_DOMA = '/SCWM/LGNUM'      )
-( SCreen_name = 'LAGP'       FIELD =  'LGPLA'   FIELD_DOMA = '/SCWM/DE_LGPLA'   )
-( SCreen_name = 'LAGP'       FIELD =  'LGTYP'   FIELD_DOMA = '/SCWM/DE_LGTYP'   )
-( SCreen_name = 'QUAN'       FIELD =  'LGNUM'   FIELD_DOMA = '/SCWM/LGNUM'      )
-( SCreen_name = 'QUAN'       FIELD =  'LGPLA'   FIELD_DOMA = '/SCWM/DE_LGPLA'   )
-( SCreen_name = 'QUAN'       FIELD =  'MATNR'   FIELD_DOMA = '/SCWM/DE_MATNR'   )
-( SCreen_name = 'QUAN'       FIELD =  'OWNER'   FIELD_DOMA = '/SCWM/DE_OWNER'   )
-( SCreen_name = 'TO'         FIELD =  'LGNUM'   FIELD_DOMA = '/SCWM/LGNUM'      )
-( SCreen_name = 'TO'         FIELD =  'MATNR'   FIELD_DOMA = '/SCWM/DE_MATNR'   )
-( SCreen_name = 'TO'         FIELD =  'PROCTY'  FIELD_DOMA = '/SCWM/DE_PROCTY'  )
-( SCreen_name = 'TO'         FIELD =  'TOSTAT'  FIELD_DOMA = '/SCWM/DE_TOSTAT'  )
-( SCreen_name = 'TO'         FIELD =  'VLPLA'   FIELD_DOMA = '/SCWM/LTAP_VLPLA' )
-).
+    ( screen_name = 'INV'        field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
+    ( screen_name = 'LAGP'       field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
+    ( screen_name = 'LAGP'       field =  'LGPLA'   field_doma = '/SCWM/DE_LGPLA'   )
+    ( screen_name = 'LAGP'       field =  'LGTYP'   field_doma = '/SCWM/DE_LGTYP'   )
+    ( screen_name = 'QUAN'       field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
+    ( screen_name = 'QUAN'       field =  'LGPLA'   field_doma = '/SCWM/DE_LGPLA'   )
+    ( screen_name = 'QUAN'       field =  'MATNR'   field_doma = '/SCWM/DE_MATNR'   )
+    ( screen_name = 'QUAN'       field =  'OWNER'   field_doma = '/SCWM/DE_OWNER'   )
+    ( screen_name = 'TO'         field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
+    ( screen_name = 'TO'         field =  'MATNR'   field_doma = '/SCWM/DE_MATNR'   )
+    ( screen_name = 'TO'         field =  'PROCTY'  field_doma = '/SCWM/DE_PROCTY'  )
+    ( screen_name = 'TO'         field =  'TOSTAT'  field_doma = '/SCWM/DE_TOSTAT'  )
+    ( screen_name = 'TO'         field =  'VLPLA'   field_doma = '/SCWM/LTAP_VLPLA' )
+    ).
 
 
     CLEAR: mt_fields.
@@ -194,7 +190,7 @@ DATA(db_fields) = value ty_t_fieldsdb(
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
 
       APPEND INITIAL LINE TO mt_fields REFERENCE INTO DATA(field).
-     field->* = CORRESPONDING #( lr_fields->* ).
+      field->* = CORRESPONDING #( lr_fields->* ).
 
     ENDLOOP.
 
@@ -202,21 +198,21 @@ DATA(db_fields) = value ty_t_fieldsdb(
   ENDMETHOD.
 
 
-  METHOD GET_TXT.
+  METHOD get_txt.
 
-   result = 'Text'.
-
-  ENDMETHOD.
-
-
-  METHOD GET_TXT_L.
-
-   result = 'Text'.
+    result = 'Text'.
 
   ENDMETHOD.
 
 
-  METHOD GET_VALUES.
+  METHOD get_txt_l.
+
+    result = 'Text'.
+
+  ENDMETHOD.
+
+
+  METHOD get_values.
 
 
     DATA(l_variants) = VALUE ty_t_variants(
@@ -236,28 +232,28 @@ DATA(db_fields) = value ty_t_fieldsdb(
     ENDLOOP.
 
 
-DATA(var_vall_all) = value ty_t_var_val(
-( SCREEN_NAME = 'LTAP'         VAR = 'E001 - All' FIELD = 'LGNUM'      GUID = '663192E9D70C1EEE8CC06B0F98CD81A3' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'LTAP'         VAR = 'E001 - All' FIELD = 'MATNR'      GUID = '663192E9D70C1EEE8CD4E9389CB11403' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'LTAP'         VAR = 'E001 - All' FIELD = 'TOSTAT'     GUID = '663192E9D70C1EEE8CC06BC66AD581A3' SIGN = 'I'   OPT = 'NE' )
-( SCREEN_NAME = 'LTAP'         VAR = 'E002 - All' FIELD = 'LGNUM'      GUID = '663192E9D70C1EEE8CC06B0F98CD81A3' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'LTAP'         VAR = 'E002 - All' FIELD = 'MATNR'      GUID = '663192E9D70C1EEE8CD4E9389CB11403' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'LTAP'         VAR = 'E002 - All' FIELD = 'TOSTAT'     GUID = '663192E9D70C1EEE8CC06BC66AD581A3' SIGN = 'I'   OPT = 'NE' )
-( SCREEN_NAME = 'QUAN'         VAR = 'E001 - ALL' FIELD = 'LGNUM'      GUID = '663192E9D70C1EEE90CEE2FA658C51EE' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'QUAN'         VAR = 'E001 - ALL' FIELD = 'LGPLA'      GUID = '663192E9D70C1EEE90CEEF4750FD91EE' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'TO'           VAR = 'E001      ' FIELD = 'LGNUM'      GUID = '663192E9D70C1EEE8E87DE5FF8CC512A' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'TO'           VAR = 'E001      ' FIELD = 'PROCTY'     GUID = '663192E9D70C1EEE8E87DD8D1EB8C7F5' SIGN = 'I'   OPT = 'EQ' )
-( SCREEN_NAME = 'TO'           VAR = 'E001 - All' FIELD = 'LGNUM'      GUID = '663192E9D70C1EEE8E86552847635198' SIGN = 'I'   OPT = 'EQ' )
+    DATA(var_vall_all) = VALUE ty_t_var_val(
+    ( screen_name = 'LTAP'         var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'LTAP'         var = 'E001 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'LTAP'         var = 'E001 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
+    ( screen_name = 'LTAP'         var = 'E002 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'LTAP'         var = 'E002 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'LTAP'         var = 'E002 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
+    ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGNUM'      guid = '663192E9D70C1EEE90CEE2FA658C51EE' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGPLA'      guid = '663192E9D70C1EEE90CEEF4750FD91EE' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'TO'           var = 'E001      ' field = 'LGNUM'      guid = '663192E9D70C1EEE8E87DE5FF8CC512A' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'TO'           var = 'E001      ' field = 'PROCTY'     guid = '663192E9D70C1EEE8E87DD8D1EB8C7F5' sign = 'I'   opt = 'EQ' )
+    ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' )
 
-).
+    ).
 
-DATA var_val type ty_t_var_val.
+    DATA var_val TYPE ty_t_var_val.
 
 
-Loop at var_vall_all into data(b) WHERE screen_name = mv_screen
-    AND   var         = mv_variant.
+    LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
+        AND   var         = mv_variant.
 
-    append b to var_val.
+      APPEND b TO var_val.
 
     ENDLOOP.
 
@@ -270,7 +266,7 @@ Loop at var_vall_all into data(b) WHERE screen_name = mv_screen
       LOOP AT  var_val REFERENCE INTO DATA(val)
       WHERE field = field->field.
 
-        DATA(filter) = VALUE ty_S_filter_pop( key    = val->guid
+        DATA(filter) = VALUE ty_s_filter_pop( key    = val->guid
                                               option = val->opt
                                               low    = val->low
                                               high   = val->high ).
@@ -285,19 +281,19 @@ Loop at var_vall_all into data(b) WHERE screen_name = mv_screen
   ENDMETHOD.
 
 
-  METHOD GET_VARIANTS.
+  METHOD get_variants.
 
-mt_variants = value #(
-( SCREEN_NAME = 'QUAN'        VAR = 'E001 - ALL' DESCR = '123'                     )
-( SCREEN_NAME = 'TO'          VAR = 'E001'       DESCR = '123'                    )
-( SCREEN_NAME = 'TO'          VAR = 'E001 - All' DESCR = '123'  )
- ).
+    mt_variants = VALUE #(
+    ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123'                     )
+    ( screen_name = 'TO'          var = 'E001'       descr = '123'                    )
+    ( screen_name = 'TO'          var = 'E001 - All' descr = '123'  )
+     ).
 
 
   ENDMETHOD.
 
 
-  METHOD HLP_GET_RANGE_BY_VALUE.
+  METHOD hlp_get_range_by_value.
 
     DATA(lv_length) = strlen( value ) - 1.
 
@@ -346,7 +342,7 @@ mt_variants = value #(
   ENDMETHOD.
 
 
-  METHOD HLP_GET_UUID.
+  METHOD hlp_get_uuid.
 
     DATA uuid TYPE sysuuid_c32.
 
@@ -371,7 +367,7 @@ mt_variants = value #(
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
 
 
@@ -381,14 +377,14 @@ mt_variants = value #(
   ENDMETHOD.
 
 
-  METHOD ON_INIT.
+  METHOD on_init.
 
-    mt_screens = value #(
-( screen_name = 'INV'      DESCR = '123'            )
-( screen_name = 'LAGP'     DESCR = '123'         )
-( screen_name = 'PO'       DESCR = '123' )
-( screen_name = 'QUAN'     DESCR = '123'            )
-( screen_name = 'TO'       DESCR = '123'        )
+    mt_screens = VALUE #(
+( screen_name = 'INV'      descr = '123'            )
+( screen_name = 'LAGP'     descr = '123'         )
+( screen_name = 'PO'       descr = '123' )
+( screen_name = 'QUAN'     descr = '123'            )
+( screen_name = 'TO'       descr = '123'        )
      ).
 
     render_main( ).
@@ -410,7 +406,7 @@ mt_variants = value #(
   ENDMETHOD.
 
 
-  METHOD POPUP_COPY_SAVE.
+  METHOD popup_copy_save.
 
     mv_variant     = mv_variant_copy.
     mv_description = mv_description_copy.
@@ -420,31 +416,31 @@ mt_variants = value #(
   ENDMETHOD.
 
 
-  METHOD POPUP_FILTER_OK.
+  METHOD popup_filter_ok.
 
     READ TABLE mt_fields REFERENCE INTO DATA(lr_field)
     WITH KEY field = mv_activ_elemnt.
 
     IF sy-subrc = 0.
 
-    DELETE mt_filter WHERE option IS INITIAL.
+      DELETE mt_filter WHERE option IS INITIAL.
 
-    lr_field->t_filter = mt_filter.
+      lr_field->t_filter = mt_filter.
 
-    CLEAR: lr_field->t_token.
+      CLEAR: lr_field->t_token.
 
-    set_token( CHANGING field = lr_field ).
+      set_token( CHANGING field = lr_field ).
 
-    client->popup_destroy( ).
+      client->popup_destroy( ).
 
-    render_main( ).
+      render_main( ).
 
-endif.
+    ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD RENDER_MAIN.
+  METHOD render_main.
 
 
     IF mo_parent_view IS INITIAL.
@@ -477,7 +473,7 @@ endif.
              )->combobox(
              change = client->_event( val = 'INPUT_SCREEN_CHANGE'  )
              items  = client->_bind_edit( mt_screens )
-             selectedkey = client->_bind_edit( Mv_SCREEN )
+             selectedkey = client->_bind_edit( mv_screen )
                  )->item(
                      key = '{SCREEN_NAME}'
                      text = '{SCREEN_NAME} - {DESCR}'
@@ -517,7 +513,7 @@ endif.
                    tokens            = client->_bind_local( lr_tab->t_token )
                    showclearicon     = abap_true
                    id                = lr_tab->field
-                   valueHelpRequest  = client->_event( val = 'CALL_POPUP_FILTER' t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
+                   valuehelprequest  = client->_event( val = 'CALL_POPUP_FILTER' t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
                )->item(
                        key  = `{KEY}`
                        text = `{TEXT}`
@@ -541,17 +537,17 @@ endif.
                      press   = client->_event( 'BUTTON_DELETE' )
                      type    = 'Reject'
                      icon    = 'sap-icon://delete'
-                     enabled = mv_Button_active
+                     enabled = mv_button_active
                  )->button(
                      text    = get_txt( 'B_KOPIE' )
                      press   = client->_event( 'BUTTON_COPY' )
                      type    = 'Default'
-                     enabled = mv_Button_active
+                     enabled = mv_button_active
                   )->button(
                      text    =  get_txt( '/SCWM/DE_LM_LOGSAVE' )
                      press   = client->_event( 'BUTTON_SAVE' )
                      type    = 'Success'
-                     enabled =  mv_Button_active ).
+                     enabled =  mv_button_active ).
 
     IF mo_parent_view IS INITIAL.
 
@@ -562,7 +558,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD RENDER_POPUP_FILTER.
+  METHOD render_popup_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
@@ -571,10 +567,10 @@ endif.
       contentwidth  = `50%`
       title         = get_txt_l( '/SCWM/DE_TW_COND_CHECK_COND' ) ).
 
-    DATA(vbox) = lo_popup->vbox( height = `100%` justifyContent = 'SpaceBetween' ).
+    DATA(vbox) = lo_popup->vbox( height = `100%` justifycontent = 'SpaceBetween' ).
 
     DATA(item) = vbox->list(
-      noData          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
+      nodata          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
       items           = client->_bind_edit( mt_filter )
       selectionchange = client->_event( 'SELCHANGE' )
                         )->custom_list_item( ).
@@ -583,7 +579,7 @@ endif.
 
     grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = client->_bind_Edit( mt_mapping )
+                 items       = client->_bind_edit( mt_mapping )
              )->item(
                      key = '{N}'
                      text = '{N}'
@@ -616,7 +612,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD RENDER_POPUP_VARAINT.
+  METHOD render_popup_varaint.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
@@ -648,7 +644,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD RENDER_POP_COPY.
+  METHOD render_pop_copy.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
@@ -686,7 +682,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD SET_TOKEN.
+  METHOD set_token.
 
     LOOP AT field->t_filter REFERENCE INTO DATA(lr_filter).
 
@@ -701,7 +697,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD VARAINT_PAGE.
+  METHOD varaint_page.
 
 
     CASE client->get( )-event.
@@ -760,7 +756,7 @@ endif.
         " vorhanden werte übertragen
         mt_filter = lr_field->t_filter.
 
-        render_POPUP_FILTER(  ).
+        render_popup_filter(  ).
 
       WHEN 'CALL_POPUP_VARIANT'.
 
