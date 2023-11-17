@@ -810,7 +810,7 @@ endif.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -825,13 +825,7 @@ endif.
 
     on_event( ).
 
-
-
-    IF mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL.
-      mv_Button_active = abap_true.
-    ELSE.
-      mv_Button_active = abap_false.
-    ENDIF.
+    mv_button_active = xsdbool( mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL ).
 
     client->view_model_update(  ).
 
