@@ -58,7 +58,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -93,11 +93,10 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
         z2ui5_on_rendering_popup( client ).
       WHEN 'BUTTON_POPOVER'.
         z2ui5_on_rendering_popover( client = client id = 'ppvr' ).
-            client->timer_set(
-      EXPORTING
-        interval_ms    = `3000`
-        event_finished = client->_event( 'REFRESH' )
-    ).
+        client->timer_set(
+                interval_ms    = `3000`
+                event_finished = client->_event( 'REFRESH' )
+        ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
@@ -136,7 +135,6 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 *    page->_cc( )->timer( )->control( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
 
     client->timer_set(
-      EXPORTING
         interval_ms    = `3000`
         event_finished = client->_event( 'REFRESH' )
     ).
