@@ -16,7 +16,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_124 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -65,7 +66,9 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                       )->input( client->_bind_edit( mv_scan_type )
                       )->label( `scanner` )->_ns_ndc(
                       )->barcodescannerbutton(
-                        scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = value #( ( `${$event>/text}` ) ( `${$event>/type}` ) ) )
+*                        scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = value #( ( `${$event}` )  ) )
+                        scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = value #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
+*                        scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = value #( ( `${$event>/text}` ) ( `${$event>/format}` ) ) )
                         dialogtitle     = `Barcode Scanner`
            )->_stringify( ) ).
 
