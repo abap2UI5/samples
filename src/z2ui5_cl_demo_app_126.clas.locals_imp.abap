@@ -773,6 +773,7 @@ CLASS lcl_demo_app_126 DEFINITION
     DATA mv_selectedkey     TYPE string.
     DATA mv_selectedkey_tmp TYPE string.
     DATA mo_app_simple_view TYPE REF TO lcl_demo_app_125.
+    DATA mo_app_test        TYPE REF TO Z2ui5_CL_DEMO_APP_999 .
 
 
   PROTECTED SECTION.
@@ -811,7 +812,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
       on_init( ).
 
-      mo_app_simple_view = new #( ).
+      mo_app_simple_view = NEW #( ).
 
 
     ENDIF.
@@ -826,13 +827,29 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
         render_main( ).
 
+      WHEN 'TEST'.
+
+        IF mv_selectedkey <> mv_selectedkey_tmp.
+
+          mo_app_test = NEW Z2ui5_CL_DEMO_APP_999( ).
+
+        ENDIF.
+
+        render_main( ).
+
+        mo_app_test->mo_parent_view = mo_main_page.
+
+        mo_app_test->z2ui5_if_app~main( client = me->client ).
+
+        mv_selectedkey_tmp = mv_selectedkey.
+
 
 
       WHEN OTHERS.
 
         IF mv_selectedkey <> mv_selectedkey_tmp.
 
-           mo_app_simple_view = new #( ).
+          mo_app_simple_view = NEW #( ).
 
         ENDIF.
 
@@ -920,6 +937,12 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
                                count     = get_count( 'USR04' )
                                text      = 'User 04'
                                key       = 'USR04' ).
+
+    lo_items->icon_tab_filter( icon      = 'sap-icon://business-objects-mobile'
+                               iconcolor = 'Default'
+                               count     = get_count( 'USR04' )
+                               text      = 'TEST'
+                               key       = 'TEST' ).
 
 
     mo_main_page = lo_items.
