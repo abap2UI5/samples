@@ -773,7 +773,7 @@ CLASS lcl_demo_app_126 DEFINITION
     DATA mv_selectedkey     TYPE string.
     DATA mv_selectedkey_tmp TYPE string.
     DATA mo_app_simple_view TYPE REF TO lcl_demo_app_125.
-    DATA mo_app_test        TYPE REF TO ZSEL_CL_DEMO_APP_999 .
+    DATA mo_app_test        TYPE REF TO Z2ui5_CL_DEMO_APP_999 .
 
 
   PROTECTED SECTION.
@@ -812,7 +812,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
       on_init( ).
 
-      mo_app_simple_view = new #( ).
+      mo_app_simple_view = NEW #( ).
 
 
     ENDIF.
@@ -827,11 +827,11 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
         render_main( ).
 
-WHEN 'TEST'.
+      WHEN 'TEST'.
 
-      IF mv_selectedkey <> mv_selectedkey_tmp.
+        IF mv_selectedkey <> mv_selectedkey_tmp.
 
-           mo_app_test = new #( ).
+          mo_app_test = NEW Z2ui5_CL_DEMO_APP_999( ).
 
         ENDIF.
 
@@ -849,7 +849,7 @@ WHEN 'TEST'.
 
         IF mv_selectedkey <> mv_selectedkey_tmp.
 
-           mo_app_simple_view = new #( ).
+          mo_app_simple_view = NEW #( ).
 
         ENDIF.
 

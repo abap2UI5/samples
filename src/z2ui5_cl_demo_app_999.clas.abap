@@ -49,11 +49,11 @@ END OF ty_s_fieldsdb .
 SCREEN_NAME type char10,
 VAR     type     char10,
 FIELD   type     char10,
-GUID    type     RAW16,
-SIGN    type TVARV_SIGN,
-OPT     type TVARV_OPTI,
-LOW     type RSDSLOW_255,
-HIGH    type RSDSLOW_255,
+GUID    type     string,
+SIGN    type char1,
+OPT     type char2,
+LOW     type char255,
+HIGH    type char255,
 end of ty_s_var_val .
   types:
     ty_t_var_val type STANDARD TABLE OF ty_s_var_val with DEFAULT KEY .
@@ -61,7 +61,7 @@ end of ty_s_var_val .
     BEGIN OF ty_s_variants,
   screen_name type char10,
   var       type char10,
-  descr     type char50,
+  descr     type string,
 END OF ty_s_variants .
   types:
     ty_t_variants type STANDARD TABLE OF ty_s_variants with DEFAULT KEY .
@@ -73,7 +73,7 @@ END OF ty_s_variants .
   types:
     BEGIN OF ty_s_screens,
   screen_name type char10,
-  descr       type char50,
+  descr       type string,
 END OF ty_s_screens .
 
   data:
@@ -194,7 +194,7 @@ DATA(db_fields) = value ty_t_fieldsdb(
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
 
       APPEND INITIAL LINE TO mt_fields REFERENCE INTO DATA(field).
-      MOVE-CORRESPONDING lr_fields->* TO field->*.
+     field->* = CORRESPONDING #( lr_fields->* ).
 
     ENDLOOP.
 
@@ -425,7 +425,7 @@ mt_variants = value #(
     READ TABLE mt_fields REFERENCE INTO DATA(lr_field)
     WITH KEY field = mv_activ_elemnt.
 
-    CHECK sy-subrc = 0.
+    IF sy-subrc = 0.
 
     DELETE mt_filter WHERE option IS INITIAL.
 
@@ -438,6 +438,8 @@ mt_variants = value #(
     client->popup_destroy( ).
 
     render_main( ).
+
+endif.
 
   ENDMETHOD.
 
@@ -762,7 +764,7 @@ mt_variants = value #(
 
       WHEN 'CALL_POPUP_VARIANT'.
 
-        mt_variants_pop = CONV #( mt_variants ).
+        mt_variants_pop = CORRESPONDING #( mt_variants ).
 
         render_popup_varaint( client ).
 
@@ -822,6 +824,8 @@ mt_variants = value #(
     ENDIF.
 
     on_event( ).
+
+
 
     IF mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL.
       mv_Button_active = abap_true.
