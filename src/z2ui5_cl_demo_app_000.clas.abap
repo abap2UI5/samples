@@ -66,8 +66,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          )->content( 'layout' ).
 
     page->formatted_text(
-`<p><strong>Explore and copy code samples!</strong> All samples are abap2UI5 implementations of the <a href="https://sapui5.hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control create an i` &&
-`ssue or send a PR` &&
+`<p><strong>Explore and copy code samples!</strong> All samples are abap2UI5 implementations of the <a href="https://sapui5.hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control or find a b` &&
+`ug please create an ` &&
+`<a href="https://github.com/abap2UI5/abap2UI5/issues" style="color:blue; font-weight:600;">issue</a> or send a <a href="https://github.com/abap2UI5/abap2UI5-samples/pulls" style="color:blue; font-weight:600;">PR</a>` &&
 `.</p>` ).
 
     DATA(page2) = page.
