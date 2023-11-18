@@ -35,7 +35,8 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
         client->message_toast_display( |{ title } - title changed| ).
 
         DATA(view) = z2ui5_cl_xml_view=>factory( ).
-        client->view_display( view->_cc(
+
+         data(tmp) = view->_cc(
               )->title( )->control( title
               )->shell(
               )->page(
@@ -55,8 +56,16 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
                           )->input( client->_bind_edit( title )
                           )->button(
                               text  = 'Change title'
-                              press = client->_event( 'SET_VIEW' )
-               )->stringify( ) ).
+                              press = client->_event( 'SET_VIEW' ) ).
+
+                  data(btn) = tmp->button(
+                              text  = 'CALL Frontend Function'
+                              press = client->_event( 'SET_VIEW' ) )->get( ).
+
+                              btn->_generic_property( value #( n = `xmlns` v = `sap.m` ) ).
+                              btn->_generic_property( value #( n = `xmlns:z2ui5` v = `z2ui5` ) ).
+
+           client->view_display( tmp->stringify( ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).

@@ -43,6 +43,11 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                                                     highlight_driver_config = ms_hightlight_driver_config
                                                 )->get_parent( ).
 
+*    view->_generic_property( value #( n = `core:require` v = `{ DriverJS: 'z2ui5/DriverJS' }` ) ).
+
+*    view->_generic_property( value #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` )
+*    ).
+
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - DriverJs'
@@ -53,8 +58,10 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                       text = 'Source_Code'
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
-                  )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
-                  )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )
+*                  )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
+                  )->button( text = `TOUR` press = `sap.z2ui5.DriverJS.drive()`
+*                  )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )
+                  )->button( text = `HIGHLIGHT` press = `sap.z2ui5.DriverJS.highlight()`
               )->get_parent(
               )->simple_form( title = 'Form Title' editable = abap_true id = `choper725-highlight`
                   )->content( 'form'
@@ -183,7 +190,9 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
         )->_cc( )->timer( )->control( client->_event( `START` )
-        )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
+        )->_cc( )->driver_js( )->load_cc(
+*         )->_cc( )->driver_js( )->load_cc( "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
+          )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
         )->stringify( ) ).
 
 *      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
