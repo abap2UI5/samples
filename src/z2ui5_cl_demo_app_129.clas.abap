@@ -58,7 +58,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -81,22 +81,22 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'REFRESH'.
         lv_text = lv_text + 10.
-        client->timer_set(
-            interval_ms    = `3000`
-            event_finished = client->_event( 'REFRESH' )
-        ).
+*        client->timer_set(
+*            interval_ms    = `3000`
+*            event_finished = client->_event( 'REFRESH' )
+*        ).
 
-*       client->view_model_update( ).
+       client->view_model_update( ).
 
       WHEN 'BUTTON_SEND'.
 *        client->message_box_display( 'success - values send to the server' ).
         z2ui5_on_rendering_popup( client ).
       WHEN 'BUTTON_POPOVER'.
         z2ui5_on_rendering_popover( client = client id = 'ppvr' ).
-        client->timer_set(
-                interval_ms    = `3000`
-                event_finished = client->_event( 'REFRESH' )
-        ).
+*        client->timer_set(
+*                interval_ms    = `3000`
+*                event_finished = client->_event( 'REFRESH' )
+*        ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
@@ -132,12 +132,12 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
-*    page->_cc( )->timer( )->control( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
+    page->_cc( )->timer( )->control( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
 
-    client->timer_set(
-        interval_ms    = `3000`
-        event_finished = client->_event( 'REFRESH' )
-    ).
+*    client->timer_set(
+*        interval_ms    = `3000`
+*        event_finished = client->_event( 'REFRESH' )
+*    ).
 
     page = page->shell(
          )->page(
