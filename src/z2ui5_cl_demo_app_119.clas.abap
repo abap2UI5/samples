@@ -29,7 +29,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
   METHOD view_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
 *    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
   view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) )->get_parent( ).

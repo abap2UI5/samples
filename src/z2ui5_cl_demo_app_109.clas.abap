@@ -81,7 +81,7 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
 
   METHOD Z2UI5_DISPLAY_VIEW.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
               title          = 'abap2UI5 - Popover Examples'

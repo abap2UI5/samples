@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(cont) = view->shell(
       )->page( title          = 'abap2UI5 - Barcode Library'

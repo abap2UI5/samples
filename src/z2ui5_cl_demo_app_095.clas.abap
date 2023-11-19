@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
 
   METHOD view_build.
 
-    page = Z2UI5_cl_xml_view=>factory( client )->shell(
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Main App with Sub App'
             navbuttonpress = client->_event( 'BACK' )

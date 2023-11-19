@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   METHOD display_demo_output.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - if_oo_adt_classrun - TODO uncomment the code first'

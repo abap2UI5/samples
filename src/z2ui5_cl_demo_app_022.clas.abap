@@ -52,7 +52,7 @@ CLASS Z2UI5_CL_DEMO_APP_022 IMPLEMENTATION.
                ( n = 'id_text3'  )
              ) ).
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client )->shell( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
       DATA(page) = view->page(
           id = 'id_page'
           title = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'

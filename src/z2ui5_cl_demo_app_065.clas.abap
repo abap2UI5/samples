@@ -20,7 +20,7 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
   METHOD Z2UI5_if_app~main.
 
 
-      data(lo_view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+      data(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
         DATA(page) = lo_view->shell(
             )->page(

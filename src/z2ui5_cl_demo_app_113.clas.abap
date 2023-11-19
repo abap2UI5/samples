@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
 
   METHOD z2ui5_view_display.
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'Timeline'

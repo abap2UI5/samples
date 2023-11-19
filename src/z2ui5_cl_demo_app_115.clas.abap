@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
 
   METHOD display_demo_output.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - CL_DEMO_OUTPUT - TODO uncomment the source code'

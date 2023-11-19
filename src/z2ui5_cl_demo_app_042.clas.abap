@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_042 IMPLEMENTATION.
 
         ENDCASE.
 
-        DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
 
         DATA(page) = view->object_page_layout(

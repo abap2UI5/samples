@@ -146,7 +146,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
     (   n = `<leer>` v = `<leer>`    )
     ).
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - sap.ui.table.Table Features'

@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 
@@ -92,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_detail_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 

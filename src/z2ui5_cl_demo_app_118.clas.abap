@@ -26,7 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
   METHOD view_main.
 
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_cc( )->font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` ).
 

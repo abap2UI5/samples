@@ -84,7 +84,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
   METHOD Z2UI5_on_init.
 
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - IconTabBar'

@@ -297,7 +297,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD Z2UI5_on_rendering.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Value Help Examples'

@@ -445,9 +445,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
                )->page(
                   title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
                   navbuttonpress = client->_event( 'BACK' )

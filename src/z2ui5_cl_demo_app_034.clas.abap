@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
 
   METHOD view_main.
 
-    DATA(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     data(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'

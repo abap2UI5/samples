@@ -214,7 +214,7 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`

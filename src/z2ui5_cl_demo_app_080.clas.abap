@@ -84,7 +84,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
   METHOD Z2UI5_display_view.
     DATA(lv_s_date) =  '2023-04-22T08:15:00'.
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
 

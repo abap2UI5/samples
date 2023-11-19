@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
            )->page(
               title          = 'abap2UI5 - Side Panel Example'
               navbuttonpress = client->_event( 'BACK' )

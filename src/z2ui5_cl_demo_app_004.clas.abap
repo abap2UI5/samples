@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
 
     mv_view_main = 'MAIN'.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Controller'
@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_004 IMPLEMENTATION.
 
     mv_view_main = 'SECOND'.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
      title          = 'abap2UI5 - Controller'
      navbuttonpress = client->_event( 'BACK' )

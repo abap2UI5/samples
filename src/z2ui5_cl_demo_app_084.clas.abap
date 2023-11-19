@@ -136,7 +136,7 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
   METHOD Z2UI5_display_view.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell(
         )->page( class = `sapUiContentPadding `

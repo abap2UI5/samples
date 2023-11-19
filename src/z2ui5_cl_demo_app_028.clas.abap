@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view->_cc( )->timer( )->control(
         finished = client->_event( 'TIMER_FINISHED' )

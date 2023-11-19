@@ -82,7 +82,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render.
 
-    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(view) = z2ui5_cl_xml_view=>factory( ).
     data(lv_xml) = view->shell(
       )->page(
               title          = 'abap2UI5 - Binding Syntax'

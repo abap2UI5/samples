@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( )->page( title = 'PDF Output' navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title = 'PDF Output' navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
                )->_generic(
                 ns = `html`
                 name = `iframe`

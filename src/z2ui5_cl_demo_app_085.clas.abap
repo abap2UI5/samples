@@ -87,7 +87,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->object_page_layout(
             showtitleinheadercontent = abap_true
@@ -290,7 +290,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
 
   METHOD view_display_master.
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Master Detail'

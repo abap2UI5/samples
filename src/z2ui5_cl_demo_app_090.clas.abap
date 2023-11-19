@@ -189,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
     client->_bind_edit( val = mt_sort_p13n pretty_name = 'L' ).
     client->_bind_edit( val = mt_groups_p13n pretty_name = 'L' ).
 
-    DATA(page) =  z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) =  z2ui5_cl_xml_view=>factory( ).
 
     page = page->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
@@ -297,7 +297,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
 
 
-    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
 
     p13n_popup->_generic( name = `Popup` ns = `p13n`
                               t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )

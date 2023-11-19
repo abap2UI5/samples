@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
 
   METHOD z2ui5_on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(lv_xml) = `<mvc:View ` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&

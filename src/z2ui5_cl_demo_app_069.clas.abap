@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
 
   METHOD view_display_app_01.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->page( title = `APP_01` ).
 
@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
 
   METHOD view_display_app_02.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->page( title = `APP_02` ).
 
@@ -103,7 +103,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Partly rerendering of nested views'

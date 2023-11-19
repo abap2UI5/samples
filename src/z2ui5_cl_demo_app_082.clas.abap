@@ -92,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
 
   METHOD Z2UI5_view_display.
 
-    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view->_cc( )->timer( )->control( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
 

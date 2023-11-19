@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 

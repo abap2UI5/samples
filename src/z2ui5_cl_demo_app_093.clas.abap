@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
 
 *      client->factory_view( )->_ns_html( )->script( )->zz_plain( `sap.z2ui5.myFunction();`).
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view->_generic( ns = `html` name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();`).
 

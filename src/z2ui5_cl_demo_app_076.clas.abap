@@ -85,7 +85,7 @@ CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
   METHOD Z2UI5_on_init.
 
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
 

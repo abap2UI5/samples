@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 *    product_url = view->hlp_get_url_param(  `product` ).
      product_url = z2ui5_cl_demo_utility=>factory( client )->url_param_get(  `product` ).
     z2ui5_cl_demo_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).

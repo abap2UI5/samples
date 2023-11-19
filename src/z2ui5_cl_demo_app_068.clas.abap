@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
   METHOD ui5_display_view.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Popup Tree select Entry'
             navbuttonpress = client->_event( 'BACK' )

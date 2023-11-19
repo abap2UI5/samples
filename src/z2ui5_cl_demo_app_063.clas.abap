@@ -133,7 +133,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
   METHOD Z2UI5_on_rendering.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Games'
             navbuttonpress = client->_event( 'BACK' )

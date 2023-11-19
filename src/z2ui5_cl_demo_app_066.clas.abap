@@ -63,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
      data(page) = lo_view_nested->page( title = `Nested View` ).
 
@@ -95,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-      DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Master Detail Page with Nested View'
             navbuttonpress = client->_event( 'BACK' )

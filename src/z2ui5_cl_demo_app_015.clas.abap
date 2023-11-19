@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
 
         ENDCASE.
 
-        data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        data(view) = z2ui5_cl_xml_view=>factory( ).
         view->shell(
         )->page(
             title          = 'abap2UI5 - Formatted Text'

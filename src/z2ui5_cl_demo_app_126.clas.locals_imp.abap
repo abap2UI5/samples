@@ -363,7 +363,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
 
       DATA(page) = view->page( title          =  mv_table
@@ -897,7 +897,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client )->shell( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Customizing'

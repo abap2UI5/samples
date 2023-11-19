@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
 
   METHOD render_tab_line.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(container) = view->shell(
         )->page(
