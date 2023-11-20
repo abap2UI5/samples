@@ -36,8 +36,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-
-    "on init
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
@@ -48,13 +46,9 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-
-    "user command
     CASE client->get( )-event.
 
       WHEN 'GEOLOCATION_LOADED'.
-
-*        client->message_box_display( `Geolocation loaded!`).
 
         DATA(view) = z2ui5_cl_xml_view=>factory( ).
         client->view_display( view->shell(
@@ -162,9 +156,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
         RETURN.
     ENDCASE.
-
-
-
 
   ENDMETHOD.
 ENDCLASS.
