@@ -141,7 +141,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-
+    panel->generic_tile(
+        header    = 'Focus & Cursor'
+        press     = client->_event( 'z2ui5_cl_demo_app_133' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
     panel->generic_tile(
         header    = 'Scrolling'

@@ -1,0 +1,107 @@
+CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+
+    INTERFACES z2ui5_if_app.
+
+    DATA check_initialized TYPE abap_bool.
+    DATA field_01  TYPE string.
+    DATA field_02 TYPE string.
+    DATA focus_id TYPE string.
+    DATA selstart TYPE string.
+    DATA selend TYPE string.
+    DATA update_focus TYPE abap_bool.
+
+  PROTECTED SECTION.
+    METHODS display_view
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS init
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
+
+
+  METHOD display_view.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    client->view_display( view->shell(
+
+          )->page(
+                  title          = 'abap2UI5 - Focus'
+                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  shownavbutton  = abap_true
+              )->header_content(
+                  )->link(
+                      text = 'Source_Code'
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                      target = '_blank'
+              )->get_parent(
+                        )->_cc( )->focus( )->control(
+                              focusid  = client->_bind_edit( focus_id )
+                                selectionstart = client->_bind_edit( selstart )
+                                selectionend   = client->_bind_edit( selend )
+                                setupdate      = client->_bind_edit( update_focus )
+              )->simple_form( title = 'Focus & Cursor' editable = abap_true
+                  )->content( 'form'
+                      )->title( 'Input'
+                      )->label( 'Sel_Start'
+                      )->input( value = client->_bind_edit( selstart )
+                      )->label( 'Sel_End'
+                      )->input( value = client->_bind_edit( selend )
+                      )->label( 'field_01'
+                      )->input( value = client->_bind_edit( field_01 ) id = 'BUTTON01'
+                      )->button( text  = 'focus here' press = client->_event( val = 'BUTTON01' )
+                      )->label( `field_02`
+                      )->input( value = client->_bind_edit( field_02 ) id = 'BUTTON02'
+                      )->button( text  = 'focus here' press = client->_event( val = 'BUTTON02' )
+           )->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD init.
+
+    field_01 = `this is a text`.
+    field_02 = `this is another text`.
+    selstart = `3`.
+    selend = `7`.
+
+    client->view_display( z2ui5_cl_xml_view=>factory(
+    )->_cc( )->focus( )->load_cc(
+    )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
+    )->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      init( client ).
+      RETURN.
+    ENDIF.
+
+    CASE client->get( )-event.
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+
+      WHEN 'DISPLAY_VIEW'.
+        display_view( client ).
+
+      WHEN 'BUTTON01' OR 'BUTTON02'.
+        update_focus = abap_true.
+        focus_id = client->get( )-event.
+        client->view_model_update( ).
+*        display_view( client ).
+        client->message_toast_display( |focus changed| ).
+    ENDCASE.
+
+  ENDMETHOD.
+ENDCLASS.
