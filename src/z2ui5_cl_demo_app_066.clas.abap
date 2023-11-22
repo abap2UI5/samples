@@ -9,7 +9,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 DEFINITION
 
     DATA mv_input_master TYPE string.
     DATA mv_input_detail TYPE string.
-
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
     TYPES:
       BEGIN OF ts_tree_row_base,
         object TYPE string,
@@ -68,7 +68,8 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
      data(page) = lo_view_nested->page( title = `Nested View` ).
 
       page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
-      )->input( value = client->_bind_edit( val = mv_input_detail view = client->cs_view-nested ) ).
+      )->input( id = `inputNest`
+        value = `{path:'` && client->_bind_edit( val = mv_input_detail view = client->cs_view-nested path = abap_true ) && `',type:'sap.ui.model.type.String', constraints: { maxLength: 3 } }` ).
 
       page->button(
             text = 'button 01'
@@ -95,7 +96,9 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+        view->_cc( )->messaging( )->control( client->_bind_edit( mt_messaging ) ).
+     DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Master Detail Page with Nested View'
             navbuttonpress = client->_event( 'BACK' )
@@ -127,7 +130,8 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
         )->tree_template(
         )->text( text = '{COL4}').
 
-     tab->get_parent( )->label( text = `input master` )->input( value = client->_bind_edit( val = mv_input_master view = client->cs_view-main )
+     tab->get_parent( )->label( text = `input master` )->input( id = `inputMain`
+      value = `{path:'` && client->_bind_edit( val = mv_input_master view = client->cs_view-main path = abap_true ) && `',type:'sap.ui.model.type.String', constraints: { maxLength: 3 } }`
       )->button( press = client->_event( `TEST` ) text = `button` ).
 
 
@@ -145,6 +149,11 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
+      client->view_display( z2ui5_cl_xml_view=>factory(
+        )->_cc( )->messaging( )->load_cc(
+        )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
+        )->stringify( ) ).
+
       mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
                                                                                                      ( object = '1.1.2') ) )
                                                                                ( object = '1.2' ) ) )
@@ -153,13 +162,15 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
                          ( object = '3' categories = VALUE #( ( object = '3.1' )
                                                               ( object = '3.2' ) ) ) ).
 
-      view_display_master(  ).
-      view_display_detail(  ).
+
 
     ENDIF.
 
     CASE client->get( )-event.
 
+      WHEN 'DISPLAY_VIEW'.
+              view_display_master(  ).
+              view_display_detail(  ).
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
 
