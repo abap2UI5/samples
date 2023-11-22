@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile(
       header    = 'Message III'
-        subheader = 'Message Manager'
+        subheader = 'Message View & Popover'
       press     =  client->_event( 'Z2UI5_CL_DEMO_APP_038' )
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
