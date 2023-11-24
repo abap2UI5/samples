@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(tmp) = view->_cc(
-         )->title( )->control( title
+         )->title( )->control( i_client->_bind_edit( title )
          )->shell(
          )->page(
                  title          = 'abap2UI5 - Change Browser Title'
@@ -62,17 +62,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
                  )->content( 'form'
                      )->title( 'Input'
                      )->label( 'title'
-                     )->input( i_client->_bind_edit( title )
-                     )->button(
-                         text  = 'Change title'
-                         press = i_client->_event( 'SET_VIEW' ) ).
-
-    DATA(btn) = tmp->button(
-                text  = 'CALL Frontend Function'
-                press = i_client->_event( 'SET_VIEW' ) )->get( ).
-
-    btn->_generic_property( VALUE #( n = `xmlns` v = `sap.m` ) ).
-    btn->_generic_property( VALUE #( n = `xmlns:z2ui5` v = `z2ui5` ) ).
+                     )->input( i_client->_bind_edit( title ) ).
 
     i_client->view_display( tmp->stringify( ) ).
 
