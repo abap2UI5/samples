@@ -233,37 +233,37 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
                    )->label( text = `minFractionDigits (2)`
                    )->input( value = `{path:'` && client->_bind_edit( val = mv_minfractiondigits_float path = abap_true ) && `',type: 'sap.ui.model.type.Float', formatOptions:{ minFractionDigits: 2 } }`
                              editable = abap_true
-                             class = `sapUiTinyMarginBeginEnd` )->get_parent(
+                             class = `sapUiTinyMarginBeginEnd` )->get_parent( ).
+*
+**         )->get_parent( )->get_parent( )->get_parent( ).
+*          )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
+*           )->label( text = 'input an error and Send to Server to get the errors back in Messages button' design = 'Bold' )->get_parent( ).
 
-*         )->get_parent( )->get_parent( )->get_parent( ).
-          )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->flex_box( justifycontent = `Center` alignitems = `End` height = `100px`
-           )->label( text = 'input an error and Send to Server to get the errors back in Messages button' design = 'Bold' )->get_parent( ).
-
-    page->footer( )->overflow_toolbar(
-         )->button(
-             id = 'test'
-*             text  = 'Messages'
-             icon  = 'sap-icon://message-popup'
-             press = client->_event( 'POPOVER' )
-             type  = 'Default'
-*             class = `sapUiSizeCozy`
-             )->get( )->custom_data(
-              )->badge_custom_data( value = client->_bind_edit( mv_messages_count )
-                                    visible = abap_true
-                                    key = 'badge' )->get_parent( )->get_parent(
-         )->toolbar_spacer(
-         )->button(
-             text  = 'REMOVE_MSG'
-             press = client->_event( 'REMOVE_MSG' )
-             type  = 'Success'
-         )->button(
-             text  = 'ADD_MSG'
-             press = client->_event( 'ADD_MSG' )
-             type  = 'Success'
-         )->button(
-             text  = 'Send to Server'
-             press = client->_event( 'BUTTON_SEND' )
-             type  = 'Success' ).
+*    page->footer( )->overflow_toolbar(
+*         )->button(
+*             id = 'test'
+**             text  = 'Messages'
+*             icon  = 'sap-icon://message-popup'
+*             press = client->_event( 'POPOVER' )
+*             type  = 'Default'
+**             class = `sapUiSizeCozy`
+*             )->get( )->custom_data(
+*              )->badge_custom_data( value = client->_bind_edit( mv_messages_count )
+*                                    visible = abap_true
+*                                    key = 'badge' )->get_parent( )->get_parent(
+*         )->toolbar_spacer().
+*         )->button(
+*             text  = 'REMOVE_MSG'
+*             press = client->_event( 'REMOVE_MSG' )
+*             type  = 'Success'
+*         )->button(
+*             text  = 'ADD_MSG'
+*             press = client->_event( 'ADD_MSG' )
+*             type  = 'Success'
+*         )->button(
+*             text  = 'Send to Server'
+*             press = client->_event( 'BUTTON_SEND' )
+*             type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
 
@@ -292,12 +292,12 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-
-      when `REMOVE_MSG`.
-           client->message_manager_clear( ).
-
-      when `ADD_MSG`.
-         client->message_manager_add( VALUE #( ( message = `this is a message` type = `Error` ) ) ).
+*
+*      when `REMOVE_MSG`.
+*           client->message_manager_clear( ).
+*
+*      when `ADD_MSG`.
+*         client->message_manager_add( VALUE #( ( message = `this is a message` type = `Error` ) ) ).
 
       WHEN 'POPUP'.
         Z2UI5_display_popup( ).
