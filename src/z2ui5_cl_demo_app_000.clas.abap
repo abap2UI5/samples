@@ -13,9 +13,12 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         demos      TYPE abap_bool,
       END OF ms_check_expanded.
 
+    DATA mt_scroll2 TYPE z2ui5_cl_cc_scroll=>ty_t_item.
+    data mv_set_scroll type abap_bool.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value_int.
+*    DATA mt_scroll TYPE z2ui5_if_client=>ty_t_name_value_int.
 
 ENDCLASS.
 
@@ -26,10 +29,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->get( )-check_on_navigated = abap_true.
-      IF mt_scroll IS INITIAL.
-        mt_scroll = VALUE #( ( n = `page` ) ).
+      IF mt_scroll2 IS INITIAL.
+        mt_scroll2 = VALUE #( ( id = `page` ) ).
       ENDIF.
-      client->scroll_position_set( mt_scroll ).
+        mv_set_scroll = abap_true.
+*      client->scroll_position_set( mt_scroll ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -43,7 +47,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
             client->nav_app_call( li_app ).
-            mt_scroll = client->get( )-t_scroll_pos.
+*            mt_scroll = client->get( )-t_scroll_pos.
             RETURN.
           CATCH cx_root.
         ENDTRY.
@@ -61,6 +65,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             )->link( text = 'Twitter' target = '_blank' href = 'https://twitter.com/abap2UI5'
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
         )->get_parent( ).
+
+    page->_cc( )->scroll( )->control(
+          setupdate = client->_bind_edit( mv_set_scroll )
+          items     = client->_bind_edit( mt_scroll2 )
+        ).
 
     page = page->grid( 'L12 M12 S12'
          )->content( 'layout' ).
@@ -109,14 +118,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
-*    panel->generic_tile(
-*        header    = 'Scrolling & Cursor'
-*        subheader = ''
-*        press     = client->_event( 'Z2UI5_CL_DEMO_APP_022' )
-*        mode      = 'LineMode'
-*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-*    ).
 
     panel->generic_tile(
         header    = 'Timer'

@@ -78,9 +78,9 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
          )->button( text = 'Scroll Top'     press = client->_event( 'BUTTON_SCROLL_TOP' )
-         )->button( text = 'Scroll 50'     press = client->_event( 'BUTTON_SCROLL_50' )
+         )->button( text = 'Scroll 500 up'   press = client->_event( 'BUTTON_SCROLL_UP' )
+         )->button( text = 'Scroll 500 down' press = client->_event( 'BUTTON_SCROLL_DOWN' )
          )->button( text = 'Scroll Bottom'   press = client->_event( 'BUTTON_SCROLL_BOTTOM' )
-         )->toolbar_spacer(
        ).
 
     client->view_display( view->stringify( ) ).
@@ -119,15 +119,31 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
       WHEN 'DISPLAY_VIEW'.
         display_view( client ).
 
-      WHEN 'BUTTON_SCROLL_50'.
-        CLEAR mt_scroll.
-        INSERT VALUE #( id = 'id_page' scrollto = '50' ) INTO TABLE mt_scroll.
-        mv_scrollupdate = abap_true.
-        client->view_model_update( ).
-
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.
         INSERT VALUE #( id = 'id_page' scrollto = '0' ) INTO TABLE mt_scroll.
+        mv_scrollupdate = abap_true.
+        client->view_model_update( ).
+
+      WHEN 'BUTTON_SCROLL_UP'.
+
+        DATA(lv_pos) = CONV i( mt_scroll[ id = 'id_page' ]-scrollto ).
+        lv_pos = lv_pos - 500.
+        IF lv_pos < 0.
+          lv_pos = 0.
+        ENDIF.
+        mt_scroll[ id = 'id_page' ]-scrollto = shift_left( shift_right( CONV string( lv_pos ) ) ).
+        mv_scrollupdate = abap_true.
+        client->view_model_update( ).
+
+      WHEN 'BUTTON_SCROLL_DOWN'.
+
+        lv_pos = mt_scroll[ id = 'id_page' ]-scrollto.
+        lv_pos = lv_pos + 500.
+        IF lv_pos < 0.
+          lv_pos = 0.
+        ENDIF.
+        mt_scroll[ id = 'id_page' ]-scrollto = shift_left( shift_right( CONV string( lv_pos ) ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
