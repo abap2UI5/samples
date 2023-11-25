@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         shownavbutton = abap_true
     ).
 
-    page->_cc( )->scroll( )->control(
+    page->_z2ui5( )->scroll(
           setupdate = client->_bind_edit( mv_scrollupdate )
           items     = client->_bind_edit( mt_scroll )
         ).

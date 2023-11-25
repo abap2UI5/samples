@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
         )->get_parent( ).
 
-    page->_cc( )->scroll( )->control(
+    page->_z2ui5( )->scroll(
           setupdate = client->_bind_edit( mv_set_scroll )
           items     = client->_bind_edit( mt_scroll2 )
         ).

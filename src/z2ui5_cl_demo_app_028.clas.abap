@@ -60,11 +60,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
             INTO TABLE t_tab.
 
-*        client->timer_set(
-*          interval_ms    = '2000'
-*          event_finished = client->_event( 'TIMER_FINISHED' )
-*        ).
-
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -82,10 +77,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
-*    client->timer_set(
-*      interval_ms    = '2000'
-*      event_finished = client->_event( 'TIMER_FINISHED' )
-*    ).
 
   ENDMETHOD.
 
@@ -94,7 +85,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    lo_view->_cc( )->timer( )->control(
+    lo_view->_z2ui5( )->timer(
         finished = client->_event( 'TIMER_FINISHED' )
         delayms  = `2000`
         checkrepeat = abap_true

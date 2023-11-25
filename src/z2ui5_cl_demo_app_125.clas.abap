@@ -45,8 +45,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(tmp) = view->_cc(
-         )->title( )->control( i_client->_bind_edit( title )
+    DATA(tmp) = view->_z2ui5( )->title( i_client->_bind_edit( title )
          )->shell(
          )->page(
                  title          = 'abap2UI5 - Change Browser Title'
