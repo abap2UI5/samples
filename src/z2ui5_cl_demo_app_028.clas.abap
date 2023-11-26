@@ -15,12 +15,13 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
       END OF ty_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA mv_counter TYPE i.
+*    DATA mv_check_repeat TYPE abap_bool.
+    DATA mv_check_active TYPE abap_bool.
 
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
-
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
@@ -60,6 +61,12 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
             INTO TABLE t_tab.
 
+        IF mv_counter = 3.
+*           mv_check_repeat = abap_false.
+           mv_check_active = abap_false.
+          client->message_toast_display( `timer deactivated` ).
+        ENDIF.
+
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -73,10 +80,11 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
   METHOD z2ui5_on_init.
 
     mv_counter = 1.
+*    mv_check_repeat = abap_true.
+    mv_check_active = abap_true.
 
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
-
 
   ENDMETHOD.
 
@@ -88,7 +96,8 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     lo_view->_z2ui5( )->timer(
         finished = client->_event( 'TIMER_FINISHED' )
         delayms  = `2000`
-        checkrepeat = abap_true
+*        checkrepeat = client->_bind( mv_check_repeat )
+        checkactive = client->_bind( mv_check_active )
     ).
 
     DATA(page) = lo_view->shell( )->page(

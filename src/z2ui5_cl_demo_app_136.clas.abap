@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
 
   METHOD ui5_on_event.
@@ -67,10 +67,15 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client
-         )->_cc( )->timer( )->control( client->_event( `START` )
-         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_file_uploader=>get_js( )
-         )->stringify( ) ).
+    client->view_display( client->factory_view( )->_ns_z2ui5(
+        )->timer( client->_event( `START` ) )->_ns_html(
+        )->script( )->_add_c( z2ui5_cl_cc_file_uploader=>get_js( )
+        )->_stringify( ) ).
+*
+*    client->view_display( z2ui5_cl_xml_view=>factory( client
+*         )->_cc( )->timer( )->control(
+*         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_file_uploader=>get_js( )
+*         )->stringify( ) ).
 
   ENDMETHOD.
 
