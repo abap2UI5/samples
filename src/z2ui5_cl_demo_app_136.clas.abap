@@ -67,10 +67,11 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
   METHOD ui5_view_init_display.
 
-    client->view_display( client->factory_view( )->_ns_z2ui5(
-        )->timer( client->_event( `START` ) )->_ns_html(
-        )->script( )->_add_c( z2ui5_cl_cc_file_uploader=>get_js( )
-        )->_stringify( ) ).
+    ui5_view_main_display( ).
+*    client->view_display( client->factory_view( )->_ns_z2ui5(
+*        )->timer( client->_event( `START` ) )->_ns_html(
+*        )->script( )->_add_c( z2ui5_cl_cc_file_uploader=>get_js( )
+*        )->_stringify( ) ).
 *
 *    client->view_display( z2ui5_cl_xml_view=>factory( client
 *         )->_cc( )->timer( )->control(

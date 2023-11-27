@@ -95,10 +95,8 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     selstart = `3`.
     selend = `7`.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-    )->_cc( )->scroll( )->load_cc(
-    )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
-    )->stringify( ) ).
+    INSERT VALUE #( id = 'id_page' ) INTO TABLE mt_scroll.
+    display_view( client ).
 
   ENDMETHOD.
 
@@ -115,9 +113,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
-
-      WHEN 'DISPLAY_VIEW'.
-        display_view( client ).
 
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.

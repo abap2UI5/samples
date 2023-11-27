@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                             text  = 'Clear'
                             press = client->_event( val = 'BUTTON_CLEAR' )
               )->get_parent( )->get_parent(
-            )->_cc( )->gui_demo_output( )->control( client->_bind( mv_output )
+            )->_z2ui5( )->demo_output( client->_bind( mv_output )
             )->stringify( ) ).
 
   ENDMETHOD.

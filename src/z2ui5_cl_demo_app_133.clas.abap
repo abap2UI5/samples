@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
               )->get_parent(
-                        )->_cc( )->focus( )->control(
+                        )->_z2ui5( )->focus(
                               focusid  = client->_bind_edit( focus_id )
                                 selectionstart = client->_bind_edit( selstart )
                                 selectionend   = client->_bind_edit( selend )
@@ -71,11 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
     field_02 = `this is another text`.
     selstart = `3`.
     selend = `7`.
-
-    client->view_display( z2ui5_cl_xml_view=>factory(
-    )->_cc( )->focus( )->load_cc(
-    )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
-    )->stringify( ) ).
+    display_view( client ).
 
   ENDMETHOD.
 
@@ -92,14 +88,10 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
 
-      WHEN 'DISPLAY_VIEW'.
-        display_view( client ).
-
       WHEN 'BUTTON01' OR 'BUTTON02'.
         update_focus = abap_true.
         focus_id = client->get( )-event.
         client->view_model_update( ).
-*        display_view( client ).
         client->message_toast_display( |focus changed| ).
     ENDCASE.
 

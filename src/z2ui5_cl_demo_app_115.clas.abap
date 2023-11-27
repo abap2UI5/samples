@@ -35,7 +35,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
                  )->get_parent(
-            )->_cc( )->gui_demo_output( )->control( mv_output
+            )->_z2ui5( )->demo_output( mv_output
             )->stringify( ) ).
 
   ENDMETHOD.

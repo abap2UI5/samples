@@ -116,11 +116,13 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
                 )->get_parent( ).
 
     IF check_init = abap_false.
-      cont->_cc( )->bwip_js( )->load_lib(
-         )->_cc( )->bwip_js( )->load_cc( ).
+*      cont->_cc( )->bwip_js( )->load_lib(
+      cont->_cc_plain_xml( `<html:script type="text/javascript" src="` && z2ui5_cl_cc_bwipjs=>cv_src && `" />`
+            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
+*         )->_cc( )->bwip_js( )->load_cc( ).
     ELSE.
       cont->simple_form( title    = 'Barcode' editable = abap_true
-           )->_cc( )->bwip_js( )->control(
+           )->_z2ui5( )->bwip_js(
               bcid = ms_barcode-sym
               text = ms_barcode-text
               scale = mv_scale_x

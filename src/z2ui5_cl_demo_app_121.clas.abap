@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->timer( )->control( client->_event( )
+        )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 
 *      client->timer_set( client->_event( ) ).
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
               )->get_parent(
-              )->_cc( )->timer( )->control(
+              )->_z2ui5( )->timer(
                                         finished = client->_event( `TIMER_FINISHED` )
                                         delayms  = `2000`
               )->simple_form( title = 'Timer Interval 2000 ms' editable = abap_true

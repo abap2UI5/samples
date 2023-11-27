@@ -28,7 +28,8 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_cc( )->font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` ).
+*    view->_cc( )->font_awesome( )->load_animation_js( faw_js_url = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` ).
+    view->_generic( ns = `html` name = `script` t_prop = value #( ( n = `src` v = `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/js/all.min.js` ) ) ).
 
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - FontAwsome Fonts'
@@ -66,8 +67,9 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
       check_initialized = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->timer( )->control( client->_event( `START` )
-        )->_cc( )->font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
+        )->_z2ui5( )->timer(  client->_event( `START` )
+*        )->_cc( )->font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( Z2UI5_CL_CC_FONT_AWESOME_ICONS=>get_js_icon( `https://cdn.jsdelivr.net/gh/choper725/resources/dist/` )  )->get_parent(
         )->stringify( ) ).
 
 

@@ -101,7 +101,7 @@ CLASS Z2UI5_CL_DEMO_APP_041 IMPLEMENTATION.
   METHOD Z2UI5_on_render.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-   lo_view->_cc( )->timer( )->control( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
+   lo_view->_z2ui5( )->timer( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
     DATA(lo_view2) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )

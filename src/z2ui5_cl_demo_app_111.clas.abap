@@ -1,14 +1,14 @@
-class Z2UI5_CL_DEMO_APP_111 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_111 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_s_tab,
+    TYPES:
+      BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
         product          TYPE string,
         create_date      TYPE string,
@@ -16,17 +16,17 @@ public section.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-  types:
-    ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+    TYPES:
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
-  data MV_SEARCH_VALUE type STRING .
-  data MT_TABLE type TY_T_TABLE .
-  data MV_KEY type STRING .
-  data MV_PRODUCT type STRING .
-  data MV_CREATE_DATE type STRING .
-  data MV_CREATE_BY type STRING .
-  data MV_STORAGE_LOCATION type STRING .
-  data MV_QUANTITY type STRING .
+    DATA mv_search_value TYPE string .
+    DATA mt_table TYPE ty_t_table .
+    DATA mv_key TYPE string .
+    DATA mv_product TYPE string .
+    DATA mv_create_date TYPE string .
+    DATA mv_create_by TYPE string .
+    DATA mv_storage_location TYPE string .
+    DATA mv_quantity TYPE string .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -43,7 +43,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -132,8 +132,8 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
                         `}`.
 
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->_cc( )->timer( )->control( client->_event( `START` )
+      client->view_display( z2ui5_cl_xml_view=>factory( client
+        )->_z2ui5( )->timer( client->_event( `START` )
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
         )->stringify( ) ).
 
@@ -216,10 +216,10 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
+    client->view_display( z2ui5_cl_xml_view=>factory( client
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
-        )->stringify( ) ).
+      )->_generic( ns = `html` name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
+      )->stringify( ) ).
 
 *    view->_cc_plain_xml( `<html:script> sap.z2ui5.InitSvm(); </html:script>` ).
 
@@ -263,7 +263,7 @@ CLASS Z2UI5_CL_DEMO_APP_111 IMPLEMENTATION.
             )->input( value = client->_bind_edit( mv_storage_location ) change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name = `QUANTITY` label = `Quantity` groupname = `group1` visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( suggest = abap_true suggestionItems = `{/EDIT/MT_TABLE}` value = client->_bind_edit( mv_quantity ) change = `sap.z2ui5.onChange($event);`
+            )->input( suggest = abap_true suggestionitems = `{/EDIT/MT_TABLE}` value = client->_bind_edit( mv_quantity ) change = `sap.z2ui5.onChange($event);`
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 

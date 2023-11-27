@@ -146,16 +146,16 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_cc( )->messaging( )->load_cc(
-        )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
-        )->stringify( ) ).
+z2ui5_display_view( ).
+
+*      client->view_display( z2ui5_cl_xml_view=>factory(
+*        )->_cc( )->messaging( )->load_cc(
+*        )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
+*        )->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'DISPLAY_VIEW'.
-        z2ui5_display_view( ).
 
       WHEN `REMOVE_MSG`.
         CLEAR mt_messaging.

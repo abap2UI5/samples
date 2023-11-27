@@ -24,29 +24,19 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
 
 
   METHOD view_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-*    view->_cc_plain_xml( `<html:style>` && z2ui5_cl_cc_driver_js=>get_css_local( ) && `</html:style>` )->get_parent( ).
-  view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) )->get_parent( ).
-
-*    view->_cc_plain_xml( `<html:style>` && mv_custom_css && `</html:style>` )->get_parent( ).
-    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css )->get_parent( ).
-
+    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) ).
+    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css ).
 
     view->_cc( )->driver_js( )->set_driver_configs( steps_config            = ms_steps_config
                                                     highlight_config        = ms_hightlight_config
-                                                    highlight_driver_config = ms_hightlight_driver_config
-                                                )->get_parent( ).
-
-*    view->_generic_property( value #( n = `core:require` v = `{ DriverJS: 'z2ui5/DriverJS' }` ) ).
-
-*    view->_generic_property( value #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` )
-*    ).
+                                                    highlight_driver_config = ms_hightlight_driver_config ).
 
     client->view_display( view->shell(
           )->page(
@@ -58,9 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
                       text = 'Source_Code'
                       href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
-*                  )->button( text = `TOUR` press = client->_event_client( val = `DRIVERJS_DRIVE` )
                   )->button( text = `TOUR` press = `sap.z2ui5.DriverJS.drive()`
-*                  )->button( text = `HIGHLIGHT` press = client->_event_client( val = `DRIVERJS_HIGHLIGHT` )
                   )->button( text = `HIGHLIGHT` press = `sap.z2ui5.DriverJS.highlight()`
               )->get_parent(
               )->simple_form( title = 'Form Title' editable = abap_true id = `choper725-highlight`
@@ -189,13 +177,13 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
       quantity = '500'.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->timer( )->control( client->_event( `START` )
-        )->_cc( )->driver_js( )->load_cc(
+        )->_z2ui5( )->timer(  client->_event( `START` )
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_cc( ) )->get_parent(
 *         )->_cc( )->driver_js( )->load_cc( "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
-          )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
+*          )->_cc( )->driver_js( )->load_lib( local_js = abap_true "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`
+          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_local( ) )->get_parent(
         )->stringify( ) ).
 
-*      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
     ENDIF.
 
     CASE client->get( )-event.

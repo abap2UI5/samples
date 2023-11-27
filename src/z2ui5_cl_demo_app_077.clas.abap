@@ -96,8 +96,9 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
       Z2UI5_set_data( ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->_cc( )->ui5_spreadsheet( )->load_cc( mv_column_config
+      client->view_display( Z2UI5_cl_xml_view=>factory(
+*        )->_cc( )->ui5_spreadsheet( )->load_cc( mv_column_config
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
         )->_cc( )->timer( )->control( client->_event( 'START' )
         )->stringify( ) ).
 
@@ -158,7 +159,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
               )->overflow_toolbar(
                   )->title( 'title of the table'
                   )->toolbar_spacer(
-                  )->_cc( )->ui5_spreadsheet( )->control( "zcc_export_spreadsheet(
+                  )->_z2ui5( )->spreadsheet_export(
                 tableid = 'exportTable'
                 icon = 'sap-icon://excel-attachment'
                 type = 'Emphasized'

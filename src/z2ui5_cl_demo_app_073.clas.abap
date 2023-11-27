@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( i_client ).
 
     IF mv_url IS NOT INITIAL.
-      view->_cc( )->timer( )->control( i_client->_event_client(
+      view->_z2ui5( )->timer( i_client->_event_client(
                   val   = i_client->cs_event-open_new_tab
                   t_arg = VALUE #( ( mv_url ) ) ) ).
     mv_url = ``.

@@ -114,7 +114,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
         )->_cc( )->ui5_spreadsheet( )->load_cc( mv_column_config
-        )->_cc( )->timer( )->control( client->_event( 'START' )
+        )->_z2ui5( )->timer(  client->_event( 'START' )
         )->stringify( ) ).
 
       RETURN.
@@ -242,7 +242,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
                                 sort = client->_event( 'SORT' )
                                 filter = client->_event( 'FILTER' )
                                 customfilter =  client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->_cc( )->ui5_spreadsheet( )->control( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->_z2ui5( )->spreadsheet_export( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
     DATA(lo_columns) = tab->ui_columns( ).
     lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
     lo_columns->ui_column( width = '5rem' sortproperty = 'ROWID'

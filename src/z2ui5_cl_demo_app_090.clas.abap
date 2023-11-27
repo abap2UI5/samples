@@ -144,7 +144,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `};`.
 
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-     )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW` )
+     )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW` )
       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
       "val = `<html:script>` && lv_custom_js && `</html:script>`
       )->stringify( ) ).

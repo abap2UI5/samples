@@ -39,18 +39,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_cc( )->timer( )->control( client->_event( `GEOLOCATION_LOADED` )
-        )->_cc( )->geolocation( )->load_cc(  )->stringify( ) ).
-
-      RETURN.
-    ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'GEOLOCATION_LOADED'.
-
-        DATA(view) = z2ui5_cl_xml_view=>factory( ).
+       DATA(view) = z2ui5_cl_xml_view=>factory( ).
         client->view_display( view->shell(
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
@@ -62,7 +51,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                           href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                           target = '_blank'
                   )->get_parent(
-                  )->_cc( )->geolocation( )->control(
+                  )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
                                             longitude        = client->_bind_edit( longitude )
                                             latitude         = client->_bind_edit( latitude )
@@ -88,6 +77,14 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                           )->button( text = `Display` press = client->_event( `MAP_CONTAINER_DISPLAY` )
                )->stringify( ) ).
 
+*      client->view_display( z2ui5_cl_xml_view=>factory( client
+*        )->_z2ui5( )->timer( client->_event( `GEOLOCATION_LOADED` )
+*        )->_cc( )->geolocation( )->load_cc(  )->stringify( ) ).
+
+      RETURN.
+    ENDIF.
+
+    CASE client->get( )-event.
 
       WHEN 'MAP_CONTAINER_DISPLAY'.
 

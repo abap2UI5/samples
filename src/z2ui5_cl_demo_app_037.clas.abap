@@ -88,17 +88,11 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
   METHOD z2ui5_load_cc.
 
     client->view_display( z2ui5_cl_xml_view=>factory( client
-*         )->_cc_plain_xml( get_js_custom_control( )
          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( get_js_custom_control( )
-         )->_cc( )->timer( )->control(
+         )->_z2ui5( )->timer(
                 finished = client->_event( 'DISPLAY_VIEW' )
                 delayms  = `0`
          )->stringify( ) ).
-
-*    client->timer_set(
-*      interval_ms    = '0'
-*      event_finished = client->_event( 'DISPLAY_VIEW' )
-*    ).
 
   ENDMETHOD.
 

@@ -149,10 +149,13 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_cc( )->messaging( )->load_cc(
-        )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
-        )->stringify( ) ).
+*      client->view_display( z2ui5_cl_xml_view=>factory(
+*        )->_cc( )->messaging( )->load_cc(
+*        )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW`)
+*        )->stringify( ) ).
+
+      view_display_master(  ).
+              view_display_detail(  ).
 
       mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
                                                                                                      ( object = '1.1.2') ) )
@@ -168,9 +171,8 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'DISPLAY_VIEW'.
-              view_display_master(  ).
-              view_display_detail(  ).
+*      WHEN 'DISPLAY_VIEW'.
+
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
 

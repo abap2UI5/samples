@@ -94,7 +94,7 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    lo_view->_cc( )->timer( )->control( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
+    lo_view->_z2ui5( )->timer( finished = client->_event( `TIMER_FINISHED` ) delayms = `2000` checkrepeat = abap_true ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - Roundtrip Speed Test'

@@ -132,7 +132,7 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
-    page->_cc( )->timer( )->control( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
+    page->_z2ui5( )->timer( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
 
 *    client->timer_set(
 *        interval_ms    = `3000`
