@@ -17,21 +17,8 @@ CLASS z2ui5_cl_demo_app_137 DEFINITION
 
     DATA mt_picture TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
     DATA mt_picture_out TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
-
     DATA mv_pic_display TYPE string.
-
-    DATA mv_barcode_type TYPE string.
-    DATA mv_barcode_text TYPE string.
-    DATA mv_alt_text TYPE string.
-    DATA mv_options TYPE string.
-    DATA mv_render_as TYPE string.
-    DATA mv_scale_x TYPE string.
-    DATA mv_scale_y TYPE string.
-
     DATA mv_check_init TYPE abap_bool.
-
-    DATA mt_barcode TYPE z2ui5_cl_cc_bwipjs=>ty_t_barcode.
-    DATA ms_barcode TYPE z2ui5_cl_cc_bwipjs=>ty_s_barcode.
     DATA mv_picture_base TYPE string.
 
   PROTECTED SECTION.
@@ -110,10 +97,6 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
       WHEN 'CAPTURE'.
         INSERT VALUE #( data = mv_picture_base time = sy-uzeit ) INTO TABLE mt_picture.
         CLEAR mv_picture_base.
-        client->view_model_update( ).
-
-      WHEN `BUTTON_CHANGE`.
-        ms_barcode = mt_barcode[ sym = ms_barcode-sym ].
         client->view_model_update( ).
 
       WHEN 'DISPLAY'.
