@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
               bcid = ms_barcode-sym
               text = ms_barcode-text
               scale = mv_scale_x
-              height = conv #( mv_scale_y + mv_scale_x )
+              height = conv string( mv_scale_y + mv_scale_x )
 
               ).
     ENDIF.
