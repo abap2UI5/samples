@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
 
   METHOD render_tab_donut.
 
-    DATA(container) = client->factory_view( )->_ns_m(
+    DATA(container) = z2ui5_cl_ui5=>_factory( )->_ns_m(
         )->shell(
         )->page(
             title = 'abap2UI5 - Visualization'

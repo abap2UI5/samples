@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         demos      TYPE abap_bool,
       END OF ms_check_expanded.
 
-    DATA mt_scroll2 TYPE z2ui5_cl_cc_scroll=>ty_t_item.
+    DATA mt_scroll2 TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
     data mv_set_scroll type abap_bool.
 
   PROTECTED SECTION.
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             )->link( text = 'GitHub'  target = '_blank' href = 'https://github.com/oblomov-dev/abap2ui5'
         )->get_parent( ).
 
-    page->_z2ui5( )->scroll(
+    page->_z2ui5( )->scrolling(
           setupdate = client->_bind_edit( mv_set_scroll )
           items     = client->_bind_edit( mt_scroll2 )
         ).
@@ -152,6 +152,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile(
         header    = 'Scrolling'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_134' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'History'
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_139' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).

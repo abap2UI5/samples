@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
 
     ENDCASE.
 
-    client->view_display( client->factory_view( )->_ns_m( )->shell(
+    client->view_display( z2ui5_cl_ui5=>_factory( )->_ns_m( )->shell(
           )->page(
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )

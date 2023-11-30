@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_view) = client->factory_view( )->_ns_webc(
+    DATA(lo_view) = z2ui5_cl_ui5=>_factory( )->_ns_webc(
         )->bar( design = 'header'
             )->label( id = 'basic-label'
             )->button(

@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
 
       WHEN 'NORMAL'.
 
-        DATA(lv_view_normal_xml) = client->factory_view( )->_ns_m(
+        DATA(lv_view_normal_xml) = z2ui5_cl_ui5=>_factory( )->_ns_m(
             )->page(
                     title          = 'abap2UI5 - NORMAL NORMAL NORMAL'
                     navbuttonpress = client->_event( 'BACK' )

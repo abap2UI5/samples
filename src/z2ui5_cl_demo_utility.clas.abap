@@ -5,6 +5,12 @@ CLASS z2ui5_cl_demo_utility DEFINITION
 
   PUBLIC SECTION.
 
+  CLASS-METHODS boolean_abap_2_json
+      IMPORTING
+        val           TYPE any
+      RETURNING
+        VALUE(result) TYPE string.
+
     CLASS-METHODS factory
       IMPORTING
         client          TYPE REF TO z2ui5_if_client optional
@@ -26,11 +32,6 @@ CLASS z2ui5_cl_demo_utility DEFINITION
         !val          TYPE string
       RETURNING
         VALUE(result) TYPE string.
-
-    METHODS url_param_set
-      IMPORTING
-        !n TYPE clike
-        !v TYPE clike.
 
     CLASS-METHODS trans_xml_2_object
       IMPORTING
@@ -120,6 +121,18 @@ CLASS z2ui5_cl_demo_utility DEFINITION
       RETURNING
         VALUE(result) TYPE string.
 
+    CLASS-METHODS boolean_check
+      IMPORTING
+        val           TYPE any
+      RETURNING
+        VALUE(result) TYPE abap_bool.
+
+            CLASS-METHODS rtti_get_type_name
+      IMPORTING
+        val           TYPE any
+      RETURNING
+        VALUE(result) TYPE string.
+
   PROTECTED SECTION.
 
     DATA mi_client TYPE REF TO z2ui5_if_client.
@@ -131,6 +144,37 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_utility IMPLEMENTATION.
 
+  METHOD rtti_get_type_name.
+
+    DATA(lo_descr) = cl_abap_elemdescr=>describe_by_data( val ).
+    DATA(lo_ele) = CAST cl_abap_elemdescr( lo_descr ).
+    result  = lo_ele->get_relative_name( ).
+
+  ENDMETHOD.
+
+ METHOD boolean_check.
+
+    TRY.
+        DATA(lv_type_name) = rtti_get_type_name( val ).
+        CASE lv_type_name.
+          WHEN `ABAP_BOOL` OR `XSDBOOLEAN`.
+            result = abap_true.
+        ENDCASE.
+      CATCH cx_root.
+    ENDTRY.
+
+  ENDMETHOD.
+
+  METHOD boolean_abap_2_json.
+
+    IF boolean_check( val ).
+      result = COND #( WHEN val = abap_true THEN `true` ELSE `false` ).
+    ELSE.
+      result = val.
+    ENDIF.
+
+  ENDMETHOD.
+
   METHOD factory.
 
     r_result = new #( ).
@@ -140,34 +184,22 @@ CLASS z2ui5_cl_demo_utility IMPLEMENTATION.
 
   METHOD app_get_url.
 
-    result = z2ui5_cl_fw_utility=>app_get_url( classname = classname client = mi_client ).
+    result = z2ui5_cl_util_func=>app_get_url( classname = classname client = mi_client ).
 
   ENDMETHOD.
 
 
   METHOD app_get_url_source_code.
 
-    result = z2ui5_cl_fw_utility=>app_get_url_source_code( mi_client ).
+    result = z2ui5_cl_util_func=>app_get_url_source_code( mi_client ).
 
   ENDMETHOD.
 
   METHOD url_param_get.
 
-    result = z2ui5_cl_fw_utility=>url_param_get(
+    result = z2ui5_cl_util_func=>url_param_get(
       val = val
       url = mi_client->get( )-s_config-search ).
-
-  ENDMETHOD.
-
-
-  METHOD url_param_set.
-
-    DATA(result) = z2ui5_cl_fw_utility=>url_param_set(
-      url   = mi_client->get( )-s_config-search
-      name  = n
-      value = v ).
-
-    mi_client->url_param_set( result ).
 
   ENDMETHOD.
 
