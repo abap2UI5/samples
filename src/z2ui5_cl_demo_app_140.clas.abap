@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION
     DATA check_initialized TYPE abap_bool .
     DATA: gt_multi TYPE ty_t_combo.
     DATA: gt_sel_multi TYPE ty_t_combo.
-    DATA: gt_sel_multi2 TYPE ty_t_combo.
+    DATA: gt_sel_multi2 TYPE string_table.
     METHODS ui5_on_init .
     METHODS ui5_on_event .
     METHODS ui5_view_main_display .
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
         DATA(ok_code) = client->get( )-event.
         CASE ok_code.
           WHEN 'FILTERBAR'.
-            gt_sel_multi2[] = gt_sel_multi[].
+*            gt_sel_multi2[] = gt_sel_multi[].
             client->view_model_update( ).
         ENDCASE.
       CATCH cx_root INTO DATA(x).
@@ -57,6 +57,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD ui5_on_init.
+
     gt_multi = VALUE ty_t_combo(
       ( key = 'A01' text = 'T1' )
       ( key = 'A02' text = 'T2' )
@@ -64,6 +65,9 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
       ( key = 'A04' text = 'T4' )
       ( key = 'A05' text = 'T5' )
       ).
+
+    gt_sel_multi2 = value #( ( `A01` ) ).
+
   ENDMETHOD.
 
 
@@ -91,7 +95,8 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                   )->multi_combobox(
                             name = 'Multi'
 *                           name = 'MultiComboBox'
-                            selecteditems = client->_bind_edit( gt_sel_multi )
+                    selectedkeys = client->_bind_edit( gt_sel_multi2 )
+*                            selecteditems = client->_bind_edit( gt_sel_multi )
                                    items = client->_bind_edit( val = gt_multi )
                                    )->item(
                                       key = '{KEY}'
