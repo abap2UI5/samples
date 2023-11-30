@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                )->simple_form( title = 'Form Title' editable = abap_true
                     )->content( 'form'
                   )->multi_combobox(
-                            name = 'Multi'
-*                           name = 'MultiComboBox'
+*                            name = 'Multi'
+                           name = 'MultiComboBox'
                     selectedkeys = client->_bind_edit( gt_sel_multi2 )
 *                            selecteditems = client->_bind_edit( gt_sel_multi )
                                    items = client->_bind_edit( val = gt_multi )
