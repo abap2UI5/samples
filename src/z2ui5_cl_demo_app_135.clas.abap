@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->_cc( )->messaging( )->control( client->_bind_edit( mt_messaging )
+    DATA(page) = view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging )
         )->shell(
         )->page( class = `sapUiContentPadding `
             title          = 'abap2UI5 - Messaging'

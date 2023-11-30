@@ -43,13 +43,13 @@ CLASS Z2UI5_CL_DEMO_APP_062 IMPLEMENTATION.
         INTO @DATA(ls_data).
 
       IF sy-subrc = 0.
-        SELECT SINGLE FROM Z2UI5_t_draft
+        SELECT SINGLE FROM Z2UI5_t_fw_01
          FIELDS *
-        WHERE uuid = @ls_data-uuid
+        WHERE id = @ls_data-uuid
        INTO @DATA(ls_draft).
 
         IF sy-subrc = 0.
-          client->nav_app_leave( client->get_app( ls_draft-uuid ) ).
+          client->nav_app_leave( client->get_app( ls_draft-id ) ).
           RETURN.
         ENDIF.
       ENDIF.

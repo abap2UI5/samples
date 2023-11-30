@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_picture=>get_js(  ) )->get_parent(
-       )->_cc( )->timer( )->control( delayms = `200` finished = client->_event( 'START' )
+       )->_z2ui5( )->timer( delayms = `200` finished = client->_event( 'START' )
        )->stringify( ) ).
 
     ENDIF.

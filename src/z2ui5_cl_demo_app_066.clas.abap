@@ -97,7 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
   METHOD view_display_master.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-        view->_cc( )->messaging( )->control( client->_bind_edit( mt_messaging ) ).
+        view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
      DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Master Detail Page with Nested View'

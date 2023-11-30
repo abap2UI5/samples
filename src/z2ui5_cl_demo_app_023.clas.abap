@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
 
       WHEN 'GENERIC'.
 
-        DATA(lv_view_gen_xml) = client->factory_view(
+        DATA(lv_view_gen_xml) = z2ui5_cl_ui5=>_factory(
            )->_add(
                 n   = 'Shell'
                 ns  = `sap.m`

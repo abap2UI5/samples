@@ -123,13 +123,13 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
           INTO @DATA(ls_data).
 
     IF sy-subrc = 0 AND ls_data-uuid <> client->get( )-s_draft-id.
-      SELECT SINGLE FROM Z2UI5_t_draft
+      SELECT SINGLE FROM Z2UI5_t_fw_01
        FIELDS *
-      WHERE uuid = @ls_data-uuid
+      WHERE id = @ls_data-uuid
      INTO @DATA(ls_draft).
 
       IF sy-subrc = 0.
-        DATA(app) = CAST Z2UI5_CL_DEMO_APP_064( i_client->get_app( ls_draft-uuid ) ).
+        DATA(app) = CAST Z2UI5_CL_DEMO_APP_064( i_client->get_app( ls_draft-id ) ).
         app->mv_user = mv_user.
 
         IF mv_message IS NOT INITIAL and client->get( )-event = 'SEND'.
