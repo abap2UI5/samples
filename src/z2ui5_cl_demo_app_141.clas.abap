@@ -109,9 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
                type  = 'Emphasized' ).
 
-     dialog->_generic( name = `HTML` ns = `core` t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
-                                                                   ( n = `preferDOM`  v = `false` )
-                                                                  ) )->get_parent( ).
+     dialog->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.setBlackColor( );` )->get_parent( ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -120,23 +118,18 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(css) = `` &&
-                `.lbl-color { color: red !important; font-size: 30px !important; }`.
+*    DATA(script) = `` &&
+*                   `sap.z2ui5.setBlackColor = function() {` && |\n| &&
+*                   `  var lbl = sap.z2ui5.oViewPopup.getContent()[0].getContent()[0].getDomRef();` && |\n| &&
+*                   `  lbl.style.color = "blue";` && |\n| &&
+*                   `};`.
 
     DATA(script) = `` &&
                    `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-                   `  var lbl = sap.ui.getCore().byId('lbl1');` && |\n| &&
-                   `  lbl.setText('changed from js');` && |\n| &&
-                   `  lbl.addStyleClass('lbl-color');` && |\n| &&
+                   `  alert("myfunction");` && |\n| &&
                    `};`.
 
-*    DATA(script) = `` &&
-*                   `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-*                   `  debugger;var lbl = 'x';` && |\n| &&
-*                   `};`.
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
     view->_generic( name = `script` ns = `html` )->_cc_plain_xml( script )->get_parent( ).
     DATA(page) = view->shell(
         )->page(
