@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
 *      cont->_cc( )->bwip_js( )->load_lib(
       cont->_cc_plain_xml( `<html:script type="text/javascript" src="` && z2ui5_cl_cc_bwipjs=>cv_src && `" />`
             )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
-*         )->_cc( )->bwip_js( )->load_cc( ).
+*
     ELSE.
       cont->simple_form( title    = 'Barcode' editable = abap_true
            )->_z2ui5( )->bwip_js(
