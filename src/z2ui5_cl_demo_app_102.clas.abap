@@ -69,7 +69,8 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(cont) = view->shell(
-      )->page( title          = 'abap2UI5 - Barcode Library'
+      )->page(  showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
+                title          = 'abap2UI5 - Barcode Library'
                navbuttonpress = client->_event( 'BACK' )
                shownavbutton  = abap_true
               )->header_content(

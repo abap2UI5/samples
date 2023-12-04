@@ -31,6 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
 
     DATA(container) = view->shell(
         )->page(
+             showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title = 'abap2UI5 - Visualization'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true

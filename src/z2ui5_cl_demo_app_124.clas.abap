@@ -38,6 +38,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_ui5=>_factory( )->_ns_m( )->shell(
           )->page(
+                 showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                   shownavbutton  = abap_true
