@@ -40,6 +40,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
       client->view_display( view->shell(
             )->page(
+                    showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = 'abap2UI5 -  Cross App Navigation App 128'
                     navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                     shownavbutton  = abap_true
@@ -49,7 +50,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
                         href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                         target = '_blank'
                 )->get_parent(
-                )->simple_form( title = 'Form Title' editable = abap_true
+                )->simple_form( title = 'App 128' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
                         )->label( 'product'
