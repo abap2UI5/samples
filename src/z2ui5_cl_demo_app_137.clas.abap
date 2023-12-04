@@ -91,13 +91,13 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'START'.
-        view_display( client ).
-
       WHEN 'CAPTURE'.
         INSERT VALUE #( data = mv_picture_base time = sy-uzeit ) INTO TABLE mt_picture.
         CLEAR mv_picture_base.
         client->view_model_update( ).
+
+      WHEN 'START'.
+        view_display( client ).
 
       WHEN 'DISPLAY'.
         DATA(lt_sel) = mt_picture_out.

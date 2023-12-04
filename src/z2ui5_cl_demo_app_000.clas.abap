@@ -961,6 +961,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
+        header    = 'Font Awesome Icons'
+        press     =  client->_event( 'z2ui5_cl_demo_app_118' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
         header    = 'Generate Barcodes'
         subheader = 'bwip-js'
         press     =  client->_event( 'z2ui5_cl_demo_app_102' )
