@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         demos      TYPE abap_bool,
       END OF ms_check_expanded.
 
-    DATA mt_scroll2 TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
+    DATA mt_scroll2 TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
     data mv_set_scroll type abap_bool.
 
   PROTECTED SECTION.
@@ -979,6 +979,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         header    = 'Tours & Contectual Help'
         subheader = 'driver.js'
         press     =  client->_event( 'z2ui5_cl_demo_app_119' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Image Mapster'
+        subheader = 'driver.js'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_142' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
