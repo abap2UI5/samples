@@ -146,16 +146,19 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-z2ui5_display_view( ).
-
-*      client->view_display( z2ui5_cl_xml_view=>factory(
-*        )->_cc( )->messaging( )->load_cc(
-*        )->_cc( )->timer( )->control( client->_event( `DISPLAY_VIEW`)
-*        )->stringify( ) ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( )
+            )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
+            )->stringify( ) ).
+      RETURN.
 
     ENDIF.
 
     CASE client->get( )-event.
+
+      WHEN `ON_CC_LOADED`.
+        z2ui5_display_view( ).
 
       WHEN `REMOVE_MSG`.
         CLEAR mt_messaging.

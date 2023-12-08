@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
     DATA selend TYPE string.
     DATA update_focus TYPE abap_bool.
 
-    DATA mt_scroll TYPE z2ui5_cl_cc_scrolling=>ty_t_item.
+    DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
 
   PROTECTED SECTION.
     METHODS display_view

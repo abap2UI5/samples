@@ -117,9 +117,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
                 )->get_parent( ).
 
     IF check_init = abap_false.
-      cont->_cc_plain_xml( `<html:script type="text/javascript" src="` && z2ui5_cl_cc_bwipjs=>cv_src && `" />`
-          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
-
+         cont->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
     ELSE.
       cont->simple_form( title    = 'Barcode' editable = abap_true
            )->_z2ui5( )->bwip_js(
