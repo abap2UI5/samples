@@ -10,8 +10,8 @@ CLASS Z2UI5_CL_DEMO_APP_142 DEFINITION
     DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
-*    DATA imagemapster TYPE REF TO z2ui5_cl_cc_imagemapster.
-*    DATA ls_mapster_config TYPE imagemapster->ty_imagemapster_config.
+    DATA imagemapster TYPE REF TO z2ui5_cl_cc_imagemapster.
+    DATA ls_map_cfg TYPE imagemapster->ty_c.
 
 
     METHODS z2ui5_on_rendering
@@ -63,19 +63,17 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-*    ls_mapster_config-stroke_color = `ff0000`.
-*    ls_mapster_config-fill_color = `fcffa4`.
-*    ls_mapster_config-fill_opacity = '0.8'.
-*    ls_mapster_config-stroke = abap_true.
-*    ls_mapster_config-stroke_opacity = `0.6`.
-*    ls_mapster_config-stroke_width = `3`.
-*    ls_mapster_config-single_select = abap_true.
+    ls_map_cfg-stroke_color = `ff0000`.
+    ls_map_cfg-fill_color = `fcffa4`.
+    ls_map_cfg-fill_opacity = '0.8'.
+    ls_map_cfg-stroke = abap_true.
+    ls_map_cfg-stroke_opacity = `0.6`.
+    ls_map_cfg-stroke_width = `3`.
+    ls_map_cfg-single_select = abap_true.
   ENDMETHOD.
 
 
   METHOD z2ui5_on_rendering.
-
-
 
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -115,7 +113,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                         onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
                   ).
 
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ) ).
+    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ls_map_cfg ) ).
 
     client->view_display( page->stringify( ) ).
 
