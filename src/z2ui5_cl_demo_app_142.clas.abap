@@ -62,7 +62,8 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
       WHEN 'TEST'.
         client->message_toast_display( `Click on image map` ).
       WHEN 'UPLOAD'.
-        client->view_model_update( ).
+*        client->view_model_update( ).
+        z2ui5_on_rendering( client ).
     ENDCASE.
 
   ENDMETHOD.
@@ -110,8 +111,11 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                 height = `100%`
                 width = `100%`
                 usemap = `#map_example`
-                densityaware = abap_false
-         )->html_map( id = `map_example` name = `map_example`
+                densityaware = abap_false ).
+
+    IF mv_value IS NOT INITIAL.
+
+         page->html_map( id = `map_example` name = `map_example`
           )->html_area( id = `area_1`
                         shape = `poly`
                         coords = `65,210,280,101,576,435,363,564`
@@ -126,6 +130,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                         href = `#`
                         onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
                   ).
+    ENDIF.
 
     view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ls_map_cfg ) ).
 
