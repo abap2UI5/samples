@@ -8,6 +8,8 @@ CLASS Z2UI5_CL_DEMO_APP_142 DEFINITION
     INTERFACES z2ui5_if_app .
 
     DATA check_initialized TYPE abap_bool .
+    DATA mv_value TYPE string .
+    DATA mv_path TYPE string .
   PROTECTED SECTION.
 
     DATA imagemapster TYPE REF TO z2ui5_cl_cc_imagemapster.
@@ -51,12 +53,16 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN 'GO_TO_EDITOR'.
+        client->nav_app_call( NEW z2ui5_cl_demo_app_144( b64_image = mv_value filename = mv_path ) ).
       WHEN 'START'.
         z2ui5_on_rendering( client ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
       WHEN 'TEST'.
         client->message_toast_display( `Click on image map` ).
+      WHEN 'UPLOAD'.
+        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -89,10 +95,18 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
     page->header_content(
              )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
              )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->button( text = 'Go to Editor' press = client->_event( 'GO_TO_EDITOR' ) enabled = `{= ${/EDIT/MV_VALUE} !== "" }` type = `Emphasized`
          )->get_parent( ).
 
 
-    page->vbox( )->image( src = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/image_map_example.jpg`
+    page->vbox(
+        )->_z2ui5( )->file_uploader(
+                          value       = client->_bind_edit( mv_value )
+                          path        = client->_bind_edit( mv_path )
+                          checkdirectupload = abap_true
+                          placeholder = 'upload an image'
+                          upload      = client->_event( 'UPLOAD' )
+          )->image( src = `{/EDIT/MV_VALUE}`
                 height = `100%`
                 width = `100%`
                 usemap = `#map_example`
