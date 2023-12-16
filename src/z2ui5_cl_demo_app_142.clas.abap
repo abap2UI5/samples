@@ -54,7 +54,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'GO_TO_EDITOR'.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_144( b64_image = mv_value filename = mv_path ) ).
+        client->nav_app_call( NEW z2ui5_cl_demo_app_145( b64_image = mv_value filename = mv_path ) ).
       WHEN 'START'.
         z2ui5_on_rendering( client ).
       WHEN 'BACK'.
