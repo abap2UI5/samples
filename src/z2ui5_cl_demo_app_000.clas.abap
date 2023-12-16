@@ -985,7 +985,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
         panel->generic_tile(
         header    = 'Image Mapster'
-        subheader = 'driver.js'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_142' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
