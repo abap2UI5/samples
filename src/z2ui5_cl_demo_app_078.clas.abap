@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_078 DEFINITION
+CLASS z2ui5_cl_demo_app_078 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_token,
@@ -13,10 +13,10 @@ CLASS Z2UI5_CL_DEMO_APP_078 DEFINITION
         visible  TYPE abap_bool,
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
-      END OF ty_S_token.
+      END OF ty_s_token.
 
     DATA mv_value          TYPE string.
-    DATA mt_token          TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -47,9 +47,26 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
       view->multi_input( tokens           = client->_bind_edit( mt_token )
                                 showclearicon    = abap_true
                                 value            = client->_bind_edit( mv_value )
-                                submit           = client->_event( 'SUBMIT' )
-                                tokenupdate      = client->_event( 'SUBMIT' )
-                                valueHelpRequest = client->_event( 'FILTER_VALUE_HELP' )
+*                                submit           = client->_event( 'SUBMIT' )
+*                                tokenupdate      = client->_event( 'SUBMIT' )
+                                submit       = client->_event( val    = 'SUBMIT'
+                                                    t_arg  = VALUE #(
+                                                                ( `$source` )
+                                                                ( `$event` )
+*                                                                ( `$event.mParameters.type` )
+*                                                                ( `$event.mParameters.addedTokens[0].mProperties.key` )
+*                                                               ( `$event.mParameters.addedTokens[1].mProperties.key` )
+*                                                               ( `$event.mParameters.addedTokens[2].mProperties.key` )
+*                                                               ( `$event.mParameters.removedTokens[0].mProperties.key` )
+*                                                               ( `$event.mParameters.removedTokens[1].mProperties.key` )
+*                                                               ( `$event.mParameters.removedTokens[2].mProperties.key` )
+*                                                               ( `$event.mParameters.removedTokens[3].mProperties.key` )
+
+
+                                                              ) )
+
+
+                                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
                        )->item( key  = `{KEY}`
                                 text = `{TEXT}`
                        )->tokens(
@@ -67,7 +84,25 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'SUBMIT'.
-        INSERT VALUE #( key = mv_value text = mv_value visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+
+        DATA(lt_event_arg) = client->get( )-t_event_arg.
+        IF lt_event_arg IS NOT INITIAL.
+
+
+          DATA(lv_token_upd_type) = lt_event_arg[ 2 ].
+          DATA(lv_token_key) = lt_event_arg[ 3 ].
+
+          IF lv_token_upd_type = `removed`.
+            DELETE mt_token WHERE key = lv_token_key.
+          ELSE.
+
+
+          ENDIF.
+
+        ELSE.
+          INSERT VALUE #( key = mv_value text = mv_value visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+        ENDIF.
+
         CLEAR mv_value.
         client->view_model_update( ).
 

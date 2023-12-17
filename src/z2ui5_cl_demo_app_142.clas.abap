@@ -1,4 +1,4 @@
-CLASS Z2UI5_CL_DEMO_APP_142 DEFINITION
+CLASS z2ui5_cl_demo_app_142 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -43,6 +43,10 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>get_js_local( )
           )->stringify( ) ).
 
+    ENDIF.
+
+    IF client->get( )-check_on_navigated = abap_true.
+      z2ui5_on_rendering( client ).
     ENDIF.
 
     z2ui5_on_event( client ).
@@ -115,21 +119,21 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
 
     IF mv_value IS NOT INITIAL.
 
-         page->html_map( id = `map_example` name = `map_example`
-          )->html_area( id = `area_1`
-                        shape = `poly`
-                        coords = `65,210,280,101,576,435,363,564`
+      page->html_map( id = `map_example` name = `map_example`
+       )->html_area( id = `area_1`
+                     shape = `poly`
+                     coords = `65,210,280,101,576,435,363,564`
 *                        target = `_blank`
-                        href = `#`
-                        onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
-                    )->get_parent(
-          )->html_area( id = `area_2`
-                        shape = `poly`
-                        coords = `406,151,473,138,501,193,438,209`
+                     href = `#`
+                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+                 )->get_parent(
+       )->html_area( id = `area_2`
+                     shape = `poly`
+                     coords = `406,151,473,138,501,193,438,209`
 *                        target = `_blank`
-                        href = `#`
-                        onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
-                  ).
+                     href = `#`
+                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+               ).
     ENDIF.
 
     view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ls_map_cfg ) ).
