@@ -1,11 +1,14 @@
-CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
+class Z2UI5_CL_DEMO_APP_144 definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES z2ui5_if_app.
+  interfaces IF_SERIALIZABLE_OBJECT .
+  interfaces Z2UI5_IF_APP .
 
-    TYPES:
-      BEGIN OF ty_row,
+  types:
+    BEGIN OF ty_row,
         selkz    TYPE abap_bool,
         title    TYPE string,
         value    TYPE string,
@@ -14,12 +17,12 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
         info     TYPE string,
         editable TYPE abap_bool,
         checkbox TYPE abap_bool,
-      END OF ty_row.
+      END OF ty_row .
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_editable_active TYPE abap_bool.
-    DATA check_initialized TYPE abap_bool.
-
+  data:
+    t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+  data CHECK_EDITABLE_ACTIVE type ABAP_BOOL .
+  data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -28,7 +31,9 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_144 IMPLEMENTATION.
+
 
   METHOD set_view.
 
