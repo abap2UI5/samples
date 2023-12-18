@@ -17,6 +17,8 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION
 
     DATA mv_value          TYPE string.
     DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -24,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -44,37 +46,33 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
           )->get_parent( ).
 
 
-      view->multi_input( tokens           = client->_bind_edit( mt_token )
-                                showclearicon    = abap_true
-                                value            = client->_bind_edit( mv_value )
-*                                submit           = client->_event( 'SUBMIT' )
-*                                tokenupdate      = client->_event( 'SUBMIT' )
-                                submit       = client->_event( val    = 'SUBMIT'
-                                                    t_arg  = VALUE #(
-                                                                ( `$source` )
-                                                                ( `$event` )
-*                                                                ( `$event.mParameters.type` )
-*                                                                ( `$event.mParameters.addedTokens[0].mProperties.key` )
-*                                                               ( `$event.mParameters.addedTokens[1].mProperties.key` )
-*                                                               ( `$event.mParameters.addedTokens[2].mProperties.key` )
-*                                                               ( `$event.mParameters.removedTokens[0].mProperties.key` )
-*                                                               ( `$event.mParameters.removedTokens[1].mProperties.key` )
-*                                                               ( `$event.mParameters.removedTokens[2].mProperties.key` )
-*                                                               ( `$event.mParameters.removedTokens[3].mProperties.key` )
-
-
-                                                              ) )
-
-
-                                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
-                       )->item( key  = `{KEY}`
-                                text = `{TEXT}`
-                       )->tokens(
+      view->_z2ui5( )->multiinput(
+                            addedtokens      = client->_bind_edit( mt_tokens_added )
+                            removedtokens    = client->_bind_edit( mt_tokens_removed )
+                            tokens           = client->_bind_edit( mt_token )
+                            showclearicon    = abap_true
+                            tokenupdate      = client->_event( 'UPDATE_BACKEND' )
+                       )->tokens( ns = `z2ui5`
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`
                                      visible  = `{VISIBLE}`
                                      selected = `{SELKZ}`
                                      editable = `{EDITABLE}` ).
+
+      DATA(tab) = view->table(
+        items = client->_bind_edit( mt_token )
+        mode  = 'MultiSelect' ).
+
+      tab->columns(
+       )->column(
+           )->text( 'KEY' )->get_parent(
+       )->column(
+           )->text( 'TEXT' ).
+
+      tab->items( )->column_list_item( selected = '{SELKZ}'
+        )->cells(
+            )->input( value = '{KEY}' enabled = `{EDITABLE}`
+            )->input( value = '{TEXT}' enabled = `{EDITABLE}`).
 
       client->view_display( view->stringify( ) ).
 
@@ -83,27 +81,18 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SUBMIT'.
+      WHEN 'UPDATE_BACKEND'.
 
-        DATA(lt_event_arg) = client->get( )-t_event_arg.
-        IF lt_event_arg IS NOT INITIAL.
+        LOOP AT mt_tokens_removed INTO DATA(ls_token).
+          DELETE mt_token WHERE key = ls_token-key.
+        ENDLOOP.
 
+        LOOP AT mt_tokens_added INTO ls_token.
+          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+        ENDLOOP.
 
-          DATA(lv_token_upd_type) = lt_event_arg[ 2 ].
-          DATA(lv_token_key) = lt_event_arg[ 3 ].
-
-          IF lv_token_upd_type = `removed`.
-            DELETE mt_token WHERE key = lv_token_key.
-          ELSE.
-
-
-          ENDIF.
-
-        ELSE.
-          INSERT VALUE #( key = mv_value text = mv_value visible = abap_true editable = abap_true ) INTO TABLE mt_token.
-        ENDIF.
-
-        CLEAR mv_value.
+        CLEAR mt_tokens_removed.
+        CLEAR mt_tokens_added.
         client->view_model_update( ).
 
       WHEN 'BACK'.
