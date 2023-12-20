@@ -87,7 +87,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view_nested->object_page_layout(
             showtitleinheadercontent = abap_true
@@ -290,7 +290,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
 
   METHOD view_display_master.
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Master Detail'
@@ -298,7 +298,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
             shownavbutton = abap_true
           )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1691003695654133760`
-             )->link( text = 'Source_Code'  target = '_blank' href = view->hlp_get_source_code_url(  )
+             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
          )->get_parent( ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = lv_layout id ='Detail' )->begin_column_pages( ).

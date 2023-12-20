@@ -84,9 +84,10 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
   METHOD Z2UI5_on_init.
 
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->page( id = `page_main`
+           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - IconTabBar'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = abap_true
@@ -94,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
     page->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
+              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
     DATA(lo_items) = page->icon_tab_bar( class = 'sapUiResponsiveContentPadding' selectedKey = client->_bind_edit( lv_selectedKey )  select = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count = client->_bind_edit( lv_cnt_total ) text = 'Products' key = 'ALL' showall = abap_true ).
     lo_items->icon_tab_separator(  ).

@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Tables and editable'
@@ -46,7 +46,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1630240894581608448'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = view->hlp_get_source_code_url(  )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     DATA(tab) = page->table(

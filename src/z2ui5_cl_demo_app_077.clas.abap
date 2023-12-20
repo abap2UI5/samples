@@ -96,11 +96,10 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
       Z2UI5_set_data( ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->zcc_export_spreadsheet_js( columnconfig = mv_column_config
+      client->view_display( Z2UI5_cl_xml_view=>factory(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
+        )->_z2ui5( )->timer( client->_event( 'START' )
         )->stringify( ) ).
-
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
       RETURN.
     ENDIF.
 
@@ -125,7 +124,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
   METHOD Z2UI5_on_init.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - XLSX Export'
@@ -135,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
     page1->header_content(
        )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1683753816716345345`
-       )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  ) ).
+       )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
@@ -157,7 +156,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
               )->overflow_toolbar(
                   )->title( 'title of the table'
                   )->toolbar_spacer(
-                  )->zcc_export_spreadsheet(
+                  )->_z2ui5( )->spreadsheet_export(
                 tableid = 'exportTable'
                 icon = 'sap-icon://excel-attachment'
                 type = 'Emphasized'

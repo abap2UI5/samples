@@ -63,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(lo_main) = Z2UI5_cl_xml_view=>factory( client )->shell( ).
+    DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = lo_main->page(
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = lo_main->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
 
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'

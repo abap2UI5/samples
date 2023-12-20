@@ -146,7 +146,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
     (   n = `<leer>` v = `<leer>`    )
     ).
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - sap.ui.table.Table Features'
@@ -156,7 +156,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
 
     page1->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

@@ -113,11 +113,9 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
       Z2UI5_set_data( ).
 
       client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->zcc_export_spreadsheet_js( columnconfig = mv_column_config
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
+        )->_z2ui5( )->timer(  client->_event( 'START' )
         )->stringify( ) ).
-
-      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
-
 
       RETURN.
     ENDIF.
@@ -194,7 +192,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
     (   n = `<leer>` v = `<leer>`    )
     ).
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - sap.ui.table.Table Features'
@@ -204,7 +202,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
     page1->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
@@ -244,7 +242,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
                                 sort = client->_event( 'SORT' )
                                 filter = client->_event( 'FILTER' )
                                 customfilter =  client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->zcc_export_spreadsheet( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->_z2ui5( )->spreadsheet_export( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
     DATA(lo_columns) = tab->ui_columns( ).
     lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
     lo_columns->ui_column( width = '5rem' sortproperty = 'ROWID'

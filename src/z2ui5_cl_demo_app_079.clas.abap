@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_079 DEFINITION
+CLASS z2ui5_cl_demo_app_079 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_value          TYPE string.
     DATA check_initialized TYPE abap_bool.
@@ -13,13 +13,13 @@ CLASS Z2UI5_CL_DEMO_APP_079 DEFINITION
       RETURNING
         VALUE(result) TYPE string.
 
-protected section.
-private section.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_079 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
 
   METHOD get_example_pdf.
@@ -47,12 +47,12 @@ CLASS Z2UI5_CL_DEMO_APP_079 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client )->page( title = 'PDF Output'
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title = 'PDF Output' navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
                )->_generic(
                 ns = `html`
                 name = `iframe`
@@ -65,6 +65,11 @@ CLASS Z2UI5_CL_DEMO_APP_079 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
+
+    CASE client->get( )-event.
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.

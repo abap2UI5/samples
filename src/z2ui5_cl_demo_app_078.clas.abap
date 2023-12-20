@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_078 DEFINITION
+CLASS z2ui5_cl_demo_app_078 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_token,
@@ -13,10 +13,12 @@ CLASS Z2UI5_CL_DEMO_APP_078 DEFINITION
         visible  TYPE abap_bool,
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
-      END OF ty_S_token.
+      END OF ty_s_token.
 
     DATA mv_value          TYPE string.
-    DATA mt_token          TYPE STANDARD TABLE OF ty_S_token WITH EMPTY KEY.
+    DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -24,15 +26,15 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view = view->shell( )->page( id = `page_main`
                title          = 'abap2UI5 - Select-Options'
@@ -40,24 +42,37 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
                shownavbutton  = abap_true
            )->header_content(
                )->link(
-                   text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                   text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
           )->get_parent( ).
 
 
-      view->multi_input( tokens           = client->_bind_edit( mt_token )
-                                showclearicon    = abap_true
-                                value            = client->_bind_edit( mv_value )
-                                submit           = client->_event( 'SUBMIT' )
-                                tokenupdate      = client->_event( 'SUBMIT' )
-                                valueHelpRequest = client->_event( 'FILTER_VALUE_HELP' )
-                       )->item( key  = `{KEY}`
-                                text = `{TEXT}`
-                       )->tokens(
+      view->_z2ui5( )->multiinput(
+                            addedtokens      = client->_bind_edit( mt_tokens_added )
+                            removedtokens    = client->_bind_edit( mt_tokens_removed )
+                            tokens           = client->_bind_edit( mt_token )
+                            showclearicon    = abap_true
+                            tokenupdate      = client->_event( 'UPDATE_BACKEND' )
+                       )->tokens( ns = `z2ui5`
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`
                                      visible  = `{VISIBLE}`
                                      selected = `{SELKZ}`
                                      editable = `{EDITABLE}` ).
+
+      DATA(tab) = view->table(
+        items = client->_bind_edit( mt_token )
+        mode  = 'MultiSelect' ).
+
+      tab->columns(
+       )->column(
+           )->text( 'KEY' )->get_parent(
+       )->column(
+           )->text( 'TEXT' ).
+
+      tab->items( )->column_list_item( selected = '{SELKZ}'
+        )->cells(
+            )->input( value = '{KEY}' enabled = `{EDITABLE}`
+            )->input( value = '{TEXT}' enabled = `{EDITABLE}`).
 
       client->view_display( view->stringify( ) ).
 
@@ -66,9 +81,18 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SUBMIT'.
-        INSERT VALUE #( key = mv_value text = mv_value visible = abap_true editable = abap_true ) INTO TABLE mt_token.
-        CLEAR mv_value.
+      WHEN 'UPDATE_BACKEND'.
+
+        LOOP AT mt_tokens_removed INTO DATA(ls_token).
+          DELETE mt_token WHERE key = ls_token-key.
+        ENDLOOP.
+
+        LOOP AT mt_tokens_added INTO ls_token.
+          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+        ENDLOOP.
+
+        CLEAR mt_tokens_removed.
+        CLEAR mt_tokens_added.
         client->view_model_update( ).
 
       WHEN 'BACK'.

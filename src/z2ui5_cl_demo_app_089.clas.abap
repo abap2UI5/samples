@@ -81,12 +81,12 @@ CLASS Z2UI5_CL_DEMO_APP_089 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_view_display.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
                                      )->button( text = `Back` press = client->_event( 'BACK' )
-                            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+                            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
 
                               )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
                                         height = `1.5rem`
@@ -116,7 +116,7 @@ CLASS Z2UI5_CL_DEMO_APP_089 IMPLEMENTATION.
                                                           icon = `sap-icon://grid`
                                                           type = `Transparent`
                               )->get_parent(
-                            )->get_parent( )->subheader(
+                            )->get_parent( )->sub_header( ns = `tnt`
                             )->tool_header(
                               )->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
                                                   select = client->_event( `OnSelectIconTabBar` )

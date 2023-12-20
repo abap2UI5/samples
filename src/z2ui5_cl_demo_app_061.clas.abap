@@ -21,7 +21,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1676522756781817857'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = view->hlp_get_source_code_url(  )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
 
@@ -62,9 +62,9 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{UUID}'
+          )->input( value = '{ID}'
           )->input( value = '{TIMESTAMPL}'
-          )->input( value = '{UUID_PREV}' ).
+          )->input( value = '{ID_PREV}' ).
 
     client->view_display( view->stringify( ) ).
 
@@ -78,16 +78,16 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_DRAFT').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_FW_01').
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE Z2UI5_t_draft( uuid = 'this is an uuid'  timestampl = '2023234243'  uuid_prev = 'previous' )
+      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
         INTO TABLE <tab>.
 
-      INSERT VALUE Z2UI5_t_draft( uuid = 'this is an uuid'  timestampl = '2023234243'  uuid_prev = 'previous' )
+      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
-      INSERT VALUE Z2UI5_t_draft( uuid = 'this is an uuid'  timestampl = '2023234243'  uuid_prev = 'previous' )
+      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
 
     ENDIF.

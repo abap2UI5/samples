@@ -66,7 +66,7 @@ CLASS Z2UI5_CL_DEMO_APP_007 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - TreeTable'
@@ -76,7 +76,7 @@ CLASS Z2UI5_CL_DEMO_APP_007 IMPLEMENTATION.
                )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1673320288983842820`
                )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = view->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
 
     DATA(tab) = page->tree_table(

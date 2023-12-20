@@ -1,35 +1,35 @@
-CLASS Z2UI5_CL_DEMO_APP_031 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA mv_value    TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        get               TYPE Z2UI5_if_client=>ty_s_get,
-        popup             type string,
+        get               TYPE z2ui5_if_client=>ty_s_get,
+        popup             TYPE string,
       END OF app.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_on_render_main.
-    METHODS Z2UI5_on_render_popup.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_on_render_main.
+    METHODS z2ui5_on_render_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_031 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     app-get = client->get( ).
     me->client = client.
@@ -37,22 +37,22 @@ CLASS Z2UI5_CL_DEMO_APP_031 IMPLEMENTATION.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      Z2UI5_on_event( ).
+      z2ui5_on_event( ).
     ENDIF.
 
-    Z2UI5_on_render_main( ).
-    Z2UI5_on_render_popup( ).
+    z2ui5_on_render_main( ).
+    z2ui5_on_render_popup( ).
 
     CLEAR app-get.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE app-get-event.
 
@@ -60,25 +60,25 @@ CLASS Z2UI5_CL_DEMO_APP_031 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN 'POPUP'.
         app-popup = 'TEST'.
-        WHEN 'DATA'.
+      WHEN 'DATA'.
         client->message_box_display( 'Event raised value:' && mv_value ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     mv_value  = '200'.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_main.
+  METHOD z2ui5_on_render_main.
 
-data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    data(lv_xml) = `<mvc:View ` && |\n|  &&
+    DATA(lv_xml) = `<mvc:View ` && |\n|  &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n|  &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n|  &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n|  &&
@@ -86,7 +86,7 @@ data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
                         `       <Button text="BACK" type="Emphasized" press="` && client->_event( 'BACK') && `"/>` && |\n|  &&
                         `       <Link target="_blank" text="Demo" href="https://twitter.com/abap2UI5/status/1645104539387691008"/>` && |\n|  &&
-                        `       <Link target="_blank" text="Source_Code" href="` && view->hlp_get_source_code_url( ) && `"/>` && |\n|  &&
+                        `       <Link target="_blank" text="Source_Code" href="` && z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) && `"/>` && |\n|  &&
                         `   </form:SimpleForm>  ` && |\n|  &&
                         `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( 'POPUP' ) && `"` && |\n|  &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n|  &&
@@ -160,57 +160,57 @@ data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
                         `   </GenericTile>` && |\n|  &&
                         `</mvc:View>`.
 
-     client->view_display( lv_xml ).
+    client->view_display( lv_xml ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_popup.
+  METHOD z2ui5_on_render_popup.
 
-    if app-popup = `TEST`.
-    data(lv_xml) = `<core:FragmentDefinition` && |\n|  &&
-                         `  xmlns="sap.m"` && |\n|  &&
-                         `  xmlns:core="sap.ui.core">` && |\n|  &&
-                         `  <ViewSettingsDialog` && |\n|  &&
-                         `      confirm="` && client->_event_client( client->cs_event-popup_close ) && `">` && |\n|  &&
-                         `      <sortItems>` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 2" key="2" />` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 3" key="3" />` && |\n|  &&
-                         `      </sortItems>` && |\n|  &&
-                         `      <groupItems>` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 2" key="2" />` && |\n|  &&
-                         `          <ViewSettingsItem text="Field 3" key="3" />` && |\n|  &&
-                         `      </groupItems>` && |\n|  &&
-                         `      <filterItems>` && |\n|  &&
-                         `          <ViewSettingsFilterItem text="Field1" key="1">` && |\n|  &&
-                         `              <items>` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value A" key="1a" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value B" key="1b" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value C" key="1c" />` && |\n|  &&
-                         `              </items>` && |\n|  &&
-                         `          </ViewSettingsFilterItem>` && |\n|  &&
-                         `          <ViewSettingsFilterItem text="Field2" key="2">` && |\n|  &&
-                         `              <items>` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value A" key="2a" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value B" key="2b" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value C" key="2c" />` && |\n|  &&
-                         `              </items>` && |\n|  &&
-                         `          </ViewSettingsFilterItem>` && |\n|  &&
-                         `          <ViewSettingsFilterItem text="Field3" key="3">` && |\n|  &&
-                         `              <items>` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value A" key="3a" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value B" key="3b" />` && |\n|  &&
-                         `                  <ViewSettingsItem text="Value C" key="3c" />` && |\n|  &&
-                         `              </items>` && |\n|  &&
-                         `          </ViewSettingsFilterItem>` && |\n|  &&
-                         `      </filterItems>` && |\n|  &&
-                         `  </ViewSettingsDialog>` && |\n|  &&
-                         `</core:FragmentDefinition>`.
+    IF app-popup = `TEST`.
+      DATA(lv_xml) = `<core:FragmentDefinition` && |\n|  &&
+                           `  xmlns="sap.m"` && |\n|  &&
+                           `  xmlns:core="sap.ui.core">` && |\n|  &&
+                           `  <ViewSettingsDialog` && |\n|  &&
+                           `      confirm="` && client->_event_client( client->cs_event-popup_close ) && `">` && |\n|  &&
+                           `      <sortItems>` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 2" key="2" />` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 3" key="3" />` && |\n|  &&
+                           `      </sortItems>` && |\n|  &&
+                           `      <groupItems>` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 2" key="2" />` && |\n|  &&
+                           `          <ViewSettingsItem text="Field 3" key="3" />` && |\n|  &&
+                           `      </groupItems>` && |\n|  &&
+                           `      <filterItems>` && |\n|  &&
+                           `          <ViewSettingsFilterItem text="Field1" key="1">` && |\n|  &&
+                           `              <items>` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value A" key="1a" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value B" key="1b" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value C" key="1c" />` && |\n|  &&
+                           `              </items>` && |\n|  &&
+                           `          </ViewSettingsFilterItem>` && |\n|  &&
+                           `          <ViewSettingsFilterItem text="Field2" key="2">` && |\n|  &&
+                           `              <items>` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value A" key="2a" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value B" key="2b" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value C" key="2c" />` && |\n|  &&
+                           `              </items>` && |\n|  &&
+                           `          </ViewSettingsFilterItem>` && |\n|  &&
+                           `          <ViewSettingsFilterItem text="Field3" key="3">` && |\n|  &&
+                           `              <items>` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value A" key="3a" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value B" key="3b" />` && |\n|  &&
+                           `                  <ViewSettingsItem text="Value C" key="3c" />` && |\n|  &&
+                           `              </items>` && |\n|  &&
+                           `          </ViewSettingsFilterItem>` && |\n|  &&
+                           `      </filterItems>` && |\n|  &&
+                           `  </ViewSettingsDialog>` && |\n|  &&
+                           `</core:FragmentDefinition>`.
 
-    client->popup_display( lv_xml ).
+      client->popup_display( lv_xml ).
 
-    endif.
+    ENDIF.
   ENDMETHOD.
 ENDCLASS.

@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
     ENDCASE.
 
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = Z2UI5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     page->simple_form( title = 'Form Title' editable = abap_true

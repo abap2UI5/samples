@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
 
   METHOD Z2UI5_on_init.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     data(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
@@ -84,7 +84,7 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
                 text = 'Demo' target = '_blank'
                 href = 'https://twitter.com/abap2UI5/status/1661642823542747138'
             )->link(
-                text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+                text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
        ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

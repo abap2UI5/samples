@@ -1,23 +1,26 @@
-CLASS Z2UI5_CL_DEMO_APP_057 DEFINITION PUBLIC.
+class Z2UI5_CL_DEMO_APP_057 definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    INTERFACES Z2UI5_if_app.
+  interfaces Z2UI5_IF_APP .
+  interfaces IF_SERIALIZABLE_OBJECT .
 
-    TYPES:
-      BEGIN OF ty_s_tab,
+  types:
+    BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
         product          TYPE string,
         create_date      TYPE string,
         create_by        TYPE string,
         storage_location TYPE string,
         quantity         TYPE i,
-      END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+      END OF ty_s_tab .
+  types:
+    ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
-    DATA mt_table TYPE ty_t_table.
-    DATA mv_check_download TYPE abap_bool.
-
+  data MT_TABLE type TY_T_TABLE .
+  data MV_CHECK_DOWNLOAD type ABAP_BOOL .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO Z2UI5_if_client.
@@ -175,7 +178,7 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render_main.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view = view->page( id = `page_main`
                 title          = 'abap2UI5 - List Report Features'
@@ -186,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1661723127595016194'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
            )->get_parent( ).
 
     IF mv_check_download = abap_true.
@@ -195,7 +198,8 @@ CLASS Z2UI5_CL_DEMO_APP_057 IMPLEMENTATION.
       DATA(lv_csv) = hlp_get_csv_by_tab( mt_table ).
       DATA(lv_base64) = hlp_get_base64( lv_csv ).
 
-      view->zcc_plain_xml( `<html:iframe src="data:text/csv;base64,` && lv_base64 && `" hidden="hidden" />`).
+      view->_generic( ns = `html` name = `iframe` t_prop = value #( ( n = `src` v = `data:text/csv;base64,` && lv_base64 ) ( n = `hidden` v = `hidden` ) ) ).
+*      ->_cc_plain_xml( `<html:iframe src= hidden="hidden" />`).
 
     ENDIF.
 

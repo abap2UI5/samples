@@ -69,14 +69,14 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
 
   METHOD Z2UI5_ON_RENDERING.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Label Example'
+            title          = 'abap2UI5 - Side Panel Example'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
     page->header_content(
-         )->link( text = 'Source_Code'  target = '_blank' href = page->hlp_get_source_code_url(  )
+         )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
          )->get_parent( ).
 
     DATA(side_panel) = page->side_panel( sidepanelposition = `Left`

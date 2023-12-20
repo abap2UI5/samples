@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
 
         ENDCASE.
 
-        data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+        data(view) = z2ui5_cl_xml_view=>factory( ).
         view->shell(
         )->page(
             title          = 'abap2UI5 - Formatted Text'
@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
             shownavbutton  = abap_true
             )->header_content(
                 )->toolbar_spacer(
-                )->link( text = 'Source_Code'  target = '_blank' href = view->hlp_get_source_code_url(  )
+                )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent(
             )->vbox( 'sapUiSmallMargin'
                 )->link(

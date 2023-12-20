@@ -79,7 +79,7 @@ CLASS Z2UI5_CL_DEMO_APP_032 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render.
 
-    data(lo_view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
    data(lv_xml) = `<mvc:View` && |\n|  &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n|  &&
@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_032 IMPLEMENTATION.
                           `  text="back" ` && |\n|  &&
                           `  press="` && client->_event( 'BACK' ) && `" ` && |\n|  &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n|  &&
-                   `       <m:Link target="_blank" text="Source_Code" href="` && lo_view->hlp_get_source_code_url(  ) && `"/>` && |\n|  &&
+                   `       <m:Link target="_blank" text="Source_Code" href="` && z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) && `"/>` && |\n|  &&
                           `<html><head><style>` && |\n|  &&
                           `body {background-color: powderblue;}` && |\n|  &&
                           `h1   {color: blue;}` && |\n|  &&

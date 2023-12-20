@@ -6,16 +6,6 @@ CLASS Z2UI5_CL_DEMO_APP_014 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
-
-
-
-
-
-
-
-
-
-
     DATA mv_sel7 TYPE abap_bool.
     DATA mv_sel8 TYPE abap_bool.
     DATA mv_sel9 TYPE abap_bool.
@@ -23,14 +13,8 @@ CLASS Z2UI5_CL_DEMO_APP_014 DEFINITION PUBLIC.
     DATA mv_sel11 TYPE abap_bool.
     DATA mv_sel12 TYPE abap_bool.
 
-
-
     DATA mv_tab_line_active TYPE abap_bool.
-
-
     METHODS render_tab_line.
-
-
     DATA client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
@@ -44,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
 
   METHOD render_tab_line.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(container) = view->shell(
         )->page(
@@ -53,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
             shownavbutton = abap_true
             )->header_content(
                 )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1639191954285113344`
-                )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent(
         )->tab_container( ).
 

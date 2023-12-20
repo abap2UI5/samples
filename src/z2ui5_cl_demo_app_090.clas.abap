@@ -142,14 +142,17 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `    oView.getModel().oData.EDIT.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
                          `  };` && |\n| &&
                          `};`.
+
     client->view_display( Z2UI5_cl_xml_view=>factory( client
-      )->zcc_plain_xml( `<html:script>` && lv_custom_js && `</html:script>`
+     )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW` )
+      )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
+      "val = `<html:script>` && lv_custom_js && `</html:script>`
       )->stringify( ) ).
 
-    client->timer_set(
-      interval_ms    = '0'
-      event_finished = client->_event( 'DISPLAY_VIEW' )
-    ).
+*    client->timer_set(
+*      interval_ms    = '0'
+*      event_finished = client->_event( 'DISPLAY_VIEW' )
+*    ).
 
       RETURN.
     ENDIF.
@@ -186,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
     client->_bind_edit( val = mt_sort_p13n pretty_name = 'L' ).
     client->_bind_edit( val = mt_groups_p13n pretty_name = 'L' ).
 
-    DATA(page) =  z2ui5_cl_xml_view=>factory( client ).
+    DATA(page) =  z2ui5_cl_xml_view=>factory( ).
 
     page = page->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
@@ -294,7 +297,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
 
 
-    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
 
     p13n_popup->_generic( name = `Popup` ns = `p13n`
                               t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )

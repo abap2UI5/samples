@@ -63,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD Z2UI5_display_view_main.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = view->hlp_get_source_code_url(  )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent(
             )->simple_form( title = 'VIEW_MAIN' editable = abap_true
                 )->content( 'form'
@@ -105,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD Z2UI5_display_view_second.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
@@ -114,7 +114,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = view->hlp_get_source_code_url( )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
               )->get_parent(
               )->simple_form( 'VIEW_SECOND'
                   )->content( 'form'

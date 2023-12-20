@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
     ENDCASE.
 
-    client->view_display( Z2UI5_cl_xml_view=>factory( client )->shell(
+    client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
                 title          = 'abap2UI5 - Currency Format'
                 navbuttonpress = client->_event( 'BACK' )
@@ -41,7 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    href = Z2UI5_cl_xml_view=>factory( client )->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                     target = '_blank'
             )->get_parent(
                 )->simple_form( title = 'Currency' editable = abap_true

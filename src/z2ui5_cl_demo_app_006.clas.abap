@@ -79,7 +79,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
 
     ENDCASE.
 
-    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = view->hlp_get_source_code_url(  )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true

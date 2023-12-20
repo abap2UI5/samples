@@ -296,7 +296,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render_main.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->page( id = `page_main`
              title          = 'abap2UI5 - Select-Options'
@@ -304,7 +304,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
              shownavbutton  = abap_true
          )->header_content(
              )->link(
-                 text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url( )
+                 text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
     DATA(page) = view->dynamic_page(

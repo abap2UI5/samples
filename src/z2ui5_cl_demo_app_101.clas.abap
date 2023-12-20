@@ -17,6 +17,7 @@ CLASS Z2UI5_CL_DEMO_APP_101 DEFINITION
 
     DATA mt_feed TYPE TABLE OF ty_feed.
     DATA ms_feed TYPE ty_feed.
+    data mv_value type string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO Z2UI5_if_client.
@@ -56,13 +57,16 @@ CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN 'POST'.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-        IF ls_arg IS NOT INITIAL.
+*        DATA(lt_arg) = client->get( )-t_event_arg.
+*        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+*        IF ls_arg IS NOT INITIAL.
+            if mv_value is not INITIAL.
           CLEAR ms_feed.
-          ms_feed-author = 'choper725'.
+          ms_feed-author = sy-uname.
           ms_feed-type = 'Respond'.
-          ms_feed-text = ls_arg.
+*          ms_feed-text = ls_arg.
+          ms_feed-text = mv_value.
+          mv_value = ``.
 
           INSERT ms_feed INTO mt_feed INDEX 1.
 
@@ -92,20 +96,23 @@ CLASS Z2UI5_CL_DEMO_APP_101 IMPLEMENTATION.
 
 
   METHOD Z2UI5_view_display.
-    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
-         ).
+                    )->header_content(
+                    )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+            )->get_parent( ).
 
     DATA(fi) = page->vbox(
-      )->feed_input( post = client->_event( val = 'POST' t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
-*                             icon = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
+*      )->feed_input( post = client->_event( val = 'POST' t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
+      )->feed_input( post = client->_event( val = 'POST' ) "t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
                              growing = abap_true
                              rows = `4`
                              icondensityaware = abap_false
+                             value = client->_bind_edit( mv_value )
                              class = `sapUiSmallMarginTopBottom`
       )->get_parent( )->get_parent(
       )->list(

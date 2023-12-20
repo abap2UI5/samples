@@ -1,24 +1,24 @@
-CLASS Z2UI5_CL_DEMO_APP_023 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_023 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        s_get             TYPE Z2UI5_if_client=>ty_s_get,
+        s_get             TYPE z2ui5_if_client=>ty_s_get,
       END OF app.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_on_render_main.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_on_render_main.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -26,31 +26,31 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
     app-s_get  = client->get( ).
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
 
     IF app-s_get-event IS NOT INITIAL.
-      Z2UI5_on_event( ).
+      z2ui5_on_event( ).
     ENDIF.
 
-    Z2UI5_on_render_main( ).
+    z2ui5_on_render_main( ).
 
     CLEAR app-s_get.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE app-s_get-event.
 
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     product  = 'tomato'.
     quantity = '500'.
@@ -74,9 +74,9 @@ CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_main.
+  METHOD z2ui5_on_render_main.
 
-    DATA(lo_view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     CASE app-view_main.
 
@@ -117,78 +117,84 @@ CLASS Z2UI5_CL_DEMO_APP_023 IMPLEMENTATION.
 
       WHEN 'NORMAL'.
 
-        lo_view->shell(
-          )->page(
-                  title          = 'abap2UI5 - NORMAL NORMAL NORMAL'
-                  navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = abap_true
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'
-                      href = lo_view->hlp_get_source_code_url(  )
-                      target = '_blank'
-              )->get_parent(
-              )->simple_form( 'Form Title'
-                  )->content( 'form'
-                      )->title( 'Input'
-                      )->label( 'quantity'
-                      )->input( client->_bind( quantity )
-                      )->button(
-                          text  = 'NORMAL'
-                          press = client->_event( 'NORMAL' )
-                      )->button(
-                          text  = 'GENERIC'
-                          press = client->_event( 'GENERIC' )
-                         )->button(
-                          text  = 'XML'
-                          press = client->_event( 'XML' ) ).
+        DATA(lv_view_normal_xml) = z2ui5_cl_ui5=>_factory( )->_ns_m(
+            )->page(
+                    title          = 'abap2UI5 - NORMAL NORMAL NORMAL'
+                    navbuttonpress = client->_event( 'BACK' )
+                    shownavbutton  = abap_true
+                )->headercontent(
+                    )->link(
+                        text = 'Source_Code'
+                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
+                        target = '_blank'
+                )->_go_up( )->_ns_ui(
+                )->simpleform( 'Form Title'
+                    )->content( )->_ns_m(
+                        )->title( 'Input'
+                        )->label( 'quantity'
+                        )->input( client->_bind( quantity )
+                        )->button(
+                            text  = 'NORMAL'
+                            press = client->_event( 'NORMAL' )
+                        )->button(
+                            text  = 'GENERIC'
+                            press = client->_event( 'GENERIC' )
+                        )->button(
+                            text  = 'XML'
+                            press = client->_event( 'XML' )
+                 )->_stringify( ).
 
-       client->view_display( lo_view->stringify( ) ).
+        client->view_display( lv_view_normal_xml ).
 
       WHEN 'GENERIC'.
 
-        lo_view->_generic( 'Shell' )->_generic(
-           name      = `Page`
-           t_prop = VALUE #(
-               ( n = `title`          v = 'abap2UI5 - GENERIC GENERIC GENERIC' )
-               ( n = `showNavButton`  v = `true` )
-               ( n = `navButtonPress` v = client->_event( 'BACK' ) ) )
-           )->_generic(
-                name = `SimpleForm`
-                ns   = `form`
-                t_prop = VALUE #(
-                    ( n = `title` v = 'title' )
-           ) )->_generic(
-                name = `content`
-                ns   = `form`
-           )->_generic(
-                name = `Label`
-                t_prop = VALUE #(
-                    ( n = `text` v = 'quantity' )
-           ) )->get_parent( )->_generic(
-                name = `Input`
-                t_prop = VALUE #(
-                    ( n = `value` v = client->_bind( quantity ) )
-           ) )->get_parent(
-            )->_generic(
-                name = `Button`
-                t_prop = VALUE #(
-                    ( n = `text`  v = `NORMAL` )
-                    ( n = `press` v = client->_event( 'NORMAL' ) ) )
-               )->get_parent(
-               )->_generic(
-                name = `Button`
-                t_prop = VALUE #(
-                    ( n = `text`  v = `GENERIC` )
-                    ( n = `press` v = client->_event( 'GENERIC' ) ) )
-                )->get_parent(
-                     )->_generic(
-                name = `Button`
-                t_prop = VALUE #(
-                    ( n = `text`  v = `XML` )
-                    ( n = `press` v = client->_event( 'XML' ) ) ) ).
+        DATA(lv_view_gen_xml) = z2ui5_cl_ui5=>_factory(
+           )->_add(
+                n   = 'Shell'
+                ns  = `sap.m`
+           )->_add(
+                n   = `Page`
+                ns  = `sap.m`
+                t_p = VALUE #(
+                        ( n = `title`          v = 'abap2UI5 - GENERIC GENERIC GENERIC' )
+                        ( n = `showNavButton`  v = `true` )
+                        ( n = `navButtonPress` v = client->_event( 'BACK' ) ) )
+           )->_add(
+                n   = `SimpleForm`
+                ns  = `sap.ui.layout.form`
+                t_p = VALUE #( ( n = `title` v = 'title' ) )
+           )->_add(
+                n  = `content`
+                ns = `sap.ui.layout.form`
+           )->_add(
+                n   = `Label`
+                ns  = `sap.m`
+                t_p = VALUE #( ( n = `text` v = 'quantity' ) ) )->_go_up(
+           )->_add(
+                n   = `Input`
+                ns  = `sap.m`
+                t_p = VALUE #( ( n = `value` v = client->_bind( quantity ) ) ) )->_go_up(
+           )->_add(
+                n   = `Button`
+                ns  = `sap.m`
+                t_p = VALUE #(
+                        ( n = `text`  v = `NORMAL` )
+                        ( n = `press` v = client->_event( 'NORMAL' ) ) ) )->_go_up(
+           )->_add(
+                n   = `Button`
+                ns  = `sap.m`
+                t_p = VALUE #(
+                        ( n = `text`  v = `GENERIC` )
+                        ( n = `press` v = client->_event( 'GENERIC' ) ) ) )->_go_up(
+           )->_add(
+                n = `Button`
+                ns  = `sap.m`
+                t_p = VALUE #(
+                        ( n = `text`  v = `XML` )
+                        ( n = `press` v = client->_event( 'XML' ) ) )
+           )->_stringify( ).
 
-       client->view_display( lo_view->stringify( ) ).
+        client->view_display( lv_view_gen_xml ).
 
     ENDCASE.
 

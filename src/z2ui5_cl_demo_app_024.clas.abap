@@ -24,12 +24,12 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01' navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
         )->header_content(
             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-            )->link( text = 'Source_Code' target = '_blank' href = view->hlp_get_source_code_url(  )
+            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent(
 
        )->grid( 'L6 M12 S12' )->content( 'layout'

@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
     FIELD-SYMBOLS <screen> TYPE ty_s_01.
     ASSIGN mr_screen->* TO <screen>.
 
-    page = Z2UI5_cl_xml_view=>factory( client )->shell(
+    page = z2ui5_cl_xml_view=>factory( )->shell(
           )->page( title  = `test` ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'

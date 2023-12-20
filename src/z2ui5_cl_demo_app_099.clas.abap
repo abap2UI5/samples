@@ -194,7 +194,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
   METHOD Z2UI5_view_display.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
@@ -203,7 +203,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    href = view->hlp_get_source_code_url( )
+                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
 
 

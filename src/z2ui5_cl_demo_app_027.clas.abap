@@ -82,7 +82,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render.
 
-    data(view) = Z2UI5_CL_XML_VIEW=>factory( client ).
+    data(view) = z2ui5_cl_xml_view=>factory( ).
     data(lv_xml) = view->shell(
       )->page(
               title          = 'abap2UI5 - Binding Syntax'
@@ -92,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
               )->link( text = `Demo` target = `_blank` href = `https://twitter.com/abap2UI5/status/1647889242545111043`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  href = view->hlp_get_source_code_url( )
+                  href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
           )->get_parent(
           )->simple_form( title = 'Binding Syntax' editable = abap_true
               )->content( 'form'
