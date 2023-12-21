@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
       check_initialized = abap_true.
 
 
-*    client->url_param_set( val =  ).
+*    client->url_param_set( val = `test` ).
 
       product  = 'tomato'.
       quantity = '500'.
