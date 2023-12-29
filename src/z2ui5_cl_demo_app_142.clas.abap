@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF client->get( )-check_on_navigated = abap_true AND check_initialized = abap_false.
       z2ui5_on_rendering( client ).
     ENDIF.
 
