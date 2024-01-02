@@ -19,7 +19,6 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
-
       data(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
         DATA(page) = lo_view->shell(
@@ -42,6 +41,8 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
     DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client
           )->page( title = `Nested View`
               )->button( text = 'event' press = client->_event( 'TEST' )
+              )->button( text  = `frontend event`
+                         press = client->_event_client( val = client->cs_event-open_new_tab t_arg = value #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) )
               )->input( value = client->_bind_edit( mv_input_nest ) ).
 
     IF check_initialized = abap_false.

@@ -96,7 +96,10 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 
-    page = page->text( text = client->_bind( mv_title ) ).
+    page = page->text( text = client->_bind( mv_title )
+       )->button(
+           text  = `frontend event`
+           press = client->_event_client( val = client->cs_event-open_new_tab t_arg = value #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) ) ).
 
 
     client->nest2_view_display(
