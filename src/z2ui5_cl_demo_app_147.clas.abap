@@ -1,14 +1,14 @@
-class Z2UI5_CL_DEMO_APP_147 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_147 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  data MS_CHARTJS_CONFIG type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
+    DATA check_initialized TYPE abap_bool .
+    DATA ms_chartjs_config TYPE z2ui5_cl_cc_chartjs=>ty_chart .
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering.
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -33,10 +33,10 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
       z2ui5_on_init( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_z2ui5( )->timer(  client->_event( `START` )
-        )->_generic( ns = `html` name = `script` t_prop = VALUE #( ( n = `src` v = z2ui5_cl_cc_chartjs=>get_js_url( ) )
-        ) )->get_parent(
+        )->_z2ui5( )->timer( finished = client->_event( `LOAD1` ) delayms = `2000`
+        )->html( content = `<script type="module" src="` && z2ui5_cl_cc_chartjs=>get_js_url( )  && `"></script>` )->get_parent(
         )->stringify( ) ).
+
 
     ENDIF.
 
@@ -45,9 +45,19 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN 'LOAD1'.
+        client->view_display( z2ui5_cl_xml_view=>factory( client
+          )->_z2ui5( )->timer(  client->_event( `LOAD2` )
+          )->html( content = `<script src="` && z2ui5_cl_cc_chartjs=>get_js_datalabels( )  && `"></script>` )->get_parent(
+          )->stringify( ) ).
+      WHEN 'LOAD2'.
+        client->view_display( z2ui5_cl_xml_view=>factory( client
+          )->_z2ui5( )->timer(  client->_event( `START` )
+          )->html( content = `<script src="` && z2ui5_cl_cc_chartjs=>get_js_autocolors( )  && `"></script>` )->get_parent(
+          )->stringify( ) ).
       WHEN 'START'.
         z2ui5_on_rendering( ).
       WHEN 'BACK'.
@@ -57,7 +67,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
 
     DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
 
@@ -69,16 +79,16 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config-data-datasets.
 
-    ms_chartjs_config-options-plugins-colors-force_override = abap_true.
-    ms_chartjs_config-options-plugins-colors-enabled = abap_true.
+    ms_chartjs_config-options-plugins-autocolors-mode = 'data'.
 
+    ms_chartjs_config-plugins = VALUE #( ( `ChartDataLabels` ) ( `autocolors` ) ).
 
     ms_chartjs_config-options-scales-y-begin_at_zero = abap_true.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_RENDERING.
+  METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
