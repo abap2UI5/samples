@@ -34,9 +34,6 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) ).
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css ).
 
-*    view->_z2ui5(  )->set_driver_configs( steps_config            = ms_steps_config
-*                                                    highlight_config        = ms_hightlight_config
-*                                                    highlight_driver_config = ms_hightlight_driver_config ).
     view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_config( i_steps_config            = ms_steps_config
                                                     i_highlight_config        = ms_hightlight_config
                                                     i_highlight_driver_config = ms_hightlight_driver_config ) ).
