@@ -73,8 +73,6 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     ms_chartjs_config-options-plugins-autocolors-mode = 'data'.
 
-    ms_chartjs_config-plugins = VALUE #( ( `ChartDataLabels` ) ( `autocolors` ) ).
-
     ms_chartjs_config-options-scales-y-begin_at_zero = abap_true.
 
   ENDMETHOD.
