@@ -68,6 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     ls_dataset-border_width = 1.
     ls_dataset-label = `# of Votes`.
+    ls_dataset-rtl = abap_true.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config-data-datasets.
 
