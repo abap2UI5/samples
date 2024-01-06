@@ -8,7 +8,15 @@ CLASS z2ui5_cl_demo_app_147 DEFINITION
     INTERFACES z2ui5_if_app .
 
     DATA check_initialized TYPE abap_bool .
-    DATA ms_chartjs_config TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_bar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_bar2 TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_hbar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_line TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_area TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_pie TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_bubble TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_polar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_doughnut TYPE z2ui5_cl_cc_chartjs=>ty_chart.
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering.
@@ -63,18 +71,157 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
 
-    ms_chartjs_config-type = 'bar'.
-    ms_chartjs_config-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+    ms_chartjs_config_bar-type = 'bar'.
+    ms_chartjs_config_bar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
 
     ls_dataset-border_width = 1.
     ls_dataset-label = `# of Votes`.
     ls_dataset-rtl = abap_true.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
-    APPEND ls_dataset TO ms_chartjs_config-data-datasets.
+    APPEND ls_dataset TO ms_chartjs_config_bar-data-datasets.
 
-    ms_chartjs_config-options-plugins-autocolors-mode = 'data'.
+    ms_chartjs_config_bar-options-plugins-autocolors-mode = 'data'.
+    ms_chartjs_config_bar-options-plugins-datalabels-text_align = `center`.
+    ms_chartjs_config_bar-options-scales-y-begin_at_zero = abap_true.
 
-    ms_chartjs_config-options-scales-y-begin_at_zero = abap_true.
+    ms_chartjs_config_bar2-type = 'bar'.
+    ms_chartjs_config_bar2-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Fully Rounded'.
+    ls_dataset-border_width = 2.
+    ls_dataset-border_radius = 200.
+    ls_dataset-border_skipped = abap_false.
+    ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_bar2-data-datasets.
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Small Radius'.
+    ls_dataset-border_width = 2.
+    ls_dataset-border_radius = 5.
+    ls_dataset-border_skipped = abap_false.
+    ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_bar2-data-datasets.
+
+    ms_chartjs_config_bar2-options-responsive = abap_true.
+    ms_chartjs_config_bar2-options-plugins-legend-position = `top`.
+    ms_chartjs_config_bar2-options-plugins-title-display = abap_true.
+    ms_chartjs_config_bar2-options-plugins-title-text = `Bar Chart`.
+
+    ms_chartjs_config_bar2-options-plugins-autocolors-offset = 11.
+    ms_chartjs_config_bar2-options-plugins-autocolors-mode = 'dataset'.
+    ms_chartjs_config_bar2-options-plugins-datalabels-text_align = `center`.
+    ms_chartjs_config_bar2-options-plugins-datalabels-color = `white`.
+
+
+
+    ms_chartjs_config_hbar-type = 'bar'.
+    ms_chartjs_config_hbar-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 1'.
+    ls_dataset-background_color = `#ffb1c1`.
+    ls_dataset-border_color = `#ff7894`.
+    ls_dataset-data = VALUE #( ( `5` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_hbar-data-datasets.
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 2'.
+    ls_dataset-background_color = `#9ad0f5`.
+    ls_dataset-border_color = `#40a6ec`.
+    ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_hbar-data-datasets.
+
+    ms_chartjs_config_hbar-options-responsive = abap_true.
+    ms_chartjs_config_hbar-options-index_axis = `y`.
+    ms_chartjs_config_hbar-options-elements-bar-border_width = 2.
+    ms_chartjs_config_hbar-options-plugins-legend-position = `right`.
+    ms_chartjs_config_hbar-options-plugins-title-display = abap_true.
+    ms_chartjs_config_hbar-options-plugins-title-text = `Horizontal Bar Chart`.
+
+
+    ms_chartjs_config_hbar-options-plugins-datalabels-text_align = `center`.
+    ms_chartjs_config_hbar-options-plugins-datalabels-color = `white`.
+
+
+    ms_chartjs_config_line-type = 'line'.
+    ms_chartjs_config_line-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 1'.
+    ls_dataset-background_color = `#ffb1c1`.
+    ls_dataset-border_color = `#ff7894`.
+    ls_dataset-data = VALUE #( ( `5` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_line-data-datasets.
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 2'.
+    ls_dataset-point_style = 'circle'.
+    ls_dataset-point_hover_radius = 10.
+    ls_dataset-background_color = `#9ad0f5`.
+    ls_dataset-border_color = `#40a6ec`.
+    ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_line-data-datasets.
+
+    ms_chartjs_config_line-options-responsive = abap_true.
+    ms_chartjs_config_line-options-plugins-legend-position = `top`.
+    ms_chartjs_config_line-options-plugins-title-display = abap_true.
+    ms_chartjs_config_line-options-plugins-title-text = `Line Chart`.
+    ms_chartjs_config_line-options-plugins-datalabels-font-size = `15`.
+    ms_chartjs_config_line-options-plugins-datalabels-text_align = `end`.
+
+
+    ms_chartjs_config_bubble-type = 'bubble'.
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 1'.
+    ls_dataset-data_x_y_r = VALUE #( ( x = `100` y = `0` r = `8` )
+                                  ( x = `60`  y = `30` r = `15` )
+                                  ( x = `40`  y = `60` r = `8` )
+                                  ( x = `80`  y = `80` r = `23` )
+                                  ( x = `20`  y = `30` r = `8` )
+                                  ( x = `0`  y = `100` r = `9` )
+                                ).
+    ls_dataset-background_color = `#ffb1c1`.
+    ls_dataset-border_color = `#ff7894`.
+    APPEND ls_dataset TO ms_chartjs_config_bubble-data-datasets.
+
+    CLEAR ls_dataset.
+    ls_dataset-label = 'Dataset 2'.
+    ls_dataset-background_color = `#9ad0f5`.
+    ls_dataset-border_color = `#40a6ec`.
+    ls_dataset-data_x_y_r = VALUE #( ( x = `0` y = `0` r = `8` )
+                              ( x = `20`  y = `15` r = `15` )
+                              ( x = `80`  y = `40` r = `8` )
+                              ( x = `20`  y = `66` r = `23` )
+                              ( x = `10`  y = `15` r = `8` )
+                              ( x = `80`  y = `5` r = `9` )
+                            ).
+    APPEND ls_dataset TO ms_chartjs_config_bubble-data-datasets.
+
+    ms_chartjs_config_bubble-options-responsive = abap_true.
+    ms_chartjs_config_bubble-options-plugins-legend-position = `top`.
+    ms_chartjs_config_bubble-options-plugins-title-display = abap_true.
+    ms_chartjs_config_bubble-options-plugins-title-text = `Bubble Chart`.
+    ms_chartjs_config_bubble-options-plugins-datalabels-display = '-'.
+
+
+    ms_chartjs_config_doughnut-type = 'doughnut'.
+    ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = `# of Votes`.
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ).
+    ls_dataset-hover_offset = 5.
+    APPEND ls_dataset TO ms_chartjs_config_doughnut-data-datasets.
+
+    ms_chartjs_config_doughnut-options-plugins-autocolors-enabled = '-'.
+    ms_chartjs_config_doughnut-options-plugins-datalabels-text_align = 'center'.
+    ms_chartjs_config_doughnut-options-plugins-datalabels-color = 'white'.
+    ms_chartjs_config_doughnut-options-plugins-title-text = `Doughnut Chart`.
+    ms_chartjs_config_doughnut-options-plugins-title-display = abap_true.
+    ms_chartjs_config_doughnut-options-plugins-legend-position = 'right'.
 
   ENDMETHOD.
 
@@ -97,13 +244,40 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
          )->get_parent( ).
 
 
-    DATA(vbox) = page->vbox( justifycontent = `Center`  ).
-    vbox->html_canvas( id = `myChart` ).
+*    DATA(vbox) = page->vbox( justifycontent = `Center`  ).
+    DATA(car) = page->carousel( class = `sapUiContentPadding` ).
+    DATA(vl1) = car->vertical_layout( width = `100%` ).
+    DATA(fb1) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
+    DATA(fb2) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
+    fb1->vbox( justifycontent = `Center` )->html_canvas( id = `bar`  height = `300` width = `400` ).
+    fb1->vbox( justifycontent = `Center` )->html_canvas( id = `bar2` height = `300` width = `400` ).
+    fb2->vbox( justifycontent = `Center` )->html_canvas( id = `hbar` height = `300` width = `400` ).
+    fb2->vbox( justifycontent = `Center` )->html_canvas( id = `line`  height = `300` width = `400` ).
 
-    vbox->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'myChart'
-                                                                                                      is_config = ms_chartjs_config
+    DATA(vl2) = car->vertical_layout( width = `100%` ).
+    DATA(fb3) = vl2->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
+    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `bubble`  height = `300` width = `400` ).
+    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `doughnut`  height = `300` width = `400` ).
+
+
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar'
+                                                                                                      is_config = ms_chartjs_config_bar
                                                                                                       view = client->cs_view-main ) ).
-
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar2'
+                                                                                                      is_config = ms_chartjs_config_bar2
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'hbar'
+                                                                                                      is_config = ms_chartjs_config_hbar
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'line'
+                                                                                                      is_config = ms_chartjs_config_line
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bubble'
+                                                                                                      is_config = ms_chartjs_config_bubble
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'doughnut'
+                                                                                                      is_config = ms_chartjs_config_doughnut
+                                                                                                      view = client->cs_view-main ) ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
