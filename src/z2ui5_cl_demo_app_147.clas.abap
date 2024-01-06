@@ -33,8 +33,10 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
       z2ui5_on_init( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
-        )->_z2ui5( )->timer( finished = client->_event( `LOAD1` ) delayms = `2000`
-        )->html( content = `<script type="module" src="` && z2ui5_cl_cc_chartjs=>get_js_url( )  && `"></script>` )->get_parent(
+        )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
+          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
+                                                                                                   autocolors = abap_true
+                                                                                                  )
         )->stringify( ) ).
 
 
@@ -48,16 +50,6 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'LOAD1'.
-        client->view_display( z2ui5_cl_xml_view=>factory( client
-          )->_z2ui5( )->timer(  client->_event( `LOAD2` )
-          )->html( content = `<script src="` && z2ui5_cl_cc_chartjs=>get_js_datalabels( )  && `"></script>` )->get_parent(
-          )->stringify( ) ).
-      WHEN 'LOAD2'.
-        client->view_display( z2ui5_cl_xml_view=>factory( client
-          )->_z2ui5( )->timer(  client->_event( `START` )
-          )->html( content = `<script src="` && z2ui5_cl_cc_chartjs=>get_js_autocolors( )  && `"></script>` )->get_parent(
-          )->stringify( ) ).
       WHEN 'START'.
         z2ui5_on_rendering( ).
       WHEN 'BACK'.
@@ -76,12 +68,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     ls_dataset-border_width = 1.
     ls_dataset-label = `# of Votes`.
+    ls_dataset-rtl = abap_true.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config-data-datasets.
 
     ms_chartjs_config-options-plugins-autocolors-mode = 'data'.
-
-    ms_chartjs_config-plugins = VALUE #( ( `ChartDataLabels` ) ( `autocolors` ) ).
 
     ms_chartjs_config-options-scales-y-begin_at_zero = abap_true.
 
