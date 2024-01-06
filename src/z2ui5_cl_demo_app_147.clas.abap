@@ -201,7 +201,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     ms_chartjs_config_bubble-options-responsive = abap_true.
     ms_chartjs_config_bubble-options-plugins-legend-position = `top`.
-    ms_chartjs_config_bubble-options-plugins-title-display = abap_true.
+    ms_chartjs_config_bubble-options-plugins-title-display = '-'.
     ms_chartjs_config_bubble-options-plugins-title-text = `Bubble Chart`.
     ms_chartjs_config_bubble-options-plugins-datalabels-display = '-'.
 
@@ -210,7 +210,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
     ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
 
     CLEAR ls_dataset.
-    ls_dataset-label = `# of Votes`.
+    ls_dataset-label = `Dataset 1`.
     ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ).
     ls_dataset-hover_offset = 5.
@@ -222,6 +222,41 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
     ms_chartjs_config_doughnut-options-plugins-title-text = `Doughnut Chart`.
     ms_chartjs_config_doughnut-options-plugins-title-display = abap_true.
     ms_chartjs_config_doughnut-options-plugins-legend-position = 'right'.
+
+
+    ms_chartjs_config_pie-type = 'pie'.
+    ms_chartjs_config_pie-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = `# of Votes`.
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ).
+    ls_dataset-hover_offset = 5.
+    APPEND ls_dataset TO ms_chartjs_config_pie-data-datasets.
+
+    ms_chartjs_config_pie-options-plugins-autocolors-enabled = '-'.
+    ms_chartjs_config_pie-options-plugins-datalabels-text_align = 'center'.
+    ms_chartjs_config_pie-options-plugins-datalabels-color = 'white'.
+    ms_chartjs_config_pie-options-plugins-title-text = `Pie Chart`.
+    ms_chartjs_config_pie-options-plugins-title-display = abap_true.
+    ms_chartjs_config_pie-options-plugins-legend-position = 'left'.
+
+
+    ms_chartjs_config_polar-type = 'polarArea'.
+    ms_chartjs_config_polar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = `Dataset 1`.
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-data = VALUE #( ( `10` ) ( `12` ) ( `19` ) ( `8` ) ( `5` ) ( `9` ) ).
+    APPEND ls_dataset TO ms_chartjs_config_polar-data-datasets.
+
+    ms_chartjs_config_polar-options-plugins-autocolors-enabled = '-'.
+    ms_chartjs_config_polar-options-plugins-datalabels-text_align = 'center'.
+    ms_chartjs_config_polar-options-plugins-datalabels-color = 'white'.
+    ms_chartjs_config_polar-options-plugins-title-text = `Polar Area Chart`.
+    ms_chartjs_config_polar-options-plugins-title-display = abap_true.
+    ms_chartjs_config_polar-options-plugins-legend-position = 'left'.
 
   ENDMETHOD.
 
@@ -256,8 +291,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
     DATA(vl2) = car->vertical_layout( width = `100%` ).
     DATA(fb3) = vl2->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
-    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `bubble`  height = `300` width = `400` ).
-    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `doughnut`  height = `300` width = `400` ).
+    DATA(fb4) = vl2->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
+    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `bubble`  height = `300` width = `315 ` ).
+    fb3->vbox( justifycontent = `Center` )->html_canvas( id = `doughnut`  height = `300` width = `315` ).
+    fb4->vbox( justifycontent = `Center` )->html_canvas( id = `pie`  height = `300` width = `315` ).
+    fb4->vbox( justifycontent = `Center` )->html_canvas( id = `polar`  height = `300` width = `315` ).
 
 
     view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar'
@@ -277,6 +315,12 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
                                                                                                       view = client->cs_view-main ) ).
     view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'doughnut'
                                                                                                       is_config = ms_chartjs_config_doughnut
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'pie'
+                                                                                                      is_config = ms_chartjs_config_pie
+                                                                                                      view = client->cs_view-main ) ).
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'polar'
+                                                                                                      is_config = ms_chartjs_config_polar
                                                                                                       view = client->cs_view-main ) ).
     client->view_display( page->stringify( ) ).
 
