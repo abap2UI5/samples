@@ -44,6 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
                                                                                                    autocolors = abap_true
+                                                                                                   deferred   = abap_false
                                                                                                   )
         )->stringify( ) ).
 
@@ -167,8 +168,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
     ms_chartjs_config_line-options-plugins-legend-position = `top`.
     ms_chartjs_config_line-options-plugins-title-display = abap_true.
     ms_chartjs_config_line-options-plugins-title-text = `Line Chart`.
-    ms_chartjs_config_line-options-plugins-datalabels-font-size = `15`.
-    ms_chartjs_config_line-options-plugins-datalabels-text_align = `end`.
+    ms_chartjs_config_line-options-plugins-datalabels-font-size = `10`.
+    ms_chartjs_config_line-options-plugins-datalabels-font-weight = `bold`.
+    ms_chartjs_config_line-options-plugins-datalabels-text_align = 'start'.
+    ms_chartjs_config_line-options-plugins-datalabels-offset = 90.
+*    ms_chartjs_config_line-options-plugins-datalabels-offset = `6`.
 
 
     ms_chartjs_config_bubble-type = 'bubble'.
@@ -207,11 +211,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
 
     ms_chartjs_config_doughnut-type = 'doughnut'.
-    ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+    ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Teal` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
 
     CLEAR ls_dataset.
     ls_dataset-label = `Dataset 1`.
-    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `#118ab2` ) ( `green` ) ( `purple` ) ( `orange` ) ).
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ).
     ls_dataset-hover_offset = 5.
     APPEND ls_dataset TO ms_chartjs_config_doughnut-data-datasets.
@@ -225,11 +229,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
 
     ms_chartjs_config_pie-type = 'pie'.
-    ms_chartjs_config_pie-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+    ms_chartjs_config_pie-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Teal` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
 
     CLEAR ls_dataset.
-    ls_dataset-label = `# of Votes`.
-    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-label = `Dataset 1'`.
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `#118ab2` ) ( `green` ) ( `purple` ) ( `orange` ) ).
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ).
     ls_dataset-hover_offset = 5.
     APPEND ls_dataset TO ms_chartjs_config_pie-data-datasets.
@@ -243,11 +247,11 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
 
 
     ms_chartjs_config_polar-type = 'polarArea'.
-    ms_chartjs_config_polar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+    ms_chartjs_config_polar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Teal` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
 
     CLEAR ls_dataset.
     ls_dataset-label = `Dataset 1`.
-    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `yellow` ) ( `green` ) ( `purple` ) ( `orange` ) ).
+    ls_dataset-background_color_t = VALUE #( ( `red` ) ( `blue` ) ( `#118ab2` ) ( `green` ) ( `purple` ) ( `orange` ) ).
     ls_dataset-data = VALUE #( ( `10` ) ( `12` ) ( `19` ) ( `8` ) ( `5` ) ( `9` ) ).
     APPEND ls_dataset TO ms_chartjs_config_polar-data-datasets.
 
