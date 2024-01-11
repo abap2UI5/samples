@@ -107,7 +107,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
           ( title = 'entry 01'  value = 'red'    info = 'completed'  descr = 'this is a description' checkbox = abap_true )
           ( title = 'entry 02'  value = 'blue'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
           ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = 'this is a description' checkbox = abap_true )
+          ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = '' checkbox = abap_true )
           ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true ) ).
 
       set_view(  ).
