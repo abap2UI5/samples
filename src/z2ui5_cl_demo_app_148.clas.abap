@@ -33,11 +33,6 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_147TEST->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_IF_APP~MAIN.
 
     me->client = client.
@@ -48,8 +43,8 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
-           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_false
-                                                                                                    autocolors = abap_false
+           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
+                                                                                                    autocolors = abap_true
            ) )->get_parent(
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_cc( )
         )->stringify( ) ).
@@ -61,18 +56,16 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_147TEST->Z2UI5_ON_EVENT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_ON_EVENT.
 
     CASE client->get( )-event.
       WHEN 'UPDATE_CHART'.
-*        READ TABLE ms_chartjs_config_bar-data-datasets ASSIGNING FIELD-SYMBOL(<fs_bar>) INDEX 1.
-*        <fs_bar>-data = VALUE #( ( `11` ) ( `1` ) ( `1` ) ( `13` ) ( `15` ) ( `12` ) ( `13` ) ).
+        READ TABLE ms_chartjs_config_bar-data-datasets ASSIGNING FIELD-SYMBOL(<fs_bar>) INDEX 1.
+        <fs_bar>-data = VALUE #( ( `11` ) ( `1` ) ( `1` ) ( `13` ) ( `15` ) ( `12` ) ( `13` ) ).
 
         ms_chartjs_config_bar-options-plugins-autocolors-mode = 'dataset'.
+
+        client->view_model_update( ).
 
       WHEN 'START'.
         z2ui5_on_rendering( ).
@@ -83,16 +76,12 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_147TEST->Z2UI5_ON_INIT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_ON_INIT.
 
     DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
 
     ms_chartjs_config_bar-type = 'bar'.
-    ms_chartjs_config_bar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ).
+    ms_chartjs_config_bar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ( `Black` ) ).
 
     ls_dataset-border_width = 1.
     ls_dataset-label = `# of Votes`.
@@ -136,10 +125,6 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_147TEST->Z2UI5_ON_RENDERING
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_ON_RENDERING.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
