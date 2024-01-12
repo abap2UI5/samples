@@ -50,11 +50,9 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_false
                                                                                                     autocolors = abap_false
-                                                                                                   ) )->get_parent(
+           ) )->get_parent(
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_cc( )
-
         )->stringify( ) ).
-
 
     ENDIF.
 
@@ -105,8 +103,6 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ms_chartjs_config_bar-options-plugins-autocolors-mode = 'data'.
     ms_chartjs_config_bar-options-plugins-datalabels-text_align = `center`.
     ms_chartjs_config_bar-options-scales-y-begin_at_zero = abap_true.
-
-
 
     ms_chartjs_config_bar2-type = 'bar'.
     ms_chartjs_config_bar2-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
@@ -172,7 +168,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `bar`
                              height = `300`
                              width = `400`
-                             config = client->_bind( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
                           ).
 *    fb1->vbox( justifycontent = `Center`
 *      )->_z2ui5( )->chartjs( canvas_id = `bar2`
