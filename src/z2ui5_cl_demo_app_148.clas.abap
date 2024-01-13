@@ -43,8 +43,8 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
-           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
-                                                                                                    autocolors = abap_true
+           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_false
+                                                                                                    autocolors = abap_false
            ) )->get_parent(
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_cc( )
         )->stringify( ) ).
@@ -63,7 +63,9 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
         READ TABLE ms_chartjs_config_bar-data-datasets ASSIGNING FIELD-SYMBOL(<fs_bar>) INDEX 1.
         <fs_bar>-data = VALUE #( ( `11` ) ( `1` ) ( `1` ) ( `13` ) ( `15` ) ( `12` ) ( `13` ) ).
 
-        ms_chartjs_config_bar-options-plugins-autocolors-mode = 'dataset'.
+*        ms_chartjs_config_bar-options-plugins-autocolors-mode = 'dataset'.
+
+        ms_chartjs_config_bar2-options-plugins-legend-position = `left`.
 
         client->view_model_update( ).
 
@@ -149,18 +151,18 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     DATA(vl1) = car->vertical_layout( width = `100%` ).
     DATA(fb1) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
     DATA(fb2) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
-    fb1->vbox( justifycontent = `Center`
-      )->_z2ui5( )->chartjs( canvas_id = `bar`
-                             height = `300`
-                             width = `400`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
-                          ).
 *    fb1->vbox( justifycontent = `Center`
-*      )->_z2ui5( )->chartjs( canvas_id = `bar2`
+*      )->_z2ui5( )->chartjs( canvas_id = `bar`
 *                             height = `300`
 *                             width = `400`
-*                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = abap_true )
+*                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
 *                          ).
+    fb1->vbox( justifycontent = `Center`
+      )->_z2ui5( )->chartjs( canvas_id = `bar2`
+                             height = `300`
+                             width = `400`
+                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = abap_true )
+                          ).
 
 
     client->view_display( page->stringify( ) ).
