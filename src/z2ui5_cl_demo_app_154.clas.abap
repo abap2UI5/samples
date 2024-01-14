@@ -1,18 +1,10 @@
-CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
-    TYPES:
-      BEGIN OF ty_row,
-        title TYPE string,
-        value TYPE string,
-        descr TYPE string,
-      END OF ty_row.
-    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_check_initialized TYPE abap_bool.
     METHODS ui5_display.
@@ -25,7 +17,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
   METHOD ui5_event.
@@ -34,14 +26,14 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
       WHEN 'POPUP'.
 
-        mt_tab = VALUE #( descr = 'this is a description'
-             (  title = 'title_01'  value = 'value_01' )
-             (  title = 'title_02'  value = 'value_02' )
-             (  title = 'title_03'  value = 'value_03' )
-             (  title = 'title_04'  value = 'value_04' )
-             (  title = 'title_05'  value = 'value_05' ) ).
-
-        DATA(lo_app) = z2ui5_cl_popup_to_select=>factory( mt_tab ).
+        DATA(lo_app) = z2ui5_cl_popup_messages=>factory( VALUE #(
+            ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
+            ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
+            ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
+            ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
+            ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
+            ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
+       ) ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -57,7 +49,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Select'
+                title          = 'abap2UI5 - Popup Messages'
                 navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                 shownavbutton  = abap_true
             )->header_content(
@@ -97,9 +89,8 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_index) = CAST z2ui5_cl_popup_to_select( lo_prev )->result( ).
-        DATA(ls_row) = mt_tab[ lv_index ].
-        client->message_box_display( `callback after popup to select: ` && ls_row-title ).
+        DATA(lo_dummy) = CAST z2ui5_cl_popup_messages( lo_prev ).
+        client->message_box_display( `callback after popup messages` ).
       CATCH cx_root.
     ENDTRY.
 

@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         features   TYPE abap_bool,
         extensions TYPE abap_bool,
         demos      TYPE abap_bool,
-        popups      TYPE abap_bool,
+        popups     TYPE abap_bool,
       END OF ms_check_expanded.
 
     DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
@@ -420,6 +420,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
+    panel->generic_tile(
+           header    = 'Popup Messages'
+           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_154' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+    panel->generic_tile(
+           header    = 'Popup Textedit'
+           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_155' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
@@ -469,7 +483,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     page = page2->panel(
           expandable = abap_true
-      expanded   = client->_bind_edit( ms_check_expanded-more )
+          expanded   = client->_bind_edit( ms_check_expanded-more )
           headertext = `More - Tables, Visualization & Layouts`
      ).
 
@@ -535,7 +549,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-
     panel = page->panel(
            expandable = abap_false
            expanded   = abap_true
@@ -543,20 +556,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       ).
 
     panel->generic_tile(
-  header    = 'List I'
-  subheader = 'Basic'
-  press     =  client->_event( 'Z2UI5_CL_DEMO_APP_003' )
-  mode      = 'LineMode'
-  class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
+        header    = 'List I'
+        subheader = 'Basic'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_003' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
     panel->generic_tile(
     header    = 'List II'
     subheader = 'Events & Visualization'
     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_048' )
     mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
 
 
     panel->generic_tile(

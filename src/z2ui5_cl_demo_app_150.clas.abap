@@ -16,21 +16,17 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
 
 
-  METHOD ui5_event.
+  METHOD ui5_callback.
 
-    CASE client->get( )-event.
-
-      WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_to_confirm=>factory( `this is a question` ).
-        client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
+    TRY.
+        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lv_confirm_result) = CAST z2ui5_cl_popup_to_confirm( lo_prev )->result( ).
+        client->message_box_display( `the result is ` && lv_confirm_result ).
+      CATCH cx_root.
+    ENDTRY.
 
   ENDMETHOD.
 
@@ -58,6 +54,22 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD ui5_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPUP'.
+        DATA(lo_app) = z2ui5_cl_popup_to_confirm=>factory( `this is a question` ).
+        client->nav_app_call( lo_app ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -71,16 +83,4 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
     ui5_event( ).
 
   ENDMETHOD.
-
-  METHOD ui5_callback.
-
-    TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_confirm_result) = CAST z2ui5_cl_popup_to_confirm( lo_prev )->check_result( ).
-        client->message_box_display( `the result is ` && lv_confirm_result ).
-      CATCH cx_root.
-    ENDTRY.
-
-  ENDMETHOD.
-
 ENDCLASS.

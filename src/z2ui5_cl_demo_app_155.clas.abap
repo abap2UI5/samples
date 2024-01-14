@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_155 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -6,15 +6,6 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    TYPES:
-      BEGIN OF ty_row,
-        title TYPE string,
-        value TYPE string,
-        descr TYPE string,
-      END OF ty_row.
-    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-
-    DATA mv_check_initialized TYPE abap_bool.
     METHODS ui5_display.
     METHODS ui5_event.
     METHODS ui5_callback.
@@ -25,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
 
   METHOD ui5_event.
@@ -33,15 +24,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-
-        mt_tab = VALUE #( descr = 'this is a description'
-             (  title = 'title_01'  value = 'value_01' )
-             (  title = 'title_02'  value = 'value_02' )
-             (  title = 'title_03'  value = 'value_03' )
-             (  title = 'title_04'  value = 'value_04' )
-             (  title = 'title_05'  value = 'value_05' ) ).
-
-        DATA(lo_app) = z2ui5_cl_popup_to_select=>factory( mt_tab ).
+        DATA(lo_app) = z2ui5_cl_popup_textedit=>factory( `this is a text` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -57,7 +40,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Select'
+                title          = 'abap2UI5 - Popup To Text Edit'
                 navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                 shownavbutton  = abap_true
             )->header_content(
@@ -80,12 +63,8 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
-      IF mv_check_initialized = abap_false.
-        mv_check_initialized = abap_true.
-        ui5_display( ).
-      ELSE.
-        ui5_callback( ).
-      ENDIF.
+      ui5_display( ).
+      ui5_callback( ).
       RETURN.
     ENDIF.
 
@@ -97,9 +76,8 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_index) = CAST z2ui5_cl_popup_to_select( lo_prev )->result( ).
-        DATA(ls_row) = mt_tab[ lv_index ].
-        client->message_box_display( `callback after popup to select: ` && ls_row-title ).
+        DATA(lv_text) = CAST z2ui5_cl_popup_textedit( lo_prev )->get_result( ).
+        client->message_box_display( `the result is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.
 
