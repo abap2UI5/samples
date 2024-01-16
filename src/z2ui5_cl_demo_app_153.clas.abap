@@ -11,9 +11,10 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_struct_tab,
-        selkz   TYPE abap_bool,
-        counter TYPE i,
-        descr   TYPE string,
+        selkz    TYPE abap_bool,
+        counter  TYPE i,
+        descr    TYPE string,
+        new_type TYPE string,
       END OF ty_struct_tab.
 
     TYPES:
@@ -36,12 +37,12 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
 
   METHOD ui5_display.
 
-    client->_bind_edit( ms_struc ).
+    client->_bind_edit( val = ms_struc pretty_name = 'X' ).
     client->_bind_edit( mt_string_table ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -73,12 +74,12 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
         IF ms_struc <> ms_struc2.
           client->message_box_display( `structure changed error` ).
-          return.
+          RETURN.
         ENDIF.
 
         IF mt_string_table2 <> mt_string_table2.
           client->message_box_display( `string table changed error` ).
-          return.
+          RETURN.
         ENDIF.
 
         client->message_toast_display( `everything works as expected` ).
@@ -101,10 +102,11 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
        descr = 'this is a description'
        counter = 3
        selkz = abap_true
-       t_tab = value #( (
+       t_tab = VALUE #( (
           descr = 'this is a description'
           counter = 3
           selkz = abap_true
+          new_type = `ABC`
        ) )
        ).
 
