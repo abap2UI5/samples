@@ -10,11 +10,19 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     DATA mt_string_table2 TYPE string_table.
 
     TYPES:
-      BEGIN OF ty_struct_tab,
+      BEGIN OF ty_struct_tab2,
         selkz    TYPE abap_bool,
         counter  TYPE i,
         descr    TYPE string,
         new_type TYPE string,
+      END OF ty_struct_tab2.
+
+    TYPES:
+      BEGIN OF ty_struct_tab,
+        selkz    TYPE abap_bool,
+        counter  TYPE i,
+        descr    TYPE string,
+        new_type TYPE ty_struct_tab2,
       END OF ty_struct_tab.
 
     TYPES:
@@ -29,7 +37,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     DATA mv_value2 TYPE string.
     DATA ms_struc TYPE ty_struct.
     DATA ms_struc2 TYPE ty_struct.
-    data mv_long_long_long_long_value type string.
+    DATA mv_long_long_long_long_value TYPE string.
 
     METHODS ui5_display.
     METHODS ui5_event.
@@ -40,7 +48,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
 
   METHOD ui5_display.
@@ -118,7 +126,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
           descr = 'this is a description'
           counter = 3
           selkz = abap_true
-          new_type = `ABC`
+          new_type = VALUE #(  new_type = `ABC` )
        ) )
        ).
 
