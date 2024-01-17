@@ -25,8 +25,11 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
         t_tab   TYPE STANDARD TABLE OF ty_struct_tab WITH EMPTY KEY,
       END OF ty_struct.
 
+    DATA mv_value TYPE string.
+    DATA mv_value2 TYPE string.
     DATA ms_struc TYPE ty_struct.
     DATA ms_struc2 TYPE ty_struct.
+    data mv_long_long_long_long_value type string.
 
     METHODS ui5_display.
     METHODS ui5_event.
@@ -37,11 +40,12 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
 
   METHOD ui5_display.
 
+    client->_bind_edit( val = mv_value pretty_name = 'X' ).
     client->_bind_edit( val = ms_struc pretty_name = 'X' ).
     client->_bind_edit( mt_string_table ).
 
@@ -56,10 +60,13 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
                     text = 'Source_Code'
                     target = '_blank'
                     href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-                    )->get_parent(
+               )->get_parent(
            )->button(
             text  = 'Rountrip...'
-            press = client->_event( 'POPUP' ) ).
+            press = client->_event( 'POPUP' )
+           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
+           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
+             ).
 
     client->view_display( view->stringify( ) ).
 
@@ -71,6 +78,11 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
+
+        IF mv_value <> mv_value2.
+          client->message_box_display( `pretty name in binidng not working` ).
+          RETURN.
+        ENDIF.
 
         IF ms_struc <> ms_struc2.
           client->message_box_display( `structure changed error` ).
@@ -109,6 +121,9 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
           new_type = `ABC`
        ) )
        ).
+
+      mv_value = `test`.
+      mv_value2 = `test`.
 
       ms_struc2 = ms_struc.
 

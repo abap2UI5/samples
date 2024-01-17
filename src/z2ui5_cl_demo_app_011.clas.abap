@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            items = client->_bind_edit( val = t_tab compress = abap_false )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
@@ -124,7 +124,6 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
           lr_tab->editable = check_editable_active.
         ENDLOOP.
-
 
       WHEN 'BUTTON_DELETE'.
         DELETE t_tab WHERE selkz = abap_true.
