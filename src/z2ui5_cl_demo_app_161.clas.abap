@@ -1,32 +1,34 @@
-class Z2UI5_CL_DEMO_APP_161 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_161 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data CLIENT type ref to Z2UI5_IF_CLIENT .
+    DATA client TYPE REF TO z2ui5_if_client .
 
-  methods UI5_DISPLAY .
-  methods UI5_EVENT .
-  methods SIMPLE_POPUP1 .
-  methods SIMPLE_POPUP2 .
+    METHODS ui5_display .
+    METHODS ui5_event .
+    METHODS simple_popup1 .
+    METHODS simple_popup2 .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
 
-  METHOD SIMPLE_POPUP1.
+  METHOD simple_popup1.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    DATA(dialog) = popup->dialog( )->content( ).
+    DATA(dialog) = popup->dialog(
+            afterclose = client->_event( 'BTN_OK_1ND' )
+         )->content( ).
 
     DATA(content) = dialog->button( text = `Open 2nd popup` press = client->_event( 'GOTO_2ND' ) ).
 
@@ -34,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'OK'
-                      press = client->_event( 'BTN_OK' )
+                      press = client->_event( 'BTN_OK_1ND' )
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
@@ -42,11 +44,13 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD SIMPLE_POPUP2.
+  METHOD simple_popup2.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
 
-    DATA(dialog) = popup->dialog( )->content( ).
+    DATA(dialog) = popup->dialog(
+        afterclose = client->_event( 'BTN_OK_2ND' )
+         )->content( ).
 
     DATA(content) = dialog->label( text = 'this is a second popup' ).
 
@@ -54,7 +58,7 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'GOTO 1ST POPUP'
-                      press = client->_event( 'BTN_OK' )
+                      press = client->_event( 'BTN_OK_2ND' )
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
@@ -62,7 +66,7 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_DISPLAY.
+  METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -85,13 +89,17 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_EVENT.
+  METHOD ui5_event.
 
     CASE client->get( )-event.
       WHEN 'GOTO_2ND'.
         simple_popup2( ).
 
-      WHEN 'BTN_OK'.
+      WHEN 'BTN_OK_2ND'.
+        client->popup_destroy(  ).
+        simple_popup1( ).
+
+      WHEN 'BTN_OK_1ND'.
         client->popup_destroy(  ).
 
       WHEN 'POPUP'.
@@ -105,7 +113,7 @@ CLASS Z2UI5_CL_DEMO_APP_161 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

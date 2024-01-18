@@ -385,16 +385,30 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
              expandable = abap_false
              expanded   = abap_true
-             headertext = `Popup`
+             headertext = `Popup Handling`
         ).
 
     panel->generic_tile(
         header    = 'Flow Logic'
-        subheader = 'Different ways of Popup handling'
+        subheader = 'Different ways of calling Popups'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_012' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
+
+    panel->generic_tile(
+        header    = 'Call Popup in Popup'
+        subheader = 'Backend Popup Stack Handling'
+        press     =  client->_event( 'z2ui5_cl_demo_app_161' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel = page->panel(
+             expandable = abap_false
+             expanded   = abap_true
+             headertext = `Built-in Popups`
+        ).
 
     panel->generic_tile(
            header    = 'Popup to Inform'

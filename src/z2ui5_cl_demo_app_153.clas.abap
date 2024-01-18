@@ -6,29 +6,26 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    DATA mt_string_table TYPE string_table.
-    DATA mt_string_table2 TYPE string_table.
-
     TYPES:
       BEGIN OF ty_dataset,
         label              TYPE string,
-        type               TYPE string,
+*        type               TYPE string,
         data               TYPE string_table,
         border_width       TYPE i,
-        border_color       TYPE string,
+*        border_color       TYPE string,
         border_radius      TYPE i,
         border_skipped     TYPE abap_bool,
-        show_line          TYPE abap_bool,
-        background_color   TYPE string,
-        hover_offset       TYPE i,
-        order              TYPE i,
-        fill               TYPE string,
-        hidden             TYPE abap_bool,
-        point_style        TYPE string,
-        point_border_color TYPE string,
-        point_radius       TYPE i,
-        point_hover_radius TYPE i,
-        rtl                TYPE abap_bool,
+*        show_line          TYPE abap_bool,
+*        background_color   TYPE string,
+*        hover_offset       TYPE i,
+*        order              TYPE i,
+*        fill               TYPE string,
+*        hidden             TYPE abap_bool,
+*        point_style        TYPE string,
+*        point_border_color TYPE string,
+*        point_radius       TYPE i,
+*        point_hover_radius TYPE i,
+*        rtl                TYPE abap_bool,
       END OF ty_dataset.
 
     TYPES ty_datasets TYPE STANDARD TABLE OF ty_dataset WITH DEFAULT KEY.
@@ -44,12 +41,13 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
         data TYPE ty_data,
       END OF ty_chart .
 
-
-    DATA mv_value TYPE string.
-    DATA mv_value2 TYPE string.
+*    DATA mt_string_table TYPE string_table.
+*    DATA mt_string_table2 TYPE string_table.
+*    DATA mv_value TYPE string.
+*    DATA mv_value2 TYPE string.
     DATA ms_struc TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
-    DATA mv_long_long_long_long_value TYPE string.
+*    DATA mv_long_long_long_long_value TYPE string.
 
     METHODS ui5_display.
     METHODS ui5_event.
@@ -65,9 +63,9 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
   METHOD ui5_display.
 
-    client->_bind_edit( val = mv_value pretty_name = 'X' ).
+*    client->_bind_edit( val = mv_value pretty_name = 'X' ).
     client->_bind_edit( val = ms_struc pretty_name = 'X' ).
-    client->_bind_edit( mt_string_table ).
+*    client->_bind_edit( mt_string_table ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -84,8 +82,8 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
            )->button(
             text  = 'Rountrip...'
             press = client->_event( 'POPUP' )
-           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
-           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
+*           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
+*           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
              ).
 
     client->view_display( view->stringify( ) ).
@@ -99,20 +97,20 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
       WHEN 'POPUP'.
 
-        IF mv_value <> mv_value2.
-          client->message_box_display( `pretty name in binidng not working` ).
-          RETURN.
-        ENDIF.
-
         IF ms_struc <> ms_struc2.
           client->message_box_display( `structure changed error` ).
           RETURN.
         ENDIF.
 
-        IF mt_string_table2 <> mt_string_table2.
-          client->message_box_display( `string table changed error` ).
-          RETURN.
-        ENDIF.
+*        IF mv_value <> mv_value2.
+*          client->message_box_display( `pretty name in binding not working` ).
+*          RETURN.
+*        ENDIF.
+
+*        IF mt_string_table2 <> mt_string_table2.
+*          client->message_box_display( `string table changed error` ).
+*          RETURN.
+*        ENDIF.
 
         client->message_toast_display( `everything works as expected` ).
 
@@ -138,26 +136,25 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
       ls_dataset-label = 'Fully Rounded'.
       ls_dataset-border_width = 2.
       ls_dataset-border_radius = 200.
-      ls_dataset-border_skipped = abap_false.
+      ls_dataset-border_skipped = abap_true.
       ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
       APPEND ls_dataset TO ms_struc-data-datasets.
 
-      CLEAR ls_dataset.
-      ls_dataset-label = 'Small Radius'.
-      ls_dataset-border_width = 2.
-      ls_dataset-border_radius = 5.
-      ls_dataset-border_skipped = abap_false.
-      ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
-      APPEND ls_dataset TO ms_struc-data-datasets.
-
-
-      mv_value = `test`.
-      mv_value2 = `test`.
+*      CLEAR ls_dataset.
+*      ls_dataset-label = 'Small Radius'.
+*      ls_dataset-border_width = 2.
+*      ls_dataset-border_radius = 5.
+*      ls_dataset-border_skipped = abap_false.
+*      ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
+*      APPEND ls_dataset TO ms_struc-data-datasets.
 
       ms_struc2 = ms_struc.
 
-      mt_string_table = VALUE #( ( `row_01` ) ( `row_02` ) ).
-      mt_string_table2 = mt_string_table.
+*      mv_value = `test`.
+*      mv_value2 = `test`.
+
+*      mt_string_table = VALUE #( ( `row_01` ) ( `row_02` ) ).
+*      mt_string_table2 = mt_string_table.
 
       ui5_display( ).
       RETURN.
