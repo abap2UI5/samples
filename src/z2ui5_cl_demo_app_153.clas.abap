@@ -10,33 +10,45 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     DATA mt_string_table2 TYPE string_table.
 
     TYPES:
-      BEGIN OF ty_struct_tab2,
-        selkz    TYPE abap_bool,
-        counter  TYPE i,
-        descr    TYPE string,
-        new_type TYPE string,
-      END OF ty_struct_tab2.
+      BEGIN OF ty_dataset,
+        label              TYPE string,
+        type               TYPE string,
+        data               TYPE string_table,
+        border_width       TYPE i,
+        border_color       TYPE string,
+        border_radius      TYPE i,
+        border_skipped     TYPE abap_bool,
+        show_line          TYPE abap_bool,
+        background_color   TYPE string,
+        hover_offset       TYPE i,
+        order              TYPE i,
+        fill               TYPE string,
+        hidden             TYPE abap_bool,
+        point_style        TYPE string,
+        point_border_color TYPE string,
+        point_radius       TYPE i,
+        point_hover_radius TYPE i,
+        rtl                TYPE abap_bool,
+      END OF ty_dataset.
+
+    TYPES ty_datasets TYPE STANDARD TABLE OF ty_dataset WITH DEFAULT KEY.
 
     TYPES:
-      BEGIN OF ty_struct_tab,
-        selkz    TYPE abap_bool,
-        counter  TYPE i,
-        descr    TYPE string,
-        new_type TYPE ty_struct_tab2,
-      END OF ty_struct_tab.
+      BEGIN OF ty_data,
+        labels   TYPE string_table,
+        datasets TYPE ty_datasets,
+      END OF ty_data .
 
     TYPES:
-      BEGIN OF ty_struct,
-        selkz   TYPE abap_bool,
-        counter TYPE i,
-        descr   TYPE string,
-        t_tab   TYPE STANDARD TABLE OF ty_struct_tab WITH EMPTY KEY,
-      END OF ty_struct.
+      BEGIN OF ty_chart,
+        data TYPE ty_data,
+      END OF ty_chart .
+
 
     DATA mv_value TYPE string.
     DATA mv_value2 TYPE string.
-    DATA ms_struc TYPE ty_struct.
-    DATA ms_struc2 TYPE ty_struct.
+    DATA ms_struc TYPE ty_chart.
+    DATA ms_struc2 TYPE ty_chart.
     DATA mv_long_long_long_long_value TYPE string.
 
     METHODS ui5_display.
@@ -114,21 +126,30 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    DATA ls_dataset TYPE ty_dataset.
+
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
 
-      ms_struc = VALUE #(
-       descr = 'this is a description'
-       counter = 3
-       selkz = abap_true
-       t_tab = VALUE #( (
-          descr = 'this is a description'
-          counter = 3
-          selkz = abap_true
-          new_type = VALUE #(  new_type = `ABC` )
-       ) )
-       ).
+      ms_struc-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
+
+      CLEAR ls_dataset.
+      ls_dataset-label = 'Fully Rounded'.
+      ls_dataset-border_width = 2.
+      ls_dataset-border_radius = 200.
+      ls_dataset-border_skipped = abap_false.
+      ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+      APPEND ls_dataset TO ms_struc-data-datasets.
+
+      CLEAR ls_dataset.
+      ls_dataset-label = 'Small Radius'.
+      ls_dataset-border_width = 2.
+      ls_dataset-border_radius = 5.
+      ls_dataset-border_skipped = abap_false.
+      ls_dataset-data = VALUE #( ( `11` ) ( `2` ) ( `-3` ) ( `13` ) ( `-9` ) ( `7` ) ( `-4` ) ).
+      APPEND ls_dataset TO ms_struc-data-datasets.
+
 
       mv_value = `test`.
       mv_value2 = `test`.
