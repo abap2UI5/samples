@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( val = t_tab compress = abap_false )
+            items = client->_bind_edit( t_tab )
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
