@@ -18,6 +18,9 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     DATA mt_table TYPE ty_t_table.
     DATA mt_token TYPE z2ui5_cl_util_func=>ty_t_token.
 
+    DATA mt_tokens_added TYPE z2ui5_cl_util_func=>ty_t_token.
+    DATA mt_tokens_removed TYPE z2ui5_cl_util_func=>ty_t_token.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
@@ -42,14 +45,23 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         set_data( ).
         client->view_model_update( ).
 
+      WHEN `UPDATE_TOKENS`.
+        LOOP AT mt_tokens_removed INTO DATA(ls_token).
+          DELETE mt_token WHERE key = ls_token-key.
+        ENDLOOP.
+
+        LOOP AT mt_tokens_added INTO ls_token.
+          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+        ENDLOOP.
+
+        CLEAR mt_tokens_removed.
+        CLEAR mt_tokens_added.
+
+        mt_range = z2ui5_cl_util_func=>get_range_t_by_token_t( mt_token ).
+        client->view_model_update( ).
+
       WHEN `FILTER_VALUE_HELP`.
         client->nav_app_call( z2ui5_cl_popup_get_range=>factory( mt_range ) ).
-
-*      WHEN `FILTER_UPDATE`.
-*        IF mv_value IS NOT INITIAL.
-*          DATA(ls_range) = hlp_get_range_by_value( mv_value ).
-*          INSERT ls_range INTO TABLE ms_filter-product.
-*        ENDIF.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -105,9 +117,18 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
+
     DATA(vbox) = lo_box->vbox( ).
+
+    lo_box->_z2ui5( )->multiinput_ext(
+                       addedtokens      = client->_bind_edit( mt_tokens_added )
+                       removedtokens    = client->_bind_edit( mt_tokens_removed )
+                       change    = client->_event( 'UPDATE_TOKENS' )
+                       multiinputid    = `MultiInput`  ).
+
     vbox->text( `Product:`
     )->multi_input(
+                id = `MultiInput`
                 tokens           = client->_bind( mt_token )
                 showclearicon    = abap_true
                 valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
