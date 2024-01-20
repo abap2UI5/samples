@@ -1,23 +1,45 @@
-class Z2UI5_CL_DEMO_APP_148 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_148 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  data MS_CHARTJS_CONFIG_BAR type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_BAR_t type TABLE OF Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_BAR2 type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_HBAR type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_LINE type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_AREA type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_PIE type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_BUBBLE type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_POLAR type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
-  data MS_CHARTJS_CONFIG_DOUGHNUT type Z2UI5_CL_CC_CHARTJS=>TY_CHART .
+    DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
+    DATA check_initialized TYPE abap_bool .
+
+    "bar charts
+    DATA ms_chartjs_config_bar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_bar2 TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+    DATA ms_chartjs_config_hbar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "venn chart - plugin
+    DATA ms_chartjs_config_venn TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "wordCloud
+    DATA ms_chartjs_config_wordcloud TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "line charts
+    DATA ms_chartjs_config_line TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "area charts
+    DATA ms_chartjs_config_area TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "pie charts
+    DATA ms_chartjs_config_pie TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "bubble charts
+    DATA ms_chartjs_config_bubble TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "polar charts
+    DATA ms_chartjs_config_polar TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+    "doughnut charts
+    DATA ms_chartjs_config_doughnut TYPE z2ui5_cl_cc_chartjs=>ty_chart .
+
+
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering.
@@ -33,7 +55,7 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -43,8 +65,10 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory( client
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
-           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_false
+           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
                                                                                                     autocolors = abap_false
+                                                                                                    venn       = abap_true
+                                                                                                    wordcloud  = abap_true
            ) )->get_parent(
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_cc( )
         )->stringify( ) ).
@@ -56,16 +80,41 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'UPDATE_CHART'.
         READ TABLE ms_chartjs_config_bar-data-datasets ASSIGNING FIELD-SYMBOL(<fs_bar>) INDEX 1.
         <fs_bar>-data = VALUE #( ( `11` ) ( `1` ) ( `1` ) ( `13` ) ( `15` ) ( `12` ) ( `13` ) ).
 
-*        ms_chartjs_config_bar-options-plugins-autocolors-mode = 'dataset'.
-
         ms_chartjs_config_bar2-options-plugins-legend-position = `left`.
+
+        ms_chartjs_config_venn-data-labels = VALUE #( ( `Reading` )
+                                                      ( `Maths` )
+                                                      ( `GPS` )
+                                                      ( `Reading ∩ Maths` )
+                                                      ( `GPS ∩ Reading` )
+                                                      ( `Maths ∩ GPS` )
+                                                      ( `Reading ∩ Maths ∩ GPS` ) ).
+
+        CLEAR ls_dataset.
+        ls_dataset-label = `At or Above Expected`.
+        ls_dataset-background_color = `rgba(75, 192, 192, 0.2)`.
+        ls_dataset-border_color = `rgba(75, 192, 192, 1)`.
+        ls_dataset-data_venn = VALUE #(
+                                        ( sets = VALUE #( ( `Reading` ) )                       value = `15%` )
+                                        ( sets = VALUE #( ( `Maths` ) )                         value = `3%` )
+                                        ( sets = VALUE #( ( `GPS` ) )                           value = `3%` )
+                                        ( sets = VALUE #( ( `Reading` ) ( `Maths` ) )           value = `3%` )
+                                        ( sets = VALUE #( ( `GPS` ) ( `Reading` ) )             value = `21%` )
+                                        ( sets = VALUE #( ( `Maths` ) ( `GPS` ) )               value = `0%` )
+                                        ( sets = VALUE #( ( `Reading` ) ( `Maths` ) ( `GPS` ) ) value = `13%` )
+                                      ).
+        CLEAR ms_chartjs_config_venn-data-datasets.
+        APPEND ls_dataset TO ms_chartjs_config_venn-data-datasets.
+
+
+        ms_chartjs_config_wordcloud-options-plugins-datalabels-display = '-'.
 
         client->view_model_update( ).
 
@@ -78,9 +127,9 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
 
-    DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
+    "bar
 
     ms_chartjs_config_bar-type = 'bar'.
     ms_chartjs_config_bar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ( `Black` ) ).
@@ -124,10 +173,68 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ms_chartjs_config_bar2-options-plugins-datalabels-text_align = `center`.
     ms_chartjs_config_bar2-options-plugins-datalabels-color = `white`.
 
+
+    "venn
+    ms_chartjs_config_venn-type = 'venn'.
+    ms_chartjs_config_venn-data-labels = VALUE #( ( `Soccer` )
+                                                  ( `Tennis` )
+                                                  ( `Volleyball` )
+                                                  ( `Soccer ∩ Tennis` )
+                                                  ( `Soccer ∩ Volleyball` )
+                                                  ( `Tennis ∩ Volleyball` )
+                                                  ( `Soccer ∩ Tennis ∩ Volleyball` ) ).
+
+    CLEAR ls_dataset.
+    ls_dataset-label = `Sports`.
+    ls_dataset-data_venn = VALUE #(
+                                    ( sets = VALUE #( ( `Soccer` ) )                               value = `2` )
+                                    ( sets = VALUE #( ( `Tennis` ) )                               value = `0` )
+                                    ( sets = VALUE #( ( `Volleyball` ) )                           value = `1` )
+                                    ( sets = VALUE #( ( `Soccer` ) ( `Tennis` ) )                  value = `1` )
+                                    ( sets = VALUE #( ( `Soccer` ) ( `Volleyball` ) )              value = `0` )
+                                    ( sets = VALUE #( ( `Tennis` ) ( `Volleyball` ) )              value = `1` )
+                                    ( sets = VALUE #( ( `Soccer` ) ( `Tennis` ) ( `Volleyball` ) ) value = `1` )
+                                  ).
+
+    APPEND ls_dataset TO ms_chartjs_config_venn-data-datasets.
+
+    "wordcloud
+
+    ms_chartjs_config_wordcloud-type = `wordCloud`.
+    ms_chartjs_config_wordcloud-data-labels = VALUE #(
+                                                      ( `Hello` )
+                                                      ( `world` )
+                                                      ( `normally` )
+                                                      ( `you` )
+                                                      ( `want` )
+                                                      ( `more` )
+                                                      ( `words` )
+                                                      ( `than` )
+                                                      ( `this` )
+                                                     ).
+    CLEAR ls_dataset.
+    ls_dataset-label = `DS`.
+    ls_dataset-data = VALUE #(
+                               ( `90` )
+                               ( `80` )
+                               ( `70` )
+                               ( `60` )
+                               ( `50` )
+                               ( `40` )
+                               ( `30` )
+                               ( `20` )
+                               ( `10` )
+                             ).
+
+    APPEND ls_dataset TO ms_chartjs_config_wordcloud-data-datasets.
+
+    "disable datalabels
+    ms_chartjs_config_wordcloud-options-plugins-datalabels-display = '-'.
+
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_RENDERING.
+  METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -151,17 +258,29 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     DATA(vl1) = car->vertical_layout( width = `100%` ).
     DATA(fb1) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
     DATA(fb2) = vl1->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
-*    fb1->vbox( justifycontent = `Center`
-*      )->_z2ui5( )->chartjs( canvas_id = `bar`
-*                             height = `300`
-*                             width = `400`
-*                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
-*                          ).
+    fb1->vbox( justifycontent = `Center`
+      )->_z2ui5( )->chartjs( canvas_id = `bar`
+                             height = `300`
+                             width = `400`
+                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
+                          ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
-                             width = `400`
+                             width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = abap_true )
+                          ).
+    fb2->vbox( justifycontent = `Center`
+      )->_z2ui5( )->chartjs( canvas_id = `venn`
+                             height = `300`
+                             width = `600`
+                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' compress = abap_true )
+                          ).
+    fb2->vbox( justifycontent = `Center`
+      )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
+                             height = `300`
+                             width = `600`
+                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' compress = abap_true )
                           ).
 
 
