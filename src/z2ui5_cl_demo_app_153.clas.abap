@@ -5,16 +5,27 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
+    TYPES:
+      BEGIN OF ty_dataset2,
+        label                TYPE string,
+*        type               TYPE string,
+        data                 TYPE string_table,
+        border_width         TYPE i,
+*        border_color       TYPE string,
+        border_radius        TYPE i,
+        border_skipped       TYPE abap_bool,
+        border_skipped_xfeld TYPE xfeld,
+      END OF ty_dataset2.
 
     TYPES:
       BEGIN OF ty_dataset,
-        label              TYPE string,
+        label          TYPE string,
 *        type               TYPE string,
-        data               TYPE string_table,
-        border_width       TYPE i,
+        data           TYPE string_table,
+        border_width   TYPE i,
 *        border_color       TYPE string,
-        border_radius      TYPE i,
-        border_skipped     TYPE abap_bool,
+        border_radius  TYPE i,
+        border_skipped TYPE abap_bool,
 *        show_line          TYPE abap_bool,
 *        background_color   TYPE string,
 *        hover_offset       TYPE i,
@@ -26,6 +37,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 *        point_radius       TYPE i,
 *        point_hover_radius TYPE i,
 *        rtl                TYPE abap_bool,
+        lvl2           TYPE ty_dataset2,
       END OF ty_dataset.
 
     TYPES ty_datasets TYPE STANDARD TABLE OF ty_dataset WITH DEFAULT KEY.
@@ -136,8 +148,13 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
       ls_dataset-label = 'Fully Rounded'.
       ls_dataset-border_width = 2.
       ls_dataset-border_radius = 200.
-      ls_dataset-border_skipped = abap_true.
+*      ls_dataset-border_skipped = abap_true.
       ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+
+
+      "new value in lvl2
+      ls_dataset-lvl2-border_skipped = '-'.
+
       APPEND ls_dataset TO ms_struc-data-datasets.
 
 *      CLEAR ls_dataset.
