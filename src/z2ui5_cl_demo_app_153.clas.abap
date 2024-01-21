@@ -153,7 +153,7 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
 
       "new value in lvl2
-      ls_dataset-lvl2-border_skipped = '-'.
+      ls_dataset-lvl2-border_skipped = abap_false.
 
       APPEND ls_dataset TO ms_struc-data-datasets.
 

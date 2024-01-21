@@ -151,22 +151,13 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
 
     IF mv_search_value IS NOT INITIAL.
 
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
-        DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
+        z2ui5_cl_util_func=>get_tab_filter_by_val(
+          EXPORTING
+            val = mv_search_value
+          CHANGING
+            tab = mt_table
+        ).
 
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
     ENDIF.
 
   ENDMETHOD.
