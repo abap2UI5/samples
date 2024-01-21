@@ -140,7 +140,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config_bar-data-datasets.
 
-    ms_chartjs_config_bar-options-plugins-autocolors-mode = 'data'.
+*    ms_chartjs_config_bar-options-plugins-autocolors-mode = 'data'.
     ms_chartjs_config_bar-options-plugins-datalabels-text_align = `center`.
     ms_chartjs_config_bar-options-scales-y-begin_at_zero = abap_true.
 
@@ -262,25 +262,25 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `bar`
                              height = `300`
                              width = `400`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = abap_true )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' )
                           ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = abap_true )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `venn`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' compress = abap_true )
+                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' compress = abap_true )
+                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' )
                           ).
 
 
