@@ -69,6 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                                                                                                     autocolors = abap_false
                                                                                                     venn       = abap_true
                                                                                                     wordcloud  = abap_true
+                                                                                                    annotation = abap_true
            ) )->get_parent(
            )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_cc( )
         )->stringify( ) ).
@@ -133,6 +134,15 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
     ms_chartjs_config_bar-type = 'bar'.
     ms_chartjs_config_bar-data-labels = VALUE #( ( `Red` ) ( `Blue` ) ( `Yellow` ) ( `Green` ) ( `Purple` ) ( `Orange` ) ( `Black` ) ).
+
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-type = 'line'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-border_color = 'black'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-border_width = '5'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-label-background_color = 'red'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-label-content = 'Test Label'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-label-display = abap_true.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-scaleid = 'y'.
+    ms_chartjs_config_bar-options-plugins-annotation-annotations-shape1-value = '14'.
 
     ls_dataset-border_width = 1.
     ls_dataset-label = `# of Votes`.
@@ -262,25 +272,25 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `bar`
                              height = `300`
                              width = `400`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = client->cs_compress_mode-full )
                           ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = client->cs_compress_mode-full )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `venn`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' )
+                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' compress = client->cs_compress_mode-full )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' )
+                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' compress = client->cs_compress_mode-full )
                           ).
 
 
