@@ -356,14 +356,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
   ).
 
     panel->generic_tile(
-       header    = 'Select-Options'
-       subheader = 'Use multi inputs to create range tables'
-       press     =  client->_event( 'Z2UI5_CL_DEMO_APP_056' )
-       mode      = 'LineMode'
-       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-   ).
-
-    panel->generic_tile(
  header    = 'Feed Input'
  press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
  mode      = 'LineMode'
@@ -465,6 +457,22 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
+
+    panel->generic_tile(
+        header    = 'Popup Get Range'
+        subheader = 'Create Select-Options in Multi Inputs'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_056' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+     header    = 'Popup Get Range Multi'
+     subheader = 'Create Select-Options for Structures & Tables'
+     press     =  client->_event( 'z2ui5_cl_demo_app_162' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     panel = page->panel(
                expandable = abap_false
@@ -580,13 +588,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        panel->generic_tile(
-        header    = 'ui.Table'
-        subheader = 'Events on Cell Level'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_160' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+    panel->generic_tile(
+    header    = 'ui.Table'
+    subheader = 'Events on Cell Level'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_160' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
            expandable = abap_false
@@ -876,6 +884,15 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
+
+
+    panel->generic_tile(
+     header    = 'Cell Binding'
+   press     =  client->_event( 'z2ui5_cl_demo_app_144' )
+   mode      = 'LineMode'
+   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
 
     page = page2->panel(
           expandable = abap_true

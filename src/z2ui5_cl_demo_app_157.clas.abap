@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_DEMO_APP_157 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_popup_file_upload( lo_prev )->result( )-text.
+        DATA(lv_text) = CAST z2ui5_cl_popup_file_upload( lo_prev )->result( )-value.
         client->message_box_display( `the input is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.

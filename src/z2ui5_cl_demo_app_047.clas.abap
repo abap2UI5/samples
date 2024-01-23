@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_047 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA int1    TYPE i.
     DATA int2    TYPE i.
@@ -15,6 +15,13 @@ CLASS Z2UI5_CL_DEMO_APP_047 DEFINITION PUBLIC.
     DATA date    TYPE d.
     DATA time    TYPE t.
 
+    TYPES:
+      BEGIN OF ty_s_row,
+        date TYPE d,
+        time TYPE t,
+      END OF ty_s_row.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -23,10 +30,10 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -34,6 +41,8 @@ CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
       time = sy-uzeit.
       dec1 = -1 / 3.
 
+      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+      client->_bind_edit( mt_tab ).
     ENDIF.
 
     CASE client->get( )-event.

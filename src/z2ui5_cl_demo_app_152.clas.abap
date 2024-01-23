@@ -97,9 +97,10 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_index) = CAST z2ui5_cl_popup_to_select( lo_prev )->result( ).
-        DATA(ls_row) = mt_tab[ lv_index ].
-        client->message_box_display( `callback after popup to select: ` && ls_row-title ).
+        DATA(ls_result) = CAST z2ui5_cl_popup_to_select( lo_prev )->result( ).
+        FIELD-SYMBOLS <row> TYPE ty_row.
+        ASSIGN ls_result-row->* TO <row>.
+        client->message_box_display( `callback after popup to select: ` && <row>-title ).
       CATCH cx_root.
     ENDTRY.
 

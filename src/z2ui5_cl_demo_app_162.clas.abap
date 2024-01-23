@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -16,10 +16,11 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_token TYPE z2ui5_cl_util_func=>ty_t_token.
+    DATA mt_sql TYPE z2ui5_cl_util_func=>ty_t_sql_multi.
+*    DATA mt_token TYPE z2ui5_cl_util_func=>ty_t_token.
 
-    DATA mt_tokens_added TYPE z2ui5_cl_util_func=>ty_t_token.
-    DATA mt_tokens_removed TYPE z2ui5_cl_util_func=>ty_t_token.
+*    DATA mt_tokens_added TYPE z2ui5_cl_util_func=>ty_t_token.
+*    DATA mt_tokens_removed TYPE z2ui5_cl_util_func=>ty_t_token.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,12 +30,12 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     METHODS set_data.
 
   PRIVATE SECTION.
-    DATA mt_range TYPE z2ui5_cl_popup_get_range=>ty_s_result-t_range.
+*    DATA mt_range TYPE z2ui5_cl_util_func=>ty_t_sql_multi.
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
 
   METHOD on_event.
@@ -45,23 +46,23 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         set_data( ).
         client->view_model_update( ).
 
-      WHEN `UPDATE_TOKENS`.
-        LOOP AT mt_tokens_removed INTO DATA(ls_token).
-          DELETE mt_token WHERE key = ls_token-key.
-        ENDLOOP.
+*      WHEN `UPDATE_TOKENS`.
+*        LOOP AT mt_tokens_removed INTO DATA(ls_token).
+*          DELETE mt_token WHERE key = ls_token-key.
+*        ENDLOOP.
+*
+*        LOOP AT mt_tokens_added INTO ls_token.
+*          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+*        ENDLOOP.
+*
+*        CLEAR mt_tokens_removed.
+*        CLEAR mt_tokens_added.
+*
+*        mt_range = z2ui5_cl_util_func=>get_range_t_by_token_t( mt_token ).
+*        client->view_model_update( ).
 
-        LOOP AT mt_tokens_added INTO ls_token.
-          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
-        ENDLOOP.
-
-        CLEAR mt_tokens_removed.
-        CLEAR mt_tokens_added.
-
-        mt_range = z2ui5_cl_util_func=>get_range_t_by_token_t( mt_token ).
-        client->view_model_update( ).
-
-      WHEN `FILTER_VALUE_HELP`.
-        client->nav_app_call( z2ui5_cl_popup_get_range=>factory( mt_range ) ).
+      WHEN `PREVIEW_FILTER`.
+        client->nav_app_call( z2ui5_cl_popup_get_range_multi=>factory( mt_sql ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -82,9 +83,15 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
 
+    DATA lt_result LIKE mt_table.
     "put the range in the where clause of your abap sql command
     "here we use an internal table instead
-    DELETE mt_table WHERE product NOT IN mt_range.
+    LOOP AT mt_sql INTO DATA(ls_tab).
+
+      DATA(lv_clause) = ls_tab-name && ` not in ls_tab-t_range`.
+      DELETE mt_table WHERE (lv_clause).
+
+    ENDLOOP.
 
   ENDMETHOD.
 
@@ -103,56 +110,15 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).
-    vbox->_z2ui5( )->multiinput_ext(
-                       addedtokens      = client->_bind_edit( mt_tokens_added )
-                       removedtokens    = client->_bind_edit( mt_tokens_removed )
-                       change    = client->_event( 'UPDATE_TOKENS' )
-                       multiinputid    = `MultiInput`  ).
-
-*    vbox->text( `Product:`
-*    )->multi_input(
-*                width = `30%`
-*                id = `MultiInput`
-*                tokens           = client->_bind( mt_token )
-*                showclearicon    = abap_true
-*                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
-*            )->item(
-*                    key  = `{KEY}`
-*                    text = `{TEXT}`
-*            )->tokens(
-*                )->token(
-*                    key      = `{KEY}`
-*                    text     = `{TEXT}`
-*                    visible  = `{VISIBLE}`
-*                    selected = `{SELKZ}`
-*                    editable = `{EDITABLE}` ).
 
 
     DATA(tab) = vbox->table(
         items = client->_bind( val = mt_table )
            )->header_toolbar(
              )->overflow_toolbar(
-             )->text( `Product:`
-             )->multi_input(
-                width = `30%`
-                id = `MultiInput`
-                tokens           = client->_bind( mt_token )
-                showclearicon    = abap_true
-                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
-            )->item(
-                    key  = `{KEY}`
-                    text = `{TEXT}`
-            )->tokens(
-                )->token(
-                    key      = `{KEY}`
-                    text     = `{TEXT}`
-                    visible  = `{VISIBLE}`
-                    selected = `{SELKZ}`
-                    editable = `{EDITABLE}`
-                )->get_parent( )->get_parent(
                  )->toolbar_spacer(
-               )->button(
-        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+                 )->button( text = `Filter` press = client->_event( `PREVIEW_FILTER` ) icon = `sap-icon://filter`
+           )->button(  text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).
@@ -180,16 +146,17 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
+      mt_sql = z2ui5_cl_util_func=>get_sql_multi_by_data( mt_table ).
       view_display( ).
       RETURN.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
-          DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range_multi( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           IF lo_value_help->result( )-check_cancel = abap_false.
-            mt_range = lo_value_help->result( )-t_range.
-            mt_token = z2ui5_cl_util_func=>get_token_t_by_range_t( mt_range ).
+            mt_sql = lo_value_help->result( )-t_sql.
+            set_data( ).
             client->view_model_update( ).
           ENDIF.
         CATCH cx_root.
