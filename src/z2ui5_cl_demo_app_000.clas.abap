@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -509,6 +509,14 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
          header    = 'Popover with Quick View'
          subheader = ''
          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_109' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+    panel->generic_tile(
+         header    = 'Popover with Action Sheet'
+         subheader = ''
+         press     =  client->_event( '2ui5_cl_demo_app_163' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
