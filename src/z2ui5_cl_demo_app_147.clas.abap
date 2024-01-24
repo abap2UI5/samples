@@ -302,30 +302,30 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
     fb4->vbox( justifycontent = `Center` )->html_canvas( id = `polar`  height = `300` width = `315` ).
 
 
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar'
-                                                                                                      is_config = ms_chartjs_config_bar
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar2'
-                                                                                                      is_config = ms_chartjs_config_bar2
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'hbar'
-                                                                                                      is_config = ms_chartjs_config_hbar
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'line'
-                                                                                                      is_config = ms_chartjs_config_line
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bubble'
-                                                                                                      is_config = ms_chartjs_config_bubble
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'doughnut'
-                                                                                                      is_config = ms_chartjs_config_doughnut
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'pie'
-                                                                                                      is_config = ms_chartjs_config_pie
-                                                                                                      view = client->cs_view-main ) ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'polar'
-                                                                                                      is_config = ms_chartjs_config_polar
-                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar'
+*                                                                                                      is_config = ms_chartjs_config_bar
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bar2'
+*                                                                                                      is_config = ms_chartjs_config_bar2
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'hbar'
+*                                                                                                      is_config = ms_chartjs_config_hbar
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'line'
+*                                                                                                      is_config = ms_chartjs_config_line
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'bubble'
+*                                                                                                      is_config = ms_chartjs_config_bubble
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'doughnut'
+*                                                                                                      is_config = ms_chartjs_config_doughnut
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'pie'
+*                                                                                                      is_config = ms_chartjs_config_pie
+*                                                                                                      view = client->cs_view-main ) ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>set_js_config( canvas_id = 'polar'
+*                                                                                                      is_config = ms_chartjs_config_polar
+*                                                                                                      view = client->cs_view-main ) ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.

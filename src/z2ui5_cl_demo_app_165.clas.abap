@@ -116,7 +116,8 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
-      mt_layout = z2ui5_cl_popup_layout=>factory( i_tab = mt_table )->ms_result-t_layout.
+      DATA(ls_result) = z2ui5_cl_popup_layout=>factory( i_tab = mt_table )->ms_result.
+      mt_layout = ls_result-t_layout.
       set_data( ).
       view_display( ).
       RETURN.

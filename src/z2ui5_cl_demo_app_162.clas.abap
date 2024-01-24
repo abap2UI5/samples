@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
           DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range_multi( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-          IF lo_value_help->result( )-check_cancel = abap_false.
+          IF lo_value_help->result( )-check_confirmed = abap_false.
             mt_sql = lo_value_help->result( )-t_sql.
             set_data( ).
             client->view_model_update( ).
