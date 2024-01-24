@@ -1,14 +1,16 @@
-CLASS Z2UI5_CL_DEMO_APP_061 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA t_tab TYPE REF TO data.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+*    DATA t_tab2 TYPE REF TO data.
 
     METHODS set_view.
   PRIVATE SECTION.
@@ -16,7 +18,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
 
   METHOD set_view.
@@ -71,7 +73,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -82,6 +84,10 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
+*      CREATE DATA t_tab2 TYPE STANDARD TABLE OF ('Z2UI5_T_FW_01').
+*      FIELD-SYMBOLS <tab2> TYPE table.
+*      ASSIGN t_tab2->* TO <tab2>.
+
       INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
         INTO TABLE <tab>.
 
@@ -89,6 +95,8 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
           INTO TABLE <tab>.
       INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
+
+*      <tab2> = <tab>.
 
     ENDIF.
 
