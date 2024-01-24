@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_165 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
+    DATA mt_layout TYPE z2ui5_cl_popup_layout=>ty_t_layout.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -25,11 +26,12 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
     METHODS set_data.
 
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
 
 
   METHOD on_event.
@@ -37,7 +39,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_START`.
-        client->nav_app_call( z2ui5_cl_popup_table=>factory( mt_table ) ).
+        client->nav_app_call( z2ui5_cl_popup_layout=>factory( i_tab = mt_table t_layout = mt_layout ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -53,6 +55,8 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -66,7 +70,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Popup Display Table'
+             title          = 'abap2UI5 - Popup Layout'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton  = abap_true
          )->header_content(
@@ -81,23 +85,25 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
            )->header_toolbar(
              )->overflow_toolbar(
                  )->toolbar_spacer(
-*                 )->button( text = `Filter` press = client->_event( `PREVIEW_FILTER` ) icon = `sap-icon://filter`
-           )->button(  text = `Display Popup` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+           )->button(  text = `Popup Layout` press = client->_event( `BUTTON_START` ) type = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
+    LOOP AT mt_layout REFERENCE INTO DATA(lr_layout).
+      DATA(lv_index) = sy-tabix.
+
+      DATA(lo_col) = lo_columns->column(
+        visible         = client->_bind( val = lr_layout->visible         tab = mt_layout tab_index = lv_index )
+        mergeduplicates = client->_bind( val = lr_layout->mergeduplicates tab = mt_layout tab_index = lv_index ) ).
+
+      lo_col->text( text = lr_layout->name ).
+
+    ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{PRODUCT}` ).
-    lo_cells->text( `{CREATE_DATE}` ).
-    lo_cells->text( `{CREATE_BY}` ).
-    lo_cells->text( `{STORAGE_LOCATION}` ).
-    lo_cells->text( `{QUANTITY}` ).
+    LOOP AT mt_layout REFERENCE INTO lr_layout.
+      lo_cells->text( `{` && lr_layout->name && `}`  ).
+    ENDLOOP.
 
     client->view_display( view->stringify( ) ).
 
@@ -110,6 +116,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
+      mt_layout = z2ui5_cl_popup_layout=>factory( i_tab = mt_table )->ms_result-t_layout.
       set_data( ).
       view_display( ).
       RETURN.
@@ -117,8 +124,8 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
-          DATA(lo_popup_table) = CAST z2ui5_cl_popup_table( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-          set_data( ).
+          DATA(lo_popup_layout) = CAST z2ui5_cl_popup_layout( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          mt_layout = lo_popup_layout->result( )-t_layout.
           client->view_model_update( ).
         CATCH cx_root.
       ENDTRY.
@@ -130,4 +137,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
+
 ENDCLASS.
