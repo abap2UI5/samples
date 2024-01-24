@@ -533,7 +533,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile(
          header    = 'Popover with Action Sheet'
          subheader = ''
-         press     =  client->_event( '2ui5_cl_demo_app_163' )
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_163' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).

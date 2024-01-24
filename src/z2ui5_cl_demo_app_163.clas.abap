@@ -84,7 +84,6 @@ CLASS Z2UI5_CL_DEMO_APP_163 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
-
       view_display( ).
       RETURN.
     ENDIF.
