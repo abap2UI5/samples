@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 ).
 
     panel->generic_tile(
-        header    = 'Controller'
+        header    = 'Event I'
         subheader = 'Handle events & change the view'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_004' )
         mode      = 'LineMode'
@@ -126,9 +126,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-        header    = 'Flow Logic'
+        header    = 'Event II'
         subheader = 'Call other apps & exchange data'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_024' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Event III'
+        subheader = 'Additional Infos with t_args'
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_167' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
@@ -225,7 +233,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
            expandable = abap_false
            expanded   = abap_true
-           headertext = `Controls`
+           headertext = `Basic Controls`
       ).
 
     panel->generic_tile(

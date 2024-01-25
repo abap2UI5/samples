@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-          title          = 'abap2UI5 - Partly rerendering of nested views'
+          title          = 'abap2UI5 - Master-Detail View with Nested Views'
           navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true
           )->header_content(
