@@ -40,8 +40,13 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
 
-    data(temp3) = temp->input( value           = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lcl_file_api=>get_editor_type( ) ) ).
+     data(lt_types) = VALUE z2ui5_if_client=>ty_t_name_value( ).
+    lt_types = value #( FOR row IN z2ui5_cl_util_func=>source_get_file_types( )  (
+            n = shift_right( shift_left( row ) )
+            v = shift_right( shift_left( row ) ) ) ).
+
+    data(temp3) = temp->input( value = client->_bind_edit( mv_type )
+                   suggestionitems = client->_bind_local( lt_types ) ).
      data(temp2) =  temp3->_go_new( ).
 
           temp2->_ns_m(
