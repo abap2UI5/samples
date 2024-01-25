@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile(
      header    = 'Binding II'
      subheader = 'Structure Component Level'
-   press     =  client->_event( 'z2ui5_cl_demo_app_144' )
+   press     =  client->_event( 'z2ui5_cl_demo_app_166' )
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
