@@ -43,6 +43,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
                     href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
         )->get_parent( ).
 
+
     page->input( client->_bind_edit( val = ms_struc-title  struc = ms_struc ) ).
     page->input( client->_bind_edit( val = ms_struc-value2 struc = ms_struc ) ).
     page->input( client->_bind_edit( val = ms_struc-value3 struc = ms_struc ) ).
