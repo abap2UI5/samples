@@ -105,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_041 IMPLEMENTATION.
     DATA(lo_view2) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = abap_true
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
          )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(

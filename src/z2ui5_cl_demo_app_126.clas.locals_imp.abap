@@ -368,7 +368,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
       DATA(page) = view->page( title          =  mv_table
                                navbuttonpress = client->_event( 'BACK' )
-                               shownavbutton  = abap_true
+                               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                                class          = 'sapUiContentPadding' ).
 
     ELSE.
@@ -902,7 +902,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Customizing'
                              navbuttonpress = client->_event( 'BACK' )
-                             shownavbutton  = abap_true
+                             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                              class          = 'sapUiContentPadding' ).
 
 

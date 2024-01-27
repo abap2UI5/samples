@@ -93,7 +93,7 @@ CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - Gantt'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
 
