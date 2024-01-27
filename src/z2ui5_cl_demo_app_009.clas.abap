@@ -200,6 +200,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
           screen-name = mt_employees_sel[ 1 ]-name.
           screen-lastname = mt_employees_sel[ 1 ]-lastname.
           client->message_toast_display( 'f4 value selected' ).
+          client->popup_destroy( ).
         ENDIF.
 
       WHEN 'POPUP_TABLE_F4_CONTINUE'.
@@ -207,6 +208,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
         IF lines( mt_suggestion_sel ) = 1.
           screen-color_02 = mt_suggestion_sel[ 1 ]-value.
           client->message_toast_display( 'f4 value selected' ).
+          client->popup_destroy( ).
         ENDIF.
 
       WHEN 'BUTTON_SEND'.
