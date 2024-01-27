@@ -6,14 +6,14 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
     DATA:
       BEGIN OF ms_check_expanded,
-        basics     TYPE abap_bool,
-        more       TYPE abap_bool,
-        features   TYPE abap_bool,
-        extensions TYPE abap_bool,
-        demos      TYPE abap_bool,
-        custom_controls      TYPE abap_bool,
-        input      TYPE abap_bool,
-        popups     TYPE abap_bool,
+        basics          TYPE abap_bool,
+        more            TYPE abap_bool,
+        features        TYPE abap_bool,
+        extensions      TYPE abap_bool,
+        demos           TYPE abap_bool,
+        custom_controls TYPE abap_bool,
+        input           TYPE abap_bool,
+        popups          TYPE abap_bool,
       END OF ms_check_expanded.
 
     DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         id = `page`
         title = 'abap2UI5 - Samples'
         navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-        shownavbutton = abap_true
+        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
             )->link( text = 'SCN'     target = '_blank' href = 'https://blogs.sap.com/tag/abap2ui5/'
