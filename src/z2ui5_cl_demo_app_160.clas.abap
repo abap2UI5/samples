@@ -93,6 +93,9 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
         client->message_box_display( lv_tab_index && lv_id_event && lv_id_parent ).
 
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
     ENDCASE.
 
     client->view_model_update( ).
@@ -103,7 +106,19 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
   METHOD render_main_screen.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( title = 'Test App' enablescrolling = abap_false class = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer' ).
+
+    DATA(page) = view->shell(
+    )->page(
+        title          = 'abap2UI5 - Event on cell level'
+        navbuttonpress = client->_event( 'BACK' )
+          shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        )->header_content(
+            )->link(
+                text = 'Source_Code'  target = '_blank'
+                href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+        )->get_parent( ).
+
+*    DATA(page) = view->page( title = 'Test App' enablescrolling = abap_false class = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer' ).
     DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors = 'true' visiblerowcountmode = 'Auto' fixedrowcount = '1' selectionmode = 'None'  rows = client->_bind_edit( mt_output ) ).
     DATA(columns) = table->ui_columns( ).
 
