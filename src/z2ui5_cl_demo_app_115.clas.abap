@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5 - CL_DEMO_OUTPUT - TODO uncomment the source code'
                   navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
+                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
                   )->link(
                       text = 'Source_Code'

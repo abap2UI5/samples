@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - CSV to ABAP internal Table'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )

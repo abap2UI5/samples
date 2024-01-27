@@ -301,7 +301,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
     view = view->page( id = `page_main`
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = abap_true
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
          )->header_content(
              )->link(
                  text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )

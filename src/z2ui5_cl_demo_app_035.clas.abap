@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
                                        navbuttonpress = client->_event( 'BACK' )
-                                       shownavbutton  = abap_true
+                                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->headercontent(
                 )->link( text = 'Demo'        target = '_blank' href = 'https://twitter.com/abap2UI5/status/1631562906570575875'
                 )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )

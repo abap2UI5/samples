@@ -125,7 +125,7 @@ method Z2UI5_view_display.
     data(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true ).
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
       page1->header_content(
             )->link(

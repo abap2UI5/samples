@@ -30,7 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5 - First Example'
                   navbuttonpress = i_client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
+                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              )->_z2ui5( )->timer(
                   checkactive = i_client->_bind( mv_check_timer_active )
                   finished    = i_client->_event_client( val   = i_client->cs_event-open_new_tab

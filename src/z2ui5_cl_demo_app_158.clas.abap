@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup Display PDF'
                 navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                shownavbutton  = abap_true
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->header_content(
                 )->link(
                     text = 'Source_Code'
