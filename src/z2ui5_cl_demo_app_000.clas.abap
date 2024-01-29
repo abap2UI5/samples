@@ -350,7 +350,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
 
-
     panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
@@ -372,7 +371,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
-
 
     panel->generic_tile(
      header    = 'Input Validation'
@@ -398,7 +396,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-
     panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
@@ -420,7 +417,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
 
     page = page2->panel(
         expandable = abap_true
@@ -543,6 +539,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+    panel->generic_tile(
+     header    = 'Popup Display Download'
+     subheader = ''
+     press     =  client->_event( 'z2ui5_cl_demo_app_168' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     panel = page->panel(
                expandable = abap_false

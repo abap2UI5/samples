@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION
         pl_01       TYPE i,
         %_01        TYPE p LENGTH 2 DECIMALS 1,
         is_02_prev  TYPE i,
-        pl_02       TYPE i,
+        pl_02       TYPE p LENGTH 2 DECIMALS 1,
         %_02        TYPE p LENGTH 2 DECIMALS 1,
         is_03_prev  TYPE i,
         pl_03       TYPE i,
@@ -67,6 +67,9 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
       ls_output-set_sk = 'Test'.
       ls_output-matnr  = '1234567'.
       ls_output-description = 'Test'.
+      ls_output-pl_01 = 0.
+      ls_output-pl_02 = 0.
+
 
       APPEND ls_output TO mt_output.
 
@@ -119,7 +122,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         )->get_parent( ).
 
 *    DATA(page) = view->page( title = 'Test App' enablescrolling = abap_false class = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer' ).
-    DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors = 'true' visiblerowcountmode = 'Auto' fixedrowcount = '1' selectionmode = 'None'  rows = client->_bind_edit( mt_output ) ).
+    DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors = 'true' visiblerowcountmode = 'Auto' fixedrowcount = '1' selectionmode = 'None'  rows = client->_bind_edit( val = mt_output
+        compress = z2ui5_if_client=>cs_compress_mode-none ) ).
     DATA(columns) = table->ui_columns( ).
 
     columns->ui_column( width = '5.2rem' sortproperty = 'SET_SK' filterproperty = 'SET_SK' )->text( text = 'Column 1' )->ui_template( )->text( text = `{SET_SK}` ).
