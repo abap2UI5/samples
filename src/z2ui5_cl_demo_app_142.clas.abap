@@ -42,7 +42,6 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
         )->_z2ui5( )->timer(  client->_event( `START` )
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>get_js_local( )
           )->stringify( ) ).
-
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true AND check_initialized = abap_false.
@@ -80,7 +79,8 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
     ls_map_cfg-stroke = abap_true.
     ls_map_cfg-stroke_opacity = `0.6`.
     ls_map_cfg-stroke_width = `3`.
-    ls_map_cfg-single_select = abap_true.
+    ls_map_cfg-selected = '-'.
+    ls_map_cfg-is_selectable = '-'.
   ENDMETHOD.
 
 
