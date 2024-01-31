@@ -76,7 +76,7 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
   METHOD ui5_display.
 
 *    client->_bind_edit( val = mv_value pretty_name = 'X' ).
-    client->_bind_edit( val = ms_struc pretty_name = 'X' ).
+    client->_bind_edit( val = ms_struc pretty_mode = 'X' ).
 *    client->_bind_edit( mt_string_table ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

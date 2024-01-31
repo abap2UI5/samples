@@ -8,10 +8,9 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
     DATA mv_url TYPE string.
     DATA mv_check_timer_active TYPE abap_bool.
 
-    METHODS display_view
-      IMPORTING
-        i_client TYPE REF TO z2ui5_if_client.
+    METHODS display_view.
 
+    DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -19,33 +18,33 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( i_client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
 
-    i_client->view_display( view->shell(
+    client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - First Example'
-                  navbuttonpress = i_client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
                   shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              )->_z2ui5( )->timer(
-                  checkactive = i_client->_bind( mv_check_timer_active )
-                  finished    = i_client->_event_client( val   = i_client->cs_event-open_new_tab
-                                                         t_arg = VALUE #( ( `$` && i_client->_bind( mv_url ) ) ) )
+                  checkactive = client->_bind( mv_check_timer_active )
+                  finished    = client->_event_client( val   = client->cs_event-open_new_tab
+                                                         t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( i_client )->app_get_url_source_code( )
+                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
                       target = '_blank'
               )->get_parent(
               )->simple_form( title = 'Form Title' editable = abap_true
                   )->content( 'form'
                       )->button(
                           text  = 'open new tab'
-                          press = i_client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
+                          press = client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
            )->stringify( ) ).
 
   ENDMETHOD.
@@ -53,10 +52,12 @@ CLASS Z2UI5_CL_DEMO_APP_073 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
+
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       mv_check_timer_active = abap_false.
-      display_view( client ).
+      display_view( ).
     ENDIF.
 
     CASE client->get( )-event.

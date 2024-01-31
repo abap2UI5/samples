@@ -185,9 +185,9 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    client->_bind_edit( val = mt_columns_p13n pretty_name = 'L' ).
-    client->_bind_edit( val = mt_sort_p13n pretty_name = 'L' ).
-    client->_bind_edit( val = mt_groups_p13n pretty_name = 'L' ).
+    client->_bind_edit( val = mt_columns_p13n pretty_mode = 'L' ).
+    client->_bind_edit( val = mt_sort_p13n pretty_mode = 'L' ).
+    client->_bind_edit( val = mt_groups_p13n pretty_mode = 'L' ).
 
     DATA(page) =  z2ui5_cl_xml_view=>factory( ).
 

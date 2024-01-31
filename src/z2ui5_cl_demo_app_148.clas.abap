@@ -385,25 +385,25 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `bar`
                              height = `300`
                              width = `400`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `venn`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
 
     DATA(vl11) = car->vertical_layout( width = `100%` ).
@@ -413,27 +413,27 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `line`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_line pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_line pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
     fb11->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bubble`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bubble pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_bubble pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `doughnut`
                              height = `300`
                              width = `300`
-                             config = client->_bind_edit( val = ms_chartjs_config_doughnut pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_doughnut pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                           ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `pie`
                              height = `300`
                              width = `300`
-                             config = client->_bind_edit( val = ms_chartjs_config_pie pretty_name = 'X' compress = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_pie pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
                          ).
 
     client->view_display( page->stringify( ) ).
