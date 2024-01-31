@@ -553,7 +553,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
         FIELD-SYMBOLS <table> TYPE ANY TABLE.
         ASSIGN o_table->* TO <table>.
 
-        SELECT * FROM (mv_table) INTO CORRESPONDING FIELDS OF TABLE <table>.
+        SELECT * FROM (mv_table) INTO CORRESPONDING FIELDS OF TABLE @<table>.
 
 
         lo_tab ?= cl_abap_tabledescr=>describe_by_data( <table> ).
@@ -964,7 +964,7 @@ CLASS lcl_demo_app_126 IMPLEMENTATION.
     FIELD-SYMBOLS <table> TYPE ANY TABLE.
     ASSIGN o_table->* TO <table>.
 
-    SELECT * FROM (tabname) INTO CORRESPONDING FIELDS OF TABLE <table>.
+    SELECT * FROM (tabname) INTO CORRESPONDING FIELDS OF TABLE @<table>.
 
     result = lines( <table> ).
 

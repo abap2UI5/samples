@@ -9,34 +9,34 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION
 
     TYPES:
       BEGIN OF s_output,
-        index       TYPE i,
-        set_sk      TYPE c LENGTH 10,
-        matnr       TYPE matnr,
-        description TYPE c LENGTH 50,
-        is_total    TYPE i,
-        pl_total    TYPE i,
-        %_total     TYPE p LENGTH 2 DECIMALS 1,
-        is_01_prev  TYPE i,
-        pl_01       TYPE i,
-        %_01        TYPE p LENGTH 2 DECIMALS 1,
-        is_02_prev  TYPE i,
-        pl_02       TYPE p LENGTH 2 DECIMALS 1,
-        %_02        TYPE p LENGTH 2 DECIMALS 1,
-        is_03_prev  TYPE i,
-        pl_03       TYPE i,
-        %_03        TYPE p LENGTH 2 DECIMALS 1,
-        is_q01_prev TYPE i,
-        pl_q01      TYPE i,
-        %_q01       TYPE p LENGTH 2 DECIMALS 1,
-        is_q02_prev TYPE i,
-        pl_q02      TYPE i,
-        %_q02       TYPE p LENGTH 2 DECIMALS 1,
-        is_q03_prev TYPE i,
-        pl_q03      TYPE i,
-        %_q03       TYPE p LENGTH 2 DECIMALS 1,
-        is_q04_prev TYPE i,
-        pl_q04      TYPE i,
-        %_q04       TYPE p LENGTH 2 DECIMALS 1,
+        index          TYPE i,
+        set_sk         TYPE c LENGTH 10,
+        matnr          TYPE matnr,
+        description    TYPE c LENGTH 50,
+        is_total       TYPE i,
+        pl_total       TYPE i,
+        per_cent_total TYPE p LENGTH 2 DECIMALS 1,
+        is_01_prev     TYPE i,
+        pl_01          TYPE i,
+        per_cent_01    TYPE p LENGTH 2 DECIMALS 1,
+        is_02_prev     TYPE i,
+        pl_02          TYPE p LENGTH 2 DECIMALS 1,
+        per_cent_02    TYPE p LENGTH 2 DECIMALS 1,
+        is_03_prev     TYPE i,
+        pl_03          TYPE i,
+        per_cent_03    TYPE p LENGTH 2 DECIMALS 1,
+        is_q01_prev    TYPE i,
+        pl_q01         TYPE i,
+        per_cent_q01   TYPE p LENGTH 2 DECIMALS 1,
+        is_q02_prev    TYPE i,
+        pl_q02         TYPE i,
+        per_cent_q02   TYPE p LENGTH 2 DECIMALS 1,
+        is_q03_prev    TYPE i,
+        pl_q03         TYPE i,
+        per_cent_q03   TYPE p LENGTH 2 DECIMALS 1,
+        is_q04_prev    TYPE i,
+        pl_q04         TYPE i,
+        per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
       END OF s_output .
 
     DATA check_initialized TYPE abap_bool .
@@ -139,35 +139,35 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         ( `$event.oSource.oParent.sId` )
          ) ) editable = abap_true type = 'Number' ).
 
-    columns->ui_column( width = '4rem' sortproperty = '%_TOTAL' filterproperty = '%_TOTAL' )->text( text = 'Column 6' )->ui_template( )->text( text = `{%_TOTAL} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_total' filterproperty = 'per_cent_total' )->text( text = 'Column 6' )->ui_template( )->text( text = `{per_cent_total} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_01_PREV' filterproperty = 'IS_01_PREV' )->text( text = 'Column 7' )->ui_template( )->text( text = `{IS_01_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_01' filterproperty = 'PL_01' )->text( text = 'Column 8' )->ui_template( )->input( value = `{PL_01}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_01' filterproperty = '%_01' )->text( text = 'Column 9' )->ui_template( )->text( text = `{%_01} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_01' filterproperty = 'per_cent_01' )->text( text = 'Column 9' )->ui_template( )->text( text = `{per_cent_01} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_02_PREV' filterproperty = 'IS_02_PREV' )->text( text = 'Column 10' )->ui_template( )->text( text = `{IS_02_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_02' filterproperty = 'PL_02' )->text( text = 'Column 11' )->ui_template( )->input( value = `{PL_02}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_02' filterproperty = '%_02' )->text( text = 'Column 12' )->ui_template( )->text( text = `{%_02} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_02' filterproperty = 'per_cent_02' )->text( text = 'Column 12' )->ui_template( )->text( text = `{per_cent_02} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_03_PREV' filterproperty = 'IS_03_PREV' )->text( text = 'Column 13' )->ui_template( )->text( text = `{IS_03_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_03' filterproperty = 'PL_03' )->text( text = 'Column 14' )->ui_template( )->input( value = `{PL_03}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_03' filterproperty = '%_03' )->text( text = 'Column 15'  )->ui_template( )->text( text = `{%_03} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_03' filterproperty = 'per_cent_03' )->text( text = 'Column 15'  )->ui_template( )->text( text = `{per_cent_03} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_Q01_PREV' filterproperty = 'IS_Q01_PREV' )->text( text = 'Column 16' )->ui_template( )->text( text = `{IS_Q01_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_Q01' filterproperty = 'PL_Q01' )->text( text = 'Column 17' )->ui_template( )->text( text = `{PL_Q01}` ). "Nicht editierbar, da im Detail geplant
-    columns->ui_column( width = '4rem' sortproperty = '%_Q01' filterproperty = '%_Q01' )->text( text = 'Column 18' )->ui_template( )->text( text = `{%_Q01} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_q01' filterproperty = 'per_cent_q01' )->text( text = 'Column 18' )->ui_template( )->text( text = `{per_cent_q01} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_Q02_PREV' filterproperty = 'IS_Q02_PREV' )->text( text = 'Column 19' )->ui_template( )->text( text = `{IS_Q02_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_Q02' filterproperty = 'PL_Q02' )->text( text = 'Column 20' )->ui_template( )->input( value = `{PL_Q02}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_Q02' filterproperty = '%_Q02' )->text( text = 'Column 21' )->ui_template( )->text( text = `{%_Q02} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_q02' filterproperty = 'per_cent_q02' )->text( text = 'Column 21' )->ui_template( )->text( text = `{per_cent_q02} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_Q03_PREV' filterproperty = 'IS_Q03_PREV' )->text( text = 'Column 22' )->ui_template( )->text( text = `{IS_Q03_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_Q03' filterproperty = 'PL_Q03' )->text( text = 'Column 23' )->ui_template( )->input( value = `{PL_Q03}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_Q03' filterproperty = '%_Q03' )->text( text = 'Column 24' )->ui_template( )->text( text = `{%_Q03} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_q03' filterproperty = 'per_cent_q03' )->text( text = 'Column 24' )->ui_template( )->text( text = `{per_cent_q03} %` ).
 
     columns->ui_column( width = '5rem' sortproperty = 'IS_Q04_PREV' filterproperty = 'IS_Q04_PREV' )->text( text = 'Column 25' )->ui_template( )->text( text = `{IS_Q04_PREV}` ).
     columns->ui_column( width = '5rem' sortproperty = 'PL_Q04' filterproperty = 'PL_Q04' )->text( text = 'Column 26' )->ui_template( )->input( value = `{PL_Q04}` editable = abap_true type = 'Number' ).
-    columns->ui_column( width = '4rem' sortproperty = '%_Q04' filterproperty = '%_Q04' )->text( text = 'Column 27' )->ui_template( )->text( text = `{%_Q04} %` ).
+    columns->ui_column( width = '4rem' sortproperty = 'per_cent_q04' filterproperty = 'per_cent_q04' )->text( text = 'Column 27' )->ui_template( )->text( text = `{per_cent_q04} %` ).
 
     client->view_display( view->stringify( ) ).
 

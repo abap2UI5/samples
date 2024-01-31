@@ -155,7 +155,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 `Information`  )
     ).
 
-    DESCRIBE TABLE mt_table lines lv_cnt_total.
+    lv_cnt_total = lines( mt_table ).
     lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
     lv_cnt_heavy = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT i = i + 1 ).
     lv_cnt_neg = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT i = i + 1 ).
