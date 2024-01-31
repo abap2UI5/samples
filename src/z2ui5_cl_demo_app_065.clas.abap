@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
                 )->button( text = 'Rerender only nested view' press = client->_event( 'NEST' )
                 )->input( value = client->_bind_edit( mv_input_main )  ).
 
-    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory( client
+    DATA(lo_view_nested) = Z2UI5_cl_xml_view=>factory(
           )->page( title = `Nested View`
               )->button( text = 'event' press = client->_event( 'TEST' )
               )->button( text  = `frontend event`
