@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 

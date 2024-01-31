@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popover.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
 *    popup = popup->popover(
 *              placement = `Top`

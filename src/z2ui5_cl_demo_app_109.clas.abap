@@ -32,7 +32,7 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
 
   METHOD Z2UI5_DISPLAY_POPOVER.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = mv_placement
 *                      beforeclose = client->_event( val = `CLOSE_POPOVER` )
 *                      beforeclose = client->_event_client( client->cs_event-popover_close )

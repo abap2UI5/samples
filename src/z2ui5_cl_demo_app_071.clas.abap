@@ -112,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
       Z2UI5_set_data( ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
+      client->view_display( Z2UI5_cl_xml_view=>factory(
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
         )->_z2ui5( )->timer(  client->_event( 'START' )
         )->stringify( ) ).

@@ -243,7 +243,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
   METHOD Z2UI5_view_filter_popup.
 
-    DATA(popup_filter) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_filter) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     DATA(filter_view) = popup_filter->view_settings_dialog( filteritems = client->_bind_edit( t_tab_filter_title )
                                                             confirm = client->_event( val = `CONFIRM_FILTER` t_arg = VALUE #( ( `${$parameters>/filterString}` ) ) )
@@ -263,7 +263,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
   METHOD Z2UI5_view_group_popup.
 
-    DATA(popup_group) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_group) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     DATA(group_view) = popup_group->view_settings_dialog( confirm = client->_event( val = `CONFIRM_GROUP` t_arg = VALUE #( ( `${$parameters>/groupItem/mProperties/key}` ) ) )
                                                           reset = client->_event( `RESET_GROUP` )
@@ -280,7 +280,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
 
   METHOD Z2UI5_view_settings_popup.
-    DATA(popup_settings) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_settings) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(
                                     confirm = client->_event( 'ALL_EVENT' )
@@ -302,7 +302,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
   METHOD Z2UI5_view_sort_popup.
 
-    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     DATA(sort_view) = popup_sort->view_settings_dialog(
                                     confirm = client->_event( val = `CONFIRM_SORT` t_arg = VALUE #( ( `${$parameters>/sortItem/mProperties/key}` ) ) )

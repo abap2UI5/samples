@@ -22,7 +22,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_popup_decide.
 
-    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Decide'
             )->vbox(
                 )->text( 'this is a popup to decide, you have to make a decision now...'
@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_popup_info_frontend_close.
 
-    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Info'
             )->vbox(
                 )->text( 'this is an information, press close to go back to the main view without a server roundtrip'

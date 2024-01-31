@@ -143,7 +143,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                          `  };` && |\n| &&
                          `};`.
 
-    client->view_display( Z2UI5_cl_xml_view=>factory( client
+    client->view_display( Z2UI5_cl_xml_view=>factory(
      )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW` )
       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
       "val = `<html:script>` && lv_custom_js && `</html:script>`
@@ -244,9 +244,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
   METHOD z2ui5_view_p13n.
 
-
-
-    DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(p13n) = p13n_dialog->_generic( name = `P13nDialog`
     t_prop = VALUE #(

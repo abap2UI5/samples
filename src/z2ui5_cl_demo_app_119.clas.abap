@@ -176,7 +176,7 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_cc( ) )->get_parent(
 *         )->_cc( )->driver_js( )->load_cc( "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`

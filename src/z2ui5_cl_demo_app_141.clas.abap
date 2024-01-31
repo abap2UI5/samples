@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
   METHOD ui5_popup_input.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
        contentheight = '500px'

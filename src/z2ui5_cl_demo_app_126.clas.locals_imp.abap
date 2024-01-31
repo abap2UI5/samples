@@ -659,7 +659,7 @@ CLASS lcl_demo_app_125 IMPLEMENTATION.
 
     DATA index TYPE int4.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(title) = COND #( WHEN mv_edit = abap_true THEN 'CRMST_UIU_EDIT' ELSE 'RSLPO_GUI_ADDPART' ).
 

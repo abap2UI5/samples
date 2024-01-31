@@ -132,7 +132,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                         `}`.
 
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( `START` )
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
         )->stringify( ) ).
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    client->view_display( z2ui5_cl_xml_view=>factory( client
+    client->view_display( z2ui5_cl_xml_view=>factory(
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).

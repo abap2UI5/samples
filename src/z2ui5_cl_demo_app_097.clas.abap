@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = Z2UI5_cl_xml_view=>factory( client
+    DATA(page) = Z2UI5_cl_xml_view=>factory(
        )->page(
           title          = 'abap2UI5 - Master Detail Page with Nested View'
           navbuttonpress = client->_event( 'BACK' )

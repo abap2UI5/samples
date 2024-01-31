@@ -275,7 +275,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render_popup.
 
-    DATA(ro_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(ro_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     ro_popup = ro_popup->dialog( title = 'View Setup'  resizable = abap_true
           contentheight = `50%` contentwidth = `50%` ).
@@ -349,7 +349,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render_popup_save.
 
-    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
         )->input( description = `Name` value = client->_bind( mv_layout )

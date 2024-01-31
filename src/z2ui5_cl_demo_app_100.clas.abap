@@ -146,9 +146,7 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
 
   METHOD Z2UI5_view_vm_popup.
 
-    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( client ).
-
-
+    DATA(popup_sort) = Z2UI5_cl_xml_view=>factory_popup( ).
     client->popup_display( popup_sort->stringify( ) ).
 
   ENDMETHOD.

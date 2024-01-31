@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD simple_popup1.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
             afterclose = client->_event( 'BTN_OK_1ND' )
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD simple_popup2.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
         afterclose = client->_event( 'BTN_OK_2ND' )

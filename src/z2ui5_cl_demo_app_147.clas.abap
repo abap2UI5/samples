@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_147 IMPLEMENTATION.
       check_initialized = abap_true.
       z2ui5_on_init( ).
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( finished = client->_event( `START` ) delayms = `0`
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_chartjs=>load_js( datalabels = abap_true
                                                                                                    autocolors = abap_true

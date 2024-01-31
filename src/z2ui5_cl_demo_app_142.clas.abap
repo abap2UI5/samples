@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
       check_initialized = abap_true.
       z2ui5_on_init( ).
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>get_js_local( )
           )->stringify( ) ).

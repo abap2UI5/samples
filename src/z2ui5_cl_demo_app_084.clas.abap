@@ -77,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popover.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup = popup->popover(
               placement = `Top`
@@ -102,7 +102,7 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popup.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup = popup->dialog(
           title = `Messages`

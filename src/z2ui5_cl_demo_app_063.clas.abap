@@ -188,7 +188,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( )->dialog(
           contentheight = '500px'
           contentwidth  = '500px'
           title = 'Title'
@@ -217,7 +217,7 @@ CLASS Z2UI5_CL_DEMO_APP_063 IMPLEMENTATION.
 
   METHOD popup_display_start.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client )->dialog(
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( )->dialog(
           contentheight = '500px'
           contentwidth  = '500px'
           title = 'Title'

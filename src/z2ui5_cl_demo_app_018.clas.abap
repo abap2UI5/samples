@@ -29,7 +29,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popup_input.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
     view->dialog(
              title = 'Title'
              icon = 'sap-icon://edit'

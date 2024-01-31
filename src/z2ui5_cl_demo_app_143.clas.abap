@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
         DATA(ok_code) = client->get( )-event.
         CASE ok_code.
           WHEN 'ROW_ACTION_ITEM_ADD'  .
-            client->message_toast_display( 'Something'   ).
+            client->message_toast_display( 'Something' ).
             client->view_model_update( ).
         ENDCASE.
       CATCH cx_root INTO DATA(x).
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD ui5_view_main_display.
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'Table Filters Reset after view Update'

@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_display_popover.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
     view->popover(
                   title     = 'Popover Title'
                   placement = mv_placement
@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_display_popover_list.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
       view->popover(
                   title     = 'Popover Title'
                   placement = mv_placement

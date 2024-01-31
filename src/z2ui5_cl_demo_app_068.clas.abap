@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
   METHOD ui5_display_popup_tree_select.
 
-    DATA(dialog) = Z2UI5_cl_xml_view=>factory_popup( client
+    DATA(dialog) = Z2UI5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
     dialog->tree(

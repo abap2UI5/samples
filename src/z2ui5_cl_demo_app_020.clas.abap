@@ -60,7 +60,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
         return.
     ENDCASE.
 
-    client->popup_display(  Z2UI5_cl_xml_view=>factory_popup( client
+    client->popup_display(  Z2UI5_cl_xml_view=>factory_popup(
          )->dialog( 'abap2UI5 - Popup to decide'
                 )->vbox(
                     )->text( mv_text )->get_parent(

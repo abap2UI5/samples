@@ -273,10 +273,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
     ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` )
     ).
 
-
-
     mv_name = `screen_01`.
-
     Z2UI5_on_render_main( ).
 
     mt_mapping = VALUE #(
@@ -458,7 +455,7 @@ CLASS Z2UI5_CL_DEMO_APP_083 IMPLEMENTATION.
 
   METHOD Z2UI5_on_render_pop_filter.
 
-    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog(
     contentheight = `50%`

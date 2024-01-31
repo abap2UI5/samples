@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
                         `  reader.readAsDataURL(oFile);` && |\n| &&
                         `};`.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
           )->_z2ui5( )->timer( client->_event( `DISPLAY_VIEW` )
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script

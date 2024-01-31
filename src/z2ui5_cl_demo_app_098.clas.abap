@@ -118,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client
+    DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
           title          = 'abap2UI5 - Master Detail Page with Nested View'

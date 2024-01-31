@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ENDTRY.
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client
+    DATA(page) = z2ui5_cl_xml_view=>factory(
         )->shell( )->page(
         id = `page`
         title = 'abap2UI5 - Samples'

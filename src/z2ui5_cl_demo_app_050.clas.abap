@@ -31,7 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
     ENDCASE.
 
-   client->view_display( Z2UI5_cl_xml_view=>factory( client
+   client->view_display( Z2UI5_cl_xml_view=>factory(
         )->shell(
         )->page(
                 title          = 'abap2UI5 - Changed CSS'

@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( 'abap2UI5 - F4 Value Help'
     )->table(
@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table_custom.
 
-    DATA(popup2) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup2) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup2 = popup2->dialog( 'abap2UI5 - F4 Value Help' ).
 

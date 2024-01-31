@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     client->view_display( view->shell(
           )->page(
