@@ -20,13 +20,13 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     TYPES:
       BEGIN OF ty_dataset,
         label          TYPE string,
-*        type               TYPE string,
+        type               TYPE string,
         data           TYPE string_table,
         border_width   TYPE i,
-*        border_color       TYPE string,
+        border_color       TYPE string,
         border_radius  TYPE i,
         border_skipped TYPE abap_bool,
-*        show_line          TYPE abap_bool,
+        show_line          TYPE abap_bool,
 *        background_color   TYPE string,
 *        hover_offset       TYPE i,
 *        order              TYPE i,
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 *        point_radius       TYPE i,
 *        point_hover_radius TYPE i,
 *        rtl                TYPE abap_bool,
-        lvl2           TYPE ty_dataset2,
+       lvl2           TYPE ty_dataset2,
       END OF ty_dataset.
 
     TYPES ty_datasets TYPE STANDARD TABLE OF ty_dataset WITH DEFAULT KEY.
@@ -153,7 +153,7 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
 
       "new value in lvl2
-      ls_dataset-lvl2-border_skipped = '-'.
+*      ls_dataset-lvl2-border_skipped = '-'.
 
       APPEND ls_dataset TO ms_struc-data-datasets.
 
