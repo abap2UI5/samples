@@ -52,7 +52,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -149,7 +149,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ls_dataset-data = VALUE #( ( `1` ) ( `12` ) ( `19` ) ( `3` ) ( `5` ) ( `2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config_bar-data-datasets.
 
-*    ms_chartjs_config_bar-options-plugins-autocolors-mode = 'data'.
+
     ms_chartjs_config_bar-options-plugins-datalabels-text_align = `center`.
     ms_chartjs_config_bar-options-scales-y-begin_at_zero = abap_true.
 
@@ -163,6 +163,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ls_dataset-border_skipped = abap_false.
     ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
     APPEND ls_dataset TO ms_chartjs_config_bar2-data-datasets.
+
 
     CLEAR ls_dataset.
     ls_dataset-label = 'Small Radius'.
@@ -276,7 +277,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ms_chartjs_config_line-options-plugins-title-display = abap_true.
     ms_chartjs_config_line-options-plugins-title-text = `Min and Max Settings`.
 
-"bubble
+    "bubble
     ms_chartjs_config_bubble-type = 'bubble'.
 
     CLEAR ls_dataset.
@@ -308,50 +309,50 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
     ms_chartjs_config_bubble-options-plugins-title-display = abap_true.
     ms_chartjs_config_bubble-options-plugins-title-text = `Bubble Chart`.
 
-"doughnut
-  ms_chartjs_config_doughnut-type = `doughnut`.
-  ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Orange` ) ( `Yellow` ) ( `Green` ) ( `Blue` ) ).
+    "doughnut
+    ms_chartjs_config_doughnut-type = `doughnut`.
+    ms_chartjs_config_doughnut-data-labels = VALUE #( ( `Red` ) ( `Orange` ) ( `Yellow` ) ( `Green` ) ( `Blue` ) ).
 
-  CLEAR ls_dataset.
-  ls_dataset-label = `Dataset 1`.
+    CLEAR ls_dataset.
+    ls_dataset-label = `Dataset 1`.
 
-  ls_dataset-data = VALUE #(
-                            ( `63.411` )
-                            ( `47.831` )
-                            ( `50.666` )
-                            ( `21.3` )
-                            ( `38.744` )
-                          ).
+    ls_dataset-data = VALUE #(
+                              ( `63.411` )
+                              ( `47.831` )
+                              ( `50.666` )
+                              ( `21.3` )
+                              ( `38.744` )
+                            ).
 
-  APPEND ls_dataset TO ms_chartjs_config_doughnut-data-datasets.
+    APPEND ls_dataset TO ms_chartjs_config_doughnut-data-datasets.
 
 *  ms_chartjs_config_doughnut-options-responsive = abap_true.
-  ms_chartjs_config_doughnut-options-plugins-legend-position = `bottom`.
-  ms_chartjs_config_doughnut-options-plugins-title-display = abap_false.
-  ms_chartjs_config_doughnut-options-plugins-title-text = `Doughnut Chart`.
-  ms_chartjs_config_doughnut-options-plugins-datalabels-text_align = `center`.
+    ms_chartjs_config_doughnut-options-plugins-legend-position = `bottom`.
+    ms_chartjs_config_doughnut-options-plugins-title-display = abap_false.
+    ms_chartjs_config_doughnut-options-plugins-title-text = `Doughnut Chart`.
+    ms_chartjs_config_doughnut-options-plugins-datalabels-text_align = `center`.
 
-"pie
-  ms_chartjs_config_pie-type = `pie`.
-  ms_chartjs_config_pie-data-labels = VALUE #( ( `Red` ) ( `Orange` ) ( `Yellow` ) ( `Green` ) ( `Blue` ) ).
+    "pie
+    ms_chartjs_config_pie-type = `pie`.
+    ms_chartjs_config_pie-data-labels = VALUE #( ( `Red` ) ( `Orange` ) ( `Yellow` ) ( `Green` ) ( `Blue` ) ).
 
-  CLEAR ls_dataset.
-  ls_dataset-label = `Dataset 1`.
+    CLEAR ls_dataset.
+    ls_dataset-label = `Dataset 1`.
 
-  ls_dataset-data = VALUE #(
-                            ( `63.411` )
-                            ( `47.831` )
-                            ( `50.666` )
-                            ( `21.3` )
-                            ( `38.744` )
-                          ).
+    ls_dataset-data = VALUE #(
+                              ( `63.411` )
+                              ( `47.831` )
+                              ( `50.666` )
+                              ( `21.3` )
+                              ( `38.744` )
+                            ).
 
-  APPEND ls_dataset TO ms_chartjs_config_pie-data-datasets.
+    APPEND ls_dataset TO ms_chartjs_config_pie-data-datasets.
 
-  ms_chartjs_config_pie-options-plugins-legend-position = `bottom`.
-  ms_chartjs_config_pie-options-plugins-title-display = abap_false.
-  ms_chartjs_config_pie-options-plugins-title-text = `Pie Chart`.
-  ms_chartjs_config_pie-options-plugins-datalabels-text_align = `center`.
+    ms_chartjs_config_pie-options-plugins-legend-position = `bottom`.
+    ms_chartjs_config_pie-options-plugins-title-display = abap_false.
+    ms_chartjs_config_pie-options-plugins-title-text = `Pie Chart`.
+    ms_chartjs_config_pie-options-plugins-datalabels-text_align = `center`.
 
 
   ENDMETHOD.
@@ -385,25 +386,31 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `bar`
                              height = `300`
                              width = `400`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit(
+                             val = ms_chartjs_config_bar pretty_mode = 'X'
+                              compress_mode = client->cs_compress_mode-full
+                              compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `venn`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_venn pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
 
     DATA(vl11) = car->vertical_layout( width = `100%` ).
@@ -413,27 +420,31 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
       )->_z2ui5( )->chartjs( canvas_id = `line`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_line pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_line pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
     fb11->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bubble`
                              height = `300`
                              width = `600`
-                             config = client->_bind_edit( val = ms_chartjs_config_bubble pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_bubble pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `doughnut`
                              height = `300`
                              width = `300`
-                             config = client->_bind_edit( val = ms_chartjs_config_doughnut pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_doughnut pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                           ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `pie`
                              height = `300`
                              width = `300`
-                             config = client->_bind_edit( val = ms_chartjs_config_pie pretty_mode = 'X' compress_mode = client->cs_compress_mode-full )
+                             config = client->_bind_edit( val = ms_chartjs_config_pie pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
+                                compress_custom = `z2ui5_cl_cc_chartjs` )
                          ).
 
     client->view_display( page->stringify( ) ).
