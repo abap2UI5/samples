@@ -106,11 +106,11 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CANCEL' )
            )->button(
                text  = 'Confirm'
-               press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
+               press = client->_event( client->cs_event-popup_close )
                type  = 'Emphasized' ).
 
      dialog->_generic( name = `HTML` ns = `core` t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
-                                                                   ( n = `preferDOM`  v = `false` )
+                                                                   ( n = `preferDOM`  v = `true` )
                                                                   ) )->get_parent( ).
 
     client->popup_display( popup->stringify( ) ).
@@ -125,15 +125,11 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     DATA(script) = `` &&
                    `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-                   `  var lbl = sap.ui.getCore().byId('lbl1');` && |\n| &&
+                   `  var lbl = sap.ui.getCore().byId('popupId--lbl1');` && |\n| &&
                    `  lbl.setText('changed from js');` && |\n| &&
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&
                    `};`.
 
-*    DATA(script) = `` &&
-*                   `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-*                   `  debugger;var lbl = 'x';` && |\n| &&
-*                   `};`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
