@@ -389,29 +389,37 @@ CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
                              config = client->_bind_edit(
                              val = ms_chartjs_config_bar pretty_mode = 'X'
                               compress_mode = client->cs_compress_mode-full
-                              compress_custom = `z2ui5_cl_cc_chartjs` )
+*                              compress_custom = `z2ui5_cl_cc_chartjs`
+                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               )
                           ).
     fb1->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bar2`
                              height = `300`
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_bar2 pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
+*                                compress_custom = `z2ui5_cl_cc_chartjs`
+                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                                 )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `venn`
                              height = `300`
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_venn pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
+*                              compress_custom = `z2ui5_cl_cc_chartjs`
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                              )
                           ).
     fb2->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `wordCloud`
                              height = `300`
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_wordcloud pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
-                          ).
+                            custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               ) ).
 
     DATA(vl11) = car->vertical_layout( width = `100%` ).
     DATA(fb11) = vl11->flex_box( width = `100%` height = `50%` justifycontent = `SpaceAround` ).
@@ -421,31 +429,39 @@ CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
                              height = `300`
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_line pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
-                          ).
+*                                compress_custom = `z2ui5_cl_cc_chartjs` )
+                                custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               ) ).
     fb11->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bubble`
                              height = `300`
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_bubble pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
-                          ).
+*                                compress_custom = `z2ui5_cl_cc_chartjs` )
+                               custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               ) ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `doughnut`
                              height = `300`
                              width = `300`
                              config = client->_bind_edit( val = ms_chartjs_config_doughnut pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
-                          ).
+*                                compress_custom = `z2ui5_cl_cc_chartjs` )
+                               custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               ) ).
 
     fb22->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `pie`
                              height = `300`
                              width = `300`
                              config = client->_bind_edit( val = ms_chartjs_config_pie pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
-                                compress_custom = `z2ui5_cl_cc_chartjs` )
-                         ).
+*                                compress_custom = `z2ui5_cl_cc_chartjs` )
+                             custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                               ) ).
 
     client->view_display( page->stringify( ) ).
 

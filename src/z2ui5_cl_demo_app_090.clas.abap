@@ -72,7 +72,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -119,35 +119,35 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                             ( grouped = `false` name = `key2` label = `Region` )
                           ).
 
-    DATA(lv_custom_js) = `sap.z2ui5.setInitialData = () => {` && |\n| &&
-                         `    debugger;` && |\n| &&
-                         `    var oView = sap.z2ui5.oView` && |\n| &&
-                         `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
-                         `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
-                         `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
-                         `    oSelectionPanel.setP13nData(oView.getModel().oData.EDIT.MT_COLUMNS_P13N);` && |\n| &&
-                         `    oSortPanel.setP13nData(oView.getModel().oData.EDIT.MT_SORT_P13N);` && |\n| &&
-                         `    oGroupPanel.setP13nData(oView.getModel().oData.EDIT.MT_GROUPS_P13N);` && |\n| &&
-                         `    var oPopup = oView.byId("p13nPopup");` && |\n| &&
-                         `    oPopup.open();` && |\n| &&
-                         `};` && |\n| &&
-                         `sap.z2ui5.updateData = (oReason) => {` && |\n| &&
-                         `  if( oReason === "Ok" ) {` && |\n| &&
-                         `    var oView = sap.z2ui5.oView` && |\n| &&
-                         `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
-                         `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
-                         `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
-                         `    oView.getModel().oData.EDIT.MT_COLUMNS_P13N = oSelectionPanel.getP13nData();` && |\n| &&
-                         `    oView.getModel().oData.EDIT.MT_SORT_P13N = oSortPanel.getP13nData();` && |\n| &&
-                         `    oView.getModel().oData.EDIT.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
-                         `  };` && |\n| &&
-                         `};`.
+      DATA(lv_custom_js) = `sap.z2ui5.setInitialData = () => {` && |\n| &&
+                           `    debugger;` && |\n| &&
+                           `    var oView = sap.z2ui5.oView` && |\n| &&
+                           `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
+                           `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
+                           `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
+                           `    oSelectionPanel.setP13nData(oView.getModel().oData.EDIT.MT_COLUMNS_P13N);` && |\n| &&
+                           `    oSortPanel.setP13nData(oView.getModel().oData.EDIT.MT_SORT_P13N);` && |\n| &&
+                           `    oGroupPanel.setP13nData(oView.getModel().oData.EDIT.MT_GROUPS_P13N);` && |\n| &&
+                           `    var oPopup = oView.byId("p13nPopup");` && |\n| &&
+                           `    oPopup.open();` && |\n| &&
+                           `};` && |\n| &&
+                           `sap.z2ui5.updateData = (oReason) => {` && |\n| &&
+                           `  if( oReason === "Ok" ) {` && |\n| &&
+                           `    var oView = sap.z2ui5.oView` && |\n| &&
+                           `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
+                           `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
+                           `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
+                           `    oView.getModel().oData.EDIT.MT_COLUMNS_P13N = oSelectionPanel.getP13nData();` && |\n| &&
+                           `    oView.getModel().oData.EDIT.MT_SORT_P13N = oSortPanel.getP13nData();` && |\n| &&
+                           `    oView.getModel().oData.EDIT.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
+                           `  };` && |\n| &&
+                           `};`.
 
-    client->view_display( Z2UI5_cl_xml_view=>factory(
-     )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW` )
-      )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
-      "val = `<html:script>` && lv_custom_js && `</html:script>`
-      )->stringify( ) ).
+      client->view_display( z2ui5_cl_xml_view=>factory(
+       )->_z2ui5( )->timer(  client->_event( `DISPLAY_VIEW` )
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_custom_js
+        "val = `<html:script>` && lv_custom_js && `</html:script>`
+        )->stringify( ) ).
 
 *    client->timer_set(
 *      interval_ms    = '0'
@@ -185,9 +185,12 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    client->_bind_edit( val = mt_columns_p13n pretty_mode = 'L' ).
-    client->_bind_edit( val = mt_sort_p13n pretty_mode = 'L' ).
-    client->_bind_edit( val = mt_groups_p13n pretty_mode = 'L' ).
+*    client->_bind_edit( val = mt_columns_p13n pretty_mode = 'L' ).
+*    client->_bind_edit( val = mt_sort_p13n pretty_mode = 'L' ).
+*    client->_bind_edit( val = mt_groups_p13n pretty_mode = 'L' ).
+    client->_bind_edit( val = mt_columns_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
+    client->_bind_edit( val = mt_sort_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
+    client->_bind_edit( val = mt_groups_p13n custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( )  ).
 
     DATA(page) =  z2ui5_cl_xml_view=>factory( ).
 
@@ -260,8 +263,8 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
 *     ( n = `title`   v = `Columns` )
 *     ( n = `visible` v = `true` )
 *     ( n = `type`    v = `Columns` )
-     ( n = `items`   v = `{path:'` && client->_bind_edit( val = mt_columns path = abap_true ) && `'}` )
-     ( n = `columnsItems`   v = `{path:'` && client->_bind_edit( val = mt_columns1 path = abap_true ) && `'}` ) )
+     ( n = `items`   v = `{path:'` && client->_bind_edit( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` )
+     ( n = `columnsItems`   v = `{path:'` && client->_bind_edit( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
      )->items(
          )->_generic( name = `P13nItem`
            t_prop = VALUE #( ( n = `columnKey` v = `{columnkey}` )
@@ -274,7 +277,7 @@ CLASS Z2UI5_CL_DEMO_APP_090 IMPLEMENTATION.
                                    ( n = `index`    v = `{index}` ) ) )->get_parent( )->get_parent( )->get_parent(
 
      )->_generic( name = `P13nGroupPanel`
-           t_prop = VALUE #( ( n = `groupItems` v = `{path:'` && client->_bind_edit( val = mt_groups path = abap_true ) && `'}` ) )
+           t_prop = VALUE #( ( n = `groupItems` v = `{path:'` && client->_bind_edit( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
      )->items(
       )->_generic( name = `P13nItem`
            t_prop = VALUE #( ( n = `columnKey` v = `{columnkey}` )

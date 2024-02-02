@@ -140,6 +140,9 @@ CLASS Z2UI5_CL_DEMO_APP_052 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
+      when `BUTTON_DETAILS`.
+        client->popover_destroy( ).
+
       WHEN `POPOVER_DETAIL`.
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_open_by_id) = lt_arg[ 1 ].

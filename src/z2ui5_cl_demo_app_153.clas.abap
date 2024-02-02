@@ -75,7 +75,9 @@ CLASS Z2UI5_CL_DEMO_APP_153 IMPLEMENTATION.
 
   METHOD ui5_display.
 
-    client->_bind_edit( val = ms_struc pretty_mode = 'X' ).
+    client->_bind_edit( val = ms_struc pretty_mode = 'X'
+           custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+     ).
 *    client->_bind_edit( val = ms_struc ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

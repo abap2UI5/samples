@@ -32,7 +32,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
 
   METHOD refresh_data.
 
-    DO 1000 TIMES.
+    DO 5000 TIMES.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = 'red'
         info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
         descr = 'this is a description' checkbox = abap_true
@@ -96,7 +96,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
             growing             = abap_true
             growingthreshold    = '20'
             growingscrolltoload = abap_true
-            items               = client->_bind( t_tab )
+            items               = client->_bind_edit( t_tab )
             sticky              = 'ColumnHeaders,HeaderToolbar' ).
 
     tab->header_toolbar(
