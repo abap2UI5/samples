@@ -390,6 +390,7 @@ CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
                              val = ms_chartjs_config_bar pretty_mode = 'X'
                               compress_mode = client->cs_compress_mode-full
 *                              compress_custom = `z2ui5_cl_cc_chartjs`
+                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                               custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
                                )
                           ).
@@ -409,6 +410,7 @@ CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
                              width = `600`
                              config = client->_bind_edit( val = ms_chartjs_config_venn pretty_mode = 'X' compress_mode = client->cs_compress_mode-full
 *                              compress_custom = `z2ui5_cl_cc_chartjs`
+                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
                               )
                           ).
