@@ -388,8 +388,9 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              width = `400`
                              config = client->_bind_edit(
                              val = ms_chartjs_config_bar
-                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
-                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                             custom_filter = NEW z2ui5_cl_cc_chartjs( )
+                             custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                            custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                )
                           ).
     fb1->vbox( justifycontent = `Center`
@@ -399,6 +400,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_bar2
                               custom_filter = NEW z2ui5_cl_cc_chartjs( )
                               custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                             custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                  )
                           ).
     fb2->vbox( justifycontent = `Center`
@@ -408,6 +410,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_venn
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                             custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                               )
                           ).
     fb2->vbox( justifycontent = `Center`
@@ -417,6 +420,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_wordcloud
                             custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                             custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
 
     DATA(vl11) = car->vertical_layout( width = `100%` ).
@@ -429,6 +433,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_line
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                             custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
     fb11->vbox( justifycontent = `Center`
       )->_z2ui5( )->chartjs( canvas_id = `bubble`
@@ -437,6 +442,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_bubble
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                              custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
 
     fb22->vbox( justifycontent = `Center`
@@ -446,6 +452,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_doughnut
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                              custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
 
     fb22->vbox( justifycontent = `Center`
@@ -455,6 +462,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_pie
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+                              custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
 
     client->view_display( page->stringify( ) ).
