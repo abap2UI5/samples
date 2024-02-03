@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
 
   METHOD view_main.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) ).
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css ).
 
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_config( i_steps_config            = ms_steps_config
+    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_config( i_steps_config = ms_steps_config
                                                     i_highlight_config        = ms_hightlight_config
                                                     i_highlight_driver_config = ms_hightlight_driver_config ) ).
 
@@ -86,8 +86,9 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
       "steps
       ms_steps_config-show_progress = abap_true.
       ms_steps_config-popover_class = 'driverjs-theme'.
-      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
+*      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
       ms_steps_config-allow_close = z2ui5_cl_demo_utility=>boolean_abap_2_json( abap_false ).
+      ms_steps_config-allow_close =  abap_false.
       ms_steps_config-progress_text = `{{current}} of {{total}} steps`.
 
       ms_steps_config-on_next_click = `//alert("this is an event function here !");` && |\n| &&

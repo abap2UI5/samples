@@ -79,8 +79,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
     ls_map_cfg-stroke = abap_true.
     ls_map_cfg-stroke_opacity = `0.6`.
     ls_map_cfg-stroke_width = `3`.
-    ls_map_cfg-selected = '-'.
-    ls_map_cfg-is_selectable = '-'.
+    ls_map_cfg-is_selectable = abap_false.
   ENDMETHOD.
 
 

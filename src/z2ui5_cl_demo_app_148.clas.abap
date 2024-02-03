@@ -52,7 +52,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_148 IMPLEMENTATION.
         APPEND ls_dataset TO ms_chartjs_config_venn-data-datasets.
 
 
-        ms_chartjs_config_wordcloud-options-plugins-datalabels-display = '-'.
+        ms_chartjs_config_wordcloud-options-plugins-datalabels-display = abap_false.
 
         client->view_model_update( ).
 
