@@ -44,9 +44,9 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
         )->get_parent( ).
 
 
-    page->input( client->_bind_edit( val = ms_struc-title  struc = ms_struc ) ).
-    page->input( client->_bind_edit( val = ms_struc-value2 struc = ms_struc ) ).
-    page->input( client->_bind_edit( val = ms_struc-value3 struc = ms_struc ) ).
+    page->input( client->_bind_edit( val = ms_struc-title  ) ).
+    page->input( client->_bind_edit( val = ms_struc-value2 ) ).
+    page->input( client->_bind_edit( val = ms_struc-value3 ) ).
 
     client->view_display( view->stringify( ) ).
 
