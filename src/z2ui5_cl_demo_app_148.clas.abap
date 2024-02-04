@@ -282,7 +282,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
     CLEAR ls_dataset.
     ls_dataset-label = `Dataset 1`.
-    ls_dataset-data_x_y_r = VALUE #( ( x = `26` y = `79` r = `12.3` )
+    ls_dataset-data_radial = VALUE #( ( x = `26` y = `79` r = `12.3` )
                                      ( x = `37` y = `65` r = `13.8` )
                                      ( x = `27` y = `24` r = `5.8` )
                                      ( x = `38` y = `39` r = `5.8` )
@@ -294,7 +294,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
 
     CLEAR ls_dataset.
     ls_dataset-label = `Dataset 2`.
-    ls_dataset-data_x_y_r = VALUE #( ( x = `5`  y = `18` r = `8.9` )
+    ls_dataset-data_radial = VALUE #( ( x = `5`  y = `18` r = `8.9` )
                                      ( x = `15` y = `88` r = `6.9` )
                                      ( x = `19` y = `56` r = `13.1` )
                                      ( x = `64` y = `31` r = `10.8` )
@@ -452,7 +452,7 @@ CLASS Z2UI5_CL_DEMO_APP_148 IMPLEMENTATION.
                              config = client->_bind_edit( val = ms_chartjs_config_doughnut
                              custom_filter = NEW z2ui5_cl_cc_chartjs( )
                              custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
-                              custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
+                             custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
                                ) ).
 
     fb22->vbox( justifycontent = `Center`
