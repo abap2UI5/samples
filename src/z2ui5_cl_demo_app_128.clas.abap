@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
      product_url = z2ui5_cl_demo_utility=>factory( client )->url_param_get(  `product` ).
 *    z2ui5_cl_demo_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).
-    check_launchpad_active = client->get( )-s_config-check_launchpad_active.
+    check_launchpad_active = client->get( )-check_launchpad_active.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

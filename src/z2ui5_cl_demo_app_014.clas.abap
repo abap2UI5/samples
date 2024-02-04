@@ -126,11 +126,11 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-            DATA(lv_version) = to_upper( client->get( )-s_config-version ).
-      IF lv_version CS `OPEN`.
-        client->message_box_display( text = `Charts are not avalaible with OpenUI5, change your UI5 library first` type = `error` ).
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-      ENDIF.
+*            DATA(lv_version) = to_upper( client->get( )-s_config-version ).
+*      IF lv_version CS `OPEN`.
+*        client->message_box_display( text = `Charts are not avalaible with OpenUI5, change your UI5 library first` type = `error` ).
+*        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+*      ENDIF.
 
       render_tab_line( ).
     ENDIF.
