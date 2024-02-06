@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
 
     DATA:
       mt_filter       TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
     DATA:
       mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY .
     DATA:

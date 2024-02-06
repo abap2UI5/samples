@@ -45,9 +45,8 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
          )->label( 'Demo'
          )->input( client->_bind_edit( mv_input )
          )->button( text = 'call new app (set data)' press = client->_event( 'CALL_NEW_APP_READ' )
-              )->label( 'some data, you can read it in the next app'
-         )->input( client->_bind_edit( mv_input2 )
-    ).
+              )->label( 'some data, you can read in the next app'
+         )->input( client->_bind_edit( mv_input2 ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -89,6 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
         CASE mv_backend_event.
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
             DATA(lo_called_app) = CAST Z2UI5_CL_DEMO_APP_025( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            clear mv_backend_event.
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
         ENDCASE.
 
