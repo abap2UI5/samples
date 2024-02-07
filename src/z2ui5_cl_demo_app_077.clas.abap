@@ -1,11 +1,11 @@
-CLASS Z2UI5_CL_DEMO_APP_077 DEFINITION
+CLASS z2ui5_cl_demo_app_077 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
     TYPES:
       BEGIN OF ty_value_map,
@@ -65,18 +65,18 @@ CLASS Z2UI5_CL_DEMO_APP_077 DEFINITION
         key    TYPE string,
       END OF ty_s_filter_pop .
 
-    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
     DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
     DATA lv_selkz TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool VALUE abap_false.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_data.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
 
@@ -84,35 +84,35 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      Z2UI5_set_data( ).
+      z2ui5_set_data( ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory(
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
         )->_z2ui5( )->timer( client->_event( 'START' )
         )->stringify( ) ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'START'.
-        Z2UI5_on_init( ).
+        z2ui5_on_init( ).
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         client->view_model_update( ).
       WHEN 'BACK'.
@@ -122,7 +122,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -193,7 +193,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
+  METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false rowid = '1' product = 'table'    createdate = `01.01.2023` createby = `Olaf` storagelocation = `AREA_001` quantity = 400  meins = 'PC' price = '1000.50' waers = 'EUR' )

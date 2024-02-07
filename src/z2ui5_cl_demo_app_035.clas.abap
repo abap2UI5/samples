@@ -22,7 +22,6 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
   METHOD view_display.
 
-*    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(view) = z2ui5_cl_ui5=>_factory( )->_ns_m( ).
 
     DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
@@ -40,8 +39,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
 
-     data(lt_types) = VALUE z2ui5_if_client=>ty_t_name_value( ).
-    lt_types = value #( FOR row IN z2ui5_cl_util_func=>source_get_file_types( )  (
+     data(lt_types) = VALUE z2ui5_if_types=>ty_t_name_value( ).
+    lt_types = value #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
             n = shift_right( shift_left( row ) )
             v = shift_right( shift_left( row ) ) ) ).
 

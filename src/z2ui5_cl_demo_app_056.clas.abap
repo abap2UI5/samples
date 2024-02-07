@@ -16,10 +16,10 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_token TYPE z2ui5_cl_util_func=>ty_t_token.
+    DATA mt_token TYPE z2ui5_cl_util=>ty_t_token.
 
-    DATA mt_tokens_added TYPE z2ui5_cl_util_func=>ty_t_token.
-    DATA mt_tokens_removed TYPE z2ui5_cl_util_func=>ty_t_token.
+    DATA mt_tokens_added TYPE z2ui5_cl_util=>ty_t_token.
+    DATA mt_tokens_removed TYPE z2ui5_cl_util=>ty_t_token.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         CLEAR mt_tokens_removed.
         CLEAR mt_tokens_added.
 
-        mt_range = z2ui5_cl_util_func=>filter_get_range_t_by_token_t( mt_token ).
+        mt_range = z2ui5_cl_util=>filter_get_range_t_by_token_t( mt_token ).
         client->view_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
@@ -189,7 +189,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
           DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           IF lo_value_help->result( )-check_confirmed = abap_true.
             mt_range = lo_value_help->result( )-t_range.
-            mt_token = z2ui5_cl_util_func=>filter_get_token_t_by_range_t( mt_range ).
+            mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
             client->view_model_update( ).
           ENDIF.
         CATCH cx_root.

@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE z2ui5_if_types=>ty_s_get,
         popup             TYPE string,
       END OF app.
 

@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_027 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE i.
@@ -15,28 +15,28 @@ CLASS Z2UI5_CL_DEMO_APP_027 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    data client            TYPE REF TO Z2UI5_if_client.
+    DATA client            TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        s_get             TYPE Z2UI5_if_client=>ty_s_get,
+        s_get             TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_on_render.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_on_render.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
     app-s_get      = client->get( ).
@@ -44,21 +44,21 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
 
     IF app-s_get-event IS NOT INITIAL.
-      Z2UI5_on_event( ).
+      z2ui5_on_event( ).
     ENDIF.
 
-    Z2UI5_on_render( ).
+    z2ui5_on_render( ).
 
     CLEAR app-s_get.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE app-s_get-event.
 
@@ -70,7 +70,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     product  = 'tomato'.
     quantity = '500'.
@@ -80,10 +80,10 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render.
+  METHOD z2ui5_on_render.
 
-    data(view) = z2ui5_cl_xml_view=>factory( ).
-    data(lv_xml) = view->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lv_xml) = view->shell(
       )->page(
               title          = 'abap2UI5 - Binding Syntax'
               navbuttonpress = client->_event( 'BACK' )
@@ -146,7 +146,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
        )->get_root( )->xml_get( ).
 
 
-       client->view_display( lv_xml ).
+    client->view_display( lv_xml ).
 
   ENDMETHOD.
 ENDCLASS.

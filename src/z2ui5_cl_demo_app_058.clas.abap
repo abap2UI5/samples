@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_058 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF s_combobox,
@@ -13,23 +13,23 @@ CLASS Z2UI5_CL_DEMO_APP_058 DEFINITION PUBLIC.
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
     TYPES:
-      BEGIN OF ty_S_cols,
+      BEGIN OF ty_s_cols,
         visible  TYPE abap_bool,
         name     TYPE string,
         length   TYPE string,
         title    TYPE string,
         editable TYPE abap_bool,
-      END OF ty_S_cols.
+      END OF ty_s_cols.
 
     TYPES:
-      BEGIN OF ty_S_db_layout,
-        selkz   TYPE ABap_bool,
+      BEGIN OF ty_s_db_layout,
+        selkz   TYPE abap_bool,
         name    TYPE string,
         user    TYPE string,
         default TYPE abap_bool,
         data    TYPE string,
-      END OF ty_S_db_layout.
-    DATA mt_db_layout TYPE STANDARD TABLE OF ty_S_db_layout.
+      END OF ty_s_db_layout.
+    DATA mt_db_layout TYPE STANDARD TABLE OF ty_s_db_layout.
 
     DATA:
       BEGIN OF ms_layout,
@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 DEFINITION PUBLIC.
         title         TYPE string,
         sticky_header TYPE string,
         selmode       TYPE string,
-        t_cols        TYPE STANDARD TABLE OF ty_S_cols,
+        t_cols        TYPE STANDARD TABLE OF ty_s_cols,
       END OF ms_layout.
 
     TYPES:
@@ -63,33 +63,33 @@ CLASS Z2UI5_CL_DEMO_APP_058 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        get               TYPE Z2UI5_if_client=>ty_s_get,
+        get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_on_render.
-    METHODS Z2UI5_on_render_main.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_on_render.
+    METHODS z2ui5_on_render_main.
 
-    METHODS Z2UI5_set_data.
-    METHODS Z2UI5_on_render_popup.
-    METHODS Z2UI5_on_render_popup_save.
+    METHODS z2ui5_set_data.
+    METHODS z2ui5_on_render_popup.
+    METHODS z2ui5_on_render_popup_save.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
     app-get        = client->get( ).
@@ -99,14 +99,14 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      Z2UI5_on_event( ).
+      z2ui5_on_event( ).
     ENDIF.
 
-    Z2UI5_on_render( ).
+    z2ui5_on_render( ).
 
 *    client->set_next( app-next ).
     CLEAR app-get.
@@ -115,11 +115,11 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE app-get-event.
       WHEN `BUTTON_START`.
-        Z2UI5_set_data( ).
+        z2ui5_set_data( ).
       WHEN `BUTTON_SETUP`.
         app-view_popup = `POPUP`.
       WHEN `BUTTON_SAVE`.
@@ -150,7 +150,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     app-view_main = `MAIN`.
 
@@ -166,37 +166,37 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render.
+  METHOD z2ui5_on_render.
 
     CASE app-view_popup.
       WHEN `POPUP`.
-        Z2UI5_on_render_popup( ).
+        z2ui5_on_render_popup( ).
       WHEN `POPUP_SAVE`.
-        Z2UI5_on_render_popup_save( ).
+        z2ui5_on_render_popup_save( ).
     ENDCASE.
 
     CASE app-view_main.
       WHEN 'MAIN'.
-        Z2UI5_on_render_main( ).
+        z2ui5_on_render_main( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_main.
+  METHOD z2ui5_on_render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-       view = view->page( id = `page_main`
-                title          = 'abap2UI5 - List Report Features'
-                navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1662821284873396225'
-                )->link(
-                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-           )->get_parent( ).
+    view = view->page( id = `page_main`
+             title          = 'abap2UI5 - List Report Features'
+             navbuttonpress = client->_event( 'BACK' )
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+         )->header_content(
+             )->link(
+                 text = 'Demo' target = '_blank'
+                 href = 'https://twitter.com/abap2UI5/status/1662821284873396225'
+             )->link(
+                 text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+        )->get_parent( ).
 
     DATA(page) = view->dynamic_page(
             headerexpanded = abap_true
@@ -214,7 +214,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
+         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
@@ -255,7 +255,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press = client->_event( val = 'DETAIL' t_arg = value #( ( `${UUID}` ) ) )
+        press = client->_event( val = 'DETAIL' t_arg = VALUE #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
       )->cells( ).
 
@@ -268,14 +268,14 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-   client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_popup.
+  METHOD z2ui5_on_render_popup.
 
-    DATA(ro_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
+    DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     ro_popup = ro_popup->dialog( title = 'View Setup'  resizable = abap_true
           contentheight = `50%` contentwidth = `50%` ).
@@ -287,7 +287,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
-    lo_tab->tab( text = 'Table' selected = client->_bind_Edit( mv_check_table )
+    lo_tab->tab( text = 'Table' selected = client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true
            )->content( 'form'
                )->label( 'zebra mode'
@@ -295,7 +295,7 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
                )->label( 'sticky header'
                )->input( client->_bind( ms_layout-sticky_header )
                )->label( text = `Title`
-               )->Input( value = client->_bind( ms_layout-title )
+               )->input( value = client->_bind( ms_layout-title )
                )->label( 'sel mode'
                )->combobox(
                    selectedkey = client->_bind_edit( ms_layout-selmode )
@@ -324,15 +324,15 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
             )->cells(
                 )->checkbox( '{VISIBLE}'
                 )->text( '{NAME}'
-                )->Input( '{TITLE}'
+                )->input( '{TITLE}'
                   )->checkbox( '{EDITABLE}'
-                  )->Input( '{LENGTH}'
+                  )->input( '{LENGTH}'
          "       )->text( '{DESCR}'
     )->get_parent( )->get_parent( )->get_parent( )->get_parent(  )->get_parent( ).
 
-   lo_tab->tab(
-                   text     = 'Sort'
-                   selected = client->_bind( mv_check_sort ) ).
+    lo_tab->tab(
+                    text     = 'Sort'
+                    selected = client->_bind( mv_check_sort ) ).
 
     ro_popup->footer( )->overflow_toolbar(
           )->toolbar_spacer(
@@ -347,9 +347,9 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_render_popup_save.
+  METHOD z2ui5_on_render_popup_save.
 
-    DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
         )->input( description = `Name` value = client->_bind( mv_layout )
@@ -380,12 +380,12 @@ CLASS Z2UI5_CL_DEMO_APP_058 IMPLEMENTATION.
                 press = client->_event( 'POPUP_LAYOUT_CONTINUE' )
                 type  = 'Emphasized' ).
 
-       client->popup_display( lo_popup->get_root( )->xml_get( ) ).
+    client->popup_display( lo_popup->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
+  METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

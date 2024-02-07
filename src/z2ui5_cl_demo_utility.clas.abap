@@ -184,20 +184,20 @@ CLASS z2ui5_cl_demo_utility IMPLEMENTATION.
 
   METHOD app_get_url.
 
-    result = z2ui5_cl_util_func=>app_get_url( classname = classname client = mi_client ).
+    result = z2ui5_cl_util=>app_get_url( classname = classname client = mi_client ).
 
   ENDMETHOD.
 
 
   METHOD app_get_url_source_code.
 
-    result = z2ui5_cl_util_func=>app_get_url_source_code( mi_client ).
+    result = z2ui5_cl_util=>app_get_url_source_code( mi_client ).
 
   ENDMETHOD.
 
   METHOD url_param_get.
 
-    result = z2ui5_cl_util_func=>url_param_get(
+    result = z2ui5_cl_util=>url_param_get(
       val = val
       url = mi_client->get( )-s_config-search ).
 

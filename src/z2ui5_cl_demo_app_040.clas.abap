@@ -15,7 +15,7 @@ CLASS Z2UI5_CL_DEMO_APP_040 DEFINITION PUBLIC.
         check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
-        get               TYPE Z2UI5_if_client=>ty_s_get,
+        get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
     METHODS Z2UI5_on_event.
