@@ -4,10 +4,10 @@
       "filename": "./abaplint.jsonc"
     },
     "abap_standard_readiness": {
-      "filename": "./abaplint-standard_abap_readiness.jsonc"
+      "filename": "./abaplint-syntax_standard.jsonc"
     },
     "abap_cloud_readiness": {
-      "filename": "./abaplint-abap_cloud_readiness.jsonc"
+      "filename": "./abaplint-syntax_cloud.jsonc"
     }
   }
 }
