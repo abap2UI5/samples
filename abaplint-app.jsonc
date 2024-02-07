@@ -3,9 +3,6 @@
     "default": {
       "filename": "./abaplint.jsonc"
     },
-    "abap_standard_readiness": {
-      "filename": "./abaplint-syntax_standard.jsonc"
-    },
     "abap_cloud_readiness": {
       "filename": "./abaplint-syntax_cloud.jsonc"
     }
