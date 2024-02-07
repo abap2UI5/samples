@@ -16,11 +16,7 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_sql TYPE z2ui5_cl_util_func=>ty_t_filter_multi.
-*    DATA mt_token TYPE z2ui5_cl_util_func=>ty_t_token.
-
-*    DATA mt_tokens_added TYPE z2ui5_cl_util_func=>ty_t_token.
-*    DATA mt_tokens_removed TYPE z2ui5_cl_util_func=>ty_t_token.
+    DATA mt_sql TYPE z2ui5_cl_util=>ty_t_filter_multi.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -30,7 +26,6 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
     METHODS set_data.
 
   PRIVATE SECTION.
-*    DATA mt_range TYPE z2ui5_cl_util_func=>ty_t_sql_multi.
 ENDCLASS.
 
 
@@ -146,7 +141,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
-      mt_sql = z2ui5_cl_util_func=>filter_get_multi_by_data( mt_table ).
+      mt_sql = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
       view_display( ).
       RETURN.
     ENDIF.

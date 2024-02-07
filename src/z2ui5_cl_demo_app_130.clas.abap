@@ -623,7 +623,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN `POPUP_FILTER_ADD`.
 
-        INSERT VALUE #( key = z2ui5_cl_util_func=>uuid_get_c32( ) ) INTO TABLE mt_filter.
+        INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
 
         client->popup_model_update( ).
 
