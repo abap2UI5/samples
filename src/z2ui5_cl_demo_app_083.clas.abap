@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     DATA mv_value2      TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
 
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value.
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
 
     TYPES ty_t_range TYPE RANGE OF string.
     TYPES ty_s_range TYPE LINE OF ty_t_range.
@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
-          DATA(ls_range) = z2ui5_cl_util_func=>filter_get_range_by_token( mv_value ).
+          DATA(ls_range) = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
 
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         client->popup_destroy( ).
 
       WHEN `POPUP_ADD`.
-        INSERT VALUE #( key = z2ui5_cl_util_func=>uuid_get_c32( ) ) INTO TABLE mt_filter.
+        INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
         client->popup_model_update( ).
 
       WHEN `POPUP_DELETE`.
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                    low = lr_product->low
                    high = lr_product->high
                    option = lr_product->option
-                   key = z2ui5_cl_util_func=>uuid_get_c32( )
+                   key = z2ui5_cl_util=>uuid_get_c32( )
            ) INTO TABLE mt_filter.
 
         ENDLOOP.
