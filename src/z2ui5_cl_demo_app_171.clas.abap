@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_171 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      favicon = `https://cdn.jsdelivr.net/gh/choper725/resources/123/abap2ui5.png`.
+      favicon = `https://cdn.jsdelivr.net/gh/abap2UI5/abap2UI5/resources/abap2ui5.png`.
 
       display_view( ).
 
