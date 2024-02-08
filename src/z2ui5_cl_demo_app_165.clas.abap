@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
       DATA(lv_index) = sy-tabix.
 
       DATA(lo_col) = lo_columns->column(
-        visible         = client->_bind( val = lr_layout->visible         tab = mt_layout tab_index = lv_index )
-        mergeduplicates = client->_bind( val = lr_layout->mergeduplicates tab = mt_layout tab_index = lv_index ) ).
+        visible         = client->_bind( val = lr_layout->visible         tab = ref #( mt_layout ) tab_index = lv_index )
+        mergeduplicates = client->_bind( val = lr_layout->mergeduplicates tab = ref #( mt_layout ) tab_index = lv_index ) ).
 
       lo_col->text( text = lr_layout->name ).
 
