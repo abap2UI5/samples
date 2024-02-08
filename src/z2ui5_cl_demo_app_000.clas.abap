@@ -899,28 +899,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
-               headertext = `Draft Handling`
-          ).
-
-    panel->generic_tile(
-      header    = 'Draft I'
-      subheader = 'App remembers at startup values of past inputs'
-      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_062' )
-      mode      = 'LineMode'
-      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
-
-    panel->generic_tile(
-         header    = 'Draft II'
-         subheader = 'Call the same app with different users'
-         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_063' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
-    panel = page->panel(
-               expandable = abap_false
-               expanded   = abap_true
                headertext = `Features`
           ).
 

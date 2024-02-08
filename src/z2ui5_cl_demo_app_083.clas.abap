@@ -239,13 +239,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       mt_02_display = mt_02.
       DELETE mt_02_display WHERE screen_name <> mv_name.
 
-
-
-*      FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-*      ASSIGN mt_table->* TO <tab>.
-
-*      mt_cols = Z2UI5_tool_cl_utility=>get_fieldlist_by_table( mt_02 ).
-
       mt_tab_02_input = VALUE #( FOR line IN mt_cols ( name = line ) ).
 
       LOOP AT mt_02_display REFERENCE INTO DATA(lr_tab).
@@ -261,8 +254,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         )->custom_list_item(
             )->hbox(
                 )->text( `{NAME}`
-*                )->input( value = `{VALUE}` enabled = abap_true
-
             )->multi_input(
                 tokens          = client->_bind( mt_token )
                 showclearicon   = abap_true
@@ -280,72 +271,8 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                     text     = `{TEXT}`
                     visible  = `{VISIBLE}`
                     selected = `{SELKZ}`
-                    editable = `{EDITABLE}`
-
-        ).
-
-*      DATA(tab) = view->get_parent( )->get_parent( )->simple_form( editable = abap_true
-*                )->content( 'form' )->table(
-*                  items = client->_bind( val = mt_02 )
-*              ).
-*
-*      DATA(lo_columns) = tab->columns( ).
-*
-*
-*      LOOP AT mt_cols INTO DATA(lv_field) FROM 2.
-*        lo_columns->column( )->text( lv_field ).
-*      ENDLOOP.
-*
-*      DATA(lo_cells) = tab->items( )->column_list_item( selected = '{SELKZ}' )->cells( ).
-*      LOOP AT mt_cols INTO lv_field FROM 2.
-*        lo_cells->input( `{` && lv_field && `}` ).
-*      ENDLOOP.
-
+                    editable = `{EDITABLE}` ).
     ENDIF.
-
-
-*    DATA(vbox) = lo_box->vbox( ).
-*    vbox->text(  `Product:`
-*    )->multi_input(
-*                tokens          = client->_bind( mt_token )
-*                showclearicon   = abap_true
-*                value           = client->_bind( mv_value )
-*                tokenUpdate     = client->_event( val = 'FILTER_UPDATE1'  )
-*                submit          = client->_event( 'FILTER_UPDATE' )
-*                id              = `FILTER`
-*                valueHelpRequest  = client->_event( 'FILTER_VALUE_HELP' )
-*            )->item(
-*                    key  = `{KEY}`
-*                    text = `{TEXT}`
-*            )->tokens(
-*                )->token(
-*                    key      = `{KEY}`
-*                    text     = `{TEXT}`
-*                    visible  = `{VISIBLE}`
-*                    selected = `{SELKZ}`
-*                    editable = `{EDITABLE}` ).
-*
-*    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-*        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
-*        ).
-
-*    DATA(cont) = page->content( ns = 'f' ).
-
-*    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
-*
-*    DATA(lo_columns) = tab->columns( ).
-*    lo_columns->column( )->text( text = `Product` ).
-*    lo_columns->column( )->text( text = `Date` ).
-*    lo_columns->column( )->text( text = `Name` ).
-*    lo_columns->column( )->text( text = `Location` ).
-*    lo_columns->column( )->text( text = `Quantity` ).
-*
-*    DATA(lo_cells) = tab->items( )->column_list_item( ).
-*    lo_cells->text( `{PRODUCT}` ).
-*    lo_cells->text( `{CREATE_DATE}` ).
-*    lo_cells->text( `{CREATE_BY}` ).
-*    lo_cells->text( `{STORAGE_LOCATION}` ).
-*    lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 
