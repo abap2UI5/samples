@@ -155,13 +155,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-    header    = 'Browser Title'
-    press     = client->_event( 'z2ui5_cl_demo_app_125' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
-
-    panel->generic_tile(
         header    = 'New Tab'
         subheader = 'Open an URL in a new tab'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_073' )
@@ -1010,6 +1003,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             expanded   = abap_true
             headertext = `Custom Control - More`
        ).
+
+    panel->generic_tile(
+    header    = 'Tab Title'
+    press     = client->_event( 'z2ui5_cl_demo_app_125' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+    header    = 'Tab Favicon'
+    press     = client->_event( 'z2ui5_cl_demo_app_171' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel->generic_tile(
         header    = 'Spreadsheet Control'
