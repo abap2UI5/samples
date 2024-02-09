@@ -176,16 +176,13 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
         view_display_detail(  ).
 
       WHEN 'TEST'.
-*        client->view_model_update( ).
         client->message_toast_display( mv_input_master ).
+
       WHEN `NEST_TEST`.
 
         mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
         mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
-
         client->message_toast_display( mv_input_detail ).
-
-*      client->nest_view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).

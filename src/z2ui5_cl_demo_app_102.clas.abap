@@ -23,8 +23,8 @@ CLASS z2ui5_cl_demo_app_102 DEFINITION
 
     METHODS view_display
       IMPORTING
-        check_init TYPE abap_bool
-        client     TYPE REF TO z2ui5_if_client.
+*        check_init TYPE abap_bool
+        client TYPE REF TO z2ui5_if_client.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -37,14 +37,8 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
 
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
-      mv_scale_x = `5`.
-      mv_scale_y = `7`.
-
-      mt_barcode = z2ui5_cl_cc_bwipjs=>get_t_barcode_types( ).
-      ms_barcode = mt_barcode[ 1 ].
-
-      view_display( client = client check_init = abap_false ).
-
+      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_bwipjs=>get_js( ) ) ).
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
@@ -54,11 +48,19 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `BUTTON_POST`.
-        view_display( client = client check_init = abap_true ).
+        view_display( client = client ).
+*        check_init = abap_true ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+      WHEN OTHERS.
+        mv_scale_x = `5`.
+        mv_scale_y = `7`.
 
+        mt_barcode = z2ui5_cl_cc_bwipjs=>get_t_barcode_types( ).
+        ms_barcode = mt_barcode[ 1 ].
+
+        view_display( client = client ). "check_init = abap_false ).
     ENDCASE.
 
   ENDMETHOD.
@@ -116,18 +118,18 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
                   )->button( text  = 'Show Barcode' press = client->_event( 'BUTTON_POST' )
                 )->get_parent( ).
 
-    IF check_init = abap_false.
-         cont->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
-    ELSE.
-      cont->simple_form( title    = 'Barcode' editable = abap_true
-           )->_z2ui5( )->bwip_js(
-              bcid = ms_barcode-sym
-              text = ms_barcode-text
-              scale = mv_scale_x
-              height = conv string( mv_scale_y + mv_scale_x )
+*    IF check_init = abap_false.
+*      cont->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_bwipjs=>get_js( ) ).
+*    ELSE.
+    cont->simple_form( title    = 'Barcode' editable = abap_true
+         )->_z2ui5( )->bwip_js(
+            bcid = ms_barcode-sym
+            text = ms_barcode-text
+            scale = mv_scale_x
+            height = CONV string( mv_scale_y + mv_scale_x )
 
-              ).
-    ENDIF.
+            ).
+*    ENDIF.
 
     client->view_display( view->stringify( ) ).
 

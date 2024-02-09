@@ -57,22 +57,12 @@ CLASS z2ui5_cl_demo_app_077 DEFINITION
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
-    TYPES:
-      BEGIN OF ty_s_filter_pop,
-        option TYPE string,
-        low    TYPE string,
-        high   TYPE string,
-        key    TYPE string,
-      END OF ty_s_filter_pop .
-
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
+    DATA mt_table TYPE ty_t_table.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool VALUE abap_false.
+    DATA check_load_cc   TYPE abap_bool VALUE abap_false.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
@@ -89,17 +79,16 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
+    IF check_load_cc = abap_false.
+      check_load_cc = abap_true.
       z2ui5_set_data( ).
-
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
-        )->_z2ui5( )->timer( client->_event( 'START' )
-        )->stringify( ) ).
+      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+      RETURN.
+    ELSEIF check_initialized = abap_false..
+      check_initialized = abap_true.
+      z2ui5_on_init( ).
       RETURN.
     ENDIF.
 
@@ -111,10 +100,6 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'START'.
-        z2ui5_on_init( ).
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        client->view_model_update( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
@@ -185,8 +170,7 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
           )->text( text = '{STORAGELOCATION}'
           )->text( text = '{QUANTITY}'
           )->text( text = '{MEINS}'
-          )->text( text = '{PRICE}'
-          ).
+          )->text( text = '{PRICE}' ).
 
     client->view_display( view->stringify( ) ).
 

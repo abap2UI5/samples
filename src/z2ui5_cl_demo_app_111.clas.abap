@@ -32,11 +32,13 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
+    METHODS get_custom_js
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -52,94 +54,13 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      z2ui5_on_init( ).
       z2ui5_set_data( ).
+      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( get_custom_js( ) ) ).
+      RETURN.
+    ENDIF.
 
-
-      DATA(lv_script) = `debugger;sap.z2ui5.InitSvm = () => {` && |\n| &&
-                        ` var oView = sap.z2ui5.oView` && |\n| &&
-                        ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
-                        ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                        ` var aData = _registerFetchData(oFilterBar);` && |\n| &&
-                        ` oFilterBar.registerFetchData( aData );` && |\n| &&
-                        ` oFilterBar.registerApplyData( _registerApplyData(oFilterBar, aData));` && |\n| &&
-                        ` oFilterBar.registerGetFiltersWithValues( _registerGetFiltersWithValues(oFilterBar));` && |\n| &&
-                        ` var oPersInfo = new sap.ui.comp.smartvariants.PersonalizableInfo({` && |\n| &&
-                        `   type: "filterBar",` && |\n| &&
-                        `   keyName: "persistencyKey",` && |\n| &&
-                        `   dataSource: "",` && |\n| &&
-                        `   control: oFilterBar` && |\n| &&
-                        ` });` && |\n| &&
-                        ` oSmartVariantManagement.addPersonalizableControl(oPersInfo);` && |\n| &&
-                        ` oSmartVariantManagement.initialise(function () {oSmartVariantManagement.currentVariantSetModified(false);}, oFilterBar);` && |\n| &&
-                        `};` && |\n| &&
-                        `_registerFetchData = (oFilterBar) => {` && |\n| &&
-                        ` var aData = oFilterBar.getAllFilterItems().reduce(function (aResult, oFilterItem) {` && |\n| &&
-                        `   aResult.push({` && |\n| &&
-                        `     groupName: oFilterItem.getGroupName(),` && |\n| &&
-                        `     fieldName: oFilterItem.getName(),` && |\n| &&
-                        `     fieldData: oFilterItem.getControl().getValue()` && |\n| &&
-                        `   });` && |\n| &&
-                        `   return aResult;` && |\n| &&
-                        ` }, []);` && |\n| &&
-                        ` return aData;` && |\n| &&
-                        `};` && |\n| &&
-                        `_registerApplyData = (oFilterBar, aData) => {` && |\n| &&
-                        ` aData.forEach(function (oDataObject) {` && |\n| &&
-                        `   var oControl = oFilterBar.determineControlByName(oDataObject.fieldName, oDataObject.groupName);` && |\n| &&
-                        `   oControl.setValue(oDataObject.fieldData);` && |\n| &&
-                        ` });` && |\n| &&
-                        `};` && |\n| &&
-                        `_registerGetFiltersWithValues = (oFilterBar) => {` && |\n| &&
-                        ` var aFiltersWithValue = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
-                        `   var oControl = oFilterGroupItem.getControl();` && |\n| &&
-                        `   if (oControl &amp;&amp; oControl.getValue &amp;&amp; oControl.getValue().length > 0) {` && |\n| &&
-                        `       aResult.push(oFilterGroupItem);` && |\n| &&
-                        `   }` && |\n| &&
-                        `   return aResult;` && |\n| &&
-                        ` }, []);` && |\n| &&
-                        ` return aFiltersWithValue;` && |\n| &&
-                        `};` && |\n| &&
-                        `sap.z2ui5.onSearch = () => {` && |\n| &&
-                        ` var oView = sap.z2ui5.oView` && |\n| &&
-                        ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                        ` var oTable = oView.byId("table1");` && |\n| &&
-                        ` var aTableFilters = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
-                        `   var oControl = oFilterGroupItem.getControl(),` && |\n| &&
-                        `       aSelectedKey = oControl.getValue(),` && |\n| &&
-                        `       aFilters = return new sap.ui.model.Filter({` && |\n| &&
-                        `                   path: oFilterGroupItem.getName(),` && |\n| &&
-                        `                   operator: "Contains",` && |\n| &&
-                        `                   value1: sSelectedKey` && |\n| &&
-                        `                });` && |\n| &&
-*                        `     });` && |\n| &&
-                        ` if (aSelectedKey.length > 0) {` && |\n| &&
-                        `     aResult.push(new sap.ui.model.Filter({` && |\n| &&
-                        `                   filters: aFilters,` && |\n| &&
-                        `                   and: false` && |\n| &&
-                        `                 }));` && |\n| &&
-                        ` }` && |\n| &&
-                        ` return aResult;` && |\n| &&
-                        `     }, []);` && |\n| &&
-                        `  oTable.getBinding("items").filter(aTableFilters);` && |\n| &&
-                        `};` && |\n| &&
-                        `sap.z2ui5.onChange = (oEvent) => {` && |\n| &&
-                        ` var oView = sap.z2ui5.oView` && |\n| &&
-                        ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                        ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
-                        ` oSmartVariantManagement.currentVariantSetModified(true);` && |\n| &&
-                        ` oFilterBar.fireFilterChange(oEvent);` && |\n| &&
-                        `}`.
-
-
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->timer( client->_event( `START` )
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
-        )->stringify( ) ).
-
-*      client->timer_set( event_finished = client->_event( `START` ) interval_ms = `0` ).
-
-
+    IF client->get( )-check_on_navigated = abap_true.
+      z2ui5_view_display( ).
       RETURN.
     ENDIF.
 
@@ -152,23 +73,13 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'START'.
-        z2ui5_view_display( ).
-
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-*        z2ui5_set_data( ).
-*        z2ui5_set_search( ).
         client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_init.
 
   ENDMETHOD.
 
@@ -288,4 +199,84 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
+  METHOD get_custom_js.
+
+    result  = `sap.z2ui5.InitSvm = () => {` && |\n| &&
+                 ` var oView = sap.z2ui5.oView` && |\n| &&
+                 ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
+                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
+                 ` var aData = _registerFetchData(oFilterBar);` && |\n| &&
+                 ` oFilterBar.registerFetchData( aData );` && |\n| &&
+                 ` oFilterBar.registerApplyData( _registerApplyData(oFilterBar, aData));` && |\n| &&
+                 ` oFilterBar.registerGetFiltersWithValues( _registerGetFiltersWithValues(oFilterBar));` && |\n| &&
+                 ` var oPersInfo = new sap.ui.comp.smartvariants.PersonalizableInfo({` && |\n| &&
+                 `   type: "filterBar",` && |\n| &&
+                 `   keyName: "persistencyKey",` && |\n| &&
+                 `   dataSource: "",` && |\n| &&
+                 `   control: oFilterBar` && |\n| &&
+                 ` });` && |\n| &&
+                 ` oSmartVariantManagement.addPersonalizableControl(oPersInfo);` && |\n| &&
+                 ` oSmartVariantManagement.initialise(function () {oSmartVariantManagement.currentVariantSetModified(false);}, oFilterBar);` && |\n| &&
+                 `};` && |\n| &&
+                 `_registerFetchData = (oFilterBar) => {` && |\n| &&
+                 ` var aData = oFilterBar.getAllFilterItems().reduce(function (aResult, oFilterItem) {` && |\n| &&
+                 `   aResult.push({` && |\n| &&
+                 `     groupName: oFilterItem.getGroupName(),` && |\n| &&
+                 `     fieldName: oFilterItem.getName(),` && |\n| &&
+                 `     fieldData: oFilterItem.getControl().getValue()` && |\n| &&
+                 `   });` && |\n| &&
+                 `   return aResult;` && |\n| &&
+                 ` }, []);` && |\n| &&
+                 ` return aData;` && |\n| &&
+                 `};` && |\n| &&
+                 `_registerApplyData = (oFilterBar, aData) => {` && |\n| &&
+                 ` aData.forEach(function (oDataObject) {` && |\n| &&
+                 `   var oControl = oFilterBar.determineControlByName(oDataObject.fieldName, oDataObject.groupName);` && |\n| &&
+                 `   oControl.setValue(oDataObject.fieldData);` && |\n| &&
+                 ` });` && |\n| &&
+                 `};` && |\n| &&
+                 `_registerGetFiltersWithValues = (oFilterBar) => {` && |\n| &&
+                 ` var aFiltersWithValue = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
+                 `   var oControl = oFilterGroupItem.getControl();` && |\n| &&
+                 `   if (oControl &amp;&amp; oControl.getValue &amp;&amp; oControl.getValue().length > 0) {` && |\n| &&
+                 `       aResult.push(oFilterGroupItem);` && |\n| &&
+                 `   }` && |\n| &&
+                 `   return aResult;` && |\n| &&
+                 ` }, []);` && |\n| &&
+                 ` return aFiltersWithValue;` && |\n| &&
+                 `};` && |\n| &&
+                 `sap.z2ui5.onSearch = () => {` && |\n| &&
+                 ` var oView = sap.z2ui5.oView` && |\n| &&
+                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
+                 ` var oTable = oView.byId("table1");` && |\n| &&
+                 ` var aTableFilters = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
+                 `   var oControl = oFilterGroupItem.getControl(),` && |\n| &&
+                 `       aSelectedKey = oControl.getValue(),` && |\n| &&
+                 `       aFilters = return new sap.ui.model.Filter({` && |\n| &&
+                 `                   path: oFilterGroupItem.getName(),` && |\n| &&
+                 `                   operator: "Contains",` && |\n| &&
+                 `                   value1: sSelectedKey` && |\n| &&
+                 `                });` && |\n| &&
+*                        `     });` && |\n| &&
+                 ` if (aSelectedKey.length > 0) {` && |\n| &&
+                 `     aResult.push(new sap.ui.model.Filter({` && |\n| &&
+                 `                   filters: aFilters,` && |\n| &&
+                 `                   and: false` && |\n| &&
+                 `                 }));` && |\n| &&
+                 ` }` && |\n| &&
+                 ` return aResult;` && |\n| &&
+                 `     }, []);` && |\n| &&
+                 `  oTable.getBinding("items").filter(aTableFilters);` && |\n| &&
+                 `};` && |\n| &&
+                 `sap.z2ui5.onChange = (oEvent) => {` && |\n| &&
+                 ` var oView = sap.z2ui5.oView` && |\n| &&
+                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
+                 ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
+                 ` oSmartVariantManagement.currentVariantSetModified(true);` && |\n| &&
+                 ` oFilterBar.fireFilterChange(oEvent);` && |\n| &&
+                 `}`.
+
+  ENDMETHOD.
+
 ENDCLASS.
