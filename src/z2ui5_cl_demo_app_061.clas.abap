@@ -80,23 +80,18 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_FW_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_CORE_01').
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-*      CREATE DATA t_tab2 TYPE STANDARD TABLE OF ('Z2UI5_T_FW_01').
-*      FIELD-SYMBOLS <tab2> TYPE table.
-*      ASSIGN t_tab2->* TO <tab2>.
-
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
 
-*      <tab2> = <tab>.
 
     ENDIF.
 
