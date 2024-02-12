@@ -58,6 +58,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         CLEAR mt_tokens_added.
 
         mt_range = z2ui5_cl_util=>filter_get_range_t_by_token_t( mt_token ).
+        set_data( ).
         client->view_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
@@ -108,25 +109,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
                        removedtokens    = client->_bind_edit( mt_tokens_removed )
                        change    = client->_event( 'UPDATE_TOKENS' )
                        multiinputid    = `MultiInput`  ).
-
-*    vbox->text( `Product:`
-*    )->multi_input(
-*                width = `30%`
-*                id = `MultiInput`
-*                tokens           = client->_bind( mt_token )
-*                showclearicon    = abap_true
-*                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
-*            )->item(
-*                    key  = `{KEY}`
-*                    text = `{TEXT}`
-*            )->tokens(
-*                )->token(
-*                    key      = `{KEY}`
-*                    text     = `{TEXT}`
-*                    visible  = `{VISIBLE}`
-*                    selected = `{SELKZ}`
-*                    editable = `{EDITABLE}` ).
-
 
     DATA(tab) = vbox->table(
         items = client->_bind( val = mt_table )
@@ -190,6 +172,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
           IF lo_value_help->result( )-check_confirmed = abap_true.
             mt_range = lo_value_help->result( )-t_range.
             mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
+            set_data( ).
             client->view_model_update( ).
           ENDIF.
         CATCH cx_root.

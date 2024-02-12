@@ -87,7 +87,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
       ms_steps_config-show_progress = abap_true.
       ms_steps_config-popover_class = 'driverjs-theme'.
 *      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
-      ms_steps_config-allow_close = z2ui5_cl_demo_utility=>boolean_abap_2_json( abap_false ).
+      ms_steps_config-allow_close = z2ui5_cl_util=>boolean_abap_2_json( abap_false ).
       ms_steps_config-allow_close =  abap_false.
       ms_steps_config-progress_text = `{{current}} of {{total}} steps`.
 

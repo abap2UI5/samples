@@ -42,10 +42,10 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = z2ui5_cl_demo_utility=>decode_x_base64( lv_data ).
-            DATA(lv_ready) = z2ui5_cl_demo_utility=>get_string_by_xstring( lv_data2 ).
+            DATA(lv_data2) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+            DATA(lv_ready) = z2ui5_cl_util=>conv_get_string_by_xstring( lv_data2 ).
 
-            mr_table = z2ui5_cl_demo_utility=>get_table_by_csv( lv_ready ).
+            mr_table = z2ui5_cl_util=>itab_get_itab_by_csv( lv_ready ).
             client->message_box_display( `CSV loaded to table` ).
 
             ui5_view_main_display( ).
@@ -103,14 +103,14 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
           )->get_parent( )->get_parent( ).
 
 
-      DATA(lr_fields) = z2ui5_cl_demo_utility=>get_fieldlist_by_table( <tab> ).
+      DATA(lr_fields) = z2ui5_cl_util=>rtti_get_t_attri_by_struc( <tab> ).
       DATA(lo_cols) = tab->columns( ).
       LOOP AT lr_fields REFERENCE INTO DATA(lr_col).
-        lo_cols->column( )->text( lr_col->* ).
+        lo_cols->column( )->text( lr_col->name ).
       ENDLOOP.
       DATA(lo_cells) = tab->items( )->column_list_item( )->cells( ).
       LOOP AT lr_fields REFERENCE INTO lr_col.
-        lo_cells->text( `{` && lr_col->* && `}` ).
+        lo_cells->text( `{` && lr_col->name && `}` ).
       ENDLOOP.
     ENDIF.
 

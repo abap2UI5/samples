@@ -41,21 +41,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         set_data( ).
         client->view_model_update( ).
 
-*      WHEN `UPDATE_TOKENS`.
-*        LOOP AT mt_tokens_removed INTO DATA(ls_token).
-*          DELETE mt_token WHERE key = ls_token-key.
-*        ENDLOOP.
-*
-*        LOOP AT mt_tokens_added INTO ls_token.
-*          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
-*        ENDLOOP.
-*
-*        CLEAR mt_tokens_removed.
-*        CLEAR mt_tokens_added.
-*
-*        mt_range = z2ui5_cl_util_func=>get_range_t_by_token_t( mt_token ).
-*        client->view_model_update( ).
-
       WHEN `PREVIEW_FILTER`.
         client->nav_app_call( z2ui5_cl_popup_get_range_multi=>factory( mt_sql ) ).
 
@@ -83,8 +68,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     "here we use an internal table instead
     LOOP AT mt_sql INTO DATA(ls_tab).
 
-      DATA(lv_clause) = ls_tab-name && ` not in ls_tab-t_range`.
-      DELETE mt_table WHERE (lv_clause).
+      "do filtering here..
 
     ENDLOOP.
 
@@ -105,7 +89,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).
-
 
     DATA(tab) = vbox->table(
         items = client->_bind( val = mt_table )
@@ -149,7 +132,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
           DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range_multi( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-          IF lo_value_help->result( )-check_confirmed = abap_false.
+          IF lo_value_help->result( )-check_confirmed = abap_true.
             mt_sql = lo_value_help->result( )-t_sql.
             set_data( ).
             client->view_model_update( ).
