@@ -63,14 +63,14 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
 
-    DATA lt_result LIKE mt_table.
-    "put the range in the where clause of your abap sql command
-    "here we use an internal table instead
-    LOOP AT mt_sql INTO DATA(ls_tab).
-
-      "do filtering here..
-
-    ENDLOOP.
+*    DATA lt_result LIKE mt_table.
+*    "put the range in the where clause of your abap sql command
+*    "here we use an internal table instead
+*    LOOP AT mt_sql INTO DATA(ls_tab).
+*
+*      "do filtering here..
+*
+*    ENDLOOP.
 
   ENDMETHOD.
 
