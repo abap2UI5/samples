@@ -21,25 +21,17 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-     product_url = z2ui5_cl_demo_utility=>factory( client )->url_param_get(  `product` ).
-     product_url = z2ui5_cl_util=>url_param_get(
-                     val =  `product`
-                     url = client->get( )-s_config-search ).
-*    z2ui5_cl_demo_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).
+    product_url = z2ui5_cl_util=>url_param_get(
+                    val =  `product`
+                    url = client->get( )-s_config-search ).
     check_launchpad_active = client->get( )-check_launchpad_active.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-
-*    client->url_param_set( val = `test` ).
-
       product  = 'tomato'.
       quantity = '500'.
-
-
 
       client->view_display( view->shell(
             )->page(
