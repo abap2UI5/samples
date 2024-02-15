@@ -11,7 +11,7 @@
     },
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/abap2UI5/abap2UI5.git"
+      "url": "git+https://github.com/abap2UI5/abap2UI5-downport.git"
     },
     "license": "MIT",
     "bugs": {
