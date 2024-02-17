@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "description": "Explore Code Samples of abap2UI5",
     "scripts": {
-      "downport": "rm -rf downport && cp -r src downport && abaplint --fix abaplint-downport.jsonc",
+      "downport": "abaplint ./abaplint-downport.jsonc --fix ? npm run downport ?",
       "unit": "echo RUNNING && node output/index.mjs",
       "transpile": "rm -rf output && abap_transpile test/abap_transpile.json",
       "test": "npm run downport && npm run transpile && npm run unit"
