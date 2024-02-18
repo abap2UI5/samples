@@ -27,16 +27,6 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
         border_radius  TYPE i,
         border_skipped TYPE abap_bool,
         show_line      TYPE abap_bool,
-*        background_color   TYPE string,
-*        hover_offset       TYPE i,
-*        order              TYPE i,
-*        fill               TYPE string,
-*        hidden             TYPE abap_bool,
-*        point_style        TYPE string,
-*        point_border_color TYPE string,
-*        point_radius       TYPE i,
-*        point_hover_radius TYPE i,
-*        rtl                TYPE abap_bool,
         lvl2           TYPE ty_dataset2,
       END OF ty_dataset.
 
