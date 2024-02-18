@@ -42,7 +42,6 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
 
       render_main( ).
 
-      RETURN.
     ENDIF.
 
   ENDMETHOD.
