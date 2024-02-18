@@ -2,7 +2,6 @@ name: build_downport
 
 on:
   push:
-    branches: [main]
 
 permissions:
   contents: read
@@ -12,14 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
       with:
         node-version: 20
     - run: npm ci
     - run: npm run downport
     - name: send to downport repository
       uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' && github.repository == 'abap2UI5/abap2UI5-samples'
       with:
         external_repository: abap2UI5/abap2UI5-samples-downport
         user_name: 'github-actions[bot]'
