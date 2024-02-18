@@ -656,7 +656,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN 'CALL_POPUP_VARIANT'.
 
-        mt_variants_pop = CORRESPONDING #( mt_variants ).
+        LOOP AT mt_variants REFERENCE INTO DATA(lr_fields).
+          APPEND INITIAL LINE TO mt_variants_pop REFERENCE INTO DATA(field).
+          field->* = CORRESPONDING #( lr_fields->* ).
+        ENDLOOP.
 
         render_popup_varaint( client ).
 

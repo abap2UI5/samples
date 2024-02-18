@@ -111,7 +111,8 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
-          DATA(ls_range) = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
+          DATA ls_range TYPE z2ui5_cl_util_api=>ty_s_range.
+          ls_range = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
 
