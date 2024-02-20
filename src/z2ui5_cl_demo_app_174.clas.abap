@@ -17,9 +17,9 @@ CLASS z2ui5_cl_demo_app_174 DEFINITION PUBLIC.
 
     DATA mt_table TYPE ty_t_table.
 
-    DATA ms_layout  TYPE Z2UI5_CL_POPUP_LAYOUT_V2=>ty_s_layout.
+    DATA ms_layout  TYPE z2ui5_cl_popup_layout_v2=>ty_s_layout.
 
-  PROTECTED SECTION.
+PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
     METHODS on_event.
@@ -43,8 +43,8 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-     WHEN OTHERS.
-         on_event_LAYOUT( ).
+      WHEN OTHERS.
+        on_event_layout( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -77,21 +77,21 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
          ).
 
-  DATA(table) = view->table(
+    DATA(table) = view->table(
       growing    = 'true'
       width      = 'auto'
       items      = client->_bind( val = mt_table )
-      headerText = 'Table'
+      headertext = 'Table'
     ).
 
     DATA(headder) =  table->header_toolbar(
                )->overflow_toolbar(
-                 )->Title(   text =  'Table'
+                 )->title(   text =  'Table'
                  )->toolbar_spacer(
                  ).
 
-    headder = Z2UI5_CL_POPUP_LAYOUT_V2=>render_layout_function( xml    = headder
-                                                             client = client ).
+    headder = z2ui5_cl_popup_layout_v2=>render_layout_function( xml    = headder
+                                                                client = client ).
 
     DATA(columns) = table->columns( ).
 
@@ -100,18 +100,18 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
       DATA(lv_index) = sy-tabix.
 
       columns->column(
-                       visible         = client->_bind( val = layout->visible         tab = ms_layout-t_layout tab_index = lv_index )
-                       halign          = client->_bind( val = layout->halign          tab = ms_layout-t_layout tab_index = lv_index )
-                       importance      = client->_bind( val = layout->importance      tab = ms_layout-t_layout tab_index = lv_index )
-                       mergeduplicates = client->_bind( val = layout->merge           tab = ms_layout-t_layout tab_index = lv_index )
-                       minscreenwidth  = client->_bind( val = layout->width           tab = ms_layout-t_layout tab_index = lv_index )
-       )->text( layout->fname ).
+        visible         = client->_bind( val = layout->visible tab = ms_layout-t_layout tab_index = lv_index )
+        halign          = client->_bind( val = layout->halign tab = ms_layout-t_layout tab_index = lv_index )
+        importance      = client->_bind( val = layout->importance tab = ms_layout-t_layout tab_index = lv_index )
+        mergeduplicates = client->_bind( val = layout->merge tab = ms_layout-t_layout tab_index = lv_index )
+        minscreenwidth  = client->_bind( val = layout->width tab = ms_layout-t_layout tab_index = lv_index )
+                          )->text( layout->fname ).
 
     ENDLOOP.
 
 
     DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( vAlign = 'Middle'
+                                       )->column_list_item( valign = 'Middle'
                                                             type   = 'Navigation'
                                                             press  = client->_event( val   = 'ROW_SELECT'
                                                                                      t_arg = VALUE #( ( `${ROW_ID}`  ) ) )
@@ -145,7 +145,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
     ENDIF.
 
-    on_after_LAYOUT( ).
+    on_after_layout( ).
 
     IF client->get( )-event IS NOT INITIAL.
       on_event( ).
@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
     DATA(class)   = cl_abap_classdescr=>get_class_name( me ).
 
-    ms_layout = Z2UI5_CL_POPUP_LAYOUT_V2=>init_layout(
+    ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
       tab   = tab
       class = CONV #( class ) ).
 
@@ -180,7 +180,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
       TRY.
           " War es das Layout?
-          DATA(app) = CAST Z2UI5_CL_POPUP_LAYOUT_V2( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          DATA(app) = CAST z2ui5_cl_popup_layout_v2( client->get_app( client->get( )-s_draft-id_prev_app ) ).
 
           ms_layout = app->ms_layout.
 
@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
   METHOD on_event_layout.
 
-    client = Z2UI5_CL_POPUP_LAYOUT_V2=>on_event_layout(
+    client = z2ui5_cl_popup_layout_v2=>on_event_layout(
       client = client
       layout = ms_layout ).
 
