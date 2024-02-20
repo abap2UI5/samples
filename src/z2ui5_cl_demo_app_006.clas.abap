@@ -1,23 +1,24 @@
-CLASS Z2UI5_CL_DEMO_APP_006 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
-        count    TYPE i,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        checkbox TYPE abap_bool,
+        count         TYPE i,
+        value         TYPE string,
+        descr         TYPE string,
+        icon          TYPE string,
+        info          TYPE string,
+        checkbox      TYPE abap_bool,
         percentage(5) TYPE p DECIMALS 2,
-        valueColor TYPE string,
+        valuecolor    TYPE string,
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
+    DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
     METHODS refresh_data.
 
@@ -27,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
 
   METHOD refresh_data.
@@ -45,9 +46,31 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
-
+  METHOD z2ui5_if_app~main.
+    data(lo_app2) = client->get_app( client->get( )-s_draft-id_prev_app_stack ) .
     IF check_initialized = abap_false.
+
+      IF check_ui5 = abap_false.
+        check_ui5 = abap_true.
+        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
+        RETURN.
+      ENDIF.
+
+      IF client->get( )-check_on_navigated = abap_true.
+        TRY.
+            DATA(lo_app) = CAST z2ui5_cl_popup_js_loader( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            IF lo_app->mv_is_open_ui5 = abap_true.
+              client->nav_app_call(  z2ui5_cl_popup_to_inform=>factory(
+                `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ) ).
+              RETURN.
+            ENDIF.
+          CATCH cx_root.
+            CAST z2ui5_cl_popup_to_inform( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            client->nav_app_leave( ).
+            RETURN.
+        ENDTRY.
+      ENDIF.
+
       check_initialized = abap_true.
       refresh_data( ).
     ENDIF.
@@ -68,18 +91,19 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
       WHEN 'MENU_DEFAULT'.
         client->message_box_display( 'menu default pressed' ).
 
-           WHEN 'MENU_01'.
+      WHEN 'MENU_01'.
         client->message_box_display( 'menu 01 pressed' ).
 
-           WHEN 'MENU_02'.
+      WHEN 'MENU_02'.
         client->message_box_display( 'menu 02 pressed' ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
+*        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
-    data(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
@@ -144,7 +168,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
         tooltip       = `Export`
         defaultaction = client->_event( 'MENU_DEFAULT' )
         icon = `sap-icon://share`
-         buttonMode  = `Split`
+         buttonmode  = `Split`
      )->_generic( `menu` )->_generic( `Menu`
         )->menu_item(
             press  = client->_event( 'MENU_01' )
@@ -176,7 +200,7 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
        )->text( '{COUNT}'
-       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valueColor = `{VALUECOLOR}` ).
+       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valuecolor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
 
