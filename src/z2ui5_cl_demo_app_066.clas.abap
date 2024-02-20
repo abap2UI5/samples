@@ -176,7 +176,7 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
         view_display_detail(  ).
 
       WHEN 'TEST'.
-        client->message_toast_display( mv_input_master ).
+        client->message_toast_display( `output: ` && mv_input_master ).
 
       WHEN `NEST_TEST`.
 
