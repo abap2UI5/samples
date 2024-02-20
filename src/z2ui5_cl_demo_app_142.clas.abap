@@ -110,7 +110,7 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                           checkdirectupload = abap_true
                           placeholder = 'upload an image'
                           upload      = client->_event( 'UPLOAD' )
-          )->image( src = `{/EDIT/MV_VALUE}`
+          )->image( src = `{/XX/MV_VALUE}`
                 height = `100%`
                 width = `100%`
                 usemap = `#map_example`
@@ -124,14 +124,16 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                      coords = `65,210,280,101,576,435,363,564`
 *                        target = `_blank`
                      href = `#`
-                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+*                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+                     onclick = `sap.z2ui5.oController.eB(['TEST'])`
                  )->get_parent(
        )->html_area( id = `area_2`
                      shape = `poly`
                      coords = `406,151,473,138,501,193,438,209`
 *                        target = `_blank`
                      href = `#`
-                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+*                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+                     onclick = `sap.z2ui5.oController.eB(['TEST'])`
                ).
     ENDIF.
 
