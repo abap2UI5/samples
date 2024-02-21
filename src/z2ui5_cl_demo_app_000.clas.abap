@@ -30,6 +30,8 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    data(ls_get) = client->get( ).
+
     IF client->get( )-check_on_navigated = abap_true.
       IF mt_scroll IS INITIAL.
         mt_scroll = VALUE #( ( id = `page` ) ).
@@ -56,7 +58,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
         )->shell( )->page(
         id = `page`
-        title = 'abap2UI5 - Samples'
+        title = ` abap2UI5 - Samples`
         navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
         shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
