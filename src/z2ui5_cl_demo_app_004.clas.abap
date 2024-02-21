@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
         DATA(lv_dummy) = 1 / 0.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -67,13 +67,8 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Controller'
             navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-            shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-                    target = '_blank'
-            )->get_parent( ).
+               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+          ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
         )->simple_form( 'Controller' )->content( 'form'

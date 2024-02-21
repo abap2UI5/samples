@@ -58,7 +58,6 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
-*        client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
 
     ENDCASE.
 

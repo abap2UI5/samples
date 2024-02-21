@@ -46,12 +46,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
           )->page(
               title          = 'abap2UI5 - List'
               navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = abap_true
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'  target = '_blank'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-              )->get_parent( ).
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
       page->list(
           headertext      = 'List Ouput'
@@ -79,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
         client->message_box_display( `go to details for item ` && lt_sel[ 1 ]-title ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
