@@ -1,131 +1,63 @@
-class Z2UI5_CL_DEMO_APP_175 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_demo_app_175 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data MV_CHECK_INITIALIZED type ABAP_BOOL .
-protected section.
+    DATA mv_check_initialized TYPE abap_bool .
+  PROTECTED SECTION.
 
-  methods ON_RENDERING
-    importing
-      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
-  methods ON_INIT
-    importing
-      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
-private section.
+    METHODS on_rendering
+      IMPORTING
+        !ir_client TYPE REF TO z2ui5_if_client .
 
-  methods ON_EVENT
-    importing
-      !IR_CLIENT type ref to Z2UI5_IF_CLIENT .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_175 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
 
 
-  METHOD ON_EVENT.
+  METHOD on_rendering.
 
-*    CASE ir_client->get( )-event.
-*      WHEN ''.
-*
-*    ENDCASE.
-  ENDMETHOD.
+    DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
-
-  method ON_INIT.
-  endmethod.
-
-
-  METHOD ON_RENDERING.
-* ---------- Set view -----------------------------------------------------------------------------
-    DATA(lr_view) = z2ui5_cl_xml_view=>factory( t_ns = VALUE #( ( n = `xmlns:table` v = `sap.ui.table` ) ) ).
-
-* ---------- Set dynamic page ---------------------------------------------------------------------
     DATA(lr_dyn_page) =  lr_view->dynamic_page(
-        showfooter = abap_false
-       "  headerExpanded = abap_true
-      "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
-     ).
+        showfooter = abap_false  ).
 
-* ---------- Get header title ---------------------------------------------------------------------
     DATA(lr_header_title) = lr_dyn_page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-
-* ---------- Set header title text ----------------------------------------------------------------
-    lr_header_title->heading( ns = 'f' )->title( TEXT-t00 ).
-
-* ---------- Get page header area ----------------------------------------------------------------
+    lr_header_title->heading( ns = 'f' )->title( `Demo - Wizard Control` ).
     DATA(lr_header) = lr_dyn_page->header( ns = 'f' )->dynamic_page_header( pinnable = abap_true )->content( ns = 'f' ).
-
-* ---------- Get page content area ----------------------------------------------------------------
     DATA(lr_content) = lr_dyn_page->content( ns = 'f' ).
+    DATA(lr_wizard) = lr_content->wizard( ).
+    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title = 'Step1'  validated          = abap_true ).
+    lr_wiz_step1->message_strip( text = 'STEP1' ).
+    DATA(lr_wiz_step2) = lr_wizard->wizard_step( title              = 'Step2'
+                                                 validated          = abap_true ).
 
-* -------------------------------------------------------------------------------------------------
-* WIZARD
-* -------------------------------------------------------------------------------------------------
-data(lr_wizard) = lr_content->wizard( ).
+    lr_wiz_step2->message_strip( text = 'STEP2' ).
+    DATA(lr_wiz_step3) = lr_wizard->wizard_step( title              = 'Step3'
+                                                 validated          = abap_true ).
 
-* -------------------------------------------------------------------------------------------------
-* WIZARD Step 1
-* -------------------------------------------------------------------------------------------------
-data(lr_wiz_step1) = lr_wizard->wizard_step( title              = 'Step1'
-                                             validated          = abap_true ).
+    lr_wiz_step3->message_strip( text = 'STEP3' ).
+    DATA(lr_wiz_step4) = lr_wizard->wizard_step( title              = 'Step4'
+                                                 validated          = abap_true ).
 
-lr_wiz_step1->message_strip( text = 'STEP1' ).
+    lr_wiz_step4->message_strip( text = 'STEP4' ).
 
-* -------------------------------------------------------------------------------------------------
-* WIZARD Step 2
-* -------------------------------------------------------------------------------------------------
-data(lr_wiz_step2) = lr_wizard->wizard_step( title              = 'Step2'
-                                             validated          = abap_true ).
-
-lr_wiz_step2->message_strip( text = 'STEP2' ).
-
-* -------------------------------------------------------------------------------------------------
-* WIZARD Step 3
-* -------------------------------------------------------------------------------------------------
-data(lr_wiz_step3) = lr_wizard->wizard_step( title              = 'Step3'
-                                             validated          = abap_true ).
-
-lr_wiz_step3->message_strip( text = 'STEP3' ).
-
-* -------------------------------------------------------------------------------------------------
-* WIZARD Step 4
-* -------------------------------------------------------------------------------------------------
-data(lr_wiz_step4) = lr_wizard->wizard_step( title              = 'Step4'
-                                             validated          = abap_true ).
-
-lr_wiz_step4->message_strip( text = 'STEP4' ).
-
-
-* ---------- Set View -----------------------------------------------------------------------------
     ir_client->view_display( lr_view->stringify( ) ).
+
   ENDMETHOD.
 
 
-  method Z2UI5_IF_APP~MAIN.
-* -------------------------------------------------------------------------------------------------
-* INITIALIZATION
-* -------------------------------------------------------------------------------------------------
-    IF me->mv_check_initialized = abap_false.
-      me->mv_check_initialized = abap_true.
-      me->on_init( ir_client = client ).
+  METHOD z2ui5_if_app~main.
 
-* -------------------------------------------------------------------------------------------------
-* RENDERING
-* -------------------------------------------------------------------------------------------------
-      me->on_rendering( ir_client = client ).
-    ENDIF.
+    me->on_rendering( ir_client = client ).
 
-* -------------------------------------------------------------------------------------------------
-* EVENTS
-* -------------------------------------------------------------------------------------------------
-    me->on_event( ir_client = client ).
-
-  endmethod.
+  ENDMETHOD.
 ENDCLASS.
