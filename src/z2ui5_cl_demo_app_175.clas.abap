@@ -44,8 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_175 IMPLEMENTATION.
 
   METHOD ON_RENDERING.
 * ---------- Set view -----------------------------------------------------------------------------
-    DATA(lr_view) = z2ui5_cl_xml_view=>factory( client = ir_client
-                                                t_ns = VALUE #( ( n = `xmlns:table` v = `sap.ui.table` ) ) ).
+    DATA(lr_view) = z2ui5_cl_xml_view=>factory( t_ns = VALUE #( ( n = `xmlns:table` v = `sap.ui.table` ) ) ).
 
 * ---------- Set dynamic page ---------------------------------------------------------------------
     DATA(lr_dyn_page) =  lr_view->dynamic_page(
