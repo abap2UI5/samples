@@ -168,22 +168,18 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
     ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
       tab   = tab
-      class = CONV #( class ) ).
+      classname = CONV #( class ) ).
 
   ENDMETHOD.
 
 
   METHOD on_after_layout.
 
-    " Kommen wir aus einer anderen APP
     IF client->get( )-check_on_navigated = abap_true.
 
       TRY.
-          " War es das Layout?
           DATA(app) = CAST z2ui5_cl_popup_layout_v2( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-
           ms_layout = app->ms_layout.
-
           view_display( ).
 
         CATCH cx_root.

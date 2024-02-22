@@ -1,22 +1,19 @@
-class Z2UI5_CL_DEMO_APP_173 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_173 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types: begin of ty_s_data,
-         name type string,
-         END OF ty_s_data,
-         ty_t_data type STANDARD TABLE OF ty_s_data with EMPTY KEY.
+    TYPES: BEGIN OF ty_s_data,
+             name TYPE string,
+           END OF ty_s_data,
+           ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
-DATA mt_data type ty_t_data.
-
-  data CLIENT type ref to Z2UI5_IF_CLIENT .
-
-
+    DATA mt_data TYPE ty_t_data.
+    DATA client TYPE REF TO z2ui5_if_client .
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -25,7 +22,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
 
 

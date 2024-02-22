@@ -144,13 +144,6 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
             title          = 'abap2UI5 - Input Validation'
             navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
               shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo'  target = '_blank'
-                    href = `https://twitter.com/abap2UI5/status/1647246029828268032`
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
             )->get_parent( ).
 
     "string
