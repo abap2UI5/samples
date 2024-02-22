@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-        header    = '(1) Binding I'
+        header    = 'Binding I'
         subheader = 'Simple - Send values to the backend'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_001' )
         mode      = 'LineMode'
@@ -111,28 +111,28 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 ).
 
     panel->generic_tile(
-     header    = '(144) Binding III'
+     header    = 'Binding III'
      subheader = 'Table Cell Level'
      press     =  client->_event( 'z2ui5_cl_demo_app_144' )
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
     panel->generic_tile(
-        header    = '(4) Event I'
+        header    = 'Event I'
         subheader = 'Handle events & change the view'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_004' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
     panel->generic_tile(
-        header    = '(24) Event II'
+        header    = 'Event II'
         subheader = 'Call other apps & exchange data'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_024' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
     panel->generic_tile(
-        header    = '(167) Event III'
+        header    = 'Event III'
         subheader = 'Additional Infos with t_args'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_167' )
         mode      = 'LineMode'
@@ -630,14 +630,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-         header    = 'Dynamic Types'
-         subheader = 'Use RTTI to send tables to the frontend'
-         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
-    panel->generic_tile(
          header    = 'Visualization'
          subheader = 'Object Number, Object States & Tab Filter'
          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_072' )
@@ -707,8 +699,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
-
 
     panel = page->panel(
           expandable = abap_false
@@ -901,6 +891,23 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+
+  panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
+               headertext = `RTTI - Data Typing with S-RTTI`
+          ).
+
+
+    panel->generic_tile(
+         header    = 'Dynamic Types'
+         subheader = 'Use S-RTTI to send tables to the frontend'
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+
     panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
@@ -938,14 +945,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     page = page2->panel(
           expandable = abap_true
            expanded   = client->_bind_edit( ms_check_expanded-custom_controls )
-          headertext = `Custom Controls, Device Capabilities`
+          headertext = `Custom Controls & Device Capabilities`
      ).
 
 
     panel = page->panel(
            expandable = abap_false
            expanded   = abap_true
-           headertext = `Custom Control - File API`
+           headertext = `File API`
       ).
 
     panel->generic_tile(
@@ -976,7 +983,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
             expandable = abap_false
             expanded   = abap_true
-            headertext = `Custom Control - More`
+            headertext = `More`
        ).
 
     panel->generic_tile(
