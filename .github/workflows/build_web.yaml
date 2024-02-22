@@ -21,6 +21,7 @@ jobs:
     - run: npm run transpile
     - name: send to downport repository
       uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' && github.repository == 'abap2UI5/abap2UI5-samples'
       with:
         external_repository: abap2UI5/abap2UI5-web
         user_name: 'github-actions[bot]'
