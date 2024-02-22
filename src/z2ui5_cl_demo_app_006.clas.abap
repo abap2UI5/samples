@@ -48,16 +48,16 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-    DATA(lo_app2) = client->get_app( client->get( )-s_draft-id_prev_app_stack ) .
+
     IF check_initialized = abap_false.
 
-      IF check_ui5 = abap_false.
-        check_ui5 = abap_true.
-        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
-        RETURN.
-      ENDIF.
+*      IF check_ui5 = abap_false.
+*        check_ui5 = abap_true.
+*        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
+*        RETURN.
+*      ENDIF.
 
-      IF client->get( )-check_on_navigated = abap_true.
+*      IF client->get( )-check_on_navigated = abap_true.
 *        TRY.
 *            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
 *            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 *            client->nav_app_leave( ).
 *            RETURN.
 *        ENDTRY.
-      ENDIF.
+*      ENDIF.
 
       check_initialized = abap_true.
       refresh_data( ).
