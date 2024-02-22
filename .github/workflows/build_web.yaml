@@ -2,7 +2,6 @@ name: build_web
 
 on:
   push:
-    branches: [main]
 
 permissions:
   contents: read
