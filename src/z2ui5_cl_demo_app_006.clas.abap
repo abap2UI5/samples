@@ -58,21 +58,21 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
       ENDIF.
 
       IF client->get( )-check_on_navigated = abap_true.
-        TRY.
-            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
-            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
-            lo_app  ?=  lo_app5.
-            IF lo_app->mv_is_open_ui5 = abap_true.
-              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
-              client->nav_app_call( lo_app3 ).
-              RETURN.
-            ENDIF.
-          CATCH cx_root.
-            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
-            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
-            client->nav_app_leave( ).
-            RETURN.
-        ENDTRY.
+*        TRY.
+*            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
+*            lo_app  ?=  lo_app5.
+*            IF lo_app->mv_is_open_ui5 = abap_true.
+*              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
+*              client->nav_app_call( lo_app3 ).
+*              RETURN.
+*            ENDIF.
+*          CATCH cx_root.
+*            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
+*            client->nav_app_leave( ).
+*            RETURN.
+*        ENDTRY.
       ENDIF.
 
       check_initialized = abap_true.
