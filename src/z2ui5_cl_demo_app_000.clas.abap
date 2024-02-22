@@ -443,63 +443,63 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ).
 
     panel->generic_tile(
-           header    = 'Popup to Inform (151)'
+           header    = 'Popup to Inform'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_151' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-           header    = 'Popup to Confirm (150)'
+           header    = 'Popup to Confirm'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_150' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-           header    = 'Popup to Select (152)'
+           header    = 'Popup to Select'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_152' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-           header    = 'Popup Messages (154)'
+           header    = 'Popup Messages'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_154' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-           header    = 'Popup Textedit (155)'
+           header    = 'Popup Textedit'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_155' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-           header    = 'Popup Input Value (156)'
+           header    = 'Popup Input Value'
            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_156' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-        header    = 'Popup File Upload (157)'
+        header    = 'Popup File Upload'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_157' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generic_tile(
-        header    = 'Popup Display PDF (158)'
+        header    = 'Popup Display PDF'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_158' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
     panel->generic_tile(
-        header    = 'Popup Get Range (56)'
+        header    = 'Popup Get Range'
         subheader = 'Create Select-Options in Multi Inputs'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_056' )
         mode      = 'LineMode'
@@ -507,7 +507,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile(
-     header    = 'Popup Get Range Multi (162)'
+     header    = 'Popup Get Range Multi'
      subheader = 'Create Select-Options for Structures & Tables'
      press     =  client->_event( 'z2ui5_cl_demo_app_162' )
      mode      = 'LineMode'
@@ -515,7 +515,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
  ).
 
     panel->generic_tile(
-     header    = 'Popup Display Table (164)'
+     header    = 'Popup Display Table'
      subheader = ''
      press     =  client->_event( 'z2ui5_cl_demo_app_164' )
      mode      = 'LineMode'
@@ -523,7 +523,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
  ).
 
     panel->generic_tile(
-     header    = 'Popup Display Layout (165)'
+     header    = 'Popup Display Layout'
      subheader = ''
      press     =  client->_event( 'z2ui5_cl_demo_app_165' )
      mode      = 'LineMode'
@@ -531,7 +531,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
  ).
 
     panel->generic_tile(
-     header    = 'Popup Display Download (168)'
+     header    = 'Popup Display Download'
      subheader = ''
      press     =  client->_event( 'z2ui5_cl_demo_app_168' )
      mode      = 'LineMode'
@@ -539,7 +539,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
  ).
 
     panel->generic_tile(
-     header    = 'Popup Display JSON Export (169)'
+     header    = 'Popup Display JSON Export'
      subheader = ''
      press     =  client->_event( 'z2ui5_cl_demo_app_169' )
      mode      = 'LineMode'

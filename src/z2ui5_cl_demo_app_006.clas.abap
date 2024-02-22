@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-    data(lo_app2) = client->get_app( client->get( )-s_draft-id_prev_app_stack ) .
+    DATA(lo_app2) = client->get_app( client->get( )-s_draft-id_prev_app_stack ) .
     IF check_initialized = abap_false.
 
       IF check_ui5 = abap_false.
@@ -60,14 +60,16 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
       IF client->get( )-check_on_navigated = abap_true.
         TRY.
-            DATA(lo_app) = CAST z2ui5_cl_popup_js_loader( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
+            DATA(lo_app) = CAST z2ui5_cl_popup_js_loader( lo_app5 ).
             IF lo_app->mv_is_open_ui5 = abap_true.
-              client->nav_app_call(  z2ui5_cl_popup_to_inform=>factory(
-                `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ) ).
+              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
+              client->nav_app_call( lo_app3 ).
               RETURN.
             ENDIF.
           CATCH cx_root.
-            CAST z2ui5_cl_popup_to_inform( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
+            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
             client->nav_app_leave( ).
             RETURN.
         ENDTRY.
@@ -101,7 +103,6 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
-*        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
@@ -111,11 +112,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+        ).
 
     DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
         )->table(
