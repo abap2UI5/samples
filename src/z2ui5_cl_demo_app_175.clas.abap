@@ -5,10 +5,9 @@ CLASS z2ui5_cl_demo_app_175 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
+    DATA mv_check_initialized TYPE abap_bool.
 
-    DATA mv_check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS on_rendering
@@ -17,7 +16,6 @@ CLASS z2ui5_cl_demo_app_175 DEFINITION
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
