@@ -72,8 +72,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     view = view->shell( )->page( id = `page_main`
              title          = 'abap2UI5 - Popup Layout'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-         ).
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(table) = view->table(
       growing    = 'true'
@@ -90,19 +89,6 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     headder->button( text =  'Layout'
                          icon = 'sap-icon://action-settings'
                          press = client->_event( val = 'LAYOUT_EDIT' ) ).
-
-*    headder->overflow_toolbar_menu_button( tooltip = 'Export' icon = 'sap-icon://action-settings'
-*     )->_generic( `menu`
-*        )->_generic( `Menu`
-*           )->menu_item( text =  'Change Layout'
-*                         icon = 'sap-icon://edit'
-*                         press = client->_event( val = 'LAYOUT_EDIT' )
-*           )->menu_item( text =  'Choose Layout'
-*                         icon = 'sap-icon://open-folder'
-*                         press = client->_event( val = 'LAYOUT_OPEN' )
-*           )->menu_item( text = 'Manage Layouts'
-*                         icon = 'sap-icon://delete'
-*                         press = client->_event( val = 'LAYOUT_DELETE' ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -192,20 +178,9 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'LAYOUT_OPEN'.
-*        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
-                                       open_layout = abap_true   ) ).
-
       WHEN 'LAYOUT_EDIT'.
-*        client->view_destroy( ).
         client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
                                        extended_layout = abap_true   ) ).
-
-      WHEN 'LAYOUT_DELETE'.
-*        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
-                                       delete_layout = abap_true ) ).
 
     ENDCASE.
 
