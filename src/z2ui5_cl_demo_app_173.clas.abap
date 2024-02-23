@@ -29,11 +29,14 @@ PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
+
+
+CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
-    client->_bind( mt_data ).
+*    client->_bind( mt_data ).
     client->_bind( mt_layout ).
 
     mt_data = VALUE #( ( name = 'Theo' date = '01.01.2000' age = '5' )
@@ -43,34 +46,51 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
                          ( fname = 'DATE' merge = 'false' visible = 'true' )
                          ( fname = 'AGE'  merge = 'false' visible = 'false' ) ).
 
-    DATA(xml) =
-`<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1" displayBlock="true" height="100%" >` &&
-`  <Shell>` &&
-`    <Page>` &&
-`      <Table items="{/MT_DATA}">` &&
-`        <columns>` &&
-`          <template:repeat list="{meta>/MT_LAYOUT} " var="MT_LAYOUT">` &&
-`            <Column` &&
-`           mergeDuplicates="{MT_LAYOUT>MERGE}"` &&
-`           visible="{MT_LAYOUT>VISIBLE}"/>` &&
-`          </template:repeat>` &&
-`        </columns>` &&
-`        <items>` &&
-`          <ColumnListItem>` &&
-`            <cells>` &&
-`              <template:repeat list="{meta>/MT_LAYOUT}" var="MT_LAYOUT">` &&
-`                <ObjectIdentifier text="{MT_LAYOUT>FNAME}"/>` &&
-`              </template:repeat>` &&
-`            </cells>` &&
-`          </ColumnListItem>` &&
-`        </items>` &&
-`      </Table>` &&
-`    </Page>` &&
-`  </Shell>` &&
-`</mvc:View> `.
+*    DATA(xml) =
+*`<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" ` &&
+*  `xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1" displayBlock="true" height="100%" >` &&
+*`  <Shell>` &&
+*`    <Page>` &&
+*`      <Table items="{/MT_DATA}">` &&
+*`        <columns>` &&
+*`          <template:repeat list="{meta>/MT_LAYOUT} " var="MT_LAYOUT">` &&
+*`            <Column` &&
+*`           mergeDuplicates="{MT_LAYOUT>MERGE}"` &&
+*`           visible="{MT_LAYOUT>VISIBLE}"/>` &&
+*`          </template:repeat>` &&
+*`        </columns>` &&
+*`        <items>` &&
+*`          <ColumnListItem>` &&
+*`            <cells>` &&
+*`              <template:repeat list="{meta>/MT_LAYOUT}" var="MT_LAYOUT">` &&
+*`                <ObjectIdentifier text="{MT_LAYOUT>FNAME}"/>` &&
+*`              </template:repeat>` &&
+*`            </cells>` &&
+*`          </ColumnListItem>` &&
+*`        </items>` &&
+*`      </Table>` &&
+*`    </Page>` &&
+*`  </Shell>` &&
+*`</mvc:View> `.
+*
+*    client->view_display( xml ).
 
-    client->view_display( xml ).
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    view->shell( )->page(
+    )->table( items = client->_bind( mt_data )
+      )->columns(
+        )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO`
+          )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
+        )->get_parent( )->get_parent(
+        )->items(
+          )->column_list_item(
+            )->cells(
+              )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO2`
+                )->object_identifier( text = `{LO2>FNAME}` ).
+
+     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
