@@ -525,7 +525,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile(
      header    = 'Popup Display Layout'
      subheader = ''
-     press     =  client->_event( 'z2ui5_cl_demo_app_165' )
+     press     =  client->_event( 'z2ui5_cl_demo_app_174' )
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
