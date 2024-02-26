@@ -943,8 +943,16 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 ).
 
     panel->generic_tile(
-     header    = 'Templating'
+     header    = 'Templating I'
    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_173' )
+   mode      = 'LineMode'
+   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+     header    = 'Templating II'
+     subheader = 'Nested Views'
+   press     =  client->_event( 'Z2UI5_CL_DEMO_APP_176' )
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
