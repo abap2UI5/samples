@@ -1,4 +1,4 @@
-CLASS Z2UI5_CL_DEMO_APP_176 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -32,12 +32,11 @@ CLASS Z2UI5_CL_DEMO_APP_176 DEFINITION PUBLIC.
     METHODS nest_view
       IMPORTING
         i_client TYPE REF TO z2ui5_if_client.
+
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_176 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -99,6 +98,5 @@ CLASS Z2UI5_CL_DEMO_APP_176 IMPLEMENTATION.
     i_client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
-
 
 ENDCLASS.
