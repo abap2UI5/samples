@@ -24,8 +24,6 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
     DATA mt_layout TYPE ty_t_layout.
     DATA mt_data   TYPE ty_t_data.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
     METHODS main_view
       IMPORTING
         i_client TYPE REF TO z2ui5_if_client.
@@ -33,6 +31,8 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
       IMPORTING
         i_client TYPE REF TO z2ui5_if_client.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -75,8 +75,6 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent' ).
 
   ENDMETHOD.
-
-
 
   METHOD main_view.
 
