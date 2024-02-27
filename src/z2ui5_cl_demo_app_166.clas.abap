@@ -47,13 +47,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Structure Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
-
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->input( client->_bind_edit( val = ms_struc-title  ) ).
     page->input( client->_bind_edit( val = ms_struc-value ) ).

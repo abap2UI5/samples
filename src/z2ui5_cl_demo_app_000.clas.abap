@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->shell( )->page(
         id = `page`
         title = ` abap2UI5 - Samples`
-        navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+        navbuttonpress = client->_event( val = 'BACK' s_cnt = value #( check_view_destroy = abap_true ) )
         shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
@@ -316,14 +316,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
-    panel->generic_tile(
-     header    = 'Input with Filter'
-     subheader = 'Filter Table on the Server'
-     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_059' )
-     mode      = 'LineMode'
-     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
- ).
 
     panel->generic_tile(
      header    = 'Input with Suggestion'

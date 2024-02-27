@@ -26,12 +26,8 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Event with add Information and t_arg'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+       ).
 
     page->link( text = 'More Infos..' target = '_blank'
                 href = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
