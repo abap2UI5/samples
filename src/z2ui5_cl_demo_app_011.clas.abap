@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_011 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -21,7 +21,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
   PRIVATE SECTION.
@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
 
   METHOD set_view.
@@ -55,6 +55,9 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'title of the table'
+                )->button(
+                    text  = 'test'
+                    press = client->_event( 'BUTTON_TEST' )
                 )->toolbar_spacer(
                 )->button(
                     icon  = 'sap-icon://delete'
@@ -95,7 +98,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -112,7 +115,8 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
           ( )
           ).
 
-      set_view(  ).
+      set_view( ).
+      RETURN.
 
     ENDIF.
 
@@ -124,19 +128,17 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
           lr_tab->editable = check_editable_active.
         ENDLOOP.
-
+        client->view_model_update( ).
       WHEN 'BUTTON_DELETE'.
         DELETE t_tab WHERE selkz = abap_true.
-
+        client->view_model_update( ).
       WHEN 'BUTTON_ADD'.
         INSERT VALUE #( ) INTO TABLE t_tab.
-
+        client->view_model_update( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
-
-    client->view_model_update( ).
 
   ENDMETHOD.
 ENDCLASS.

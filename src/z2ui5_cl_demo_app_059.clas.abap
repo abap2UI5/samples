@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         Z2UI5_set_data( ).
         Z2UI5_set_search( ).
-        client->view_model_update( ).
+        client->view_model_update( mt_table ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
