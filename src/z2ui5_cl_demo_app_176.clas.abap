@@ -78,13 +78,13 @@ CLASS Z2UI5_CL_DEMO_APP_176 IMPLEMENTATION.
     lo_view_nested->shell( )->page(
     )->table( items = i_client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO`
+        )->template_repeat( list = `{/MT_LAYOUT}` var = `LO`
           )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO2`
+              )->template_repeat( list = `{/MT_LAYOUT}` var = `LO2`
                 )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
     i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent' ).

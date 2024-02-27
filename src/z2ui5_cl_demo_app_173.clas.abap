@@ -51,13 +51,13 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
     view->shell( )->page(
     )->table( items = client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO`
+        )->template_repeat( list = `{/MT_LAYOUT}` var = `LO`
           )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{meta>/MT_LAYOUT}` var = `LO2`
+              )->template_repeat( list = `{/MT_LAYOUT}` var = `LO2`
                 )->object_identifier( text = `{LO2>BINDING}` ).
 
      client->view_display( view->stringify( ) ).
