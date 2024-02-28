@@ -35,22 +35,23 @@ PUBLIC
         headers      TYPE TABLE OF ty_s_headers      WITH NON-UNIQUE DEFAULT KEY,
       END OF ty_s_people .
 
-    DATA:
-      lt_people TYPE STANDARD TABLE OF ty_s_people .
+    DATA lt_people TYPE STANDARD TABLE OF ty_s_people.
+
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
-    DATA check_initialized TYPE abap_bool .
+    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA check_initialized TYPE abap_bool.
 
-    METHODS z2ui5_display_view .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_view.
@@ -117,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
       z2ui5_set_data( ).
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true or client->get( )-event = 'DISPLAY_VIEW'.
+    IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = 'DISPLAY_VIEW'.
       z2ui5_display_view( ).
       RETURN.
     ENDIF.
