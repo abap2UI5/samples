@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
         )->shell(
         )->page( class = `sapUiContentPadding `
             title          = 'abap2UI5 - Messaging'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = abap_true
             )->header_content(
                 )->link(

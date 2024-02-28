@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         client->view_display( view->shell(
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
-                      navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                      navbuttonpress = client->_event( val = 'BACK' )
                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                   )->header_content(
                       )->link(
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         client->view_display( view->shell(
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
-                      navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                      navbuttonpress = client->_event( val = 'BACK' )
                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                   )->header_content(
                       )->link(

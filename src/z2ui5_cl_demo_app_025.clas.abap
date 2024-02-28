@@ -95,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
         page = view->shell(
             )->page(
                     title          = 'abap2UI5 - flow logic - APP 02'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true ) shownavbutton = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' ) shownavbutton = abap_true
                 )->header_content(
                     )->link( text = 'Demo'        href = `https://twitter.com/abap2UI5/status/1640743794206228480`
                     )->link( text = 'Source_Code' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )

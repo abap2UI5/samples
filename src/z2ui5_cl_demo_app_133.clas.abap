@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
           )->page(
                   title          = 'abap2UI5 - Focus'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                  navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
                   )->link(

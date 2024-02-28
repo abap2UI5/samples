@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
             )->page(
                      showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = 'abap2UI5 - Cross App Navigation App 127'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+                    navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
                     )->link(
