@@ -35,7 +35,7 @@ PUBLIC
         headers      TYPE TABLE OF ty_s_headers      WITH NON-UNIQUE DEFAULT KEY,
       END OF ty_s_people .
 
-    DATA lt_people TYPE STANDARD TABLE OF ty_s_people.
+    DATA mt_people TYPE STANDARD TABLE OF ty_s_people.
 
   PROTECTED SECTION.
 
@@ -55,6 +55,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_view.
+
     DATA(lv_s_date) =  '2023-04-22T08:15:00'.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -74,7 +75,8 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
                                                           startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind_local( val = lt_people path = abap_true ) && `'}`
+                                                          rows = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
+*                                                          rows = `{ path: '` && client->_bind( val = mt_people path = abap_true ) && `}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers = abap_true ).
 
@@ -140,7 +142,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
-    lt_people = VALUE #(
+    mt_people = VALUE #(
      ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
           ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = 'Mittag1' type = 'Type01' title = 'App1' tentative = abap_false pic = 'sap-icon://sap-ui5' )
