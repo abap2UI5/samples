@@ -34,7 +34,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -94,10 +94,6 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    if mv_search_value = `ta`.
-        data(dummy) = ``.
-    endif.
-
     LOOP AT mt_table REFERENCE INTO DATA(lr_row).
       DATA(lv_row) = ``.
       DATA(lv_index) = 1.
@@ -127,11 +123,12 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
+    data(ls_cnt) = value z2ui5_if_types=>ty_s_event_control( check_allow_multi_req = abap_true ).
     DATA(lo_box) =  page1->vbox( )->text( `Search` )->search_field(
          livechange = client->_event(
             val = 'BUTTON_SEARCH'
             t_arg = VALUE #( ( `${$source>/value}` ) )
-            s_cnt = VALUE #( check_allow_multi_req = abap_true )
+            s_cnt = ls_cnt
             )
          width  = `17.5rem` ).
 
