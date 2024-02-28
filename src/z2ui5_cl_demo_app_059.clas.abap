@@ -34,7 +34,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
       WHEN 'BUTTON_SEARCH'.
         z2ui5_set_data( ).
         z2ui5_set_search( ).
-        client->view_model_update( mt_table ).
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -94,6 +94,10 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
+    if mv_search_value = `ta`.
+        data(dummy) = ``.
+    endif.
+
     LOOP AT mt_table REFERENCE INTO DATA(lr_row).
       DATA(lv_row) = ``.
       DATA(lv_index) = 1.
@@ -124,11 +128,10 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(lo_box) =  page1->vbox( )->text( `Search` )->search_field(
-*         value  = client->_bind_edit( mv_search_value )
          livechange = client->_event(
             val = 'BUTTON_SEARCH'
             t_arg = VALUE #( ( `${$source>/value}` ) )
-*            s_cnt = VALUE #( check_hide_busy_display = abap_true )
+            s_cnt = VALUE #( check_allow_multi_req = abap_true )
             )
          width  = `17.5rem` ).
 
@@ -151,5 +154,4 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
