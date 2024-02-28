@@ -14,7 +14,7 @@ PUBLIC
         type      TYPE string,
         info      TYPE string,
         pic       TYPE string,
-        tentative TYPE boolean,
+        tentative TYPE abap_bool,
       END OF ty_s_appointments .
     TYPES:
       BEGIN OF ty_s_headers,
@@ -24,7 +24,7 @@ PUBLIC
         type      TYPE string,
         info      TYPE string,
         pic       TYPE string,
-        tentative TYPE boolean,
+        tentative TYPE abap_bool,
       END OF ty_s_headers .
     TYPES:
       BEGIN OF ty_s_people,
@@ -51,7 +51,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_view.
