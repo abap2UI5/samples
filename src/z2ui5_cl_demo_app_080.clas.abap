@@ -83,11 +83,11 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
-                                                     appointments = `{path:'APPOINTMENTS'}`
+                                                     appointments = `{path:'APPOINTMENTS', templateShareable: false}`
                                                      icon =  '{PIC}'
                                                      title = '{NAME}'
                                                      text = '{ROLE}'
-                                                     intervalheaders = `{path:'HEADERS'}`
+                                                     intervalheaders = `{path:'HEADERS', templateShareable: false}`
                                                      ).
     lo_planningcalendarrow->appointments( )->calendar_appointment(
                                                                   startdate = `{= Helper.DateCreateObject(${START} ) }`
