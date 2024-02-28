@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_177 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -27,12 +27,12 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
 
   METHOD refresh_data.
 
-    DO 100 TIMES.
+    DO 50 TIMES.
       DATA ls_row TYPE ty_row.
       ls_row-count = sy-index.
       ls_row-value = 'red'.
@@ -50,6 +50,31 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
+
+*      IF check_ui5 = abap_false.
+*        check_ui5 = abap_true.
+*        client->nav_app_call( z2ui5_cl_popup_js_loader=>factory_check_open_ui5( ) ).
+*        RETURN.
+*      ENDIF.
+
+*      IF client->get( )-check_on_navigated = abap_true.
+*        TRY.
+*            DATA(lo_app5) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            DATA lo_app TYPE REF TO z2ui5_cl_popup_js_loader.
+*            lo_app  ?=  lo_app5.
+*            IF lo_app->mv_is_open_ui5 = abap_true.
+*              DATA(lo_app3) = z2ui5_cl_popup_to_inform=>factory( `Sample not supported with OpenUI5, switch bootstrapping first to see this demo` ).
+*              client->nav_app_call( lo_app3 ).
+*              RETURN.
+*            ENDIF.
+*          CATCH cx_root.
+*            DATA(lo_app4) = client->get_app( client->get( )-s_draft-id_prev_app ).
+*            CAST z2ui5_cl_popup_to_inform( lo_app4 ).
+*            client->nav_app_leave( ).
+*            RETURN.
+*        ENDTRY.
+*      ENDIF.
+
       check_initialized = abap_true.
       refresh_data( ).
     ENDIF.
@@ -174,7 +199,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
        )->text( '{COUNT}'
-        ).
+       )->radial_micro_chart( size = `Responsive` height = `35px` percentage = `{PERCENTAGE}` valuecolor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -14,6 +14,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         custom_controls TYPE abap_bool,
         input           TYPE abap_bool,
         popups          TYPE abap_bool,
+        version          TYPE abap_bool,
       END OF ms_check_expanded.
 
     DATA mt_scroll TYPE z2ui5_cl_fw_cc_scrolling=>ty_t_item.
@@ -211,14 +212,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       mode      = 'LineMode'
       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
   ).
-
-    panel->generic_tile(
-      header = `Message IV`
-       subheader    = 'Message Manager / Messaging'
-       press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
-       mode      = 'LineMode'
-       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-   ).
 
     panel = page->panel(
            expandable = abap_false
@@ -699,72 +692,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
      ).
 
     panel->generic_tile(
-           header    = 'Donut Chart'
-*        subheader = 'Use RTTI to send tables to the frontend'
-           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_013' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-    panel->generic_tile(
-        header    = 'Line Chart'
-*        subheader = 'sap.ui.Table'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_014' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-    panel->generic_tile(
-        header    = 'Bar Chart'
-*        subheader = 'sap.ui.Table'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_016' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-    panel->generic_tile(
-         header    = 'Radial Chart'
-*subheader = 'sap.ui.Table'
-         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_029' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
-    panel->generic_tile(
-            header    = 'Monitor'
-*subheader = 'sap.ui.Table'
-            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_041' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-    panel->generic_tile(
-        header    = 'Gantt Chart'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_076' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-    panel->generic_tile(
         header    = 'Planning Calender'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_080' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
-
-    panel->generic_tile(
-    header    = 'Process Flow'
-    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_091' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
-
-    panel->generic_tile(
-    header    = 'Map Container'
-    press     =  client->_event( 'z2ui5_cl_demo_app_123' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-).
 
     panel->generic_tile(
     header    = 'Wizard Control'
@@ -1221,6 +1153,93 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+
+    page = page2->panel(
+          expandable = abap_true
+           expanded   = client->_bind_edit( ms_check_expanded-version )
+          headertext = `UI5 Version Specific`
+     ).
+
+     panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `UI5-Only (No OpenUI5)`
+      ).
+
+   panel->generic_tile(
+        header    = 'Table with RadialMicroChart'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_177' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+           header    = 'Donut Chart'
+*        subheader = 'Use RTTI to send tables to the frontend'
+           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_013' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+    panel->generic_tile(
+        header    = 'Line Chart'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_014' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Bar Chart'
+*        subheader = 'sap.ui.Table'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_016' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+         header    = 'Radial Chart'
+*subheader = 'sap.ui.Table'
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_029' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+    panel->generic_tile(
+        header    = 'Gantt Chart'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_076' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+    panel->generic_tile(
+    header    = 'Process Flow'
+    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_091' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+    panel->generic_tile(
+    header    = 'Map Container'
+    press     =  client->_event( 'z2ui5_cl_demo_app_123' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
+           panel = page->panel(
+           expandable = abap_false
+           expanded   = abap_true
+           headertext = `High-Version-Only (>1.60.14)`
+      ).
+
+    panel->generic_tile(
+      header = `Messaging`
+       subheader    = 'Message Manager'
+       press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
+       mode      = 'LineMode'
+       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+   ).
 
     client->view_display( page->stringify( ) ).
 

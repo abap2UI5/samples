@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_041</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_177</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>demo - monitor</DESCRIPT>
+    <DESCRIPT>tab - toolbar container sort</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
