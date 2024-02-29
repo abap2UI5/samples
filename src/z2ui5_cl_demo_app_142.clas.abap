@@ -137,8 +137,8 @@ CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
                ).
     ENDIF.
 
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ls_map_cfg ) ).
-
+    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( is_config = ls_map_cfg auto_resize = abap_true ) ).
+    view->html( content = `<script> onWindowResize(200,200); </script>` ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
