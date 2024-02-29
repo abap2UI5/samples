@@ -75,8 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
                                                           startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
-*                                                          rows = `{ path: '` && client->_bind( val = mt_people path = abap_true ) && `}`
+                                                          rows = `{path: '` && client->_bind_local( val = mt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers = abap_true ).
 
