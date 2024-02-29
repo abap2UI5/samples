@@ -6,6 +6,8 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION
 
     INTERFACES z2ui5_if_app .
 
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
+
     "string - constraints
     DATA: mv_maxlength_string            TYPE string,
           mv_minlength_string            TYPE string,
@@ -40,31 +42,10 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION
     DATA: mv_maximum_date TYPE string,
           mv_minimum_date TYPE string.
 
-    "boolean
-    DATA: mv_boolean TYPE abap_bool.
-
-    DATA: mv_messages_count TYPE i.
-
-    TYPES:
-      BEGIN OF ty_msg,
-        type        TYPE string,
-        title       TYPE string,
-        subtitle    TYPE string,
-        description TYPE string,
-        group       TYPE string,
-      END OF ty_msg .
-
     DATA mv_input_master TYPE string.
-    DATA:
-      t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY .
     DATA check_initialized TYPE abap_bool .
-    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
-
     METHODS z2ui5_display_view .
-    METHODS z2ui5_display_popup .
-    METHODS z2ui5_display_popover
-      IMPORTING
-        !id TYPE string .
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -74,67 +55,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
-
-
-  METHOD z2ui5_display_popover.
-
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-
-    popup = popup->popover(
-              placement = `Top`
-              title = `Messages`
-              contentheight = '50%'
-              contentwidth = '50%' ).
-
-    popup->message_view(
-            items      = client->_bind_edit( t_msg )
-            groupitems = abap_true
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}` ).
-
-    client->popover_display( xml = popup->stringify( ) by_id = id ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_display_popup.
-
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-
-    popup = popup->dialog(
-          title = `Messages`
-          contentheight = '50%'
-          contentwidth = '50%' ).
-
-    popup->message_view(
-            items = client->_bind_edit( t_msg )
-            groupitems = abap_true
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}` ).
-
-    popup->footer( )->overflow_toolbar(
-      )->toolbar_spacer(
-      )->button(
-          id    = `test2`
-          text  = 'test'
-          press = client->_event( `TEST` )
-      )->button(
-          text  = 'close'
-          press = client->_event_client( client->cs_event-popup_close ) ).
-
-    client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
+CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
   METHOD z2ui5_display_view.
 
@@ -144,8 +65,8 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
         )->page( class = `sapUiContentPadding `
             title          = 'abap2UI5 - Input Validation'
             navbuttonpress = client->_event( val = 'BACK' )
-              shownavbutton = abap_true
-            )->get_parent( ).
+           shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            ).
 
     "string
     page->flex_box( justifycontent = `SpaceAround` )->panel( headertext = `sap.ui.model.type.String`
@@ -254,10 +175,6 @@ CLASS Z2UI5_CL_DEMO_APP_084 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'ON_CC_LOADED'.
         z2ui5_display_view( ).
-      WHEN 'POPUP'.
-        z2ui5_display_popup( ).
-      WHEN 'POPOVER'.
-        z2ui5_display_popover( `test` ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.

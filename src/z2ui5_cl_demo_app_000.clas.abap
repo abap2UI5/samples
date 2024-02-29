@@ -365,14 +365,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
   ).
 
     panel->generic_tile(
-     header    = 'Input Validation'
-     subheader = `Constraints & Format Options`
-     press     = client->_event( 'Z2UI5_CL_DEMO_APP_084' )
-     mode      = 'LineMode'
-     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
- ).
-
-    panel->generic_tile(
      header    = 'Mask Input'
      subheader = ``
      press     = client->_event( 'Z2UI5_CL_DEMO_APP_110' )
@@ -755,6 +747,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile(
      header    = 'Templating I'
+       subheader = 'Basic Example'
    press     =  client->_event( 'Z2UI5_CL_DEMO_APP_173' )
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -1279,6 +1272,19 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
+    panel = page->panel(
+    expandable = abap_false
+    expanded   = abap_true
+    headertext = `Deprecated`
+).
+
+    panel->generic_tile(
+     header    = 'Message Manager & Validation'
+     subheader = `Constraints & Format Options`
+     press     = client->_event( 'Z2UI5_CL_DEMO_APP_084' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     client->view_display( page->stringify( ) ).
 
