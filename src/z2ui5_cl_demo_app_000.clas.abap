@@ -689,14 +689,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-    panel->generic_tile(
-        header    = 'Nav Container II'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_089' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-
     panel = page->panel(
                  expandable = abap_false
                  expanded   = abap_true
@@ -1256,22 +1248,29 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-   panel->generic_tile(
-        header    = 'Side Panel'
-        subheader = `Since 1.107`
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_108' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+    panel->generic_tile(
+         header    = 'Side Panel'
+         subheader = `Since 1.107`
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_108' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
 
     panel->generic_tile(
-  header = `Messaging`
+  header = `Messaging I`
    subheader    = 'Since 1.118'
    press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
    mode      = 'LineMode'
    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
+    panel->generic_tile(
+  header = `Messaging II - Nested Views`
+   subheader    = 'Since 1.118'
+   press     = client->_event( 'Z2UI5_CL_DEMO_APP_071' )
+   mode      = 'LineMode'
+   class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
 
     panel = page->panel(
     expandable = abap_false

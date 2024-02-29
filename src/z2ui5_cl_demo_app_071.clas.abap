@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_066 DEFINITION
+CLASS z2ui5_cl_demo_app_071 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
 
     DATA mv_input_master TYPE string.
     DATA mv_input_detail TYPE string.
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
     TYPES:
       BEGIN OF ts_tree_row_base,
         object TYPE string,
@@ -57,7 +58,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
 
   METHOD view_display_detail.
@@ -96,6 +97,7 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
   METHOD view_display_master.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
     DATA(page) = view->shell(
         )->page(
            title          = 'abap2UI5 - Master Detail Page with Nested View'
@@ -147,6 +149,18 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( )
+            )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
+            )->stringify( ) ).
+
+    ENDIF.
+
+    CASE client->get( )-event.
+
+      WHEN 'ON_CC_LOADED'.
+
         view_display_master(  ).
         view_display_detail(  ).
 
@@ -157,11 +171,6 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
                                                                 ( object = '2.2' ) ) )
                            ( object = '3' categories = VALUE #( ( object = '3.1' )
                                                                 ( object = '3.2' ) ) ) ).
-
-    ENDIF.
-
-    CASE client->get( )-event.
-
 
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
