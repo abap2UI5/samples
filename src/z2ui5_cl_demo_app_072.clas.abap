@@ -86,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(page) = view->shell( )->page( id = `page_main`
            showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - IconTabBar'
             navbuttonpress = client->_event( 'BACK' )
@@ -134,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
              )->object_number(
                    state = '{STATE_PRICE}'
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } `
-             )->rating_indicator( VALUE = '{RATING}'  class = 'sapUiSmallMarginBottom' iconSize = '12px' maxvalue ='6' enabled = 'false' ).
+                   ).
 
     client->view_display( view->stringify( ) ).
 

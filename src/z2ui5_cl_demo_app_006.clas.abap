@@ -64,18 +64,6 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( 'sort descending' ).
 
-      WHEN 'BUTTON_POST'.
-        client->message_box_display( 'button post was pressed' ).
-
-      WHEN 'MENU_DEFAULT'.
-        client->message_box_display( 'menu default pressed' ).
-
-      WHEN 'MENU_01'.
-        client->message_box_display( 'menu 01 pressed' ).
-
-      WHEN 'MENU_02'.
-        client->message_box_display( 'menu 02 pressed' ).
-
       WHEN 'BACK'.
         client->nav_app_leave( ).
 
@@ -98,7 +86,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
             sticky              = 'ColumnHeaders,HeaderToolbar' ).
 
     tab->header_toolbar(
-        )->overflow_toolbar(
+        )->toolbar(
             )->title( 'title of the table'
             )->button(
                 text  = 'letf side button'
@@ -116,43 +104,13 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
                         text = 'green'
             )->get_parent( )->get_parent(
             )->toolbar_spacer(
-            )->generic_tag(
-                    arialabelledby = 'genericTagLabel'
-                    text           = 'Project Cost'
-                    design         = 'StatusIconHidden'
-                    status         = 'Error'
-                    class          = 'sapUiSmallMarginBottom'
-                )->object_number(
-                    state      = 'Error'
-                    emphasized = 'false'
-                    number     = '3.5M'
-                    unit       = 'EUR'
-            )->get_parent(
-            )->toolbar_spacer(
-            )->overflow_toolbar_toggle_button(
+            )->button(
                 icon = 'sap-icon://sort-descending'
                 press = client->_event( 'SORT_DESCENDING' )
-            )->overflow_toolbar_toggle_button(
+            )->button(
                 icon = 'sap-icon://sort-ascending'
                 press = client->_event( 'SORT_ASCENDING' )
-
-            )->overflow_toolbar_menu_button(
-        text          = `Export`
-        type          = `Transparent`
-        tooltip       = `Export`
-        defaultaction = client->_event( 'MENU_DEFAULT' )
-        icon = `sap-icon://share`
-         buttonmode  = `Split`
-     )->_generic( `menu` )->_generic( `Menu`
-        )->menu_item(
-            press  = client->_event( 'MENU_01' )
-            text   = `Export as PDF`
-            icon   = `sap-icon://pdf-attachment`
-      )->menu_item(
-            press  = client->_event( 'MENU_02' )
-            text   = `Export to Excel`
-            icon   = `sap-icon://excel-attachment`
-    ).
+        ).
 
     tab->columns(
         )->column(

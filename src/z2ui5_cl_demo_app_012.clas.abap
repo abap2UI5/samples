@@ -27,8 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->vbox(
                 )->text( 'this is a popup to decide, you have to make a decision now...'
             )->get_parent(
-            )->footer( )->overflow_toolbar(
-                )->toolbar_spacer(
+            )->buttons(
                 )->button(
                     text  = 'Cancel'
                     press = client->_event( 'POPUP_DECIDE_CANCEL' )
@@ -49,8 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->vbox(
                 )->text( 'this is an information, press close to go back to the main view without a server roundtrip'
             )->get_parent(
-            )->footer( )->overflow_toolbar(
-                )->toolbar_spacer(
+                )->buttons(
                 )->button(
                     text  = 'close'
                     press = client->_event_client( client->cs_event-popup_close )

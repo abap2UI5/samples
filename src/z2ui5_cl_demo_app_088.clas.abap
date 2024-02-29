@@ -30,11 +30,6 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Public Method Z2UI5_CL_DEMO_APP_089->Z2UI5_IF_APP~MAIN
-* +-------------------------------------------------------------------------------------------------+
-* | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_if_app~main.
 
     me->client     = client.
@@ -51,10 +46,6 @@ CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_089->Z2UI5_ON_EVENT
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
@@ -77,28 +68,20 @@ CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
   ENDMETHOD.
 
 
-* <SIGNATURE>---------------------------------------------------------------------------------------+
-* | Instance Protected Method Z2UI5_CL_DEMO_APP_089->Z2UI5_VIEW_DISPLAY
-* +-------------------------------------------------------------------------------------------------+
-* +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD Z2UI5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(tool_page) = view->shell( )->tool_page(
                           )->header( ns = `tnt`
                             )->tool_header(
-
                             )->button( text = `Back` press = client->_event( 'BACK' )
                             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-
                               )->image( src = `https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg`
                                         height = `1.5rem`
                                         class = `sapUiSmallMarginBegin`
 
-                              )->title( level = `H1`
-                                        text  = `Nav Container I`
-                              )->title( level = `H3`
-                                        text  = `Second Title`
+                              )->title( text  = `Nav Container I`
+                              )->title( text  = `Second Title`
                               )->toolbar_spacer(
                               )->overflow_Toolbar_Button( text = `Search`
                                                           tooltip = `Search`
@@ -112,8 +95,8 @@ CLASS Z2UI5_CL_DEMO_APP_088 IMPLEMENTATION.
                                                           tooltip = `Notifications`
                                                           icon = `sap-icon://bell`
                                                           type = `Transparent`
-                              )->avatar( src = ``
-                                         displaysize = `XS`
+*                              )->avatar( src = ``
+*                                         displaysize = `XS`
                               )->overflow_toolbar_button( text = `Custom Action`
                                                           tooltip = `Custom Action`
                                                           icon = `sap-icon://grid`

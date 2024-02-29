@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_053 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -22,44 +22,45 @@ CLASS Z2UI5_CL_DEMO_APP_053 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_search.
-    METHODS Z2UI5_set_data.
+    METHODS view_display.
+    METHODS on_event.
+    METHODS z2ui5_set_search.
+    METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        Z2UI5_set_data( ).
-        Z2UI5_set_search( ).
+        set_data( ).
+        z2ui5_set_search( ).
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -70,49 +71,29 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    data(page1) = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
+    DATA(page) = view->shell( )->page( id = `page_main`
+            title          = 'abap2UI5 - Search with Enter'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-      page1->header_content(
-            )->link(
-                text = 'Demo' target = '_blank'
-                href = 'https://twitter.com/abap2UI5/status/1661642823542747138'
-            )->link(
-                text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-       ).
+    DATA(vbox) = page->vbox( ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
-
-    DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
-
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
-
-    lo_box->vbox( )->text( `Search` )->search_field(
+    vbox->hbox( )->search_field(
          value  = client->_bind_edit( mv_search_value )
          search = client->_event( 'BUTTON_SEARCH' )
          change = client->_event( 'BUTTON_SEARCH' )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
-         id     = `SEARCH` ).
-
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
+         id     = `SEARCH` )->button(
         text = `Go`
         press = client->_event( `BUTTON_START` )
         type = `Emphasized` ).
 
-    DATA(cont) = page->content( ns = 'f' ).
-
-    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+    DATA(tab) = vbox->table( items = client->_bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -133,7 +114,7 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -147,16 +128,16 @@ CLASS Z2UI5_CL_DEMO_APP_053 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_search.
+  METHOD z2ui5_set_search.
 
     IF mv_search_value IS NOT INITIAL.
 
-        z2ui5_cl_util=>itab_filter_by_val(
-          EXPORTING
-            val = mv_search_value
-          CHANGING
-            tab = mt_table
-        ).
+      z2ui5_cl_util=>itab_filter_by_val(
+        EXPORTING
+          val = mv_search_value
+        CHANGING
+          tab = mt_table
+      ).
 
     ENDIF.
 

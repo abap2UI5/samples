@@ -92,9 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                     )->text( '{VALUE}'
                     )->text( '{DESCR}'
     )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-    )->footer(
-        )->overflow_toolbar(
-            )->toolbar_spacer(
+    )->buttons(
             )->button(
                 text  = 'continue'
                 press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
@@ -147,9 +145,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
             )->text( '{NAME}'
             )->text( '{LASTNAME}' ).
 
-    popup2->footer(
-        )->overflow_toolbar(
-            )->toolbar_spacer(
+    popup2->buttons(
                 )->button(
                     text  = 'continue'
                     press = client->_event( 'POPUP_TABLE_F4_CUSTOM_CONTINUE' )
@@ -304,15 +300,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Value Help Examples'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo'  target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1637470531136921600'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->get_parent( ).
+            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        ).
 
     DATA(form) = page->grid( 'L7 M7 S7'
         )->content( 'layout'

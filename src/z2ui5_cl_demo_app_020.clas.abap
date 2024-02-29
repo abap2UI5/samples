@@ -64,9 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
          )->dialog( 'abap2UI5 - Popup to decide'
                 )->vbox(
                     )->text( mv_text )->get_parent(
-                )->footer(
-                    )->overflow_toolbar(
-                        )->toolbar_spacer(
+                )->buttons(
                         )->button(
                             text  = mv_cancel_text
                             press = client->_event( mv_cancel_event )
