@@ -22,19 +22,14 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_ui5=>_factory( )->_ns_m( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
                                        navbuttonpress = client->_event( 'BACK' )
                                        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->headercontent(
-                )->link( text = 'Demo'        target = '_blank' href = 'https://twitter.com/abap2UI5/status/1631562906570575875'
-                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-        )->_go_up( ).
+        ).
 
-    DATA(grid) = page->_ns_ui( )->grid( 'L7 M12 S12' )->content( `sap.ui.layout` ).
-
-   data(temp) = grid->simpleform( title = 'File' editable = abap_true )->content( )->_ns_m(
+   data(temp) = page->simple_form( title = 'File' editable = abap_true )->content( `form`
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
@@ -45,28 +40,25 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
             v = shift_right( shift_left( row ) ) ) ).
 
     data(temp3) = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lt_types ) ).
-     data(temp2) =  temp3->_go_new( ).
+                   suggestionitems = client->_bind_local( lt_types )
+                    )->get( ).
 
-          temp2->_ns_m(
-            )->suggestionitems( )->_ns_ui(
-                )->listitem( text = '{NAME}' additionaltext = '{VALUE}'
-         )->_go_up( )->_go_up( )->_ns_m(
-         )->button( text  = 'Download'
+       temp3->suggestion_items(
+                )->list_item( text = '{N}' additionaltext = '{V}' ).
+
+    temp->label( '' )->button( text  = 'Download'
                     press = client->_event( 'DB_LOAD' )
                     icon  = 'sap-icon://download-from-cloud' ).
 
-    grid = page->_ns_ui( )->grid( 'L12 M12 S12' )->content( `sap.ui.layout` ).
-
-    page->_ns_ui( )->codeeditor( type     = mv_type
+    page->code_editor( type     = mv_type
                        editable = mv_check_editable
                        value    = client->_bind( mv_editor ) ).
 
-    page->_ns_m( )->footer( )->overflowtoolbar(
+    page->footer( )->overflow_toolbar(
         )->button( text  = 'Clear'
                    press = client->_event( 'CLEAR' )
                    icon  = 'sap-icon://delete'
-        )->toolbarspacer(
+        )->toolbar_spacer(
         )->button( text  = 'Edit'
                    press = client->_event( 'EDIT' )
                    icon  = 'sap-icon://edit'
@@ -76,7 +68,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                    icon    = 'sap-icon://upload-to-cloud'
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
-    client->view_display( page->_stringify( ) ).
+    client->view_display( page->stringify( ) ).
   ENDMETHOD.
 
   METHOD Z2UI5_if_app~main.
