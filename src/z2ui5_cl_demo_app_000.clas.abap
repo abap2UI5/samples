@@ -1257,7 +1257,7 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
     panel->generic_tile(
-  header = `Messaging I`
+  header = `Messaging`
    subheader    = 'Since 1.118'
    press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
    mode      = 'LineMode'
@@ -1265,7 +1265,7 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
     panel->generic_tile(
-  header = `Messaging II - Nested Views`
+  header = `Messaging & Nested Views`
    subheader    = 'Since 1.118'
    press     = client->_event( 'Z2UI5_CL_DEMO_APP_071' )
    mode      = 'LineMode'
