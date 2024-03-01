@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
             groupitems = abap_true
             placement = `Top`
             initiallyexpanded = abap_true
-            beforeclose = client->_event( val = 'POPOVER_CLOSE' check_view_destroy = abap_false )
+            beforeclose = client->_event( val = 'POPOVER_CLOSE' s_ctrl = value #( check_view_destroy = abap_true ) )
         )->message_item(
             type        = `{TYPE}`
             title       = `{TITLE}`

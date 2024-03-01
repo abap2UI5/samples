@@ -9,10 +9,8 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-
-*    DATA t_tab2 TYPE REF TO data.
-
     METHODS set_view.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -51,7 +49,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( val = 'SEND' check_view_destroy = abap_true )
+                    press = client->_event( val = 'SEND' s_ctrl = value #( check_view_destroy = abap_true ) )
         )->get_parent( )->get_parent( ).
 
     tab->columns(

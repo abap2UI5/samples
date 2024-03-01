@@ -22,28 +22,10 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-*    DATA(page2) = view->shell( )->page( ).
-*
-*    page2->illustrated_message(
-*         title = `HTTP 500 - Server Error`
-*         enableformattedtext = abap_true
-*      description = mv_html
-*         illustrationtype = `sapIllus-ErrorScreen`
-*         illustrationsize = `Dot`
-*    )->additional_content(
-*     )->button(
-*                text  = 'Home'
-*                type  = `Emphasized`
-*                press = client->__event_frontend( client->cs_event-leave_home ) ).
-*
-*    client->set_view( view->stringify( ) ).
-*
-*    RETURN.
-
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true  )
+            navbuttonpress = client->_event( val = 'BACK' s_ctrl = value #( check_view_destroy = abap_true )  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(

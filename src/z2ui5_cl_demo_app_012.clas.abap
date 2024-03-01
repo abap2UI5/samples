@@ -77,11 +77,11 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, no background rendering'
-                press = client->_event( val = 'BUTTON_POPUP_01' check_view_destroy = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_01' s_ctrl = value #( check_view_destroy = abap_true ) )
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, background destroyed and rerendering'
-                press = client->_event( val = 'BUTTON_POPUP_02' check_view_destroy = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_02' s_ctrl = value #( check_view_destroy = abap_true ) )
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close (no roundtrip)'
