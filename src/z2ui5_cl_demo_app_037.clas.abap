@@ -139,7 +139,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                           `  text="back" ` && |\n|  &&
                           `  press="` && client->_event( 'BACK' ) && `" ` && |\n|  &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n|  &&
-                   `       <m:Link target="_blank" text="Source_Code" href="` && z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) && `"/>` && |\n|  &&
                           `<m:Button text="Load Custom Control"    press="` && client->_event( 'LOAD_CC' )    && `" />` && |\n|  &&
                           `<m:Button text="Display Custom Control" press="` && client->_event( 'DISPLAY_CC' ) && `" />` && |\n|  &&
                           `<html><head> ` &&

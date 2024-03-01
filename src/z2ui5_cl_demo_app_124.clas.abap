@@ -42,12 +42,6 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
                   shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
-                      target = '_blank'
-              )->get_parent(
               )->simple_form( title = 'Information' editable = abap_true
                   )->content( 'form'
                       )->label( 'mv_scan_input'

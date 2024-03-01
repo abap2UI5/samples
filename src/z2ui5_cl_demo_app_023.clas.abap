@@ -123,11 +123,6 @@ CLASS z2ui5_cl_demo_app_023 IMPLEMENTATION.
                     navbuttonpress = client->_event( 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
-                    )->link(
-                        text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code(  )
-                        target = '_blank'
-                )->get_parent(
                 )->simple_form( 'Form Title'
                     )->content( `form`
                         )->title( 'Input'
