@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
                 text = 'Demo' target = '_blank'
                 href = 'https://twitter.com/abap2UI5/status/1662001605950971904'
             )->link(
-                text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                text = 'Source_Code' target = '_blank' 
        )->get_parent( ).
 
     page = page->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).

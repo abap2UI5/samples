@@ -76,7 +76,7 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
               shownavbutton = abap_true ).
 
     page->header_content(
-         )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+         )->link( text = 'Source_Code'  target = '_blank' 
          )->get_parent( ).
 
     DATA(side_panel) = page->side_panel( sidepanelposition = `Left`

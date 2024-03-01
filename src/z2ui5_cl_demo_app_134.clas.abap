@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
           items     = client->_bind_edit( mt_scroll )
         ).
 
-    page->header_content( )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
+    page->header_content( )->link( text = 'Source_Code' target = '_blank'  ).
 
     DATA(tab) = page->table( sticky = 'ColumnHeaders,HeaderToolbar' headertext = 'Table with some entries' items = client->_bind( t_tab ) ).
 

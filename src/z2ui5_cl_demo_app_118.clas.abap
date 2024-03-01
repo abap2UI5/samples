@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link( text = 'Source_Code'  target = '_blank' 
          )->get_parent( ).
 
     page->vbox( height = `100%` justifycontent = `Center` alignitems = `Center`

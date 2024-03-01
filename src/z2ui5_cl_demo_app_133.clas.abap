@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                      
                       target = '_blank'
               )->get_parent(
                         )->_z2ui5( )->focus(

@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
                 )->link(
                     text = 'Source_Code'
                     target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                    
                     )->get_parent(
            )->button(
             text  = 'Open Popup...'

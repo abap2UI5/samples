@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
         href = 'https://twitter.com/abap2UI5'
       )->link(
         text = 'Source_Code' target = '_blank'
-        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+        
        ).
 
     page->sub_header(

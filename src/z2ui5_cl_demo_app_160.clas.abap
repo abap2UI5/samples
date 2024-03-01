@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         )->header_content(
             )->link(
                 text = 'Source_Code'  target = '_blank'
-                href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                
         )->get_parent( ).
 
 *    DATA(page) = view->page( title = 'Test App' enablescrolling = abap_false class = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer' ).

@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1630240894581608448'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                    
         )->get_parent( ).
 
     DATA(tab) = page->table(

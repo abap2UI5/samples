@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->header_content(
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                    text = 'Source_Code' target = '_blank' 
            )->get_parent( ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
