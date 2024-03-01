@@ -32,7 +32,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      
+
                       target = '_blank'
                  )->get_parent(
             )->_z2ui5( )->demo_output( mv_output

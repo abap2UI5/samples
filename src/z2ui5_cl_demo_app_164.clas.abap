@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
          )->header_content(
              )->link(
-                 text = 'Source_Code' target = '_blank' 
+                 text = 'Source_Code' target = '_blank'
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).

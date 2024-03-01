@@ -147,8 +147,8 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code' target = '_blank' 
-*             )->link( text = 'Source_Code' target = '_blank' 
+             )->link( text = 'Source_Code' target = '_blank'
+*             )->link( text = 'Source_Code' target = '_blank'
          )->get_parent( ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'

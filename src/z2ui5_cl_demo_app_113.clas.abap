@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                     )->header_content(
-                    )->link( text = 'Source_Code' target = '_blank' 
+                    )->link( text = 'Source_Code' target = '_blank'
             )->get_parent( ).
 
     DATA(timeline) = page->timeline(

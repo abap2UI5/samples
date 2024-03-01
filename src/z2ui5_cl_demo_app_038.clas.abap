@@ -112,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1647246029828268032`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    
+
             )->get_parent( ).
 *    page->button( text = 'Messages in Popup' press = client->_event( 'POPUP' )  ).
     page->message_view(

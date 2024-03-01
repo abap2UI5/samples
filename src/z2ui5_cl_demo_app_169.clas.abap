@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1630240894581608448'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    
+
         )->get_parent( ).
 
     DATA(tab) = page->table(

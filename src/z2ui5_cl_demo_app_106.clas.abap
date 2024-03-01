@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        
+
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Rich Text Editor' editable = abap_true

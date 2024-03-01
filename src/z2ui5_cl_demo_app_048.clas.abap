@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
                     href = `https://twitter.com/abap2UI5/status/1657279838586109953`
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    
+
             )->get_parent( ).
 
     page->list(

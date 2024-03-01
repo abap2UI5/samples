@@ -46,7 +46,7 @@ CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      
+
                       target = '_blank'
                   )->button( text = `TOUR` press = `sap.z2ui5.DriverJS.drive()`
                   )->button( text = `HIGHLIGHT` press = `sap.z2ui5.DriverJS.highlight()`

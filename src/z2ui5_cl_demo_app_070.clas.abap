@@ -156,7 +156,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     page1->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' 
+              text = 'Source_Code' target = '_blank'
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).

@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                   )->header_content(
                       )->link(
                           text = 'Source_Code'
-                          
+
                           target = '_blank'
                   )->get_parent(
                   )->_z2ui5( )->geolocation(
@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                   )->header_content(
                       )->link(
                           text = 'Source_Code'
-                          
+
                           target = '_blank'
                   )->get_parent(
                   )->_z2ui5( )->geolocation(

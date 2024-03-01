@@ -41,7 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    
+
                     target = '_blank'
             )->get_parent(
                 )->simple_form( title = 'Currency' editable = abap_true

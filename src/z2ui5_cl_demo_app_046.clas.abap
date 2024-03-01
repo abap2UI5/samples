@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
                 )->button( text = 'Display Table' press = client->_event( 'TABLE' )
                 )->link(
                     text = 'Source_Code'  target = '_blank'
-                    
+
             )->get_parent( ).
 
     CASE mv_display.

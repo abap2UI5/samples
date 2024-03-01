@@ -111,7 +111,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
             shownavbutton = abap_true
           )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1680907265891618817`
-             )->link( text = 'Source_Code'  target = '_blank' 
+             )->link( text = 'Source_Code'  target = '_blank'
          )->get_parent( ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' )->begin_column_pages( ).

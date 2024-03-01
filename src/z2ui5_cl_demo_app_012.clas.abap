@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->header_content(
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    
+
             )->get_parent( ).
 
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'

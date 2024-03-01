@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        
+
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'App 127' editable = abap_true

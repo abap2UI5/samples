@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
               )->link( text = `Demo` target = `_blank` href = `https://twitter.com/abap2UI5/status/1647889242545111043`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  
+
           )->get_parent(
           )->simple_form( title = 'Binding Syntax' editable = abap_true
               )->content( 'form'

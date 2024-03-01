@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
                 )->link(
                     text = 'Source_Code'
                     target = '_blank'
-                    
+
                     )->get_parent(
            )->button(
                 text  = 'Open Popup...'

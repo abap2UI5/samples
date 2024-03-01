@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' 
+             )->link( text = 'Source_Code'  target = '_blank'
          )->get_parent( ).
 
     DATA(col_layout) =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).

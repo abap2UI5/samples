@@ -39,7 +39,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
               )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  
+
           )->get_parent(
           )->simple_form( title = 'Mask Input' layout = 'ColumnLayout' editable = abap_true
 *              )->content( 'form'
