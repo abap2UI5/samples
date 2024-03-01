@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
          livechange = client->_event(
             val = 'BUTTON_SEARCH'
             t_arg = VALUE #( ( `${$source>/value}` ) )
-            s_cnt = ls_cnt
+            s_ctrl = ls_cnt
             )
          width  = `17.5rem` ).
 

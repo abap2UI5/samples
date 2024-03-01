@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->shell( )->page(
         id = `page`
         title = ` abap2UI5 - Samples`
-        navbuttonpress = client->_event( val = 'BACK' s_cnt = VALUE #( check_view_destroy = abap_true ) )
+        navbuttonpress = client->_event( val = 'BACK' s_ctrl = VALUE #( check_view_destroy = abap_true ) )
         shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
