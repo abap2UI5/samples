@@ -38,7 +38,32 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
+
+
+  METHOD get_custom_js.
+
+    result  = `` && |\n| &&
+                 `sap.z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
+                 ` var oFileUploadComponent = oEvent.getParameters("items").item.getFileObject();` && |\n| &&
+                 ` if (oFileUploadComponent) {` && |\n| &&
+                 `   _handleRawFile(oFileUploadComponent,oController);` && |\n| &&
+                 ` }` && |\n| &&
+                 ` console.log(sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW.data);` && |\n| &&
+                 `};` && |\n| &&
+                 `_handleRawFile = (oFile, oController) => {` && |\n| &&
+                 ` var oFileRaw = {` && |\n| &&
+                 `   name: oFile.name,mimetype: oFile.type,size: oFile.size,data: []` && |\n| &&
+                 ` }` && |\n| &&
+                 ` var reader = new FileReader();` && |\n| &&
+                 ` reader.onload = function (e) {` && |\n| &&
+                 `   oFileRaw.data = e.target.result;` && |\n| &&
+                 `   sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW = oFileRaw;` && |\n| &&
+                 ` }` && |\n| &&
+                 `  reader.readAsDataURL(oFile);` && |\n| &&
+                 `};`.
+
+  ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
@@ -110,29 +135,4 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
-
-  METHOD get_custom_js.
-
-    result  = `` && |\n| &&
-                 `sap.z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
-                 ` var oFileUploadComponent = oEvent.getParameters("items").item.getFileObject();` && |\n| &&
-                 ` if (oFileUploadComponent) {` && |\n| &&
-                 `   _handleRawFile(oFileUploadComponent,oController);` && |\n| &&
-                 ` }` && |\n| &&
-                 ` console.log(sap.z2ui5.oResponse.OVIEWMODEL.EDIT.MV_FILE_RAW.data);` && |\n| &&
-                 `};` && |\n| &&
-                 `_handleRawFile = (oFile, oController) => {` && |\n| &&
-                 ` var oFileRaw = {` && |\n| &&
-                 `   name: oFile.name,mimetype: oFile.type,size: oFile.size,data: []` && |\n| &&
-                 ` }` && |\n| &&
-                 ` var reader = new FileReader();` && |\n| &&
-                 ` reader.onload = function (e) {` && |\n| &&
-                 `   oFileRaw.data = e.target.result;` && |\n| &&
-                 `   sap.z2ui5.oResponse.OVIEWMODEL.EDIT.MV_FILE_RAW = oFileRaw;` && |\n| &&
-                 ` }` && |\n| &&
-                 `  reader.readAsDataURL(oFile);` && |\n| &&
-                 `};`.
-
-  ENDMETHOD.
-
 ENDCLASS.
