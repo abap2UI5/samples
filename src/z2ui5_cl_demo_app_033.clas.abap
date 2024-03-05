@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1647175810917318657`
                 )->link(
-                     
+
 
             )->get_parent( ).
     page->link( text = 'Documentation'  target = '_blank' href = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).

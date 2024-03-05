@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
                 )->button( text = 'Display List'  press = client->_event( 'LIST' )
                 )->button( text = 'Display Table' press = client->_event( 'TABLE' )
                 )->link(
-                     
+
 
             )->get_parent( ).
 

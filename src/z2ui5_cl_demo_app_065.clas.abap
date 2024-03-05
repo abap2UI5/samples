@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_065 IMPLEMENTATION.
                       shownavbutton = abap_true
                 )->header_content(
                     )->link(
-                         
+
 
                 )->get_parent( ).
 

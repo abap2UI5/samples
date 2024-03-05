@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1647246029828268032`
                 )->link(
-                     
+
 
             )->get_parent( ).
 
