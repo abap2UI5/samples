@@ -64,12 +64,14 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
   METHOD ui5_display_popup_tree_select.
 
+    client->_bind_edit( prodh_nodes_ex ).
+
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
     dialog->tree(
         mode  = 'SingleSelectMaster'
-        items = client->_bind_edit( val = prodh_nodes )
+        items = client->_bind_edit( prodh_nodes )
 *        toggleopenstate = client->_event( val = 'TOGGLE_STATE' t_arg = VALUE #( ( `${$parameters>/itemIndex}` ) ( `${$parameters>/expanded}` ) ) )
         toggleopenstate = client->_event( val = 'TOGGLE_STATE' t_arg = VALUE #( ( `${$parameters>/itemContext/sPath}` ) ( `${$parameters>/expanded}` ) ) )
         )->items(
@@ -92,18 +94,11 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
   METHOD ui5_display_view.
 
-    client->_bind_edit( prodh_nodes_ex ).
-
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Popup Tree select Entry'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
-
-    page->header_content(
-             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1680261069535584259`
-             )->link( text = 'Source_Code'  target = '_blank'
-         )->get_parent( ).
 
     client->view_display( page->button( text = 'Open Popup here...' press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
 
@@ -180,7 +175,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
           <fss1> = expanded.
         ENDIF.
 
-        client->view_model_update( ).
+        client->popup_model_update( ).
 
 
       WHEN 'BACK'.
