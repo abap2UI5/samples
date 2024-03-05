@@ -424,14 +424,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-*    panel->generic_tile(
-*        header    = 'Layout'
-*        subheader = 'Save your table layout'
-*        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_058' )
-*        mode      = 'LineMode'
-*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-*    ).
-
     panel->generic_tile(
         header    = 'ui.Table'
         subheader = 'Simple example'
@@ -579,7 +571,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
-          headertext = `Visualization & Layouts`
+          headertext = `More Controls`
      ).
 
     panel->generic_tile(
@@ -595,6 +587,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     mode      = 'LineMode'
     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
+
+   panel = page->panel(
+          expandable = abap_false
+          expanded   = abap_true
+          headertext = `Layouts`
+     ).
 
     panel->generic_tile(
         header    = 'Header, Footer, Grid'
@@ -683,7 +681,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel = page->panel(
                  expandable = abap_false
                  expanded   = abap_true
-                 headertext = `SRTTI -Dynamic Typing`
+                 headertext = `S-RTTI - Dynamic Typing`
             ).
 
 
