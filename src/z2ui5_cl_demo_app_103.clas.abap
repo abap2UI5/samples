@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
                 shownavbutton = abap_true ).
 
     page->header_content(
-         )->link( text = 'Source_Code'  target = '_blank'  ).
+         )->link(    ).
 
     page->responsive_splitter( defaultpane = `default`
        )->pane_container(
