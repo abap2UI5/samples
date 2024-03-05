@@ -1,54 +1,53 @@
-class Z2UI5_CL_DEMO_APP_178 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_demo_app_178 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app.
 
-  types:
-    BEGIN OF ty_prodh_node_level3,
+    TYPES:
+      BEGIN OF ty_prodh_node_level3,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
       END OF ty_prodh_node_level3 .
-  types:
-    BEGIN OF ty_prodh_node_level2,
+    TYPES:
+      BEGIN OF ty_prodh_node_level2,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         expanded    TYPE abap_bool,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
       END OF ty_prodh_node_level2 .
-  types:
-    BEGIN OF ty_prodh_node_level1,
+    TYPES:
+      BEGIN OF ty_prodh_node_level1,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         expanded    TYPE abap_bool,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
       END OF ty_prodh_node_level1 .
-  types:
-    ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
-  types:
-    BEGIN OF ty_prodh_node_level2_ex,
-        expanded    TYPE abap_bool,
+    TYPES:
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
+    TYPES:
+      BEGIN OF ty_prodh_node_level2_ex,
+        expanded TYPE abap_bool,
       END OF ty_prodh_node_level2_ex .
-  types:
-    BEGIN OF ty_prodh_node_level1_ex,
-        expanded    TYPE abap_bool,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2_ex WITH DEFAULT KEY,
+    TYPES:
+      BEGIN OF ty_prodh_node_level1_ex,
+        expanded TYPE abap_bool,
+        nodes    TYPE STANDARD TABLE OF ty_prodh_node_level2_ex WITH DEFAULT KEY,
       END OF ty_prodh_node_level1_ex .
-  types:
-    ty_prodh_nodes_ex TYPE STANDARD TABLE OF ty_prodh_node_level1_ex WITH DEFAULT KEY .
+    TYPES:
+      ty_prodh_nodes_ex TYPE STANDARD TABLE OF ty_prodh_node_level1_ex WITH DEFAULT KEY .
 
-  data PRODH_NODES type TY_PRODH_NODES .
-  data PRODH_NODES_EX type TY_PRODH_NODES_EX .
-  data IS_INITIALIZED type ABAP_BOOL .
+    DATA prodh_nodes TYPE ty_prodh_nodes .
+    DATA prodh_nodes_ex TYPE ty_prodh_nodes_ex .
+    DATA is_initialized TYPE abap_bool .
 
-  methods UI5_DISPLAY_VIEW .
+    METHODS ui5_display_view .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -60,10 +59,10 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
-  METHOD UI5_DISPLAY_POPUP_TREE_SELECT.
+  METHOD ui5_display_popup_tree_select.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
@@ -91,7 +90,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_DISPLAY_VIEW.
+  METHOD ui5_display_view.
 
     client->_bind_edit( prodh_nodes_ex ).
 
@@ -111,7 +110,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_INITIALIZE.
+  METHOD ui5_initialize.
     prodh_nodes =
     VALUE #( ( text = 'Machines'
                prodh = '00100'
@@ -151,7 +150,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
