@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_174 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA ms_layout  TYPE z2ui5_cl_popup_layout_v2=>ty_s_layout.
+    DATA ms_layout  TYPE z2ui5_cl_popup_layout=>ty_s_layout.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
   METHOD create_layout.
 
-    ms_layout = z2ui5_cl_popup_layout_v2=>init_layout(
+    ms_layout = z2ui5_cl_popup_layout=>init_layout(
       tab       = REF #( mt_table )
       classname = z2ui5_cl_util=>rtti_get_classname_by_ref( me ) ).
 
@@ -159,7 +159,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
   METHOD on_after_layout.
 
     TRY.
-        DATA(app) = CAST z2ui5_cl_popup_layout_v2( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+        DATA(app) = CAST z2ui5_cl_popup_layout( client->get_app( client->get( )-s_draft-id_prev_app ) ).
         DATA(ls_result) = app->result( ).
         IF ls_result-check_cancel = abap_true.
           RETURN.
@@ -179,7 +179,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'LAYOUT_EDIT'.
-        client->nav_app_call( z2ui5_cl_popup_layout_v2=>factory( layout = ms_layout
+        client->nav_app_call( z2ui5_cl_popup_layout=>factory( layout = ms_layout
                                        extended_layout = abap_true   ) ).
 
     ENDCASE.
