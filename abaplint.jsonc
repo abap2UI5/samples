@@ -89,7 +89,7 @@
     },
     "exit_or_check": true,
     "expand_macros": true,
-    "exporting": true,
+    "exporting": false,
     "forbidden_identifier": true,
     "forbidden_pseudo_and_pragma": {
       "exclude": [],
