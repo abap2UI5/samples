@@ -27,10 +27,14 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
                     url = client->get( )-s_config-search ).
     check_launchpad_active = client->get( )-check_launchpad_active.
 
+    data(lt_params) = client->get( )-t_comp_params.
+    try.
+    product = lt_params[ n = `PRODUCT` ]-v.
+    catch cx_root.
+    endtry.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      product  = 'tomato'.
       quantity = '500'.
 
       client->view_display( view->shell(
@@ -48,12 +52,8 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
                 )->simple_form( title = 'App 128' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
-                        )->label( 'product'
+                        )->label( 'product nav param'
                         )->input( client->_bind_edit( product )
-                        )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
-                        )->label( `url param product`
-                        )->input( product_url
                         )->label( `CHECK_LAUNCHPAD_ACTIVE`
                         )->input( check_launchpad_active
                         )->button( press = client->_event(  )

@@ -4,9 +4,15 @@ CLASS z2ui5_cl_demo_app_127 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+*    DATA product  TYPE string.
+*    DATA quantity TYPE string.
     DATA check_initialized TYPE abap_bool.
+
+    DATA:
+      BEGIN OF nav_params,
+        product  TYPE string,
+        quantity TYPE string,
+      END OF nav_params.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -19,13 +25,12 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    data(lt_startup_params) = client->get( )-s_config-t_startup_params.
+    DATA(lt_startup_params) = client->get( )-s_config-t_startup_params.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      product  = 'tomato'.
-      quantity = '500'.
+      nav_params-product  = '102343333'.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
@@ -42,17 +47,18 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
                 )->get_parent(
                 )->simple_form( title = 'App 127' editable = abap_true
                     )->content( 'form'
-*                        )->title( 'Input'
-*                        )->label( 'Product'
-*                        )->input( client->_bind_edit( product )
-*                        )->label( `Quantity`
-*                        )->input( client->_bind_edit( quantity )
+                        )->label( `Product`
+                        )->input( client->_bind_edit( nav_params-product )
                         )->button(  text  = 'BACK' press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
                             text  = 'go to app 128'
                             press = client->_event_client(
             val    = client->cs_event-cross_app_nav_to_ext
-            t_arg  = VALUE #( ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` )  )
+            t_arg  = VALUE #(
+                ( `{ semanticObject: "Z2UI5_CL_DEMO_APP_128",  action: "Z2UI5_CL_DEMO_APP_128" }` )
+*                ( `{ "Product" : "102343333" }` )
+                ( `$` && client->_bind_edit( nav_params ) )
+                 )
         )
              )->stringify( ) ).
 
