@@ -45,6 +45,7 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION
 
     DATA prodh_nodes TYPE ty_prodh_nodes .
     DATA prodh_nodes_ex TYPE ty_prodh_nodes_ex .
+    DATA prodh_nodes_ex_tmp TYPE ty_prodh_nodes_ex .
     DATA is_initialized TYPE abap_bool .
 
     METHODS ui5_display_view .
@@ -59,17 +60,29 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
 
 
   METHOD ui5_display_popup_tree_select.
 
-    client->_bind_edit( prodh_nodes_ex ).
-
+    DATA(lv_js) = `debugger;` && |\n| &&
+                  `var tree_table = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
+                  `for (var i in sap.z2ui5.oResponse.OVIEWMODEL.XX.PRODH_NODES_EX) {` && |\n| &&
+                  ` if( sap.z2ui5.oResponse.OVIEWMODEL.XX.PRODH_NODES_EX[i].EXPANDED ) {` && |\n| &&
+                  `   tree_table.expand(parseInt(i));` && |\n| &&
+                  `   for (var j in sap.z2ui5.oResponse.OVIEWMODEL.XX.PRODH_NODES_EX[i].NODES) {` && |\n| &&
+                  `     if( sap.z2ui5.oResponse.OVIEWMODEL.XX.PRODH_NODES_EX[i].NODES[j].EXPANDED ) {` && |\n| &&
+                  `       tree_table.expand(parseInt(j+1));` && |\n| &&
+                  `     };` && |\n| &&
+                  `   };` && |\n| &&
+                  ` };` && |\n| &&
+                  `};` && |\n| &&
+                  `console.log(tree_table);`.
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
     dialog->tree(
+        id = `tree`
         mode  = 'SingleSelectMaster'
         items = client->_bind_edit( prodh_nodes )
 *        toggleopenstate = client->_event( val = 'TOGGLE_STATE' t_arg = VALUE #( ( `${$parameters>/itemIndex}` ) ( `${$parameters>/expanded}` ) ) )
@@ -87,13 +100,16 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
                type  = `Reject`
                press = client->_event( 'CANCEL' ) ).
 
+*    dialog->html( content = `<script>` && lv_js && `</script>` ).
+*    dialog->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_js ).
+
     client->popup_display( dialog->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD ui5_display_view.
-
+    client->_bind_edit( val = prodh_nodes_ex view = client->cs_view-main ).
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Popup Tree select Entry'
@@ -162,6 +178,13 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
         DATA(row) = lt_arg[ 1 ].
         DATA(expanded) = lt_arg[ 2 ].
 
+*        IF prodh_nodes_ex_tmp IS INITIAL.
+*          prodh_nodes_ex_tmp = prodh_nodes_ex.
+*        ELSE.
+*          prodh_nodes_ex = prodh_nodes_ex_tmp.
+*        ENDIF.
+
+
         SPLIT row AT '/' INTO TABLE DATA(lt_indxs).
 
         IF row CS '/NODES/'.
@@ -175,18 +198,20 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
           <fss1> = expanded.
         ENDIF.
 
-        client->popup_model_update( ).
+*        prodh_nodes_ex_tmp = prodh_nodes_ex.
 
+*        client->popup_model_update( ).
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN 'POPUP_TREE'.
+        CLEAR prodh_nodes_ex_tmp.
         ui5_display_popup_tree_select( ).
 
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
-        client->message_box_display( `Selected entry is set in the backend` ).
 
       WHEN 'CANCEL'.
         client->popup_destroy( ).
