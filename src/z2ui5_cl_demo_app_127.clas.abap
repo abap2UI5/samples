@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_127 IMPLEMENTATION.
       client->view_display( view->shell(
             )->page(
                      showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
-                    title          = 'abap2UI5 - Cross App Navigation App 127'
+                    title          = 'abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(

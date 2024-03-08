@@ -863,7 +863,7 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
     panel->generic_tile(
-       header    = 'Camera & Picture'
+       header    = 'Launchpad I'
        subheader = `App Navigation & Parameters`
        press     =  client->_event( 'z2ui5_cl_demo_app_127' )
        mode      = 'LineMode'
