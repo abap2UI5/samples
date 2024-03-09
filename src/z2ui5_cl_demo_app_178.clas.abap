@@ -86,7 +86,13 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
         mode  = 'SingleSelectMaster'
         items = client->_bind_edit( prodh_nodes )
 *        toggleopenstate = client->_event( val = 'TOGGLE_STATE' t_arg = VALUE #( ( `${$parameters>/itemIndex}` ) ( `${$parameters>/expanded}` ) ) )
-        toggleopenstate = client->_event( val = 'TOGGLE_STATE' t_arg = VALUE #( ( `${$parameters>/itemContext/sPath}` ) ( `${$parameters>/expanded}` ) ) )
+        toggleopenstate = client->_event(
+            val = 'TOGGLE_STATE'
+            t_arg = VALUE #(
+                    ( `${$parameters>/itemContext/sPath}` )
+                    ( `${$parameters>/expanded}` ) )
+            s_ctrl = value #( model_name = client->cs_view-main )
+        )
         )->items(
             )->standard_tree_item( selected = '{IS_SELECTED}' title = '{TEXT}' ).
 
