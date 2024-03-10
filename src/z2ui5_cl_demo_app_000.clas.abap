@@ -1124,6 +1124,14 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+     panel->generic_tile(
+     header    = 'Popup Display HTML'
+     subheader = ''
+     press     =  client->_event( 'z2ui5_cl_demo_app_149' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
     page = page2->panel(
           expandable = abap_true
            expanded   = client->_bind_edit( ms_check_expanded-version )
