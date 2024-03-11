@@ -470,13 +470,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       ).
 
     panel->generic_tile(
-        header    = 'Tree Table'
+        header    = 'Tree Table I'
         subheader = 'Popup Select Entry'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_068' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+    panel->generic_tile(
+        header    = 'Tree Table II'
+        subheader = 'Keep state expanded/unexpanded'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_178' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
     page = page2->panel(
         expandable = abap_true

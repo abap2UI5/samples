@@ -1,40 +1,40 @@
-class Z2UI5_CL_DEMO_APP_178 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_demo_app_178 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_prodh_node_level3,
+    TYPES:
+      BEGIN OF ty_prodh_node_level3,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
       END OF ty_prodh_node_level3 .
-  types:
-    BEGIN OF ty_prodh_node_level2,
+    TYPES:
+      BEGIN OF ty_prodh_node_level2,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
       END OF ty_prodh_node_level2 .
-  types:
-    BEGIN OF ty_prodh_node_level1,
+    TYPES:
+      BEGIN OF ty_prodh_node_level1,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
       END OF ty_prodh_node_level1 .
-  types:
-    ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
+    TYPES:
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
 
-  data PRODH_NODES type TY_PRODH_NODES .
-  data IS_INITIALIZED type ABAP_BOOL .
+    DATA prodh_nodes TYPE ty_prodh_nodes .
+    DATA is_initialized TYPE abap_bool .
 
-  methods UI5_DISPLAY_VIEW .
+    METHODS ui5_display_view .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -46,10 +46,10 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
-  METHOD UI5_DISPLAY_POPUP_TREE_SELECT.
+  METHOD ui5_display_popup_tree_select.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' beforeopen = `setState()` beforeclose = `saveState()` ).
@@ -77,14 +77,12 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_DISPLAY_VIEW.
+  METHOD ui5_display_view.
     DATA(lv_save_state_js) = `function saveState() {` && |\n| &&
-*                             `  debugger;` && |\n| &&
                              `  var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
                              `  sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
                              ` }; `.
     DATA(lv_reset_state_js) = `function setState() { ` && |\n| &&
-*                              ` debugger;` && |\n| &&
                               ` var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
                               ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
                               `     sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
@@ -99,7 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
     view->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_reset_state_js ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Popup Tree select Entry'
+            title          = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
@@ -108,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_INITIALIZE.
+  METHOD ui5_initialize.
     prodh_nodes =
     VALUE #( ( text = 'Machines'
                prodh = '00100'
@@ -136,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_178 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
