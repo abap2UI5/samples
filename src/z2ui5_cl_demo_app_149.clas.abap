@@ -16,24 +16,17 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
 
 
-  METHOD ui5_event.
+  METHOD ui5_callback.
 
-    CASE client->get( )-event.
-
-      WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_html=>factory( `<h2>HTML Links</h2>` && |\n|  &&
-                                                     `<p>HTML links are defined with the a tag:</p>` && |\n|  &&
-                                                     |\n|  &&
-                                                     `<a href="https://www.w3schools.com">This is a link</a>` ).
-        client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
+    TRY.
+        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_dummy) = CAST z2ui5_cl_popup_to_inform( lo_prev ).
+        client->message_box_display( `callback after popup to inform` ).
+      CATCH cx_root.
+    ENDTRY.
 
   ENDMETHOD.
 
@@ -61,6 +54,25 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD ui5_event.
+
+    CASE client->get( )-event.
+
+      WHEN 'POPUP'.
+        DATA(lo_app) = z2ui5_cl_popup_html=>factory( `<h2>HTML Links</h2>` && |\n|  &&
+                                                     `<p>HTML links are defined with the a tag:</p>` && |\n|  &&
+                                                     |\n|  &&
+                                                     `<a href="https://www.w3schools.com" target="_blank">This is a link</a>` ).
+        client->nav_app_call( lo_app ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -74,16 +86,4 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
     ui5_event( ).
 
   ENDMETHOD.
-
-  METHOD ui5_callback.
-
-    TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lo_dummy) = CAST z2ui5_cl_popup_to_inform( lo_prev ).
-        client->message_box_display( `callback after popup to inform` ).
-      CATCH cx_root.
-    ENDTRY.
-
-  ENDMETHOD.
-
 ENDCLASS.
