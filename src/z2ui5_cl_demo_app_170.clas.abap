@@ -1,29 +1,28 @@
-class Z2UI5_CL_DEMO_APP_170 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_170 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CLIENT type ref to Z2UI5_IF_CLIENT .
-  data MV_SELECTED_KEY type STRING .
+    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mv_selected_key TYPE string .
 
-  methods UI5_DISPLAY .
-  methods UI5_EVENT .
-  methods SIMPLE_POPUP1 .
-  methods SIMPLE_POPUP2 .
+    METHODS ui5_display .
+    METHODS ui5_event .
+    METHODS simple_popup1 .
+    METHODS simple_popup2.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
 
 
-  METHOD SIMPLE_POPUP1.
+  METHOD simple_popup1.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -31,11 +30,8 @@ CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
             afterclose = client->_event( 'BTN_OK_1ND' )
          )->content( ).
 
-*    DATA(content) = dialog->button( text = `Open 2nd popup` press = client->_event( 'GOTO_2ND' ) ).
-    DATA(content) = dialog->Icon_Tab_bar( selectedkey = client->_bind_edit( mv_selected_key )
-*                                                  select = client->_event( `OnSelectIconTabBar` )
-*                                                  select = client->_event_client( val = 'NAV_CONTAINER_TO' t_arg  = value #( ( `NavCon` ) ( `${$parameters}` ) ) )
-                                                  select = client->_event_client( val = `POPUP_NAV_CONTAINER_TO` t_arg  = value #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+    DATA(content) = dialog->icon_tab_bar( selectedkey = client->_bind_edit( mv_selected_key )
+                                                  select = client->_event_client( val = `POPUP_NAV_CONTAINER_TO` t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   headermode = `Inline`
                                                   expanded = abap_true
                                                   expandable = abap_false
@@ -77,7 +73,7 @@ CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD SIMPLE_POPUP2.
+  METHOD simple_popup2.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -99,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_DISPLAY.
+  METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -122,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD UI5_EVENT.
+  METHOD ui5_event.
 
     CASE client->get( )-event.
       WHEN 'GOTO_2ND'.
@@ -146,7 +142,7 @@ CLASS Z2UI5_CL_DEMO_APP_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
