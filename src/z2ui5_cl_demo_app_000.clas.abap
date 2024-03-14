@@ -567,6 +567,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
+    panel->generic_tile(
+         header    = 'Popover on Nested View'
+         subheader = ''
+         press     =  client->_event( 'z2ui5_cl_demo_app_147' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
 
     page = page2->panel(
           expandable = abap_true
