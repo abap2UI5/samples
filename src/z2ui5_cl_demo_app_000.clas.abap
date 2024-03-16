@@ -479,8 +479,16 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile(
         header    = 'Tree Table II'
-        subheader = 'Keep state expanded/unexpanded'
+        subheader = 'Keep expanded state popup'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_178' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel->generic_tile(
+        header    = 'Tree Table III'
+        subheader = 'Keep expanded state normal'
+        press     =  client->_event( 'z2ui5_cl_demo_app_116' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
