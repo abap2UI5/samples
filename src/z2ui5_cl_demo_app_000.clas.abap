@@ -576,8 +576,8 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
      ).
 
     panel->generic_tile(
-         header    = 'Popover on Nested View'
-         subheader = ''
+         header    = 'Popover'
+         subheader = 'Call from Nested Views & Popup'
          press     =  client->_event( 'z2ui5_cl_demo_app_147' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -586,14 +586,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     page = page2->panel(
           expandable = abap_true
            expanded   = client->_bind_edit( ms_check_expanded-features )
-          headertext = `Features I`
+          headertext = `More Controls`
      ).
 
 
     panel = page->panel(
           expandable = abap_false
           expanded   = abap_true
-          headertext = `More Controls`
+          headertext = `Visualization`
      ).
 
     panel->generic_tile(
@@ -701,22 +701,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 ).
 
     panel = page->panel(
-                 expandable = abap_false
-                 expanded   = abap_true
-                 headertext = `S-RTTI - Dynamic Typing`
-            ).
-
-
-    panel->generic_tile(
-         header    = 'Dynamic Types'
-         subheader = 'Use S-RTTI to send tables to the frontend'
-         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
-
-    panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
                headertext = `Templating`
@@ -741,7 +725,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     page = page2->panel(
           expandable = abap_true
            expanded   = client->_bind_edit( ms_check_expanded-custom_controls )
-          headertext = `Features II`
+          headertext = `Features`
      ).
 
 
@@ -775,6 +759,21 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+
+    panel = page->panel(
+                 expandable = abap_false
+                 expanded   = abap_true
+                 headertext = `S-RTTI - Dynamic Typing`
+            ).
+
+
+    panel->generic_tile(
+         header    = 'Dynamic Types'
+         subheader = 'Use S-RTTI to send tables to the frontend'
+         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
 
     panel = page->panel(
             expandable = abap_false
@@ -1157,7 +1156,7 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     page = page2->panel(
           expandable = abap_true
            expanded   = client->_bind_edit( ms_check_expanded-version )
-          headertext = `UI5 Version Specific`
+          headertext = `UI5 Version Specific & WIP`
      ).
 
     panel = page->panel(
@@ -1334,6 +1333,20 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
+    panel = page->panel(
+    expandable = abap_false
+    expanded   = abap_true
+    headertext = `Work in Progress`
+).
+    panel->message_strip( `Give it a try....` ).
+
+    panel->generic_tile(
+     header    = 'Gantt Chart with Relationships'
+     subheader = ``
+     press     = client->_event( 'Z2UI5_CL_DEMO_APP_179' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
 
     client->view_display( page->stringify( ) ).
 
