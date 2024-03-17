@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
     DATA prodh_nodes TYPE ty_prodh_nodes .
     DATA is_initialized TYPE abap_bool .
     DATA gv_user TYPE uname.
-    DATA gv_date TYPE datum.
+    DATA gv_date TYPE d.
 
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
@@ -55,23 +55,23 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD add_node.
     LOOP AT prodh_nodes ASSIGNING FIELD-SYMBOL(<fs1>).
       IF <fs1>-prodh = p_prodh.
-        ADD 1 TO <fs1>-counter.
+        <fs1>-counter = <fs1>-counter + 1.
         EXIT.
       ELSE.
         LOOP AT <fs1>-nodes ASSIGNING FIELD-SYMBOL(<fs2>).
           IF <fs2>-prodh = p_prodh.
-            ADD 1 TO <fs2>-counter.
+            <fs2>-counter = <fs2>-counter + 1.
             EXIT.
           ELSE.
             LOOP AT <fs2>-nodes ASSIGNING FIELD-SYMBOL(<fs3>).
               IF <fs3>-prodh = p_prodh.
-                ADD 1 TO <fs3>-counter.
+                <fs3>-counter = <fs3>-counter + 1.
                 EXIT.
 
               ENDIF.
@@ -87,7 +87,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
+    view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
 
 *    DATA(page) = view->shell(
 *         )->page()
@@ -167,7 +167,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                                  tooltip = 'ADD'
                           )->get_parent( )->get_parent(
        ).
-       client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( page->get_root( )->xml_get( ) ).
   ENDMETHOD.
 
 
@@ -215,16 +215,16 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                          `  sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                          ` }; `.
 
-    DATA(lv_reset_state_js) = `function setState() {debugger;` && |\n| &&
-                              ` var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
-                              ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
-                              `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
-                              ` } else {` && |\n| &&
-                              `     treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
-                              `     treeTable.getBinding("rows").refresh();` && |\n| &&
-                              `     treeTable.getBinding("rows").setTreeState(sap.z2ui5.treeState);` && |\n| &&
-                              ` };` && |\n| &&
-                              `};`.
+      DATA(lv_reset_state_js) = `function setState() {debugger;` && |\n| &&
+                                ` var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
+                                ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
+                                `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
+                                ` } else {` && |\n| &&
+                                `     treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
+                                `     treeTable.getBinding("rows").refresh();` && |\n| &&
+                                `     treeTable.getBinding("rows").setTreeState(sap.z2ui5.treeState);` && |\n| &&
+                                ` };` && |\n| &&
+                                `};`.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )

@@ -1348,6 +1348,14 @@ class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+     panel->generic_tile(
+     header    = 'Follow Up Action'
+     subheader = ``
+     press     = client->_event( 'Z2UI5_CL_DEMO_APP_180' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
