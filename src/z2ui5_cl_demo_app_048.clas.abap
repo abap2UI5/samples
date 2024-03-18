@@ -94,7 +94,14 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
               ( n = 'wrapping'      v = `true` )
               ( n = 'wrapCharLimit'      v = `{WRAPCHARLIMIT}` )
               ( n = 'selected'    v = `{SELECTED}` )
-              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )  ) ) )
+              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )
+                                                                                         ( `${DESCR}`  )
+                                                                                         ( `${ICON}`  )
+                                                                                         ( `${HIGHLIGHT}`  )
+                                                                                         ( `${INFO}`  )
+                                                                                         ( `${WRAPCHARLIMIT}`  )
+                                                                                         ( `${SELECTED}`  )
+                                                                                        ) ) )
 
               ) ).
 
