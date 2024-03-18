@@ -55,7 +55,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
 
   METHOD add_node.
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
+*    view->_z2ui5( )->timer( checkactive = client->_bind_edit( mv_run_js ) finished = `setState();` ).
 
 *    DATA(page) = view->shell(
 *         )->page()
@@ -220,9 +220,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                                 ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
                                 `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                                 ` } else {` && |\n| &&
-                                `     treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
-                                `     treeTable.getBinding("rows").refresh();` && |\n| &&
                                 `     treeTable.getBinding("rows").setTreeState(sap.z2ui5.treeState);` && |\n| &&
+                                `     treeTable.getBinding("rows").refresh();` && |\n| &&
+                                `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                                 ` };` && |\n| &&
                                 `};`.
 
@@ -255,6 +255,8 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         mv_run_js = abap_true.
 
         client->view_model_update( ).
+
+        client->follow_up_action( custom_js = `setState();` ).
 
     ENDCASE.
 
