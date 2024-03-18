@@ -202,7 +202,7 @@
     "msag_consistency": true,
     "names_no_dash": true,
     "nesting": {
-      "depth": 5
+      "depth": 8
     },
     "newline_between_methods": true,
     "no_aliases": true,
