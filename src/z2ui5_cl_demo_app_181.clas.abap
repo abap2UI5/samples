@@ -121,7 +121,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                        )->custom_list_item(
                                         )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-                                            )->title( level = `H4` text = `{TITLE}`
+                                            )->label( text = `{TITLE}`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(
                                           )->object_status( class = `sapUiTinyMargin sapUiSmallMarginEnd`
