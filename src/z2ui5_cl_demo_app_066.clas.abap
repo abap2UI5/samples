@@ -44,6 +44,11 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
     DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
     DATA mv_check_enabled_02 TYPE abap_bool.
 
+    DATA mv_ui5_version TYPE string.
+
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
+    DATA mt_message_manager TYPE z2ui5_cl_cc_message_manager=>ty_t_items.
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -57,7 +62,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
 
 
   METHOD view_display_detail.
@@ -96,6 +101,13 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
   METHOD view_display_master.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    IF mv_ui5_version > `1.118`.
+      view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
+    ELSE.
+      view->_z2ui5( )->message_manager( client->_bind_edit( mt_message_manager ) ).
+    ENDIF.
+
     DATA(page) = view->shell(
         )->page(
            title          = 'abap2UI5 - Master Detail Page with Nested View'
@@ -147,21 +159,29 @@ CLASS z2ui5_cl_demo_app_066 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-        view_display_master(  ).
-        view_display_detail(  ).
+      mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
+                                                                                                     ( object = '1.1.2') ) )
+                                                                               ( object = '1.2' ) ) )
+                         ( object = '2' categories = VALUE #( ( object = '2.1' )
+                                                              ( object = '2.2' ) ) )
+                         ( object = '3' categories = VALUE #( ( object = '3.1' )
+                                                              ( object = '3.2' ) ) ) ).
 
-        mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
-                                                                                                       ( object = '1.1.2') ) )
-                                                                                 ( object = '1.2' ) ) )
-                           ( object = '2' categories = VALUE #( ( object = '2.1' )
-                                                                ( object = '2.2' ) ) )
-                           ( object = '3' categories = VALUE #( ( object = '3.1' )
-                                                                ( object = '3.2' ) ) ) ).
+*      load two types of message handling
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_z2ui5( )->info_frontend( ui5_version = client->_bind_edit( mv_ui5_version ) )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( ) )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_manager=>get_js( ) )->get_parent(
+            )->_z2ui5( )->timer( client->_event( `START` )
+            )->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
-
+      WHEN 'START'.
+        view_display_master(  ).
+        view_display_detail(  ).
 
       WHEN `UPDATE_DETAIL`.
         view_display_detail(  ).
