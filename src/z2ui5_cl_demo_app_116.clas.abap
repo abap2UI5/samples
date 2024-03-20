@@ -256,7 +256,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
         client->view_model_update( ).
 
-        client->follow_up_action( custom_js = `setState();` ).
+        client->follow_up_action( val = `setState();` ).
 
     ENDCASE.
 
