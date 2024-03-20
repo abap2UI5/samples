@@ -4,8 +4,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_attributes3,
              label TYPE i,
@@ -118,15 +117,11 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page(
+    DATA(page) = view->shell( )->page(
                     title          = 'abap2UI5 - Network Graph - Org Tree'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                )->header_content(
-                    )->link(
-                        text = 'Source_Code'
-                        target = '_blank'
-                )->get_parent( ).
+              ).
 
     DATA(graph) = page->network_graph( enablewheelzoom = abap_false
                                        orientation = `TopBottom`
