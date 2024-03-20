@@ -40,7 +40,10 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
 
     METHODS on_event .
     METHODS view_display .
-    METHODS detail_popover IMPORTING id TYPE string node TYPE t_nodes2.
+    METHODS detail_popover
+      IMPORTING
+        id TYPE string
+        node TYPE t_nodes2.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
