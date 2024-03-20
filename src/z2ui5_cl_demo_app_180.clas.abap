@@ -22,7 +22,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
 
 
   METHOD on_event.
@@ -31,14 +31,14 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
       WHEN 'CUSTOM_JS_FROM_EB'.
 
-        client->follow_up_action( custom_js = `sap.z2ui5.afterBE()` ).
+        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
 
       WHEN 'CALL_EF'.
 
         mv_url = `https://www.google.com`.
 
         client->view_model_update( ).
-        client->follow_up_action( custom_js = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
+        client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
