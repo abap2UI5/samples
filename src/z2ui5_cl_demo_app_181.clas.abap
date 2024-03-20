@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
         client->message_toast_display( 'BOOKED !!! ENJOY' ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
         RETURN.
     ENDCASE.
 
@@ -62,7 +62,14 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(card_1) = view->card( width = `300px` class = `sapUiMediumMargin`
+    data(page) = view->page(
+        title = `Cards Demo`
+        class = `sapUiContentPadding`
+        navbuttonpress = client->_event( 'BACK' )
+        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    ).
+
+    DATA(card_1) = page->card( width = `300px` class = `sapUiMediumMargin`
       )->header( ns = `f`
         )->card_header( title = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
@@ -105,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                class = `sapUiTinyMarginBegin` ).
 
 
-    DATA(card_2) = view->card( width = `300px` class = `sapUiMediumMargin`
+    DATA(card_2) = page->card( width = `300px` class = `sapUiMediumMargin`
                      )->header( ns = `f`
                        )->card_header( title = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
@@ -121,7 +128,6 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                        )->custom_list_item(
                                         )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-*                                            )->label( text = `{TITLE}`
                                             )->title( text = `{TITLE}` titlestyle = `H3`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(

@@ -21,9 +21,9 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title           = 'abap2UI5 - Demo Layout'
-            navbuttonpress  = client->_event( 'BACK' )
-            shownavbutton   = abap_true
+            title          = 'abap2UI5 - Demo Layout'
+            navbuttonpress = client->_event( 'BACK' )
+            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              ).
 
     page->header_content(
