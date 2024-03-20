@@ -4,7 +4,8 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
     TYPES: BEGIN OF t_attributes3,
              label TYPE i,
@@ -39,7 +40,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION
 
     METHODS on_event .
     METHODS view_display .
-    METHODS detail_popover IMPORTING id TYPE string .
+    METHODS detail_popover IMPORTING id TYPE string node TYPE t_nodes2.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -55,37 +56,22 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
   METHOD detail_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Left`
-              )->quick_view_page( pageid = `employeePageId`
-                                  header = `Employee Info`
-                                  title  = `choper725`
-                                  titleurl = `https://github.com/abap2UI5/abap2UI5`
-                                  description = `Enjoy`
-                            )->quick_view_group( heading = `Contact Details`
-                              )->quick_view_group_element( label = `Mobile`
-                                                           value = `123-456-789`
-                                                           type = `mobile`
-                                                         )->get_parent(
-                              )->quick_view_group_element( label = `Phone`
-                                                           value = `789-456-123`
-                                                           type = `phone`
-                                                         )->get_parent(
-                              )->quick_view_group_element( label = `Email`
-                                                           value = `thisisemail@email.com`
-                                                           emailsubject = `Subject`
-                                                           type = `email`
-                                                         )->get_parent(
-                              )->get_parent(
-                           )->quick_view_group( heading = `Company`
-                            )->quick_view_group_element( label = `Name`
-                                                           value = `Adventure Company`
-                                                           url = `https://github.com/abap2UI5/abap2UI5`
-                                                           type = `link`
-                                                         )->get_parent(
-                            )->quick_view_group_element( label = `Address`
-                                                           value = `Here"`
-                                                         )->get_parent( ).
+    DATA(qv) = view->quick_view( placement = `Left`
+              )->quick_view_page(
+                                  header = `Employee`
+                                  title  = node-title
+                                  description = node-position
+                )->get( )->quick_view_page_avatar( )->avatar( src = node-src displayshape = `Square` )->get_parent(
+                )->quick_view_group( heading = `Contact Detail`
+                  )->quick_view_group_element( label = `Location` value = node-location )->get_parent(
+                  )->quick_view_group_element( label = `Mobile`   value = node-phone type = `phone` )->get_parent(
+                  )->quick_view_group_element( label = `Email`   value = node-email type = `email` emailsubject  = `Contact` && node-id ).
 
+    IF node-team IS NOT INITIAL.
+      qv = qv->get_parent( )->get_parent(
+        )->quick_view_group( heading = `Team`
+           )->quick_view_group_element( label = `Size` value = CONV string( node-team ) ).
+    ENDIF.
 
     client->popover_display(
       xml   = view->stringify( )
@@ -104,7 +90,9 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
       WHEN 'DETAIL_POPOVER'.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
-        detail_popover( id = lt_arg[ 1 ] ).
+        READ TABLE mt_data-nodes INTO DATA(ls_node) WITH KEY id = lt_arg[ 2 ].
+
+        detail_popover( id = lt_arg[ 1 ] node = ls_node ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -117,11 +105,15 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA(page) = view->page(
                     title          = 'abap2UI5 - Network Graph - Org Tree'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-              ).
+                )->header_content(
+                    )->link(
+                        text = 'Source_Code'
+                        target = '_blank'
+                )->get_parent( ).
 
     DATA(graph) = page->network_graph( enablewheelzoom = abap_false
                                        orientation = `TopBottom`
@@ -142,20 +134,20 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                              width  = `90`
                                              collapsed  = `{COLLAPSED}`
                                              attributes  = `{ATTRIBUTES}`
-*                                             actionbuttons  = `{ATTRIBUTES}`
                                              showactionlinksbutton  = abap_false
                                              showdetailbutton  = abap_false
                                              descriptionlinesize  = `0`
                                              shape  = `Box`
-                                            )->get( )->custom_data( ns = `networkgraph` )->core_custom_data( key = `supervisor` value = `{SUPERVISOR}`
-                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
-                                                                                        )->core_custom_data( key = `location` value = `{LOCATION}`
-                                                                                        )->core_custom_data( key = `position` value = `{POSITION}`
-                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
-                                                                                        )->core_custom_data( key = `email` value = `{EMAIL}`
-                                                                                        )->core_custom_data( key = `phone` value = `{PHONE}`
-                                           )->get_parent(
-                                           )->get( )->get_parent( )->get_parent( )->attributes( ns = `networkgraph`
+*                                            )->get( )->custom_data( ns = `networkgraph` )->core_custom_data( key = `supervisor` value = `{SUPERVISOR}`
+*                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
+*                                                                                        )->core_custom_data( key = `location` value = `{LOCATION}`
+*                                                                                        )->core_custom_data( key = `position` value = `{POSITION}`
+*                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
+*                                                                                        )->core_custom_data( key = `email` value = `{EMAIL}`
+*                                                                                        )->core_custom_data( key = `phone` value = `{PHONE}`
+*                                           )->get_parent(
+*                                           )->get( )->get_parent( )->get_parent( )->attributes( ns = `networkgraph`
+                                           )->get( )->attributes( ns = `networkgraph`
                                             )->element_attribute( label = `{LABEL}` value = `{VALUE}`
                                            )->get_parent(
                                            )->get_parent(
@@ -164,8 +156,14 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                                               position = `Left`
                                                               title = `Detail`
                                                               icon = `sap-icon://employee`
-                                                              press = client->_event( val = `DETAIL_POPOVER` t_arg = VALUE #( ( `${$source>/id}` ) ) )
-*                                                              press = client->_event( val = `DETAIL_POPOVER` t_arg = VALUE #( ( `${$parameters>/buttonElement}` ) ) )
+                                                              press = client->_event( val = `DETAIL_POPOVER` t_arg = VALUE #( ( `${$source>/id}` )
+                                                                                                                              ( `${ID}` )
+*                                                                                                                              ( `${TEAM}` )
+*                                                                                                                              ( `${LOCATION}` )
+*                                                                                                                              ( `${POSITION}` )
+*                                                                                                                              ( `${EMAIL}` )
+*                                                                                                                              ( `${PHONE}` )
+                                                                                                                             ) )
                                            )->get_parent(
                                            )->get_parent(
                                            )->get( )->get_parent( )->get_parent( )->_generic( ns = `networkgraph` name = `image`
@@ -199,7 +197,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
 
       mt_data = VALUE #( nodes = VALUE #( ( id = `Dinter`
                                             title = `Sophie Dinter`
-                                            src = ``
+                                            src = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/female_IngallsB.jpg`
                                             attributes = VALUE #( ( label = 35 value = `` ) )
                                             team = 13
                                             location = `Walldorf`
@@ -209,7 +207,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                           )
                                           ( id = `Ninsei`
                                             title = `Yamasaki Ninsei`
-                                            src = ``
+                                            src = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_GordonR.jpg`
                                             attributes = VALUE #( ( label = 9 value = `` ) )
                                             supervisor = `Dinter`
                                             team = 9
@@ -220,7 +218,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                          )
                                          ( id = `Mills`
                                            title = `Henry Mills`
-                                           src = ``
+                                           src = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_MillerM.jpg`
                                            attributes = VALUE #( ( label = 4 value = `` ) )
                                            supervisor = `Ninsei`
                                            team = 4
@@ -231,9 +229,8 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                         )
                                         ( id = `Polak`
                                           title = `Adam Polak`
-                                          src = ``
+                                          src = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_PlatteR.jpg`
                                           supervisor = `Mills`
-                                          team = 4
                                           location = `Praha`
                                           position = `Marketing Specialist`
                                           email = `adam.polak@example.com`
@@ -241,9 +238,8 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                        )
                                        ( id = `Sykorova`
                                           title = `Vlasta Sykorova`
-                                          src = ``
+                                          src = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/female_SpringS.jpg`
                                           supervisor = `Mills`
-                                          team = 4
                                           location = `Praha`
                                           position = `Human Assurance Officer`
                                           email = `vlasta.sykorova@example.com`
