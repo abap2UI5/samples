@@ -43,12 +43,16 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
     METHODS ui5_display_view .
+    methods UI5_DISPLAY_POPOVER
+      importing
+        !ID type STRING .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS ui5_initialize.
     METHODS add_node
       IMPORTING p_prodh TYPE string.
+
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -81,6 +85,26 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
+
+
+  method ui5_display_popover.
+    DATA(lo_popover) = Z2UI5_cl_xml_view=>factory_popup(  ).
+    lo_popover->popover( placement = `Right`
+                         title = 'SS' "text-028 "`Stock - Details:`
+                                                         "&& '-' && gv_matnr  "contentwidth = `32%`
+            )->footer(
+             )->overflow_toolbar(
+                )->toolbar_spacer(
+                )->button(
+                    text  = 'OK'
+                    press = client->_event( 'POPOVER_OK' )
+                    type  = 'Emphasized'
+           )->get_parent( )->get_parent(
+           )->text( 'TEST'
+                           ).
+
+    client->popover_display( xml = lo_popover->stringify( )  by_id = id ).
+  endmethod.
 
 
   METHOD ui5_display_view.
@@ -150,7 +174,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                          )->tree_columns(
                           )->tree_column( label = 'Label'
                           )->tree_template(
-                           )->text(   text = `{����}`
+                           )->text(   text = `{####}`
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'PRODH'
                           )->tree_template(
@@ -158,7 +182,9 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'Counter'
                           )->tree_template(
-                           )->text(   text = `{COUNTER}`
+                           )->link(   text = `{COUNTER}`
+                                      press = client->_event( val = 'POPOVER' t_arg = VALUE #( ( `${$source>/id}` ) )  )
+
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'ADD'
                           )->tree_template(
@@ -248,6 +274,10 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
       WHEN 'CANCEL'.
         client->popup_destroy( ).
+      when 'POPOVER'.
+        lt_event_arg = client->get( )-t_event_arg.
+        DATA(lv_open_by_id) = lt_event_arg[ 1 ].
+        ui5_display_popover( lv_open_by_id ).
 
       WHEN 'ROW_ADD'.
         add_node( lt_event_arg[ 1 ] ).
