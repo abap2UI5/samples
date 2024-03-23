@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 
 
       mt_legend = VALUE #(
-      (  	text =  'Dashed flight route' color = 'rgb(92,186,230)' )
+      (   text =  'Dashed flight route' color = 'rgb(92,186,230)' )
       (  	text =  'Flight route' color = 'rgb(92,186,35)' )
       ).
     ENDIF.
