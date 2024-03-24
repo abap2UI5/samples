@@ -95,6 +95,10 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
 
+*      WHEN 'INPUT_CHANGE'.
+*        client->view_model_update( ).
+*
+*        RETURN.
 
       WHEN 'INPUT_CHANGE'.
 
@@ -113,6 +117,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     ENDCASE.
 
+    client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
     client->view_model_update( ).
 
   ENDMETHOD.
@@ -128,6 +133,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     DATA(page) = view->shell(
     )->page(
+        id = `page`
         title          = 'abap2UI5 - Demo ui.table'
         navbuttonpress = client->_event( 'BACK' )
           shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
@@ -135,7 +141,10 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         )->link(
         )->get_parent( ).
 
-    DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors = 'true' visiblerowcountmode = 'Auto'
+     page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }`
+).
+
+    DATA(table) = page->ui_table( id = `tab` alternaterowcolors = 'true' visiblerowcountmode = 'Auto'
          fixedrowcount = '1' selectionmode = 'None'  rows = client->_bind_edit( val = output ) ).
     DATA(columns) = table->ui_columns( ).
 
@@ -156,13 +165,21 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         ( `INPUT1` ) "Pass the column name as simple string to the event
          ) ) editable = abap_true type = 'Number' ).
 
-    columns->ui_column( width = '8rem' sortproperty = 'INPUT2' filterproperty = 'INPUT2' )->text( text = 'Input Column' )->ui_template( )->input(
-      value = `{INPUT2}` enabled = `{BOOL}` change = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
+    columns->ui_column( width = '8rem' sortproperty = 'INPUT2' filterproperty = 'INPUT2' )->text( text = 'Input Column'
+     )->ui_template(
+      )->input(
+      value = `{INPUT2}`
+      enabled = `{BOOL}`
+      change = client->_event( val = 'INPUT_CHANGE'
+        t_arg = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
         ( `$event.oSource.oParent.sId` )
         ( `INPUT2` )
-         ) ) editable = abap_true type = 'Number' ).
+         ) )
+       submit = client->_event( val = 'INPUT_SUBMIT' )
+       editable = abap_true
+       type = 'Number' ).
 
     columns->ui_column( width = '8rem' sortproperty = 'INPUT3' filterproperty = 'INPUT3' )->text( text = 'Input Column' )->ui_template( )->input(
       value = `{INPUT3}` enabled = `{BOOL}` change = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
