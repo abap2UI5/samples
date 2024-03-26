@@ -156,8 +156,12 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    IF mo_app->('MV_VIEW_DISPLAY') = abap_true.
-      mo_app->('MV_VIEW_DISPLAY') = abap_false.
+  FIELD-SYMBOLS <view_display> type any.
+
+   ASSIGN mo_app->('MV_VIEW_DISPLAY') to <view_display>.
+
+    IF <view_display> = abap_true.
+      <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 

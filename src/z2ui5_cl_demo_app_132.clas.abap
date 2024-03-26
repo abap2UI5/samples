@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_view_display TYPE abap_boolean.
+    DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
 
 DATA mv_perc type string.
