@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION
 
     TYPES:   id    TYPE string,
              count TYPE string,
-             class TYPE /kro/ui501_class,
+             class TYPE string,
            END OF ty_s_t002,
            ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
 
