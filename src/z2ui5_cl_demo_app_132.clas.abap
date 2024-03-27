@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
         ASSIGN mt_table->* TO <table>.
 
         SELECT * FROM Z2UI5_T_UTIL_01
-          INTO CORRESPONDING FIELDS OF TABLE <table>
+          INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO '100' ROWS.
 
       CATCH cx_root.
