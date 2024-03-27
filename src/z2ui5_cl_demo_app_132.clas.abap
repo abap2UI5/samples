@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT * FROM usr02
+        SELECT * FROM T100
           INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 100 ROWS.
 
@@ -139,13 +139,10 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'USR02'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'T100'
                                                  RECEIVING  p_descr_ref    = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
-            IF sy-subrc <> 0.
-
-            ENDIF.
 
             DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
 
@@ -153,11 +150,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
             LOOP AT comp INTO DATA(com).
 
-              IF com-as_include = abap_true.
-
-*            APPEND LINES OF get_comp_by_struc( com-type ) TO result.
-
-              ELSE.
+              IF com-as_include = abap_false.
 
                 APPEND com TO result.
 
