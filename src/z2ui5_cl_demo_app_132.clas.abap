@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT * FROM T100
+        SELECT * FROM Z2UI5_T_UTIL_01
           INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 100 ROWS.
 
@@ -139,7 +139,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'T100'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
                                                  RECEIVING  p_descr_ref    = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
