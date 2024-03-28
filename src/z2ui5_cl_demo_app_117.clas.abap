@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_131 DEFINITION
+CLASS z2ui5_cl_demo_app_117 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION
 
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD on_event.
 
@@ -57,8 +57,7 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_132'  count = '12' )
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_132'  count = '80' )
+    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_126'  count = '12' )
                        ).
 
     mv_selectedkey = '1'.

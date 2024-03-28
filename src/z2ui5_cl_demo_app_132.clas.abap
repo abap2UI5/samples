@@ -10,10 +10,10 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
 
     DATA mv_perc         TYPE string.
-    DATA mt_table        TYPE REF TO data.
-    DATA mt_table_tmp    TYPE REF TO data.
-    DATA ms_table_row    TYPE REF TO data.
-    DATA mt_table_del    TYPE REF TO data.
+*    DATA mt_table        TYPE REF TO data.
+*    DATA mt_table_tmp    TYPE REF TO data.
+*    DATA ms_table_row    TYPE REF TO data.
+*    DATA mt_table_del    TYPE REF TO data.
 
     METHODS set_app_data
       IMPORTING !data TYPE string.
@@ -28,109 +28,16 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     METHODS Render_main.
 
   PRIVATE SECTION.
-    METHODS get_data.
 
     METHODS get_comp
       RETURNING VALUE(result) TYPE abap_component_tab.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
-  METHOD on_event.
-    CASE client->get( )-event.
 
-      WHEN 'BACK'.
+CLASS Z2UI5_CL_DEMO_APP_132 IMPLEMENTATION.
 
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
-  ENDMETHOD.
-
-  METHOD on_init.
-    get_Data( ).
-    Render_main( ).
-  ENDMETHOD.
-
-  METHOD render_main.
-    IF mo_parent_view IS INITIAL.
-
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
-
-    ELSE.
-
-      page = mo_parent_view->get( `Page` ).
-
-    ENDIF.
-
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-                                          width = `100%` ).
-    layout->label( 'ProgressIndicator'
-        )->progress_indicator( percentvalue = mv_perc
-                               displayvalue = '0,44GB of 32GB used'
-                               showvalue    = abap_true
-                               state        = 'Success' ).
-
-    IF mo_parent_view IS INITIAL.
-
-      client->view_display( page->get_root( )->xml_get( ) ).
-
-    ELSE.
-
-      mv_view_display = abap_true.
-
-    ENDIF.
-  ENDMETHOD.
-
-  METHOD z2ui5_if_app~main.
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
-      on_init( ).
-
-    ENDIF.
-
-    on_event( ).
-  ENDMETHOD.
-
-  METHOD set_app_data.
-    mv_perc = data.
-  ENDMETHOD.
-
-  METHOD get_data.
-    FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
-    FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
-
-    DATA(t_comp) = get_comp( ).
-
-    TRY.
-
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
-                                                           p_table_kind = cl_abap_tabledescr=>tablekind_std ).
-
-        CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
-
-        ASSIGN mt_table->* TO <table>.
-
-        SELECT * FROM Z2UI5_T_UTIL_01
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO '100' ROWS.
-
-      CATCH cx_root.
-
-    ENDTRY.
-
-    ASSIGN mt_table_tmp->* TO <table_tmp>.
-
-    <table_tmp> = <table>.
-  ENDMETHOD.
 
   METHOD get_comp.
     TRY.
@@ -172,4 +79,70 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
+  METHOD on_event.
+    CASE client->get( )-event.
+
+      WHEN 'BACK'.
+
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    Render_main( ).
+  ENDMETHOD.
+
+
+  METHOD render_main.
+    IF mo_parent_view IS INITIAL.
+
+      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+
+    ELSE.
+
+      page = mo_parent_view->get( `Page` ).
+
+    ENDIF.
+
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
+    layout->label( 'ProgressIndicator'
+        )->progress_indicator( percentvalue = mv_perc
+                               displayvalue = '0,44GB of 32GB used'
+                               showvalue    = abap_true
+                               state        = 'Success' ).
+
+    IF mo_parent_view IS INITIAL.
+
+      client->view_display( page->get_root( )->xml_get( ) ).
+
+    ELSE.
+
+      mv_view_display = abap_true.
+
+    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD set_app_data.
+    mv_perc = data.
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+    me->client = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+
+      on_init( ).
+
+    ENDIF.
+
+    on_event( ).
+  ENDMETHOD.
 ENDCLASS.
