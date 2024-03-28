@@ -28,13 +28,6 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
 
     page->header_content(
       )->button( text = 'button'
-      )->text( 'text'
-      )->link(
-        text = 'link' target = '_blank'
-        href = 'https://twitter.com/abap2UI5'
-      )->link(
-        text = 'Source_Code' target = '_blank'
-
        ).
 
     page->sub_header(
