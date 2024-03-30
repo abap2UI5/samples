@@ -25,6 +25,8 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
+      view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.tox-silver-sink { position: absolute !important; }` ).
+
       view->shell(
             )->page(
                     title          = 'abap2UI5 - Rich Text Editor'
@@ -45,6 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
                                         showGroupFont = abap_true
                                         showGroupLink = abap_true
                                         showGroupInsert = abap_true
+                                        wrapping = abap_false
                        )->get_parent( )->get_parent( )->get_parent(
                  )->footer(
                     )->overflow_toolbar(
