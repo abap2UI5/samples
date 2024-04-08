@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION
       BEGIN OF ty_s_t002,
         id    TYPE string,
         count TYPE string,
+        table type string,
         class TYPE string,
       END OF ty_s_t002.
     TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
@@ -131,7 +132,8 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
             CALL METHOD mo_app->('SET_APP_DATA')
               EXPORTING
-                data = t002->count.
+                count = t002->count
+                table = t002->table.
 
             render_main( ).
 
