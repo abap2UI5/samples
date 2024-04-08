@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display TYPE abap_bool.

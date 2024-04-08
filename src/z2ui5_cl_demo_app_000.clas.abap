@@ -829,6 +829,14 @@
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+           panel->generic_tile(
+        header    = 'Dynamic Objects III'
+        subheader = 'Main App Inheriting from other App'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
         panel = page->panel(
                 expandable = abap_false
                 expanded   = abap_true
