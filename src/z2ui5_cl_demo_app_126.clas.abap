@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     METHODS on_init.
     METHODS on_event.
 
-    METHODS Render_main.
+    METHODS render_main.
 
   PRIVATE SECTION.
     METHODS get_data.
@@ -49,11 +49,12 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_init.
-    get_Data( ).
-    Render_main( ).
+    get_data( ).
+    render_main( ).
   ENDMETHOD.
 
   METHOD render_main.
+
     IF mo_parent_view IS INITIAL.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -64,9 +65,12 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     ENDIF.
 
+    FIELD-SYMBOLS <tab> TYPE data.
+    ASSIGN mt_table->* TO <tab>.
+
     DATA(table) = page->table( growing    = 'true'
                                width      = 'auto'
-                               items      = client->_bind( val = mt_table->* )
+                               items      = client->_bind( <tab> )
                                headertext = mv_table ).
 
     DATA(columns) = table->columns( ).
@@ -112,7 +116,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
-      mv_table = table.
+    mv_table = table.
   ENDMETHOD.
 
   METHOD get_data.
