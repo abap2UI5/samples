@@ -9,14 +9,16 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
 
-    DATA mv_perc         TYPE string.
+    DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
     DATA ms_table_row    TYPE REF TO data.
     DATA mt_table_del    TYPE REF TO data.
+    DATA mt_comp         TYPE abap_component_tab.
 
     METHODS set_app_data
-      IMPORTING !data TYPE string.
+      IMPORTING !count TYPE string
+                !table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -32,7 +34,6 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
 
     METHODS get_comp
       RETURNING VALUE(result) TYPE abap_component_tab.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
@@ -63,13 +64,28 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-                                          width = `100%` ).
-    layout->label( 'ProgressIndicator'
-        )->progress_indicator( percentvalue = mv_perc
-                               displayvalue = '0,44GB of 32GB used'
-                               showvalue    = abap_true
-                               state        = 'Success' ).
+    DATA(table) = page->table( growing    = 'true'
+                               width      = 'auto'
+                               items      = client->_bind( val = mt_table->* )
+                               headertext = mv_table ).
+
+    DATA(columns) = table->columns( ).
+
+    LOOP AT mt_comp INTO DATA(comp).
+
+      columns->column( )->text( comp-name ).
+
+    ENDLOOP.
+
+    DATA(cells) = columns->get_parent( )->items(
+                                       )->column_list_item( valign = 'Middle'
+                                                            type   = 'Navigation'
+
+                                       )->cells( ).
+
+    LOOP AT mt_comp INTO comp.
+      cells->object_identifier( text = '{' && comp-name && '}' ).
+    ENDLOOP.
 
     IF mo_parent_view IS INITIAL.
 
@@ -96,18 +112,18 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
-    mv_perc = data.
+      mv_table = table.
   ENDMETHOD.
 
   METHOD get_data.
     FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    mt_comp = get_comp( ).
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA(new_struct_desc) = cl_abap_structdescr=>create( mt_comp ).
 
         DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
@@ -119,7 +135,8 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT * FROM Z2UI5_T_UTIL_01
+        SELECT *
+          FROM (mv_table)
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO '100' ROWS.
 
@@ -139,7 +156,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
                                                  RECEIVING  p_descr_ref    = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).

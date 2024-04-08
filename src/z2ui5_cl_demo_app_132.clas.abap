@@ -8,14 +8,11 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
 
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
-
     DATA mv_perc         TYPE string.
-    DATA mt_table        TYPE REF TO data.
-    DATA mt_table_tmp    TYPE REF TO data.
-    DATA ms_table_row    TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING !data TYPE string.
+      IMPORTING !count TYPE string
+                !table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -25,8 +22,6 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     METHODS on_event.
 
     METHODS Render_main.
-
-    METHODS get_data.
 
   PRIVATE SECTION.
     METHODS get_comp
@@ -86,7 +81,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_init.
-    get_data( ).
+
     Render_main( ).
   ENDMETHOD.
 
@@ -121,39 +116,10 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
-    mv_perc = data.
-  ENDMETHOD.
+    " TODO: parameter TABLE is never used (ABAP cleaner)
 
-  METHOD get_data.
-    FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
-    FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
+    mv_perc = count.
 
-    DATA(t_comp) = get_comp( ).
-
-    TRY.
-
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
-                                                           p_table_kind = cl_abap_tabledescr=>tablekind_std ).
-
-        CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
-
-        ASSIGN mt_table->* TO <table>.
-
-        SELECT * FROM Z2UI5_T_UTIL_01
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO '100' ROWS.
-
-      CATCH cx_root.
-
-    ENDTRY.
-
-    ASSIGN mt_table_tmp->* TO <table_tmp>.
-
-    <table_tmp> = <table>.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
