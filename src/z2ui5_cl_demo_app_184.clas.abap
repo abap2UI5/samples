@@ -124,6 +124,8 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
+    " TODO: parameter COUNT is never used (ABAP cleaner)
+
     mv_table = table.
   ENDMETHOD.
 
@@ -200,7 +202,9 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_fix_values.
-    CHECK rollname IS NOT INITIAL.
+    IF rollname IS INITIAL.
+      RETURN.
+    ENDIF.
 
     TRY.
 
@@ -220,7 +224,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
                                                      no_ddic_type   = 2
                                                      OTHERS         = 3 ).
 
-        MOVE-CORRESPONDING fixval TO result.
+        result = CORRESPONDING #( fixval ).
 
       CATCH cx_root.
     ENDTRY.
