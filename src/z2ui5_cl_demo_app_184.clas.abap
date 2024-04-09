@@ -11,14 +11,12 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
-*    DATA mt_table_del    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
+    DATA ms_fixval       TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING
-        !count TYPE string
-        !table TYPE string.
+      IMPORTING !count TYPE string
+                !table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -33,9 +31,9 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     METHODS get_data.
 
     METHODS get_comp
-      RETURNING
-        VALUE(result) TYPE abap_component_tab.
+      RETURNING VALUE(result) TYPE abap_component_tab.
 
+    METHODS get_fixval.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
@@ -66,11 +64,9 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing    = 'true'
-                               width      = 'auto'
-                               items      = client->_bind( <tab> )
-*                               headertext = mv_table
-                               ).
+    DATA(table) = page->table( growing = 'true'
+                               width   = 'auto'
+                               items   = client->_bind( <tab> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -114,6 +110,8 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
+    " TODO: parameter COUNT is never used (ABAP cleaner)
+
     mv_table = table.
   ENDMETHOD.
 
@@ -132,9 +130,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-*        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
 
         ASSIGN mt_table->* TO <table>.
 
@@ -150,6 +146,45 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
     <table_tmp> = <table>.
+
+    get_fixval( ).
+
+  ENDMETHOD.
+
+  METHOD get_fixval.
+
+    DATA comp        TYPE cl_abap_structdescr=>component_table.
+    DATA structdescr TYPE REF TO cl_abap_structdescr.
+    DATA lt_fixval   TYPE /kro/ui501_cl_object_helper=>fixvalues.
+
+    FIELD-SYMBOLS <s_fixval> TYPE any.
+
+    LOOP AT mt_comp REFERENCE INTO DATA(dfies).
+
+      comp = VALUE cl_abap_structdescr=>component_table(
+                       BASE comp
+                       ( name = dfies->name
+                         type = CAST #( cl_abap_datadescr=>describe_by_data( lt_fixval ) ) ) ).
+    ENDLOOP.
+
+    structdescr = cl_abap_structdescr=>create( comp ).
+
+    CREATE DATA ms_fixval TYPE HANDLE structdescr.
+
+    LOOP AT mt_comp REFERENCE INTO dfies.
+
+      ASSIGN ms_fixval->* TO <s_fixval>.
+      ASSIGN COMPONENT dfies->name OF STRUCTURE <s_fixval> TO FIELD-SYMBOL(<fixval>).
+
+      IF <fixval> IS NOT ASSIGNED.
+        CONTINUE.
+      ENDIF.
+
+      IF dfies->type->is_ddic_type( ) = abap_true.
+        <fixval> = /kro/ui501_cl_object_helper=>get_fix_values( CONV #( dfies->type->get_relative_name( ) ) ).
+      ENDIF.
+    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD get_comp.
@@ -173,7 +208,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
               ENDIF.
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+          CATCH cx_root.
 
         ENDTRY.
 
