@@ -5,6 +5,16 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    TYPES:
+      BEGIN OF fixvalue,
+        low        TYPE string,
+        high       TYPE string,
+        option     TYPE string,
+        ddlanguage TYPE string,
+        ddtext     TYPE string,
+      END OF fixvalue.
+    TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
+
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
 
@@ -13,6 +23,10 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     DATA mt_table_tmp    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
+
+    METHODS get_fix_values
+      IMPORTING rollname      TYPE string
+      RETURNING VALUE(result) TYPE fixvalues.
 
     METHODS set_app_data
       IMPORTING !count TYPE string
@@ -110,8 +124,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
-    " TODO: parameter COUNT is never used (ABAP cleaner)
-
     mv_table = table.
   ENDMETHOD.
 
@@ -155,7 +167,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
     DATA comp        TYPE cl_abap_structdescr=>component_table.
     DATA structdescr TYPE REF TO cl_abap_structdescr.
-    DATA lt_fixval   TYPE /kro/ui501_cl_object_helper=>fixvalues.
+    DATA lt_fixval   TYPE fixvalues.
 
     FIELD-SYMBOLS <s_fixval> TYPE any.
 
@@ -181,10 +193,37 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
       ENDIF.
 
       IF dfies->type->is_ddic_type( ) = abap_true.
-        <fixval> = /kro/ui501_cl_object_helper=>get_fix_values( CONV #( dfies->type->get_relative_name( ) ) ).
+        <fixval> = get_fix_values( CONV #( dfies->type->get_relative_name( ) ) ).
       ENDIF.
     ENDLOOP.
 
+  ENDMETHOD.
+
+  METHOD get_fix_values.
+    CHECK rollname IS NOT INITIAL.
+
+    TRY.
+
+        cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = rollname
+                                             RECEIVING  p_descr_ref    = DATA(typedescr)
+                                             EXCEPTIONS type_not_found = 1
+                                                        OTHERS         = 2 ).
+        IF sy-subrc <> 0.
+          RETURN.
+        ENDIF.
+
+        DATA(elemdescr) = CAST cl_abap_elemdescr( typedescr ).
+
+        elemdescr->get_ddic_fixed_values( EXPORTING  p_langu        = sy-langu
+                                          RECEIVING  p_fixed_values = DATA(fixval)
+                                          EXCEPTIONS not_found      = 1
+                                                     no_ddic_type   = 2
+                                                     OTHERS         = 3 ).
+
+        MOVE-CORRESPONDING fixval TO result.
+
+      CATCH cx_root.
+    ENDTRY.
   ENDMETHOD.
 
   METHOD get_comp.
