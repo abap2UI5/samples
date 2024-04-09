@@ -63,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
         )->items( )->interact_bar_chart(
                 selectionchanged = client->_event( 'BAR_CHANGED' )
                 press            = client->_event( 'BAR_CHANGED' )
-                labelwidth       = '25'
+                labelwidth       = '25%'
                 displayedbars    = `4`
             )->bars( ).
     bar->interact_bar_chart_bar( selected = client->_bind( mv_sel1 ) label = 'Product 1' value = '10' ).
