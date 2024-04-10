@@ -74,7 +74,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -84,7 +84,8 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
     IF check_load_cc = abap_false.
       check_load_cc = abap_true.
       z2ui5_set_data( ).
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+*      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( ) ) ).
       RETURN.
     ELSEIF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -145,6 +146,10 @@ CLASS z2ui5_cl_demo_app_077 IMPLEMENTATION.
                 tableid = 'exportTable'
                 icon = 'sap-icon://excel-attachment'
                 type = 'Emphasized'
+                columnconfig = client->_bind( val = mt_column_config
+                                              custom_filter = NEW z2ui5_cl_cc_spreadsheet( )
+                                              custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( )
+                                             )
           )->get_parent( )->get_parent( ).
 
     tab->columns(
