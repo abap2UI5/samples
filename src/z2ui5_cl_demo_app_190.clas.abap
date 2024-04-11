@@ -14,12 +14,11 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
 *    DATA ms_table_row    TYPE REF TO data.
 *    DATA mt_table_del    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
-    DATA ms_fixval       type ref to data.
+    DATA ms_fixval       TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING
-        !count TYPE string
-        !table TYPE string.
+      IMPORTING !count TYPE string
+                !table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -34,11 +33,9 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     METHODS get_data.
 
     METHODS get_comp
-      RETURNING
-        VALUE(result) TYPE abap_component_tab.
+      RETURNING VALUE(result) TYPE abap_component_tab.
 
     METHODS get_fixval.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
@@ -69,9 +66,9 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing    = 'true'
-                               width      = 'auto'
-                               items      = client->_bind( <tab> )
+    DATA(table) = page->table( growing = 'true'
+                               width   = 'auto'
+                               items   = client->_bind( <tab> )
 *                               headertext = mv_table
                                ).
 
@@ -156,11 +153,20 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_fixval.
-    FIELD-SYMBOLS <s_fixval> TYPE any.
+
+    TYPES:
+      BEGIN OF fixvalue,
+        low        TYPE string,
+        high       TYPE string,
+        option     TYPE string,
+        ddlanguage TYPE string,
+        ddtext     TYPE string,
+      END OF fixvalue.
+    TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
 
     DATA comp        TYPE cl_abap_structdescr=>component_table.
     DATA structdescr TYPE REF TO cl_abap_structdescr.
-    DATA lt_fixval   TYPE /kro/ui501_cl_object_helper=>fixvalues.
+    DATA lt_fixval   TYPE fixvalues.
 
     LOOP AT mt_comp REFERENCE INTO DATA(dfies).
 
@@ -187,7 +193,6 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 *    ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_comp.
     TRY.
 
@@ -209,7 +214,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
               ENDIF.
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+          CATCH cx_root.
 
         ENDTRY.
 
