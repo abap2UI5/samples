@@ -114,6 +114,8 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
+    " TODO: parameter COUNT is never used (ABAP cleaner)
+
     mv_table = table.
   ENDMETHOD.
 
@@ -150,6 +152,9 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
     <table_tmp> = <table>.
+
+    get_fixval( ).
+
   ENDMETHOD.
 
   METHOD get_fixval.
