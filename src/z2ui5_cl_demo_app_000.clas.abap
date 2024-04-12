@@ -790,12 +790,19 @@
 
         panel->generic_tile(
             header    = 'File Uploader'
-            subheader = 'Upload any file to the Backend'
+            subheader = 'Upload files to the Backend'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_075' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
+        panel->generic_tile(
+            header    = 'File Download'
+            subheader = 'Download files to the Frontend'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_186' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
 
         panel = page->panel(
                      expandable = abap_false
@@ -836,6 +843,15 @@
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
+
+               panel->generic_tile(
+        header    = 'Dynamic Objects IV'
+        subheader = 'User Generic Struc Refs in Subapps'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_190' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
 
         panel = page->panel(
                 expandable = abap_false
