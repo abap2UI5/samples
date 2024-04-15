@@ -847,7 +847,7 @@
                panel->generic_tile(
         header    = 'Dynamic Objects IV'
         subheader = 'User Generic Struc Refs in Subapps'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_190' )
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
