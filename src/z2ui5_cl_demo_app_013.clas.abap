@@ -11,6 +11,15 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
     DATA mv_sel6 TYPE abap_bool.
 
     DATA mv_tab_donut_active TYPE abap_bool.
+    DATA total_count TYPE i.
+
+    TYPES:
+      BEGIN OF ty_chart,
+        text    TYPE string,
+        percent TYPE p LENGTH 3 DECIMALS 2,
+      END OF ty_chart.
+
+    DATA counts TYPE STANDARD TABLE OF ty_chart WITH EMPTY KEY.
 
     METHODS render_tab_donut.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +30,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
 
 
   METHOD render_tab_donut.
@@ -107,6 +116,28 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     seg->interact_donut_chart_segment( label = 'Design Phase'         value = '21.5' displayedvalue = '21.5%' ).
     seg->interact_donut_chart_segment( label = 'Test Phase'           value = '38.5' displayedvalue = '38.5%' ).
 
+    grid->text(
+            text  = 'Model Update Table Data'
+            class = 'sapUiSmallMargin'
+        )->get( )->layout_data(
+            )->grid_data( 'XL12 L12 M12 S12' ).
+
+    DATA(donut_chart) = grid->button( text = `update chart` press = client->_event( 'UPDATE_CHART_DATA' ) )->get_parent(
+      )->flex_box(
+        width          = '30rem'
+        height         = '18rem'
+        alignitems     = 'Start'
+        justifycontent = 'SpaceBetween'
+            )->items(
+                )->interact_donut_chart( displayedsegments =  client->_bind_edit( total_count ) segments = client->_bind_edit( counts ) ).
+
+
+      donut_chart->interact_donut_chart_segment(
+              label          = `{TEXT}`
+              value          = `{PERCENT}`
+              displayedvalue = `{PERCENT}`
+        ).
+
     client->view_display( container->stringify( ) ).
 
   ENDMETHOD.
@@ -119,6 +150,15 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
+
+      counts = VALUE #(
+                        ( text = '1st' percent = '10.0' )
+                        ( text = '2nd' percent = '60.0' )
+                        ( text = '3rd' percent = '30.0' )
+                      ).
+
+      total_count = lines( counts ).
+
 *      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
 *      IF lv_version CS `OPEN`.
 *        client->message_box_display( text = `Charts are not avalaible with OpenUI5, change your UI5 library first` type = `error` ).
@@ -129,6 +169,18 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'UPDATE_CHART_DATA'.
+        CLEAR counts.
+        counts = VALUE #(
+                          ( text = '1st' percent = '60.0' )
+                          ( text = '2nd' percent = '10.0' )
+                          ( text = '3rd' percent = '15.0' )
+                          ( text = '4th' percent = '15.0' )
+                        ).
+
+        total_count = lines( counts ).
+
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
