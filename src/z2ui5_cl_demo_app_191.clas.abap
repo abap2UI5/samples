@@ -62,8 +62,8 @@ CLASS Z2UI5_CL_DEMO_APP_191 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_190'  count = '10' table = 'Z2UI5_T001')
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_190'  count = '12' table = 'Z2UI5_T002')
+    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_191'  count = '10' table = 'Z2UI5_T001')
+                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_191'  count = '12' table = 'Z2UI5_T002')
                        ).
 
     mv_selectedkey = '1'.
