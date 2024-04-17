@@ -11,10 +11,10 @@ CREATE PUBLIC .
       BEGIN OF ty_s_tab,
         selkz     TYPE abap_bool,
         row_id    TYPE string,
-        carrid    TYPE sflight-carrid,
-        connid    TYPE sflight-connid,
-        fldate    TYPE sflight-fldate,
-        planetype TYPE sflight-planetype,
+        carrid    TYPE string,
+        connid    TYPE string,
+        fldate    TYPE string,
+        planetype TYPE string,
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     view = z2ui5_cl_xml_view=>factory( ).
 
-    temp5 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp5 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->page( id = 'page_main'
     title = 'abap2UI5 - sap.ui.table.Table Features'
     navbuttonpress = client->_event( 'BACK' )
