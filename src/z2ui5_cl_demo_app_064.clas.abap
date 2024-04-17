@@ -240,32 +240,32 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    DATA temp5 TYPE ty_t_table.
-    DATA temp6 LIKE LINE OF temp5.
-    CLEAR temp5.
-
-*/ fetch 1
-    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
-    screen-progress_value = 25.
-    screen-display_value = 'fetch 1'.
-    WAIT UP TO 2 SECONDS.
-*/ fetch 2
-    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
-    screen-progress_value = 50.
-    screen-display_value = 'fetch 2'.
-    WAIT UP TO 2 SECONDS.
-*/ fetch 3
-    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
-    screen-progress_value = 75.
-    screen-display_value = 'fetch 3'.
-    WAIT UP TO 2 SECONDS.
-*/ fetch 4
-    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
-    screen-progress_value = 100.
-    screen-display_value = 'fetch 4'.
-    WAIT UP TO 2 SECONDS.
-
-    mt_table = temp5.
+*    DATA temp5 TYPE ty_t_table.
+*    DATA temp6 LIKE LINE OF temp5.
+*    CLEAR temp5.
+*
+**/ fetch 1
+*    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
+*    screen-progress_value = 25.
+*    screen-display_value = 'fetch 1'.
+*    WAIT UP TO 2 SECONDS.
+**/ fetch 2
+*    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
+*    screen-progress_value = 50.
+*    screen-display_value = 'fetch 2'.
+*    WAIT UP TO 2 SECONDS.
+**/ fetch 3
+*    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
+*    screen-progress_value = 75.
+*    screen-display_value = 'fetch 3'.
+*    WAIT UP TO 2 SECONDS.
+**/ fetch 4
+*    SELECT * UP TO 10 ROWS APPENDING CORRESPONDING FIELDS OF TABLE temp5 FROM sflight.
+*    screen-progress_value = 100.
+*    screen-display_value = 'fetch 4'.
+*    WAIT UP TO 2 SECONDS.
+*
+*    mt_table = temp5.
   ENDMETHOD.
 
   METHOD z2ui5_set_search.
