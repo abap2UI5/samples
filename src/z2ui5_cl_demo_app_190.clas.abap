@@ -11,8 +11,6 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
-*    DATA mt_table_del    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
 

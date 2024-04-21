@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
 *        )->_cc( )->font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( Z2UI5_CL_CC_FONT_AWESOME_ICONS=>get_js_icon( `https://cdn.jsdelivr.net/gh/choper725/resources/dist/` )  )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_font_awesome=>get_js_icon( `https://cdn.jsdelivr.net/gh/choper725/resources/dist/` )  )->get_parent(
         )->stringify( ) ).
 
 
