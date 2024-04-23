@@ -6,9 +6,9 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     TYPES: BEGIN OF ty_s_key_value,
-             fname   TYPE rollname,
+             fname   TYPE char30,
              value   TYPE string,
-             tabname TYPE tabname,
+             tabname TYPE char30,
              comp    TYPE abap_componentdescr,
            END OF ty_S_key_value,
            ty_t_key_values TYPE STANDARD TABLE OF ty_s_key_value WITH EMPTY KEY.
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
       ASSIGN <fs_s_new_data>-t_kopf->* TO <fs_t_head_new>.
 
       APPEND INITIAL LINE TO <fs_t_head_new> ASSIGNING <fs_s_head_new>.
-      MOVE-CORRESPONDING <fs_s_head> TO <fs_s_head_new>.
+      <fs_s_head> = CORRESPONDING #( <fs_s_head_new> ).
 
     ENDLOOP.
 
