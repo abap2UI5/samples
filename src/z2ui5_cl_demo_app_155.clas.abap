@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_textedit=>factory( `this is a text` ).
+        DATA(lo_app) = z2ui5_cl_pop_textedit=>factory( `this is a text` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_popup_textedit( lo_prev )->result( )-text.
+        DATA(lv_text) = CAST z2ui5_cl_pop_textedit( lo_prev )->result( )-text.
         client->message_box_display( `the result is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.

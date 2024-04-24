@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display(
-        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_manager=>get_js( )
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_m=>get_js( )
             )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
             )->stringify( ) ).
 

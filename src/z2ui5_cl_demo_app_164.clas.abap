@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_START`.
-        client->nav_app_call( z2ui5_cl_popup_table=>factory( mt_table ) ).
+        client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
-          DATA(lo_popup_table) = CAST z2ui5_cl_popup_table( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          DATA(lo_popup_table) = CAST z2ui5_cl_pop_table( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           set_data( ).
           client->view_model_update( ).
         CATCH cx_root.

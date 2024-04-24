@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
 
     IF check_load_cc = abap_false.
       check_load_cc = abap_true.
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( get_custom_js( ) ) ).
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
 
     ELSEIF check_initialized = abap_false.

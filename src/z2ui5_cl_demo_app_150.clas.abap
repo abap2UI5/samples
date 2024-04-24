@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_confirm_result) = CAST z2ui5_cl_popup_to_confirm( lo_prev )->result( ).
+        DATA(lv_confirm_result) = CAST z2ui5_cl_pop_to_confirm( lo_prev )->result( ).
         client->message_box_display( `the result is ` && lv_confirm_result ).
       CATCH cx_root.
     ENDTRY.
@@ -59,7 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_to_confirm=>factory( `this is a question` ).
+        DATA(lo_app) = z2ui5_cl_pop_to_confirm=>factory( `this is a question` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

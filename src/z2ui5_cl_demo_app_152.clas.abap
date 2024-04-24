@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
              (  title = 'title_04'  value = 'value_04' )
              (  title = 'title_05'  value = 'value_05' ) ).
 
-        DATA(lo_app) = z2ui5_cl_popup_to_select=>factory( mt_tab ).
+        DATA(lo_app) = z2ui5_cl_pop_to_select=>factory( mt_tab ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(ls_result) = CAST z2ui5_cl_popup_to_select( lo_prev )->result( ).
+        DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
         FIELD-SYMBOLS <row> TYPE ty_row.
         ASSIGN ls_result-row->* TO <row>.
         client->message_box_display( `callback after popup to select: ` && <row>-title ).
