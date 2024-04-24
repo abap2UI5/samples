@@ -39,6 +39,8 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     METHODS get_data.
+    METHODS xml_parse.
+    METHODS xml_stringify.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -62,7 +64,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     view->shell(
         )->page( title          = 'xxx'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                 shownavbutton  = abap_true
             )->header_content( ).
 
     client->view_display( view->stringify( ) ).
@@ -70,15 +72,13 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
+    xml_parse( ).
 
     me->client = client.
     get_data( ).
     ui5_display( ).
 
-*    DATA(lv_stringify) = z2ui5_cl_util_api=>xml_srtti_stringify( data = mt_new_data2 ).
-
-*    DATA(lr_result) = z2ui5_cl_util_api=>xml_srtti_parse( rtti_data = lv_stringify ).
-
+    xml_stringify( ).
   ENDMETHOD.
 
   METHOD get_data.
@@ -97,7 +97,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 
-*      APPEND INITIAL LINE TO mt_new_data ASSIGNING FIELD-SYMBOL(<fs_s_new_data>).
       DATA(lo_new_data) = NEW z2ui5_cl_demo_app_193( ).
       INSERT lo_new_data INTO TABLE mt_new_data2.
 
@@ -109,8 +108,25 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
       APPEND INITIAL LINE TO <fs_t_head_new> ASSIGNING <fs_s_head_new>.
       <fs_s_head_new> = CORRESPONDING #( <fs_s_head> ).
-*      <fs_s_head> = CORRESPONDING #( <fs_s_head_new> ).
 
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD xml_parse.
+
+    LOOP AT mt_new_data2 INTO DATA(lo_data).
+      lo_data->xml_parse( ).
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD xml_stringify.
+
+    LOOP AT mt_new_data2 INTO DATA(lo_data).
+      lo_data->xml_stringify( ).
     ENDLOOP.
 
   ENDMETHOD.
