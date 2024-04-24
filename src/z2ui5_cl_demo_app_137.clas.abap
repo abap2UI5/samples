@@ -83,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
       mv_check_init = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_picture=>get_js(  ) )->get_parent(
+       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_pic=>get_js(  ) )->get_parent(
        )->_z2ui5( )->timer( delayms = `200` finished = client->_event( 'START' )
        )->stringify( ) ).
 

@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_to_inform=>factory( `this is a question` ).
+        DATA(lo_app) = z2ui5_cl_pop_to_inform=>factory( `this is a question` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lo_dummy) = CAST z2ui5_cl_popup_to_inform( lo_prev ).
+        DATA(lo_dummy) = CAST z2ui5_cl_pop_to_inform( lo_prev ).
         client->message_box_display( `callback after popup to inform` ).
       CATCH cx_root.
     ENDTRY.

@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     METHODS set_data.
 
   PRIVATE SECTION.
-    DATA mt_range TYPE z2ui5_cl_popup_get_range=>ty_s_result-t_range.
+    DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
 ENDCLASS.
 
 
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
-        client->nav_app_call( z2ui5_cl_popup_get_range=>factory( mt_range ) ).
+        client->nav_app_call( z2ui5_cl_pop_get_range=>factory( mt_range ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
-          DATA(lo_value_help) = CAST z2ui5_cl_popup_get_range( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           IF lo_value_help->result( )-check_confirmed = abap_true.
             mt_range = lo_value_help->result( )-t_range.
             mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).

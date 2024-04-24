@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
             DATA(lv_dummy) = 1 / 0.
           CATCH cx_root INTO DATA(lx).
         ENDTRY.
-        DATA(lo_app) = z2ui5_cl_popup_error=>factory( lx ).
+        DATA(lo_app) = z2ui5_cl_pop_error=>factory( lx ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_165 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lo_dummy) = CAST z2ui5_cl_popup_to_inform( lo_prev ).
+        DATA(lo_dummy) = CAST z2ui5_cl_pop_to_inform( lo_prev ).
         client->message_box_display( `callback after popup to inform` ).
       CATCH cx_root.
     ENDTRY.

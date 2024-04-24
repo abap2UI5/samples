@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_popup_input_value( lo_prev )->result( )-value.
+        DATA(lv_text) = CAST z2ui5_cl_pop_input_val( lo_prev )->result( )-value.
         client->message_box_display( `the input is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.
@@ -59,7 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_input_value=>factory( text = `Amount of products:` ).
+        DATA(lo_app) = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

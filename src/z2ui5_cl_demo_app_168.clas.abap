@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        IF CAST z2ui5_cl_popup_file_download( lo_prev )->result( ).
+        IF CAST z2ui5_cl_pop_file_dl( lo_prev )->result( ).
           client->message_box_display( `the input is downloaded` ).
         ENDIF.
       CATCH cx_root.
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_popup_file_download=>factory( get_file( ) ).
+        DATA(lo_app) = z2ui5_cl_pop_file_dl=>factory( get_file( ) ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

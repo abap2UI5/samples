@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       z2ui5_set_data( ).
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( get_custom_js( ) ) ).
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
     ENDIF.
 

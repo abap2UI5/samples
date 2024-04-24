@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_102 IMPLEMENTATION.
 
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_bwipjs=>get_js( ) ) ).
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( z2ui5_cl_cc_bwipjs=>get_js( ) ) ).
       RETURN.
     ENDIF.
 

@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
       WHEN 'POPUP'.
 
-        DATA(lo_app) = z2ui5_cl_popup_messages=>factory( VALUE #(
+        DATA(lo_app) = z2ui5_cl_pop_messages=>factory( VALUE #(
             ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
             ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
             ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lo_dummy) = CAST z2ui5_cl_popup_messages( lo_prev ).
+        DATA(lo_dummy) = CAST z2ui5_cl_pop_messages( lo_prev ).
         client->message_box_display( `callback after popup messages` ).
       CATCH cx_root.
     ENDTRY.

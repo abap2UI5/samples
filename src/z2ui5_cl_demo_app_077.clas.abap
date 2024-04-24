@@ -85,7 +85,7 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
       check_load_cc = abap_true.
       z2ui5_set_data( ).
 *      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
-      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( ) ) ).
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( ) ) ).
       RETURN.
     ELSEIF check_initialized = abap_false.
       check_initialized = abap_true.

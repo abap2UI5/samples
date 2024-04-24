@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
     DATA mv_ui5_version TYPE string.
 
     DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
-    DATA mt_message_manager TYPE z2ui5_cl_cc_message_manager=>ty_t_items.
+    DATA mt_message_manager TYPE z2ui5_cl_cc_message_m=>ty_t_items.
 
   PROTECTED SECTION.
 
@@ -172,7 +172,7 @@ CLASS Z2UI5_CL_DEMO_APP_066 IMPLEMENTATION.
       client->view_display(
         view->_z2ui5( )->info_frontend( ui5_version = client->_bind_edit( mv_ui5_version ) )->get_parent(
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( ) )->get_parent(
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_manager=>get_js( ) )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_message_m=>get_js( ) )->get_parent(
             )->_z2ui5( )->timer( client->_event( `START` )
             )->stringify( ) ).
 

@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_popup_pdf( lo_prev )->result( )-text.
+        DATA(lv_text) = CAST z2ui5_cl_pop_pdf( lo_prev )->result( )-text.
         client->message_box_display( `pdf viewer closed` ).
       CATCH cx_root.
     ENDTRY.
@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
 
       WHEN 'POPUP'.
         data(lv_pdf) = get_example_pdf( ).
-        DATA(lo_app) = z2ui5_cl_popup_pdf=>factory( lv_pdf ).
+        DATA(lo_app) = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

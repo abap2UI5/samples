@@ -16,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
 
   METHOD set_view.
@@ -82,12 +82,12 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_core_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
 
 
