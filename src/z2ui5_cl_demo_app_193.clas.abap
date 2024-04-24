@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
 
   METHOD xml_parse.
 
-    IF mt_pos_xml IS NOT INITIAL.
+    IF mt_kopf_xml IS NOT INITIAL.
       mt_kopf = z2ui5_cl_util_api=>xml_srtti_parse( mt_kopf_xml ).
       CLEAR mt_kopf_xml.
     ENDIF.
