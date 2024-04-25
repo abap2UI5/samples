@@ -11,6 +11,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
+    DATA ms_table_row    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
 
@@ -39,11 +40,30 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
   METHOD on_event.
+
+    FIELD-SYMBOLS <row> TYPE any.
+
     CASE client->get( )-event.
 
       WHEN 'BACK'.
 
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+      WHEN 'BUTTON'.
+
+        LOOP AT mt_comp REFERENCE INTO DATA(comp).
+
+          ASSIGN ms_table_row->* TO <row>.
+          ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+          IF <val> IS NOT ASSIGNED.
+            CONTINUE.
+          ELSE.
+
+            client->_bind( val = <val>    ).
+
+          ENDIF.
+
+        ENDLOOP.
 
     ENDCASE.
   ENDMETHOD.
@@ -87,6 +107,12 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
       cells->object_identifier( text = '{' && comp-name && '}' ).
     ENDLOOP.
 
+    page->footer( )->overflow_toolbar(
+                         )->toolbar_spacer(
+                         )->button( text  = 'Save'
+                                    press = client->_event( 'BUTTON' )
+                                    type  = 'Success' ).
+
     IF mo_parent_view IS INITIAL.
 
       client->view_display( page->get_root( )->xml_get( ) ).
@@ -112,6 +138,8 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
+    " TODO: parameter COUNT is never used (ABAP cleaner)
+
     mv_table = table.
   ENDMETHOD.
 
@@ -132,7 +160,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
 *        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
 
         ASSIGN mt_table->* TO <table>.
 
