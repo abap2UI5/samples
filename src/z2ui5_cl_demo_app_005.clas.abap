@@ -1,8 +1,12 @@
-CLASS Z2UI5_CL_DEMO_APP_005 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_005 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
+
+    DATA value1 TYPE int4.
+    DATA value2 TYPE int4.
+    DATA initialized TYPE abap_bool.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -10,15 +14,25 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_005 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
+
+    IF initialized = abap_false.
+      initialized = abap_true.
+      value1 = 10.
+      value2 = 90.
+    ENDIF.
 
     CASE client->get( )-event.
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+      WHEN 'SLIDER_CHANGE'.
+
+        client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
 
     ENDCASE.
 
@@ -44,6 +58,9 @@ CLASS Z2UI5_CL_DEMO_APP_005 IMPLEMENTATION.
             labelinterval = '2'
             width         = '80%'
             class         = 'sapUiTinyMargin'
+            value         = client->_bind_edit( value1 )
+            value2        = client->_bind_edit( value2 )
+            change        = client->_event( 'SLIDER_CHANGE' )
     ).
     client->view_display( view->stringify( ) ).
 
