@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_190 DEFINITION
+CLASS z2ui5_cl_demo_app_194 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
+    DATA ms_table_row    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
 
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     METHODS get_fixval.
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
   METHOD on_event.
 
@@ -48,6 +48,22 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
       WHEN 'BACK'.
 
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+      WHEN 'BUTTON'.
+
+        LOOP AT mt_comp REFERENCE INTO DATA(comp).
+
+          ASSIGN ms_table_row->* TO <row>.
+          ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+          IF <val> IS NOT ASSIGNED.
+            CONTINUE.
+          ELSE.
+
+            client->_bind( val = <val>    ).
+
+          ENDIF.
+
+        ENDLOOP.
 
     ENDCASE.
   ENDMETHOD.
@@ -144,7 +160,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
 *        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
 
         ASSIGN mt_table->* TO <table>.
 
