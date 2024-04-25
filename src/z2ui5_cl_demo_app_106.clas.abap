@@ -25,15 +25,17 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
+      view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.tox-silver-sink { position: absolute !important; }` ).
+
       view->shell(
             )->page(
                     title          = 'abap2UI5 - Rich Text Editor'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                    shownavbutton  = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' )
+                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Rich Text Editor' editable = abap_true
@@ -45,6 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_106 IMPLEMENTATION.
                                         showGroupFont = abap_true
                                         showGroupLink = abap_true
                                         showGroupInsert = abap_true
+                                        wrapping = abap_false
                        )->get_parent( )->get_parent( )->get_parent(
                  )->footer(
                     )->overflow_toolbar(

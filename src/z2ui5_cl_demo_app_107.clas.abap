@@ -1,30 +1,34 @@
-class Z2UI5_CL_DEMO_APP_107 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_107 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  types:
-    BEGIN OF ty_items,
+    TYPES:
+      BEGIN OF ty_items,
         filename    TYPE string,
         mediatype   TYPE string,
         uploadstate TYPE string,
         url         TYPE string,
       END OF ty_items .
 
-  data:
-    mt_items TYPE TABLE OF ty_items WITH DEFAULT KEY .
-  data MV_FILE_RAW type STRING .
+    DATA:
+      mt_items TYPE TABLE OF ty_items WITH DEFAULT KEY .
+    DATA mv_file_raw TYPE string .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
+    DATA check_load_cc TYPE abap_bool.
 
     METHODS z2ui5_view_display.
     METHODS z2ui5_on_event.
+    METHODS get_custom_js
+      RETURNING
+        VALUE(result) TYPE string.
 
 
   PRIVATE SECTION.
@@ -37,45 +41,43 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD get_custom_js.
 
-    me->client     = client.
+    result  = `` && |\n| &&
+                 `sap.z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
+                 ` var oFileUploadComponent = oEvent.getParameters("items").item.getFileObject();` && |\n| &&
+                 ` if (oFileUploadComponent) {` && |\n| &&
+                 `   _handleRawFile(oFileUploadComponent,oController);` && |\n| &&
+                 ` }` && |\n| &&
+                 ` console.log(sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW.data);` && |\n| &&
+                 `};` && |\n| &&
+                 `_handleRawFile = (oFile, oController) => {` && |\n| &&
+                 ` var oFileRaw = {` && |\n| &&
+                 `   name: oFile.name,mimetype: oFile.type,size: oFile.size,data: []` && |\n| &&
+                 ` }` && |\n| &&
+                 ` var reader = new FileReader();` && |\n| &&
+                 ` reader.onload = function (e) {` && |\n| &&
+                 `   oFileRaw.data = e.target.result;` && |\n| &&
+                 `   sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW = oFileRaw;` && |\n| &&
+                 ` }` && |\n| &&
+                 `  reader.readAsDataURL(oFile);` && |\n| &&
+                 `};`.
 
-    IF check_initialized = abap_false.
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_load_cc = abap_false.
+      check_load_cc = abap_true.
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
+      RETURN.
+
+    ELSEIF check_initialized = abap_false.
       check_initialized = abap_true.
-
-      DATA(lv_script) = `` && |\n| &&
-                        `sap.z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
-                        ` var oFileUploadComponent = oEvent.getParameters("items").item.getFileObject();` && |\n| &&
-                        ` if (oFileUploadComponent) {` && |\n| &&
-                        `   _handleRawFile(oFileUploadComponent,oController);` && |\n| &&
-                        ` }` && |\n| &&
-                        ` console.log(sap.z2ui5.oResponse.OVIEWMODEL.EDIT.MV_FILE_RAW.data);` && |\n| &&
-                        `};` && |\n| &&
-                        `_handleRawFile = (oFile, oController) => {` && |\n| &&
-                        ` var oFileRaw = {` && |\n| &&
-                        `   name: oFile.name,mimetype: oFile.type,size: oFile.size,data: []` && |\n| &&
-                        ` }` && |\n| &&
-                        ` var reader = new FileReader();` && |\n| &&
-                        ` reader.onload = function (e) {` && |\n| &&
-                        `   oFileRaw.data = e.target.result;` && |\n| &&
-                        `   sap.z2ui5.oResponse.OVIEWMODEL.EDIT.MV_FILE_RAW = oFileRaw;` && |\n| &&
-                        ` }` && |\n| &&
-                        `  reader.readAsDataURL(oFile);` && |\n| &&
-                        `};`.
-
-      client->view_display( z2ui5_cl_xml_view=>factory( client
-*        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
-          )->_z2ui5( )->timer( client->_event( `DISPLAY_VIEW` )
-          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
-        )->stringify( ) ).
-
-*      client->timer_set(
-*        interval_ms    = '0'
-*        event_finished = client->_event( 'DISPLAY_VIEW' )
-*      ).
-
-
+      z2ui5_view_display( ).
       RETURN.
     ENDIF.
 
@@ -84,20 +86,17 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'DISPLAY_VIEW'.
-        z2ui5_view_display( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_VIEW_DISPLAY.
+  METHOD z2ui5_view_display.
 
     client->_bind_edit( mv_file_raw ).
 
@@ -106,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = abap_true
+        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         class = 'sapUiContentPadding' ).
 
     page = page->upload_set( instantupload = abap_true

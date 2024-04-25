@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popover.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
 *    popup = popup->popover(
 *              placement = `Top`
@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
             groupitems = abap_true
             placement = `Top`
             initiallyexpanded = abap_true
-            beforeclose = client->_event( val = 'POPOVER_CLOSE' check_view_destroy = abap_false )
+            beforeclose = client->_event( val = 'POPOVER_CLOSE' s_ctrl = value #( check_view_destroy = abap_true ) )
         )->message_item(
             type        = `{TYPE}`
             title       = `{TITLE}`
@@ -104,15 +104,15 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1647246029828268032`
                 )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
+
             )->get_parent( ).
 *    page->button( text = 'Messages in Popup' press = client->_event( 'POPUP' )  ).
     page->message_view(

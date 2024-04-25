@@ -22,13 +22,12 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_popup_decide.
 
-    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Decide'
             )->vbox(
                 )->text( 'this is a popup to decide, you have to make a decision now...'
             )->get_parent(
-            )->footer( )->overflow_toolbar(
-                )->toolbar_spacer(
+            )->buttons(
                 )->button(
                     text  = 'Cancel'
                     press = client->_event( 'POPUP_DECIDE_CANCEL' )
@@ -44,13 +43,12 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
   METHOD ui5_popup_info_frontend_close.
 
-    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(popup)  = Z2UI5_cl_xml_view=>factory_popup( ).
     popup->dialog( 'Popup - Info'
             )->vbox(
                 )->text( 'this is an information, press close to go back to the main view without a server roundtrip'
             )->get_parent(
-            )->footer( )->overflow_toolbar(
-                )->toolbar_spacer(
+                )->buttons(
                 )->button(
                     text  = 'close'
                     press = client->_event_client( client->cs_event-popup_close )
@@ -66,24 +64,20 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = lo_main->page(
             title          = 'abap2UI5 - Popups'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-            shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-            )->get_parent( ).
+            navbuttonpress = client->_event( val = 'BACK' )
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            ).
 
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'
         )->simple_form( 'Popup in same App' )->content( 'form'
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, no background rendering'
-                press = client->_event( val = 'BUTTON_POPUP_01' check_view_destroy = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_01' s_ctrl = value #( check_view_destroy = abap_true ) )
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, background destroyed and rerendering'
-                press = client->_event( val = 'BUTTON_POPUP_02' check_view_destroy = abap_true )
+                press = client->_event( val = 'BUTTON_POPUP_02' s_ctrl = value #( check_view_destroy = abap_true ) )
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close (no roundtrip)'

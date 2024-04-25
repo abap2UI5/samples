@@ -90,38 +90,25 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
 
   METHOD z2ui5_view_display.
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'Timeline'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = abap_true
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                     )->header_content(
-                    )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                    )->link( text = 'Source_Code' target = '_blank'
             )->get_parent( ).
 
     DATA(timeline) = page->timeline(
-*      EXPORTING
-*        id                =
-*        enabledoublesided =
-*        groupby           =
-*        growingthreshold  =
-*        filtertitle       =
-*        sortoldestfirst   =
-*        alignment         =
-*        axisorientation   =
-          content           = client->_bind( mt_feed )
-*      RECEIVING
-*        result            =
-     ).
+          content = client->_bind( mt_feed ) ).
 
     timeline->content( ns = `commons` )->timeline_item(
         datetime          = `{DATETIME}`
         title             = `{TITLE}`
         userpicture       = `{AUTHORPIC}`
         text              = `{TEXT}`
-        username          = `{AUTHOR}`
-    ).
+        username          = `{AUTHOR}` ).
 
     client->view_display( lo_view->stringify( ) ).
 

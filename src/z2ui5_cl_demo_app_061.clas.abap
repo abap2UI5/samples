@@ -1,16 +1,16 @@
-CLASS Z2UI5_CL_DEMO_APP_061 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA t_tab TYPE REF TO data.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO Z2UI5_if_client.
-
+    DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
                     href = 'https://twitter.com/abap2UI5/status/1676522756781817857'
                 )->link(
                     text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
         )->get_parent( ).
 
 
@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( val = 'SEND' check_view_destroy = abap_true )
+                    press = client->_event( val = 'SEND' s_ctrl = value #( check_view_destroy = abap_true ) )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -71,24 +71,25 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_FW_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_CORE_01').
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_fw_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
+
 
     ENDIF.
 

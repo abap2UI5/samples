@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 
@@ -58,12 +58,12 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
+                  navbuttonpress = client->_event( val = 'BACK' )
+                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                       target = '_blank'
               )->get_parent(
               )->_z2ui5( )->timer(

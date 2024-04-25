@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup = popup->message_popover(
               placement = `Top`
@@ -72,15 +72,15 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
         )->shell(
         )->page( class = `sapUiContentPadding `
             title          = 'abap2UI5 - Messaging'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
+            navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1647246029828268032`
                 )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
+
             )->get_parent( ).
 
     "string

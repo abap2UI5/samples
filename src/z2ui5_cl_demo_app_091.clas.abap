@@ -118,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - Process Flow'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = abap_true
+        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         class = 'sapUiContentPadding' ).
 
     DATA(process_flow) = page->process_flow(
@@ -129,7 +129,7 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
         nodepress = client->_event( val = `NODE_PRESS` )
         nodes = client->_bind_edit( mt_nodes )
         lanes = client->_bind_edit( mt_lanes )
-      )->nodes(
+      )->nodes( ns = `commons`
         )->process_flow_node(
           laneid = `{LANE}`
           nodeid = `{ID}`

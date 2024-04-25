@@ -30,7 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popover.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
     view->popover(
                   title     = 'Popover Title'
                   placement = mv_placement
@@ -62,13 +62,13 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
     view->shell(
       )->page(
               title          = 'abap2UI5 - Popover Examples'
-              navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-              shownavbutton  = abap_true
+              navbuttonpress = client->_event( val = 'BACK' )
+              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
           )->header_content(
               )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
               )->link(
                   text = 'Source_Code' target = '_blank'
-                  href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
           )->get_parent(
           )->simple_form( 'Popover'
               )->content( 'form'

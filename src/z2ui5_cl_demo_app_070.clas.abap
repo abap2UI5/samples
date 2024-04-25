@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_070 DEFINITION
+CLASS z2ui5_cl_demo_app_070 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -19,32 +19,32 @@ CLASS Z2UI5_CL_DEMO_APP_070 DEFINITION
         price            TYPE p LENGTH 10 DECIMALS 2,
         waers            TYPE waers,
         selected         TYPE abap_bool,
-        process          type string,
-        process_state    type string,
+        process          TYPE string,
+        process_state    TYPE string,
       END OF ty_s_tab .
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     TYPES:
-      BEGIN OF ty_S_filter_pop,
+      BEGIN OF ty_s_filter_pop,
         option TYPE string,
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
-      END OF ty_S_filter_pop .
+      END OF ty_s_filter_pop .
 
-    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
     DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
     DATA lv_selkz TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_search.
-    METHODS Z2UI5_set_data.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_search.
+    METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
 
@@ -56,7 +56,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
 
   METHOD set_selkz.
@@ -70,28 +70,28 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client     = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         client->message_toast_display( 'Search Entries' ).
-        Z2UI5_set_data( ).
-        Z2UI5_set_search( ).
+        z2ui5_set_data( ).
+        z2ui5_set_search( ).
         client->view_model_update( ).
       WHEN 'SORT'.
         DATA(lt_arg) = client->get( )-t_event_arg.
@@ -131,7 +131,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     mt_mapping = VALUE #(
     (   n = `EQ`     v = `={LOW}`    )
@@ -151,12 +151,12 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - sap.ui.table.Table Features'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
     page1->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+              text = 'Source_Code' target = '_blank'
      ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
@@ -167,7 +167,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignItems = `Start` ).
+         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
     lo_box->vbox( )->text( `Search` )->search_field(
          value  = client->_bind_edit( mv_search_value )
@@ -193,22 +193,22 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
                                 selectionmode = 'None'
                                 sort = client->_event( 'SORT' )
                                 filter = client->_event( 'FILTER' )
-                                customFilter =  client->_event( 'CUSTOMFILTER' ) ).
+                                customfilter =  client->_event( 'CUSTOMFILTER' ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' ).
     DATA(lo_columns) = tab->ui_columns( ).
     lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
     lo_columns->ui_column( width = '5rem' sortproperty = 'ROW_ID'
                                           filterproperty = 'ROW_ID' )->text( text = `Index` )->ui_template( )->text(   text = `{ROW_ID}` ).
-    lo_columns->Ui_column( width = '11rem' sortproperty = 'PROCESS' filterproperty = 'PROCESS' )->text( text = `Process Indicator`
-    )->ui_template( )->progress_indicator( class = 'sapUiSmallMarginBottom' percentValue = `{PROCESS}` displayValue = '{PROCESS} %'  showvalue = 'true' state = '{PROCESS_STATE}' ).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'PROCESS' filterproperty = 'PROCESS' )->text( text = `Process Indicator`
+    )->ui_template( )->progress_indicator( class = 'sapUiSmallMarginBottom' percentvalue = `{PROCESS}` displayvalue = '{PROCESS} %'  showvalue = 'true' state = '{PROCESS_STATE}' ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'PRODUCT'
                            filterproperty = 'PRODUCT' )->text( text = `Product` )->ui_template( )->input( value = `{PRODUCT}` editable = abap_false ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'CREATE_DATE' filterproperty = 'CREATE_DATE' )->text( text = `Date` )->ui_template( )->text(   text = `{CREATE_DATE}` ).
-    lo_columns->Ui_column( width = '11rem' sortproperty = 'CREATE_BY' filterproperty = 'CREATE_BY')->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATE_BY' filterproperty = 'CREATE_BY')->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
     lo_columns->ui_column( width = '11rem' sortproperty = 'STORAGE_LOCATION'  filterproperty = 'STORAGE_LOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGE_LOCATION}`).
-    lo_columns->Ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
-    lo_columns->Ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
-    lo_columns->Ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value = `{PRICE}` currency = `{WAERS}` ).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
+    lo_columns->ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
+    lo_columns->ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value = `{PRICE}` currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
     )->ui_row_action_item( type = 'Navigation'
                            press = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROW_ID}`  ) ) )
@@ -225,7 +225,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
+  METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
@@ -239,7 +239,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_search.
+  METHOD z2ui5_set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

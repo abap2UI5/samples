@@ -86,16 +86,16 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(page) = view->shell( )->page( id = `page_main`
            showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - IconTabBar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
     page->header_content(
           )->link(
-              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
+              text = 'Source_Code' target = '_blank'  ).
     DATA(lo_items) = page->icon_tab_bar( class = 'sapUiResponsiveContentPadding' selectedKey = client->_bind_edit( lv_selectedKey )  select = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count = client->_bind_edit( lv_cnt_total ) text = 'Products' key = 'ALL' showall = abap_true ).
     lo_items->icon_tab_separator(  ).
@@ -134,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
              )->object_number(
                    state = '{STATE_PRICE}'
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } `
-             )->rating_indicator( VALUE = '{RATING}'  class = 'sapUiSmallMarginBottom' iconSize = '12px' maxvalue ='6' enabled = 'false' ).
+                   ).
 
     client->view_display( view->stringify( ) ).
 
@@ -155,10 +155,10 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 `Information`  )
     ).
 
-    DESCRIBE TABLE mt_table lines lv_cnt_total.
+    lv_cnt_total = lines( mt_table ).
     lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
-    lv_cnt_heavy = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT i = i + 1 ).
-    lv_cnt_neg = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT i = i + 1 ).
+    lv_cnt_heavy = REDUCE i( INIT j = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT j = j + 1 ).
+    lv_cnt_neg = REDUCE i( INIT k = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT k = k + 1 ).
 
   ENDMETHOD.
 

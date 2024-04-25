@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_119 IMPLEMENTATION.
 
 
   METHOD view_main.
@@ -34,22 +34,19 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_css_local( ) ).
     view->_generic( ns = `html` name = `style` )->_cc_plain_xml( mv_custom_css ).
 
-*    view->_z2ui5(  )->set_driver_configs( steps_config            = ms_steps_config
-*                                                    highlight_config        = ms_hightlight_config
-*                                                    highlight_driver_config = ms_hightlight_driver_config ).
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_config( i_steps_config            = ms_steps_config
+    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_config( i_steps_config = ms_steps_config
                                                     i_highlight_config        = ms_hightlight_config
                                                     i_highlight_driver_config = ms_hightlight_driver_config ) ).
 
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5 - DriverJs'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
+                  navbuttonpress = client->_event( val = 'BACK' )
+                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                       target = '_blank'
                   )->button( text = `TOUR` press = `sap.z2ui5.DriverJS.drive()`
                   )->button( text = `HIGHLIGHT` press = `sap.z2ui5.DriverJS.highlight()`
@@ -89,8 +86,9 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
       "steps
       ms_steps_config-show_progress = abap_true.
       ms_steps_config-popover_class = 'driverjs-theme'.
-      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
-      ms_steps_config-allow_close = z2ui5_cl_demo_utility=>boolean_abap_2_json( abap_false ).
+*      ms_steps_config-show_buttons = z2ui5_cl_cc_driver_js=>buttons-next_previous.
+      ms_steps_config-allow_close = z2ui5_cl_util=>boolean_abap_2_json( abap_false ).
+      ms_steps_config-allow_close =  abap_false.
       ms_steps_config-progress_text = `{{current}} of {{total}} steps`.
 
       ms_steps_config-on_next_click = `//alert("this is an event function here !");` && |\n| &&
@@ -179,7 +177,7 @@ CLASS z2ui5_cl_demo_app_119 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_driver_js=>get_js_cc( ) )->get_parent(
 *         )->_cc( )->driver_js( )->load_cc( "js_url = `https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js`

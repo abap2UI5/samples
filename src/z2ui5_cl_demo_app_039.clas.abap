@@ -12,7 +12,7 @@ CLASS Z2UI5_CL_DEMO_APP_039 DEFINITION PUBLIC.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        get               TYPE Z2UI5_if_client=>ty_s_get,
+        get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
     METHODS Z2UI5_on_init.

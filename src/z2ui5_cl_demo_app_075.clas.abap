@@ -45,8 +45,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = z2ui5_cl_demo_utility=>decode_x_base64( lv_data ).
-            mv_file = z2ui5_cl_demo_utility=>get_string_by_xstring( lv_data2 ).
+            DATA(lv_data2) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+            mv_file = z2ui5_cl_util=>conv_get_string_by_xstring( lv_data2 ).
 
             client->message_box_display( `CSV loaded to table` ).
 
@@ -92,10 +92,10 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - Upload Files'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
-            )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+            )->link( text = 'Source_Code' target = '_blank'
         )->get_parent( ).
 
     IF mv_file IS NOT INITIAL.

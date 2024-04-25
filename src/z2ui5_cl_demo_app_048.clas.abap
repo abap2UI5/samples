@@ -70,8 +70,8 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1657279838586109953`
                 )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
+
             )->get_parent( ).
 
     page->list(
@@ -94,7 +94,14 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
               ( n = 'wrapping'      v = `true` )
               ( n = 'wrapCharLimit'      v = `{WRAPCHARLIMIT}` )
               ( n = 'selected'    v = `{SELECTED}` )
-              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )  ) ) )
+              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}`  )
+                                                                                         ( `${DESCR}`  )
+                                                                                         ( `${ICON}`  )
+                                                                                         ( `${HIGHLIGHT}`  )
+                                                                                         ( `${INFO}`  )
+                                                                                         ( `${WRAPCHARLIMIT}`  )
+                                                                                         ( `${SELECTED}`  )
+                                                                                        ) ) )
 
               ) ).
 

@@ -25,9 +25,6 @@ CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
       product  = 'tomato'.
       quantity = '500'.
 
-
-*      client->factory_view( )->_ns_html( )->script( )->zz_plain( `sap.z2ui5.myFunction();`).
-
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view->_generic( ns = `html` name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();`).
@@ -35,12 +32,12 @@ CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                    shownavbutton  = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' )
+                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'Form Title' editable = abap_true

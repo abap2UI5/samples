@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link(
          )->get_parent( ).
 
     page->vbox( height = `100%` justifycontent = `Center` alignitems = `Center`
@@ -66,10 +66,10 @@ CLASS Z2UI5_CL_DEMO_APP_118 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
 *        )->_cc( )->font_awesome( )->load_icons( font_uri = `https://cdn.jsdelivr.net/gh/choper725/resources/dist/`
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( Z2UI5_CL_CC_FONT_AWESOME_ICONS=>get_js_icon( `https://cdn.jsdelivr.net/gh/choper725/resources/dist/` )  )->get_parent(
+        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_font_awesome=>get_js_icon( `https://cdn.jsdelivr.net/gh/choper725/resources/dist/` )  )->get_parent(
         )->stringify( ) ).
 
 

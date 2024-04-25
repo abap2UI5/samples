@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
 
     DATA:
       mt_filter       TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
-    DATA mt_mapping TYPE z2ui5_if_client=>ty_t_name_value .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
     DATA:
       mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY .
     DATA:
@@ -114,23 +114,9 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
 
     METHODS get_variants.
 
-    CLASS-METHODS hlp_get_range_by_value
-      IMPORTING
-        VALUE(value)  TYPE string
-      RETURNING
-        VALUE(result) TYPE ty_s_range.
-
-    CLASS-METHODS hlp_get_uuid
-      RETURNING
-        VALUE(result) TYPE string.
-
     METHODS render_popup_varaint
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-
-
-
-
 
     METHODS popup_copy_save.
 
@@ -166,9 +152,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD get_fields.
 
-
     DATA(db_fields) = VALUE ty_t_fieldsdb(
-
     ( screen_name = 'INV'        field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
     ( screen_name = 'LAGP'       field =  'LGNUM'   field_doma = '/SCWM/LGNUM'      )
     ( screen_name = 'LAGP'       field =  'LGPLA'   field_doma = '/SCWM/DE_LGPLA'   )
@@ -184,16 +168,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ( screen_name = 'TO'         field =  'VLPLA'   field_doma = '/SCWM/LTAP_VLPLA' )
     ).
 
-
     CLEAR: mt_fields.
-
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
 
       APPEND INITIAL LINE TO mt_fields REFERENCE INTO DATA(field).
       field->* = CORRESPONDING #( lr_fields->* ).
 
     ENDLOOP.
-
 
   ENDMETHOD.
 
@@ -214,23 +195,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD get_values.
 
-
     DATA(l_variants) = VALUE ty_t_variants(
     ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123'                     )
     ( screen_name = 'TO'          var = 'E001'       descr = '123'                    )
     ( screen_name = 'TO'          var = 'E001 - All' descr = '123'  )
      ).
 
-
     DATA var TYPE ty_t_variants.
-
     LOOP AT l_variants INTO DATA(a)  WHERE screen_name = mv_screen
                                      AND   var         = mv_variant.
 
       APPEND a TO var.
       mv_description = a-descr.
     ENDLOOP.
-
 
     DATA(var_vall_all) = VALUE ty_t_var_val(
     ( screen_name = 'LTAP'         var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
@@ -254,9 +231,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         AND   var         = mv_variant.
 
       APPEND b TO var_val.
-
     ENDLOOP.
-
 
     LOOP AT mt_fields REFERENCE INTO DATA(field).
 
@@ -284,95 +259,16 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_variants.
 
     mt_variants = VALUE #(
-    ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123'                     )
-    ( screen_name = 'TO'          var = 'E001'       descr = '123'                    )
+    ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123'  )
+    ( screen_name = 'TO'          var = 'E001'       descr = '123'  )
     ( screen_name = 'TO'          var = 'E001 - All' descr = '123'  )
      ).
 
-
   ENDMETHOD.
-
-
-  METHOD hlp_get_range_by_value.
-
-    DATA(lv_length) = strlen( value ) - 1.
-
-    CASE value(1).
-
-      WHEN `=`.
-        result = VALUE #(  option = `EQ` low = value+1 ).
-
-      WHEN `<`.
-        IF value+1(1) = `=`.
-          result = VALUE #(  option = `LE` low = value+2 ).
-        ELSE.
-          result = VALUE #(  option = `LT` low = value+1 ).
-        ENDIF.
-
-      WHEN `>`.
-        IF value+1(1) = `=`.
-          result = VALUE #(  option = `GE` low = value+2 ).
-        ELSE.
-          result = VALUE #(  option = `GT` low = value+1 ).
-        ENDIF.
-
-      WHEN `*`.
-
-        IF value+lv_length(1) = `*`.
-          SHIFT value RIGHT DELETING TRAILING `*`.
-          SHIFT value LEFT DELETING LEADING `*`.
-          result = VALUE #( sign = `I` option = `CP` low = value ).
-        ENDIF.
-
-      WHEN OTHERS.
-
-        IF value CP `...`.
-          SPLIT value AT `...` INTO result-low result-high.
-          result-option = `BT`.
-        ELSE.
-          result = VALUE #( sign = `I` option = `EQ` low = value ).
-        ENDIF.
-
-
-
-    ENDCASE.
-
-
-
-  ENDMETHOD.
-
-
-  METHOD hlp_get_uuid.
-
-    DATA uuid TYPE sysuuid_c32.
-
-    TRY.
-
-        CALL METHOD ('CL_SYSTEM_UUID')=>create_uuid_c32_static
-          RECEIVING
-            uuid = uuid.
-
-      CATCH cx_sy_dyn_call_illegal_class.
-
-        DATA(lv_fm) = 'GUID_CREATE'.
-
-        CALL FUNCTION lv_fm
-          IMPORTING
-            ev_guid_32 = uuid.
-
-    ENDTRY.
-
-    result = uuid.
-
-  ENDMETHOD.
-
 
   METHOD on_event.
 
-
-
     varaint_page(  ).
-
 
   ENDMETHOD.
 
@@ -560,7 +456,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD render_popup_filter.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
@@ -614,7 +510,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD render_popup_varaint.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( title = get_txt( '/SCWM/WB_VARIANT' ) contentwidth = '30%'
     )->table(
@@ -646,7 +542,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD render_pop_copy.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
@@ -727,7 +623,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN `POPUP_FILTER_ADD`.
 
-        INSERT VALUE #( key = hlp_get_uuid( ) ) INTO TABLE mt_filter.
+        INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
 
         client->popup_model_update( ).
 
@@ -760,7 +656,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       WHEN 'CALL_POPUP_VARIANT'.
 
-        mt_variants_pop = CORRESPONDING #( mt_variants ).
+        LOOP AT mt_variants REFERENCE INTO DATA(lr_fields).
+          APPEND INITIAL LINE TO mt_variants_pop REFERENCE INTO DATA(field).
+          field->* = CORRESPONDING #( lr_fields->* ).
+        ENDLOOP.
 
         render_popup_varaint( client ).
 

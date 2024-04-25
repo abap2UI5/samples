@@ -106,12 +106,12 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-          title          = 'abap2UI5 - Partly rerendering of nested views'
+          title          = 'abap2UI5 - Master-Detail View with Nested Views'
           navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true
           )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1680907265891618817`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link(
          )->get_parent( ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' )->begin_column_pages( ).

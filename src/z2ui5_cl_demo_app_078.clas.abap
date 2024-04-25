@@ -39,25 +39,26 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       view = view->shell( )->page( id = `page_main`
                title          = 'abap2UI5 - Select-Options'
                navbuttonpress = client->_event( 'BACK' )
-               shownavbutton  = abap_true
-           )->header_content(
-               )->link(
-                   text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-          )->get_parent( ).
+               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        ).
 
-
-      view->_z2ui5( )->multiinput(
+      view->_z2ui5( )->multiinput_ext(
                             addedtokens      = client->_bind_edit( mt_tokens_added )
                             removedtokens    = client->_bind_edit( mt_tokens_removed )
-                            tokens           = client->_bind_edit( mt_token )
+                            change    = client->_event( 'UPDATE_BACKEND' )
+                            MultiInputId    = `test`  ).
+
+      view->multi_input(
+                            id = `test`
+                           tokens           = client->_bind_edit( mt_token )
                             showclearicon    = abap_true
-                            tokenupdate      = client->_event( 'UPDATE_BACKEND' )
-                       )->tokens( ns = `z2ui5`
+                       )->tokens(
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`
                                      visible  = `{VISIBLE}`
                                      selected = `{SELKZ}`
-                                     editable = `{EDITABLE}` ).
+                                     editable = `{EDITABLE}`
+                                      ).
 
       DATA(tab) = view->table(
         items = client->_bind_edit( mt_token )

@@ -22,36 +22,18 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-*    DATA(page2) = view->shell( )->page( ).
-*
-*    page2->illustrated_message(
-*         title = `HTTP 500 - Server Error`
-*         enableformattedtext = abap_true
-*      description = mv_html
-*         illustrationtype = `sapIllus-ErrorScreen`
-*         illustrationsize = `Dot`
-*    )->additional_content(
-*     )->button(
-*                text  = 'Home'
-*                type  = `Emphasized`
-*                press = client->__event_frontend( client->cs_event-leave_home ) ).
-*
-*    client->set_view( view->stringify( ) ).
-*
-*    RETURN.
-
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true  )
+            navbuttonpress = client->_event( val = 'BACK' s_ctrl = value #( check_view_destroy = abap_true )  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
                     text = 'Demo'  target = '_blank'
                     href = `https://twitter.com/abap2UI5/status/1647175810917318657`
                 )->link(
-                    text = 'Source_Code'  target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
+
             )->get_parent( ).
     page->link( text = 'Documentation'  target = '_blank' href = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
     page->button( text = 'NoActivities' press = client->_event( 'sapIllus-NoActivities' ) ).

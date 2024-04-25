@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
             shownavbutton = abap_true
             )->header_content(
                 )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1639191954285113344`
-                )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                )->link( text = 'Source_Code' target = '_blank'
         )->get_parent(
         )->tab_container( ).
 
@@ -63,6 +63,8 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
         )->items( )->interact_bar_chart(
                 selectionchanged = client->_event( 'BAR_CHANGED' )
                 press            = client->_event( 'BAR_CHANGED' )
+                labelwidth       = '25%'
+                displayedbars    = `4`
             )->bars( ).
     bar->interact_bar_chart_bar( selected = client->_bind( mv_sel1 ) label = 'Product 1' value = '10' ).
     bar->interact_bar_chart_bar( selected = client->_bind( mv_sel2 ) label = 'Product 2' value = '20' ).
@@ -113,12 +115,12 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
-      IF lv_version CS `OPEN`.
-        client->message_box_display( text = `Charts are not available with OpenUI5, change your UI5 library first` type = `error` ).
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-        return.
-      ENDIF.
+*      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
+*      IF lv_version CS `OPEN`.
+*        client->message_box_display( text = `Charts are not available with OpenUI5, change your UI5 library first` type = `error` ).
+*        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+*        return.
+*      ENDIF.
 
       render_tab_bar( ).
     ENDIF.

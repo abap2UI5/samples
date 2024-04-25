@@ -147,8 +147,8 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-*             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link( text = 'Source_Code' target = '_blank'
+*             )->link( text = 'Source_Code' target = '_blank'
          )->get_parent( ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
@@ -175,7 +175,7 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_rendering_popover.
-    DATA(popover) = z2ui5_cl_xml_view=>factory_popup( client )->popover( placement = `Top` ).
+    DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
     popover->text( text = 'this is popover in middle with timer auto refresh' ).
     client->popover_display( xml = popover->stringify( ) by_id = id ).
@@ -184,7 +184,7 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
   METHOD z2ui5_on_rendering_popup.
 
-    DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( client )->dialog( ).
+    DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( )->dialog( ).
 
     dialog->text( text = 'this is popup in middle with timer auto refresh' ).
     dialog->button( text = 'close' press = client->_event_client( client->cs_event-popup_close ) ).

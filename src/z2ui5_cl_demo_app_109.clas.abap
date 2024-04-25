@@ -1,24 +1,24 @@
-class Z2UI5_CL_DEMO_APP_109 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_109 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data PRODUCT type STRING .
-  data QUANTITY type STRING .
-  data MV_PLACEMENT type STRING .
+    DATA product TYPE string .
+    DATA quantity TYPE string .
+    DATA mv_placement TYPE string .
+
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_display_view.
-    METHODS Z2UI5_display_popover
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
 
@@ -27,12 +27,12 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = mv_placement
 *                      beforeclose = client->_event( val = `CLOSE_POPOVER` )
 *                      beforeclose = client->_event_client( client->cs_event-popover_close )
@@ -42,9 +42,6 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
                                   title  = `choper725`
                                   titleurl = `https://github.com/abap2UI5/abap2UI5`
                                   description = `Enjoy`
-                 )->quick_view_page_avatar( )->avatar( src = ``
-                                                       displayShape = `Circle`
-                                                      )->get_parent(
                             )->quick_view_group( heading = `Contact Details`
                               )->quick_view_group_element( label = `Mobile`
                                                            value = `123-456-789`
@@ -79,20 +76,14 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_VIEW.
+  METHOD z2ui5_display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Popover Examples'
-              navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-              shownavbutton  = abap_true
-          )->header_content(
-              )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
-              )->link(
-                  text = 'Source_Code' target = '_blank'
-                  href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-          )->get_parent(
+              title          = 'abap2UI5 - Popover Quickview Examples'
+              navbuttonpress = client->_event( val = 'BACK' )
+              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
           )->simple_form( 'QuickView Popover'
               )->content( 'form'
                   )->title( 'QuickView Popover'
@@ -129,29 +120,29 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
-      Z2UI5_display_view( ).
+      z2ui5_on_init( ).
+      z2ui5_display_view( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'CLOSE_POPOVER'.
         client->popover_destroy( ).
       WHEN 'POPOVER'.
-        Z2UI5_display_popover( `TEST` ).
+        z2ui5_display_popover( `TEST` ).
 
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).
@@ -169,7 +160,7 @@ CLASS Z2UI5_CL_DEMO_APP_109 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
 
     mv_placement = 'Left'.
     product  = 'tomato'.

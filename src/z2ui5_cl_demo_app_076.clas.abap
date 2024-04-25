@@ -49,6 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_076 DEFINITION
     METHODS Z2UI5_on_event .
     METHODS Z2UI5_set_data .
 
+private section.
 ENDCLASS.
 
 
@@ -87,12 +88,12 @@ CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
+    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - Gantt'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
 
@@ -111,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
             )->tree_column( label = 'Col 1' )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
 *            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
           )->row_settings_template(
-            )->gantt_row_settings( rowid = `{ID}` shapes1 = `{TASK}` shapes2 = `{SUBTASK}`
+            )->gantt_row_settings( rowid = `{ID}` shapes1 = `{path: 'TASK', templateShareable:false}` shapes2 = `{path: 'SUBTASK', templateShareable:false}`
               )->shapes1(
                 )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
                 endtime = `{= Helper.DateCreateObject(${ENDTIME} ) }` type = `SummaryExpanded` color = `sapUiAccent5` )->get_parent( )->get_parent(
@@ -140,5 +141,4 @@ children = VALUE #( ( id = `line2` text = `Level 2`
 ) ) ) ) ) .
 
   ENDMETHOD.
-
 ENDCLASS.

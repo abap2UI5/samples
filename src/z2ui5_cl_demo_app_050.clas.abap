@@ -16,7 +16,6 @@ ENDCLASS.
 
 CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
 
-
   METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
@@ -32,19 +31,20 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
     ENDCASE.
 
-   client->view_display( Z2UI5_cl_xml_view=>factory( client
+   client->view_display( Z2UI5_cl_xml_view=>factory(
         )->shell(
         )->page(
                 title          = 'abap2UI5 - Changed CSS'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = abap_true
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->header_content(
                 )->link(
                     text = 'Source_Code'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                     target = '_blank'
             )->get_parent(
-            )->_cc_plain_xml( `<html:style> .sapMInput {` && |\n|  &&
+            )->_generic( ns = `html` name = `style` )->_cc_plain_xml(
+                    `.sapMInput {` && |\n|  &&
                          `    height: 80px !important;` && |\n|  &&
                          `    font-size: 2.5rem !important;` && |\n|  &&
                          `}` && |\n|  &&
@@ -76,7 +76,8 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
                          |\n|  &&
                          `.sapMInputBaseInner::placeholder {` && |\n|  &&
                          `    font-size: 1.4rem !important;` && |\n|  &&
-                         `}</html:style> `
+                         `}`
+            )->get_parent(
             )->button(
                         text  = 'post'
                         press = client->_event( 'BUTTON_POST' )

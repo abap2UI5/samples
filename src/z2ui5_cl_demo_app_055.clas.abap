@@ -69,10 +69,10 @@ CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
 *        )->page(
 *            title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
 *            navbuttonpress = client->_event( 'BACK' )
-*            shownavbutton  = abap_true
+*            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
 *            )->header_content(
 *                )->link(
-*                    text = 'Source_Code'  target = '_blank'
+*
 *                    href = Z2UI5_CL_XML_VIEW=>hlp_get_source_code_url( app = me )
 *        )->get_parent( ).
 *

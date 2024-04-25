@@ -1,89 +1,58 @@
-CLASS Z2UI5_CL_DEMO_APP_071 DEFINITION
+CLASS z2ui5_cl_demo_app_071 DEFINITION
   PUBLIC
+  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
+    DATA mv_input_master TYPE string.
+    DATA mv_input_detail TYPE string.
+    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
     TYPES:
-      BEGIN OF ty_value_map,
-        pc TYPE string,
-        ea TYPE string,
-      END OF ty_value_map.
+      BEGIN OF ts_tree_row_base,
+        object TYPE string,
+        col2   TYPE string,
+        col3   TYPE string,
+        col4   TYPE string,
+      END OF ts_tree_row_base .
+    TYPES:
+      BEGIN OF ts_tree_level3.
+        INCLUDE TYPE ts_tree_row_base.
+      TYPES END OF ts_tree_level3 .
+    TYPES
+      tt_tree_level3 TYPE STANDARD TABLE OF ts_tree_level3 WITH KEY object .
+    TYPES
+      BEGIN OF ts_tree_level2.
+    INCLUDE TYPE ts_tree_row_base.
+    TYPES   categories TYPE tt_tree_level3.
+    TYPES END OF ts_tree_level2.
 
+    TYPES
+      tt_tree_level2 TYPE STANDARD TABLE OF ts_tree_level2 WITH KEY object.
     TYPES:
-      BEGIN OF ty_column_config,
-        label             TYPE string,
-        property          TYPE string,
-        type              TYPE string,
-        unit              TYPE string,
-        delimiter         TYPE abap_bool,
-        unit_property     TYPE string,
-        width             TYPE string,
-        scale             TYPE i,
-        text_align        TYPE string,
-        display_unit      TYPE string,
-        true_value        TYPE string,
-        false_value       TYPE string,
-        template          TYPE string,
-        input_format      TYPE string,
-        wrap              TYPE abap_bool,
-        auto_scale        TYPE abap_bool,
-        timezone          TYPE string,
-        timezone_property TYPE string,
-        display_timezone  TYPE abap_bool,
-        utc               TYPE abap_bool,
-        value_map         TYPE ty_value_map,
-      END OF ty_column_config.
+      BEGIN OF ts_tree_level1.
+        INCLUDE TYPE ts_tree_row_base.
+        TYPES   categories TYPE tt_tree_level2.
+    TYPES END OF ts_tree_level1 .
+    TYPES
+      tt_tree_level1 TYPE STANDARD TABLE OF ts_tree_level1 WITH KEY object .
 
-    DATA: mt_column_config TYPE STANDARD TABLE OF ty_column_config WITH EMPTY KEY.
-    DATA: mv_column_config TYPE string.
+    DATA mt_tree TYPE tt_tree_level1.
+    DATA check_initialized TYPE abap_bool .
 
-    TYPES:
-      BEGIN OF ty_s_tab,
-        selkz           TYPE abap_bool,
-        rowid           TYPE string,
-        product         TYPE string,
-        createdate      TYPE string,
-        createby        TYPE string,
-        storagelocation TYPE string,
-        quantity        TYPE i,
-        meins           TYPE meins,
-        price           TYPE p LENGTH 10 DECIMALS 2,
-        waers           TYPE waers,
-        selected        TYPE abap_bool,
-      END OF ty_s_tab .
-    TYPES:
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
-    TYPES:
-      BEGIN OF ty_s_filter_pop,
-        option TYPE string,
-        low    TYPE string,
-        high   TYPE string,
-        key    TYPE string,
-      END OF ty_s_filter_pop .
+    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
+    DATA mv_check_enabled_02 TYPE abap_bool.
 
-    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
-    DATA check_initialized TYPE abap_bool VALUE abap_false.
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_search.
-    METHODS Z2UI5_set_data.
+    METHODS view_display_master.
+    METHODS view_display_detail.
 
   PRIVATE SECTION.
-
-    METHODS set_selkz
-      IMPORTING
-        iv_selkz TYPE abap_bool.
 
 ENDCLASS.
 
@@ -92,233 +61,132 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
 
-  METHOD set_selkz.
+  METHOD view_display_detail.
 
-    FIELD-SYMBOLS: <ls_table> TYPE ty_s_tab.
+    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
-    LOOP AT mt_table ASSIGNING <ls_table>.
-      <ls_table>-selkz = iv_selkz.
-    ENDLOOP.
+    DATA(page) = lo_view_nested->page( title = `Nested View` ).
+
+    page->button( text = 'event' press = client->_event( 'UPDATE_DETAIL' )
+    )->input( id = `inputNest`
+      value = `{path:'` && client->_bind_edit( val = mv_input_detail view = client->cs_view-nested path = abap_true ) && `',type:'sap.ui.model.type.String', constraints: { maxLength: 3 } }` ).
+
+    page->button(
+          text = 'button 01'
+*            type    = 'Transparent'
+          press   = client->_event( `NEST_TEST` )
+          enabled = client->_bind( mv_check_enabled_01 ) ).
+
+    page->button(
+        text = 'button 02'
+*            type    = 'Transparent'
+        press   = client->_event( `NEST_TEST` )
+        enabled = client->_bind( mv_check_enabled_02 )
+       ).
+
+    client->nest_view_display(
+      val            = lo_view_nested->stringify( )
+      id             = `test`
+      method_insert  = 'addMidColumnPage'
+      method_destroy = 'removeAllMidColumnPages'
+    ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD view_display_master.
 
-    me->client     = client.
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    view->_z2ui5( )->messaging( client->_bind_edit( mt_messaging ) ).
+    DATA(page) = view->shell(
+        )->page(
+           title          = 'abap2UI5 - Master Detail Page with Nested View'
+           navbuttonpress = client->_event( 'BACK' )
+             shownavbutton = abap_true ).
+
+    page->header_content(
+             )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
+             )->link(
+         )->get_parent( ).
+
+    DATA(col_layout) =  page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded' id ='test' ).
+
+    DATA(lr_master) = col_layout->begin_column_pages( ).
+
+    client->_bind( mt_tree ).
+    DATA(tab) = lr_master->vbox( )->tree_table(
+      rows = `{path:'/MT_TREE', parameters: {arrayNames:['CATEGORIES']}}` ).
+    tab->tree_columns(
+    )->tree_column( label = 'Object'
+        )->tree_template(
+        )->text( text = '{OBJECT}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column2'
+        )->tree_template(
+        )->text( text = '{COL2}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column3'
+        )->tree_template(
+        )->text( text = '{COL3}')->get_parent( )->get_parent(
+        )->tree_column( label = 'Column4'
+        )->tree_template(
+        )->text( text = '{COL4}').
+
+    tab->get_parent( )->label( text = `input master` )->input( id = `inputMain`
+     value = `{path:'` && client->_bind_edit( val = mv_input_master view = client->cs_view-main path = abap_true ) && `',type:'sap.ui.model.type.String', constraints: { maxLength: 3 } }`
+     )->button( press = client->_event( `TEST` ) text = `button` ).
+
+
+    client->view_display( page->stringify( ) ).
+
+
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      Z2UI5_set_data( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_messaging=>get_js( )
+            )->_z2ui5( )->timer( client->_event( `ON_CC_LOADED` )
+            )->stringify( ) ).
 
-      client->view_display( Z2UI5_cl_xml_view=>factory( client
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
-        )->_z2ui5( )->timer(  client->_event( 'START' )
-        )->stringify( ) ).
-
-      RETURN.
     ENDIF.
-
-    Z2UI5_on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'START'.
-*        Z2UI5_set_data( ).
-        Z2UI5_on_init( ).
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-*        client->message_toast_display( 'Search Entries' ).
-*        Z2UI5_set_data( ).
-        Z2UI5_set_search( ).
-        client->view_model_update( ).
-      WHEN 'SORT'.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event SORT' ).
-      WHEN 'FILTER'.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event FILTER' ).
-      WHEN 'SELKZ'.
-        client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
-        set_selkz( lv_selkz ).
-        client->view_model_update( ).
-      WHEN 'CUSTOMFILTER'.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event CUSTOMFILTER' ).
+
+      WHEN 'ON_CC_LOADED'.
+
+        view_display_master(  ).
+        view_display_detail(  ).
+
+        mt_tree = VALUE #( ( object = '1' categories = VALUE #( ( object = '1.1' categories = VALUE #( ( object = '1.1.1')
+                                                                                                       ( object = '1.1.2') ) )
+                                                                                 ( object = '1.2' ) ) )
+                           ( object = '2' categories = VALUE #( ( object = '2.1' )
+                                                                ( object = '2.2' ) ) )
+                           ( object = '3' categories = VALUE #( ( object = '3.1' )
+                                                                ( object = '3.2' ) ) ) ).
+
+      WHEN `UPDATE_DETAIL`.
+        view_display_detail(  ).
+
+      WHEN 'TEST'.
+        client->message_toast_display( `output: ` && mv_input_master ).
+
+      WHEN `NEST_TEST`.
+
+        mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
+        mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
+        client->message_toast_display( mv_input_detail ).
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-      WHEN 'ROWEDIT'.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
-        ENDIF.
-
-      WHEN 'ROW_ACTION_ITEM_NAVIGATION'.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
-        ENDIF.
-
-      WHEN 'ROW_ACTION_ITEM_EDIT'.
-        lt_arg = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO ls_arg INDEX 1.
-        IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
-        ENDIF.
-
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_on_init.
-
-    mt_mapping = VALUE #(
-    (   n = `EQ`     v = `={LOW}`    )
-    (   n = `LT`     v = `<{LOW}`   )
-    (   n = `LE`     v = `<={LOW}`  )
-    (   n = `GT`     v = `>{LOW}`   )
-    (   n = `GE`     v = `>={LOW}`  )
-    (   n = `CP`     v = `*{LOW}*`  )
-    (   n = `BT`     v = `{LOW}...{HIGH}` )
-    (   n = `NE`     v = `!(={LOW})`    )
-    (   n = `NE`     v = `!(<leer>)`    )
-    (   n = `<leer>` v = `<leer>`    )
-    ).
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-    DATA(page1) = view->page( id = `page_main`
-            title          = 'abap2UI5 - sap.ui.table.Table Features'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
-            class = 'sapUiContentPadding' ).
-
-    page1->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-     ).
-
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
-
-    DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
-
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
-
-    lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind_edit( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
-*         livechange = client->__event( 'BUTTON_SEARCH' )
-         width  = `17.5rem`
-         id     = `SEARCH` ).
-
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go`
-        press = client->_event( `BUTTON_START` )
-        type = `Emphasized`
-        ).
-
-    DATA(cont) = page->content( ns = 'f' ).
-
-    DATA(tab) = cont->ui_table( rows = client->_bind( val = mt_table )
-                                editable = abap_false
-                                id = 'exportTable'
-                                alternaterowcolors = abap_true
-                                enablegrouping = abap_false
-                                fixedcolumncount = '1'
-                                rowactioncount = '2'
-                                selectionmode = 'None'
-                                sort = client->_event( 'SORT' )
-                                filter = client->_event( 'FILTER' )
-                                customfilter =  client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer( )->_z2ui5( )->spreadsheet_export( tableid = 'exportTable' icon = 'sap-icon://excel-attachment' type = 'Emphasized' ).
-    DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz ) enabled = abap_true select = client->_event( val = `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}`  ).
-    lo_columns->ui_column( width = '5rem' sortproperty = 'ROWID'
-                                          filterproperty = 'ROWID' )->text( text = `Index` )->ui_template( )->text(   text = `{ROWID}` ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'PRODUCT'
-                           filterproperty = 'PRODUCT' )->text( text = `Product` )->ui_template( )->input( value = `{PRODUCT}` editable = abap_false ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEDATE' filterproperty = 'CREATEDATE' )->text( text = `Date` )->ui_template( )->text(  '{CREATEDATE}' ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'CREATEBY' filterproperty = 'CREATEBY')->text( text = `Name` )->ui_template( )->text( text = `{CREATEBY}` ).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'STORAGELOCATION'  filterproperty = 'STORAGELOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGELOCATION}`).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'QUANTITY' filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
-    lo_columns->ui_column( width = '6rem' sortproperty = 'MEINS' filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
-    lo_columns->ui_column( width = '11rem' sortproperty = 'PRICE' filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value = `{PRICE}` currency = `{WAERS}` ).
-*    lo_columns->Ui_column( width = '4rem' )->text( )->ui_template( )->overflow_toolbar( )->overflow_toolbar_button( icon = 'sap-icon://edit' type = 'Transparent' press = client->_event( val = `ROWEDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
-
-    lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
-    )->ui_row_action_item( type = 'Navigation'
-                           press = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROWID}`  ) ) )
-                          )->get_parent( )->ui_row_action_item( icon = 'sap-icon://edit' text = 'Edit' press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROWID}`  ) ) ) ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_set_data.
-
-    mt_table = VALUE #(
-        ( selkz = abap_false rowid = '1' product = 'table'    createdate = `01.01.2023` createby = `Olaf` storagelocation = `AREA_001` quantity = 400  meins = 'PC' price = '1000.50' waers = 'EUR' )
-        ( selkz = abap_false rowid = '2' product = 'chair'    createdate = `01.01.2022` createby = `Karlo` storagelocation = `AREA_001` quantity = 123   meins = 'PC' price = '2000.55' waers = 'USD')
-        ( selkz = abap_false rowid = '3' product = 'sofa'     createdate = `01.05.2021` createby = `Elin` storagelocation = `AREA_002` quantity = 700   meins = 'PC' price = '3000.11' waers = 'CNY' )
-        ( selkz = abap_false rowid = '4' product = 'computer' createdate = `27.01.2023` createby = `Theo` storagelocation = `AREA_002` quantity = 200  meins = 'EA' price = '4000.88' waers = 'USD' )
-        ( selkz = abap_false rowid = '5' product = 'printer'  createdate = `01.01.2023` createby = `Renate` storagelocation = `AREA_003` quantity = 90   meins = 'PC' price = '5000.47' waers = 'EUR')
-        ( selkz = abap_false rowid = '6' product = 'table2'   createdate = `01.01.2023` createby = `Angela` storagelocation = `AREA_003` quantity = 1110  meins = 'PC' price = '6000.33' waers = 'GBP' )
-    ).
-
-    mt_column_config = VALUE #(
-      ( label = 'Index'    property = 'ROWID'           type = 'String' )
-      ( label = 'Product'  property = 'PRODUCT'         type = 'String' )
-      ( label = 'Date'     property = 'CREATEDATE'      type = 'String' )
-      ( label = 'Name'     property = 'CREATEBY'        type = 'String' )
-      ( label = 'Location' property = 'STORAGELOCATION' type = 'String' )
-      ( label = 'Quantity' property = 'QUANTITY'        type = 'Number' delimiter = abap_true )
-      ( label = 'Unit'     property = 'MEINS'           type = 'String' )
-      ( label = 'Price'    property = 'PRICE'           type = 'Currency' unit_property = 'WAERS' width = 14 scale = 2 )
-    ).
-
-    mv_column_config =  /ui2/cl_json=>serialize(
-                          data             = mt_column_config
-                          compress         = abap_true
-                          pretty_name      = 'X' "camel_case
-                        ).
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_set_search.
-
-    IF mv_search_value IS NOT INITIAL.
-
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
-        DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
-
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
-    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

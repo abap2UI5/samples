@@ -33,11 +33,8 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popups'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-           )->get_parent( ).
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
 
@@ -55,7 +52,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
 
   METHOD view_popup_bal.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup( client
+    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
         )->dialog( 'abap2ui5 - Popup Message Log'
             )->table( client->_bind( t_bapiret )
                 )->columns(

@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
 
@@ -103,12 +102,12 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = abap_true
+             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
          )->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
-                 href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
          )->get_parent( ).
 
     page->list(

@@ -21,20 +21,13 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title           = 'abap2UI5 - Demo Layout'
-            navbuttonpress  = client->_event( 'BACK' )
-            shownavbutton   = abap_true
+            title          = 'abap2UI5 - Demo Layout'
+            navbuttonpress = client->_event( 'BACK' )
+            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              ).
 
     page->header_content(
       )->button( text = 'button'
-      )->text( 'text'
-      )->link(
-        text = 'link' target = '_blank'
-        href = 'https://twitter.com/abap2UI5'
-      )->link(
-        text = 'Source_Code' target = '_blank'
-        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
        ).
 
     page->sub_header(

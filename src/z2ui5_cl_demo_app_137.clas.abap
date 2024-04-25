@@ -42,9 +42,9 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title          = 'abap2UI5 - Device Camera Picture'
                navbuttonpress = client->_event( 'BACK' )
-               shownavbutton  = abap_true
+               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
-                  )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                  )->link( text = 'Source_Code' target = '_blank'
           )->get_parent( ).
 
     page->_z2ui5( )->camera_picture(
@@ -83,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_137 IMPLEMENTATION.
       mv_check_init = abap_true.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_picture=>get_js(  ) )->get_parent(
+       )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_camera_pic=>get_js(  ) )->get_parent(
        )->_z2ui5( )->timer( delayms = `200` finished = client->_event( 'START' )
        )->stringify( ) ).
 

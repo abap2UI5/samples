@@ -21,44 +21,39 @@ CLASS z2ui5_cl_demo_app_128 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-     product_url = z2ui5_cl_demo_utility=>factory( client )->url_param_get(  `product` ).
-*    z2ui5_cl_demo_utility=>factory( client )->url_param_set( n = `product` v = `ABC` ).
-    check_launchpad_active = client->get( )-s_config-check_launchpad_active.
+    product_url = z2ui5_cl_util=>url_param_get(
+                    val =  `product`
+                    url = client->get( )-s_config-search ).
+    check_launchpad_active = client->get( )-check_launchpad_active.
 
+    data(lt_params) = client->get( )-t_comp_params.
+    try.
+    product = lt_params[ n = `PRODUCT` ]-v.
+    catch cx_root.
+    endtry.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-
-*    client->url_param_set( val =  ).
-
-      product  = 'tomato'.
       quantity = '500'.
-
-
 
       client->view_display( view->shell(
             )->page(
                     showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = 'abap2UI5 -  Cross App Navigation App 128'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                    shownavbutton  = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' )
+                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                         target = '_blank'
                 )->get_parent(
                 )->simple_form( title = 'App 128' editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
-                        )->label( 'product'
+                        )->label( 'product nav param'
                         )->input( client->_bind_edit( product )
-                        )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
-                        )->label( `url param product`
-                        )->input( product_url
                         )->label( `CHECK_LAUNCHPAD_ACTIVE`
                         )->input( check_launchpad_active
                         )->button( press = client->_event(  )

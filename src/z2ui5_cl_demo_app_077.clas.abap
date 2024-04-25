@@ -1,11 +1,11 @@
-CLASS Z2UI5_CL_DEMO_APP_077 DEFINITION
+CLASS z2ui5_cl_demo_app_077 DEFINITION
   PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
     TYPES:
       BEGIN OF ty_value_map,
@@ -57,26 +57,16 @@ CLASS Z2UI5_CL_DEMO_APP_077 DEFINITION
       END OF ty_s_tab .
     TYPES:
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
-    TYPES:
-      BEGIN OF ty_s_filter_pop,
-        option TYPE string,
-        low    TYPE string,
-        high   TYPE string,
-        key    TYPE string,
-      END OF ty_s_filter_pop .
-
-    DATA mt_mapping TYPE Z2UI5_if_client=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
+    DATA mt_table TYPE ty_t_table.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool VALUE abap_false.
+    DATA check_load_cc   TYPE abap_bool VALUE abap_false.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
-    METHODS Z2UI5_set_data.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
 
@@ -87,34 +77,30 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->client = client.
 
-    IF check_initialized = abap_false.
+    IF check_load_cc = abap_false.
+      check_load_cc = abap_true.
+      z2ui5_set_data( ).
+*      client->nav_app_call( z2ui5_cl_popup_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config ) ) ).
+      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( z2ui5_cl_cc_spreadsheet=>get_js( ) ) ).
+      RETURN.
+    ELSEIF check_initialized = abap_false.
       check_initialized = abap_true.
-
-      Z2UI5_set_data( ).
-
-      client->view_display( Z2UI5_cl_xml_view=>factory(
-        )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_spreadsheet=>get_js( mv_column_config )
-        )->_z2ui5( )->timer( client->_event( 'START' )
-        )->stringify( ) ).
+      z2ui5_on_init( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'START'.
-        Z2UI5_on_init( ).
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        client->view_model_update( ).
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
@@ -122,19 +108,19 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
             title          = 'abap2UI5 - XLSX Export'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
     page1->header_content(
        )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1683753816716345345`
-       )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
+       )->link( text = 'Source_Code' target = '_blank'  ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
@@ -160,6 +146,10 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
                 tableid = 'exportTable'
                 icon = 'sap-icon://excel-attachment'
                 type = 'Emphasized'
+                columnconfig = client->_bind( val = mt_column_config
+                                              custom_filter = NEW z2ui5_cl_cc_spreadsheet( )
+                                              custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( )
+                                             )
           )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -185,15 +175,14 @@ CLASS Z2UI5_CL_DEMO_APP_077 IMPLEMENTATION.
           )->text( text = '{STORAGELOCATION}'
           )->text( text = '{QUANTITY}'
           )->text( text = '{MEINS}'
-          )->text( text = '{PRICE}'
-          ).
+          )->text( text = '{PRICE}' ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
+  METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false rowid = '1' product = 'table'    createdate = `01.01.2023` createby = `Olaf` storagelocation = `AREA_001` quantity = 400  meins = 'PC' price = '1000.50' waers = 'EUR' )

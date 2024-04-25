@@ -77,17 +77,17 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD ui5_view_main_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( client ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->shell(
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
-                    navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                    shownavbutton  = abap_true
+                    navbuttonpress = client->_event( val = 'BACK' )
+                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                 )->header_content(
                     )->link(
                         text = 'Source_Code'
-                        href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
                         target = '_blank'
                 )->get_parent(
                )->simple_form( title = 'Form Title' editable = abap_true

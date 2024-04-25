@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
-        get               TYPE z2ui5_if_client=>ty_s_get,
+        get               TYPE z2ui5_if_types=>ty_s_get,
         popup             TYPE string,
       END OF app.
 
@@ -86,7 +86,6 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
                         `       <Button text="BACK" type="Emphasized" press="` && client->_event( 'BACK') && `"/>` && |\n|  &&
                         `       <Link target="_blank" text="Demo" href="https://twitter.com/abap2UI5/status/1645104539387691008"/>` && |\n|  &&
-                        `       <Link target="_blank" text="Source_Code" href="` && z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) && `"/>` && |\n|  &&
                         `   </form:SimpleForm>  ` && |\n|  &&
                         `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( 'POPUP' ) && `"` && |\n|  &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n|  &&

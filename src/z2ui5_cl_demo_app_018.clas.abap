@@ -29,7 +29,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD Z2UI5_display_popup_input.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( client ).
+    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
     view->dialog(
              title = 'Title'
              icon = 'sap-icon://edit'
@@ -67,13 +67,8 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
-                navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                shownavbutton  = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-                    href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
-            )->get_parent(
+                navbuttonpress = client->_event( val = 'BACK' )
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->simple_form( title = 'VIEW_MAIN' editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
@@ -109,12 +104,12 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
-                  navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                  shownavbutton  = abap_true
+                  navbuttonpress = client->_event( val = 'BACK' )
+                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->header_content(
                   )->link(
                       text = 'Source_Code'
-                      href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+
               )->get_parent(
               )->simple_form( 'VIEW_SECOND'
                   )->content( 'form'

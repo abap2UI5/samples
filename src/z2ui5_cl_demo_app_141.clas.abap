@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
   METHOD ui5_popup_input.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( client ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
        contentheight = '500px'
@@ -106,11 +106,11 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CANCEL' )
            )->button(
                text  = 'Confirm'
-               press = client->_event( 'BUTTON_TEXTAREA_CONFIRM' )
+               press = client->_event( client->cs_event-popup_close )
                type  = 'Emphasized' ).
 
      dialog->_generic( name = `HTML` ns = `core` t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
-                                                                   ( n = `preferDOM`  v = `false` )
+                                                                   ( n = `preferDOM`  v = `true` )
                                                                   ) )->get_parent( ).
 
     client->popup_display( popup->stringify( ) ).
@@ -125,15 +125,11 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     DATA(script) = `` &&
                    `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-                   `  var lbl = sap.ui.getCore().byId('lbl1');` && |\n| &&
+                   `  var lbl = sap.ui.getCore().byId('popupId--lbl1');` && |\n| &&
                    `  lbl.setText('changed from js');` && |\n| &&
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&
                    `};`.
 
-*    DATA(script) = `` &&
-*                   `sap.z2ui5.setBlackColor = function() {` && |\n| &&
-*                   `  debugger;var lbl = 'x';` && |\n| &&
-*                   `};`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
@@ -141,14 +137,14 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( val = 'BACK' check_view_destroy = abap_true )
-                shownavbutton  = abap_true
+                navbuttonpress = client->_event( val = 'BACK' )
+                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->header_content(
                 )->link(
                     text = 'Demo' target = '_blank'
                     href = 'https://twitter.com/abap2UI5/status/1637163852264624139'
                 )->link(
-                    text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+                    text = 'Source_Code' target = '_blank'
            )->get_parent( ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).

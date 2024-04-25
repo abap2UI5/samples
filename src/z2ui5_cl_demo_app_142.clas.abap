@@ -29,7 +29,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_142 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -38,14 +38,13 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
       check_initialized = abap_true.
       z2ui5_on_init( ).
 
-      client->view_display( z2ui5_cl_xml_view=>factory( client
+      client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer(  client->_event( `START` )
           )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>get_js_local( )
           )->stringify( ) ).
-
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF client->get( )-check_on_navigated = abap_true AND check_initialized = abap_false.
       z2ui5_on_rendering( client ).
     ENDIF.
 
@@ -80,7 +79,7 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
     ls_map_cfg-stroke = abap_true.
     ls_map_cfg-stroke_opacity = `0.6`.
     ls_map_cfg-stroke_width = `3`.
-    ls_map_cfg-single_select = abap_true.
+    ls_map_cfg-is_selectable = abap_false.
   ENDMETHOD.
 
 
@@ -99,7 +98,7 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link( text = 'Source_Code' target = '_blank'
              )->button( text = 'Go to Editor' press = client->_event( 'GO_TO_EDITOR' ) enabled = `{= ${/EDIT/MV_VALUE} !== "" }` type = `Emphasized`
          )->get_parent( ).
 
@@ -111,7 +110,7 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
                           checkdirectupload = abap_true
                           placeholder = 'upload an image'
                           upload      = client->_event( 'UPLOAD' )
-          )->image( src = `{/EDIT/MV_VALUE}`
+          )->image( src = `{/XX/MV_VALUE}`
                 height = `100%`
                 width = `100%`
                 usemap = `#map_example`
@@ -125,19 +124,21 @@ CLASS z2ui5_cl_demo_app_142 IMPLEMENTATION.
                      coords = `65,210,280,101,576,435,363,564`
 *                        target = `_blank`
                      href = `#`
-                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+*                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+                     onclick = `sap.z2ui5.oController.eB(['TEST'])`
                  )->get_parent(
        )->html_area( id = `area_2`
                      shape = `poly`
                      coords = `406,151,473,138,501,193,438,209`
 *                        target = `_blank`
                      href = `#`
-                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+*                     onclick = `sap.z2ui5.oController.onEvent( { 'EVENT' : 'TEST', 'METHOD' : 'UPDATE' , 'CHECK_VIEW_DESTROY' : false })`
+                     onclick = `sap.z2ui5.oController.eB(['TEST'])`
                ).
     ENDIF.
 
-    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( ls_map_cfg ) ).
-
+    view->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_imagemapster=>set_js_config( is_config = ls_map_cfg auto_resize = abap_true ) ).
+    view->html( content = `<script> onWindowResize(200,200); </script>` ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.

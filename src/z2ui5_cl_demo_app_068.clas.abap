@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
   METHOD ui5_display_popup_tree_select.
 
-    DATA(dialog) = Z2UI5_cl_xml_view=>factory_popup( client
+    DATA(dialog) = Z2UI5_cl_xml_view=>factory_popup(
         )->dialog( title = 'Choose Product here...' contentheight = '50%' contentwidth  = '50%' ).
 
     dialog->tree(
@@ -83,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1680261069535584259`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link(
          )->get_parent( ).
 
     client->view_display( page->button( text = 'Open Popup here...' press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).

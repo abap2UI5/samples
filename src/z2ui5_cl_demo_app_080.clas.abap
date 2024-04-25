@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_080 DEFINITION
+CLASS z2ui5_cl_demo_app_080 DEFINITION
 PUBLIC
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app .
+    INTERFACES z2ui5_if_app .
 
     TYPES:
       BEGIN OF ty_s_appointments,
@@ -14,7 +14,7 @@ PUBLIC
         type      TYPE string,
         info      TYPE string,
         pic       TYPE string,
-        tentative TYPE boolean,
+        tentative TYPE abap_bool,
       END OF ty_s_appointments .
     TYPES:
       BEGIN OF ty_s_headers,
@@ -24,7 +24,7 @@ PUBLIC
         type      TYPE string,
         info      TYPE string,
         pic       TYPE string,
-        tentative TYPE boolean,
+        tentative TYPE abap_bool,
       END OF ty_s_headers .
     TYPES:
       BEGIN OF ty_s_people,
@@ -35,16 +35,17 @@ PUBLIC
         headers      TYPE TABLE OF ty_s_headers      WITH NON-UNIQUE DEFAULT KEY,
       END OF ty_s_people .
 
-    DATA:
-      lt_people TYPE STANDARD TABLE OF ty_s_people .
+    DATA mt_people TYPE STANDARD TABLE OF ty_s_people.
+
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client .
-    DATA check_initialized TYPE abap_bool .
+    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_display_view .
-    METHODS Z2UI5_on_event .
-    METHODS Z2UI5_set_data .
+    METHODS z2ui5_display_view.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -53,67 +54,39 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
-    me->client     = client.
+  METHOD z2ui5_display_view.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      Z2UI5_set_data( ).
-    ENDIF.
-
-    IF client->get( )-check_on_navigated = abap_true.
-      Z2UI5_display_view( ).
-      RETURN.
-    ENDIF.
-
-    Z2UI5_on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_on_event.
-    CASE client->get( )-event.
-      WHEN 'AppSelected' .
-        DATA(ls_client) = client->get( ).
-        client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-    ENDCASE.
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_display_view.
     DATA(lv_s_date) =  '2023-04-22T08:15:00'.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'sap/z2ui5/Helper'}` ) ).
+    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - Planning Calendar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
     page->header_content(
           )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1688451062137573376`
           )->link(
-              text = 'Source_Code' target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
+              text = 'Source_Code' target = '_blank'  ).
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
                                                           startdate = `{= Helper.DateCreateObject($` && client->_bind_local( lv_s_date ) && ') }'
-                                                          rows = `{path: '` && client->_bind_local( val = lt_people path = abap_true ) && `'}`
+                                                          rows = `{path: '` && client->_bind_local( val = mt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers = abap_true ).
 
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
-                                                     appointments = `{path:'APPOINTMENTS'}`
+                                                     appointments = `{path:'APPOINTMENTS', templateShareable: false}`
                                                      icon =  '{PIC}'
                                                      title = '{NAME}'
                                                      text = '{ROLE}'
-                                                     intervalheaders = `{path:'HEADERS'}`
+                                                     intervalheaders = `{path:'HEADERS', templateShareable: false}`
                                                      ).
     lo_planningcalendarrow->appointments( )->calendar_appointment(
                                                                   startdate = `{= Helper.DateCreateObject(${START} ) }`
@@ -138,8 +111,37 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_set_data.
-    lt_people = VALUE #(
+  METHOD z2ui5_if_app~main.
+    me->client     = client.
+
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      z2ui5_set_data( ).
+    ENDIF.
+
+    IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = 'DISPLAY_VIEW'.
+      z2ui5_display_view( ).
+      RETURN.
+    ENDIF.
+
+    z2ui5_on_event( ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_event.
+    CASE client->get( )-event.
+      WHEN 'AppSelected' .
+        DATA(ls_client) = client->get( ).
+        client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    ENDCASE.
+  ENDMETHOD.
+
+
+  METHOD z2ui5_set_data.
+    mt_people = VALUE #(
      ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
           ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = 'Mittag1' type = 'Type01' title = 'App1' tentative = abap_false pic = 'sap-icon://sap-ui5' )

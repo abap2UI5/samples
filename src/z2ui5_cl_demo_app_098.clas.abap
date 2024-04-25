@@ -96,7 +96,10 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
 
-    page = page->text( text = client->_bind( mv_title ) ).
+    page = page->text( text = client->_bind( mv_title )
+       )->button(
+           text  = `frontend event`
+           press = client->_event_client( val = client->cs_event-open_new_tab t_arg = value #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) ) ).
 
 
     client->nest2_view_display(
@@ -115,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client
+    DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
           title          = 'abap2UI5 - Master Detail Page with Nested View'
@@ -124,7 +127,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link(
          )->get_parent( ).
 
     DATA(col_layout) =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).

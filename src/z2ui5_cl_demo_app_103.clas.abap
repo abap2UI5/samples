@@ -4,16 +4,15 @@ CLASS z2ui5_cl_demo_app_103 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
-  PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_event.
-    METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
 
+  PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -38,19 +37,13 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-  ENDMETHOD.
-
-
-  METHOD z2ui5_set_data.
-
 
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 
@@ -62,7 +55,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
                 shownavbutton = abap_true ).
 
     page->header_content(
-         )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( ) ).
+         )->link(    ).
 
     page->responsive_splitter( defaultpane = `default`
        )->pane_container(

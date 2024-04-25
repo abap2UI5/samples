@@ -122,7 +122,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( client
+    DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
           title          = 'abap2UI5 - Master Detail Page with Nested View'
           navbuttonpress = client->_event( 'BACK' )
@@ -130,7 +130,7 @@ CLASS Z2UI5_CL_DEMO_APP_104 IMPLEMENTATION.
 
     page->header_content(
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1628701535222865922`
-             )->link( text = 'Source_Code'  target = '_blank' href = z2ui5_cl_demo_utility=>factory( client )->app_get_url_source_code( )
+             )->link(
          )->get_parent( ).
 
     DATA(col_layout) =  page->flexible_column_layout( layout = client->_bind_edit( mv_layout ) id ='test' ).

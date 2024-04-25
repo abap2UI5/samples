@@ -53,14 +53,20 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
       check_initialized = abap_true.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title = 'PDF Output' navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
-               )->_generic(
-                ns = `html`
-                name = `iframe`
-                t_prop = VALUE #(
-                    ( n = `src`    v = get_example_pdf( ) )
-                    ( n = `height` v = `90%` )
-                    ( n = `width`  v = `90%` )
-                ) ).
+                      )->header_content(
+                           )->link(
+                               text = 'Source_Code'
+
+                               target = '_blank'
+                      )->get_parent(
+                      )->_generic(
+                        ns = `html`
+                        name = `iframe`
+                        t_prop = VALUE #(
+                            ( n = `src`    v = get_example_pdf( ) )
+                            ( n = `height` v = `90%` )
+                            ( n = `width`  v = `90%` )
+                    ) ).
 
       client->view_display( view->stringify( ) ).
 
