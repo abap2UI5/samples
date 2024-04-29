@@ -14,7 +14,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-        client->message_toast_display( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( text = |{ product } { quantity } - send to the server| at = 'left bottom' offset = '0 -15' animationtimingfunction = `ease-in` ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
