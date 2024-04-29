@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
     layout->input( id = `input2` value = client->_bind_edit( screen-input2 ) ).
 
     layout->label( text = 'Input normal' labelfor = `input3` ).
-    layout->input( id = `input3` value = client->_bind_edit( screen-input2 ) ).
+    layout->input( id = `input3` value = client->_bind_edit( screen-input3 ) ).
 
     client->view_display( page->stringify( ) ).
 
