@@ -846,19 +846,12 @@
 
                panel->generic_tile(
         header    = 'Dynamic Objects IV'
-        subheader = 'User Generic Tab Refs in Subapps'
+        subheader = 'User Generic Struc Refs in Subapps'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-               panel->generic_tile(
-        header    = 'Dynamic Objects V'
-        subheader = 'User Generic Struc Refs'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
 
         panel = page->panel(
                 expandable = abap_false
