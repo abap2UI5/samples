@@ -53,7 +53,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -72,7 +72,23 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
+      WHEN 'BUTTON_MCUSTOM'.
+*        send type = '' is mandatory in order to not break current implementation
+        client->message_box_display( type = '' text = 'Custom MessageBox' icon = `SUCCESS`
+                                     title = 'Custom MessageBox' actions = VALUE #( ( `First Button` ) ( `Second Button` ) ) emphasizedaction = `First Button`
+                                     onclose = `callMessageToast()` details = `<h3>these are details</h3>`).
+      WHEN 'BUTTON_MCONFIRM'.
+        client->message_box_display( type = 'confirm' text = 'Confirm MessageBox' ).
+      WHEN 'BUTTON_MALERT'.
+        client->message_box_display( type = 'alert' text = 'Alert MessageBox' ).
+      WHEN 'BUTTON_MERROR'.
+        client->message_box_display( type = 'error' text = 'Error MessageBox' ).
+      WHEN 'BUTTON_MINFO'.
+        client->message_box_display( type = 'information' text = 'Information MessageBox' ).
+      WHEN 'BUTTON_MWARNING'.
+        client->message_box_display( type = 'warning' text = 'Warning MessageBox' ).
+      WHEN 'BUTTON_MSUCCESS'.
+        client->message_box_display( type = 'success' text = 'Success MessageBox' icon = `sap-icon://accept` ).
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
@@ -112,7 +128,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
   METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
     data(page) = view->shell(
          )->page(
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
@@ -220,6 +236,28 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         customtextoff = 'NO' ).
 
     page->footer( )->overflow_toolbar(
+         )->text( text = `MessageBox Types`
+         )->button(
+             text  = 'Confirm'
+             press = client->_event( 'BUTTON_MCONFIRM' )
+         )->button(
+             text  = 'Alert'
+             press = client->_event( 'BUTTON_MALERT' )
+         )->button(
+             text  = 'Error'
+             press = client->_event( 'BUTTON_MERROR' )
+         )->button(
+             text  = 'Information'
+             press = client->_event( 'BUTTON_MINFO' )
+         )->button(
+             text  = 'Warning'
+             press = client->_event( 'BUTTON_MWARNING' )
+         )->button(
+             text  = 'Success'
+             press = client->_event( 'BUTTON_MSUCCESS' )
+         )->button(
+             text  = 'Custom'
+             press = client->_event( 'BUTTON_MCUSTOM' )
          )->toolbar_spacer(
          )->button(
              text  = 'Clear'
