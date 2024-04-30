@@ -81,7 +81,9 @@
   `<p><strong>Explore and copy code samples!</strong> All samples are abap2UI5 implementations of the <a href="https://sapui5.hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control or find a b` &&
   `ug please create an ` &&
   `<a href="https://github.com/abap2UI5/abap2UI5/issues" style="color:blue; font-weight:600;">issue</a> or send a <a href="https://github.com/abap2UI5/abap2UI5-samples/pulls" style="color:blue; font-weight:600;">PR</a>` &&
-  `.</p>` ).
+  `.</p>`  &&
+    `<p>Always press CTRL+F12 to see code samples and classname of the app.</p>`
+  ).
 
         DATA(page2) = page.
 
@@ -846,12 +848,19 @@
 
                panel->generic_tile(
         header    = 'Dynamic Objects IV'
-        subheader = 'User Generic Struc Refs in Subapps'
+        subheader = 'User Generic Tab Refs in Subapps'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+               panel->generic_tile(
+        header    = 'Dynamic Objects V'
+        subheader = 'User Generic Struc Refs'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
         panel = page->panel(
                 expandable = abap_false
