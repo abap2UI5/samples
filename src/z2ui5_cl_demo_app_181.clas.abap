@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
+
     INTERFACES z2ui5_if_app .
 
     DATA mv_initialized TYPE abap_bool .
@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    data(page) = view->page(
+    data(page) = view->shell( )->page(
         title = `Cards Demo`
         class = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )

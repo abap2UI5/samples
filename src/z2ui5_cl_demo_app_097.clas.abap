@@ -5,7 +5,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
+
     INTERFACES Z2UI5_if_app .
 
     TYPES:
