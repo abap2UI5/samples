@@ -1,7 +1,7 @@
 name: test_downport
 
 on:
-  push:
+  pull_request:
 
 permissions:
   contents: read
