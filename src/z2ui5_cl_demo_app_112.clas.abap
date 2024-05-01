@@ -4,7 +4,7 @@ class z2ui5_cl_demo_app_112 definition
 
 public section.
 
-  
+
   interfaces Z2UI5_IF_APP .
 
   data CLIENT type ref to Z2UI5_IF_CLIENT .

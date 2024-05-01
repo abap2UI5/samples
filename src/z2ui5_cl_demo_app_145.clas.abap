@@ -4,7 +4,7 @@ class Z2UI5_CL_DEMO_APP_145 definition
 
 public section.
 
-  
+
   interfaces Z2UI5_IF_APP .
 
   data CHECK_INITIALIZED type ABAP_BOOL .

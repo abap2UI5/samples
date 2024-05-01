@@ -4,7 +4,7 @@ class Z2UI5_CL_DEMO_APP_163 definition
 
 public section.
 
-  
+
   interfaces Z2UI5_IF_APP .
 
   PROTECTED SECTION.

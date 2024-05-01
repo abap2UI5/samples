@@ -5,7 +5,7 @@ class Z2UI5_CL_DEMO_APP_186 definition
 
 public section.
 
-  
+
   interfaces Z2UI5_IF_APP .
 
   data IS_INITIALIZED type BOOLEAN .
