@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    INTERFACES if_serializable_object .
+    
     INTERFACES z2ui5_if_app .
 
     TYPES:

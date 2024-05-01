@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_148 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
+    
     INTERFACES z2ui5_if_app .
 
     DATA ls_dataset TYPE z2ui5_cl_cc_chartjs=>ty_dataset.
