@@ -155,6 +155,7 @@
         "^xubname$",
         "^feld$",
         "^abap_boolean$",
+        "boolean",
       ]
     },
     "form_tables_obsolete": true,
