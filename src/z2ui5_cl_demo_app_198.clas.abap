@@ -46,9 +46,8 @@ CLASS z2ui5_cl_demo_app_198 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].
-        DATA(lo_json) = z2ui5_cl_ajson=>parse( lv_json ).
-
         TRY.
+            DATA(lo_json) = z2ui5_cl_ajson=>parse( lv_json ).
             DATA(lv_id) = lo_json->get( `/id`).
           CATCH cx_root.
         ENDTRY.
