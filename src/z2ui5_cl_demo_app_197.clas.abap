@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
     DATA mt_table TYPE ty_t_table .
+    DATA mt_table_full TYPE ty_t_table .
     DATA mt_table_products TYPE ty_t_table .
     DATA check_initialized TYPE abap_bool .
     DATA client TYPE REF TO z2ui5_if_client .
@@ -47,7 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(facet) = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true
+    DATA(facet) = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true reset = client->_event( val = `RESET` )
       )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
 *                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
@@ -87,14 +88,12 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
+      WHEN 'RESET'.
+        mt_table = mt_table_full.
+        client->view_model_update( ).
       WHEN 'FILTER'.
 
-        TYPES: BEGIN OF ty_t_arg,
-                 mProperties TYPE string,
-                 val TYPE string,
-               END OF ty_t_arg.
-
-        DATA mt_t_arg TYPE TABLE OF ty_t_arg.
+        DATA lt_range TYPE RANGE OF string.
 
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].
@@ -105,10 +104,23 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
             LOOP AT l_members INTO DATA(l_member).
               DATA(lv_val) =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+
+              APPEND VALUE #( sign = 'I' option = 'EQ' low = lv_val ) TO lt_range.
+
             ENDLOOP.
 
           CATCH cx_root.
         ENDTRY.
+
+        mt_table = mt_table_full.
+
+        LOOP AT mt_table INTO DATA(ls_tab).
+          IF NOT ls_tab-product IN lt_range.
+            DELETE mt_table.
+          ENDIF.
+        ENDLOOP.
+
+        client->view_model_update( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -171,9 +183,10 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
     ).
 
-    mt_table_products = mt_table.
+    SORT mt_table BY product.
+    mt_table_full = mt_table.
 
-    SORT mt_table_products BY product.
+    mt_table_products = mt_table.
 
     DELETE ADJACENT DUPLICATES FROM mt_table_products COMPARING product.
 
