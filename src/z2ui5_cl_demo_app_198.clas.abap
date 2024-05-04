@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_198 IMPLEMENTATION.
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                     )->button(
                         text  = 'post'
-                        press = client->_event( val = 'BUTTON_POST' t_arg = VALUE #( ( `$event.mParameters` ) ) )
+                        press = client->_event( val = 'BUTTON_POST' t_arg = VALUE #( ( `$event` ) ) )
              )->stringify( ) ).
 
     ENDIF.

@@ -47,10 +47,11 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(facet) = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true "lists = client->_bind( mt_table_products )
+    DATA(facet) = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true
       )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
-                                                                           t_arg = VALUE #( ( `$event}` ) ) )
+*                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
+                                                                           t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
     DATA(tab) = page->table( id = `tab` items = client->_bind_edit( val = mt_table ) ).
@@ -88,8 +89,27 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'FILTER'.
 
+        TYPES: BEGIN OF ty_t_arg,
+                 mProperties TYPE string,
+                 val TYPE string,
+               END OF ty_t_arg.
+
+        DATA mt_t_arg TYPE TABLE OF ty_t_arg.
+
         DATA(lt_arg) = client->get( )-t_event_arg.
-        DATA(lt3) = lt_arg.
+        DATA(lv_json) = lt_arg[ 1 ].
+        TRY.
+            DATA(lo_json) = z2ui5_cl_ajson=>parse( lv_json ).
+
+            DATA(l_members) = lo_json->members( '/' ).
+
+            LOOP AT l_members INTO DATA(l_member).
+              DATA(lv_val) =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+            ENDLOOP.
+
+          CATCH cx_root.
+        ENDTRY.
+
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
