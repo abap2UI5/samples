@@ -174,9 +174,17 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         ).
 
         panel->generic_tile(
-            header    = 'Timer'
+            header    = 'Timer I'
             subheader = 'Wait n MS and call again the server'
             press     = client->_event( 'Z2UI5_CL_DEMO_APP_028' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+     panel->generic_tile(
+            header    = 'Timer II'
+            subheader = 'Set Loading Indicator while Server Request'
+            press     = client->_event( 'Z2UI5_CL_DEMO_APP_064' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
