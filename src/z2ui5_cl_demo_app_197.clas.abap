@@ -115,7 +115,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
         mt_table = mt_table_full.
 
         LOOP AT mt_table INTO DATA(ls_tab).
-          IF NOT ls_tab-product IN lt_range.
+          IF ls_tab-product NOT IN lt_range.
             DELETE mt_table.
           ENDIF.
         ENDLOOP.
