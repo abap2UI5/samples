@@ -54,8 +54,9 @@ CREATE PUBLIC .
         iv_selkz TYPE abap_bool.
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
+
+CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
 
   METHOD set_selkz.
@@ -82,6 +83,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     z2ui5_on_event( ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_on_event.
     DATA lt_arg TYPE string_table.
@@ -150,5 +152,4 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.

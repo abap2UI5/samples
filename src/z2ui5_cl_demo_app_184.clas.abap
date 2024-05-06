@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
         SELECT *
           FROM (mv_table)
           INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO '100' ROWS.
+          UP TO 100 ROWS.
 
       CATCH cx_root.
 
