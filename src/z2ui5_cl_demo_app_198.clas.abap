@@ -1,11 +1,13 @@
-CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_198 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app.
+    INTERFACES z2ui5_if_app .
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA product TYPE string .
+    DATA quantity TYPE string .
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -14,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_198 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -32,16 +34,9 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
                     title          = 'abap2UI5 - First Example'
                     navbuttonpress = client->_event( val = 'BACK' s_ctrl = VALUE #( check_view_destroy = abap_true ) )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                )->simple_form( title = 'Form Title' editable = abap_true
-                    )->content( 'form'
-                        )->title( 'Input'
-                        )->label( 'quantity'
-                        )->input( client->_bind_edit( quantity )
-                        )->label( `product`
-                        )->input( value = product enabled = abap_false
-                        )->button(
-                            text  = 'post'
-                            press = client->_event( val = 'BUTTON_POST' )
+                    )->button(
+                        text  = 'post'
+                        press = client->_event( val = 'BUTTON_POST' t_arg = VALUE #( ( `$event` ) ) )
              )->stringify( ) ).
 
     ENDIF.
@@ -49,8 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-        client->message_toast_display( text = |{ product } { quantity } - send to the server| at = 'left bottom' offset = '0 -15' animationtimingfunction = `ease-in`
-          class = 'my-style').
+        DATA(lt_arg) = client->get( )-t_event_arg.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).

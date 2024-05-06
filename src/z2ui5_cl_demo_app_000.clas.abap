@@ -24,11 +24,12 @@
       PROTECTED SECTION.
       PRIVATE SECTION.
 
-    ENDCLASS.
+ENDCLASS.
 
 
 
-    CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
+
 
       METHOD z2ui5_if_app~main.
 
@@ -81,7 +82,9 @@
   `<p><strong>Explore and copy code samples!</strong> All samples are abap2UI5 implementations of the <a href="https://sapui5.hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control or find a b` &&
   `ug please create an ` &&
   `<a href="https://github.com/abap2UI5/abap2UI5/issues" style="color:blue; font-weight:600;">issue</a> or send a <a href="https://github.com/abap2UI5/abap2UI5-samples/pulls" style="color:blue; font-weight:600;">PR</a>` &&
-  `.</p>` ).
+  `.</p>`  &&
+    `<p>Always press CTRL+F12 to see code samples and classname of the app.</p>`
+  ).
 
         DATA(page2) = page.
 
@@ -156,6 +159,14 @@
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+            panel->generic_tile(
+        header    = 'Facet Filteer - Events (t_arg) with Objects'
+        subheader = ``
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_197' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
         panel = page->panel(
              expandable = abap_false
              expanded   = abap_true
@@ -163,9 +174,17 @@
         ).
 
         panel->generic_tile(
-            header    = 'Timer'
+            header    = 'Timer I'
             subheader = 'Wait n MS and call again the server'
             press     = client->_event( 'Z2UI5_CL_DEMO_APP_028' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+     panel->generic_tile(
+            header    = 'Timer II'
+            subheader = 'Set Loading Indicator while Server Request'
+            press     = client->_event( 'Z2UI5_CL_DEMO_APP_064' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
@@ -640,13 +659,6 @@
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        panel->generic_tile(
-        header    = 'Network Graph'
-        press     =  client->_event( 'z2ui5_cl_demo_app_182' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
         panel = page->panel(
                expandable = abap_false
                expanded   = abap_true
@@ -846,12 +858,19 @@
 
                panel->generic_tile(
         header    = 'Dynamic Objects IV'
-        subheader = 'User Generic Struc Refs in Subapps'
+        subheader = 'User Generic Tab Refs in Subapps'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_191' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+               panel->generic_tile(
+        header    = 'Dynamic Objects V'
+        subheader = 'User Generic Struc Refs'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_195' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
 
         panel = page->panel(
                 expandable = abap_false
@@ -1314,6 +1333,21 @@
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+            panel->generic_tile(
+        header    = 'Network Graph'
+        press     =  client->_event( 'z2ui5_cl_demo_app_182' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+            panel->generic_tile(
+         header    = 'Status Indicator Library'
+         subheader = ``
+         press     = client->_event( 'Z2UI5_CL_DEMO_APP_196' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
         panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
@@ -1429,4 +1463,4 @@
         client->view_display( page->stringify( ) ).
 
       ENDMETHOD.
-    ENDCLASS.
+ENDCLASS.

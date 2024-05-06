@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event( 'BUTTON_TEXTAREA_CANCEL' )
            )->button(
                text  = 'Confirm'
-               press = client->_event( client->cs_event-popup_close )
+               press = client->_event_client( client->cs_event-popup_close )
                type  = 'Emphasized' ).
 
      dialog->_generic( name = `HTML` ns = `core` t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
