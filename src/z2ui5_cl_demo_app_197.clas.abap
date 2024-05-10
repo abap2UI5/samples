@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
   METHOD z2ui5_display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id = `page_main`
             title          = 'abap2UI5 - List Report Features'
