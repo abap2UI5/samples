@@ -874,6 +874,15 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+               panel->generic_tile(
+        header    = 'Dynamic Objects VI'
+        subheader = 'User Generic Struc Refs with refresh'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_199' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
         panel = page->panel(
                 expandable = abap_false
                 expanded   = abap_true

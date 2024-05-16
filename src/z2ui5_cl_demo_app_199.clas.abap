@@ -57,10 +57,16 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
+
+    DATA(page) = view->page( id             = `page_main`
+                             title          = 'Refresh'
+                             navbuttonpress = client->_event( 'BACK' )
+                             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                             class          = 'sapUiContentPadding' ).
 
     DATA(table) = page->table( growing = 'true'
                                width   = 'auto'
