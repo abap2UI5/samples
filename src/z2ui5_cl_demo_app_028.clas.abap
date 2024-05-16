@@ -14,8 +14,8 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+
     DATA mv_counter TYPE i.
-*    DATA mv_check_repeat TYPE abap_bool.
     DATA mv_check_active TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -61,7 +61,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
             INTO TABLE t_tab.
 
         IF mv_counter = 3.
-*           mv_check_repeat = abap_false.
            mv_check_active = abap_false.
           client->message_toast_display( `timer deactivated` ).
         ENDIF.
@@ -79,7 +78,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
   METHOD z2ui5_on_init.
 
     mv_counter = 1.
-*    mv_check_repeat = abap_true.
     mv_check_active = abap_true.
 
     t_tab = VALUE #(
@@ -95,9 +93,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     lo_view->_z2ui5( )->timer(
         finished = client->_event( 'TIMER_FINISHED' )
         delayms  = `2000`
-*        checkrepeat = client->_bind( mv_check_repeat )
-        checkactive = client->_bind( mv_check_active )
-    ).
+        checkactive = client->_bind( mv_check_active )  ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
@@ -107,7 +103,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
              )->link( text = 'Demo'    target = '_blank'    href = `https://twitter.com/abap2UI5/status/1645816100813152256`
              )->link(
                  text = 'Source_Code' target = '_blank'
-
          )->get_parent( ).
 
     page->list(

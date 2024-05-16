@@ -2,6 +2,7 @@ name: build_downport
 
 on:
   push:
+    branches: [main]
 
 permissions:
   contents: read

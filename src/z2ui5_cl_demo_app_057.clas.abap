@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app .
-    INTERFACES if_serializable_object .
+
 
     TYPES:
       BEGIN OF ty_s_tab,

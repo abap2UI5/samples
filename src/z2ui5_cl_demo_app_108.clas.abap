@@ -4,7 +4,7 @@ class Z2UI5_CL_DEMO_APP_108 definition
 
 public section.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
+
   interfaces Z2UI5_IF_APP .
 
   data:
