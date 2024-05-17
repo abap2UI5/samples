@@ -5,9 +5,10 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mt_table TYPE REF TO data.
+    DATA mt_table   TYPE REF TO data.
+    DATA mv_counter TYPE string.
 
-    DATA mt_comp  TYPE abap_component_tab.
+    DATA mt_comp    TYPE abap_component_tab.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -70,7 +71,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     DATA(table) = page->table( growing = 'true'
                                width   = 'auto'
-                               items   = client->_bind( <tab> )
+                               items   = client->_bind_edit( <tab> )
 *                               headertext = mv_table
                                ).
 
@@ -119,7 +120,16 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     ENDIF.
 
+    IF mv_counter <> lines( mt_table->* ).
+      IF mv_counter IS NOT INITIAL.
+        client->message_toast_display( text = 'Frontend Lines <> Backend!' ).
+      ENDIF.
+    ENDIF.
+
     on_event( ).
+
+    mv_counter = lines( mt_table->*  ).
+
   ENDMETHOD.
 
   METHOD get_data.
