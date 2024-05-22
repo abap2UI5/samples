@@ -26,8 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
       quantity = '500'.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.my-style{ background: black !important; opacity: 0.6; color: white; }` ).
-      client->view_display( view->shell(
+       client->view_display( view->shell(
             )->page(
                     title          = 'abap2UI5 - First Example'
                     navbuttonpress = client->_event( val = 'BACK' s_ctrl = VALUE #( check_view_destroy = abap_true ) )
@@ -49,8 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_001 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BUTTON_POST'.
-        client->message_toast_display( text = |{ product } { quantity } - send to the server| at = 'left bottom' offset = '0 -15' animationtimingfunction = `ease-in`
-          class = 'my-style').
+        client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
