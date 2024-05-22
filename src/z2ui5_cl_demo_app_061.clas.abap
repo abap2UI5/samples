@@ -26,15 +26,8 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1676522756781817857'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-        )->get_parent( ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        ).
 
 
     FIELD-SYMBOLS <tab> TYPE table.
@@ -78,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_CORE_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
       FIELD-SYMBOLS <tab> TYPE table.
       ASSIGN t_tab->* TO <tab>.
 
