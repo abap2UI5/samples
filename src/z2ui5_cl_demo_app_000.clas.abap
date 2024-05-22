@@ -993,7 +993,23 @@ CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
         panel->generic_tile(
            header    = 'Launchpad I'
-           subheader = `App Navigation & Parameters`
+           subheader = `Read Startup Parameters`
+           press     =  client->_event( 'z2ui5_cl_demo_app_187' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+        panel->generic_tile(
+           header    = 'Launchpad II'
+           subheader = `Set Title`
+           press     =  client->_event( 'z2ui5_cl_demo_app_188' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+        panel->generic_tile(
+           header    = 'Launchpad III'
+           subheader = `Cross App Navigation`
            press     =  client->_event( 'z2ui5_cl_demo_app_127' )
            mode      = 'LineMode'
            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
