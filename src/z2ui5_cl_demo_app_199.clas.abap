@@ -96,12 +96,14 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       on_init( ).
     ENDIF.
 
-    IF mv_counter <> lines( mt_table->* ) AND mv_counter IS NOT INITIAL.
+    FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+    ASSIGN mt_table->* TO <tab>.
+    IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = 'Frontend Lines <> Backend!' type = 'error' ).
     ENDIF.
 
     on_event( ).
-    mv_counter = lines( mt_table->*  ).
+    mv_counter = lines( <tab>  ).
 
   ENDMETHOD.
 
