@@ -200,7 +200,7 @@
         ).
 
         panel->generic_tile(
-            header    = 'Focus & Cursor'
+            header    = 'Focus I'
             press     = client->_event( 'z2ui5_cl_demo_app_133' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
