@@ -206,6 +206,13 @@
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
+     panel->generic_tile(
+            header    = 'Focus II'
+            press     = client->_event( 'z2ui5_cl_demo_app_189' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
         panel->generic_tile(
             header    = 'Scrolling'
             press     = client->_event( 'Z2UI5_CL_DEMO_APP_134' )
