@@ -31,97 +31,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      set_data( ).
-      z2ui5_view_display( ).
-    ENDIF.
-
-    IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'ON_SUGGEST'.
-
-        DATA lt_range TYPE RANGE OF string.
-        lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
-
-        CLEAR mt_suggestion_out.
-        LOOP AT mt_suggestion INTO DATA(ls_sugg)
-            WHERE currencyname IN lt_range.
-          INSERT ls_sugg INTO TABLE mt_suggestion_out.
-        ENDLOOP.
-
-*        SELECT FROM i_currencytext
-*          FIELDS *
-*          WHERE currencyname IN @lt_range
-*          AND  language = 'E'
-*          INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
-
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_view_display.
-
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-       title          = 'abap2UI5 - Live Suggestion Event'
-       navbuttonpress = client->_event( 'BACK' )
-       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-
-    page->header_content(
-             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1675074394710765568`
-             )->link( text = 'Source_Code' target = '_blank'
-         )->get_parent( ).
-
-    DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
-
-    DATA(input) = grid->simple_form( 'Input'
-        )->content( 'form'
-            )->label( 'Input with value help'
-            )->input(
-                    value           = client->_bind_edit( input )
-                    suggest         = client->_event( 'ON_SUGGEST' )
-                    showtablesuggestionvaluehelp = abap_false
-                    suggestionrows  = client->_bind( mt_suggestion_out )
-                    showsuggestion  = abap_true
-                    valueliveupdate = abap_true
-                    autocomplete    = abap_false
-                 )->get( ).
-
-    input->suggestion_columns(
-        )->column( )->label( text = 'Name' )->get_parent(
-        )->column( )->label( text = 'Currency' ).
-
-    input->suggestion_rows(
-        )->column_list_item(
-            )->label( text = '{CURRENCYNAME}'
-            )->label( text = '{CURRENCY}' ).
-
-    client->view_display( page->stringify( ) ).
-
-  ENDMETHOD.
 
   METHOD set_data.
 
@@ -347,4 +258,125 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF check_initialized = abap_false.
+
+
+      DATA(lv_script) = `   debugger;` && |\n| &&
+                  `function setInputFIlter(){` && |\n| &&
+                  ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
+                  ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
+
+                  `   var aSplit = sValue.split(" ");` && |\n| &&
+                  `   if (aSplit.length > 0) {` && |\n| &&
+                  `     var sTermNew = aSplit.slice(-1)[0];` && |\n| &&
+                  `     sTermNew.trim();` && |\n| &&
+                  `     if (sTermNew) {` && |\n| &&
+                  `       if (oItem.mAggregations.cells[0].mProperties.text.match(new RegExp(sTermNew, "i"))` && |\n| &&
+                  `           || oItem.mAggregations.cells[1].mProperties.text.match(new RegExp(sTermNew, "i")) ) {` && |\n| &&
+                  `         return true;` && |\n| &&
+                  `       } else return false;` && |\n| &&
+                  `     }` && |\n| &&
+                  `   }` && |\n| &&
+                  ` });` && |\n| &&
+                  `}`.
+
+
+      check_initialized = abap_true.
+      set_data( ).
+
+      client->view_display( z2ui5_cl_xml_view=>factory(
+       )->_z2ui5( )->timer(  client->_event( `START` )
+         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+         )->stringify( ) ).
+
+
+    ENDIF.
+
+    IF client->get( )-event IS NOT INITIAL.
+      z2ui5_on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_on_event.
+
+    CASE client->get( )-event.
+      WHEN 'START'.
+        z2ui5_view_display( ).
+      WHEN 'ON_SUGGEST'.
+
+        DATA lt_range TYPE RANGE OF string.
+        lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
+
+        CLEAR mt_suggestion_out.
+        LOOP AT mt_suggestion INTO DATA(ls_sugg)
+            WHERE currencyname IN lt_range.
+          INSERT ls_sugg INTO TABLE mt_suggestion_out.
+        ENDLOOP.
+
+*        SELECT FROM i_currencytext
+*          FIELDS *
+*          WHERE currencyname IN @lt_range
+*          AND  language = 'E'
+*          INTO CORRESPONDING FIELDS OF TABLE @mt_suggestion.
+
+        client->view_model_update( ).
+
+      WHEN 'BACK'.
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_view_display.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+       title          = 'abap2UI5 - Live Suggestion Event'
+       navbuttonpress = client->_event( 'BACK' )
+       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+
+    page->header_content(
+             )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1675074394710765568`
+             )->link( text = 'Source_Code' target = '_blank'
+         )->get_parent( ).
+
+    DATA(grid) = page->grid( 'L6 M12 S12'
+        )->content( 'layout' ).
+
+    DATA(input) = grid->simple_form( 'Input'
+        )->content( 'form'
+            )->label( 'Input with value help'
+            )->input(
+                    id              = `suggInput`
+                    value           = client->_bind_edit( input )
+                    suggest         = client->_event( 'ON_SUGGEST' )
+                    showtablesuggestionvaluehelp = abap_false
+                    suggestionrows  = client->_bind( mt_suggestion_out )
+                    showsuggestion  = abap_true
+                    valueliveupdate = abap_true
+                    autocomplete    = abap_false
+                 )->get( ).
+
+    input->suggestion_columns(
+        )->column( )->label( text = 'Name' )->get_parent(
+        )->column( )->label( text = 'Currency' ).
+
+    input->suggestion_rows(
+        )->column_list_item(
+            )->label( text = '{CURRENCYNAME}'
+            )->label( text = '{CURRENCY}' ).
+
+    page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
 ENDCLASS.
