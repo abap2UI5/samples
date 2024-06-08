@@ -38,14 +38,12 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
     DATA check_initialized TYPE abap_bool.
 
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_rendering.
+    METHODS z2ui5_on_event.
     METHODS z2ui5_on_init.
 
   PRIVATE SECTION.
@@ -58,13 +56,36 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
+
     IF check_initialized = abap_false.
+
+      DATA(lv_script) = `` && |\n| &&
+                        `function setInputFIlter(){` && |\n| &&
+                        ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
+                        ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
+                        `   var aSplit = sValue.split(" ");` && |\n| &&
+                        `   if (aSplit.length > 0) {` && |\n| &&
+                        `     var sTermNew = aSplit.slice(-1)[0];` && |\n| &&
+                        `     sTermNew.trim();` && |\n| &&
+                        `     if (sTermNew) {` && |\n| &&
+                        `       return oItem.getText().match(new RegExp(sTermNew, "i"));` && |\n| &&
+                        `     }` && |\n| &&
+                        `   }` && |\n| &&
+                        ` });` && |\n| &&
+                        `}`.
+
+
+      client->view_display( z2ui5_cl_xml_view=>factory(
+       )->_z2ui5( )->timer(  client->_event( `START` )
+         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+         )->stringify( ) ).
+
       check_initialized = abap_true.
       z2ui5_on_init( ).
-      z2ui5_on_rendering( client ).
     ENDIF.
 
-    z2ui5_on_event( client ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
@@ -72,6 +93,8 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
+      WHEN 'START'.
+        z2ui5_on_rendering( ).
       WHEN 'BUTTON_MCUSTOM'.
 *        send type = '' is mandatory in order to not break current implementation
         client->message_box_display( type = '' text = 'Custom MessageBox' icon = `SUCCESS`
@@ -129,7 +152,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
-    data(page) = view->shell(
+    DATA(page) = view->shell(
          )->page(
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - Selection-Screen Example'
@@ -142,10 +165,11 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
     grid->simple_form( title = 'Input' editable = abap_true
         )->content( 'form'
-            )->label( 'Input with value help'
+            )->label( 'Input with suggetion items'
             )->input(
+                    id              = `suggInput`
                     value           = client->_bind_edit( screen-colour )
-                    placeholder     = 'fill in your favorite colour'
+                    placeholder     = 'Fill in your favorite color'
                     suggestionitems = client->_bind( mt_suggestion )
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
@@ -268,6 +292,9 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
              text  = 'Send to Server'
              press = client->_event( 'BUTTON_SEND' )
              type  = 'Success' ).
+
+
+    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( page->stringify( ) ).
 
