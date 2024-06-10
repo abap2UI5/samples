@@ -75,8 +75,8 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
                )->overflow_toolbar(
                  )->toolbar_spacer( ).
 
-    headder = /kro/ui501_cl_app_012=>render_layout_function( xml    = headder
-                                                             client = client ).
+    headder = z2ui5_cl_pop_layout_v2=>render_layout_function( xml    = headder
+                                                              client = client ).
 
     DATA(columns) = table->columns( ).
 
@@ -159,7 +159,7 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
   METHOD init_layout.
 
     IF ms_layout IS NOT INITIAL.
-      return.
+      RETURN.
     ENDIF.
 
     DATA(class) = cl_abap_classdescr=>get_class_name( me ).
