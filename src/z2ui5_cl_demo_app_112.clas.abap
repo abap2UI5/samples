@@ -13,10 +13,6 @@ public section.
   data MV_INIT type ABAP_BOOL .
   data MR_DATA type ref to DATA .
 
-    METHODS bind_clear
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
   methods ON_INIT .
   methods ON_EVENT .
   methods DISPLAY_VIEW
@@ -40,12 +36,6 @@ CLASS Z2UI5_CL_DEMO_APP_112 IMPLEMENTATION.
   METHOD DISPLAY_VIEW.
 
     mo_view_parent->input( value = client->_bind_edit( MV_CLASS_2 ) placeholder = `Input From Class 2` ).
-
-  ENDMETHOD.
-
-    METHOD bind_clear.
-
-    client->_bind_clear( `MO_APP_SUB` ).
 
   ENDMETHOD.
 
