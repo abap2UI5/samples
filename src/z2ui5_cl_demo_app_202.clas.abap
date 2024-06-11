@@ -88,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF av_init EQ abap_false.
+    IF av_init = abap_false.
       display_view( client ).
       av_init = 'X'.
       RETURN.
