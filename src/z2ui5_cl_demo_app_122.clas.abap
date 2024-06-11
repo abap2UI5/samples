@@ -13,7 +13,14 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION
     DATA device_os TYPE string.
     DATA device_browser TYPE string.
     DATA check_initialized TYPE abap_bool.
-    DATA device_system_desktop TYPE abap_bool.
+    DATA device_phone   TYPE abap_bool.
+    DATA device_desktop TYPE abap_bool.
+    DATA device_tablet  TYPE abap_bool.
+    DATA device_combi   TYPE abap_bool.
+    DATA device_height  type string.
+    DATA device_width   type string.
+
+
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -48,7 +55,12 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                                         ui5_gav           = client->_bind_edit( ui5_gav )
                                         ui5_theme         = client->_bind_edit( ui5_theme )
                                         ui5_version       = client->_bind_edit( ui5_version )
-                                        device_system_desktop       = client->_bind_edit( device_system_desktop )
+                                        device_phone        = client->_bind_edit( device_phone   )
+                                        device_desktop      = client->_bind_edit( device_desktop )
+                                        device_tablet       = client->_bind_edit( device_tablet  )
+                                        device_combi        = client->_bind_edit( device_combi   )
+                                        device_height       = client->_bind_edit( device_height  )
+                                        device_width        = client->_bind_edit( device_width   )
               )->simple_form( title = 'Information' editable = abap_true
                   )->content( 'form'
                       )->label( 'device_browser'
@@ -63,8 +75,21 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                       )->input( client->_bind_edit( ui5_theme )
                       )->label( `ui5_version`
                       )->input( client->_bind_edit( ui5_version )
-                      )->label( `device_system_desktop`
-                      )->input( client->_bind_edit( device_system_desktop )
+                      )->label( `device_phone`
+                      )->input( client->_bind_edit( device_phone )
+                      )->label( `device_desktop`
+                      )->input( client->_bind_edit( device_desktop )
+                      )->label( `device_tablet`
+                      )->input( client->_bind_edit( device_tablet )
+                      )->label( `device_combi`
+                      )->input( client->_bind_edit( device_combi )
+                      )->label( `device_height`
+                      )->input( client->_bind_edit( device_height )
+                      )->label( `device_width`
+                      )->input( client->_bind_edit( device_width )
+
+
+
            )->stringify( ) ).
 
   ENDMETHOD.
