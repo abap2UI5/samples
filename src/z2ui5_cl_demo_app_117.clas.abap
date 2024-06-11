@@ -118,13 +118,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
       WHEN OTHERS.
 
         IF mv_selectedkey <> mv_selectedkey_tmp.
-
-          TRY.
-              client->_bind_clear( `MO_APP` ).
-            CATCH cx_root.
-          ENDTRY.
           CREATE OBJECT mo_app TYPE (t002->class).
-
         ENDIF.
         TRY.
 
