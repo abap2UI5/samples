@@ -655,8 +655,16 @@
         ).
 
         panel->generic_tile(
-        header    = 'Wizard Control'
+        header    = 'Wizard Control I'
         press     =  client->_event( 'z2ui5_cl_demo_app_175' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+       panel->generic_tile(
+        header    = 'Wizard Control II'
+        subheader = 'Next step & SubSequentStep'
+        press     =  client->_event( 'z2ui5_cl_demo_app_202' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
@@ -740,6 +748,14 @@
         header    = 'Nested Views IV'
         subheader = 'Head & Item Table & Detail'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_098' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+            panel->generic_tile(
+        header    = 'Nested Views V'
+        subheader = 'Sub-App'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_104' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
