@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
     lr_view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.decideNextStep = (stepId, nextStepId) => {debugger;` && |\n| &&
                                                                      ` var wiz = sap.z2ui5.oView.byId('wiz');` && |\n| &&
-                                                                     ` wiz.discardProgress(sap.z2ui5.oView.byId('STEP2'));` && |\n| &&
+                                                                     ` wiz.discardProgress(sap.z2ui5.oView.byId(stepId));` && |\n| &&
                                                                      ` var step = sap.z2ui5.oView.byId(stepId);` && |\n| &&
                                                                      ` var nextStep = sap.z2ui5.oView.byId(nextStepId);` && |\n| &&
                                                                      ` step.setNextStep(nextStep);` && |\n| &&
