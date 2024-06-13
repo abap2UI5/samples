@@ -1247,8 +1247,24 @@
 
         panel->generic_tile(
          header    = 'Popup Display Layout'
-         subheader = ''
+         subheader = 'obsolet'
          press     =  client->_event( 'z2ui5_cl_demo_app_174' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+        panel->generic_tile(
+         header    = 'Popup Display Layout'
+         subheader = 'V2'
+         press     =  client->_event( 'z2ui5_cl_demo_app_200' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+     ).
+
+             panel->generic_tile(
+         header    = 'Popup Display F4-Help'
+*         subheader = 'V2'
+         press     =  client->_event( 'z2ui5_cl_demo_app_204' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
