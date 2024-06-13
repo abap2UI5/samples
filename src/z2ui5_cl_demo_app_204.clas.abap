@@ -11,8 +11,6 @@ CLASS z2ui5_cl_demo_app_204 DEFINITION
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    DATA mv_active_f4      TYPE string.
-
     METHODS on_init.
     METHODS on_event.
     METHODS render_main.
@@ -53,21 +51,21 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ). "->shell( ).
 
-    DATA(page) = view->shell( )->page( title          = 'Layout'
-                             navbuttonpress = client->_event( 'BACK' )
-                             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                             class          = 'sapUiContentPadding' ).
+    DATA(page) = view->shell( )->page(
+                     title          = 'Layout'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                     class          = 'sapUiContentPadding' ).
 
     page->simple_form( title    = 'F4-Help'
                        editable = abap_true
                     )->content( 'form'
-                        )->text(
-                            `Table t100 field ARBGB is linked to table t100a field ARBGB via a foreign key link.`
+                        )->text( `Table t100 field ARBGB is linked to table t100a field ARBGB via a foreign key link.`
                         )->label( `ARBGB`
                         )->input( value            = client->_bind_edit( mv_arbgb )
                                   showvaluehelp    = abap_true
                                   valuehelprequest = client->_event( val   = 'CALL_POPUP_F4'
-                                                                     t_arg = VALUE #( ( `ARBGB` ) ) ) ).
+                                                                     t_arg = VALUE #( ( `ARBGB` ) ( `T100` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -91,17 +89,12 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
 
-    mv_active_f4 = VALUE string( lt_arg[ 1 ] ).
+    DATA(f4_field) = VALUE string( lt_arg[ 1 ] ).
+    DATA(f4_table) = VALUE string( lt_arg[ 2 ] ).
 
-    CASE mv_active_f4.
-      WHEN `ARBGB`.
-
-        client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = 'T100'
-                                                             i_fname = 'ARBGB'
-                                                             i_value = CONV #( mv_arbgb ) ) ).
-      WHEN OTHERS.
-
-    ENDCASE.
+    client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = f4_table
+                                                         i_fname = f4_field
+                                                         i_value = CONV #( mv_arbgb ) ) ).
 
   ENDMETHOD.
 
@@ -116,8 +109,8 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
         IF app->mv_return_value IS NOT INITIAL.
 
-          CASE mv_active_f4.
-            WHEN `GUID`.
+          CASE app->mv_field.
+            WHEN `ARBGB`.
 
               mv_arbgb = CONV #( app->mv_return_value ).
 
