@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_204 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA ms_t004 TYPE z2ui5_t004.
+    DATA mv_arbgb TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ). "->shell( ).
 
-    DATA(page) = view->page( title          = 'Layout'
+    DATA(page) = view->shell( )->page( title          = 'Layout'
                              navbuttonpress = client->_event( 'BACK' )
                              shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
                              class          = 'sapUiContentPadding' ).
@@ -62,12 +62,12 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
                        editable = abap_true
                     )->content( 'form'
                         )->text(
-                            `Table Z2UI5_T004 field GUID is linked to table Z2UI5 field GUID via a foreign key link.`
-                        )->label( `GUID`
-                        )->input( value            = client->_bind_edit( ms_t004-guid )
+                            `Table t100 field ARBGB is linked to table t100a field ARBGB via a foreign key link.`
+                        )->label( `ARBGB`
+                        )->input( value            = client->_bind_edit( mv_arbgb )
                                   showvaluehelp    = abap_true
                                   valuehelprequest = client->_event( val   = 'CALL_POPUP_F4'
-                                                                     t_arg = VALUE #( ( `GUID` ) ) ) ).
+                                                                     t_arg = VALUE #( ( `ARBGB` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -94,11 +94,11 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     mv_active_f4 = VALUE string( lt_arg[ 1 ] ).
 
     CASE mv_active_f4.
-      WHEN `GUID`.
+      WHEN `ARBGB`.
 
-        client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = 'Z2UI5_T004'
-                                                             i_fname = 'GUID'
-                                                             i_value = CONV #( ms_t004-guid ) ) ).
+        client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = 'T100'
+                                                             i_fname = 'ARBGB'
+                                                             i_value = CONV #( mv_arbgb ) ) ).
       WHEN OTHERS.
 
     ENDCASE.
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
           CASE mv_active_f4.
             WHEN `GUID`.
 
-              ms_t004-guid = CONV #( app->mv_return_value ).
+              mv_arbgb = CONV #( app->mv_return_value ).
 
             WHEN OTHERS.
 
