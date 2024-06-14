@@ -547,7 +547,7 @@
         page = page2->panel(
             expandable = abap_true
             expanded   = client->_bind_edit( ms_check_expanded-popups )
-            headertext = `Popups & Popvers` ).
+            headertext = `Popups & Popovers` ).
 
         panel = page->panel(
                  expandable = abap_false
