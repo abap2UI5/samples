@@ -648,7 +648,7 @@
          ).
 
         panel->generic_tile(
-            header    = 'Planning Calender'
+            header    = 'Planning Calendar'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_080' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
