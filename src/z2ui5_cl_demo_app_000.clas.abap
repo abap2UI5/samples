@@ -927,7 +927,7 @@
         ).
 
         panel->generic_tile(
-            header    = 'Tours & Contectual Help'
+            header    = 'Tours & Contextual Help'
             subheader = 'driver.js'
             press     =  client->_event( 'z2ui5_cl_demo_app_119' )
             mode      = 'LineMode'
