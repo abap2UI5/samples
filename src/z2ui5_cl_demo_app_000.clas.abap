@@ -547,7 +547,7 @@
         page = page2->panel(
             expandable = abap_true
             expanded   = client->_bind_edit( ms_check_expanded-popups )
-            headertext = `Popups & Popvers` ).
+            headertext = `Popups & Popovers` ).
 
         panel = page->panel(
                  expandable = abap_false
@@ -648,7 +648,7 @@
          ).
 
         panel->generic_tile(
-            header    = 'Planning Calender'
+            header    = 'Planning Calendar'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_080' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -927,7 +927,7 @@
         ).
 
         panel->generic_tile(
-            header    = 'Tours & Contectual Help'
+            header    = 'Tours & Contextual Help'
             subheader = 'driver.js'
             press     =  client->_event( 'z2ui5_cl_demo_app_119' )
             mode      = 'LineMode'
