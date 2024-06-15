@@ -13,12 +13,18 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_008 IMPLEMENTATION.
 
 
   METHOD Z2UI5_if_app~main.
 
     CASE client->get( )-event.
+
+      WHEN 'BUTTON_MESSAGE_BOX_CONFIRM'.                                                                            "FMC
+        client->message_box_display( text = 'Approve purchase order 12345?' type = 'confirm' ).                     "FMC
+
+      WHEN 'BUTTON_MESSAGE_BOX_ALERT'.                                                                              "FMC
+        client->message_box_display( text = 'The quantity you have reported exceeds the quantity planned.' type = 'alert' ).                     "FMC
 
       WHEN 'BUTTON_MESSAGE_BOX'.
         client->message_box_display( 'this is a message box' ).
@@ -75,6 +81,12 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
     page->grid( 'L6 M12 S12'
         )->content( 'layout'
             )->simple_form( 'Message Box' )->content( 'form'
+                )->button(                                                                                          "FMC
+                    text  = 'Confirm'                                                                               "FMC
+                    press = client->_event( 'BUTTON_MESSAGE_BOX_CONFIRM' )                                          "FMC
+                )->button(                                                                                          "FMC
+                    text  = 'Alert'                                                                                 "FMC
+                    press = client->_event( 'BUTTON_MESSAGE_BOX_ALERT' )                                            "FMC
                 )->button(
                     text  = 'information'
                     press = client->_event( 'BUTTON_MESSAGE_BOX' )
