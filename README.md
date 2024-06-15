@@ -2,7 +2,7 @@
 
 *...learn how to code with abap2UI5. Try out various samples for any use case, such as tables, lists, trees, and many other UI5 controls. Quickly copy and paste the needed code into your own app to accelerate your development process and soon become an abap2UI5 expert!* 🤓 <br>
 
-**_Running into problems or found a bug? Create an issue [here](https://github.com/abap2UI5/abap2UI5)_**<br>
+**_Running into problems or found a bug? Create an issue [here](https://github.com/abap2UI5/abap2UI5/issues)_**<br>
 
 #### Information
 * install this repository and try out over 200 sample applications (install [**abap2UI5**](https://github.com/oblomov-dev/ABAP2UI5) before)
