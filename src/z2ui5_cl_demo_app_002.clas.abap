@@ -141,7 +141,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
         ( descr = 'Green'  value = 'GREEN' )
         ( descr = 'Blue'   value = 'BLUE' )
         ( descr = 'Black'  value = 'BLACK' )
-        ( descr = 'Grey'   value = 'GREY' )
+        ( descr = 'Gray'   value = 'GRAY' )
         ( descr = 'Blue2'  value = 'BLUE2' )
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
 
@@ -165,7 +165,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
 
     grid->simple_form( title = 'Input' editable = abap_true
         )->content( 'form'
-            )->label( 'Input with suggetion items'
+            )->label( 'Input with suggestion items'
             )->input(
                     id              = `suggInput`
                     value           = client->_bind_edit( screen-colour )
