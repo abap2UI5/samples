@@ -26,17 +26,18 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
       WHEN 'BUTTON_MESSAGE_BOX_ALERT'.
         client->message_box_display( text = 'The quantity you have reported exceeds the quantity planned.' type = 'alert' ).
 
-      WHEN 'BUTTON_MESSAGE_BOX'.
-        client->message_box_display( 'this is a message box' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_ERROR'.
-        client->message_box_display( text = 'this is a message box' type = 'error' ).
+        client->message_box_display( text = 'Select a team in the "Development" area.' && cl_abap_char_utilities=>cr_lf &&
+                                            '"Marketing" isn’t assigned to this area.' type = 'error' ).
 
-      WHEN 'BUTTON_MESSAGE_BOX_SUCCESS'.
-        client->message_box_display( text = 'this is a message box' type = 'success' ).
+      WHEN 'BUTTON_MESSAGE_BOX_INFO'.
+        client->message_box_display( 'Your booking will be reserved for 24 hours.' ).
 
       WHEN 'BUTTON_MESSAGE_BOX_WARNING'.
-        client->message_box_display( text = 'this is a message box' type = 'warning' ).
+        client->message_box_display( text = 'The project schedule was last updated over a year ago.' type = 'warning' ).
+
+      WHEN 'BUTTON_MESSAGE_BOX_SUCCESS'.
+        client->message_box_display( text = 'Project 1234567 was created and assigned to team "ABC".' type = 'success' ).
 
       WHEN 'BUTTON_MESSAGE_TOAST'.
         client->message_toast_display( 'this is a message toast' ).
@@ -88,17 +89,17 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
                     text  = 'Alert'
                     press = client->_event( 'BUTTON_MESSAGE_BOX_ALERT' )
                 )->button(
-                    text  = 'information'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX' )
-                )->button(
-                    text  = 'success'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_SUCCESS' )
-                )->button(
-                    text  = 'error'
+                    text  = 'Error'
                     press = client->_event( 'BUTTON_MESSAGE_BOX_ERROR' )
                 )->button(
-                    text  = 'warning'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_WARNING' ) ).
+                    text  = 'Info'
+                    press = client->_event( 'BUTTON_MESSAGE_BOX_INFO' )
+                )->button(
+                    text  = 'Warning'
+                    press = client->_event( 'BUTTON_MESSAGE_BOX_WARNING' )
+                )->button(
+                    text  = 'Success'
+                    press = client->_event( 'BUTTON_MESSAGE_BOX_SUCCESS' ) ).
 
     page->grid( 'L6 M12 S12'
         )->content( 'layout'
