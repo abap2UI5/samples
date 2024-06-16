@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
           )->get_parent(
           )->simple_form( title = 'Generic Mask Input' layout = 'ColumnLayout' editable = abap_true
 *              )->content( 'form'
-                  )->label( text = 'Mask Input'
+                  )->label( text = 'Unique ID'
                   )->mask_input( mask = `~~~~~~~~~~` placeholdersymbol = `_` placeholder = 'All characters allowed' )->get(
                     )->rules(
                       )->mask_input_rule( maskformatsymbol = '~' regex = `[^_]`
