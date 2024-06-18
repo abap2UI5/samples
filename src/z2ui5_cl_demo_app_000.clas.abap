@@ -253,7 +253,7 @@
         page = page2->panel(
             expandable = abap_true
             expanded   = client->_bind_edit( ms_check_expanded-input )
-            headertext = `Input & Ouput` ).
+            headertext = `Input & Output` ).
 
         panel = page->panel(
                expandable = abap_false
@@ -1247,7 +1247,7 @@
 
         panel->generic_tile(
          header    = 'Popup Display Layout'
-         subheader = 'obsolet'
+         subheader = 'obsolete'
          press     =  client->_event( 'z2ui5_cl_demo_app_174' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -1409,7 +1409,7 @@
 
 
         panel->generic_tile(
-            header    = 'Object Page with Avator'
+            header    = 'Object Page with Avatar'
              subheader = 'Since 1.73'
           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_017' )
           mode      = 'LineMode'
