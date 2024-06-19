@@ -8,6 +8,17 @@ CLASS z2ui5_cl_demo_app_200 DEFINITION
     DATA mt_table  TYPE REF TO data.
     DATA ms_layout TYPE z2ui5_cl_pop_layout_v2=>ty_s_layout.
 
+    TYPES:
+      BEGIN OF ty_s_tab,
+        selkz            TYPE abap_bool,
+        product          TYPE string,
+        create_date      TYPE string,
+        create_by        TYPE string,
+        storage_location TYPE string,
+        quantity         TYPE i,
+      END OF ty_s_tab.
+    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
@@ -54,7 +65,7 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
 
     FIELD-SYMBOLS <tab> TYPE data.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ). "->shell( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( title          = 'Layout'
                              navbuttonpress = client->_event( 'BACK' )
@@ -109,10 +120,33 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
 
                                        )->cells( ).
 
+    " Subcolumns require new rendering....
     LOOP AT ms_layout-t_layout REFERENCE INTO layout.
 
-      cells->object_identifier( text = |\{{ layout->fname }\}| ).
+      IF layout->t_sub_col IS NOT INITIAL.
 
+        DATA(sub_col) = ``.
+        DATA(index) = 0.
+        LOOP AT layout->t_sub_col INTO DATA(subcol).
+
+          index = index + 1.
+
+          READ TABLE ms_layout-t_layout INTO DATA(line) WITH KEY fname = subcol-fname.
+
+          IF index = 1.
+            sub_col = |{ line-tlabel }: \{{ subcol-fname }\}|.
+          ELSE.
+            sub_col = |{ sub_col }{ cl_abap_char_utilities=>cr_lf } { line-tlabel }: \{{ subcol-fname }\}|.
+          ENDIF.
+
+        ENDLOOP.
+
+        cells->object_identifier( title = |\{{ layout->fname }\}|
+                                  text  = sub_col ).
+
+      ELSE.
+        cells->object_identifier( text = |\{{ layout->fname }\}| ).
+      ENDIF.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
@@ -134,26 +168,23 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_data.
-    TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    TRY.
+    CREATE DATA mt_table TYPE ty_t_table.
+    ASSIGN mt_table->* TO <table>.
 
-        CREATE DATA mt_table TYPE ty_t_01.
-        ASSIGN mt_table->* TO <table>.
+    <table> = VALUE ty_t_table( create_date      = `01.01.2023`
+                                create_by        = `Peter`
+                                storage_location = `AREA_001`
+                                quantity         = 400
+                                ( product = 'table' )
+                                ( product = 'chair' )
+                                ( product = 'sofa' )
+                                ( product = 'computer' )
+                                ( product = 'oven' )
+                                ( product = 'table2' ) ).
 
-        SELECT id,
-               id_prev,
-               id_prev_app,
-               id_prev_app_stack,
-               uname
-          FROM z2ui5_t_01
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO 5 ROWS.
-
-      CATCH cx_root.
-    ENDTRY.
   ENDMETHOD.
 
   METHOD init_layout.
@@ -186,6 +217,9 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
 
         ms_layout = app->ms_layout.
 
+*        subcolumns need rerendering to work ..
+*        render_main( ).
+*        for all other changes in Layout View Model Update is enough.
         client->view_model_update( ).
 
       CATCH cx_root.
