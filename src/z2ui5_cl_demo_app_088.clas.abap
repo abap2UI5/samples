@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
         navbuttonpress = client->_event( val = 'BACK' )
         shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        title = `abap2UI5 - App Finder`
+        title = `abap2UI5 - Sample: Nav Container`
     )->content( ).
 
     page->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
