@@ -1245,17 +1245,17 @@
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-        panel->generic_tile(
-         header    = 'Popup Display Layout'
-         subheader = 'obsolete'
-         press     =  client->_event( 'z2ui5_cl_demo_app_174' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+*        panel->generic_tile(
+*         header    = 'Popup Display Layout'
+*         subheader = 'obsolete'
+*         press     =  client->_event( 'z2ui5_cl_demo_app_174' )
+*         mode      = 'LineMode'
+*         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*     ).
 
         panel->generic_tile(
          header    = 'Popup Display Layout'
-         subheader = 'V2'
+         subheader = ''
          press     =  client->_event( 'z2ui5_cl_demo_app_200' )
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -1292,6 +1292,28 @@
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
+
+       panel = page->panel(
+                   expandable = abap_false
+                   expanded   = abap_true
+                   headertext = `Popups (ABAP for Cloud WIP)`
+              ).
+
+             panel->generic_tile(
+        header    = 'Popup with F4 Help'
+        subheader = ''
+        press     =  client->_event( 'z2ui5_cl_demo_app_204' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+             panel->generic_tile(
+        header    = 'Popup to Select Transport Requests'
+        subheader = ''
+        press     =  client->_event( 'z2ui5_cl_pop_transport' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
 
         page = page2->panel(
               expandable = abap_true
