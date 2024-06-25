@@ -217,11 +217,13 @@ CLASS z2ui5_cl_demo_app_200 IMPLEMENTATION.
 
         ms_layout = app->ms_layout.
 
-*        subcolumns need rerendering to work ..
-*        render_main( ).
-*        for all other changes in Layout View Model Update is enough.
-        client->view_model_update( ).
-
+        IF app->mv_rerender = abap_true.
+          " subcolumns need rerendering to work ..
+          render_main( ).
+        ELSE.
+          "  for all other changes in Layout View Model Update is enough.
+          client->view_model_update( ).
+        ENDIF.
       CATCH cx_root.
     ENDTRY.
 
