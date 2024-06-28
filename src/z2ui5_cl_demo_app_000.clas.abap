@@ -291,6 +291,14 @@
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
 
+        panel->generic_tile(
+            header    = 'Text'
+            subheader = 'Max Lines'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_206' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
         panel = page->panel(
             expandable = abap_false
             expanded   = abap_true
