@@ -35,35 +35,35 @@ CLASS Z2UI5_CL_DEMO_APP_207 IMPLEMENTATION.
 
     DATA(layout) = page->vbox( class = `sapUiSmallMargin`
                           )->label( text = `Default RadioButton use` labelfor = `GroupA`
-                              )->radio_button_group( id = `GroupA`
-                                  )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
-                                  )->radio_button( text = `Option 2` )->get_parent(
-                                  )->radio_button( text = `Option 3` )->get_parent(
-                                  )->radio_button( text = `Option 4` )->get_parent(
-                                  )->radio_button( text = `Option 5` )->get_parent( )->get_parent( )->get_parent(
+                          )->radio_button_group( id = `GroupA`
+                              )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
+                              )->radio_button( text = `Option 2` )->get_parent(
+                              )->radio_button( text = `Option 3` )->get_parent(
+                              )->radio_button( text = `Option 4` )->get_parent(
+                              )->radio_button( text = `Option 5` )->get_parent( )->get_parent( )->get_parent(
                       )->vbox( class = `sapUiSmallMargin`
                           )->label( text = `RadioButton in various ValueState variants`
-                              )->hbox( class = `sapUiTinyMarginTopBottom`
-                                  )->vbox( class = `sapUiMediumMarginEnd`
-                                      )->label( text = `Success` labelfor = `GroupB`
-                                          )->radio_button_group( id = `GroupB` valueState = `Success`
-                                              )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
-                                              )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
-                                  )->vbox( class = `sapUiMediumMarginEnd`
-                                      )->label( text = `Error` labelfor = `GroupC`
-                                          )->radio_button_group( id = `GroupC` valueState = `Error`
-                                              )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
-                                              )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
-                                  )->vbox( class = `sapUiMediumMarginEnd`
-                                      )->label( text = `Warning` labelfor = `GroupD`
-                                          )->radio_button_group( id = `GroupD` valueState = `Warning`
-                                              )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
-                                              )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
-                                  )->vbox( class = `sapUiMediumMarginEnd`
-                                      )->label( text = `Information` labelfor = `GroupE`
-                                          )->radio_button_group( id = `GroupE` valueState = `Information`
-                                              )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
-                                              )->radio_button( text = `Option 2` )->get_parent(
+                          )->hbox( class = `sapUiTinyMarginTopBottom`
+                              )->vbox( class = `sapUiMediumMarginEnd`
+                                  )->label( text = `Success` labelfor = `GroupB`
+                                  )->radio_button_group( id = `GroupB` valueState = `Success`
+                                      )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
+                                      )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
+                              )->vbox( class = `sapUiMediumMarginEnd`
+                                  )->label( text = `Error` labelfor = `GroupC`
+                                  )->radio_button_group( id = `GroupC` valueState = `Error`
+                                      )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
+                                      )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
+                              )->vbox( class = `sapUiMediumMarginEnd`
+                                  )->label( text = `Warning` labelfor = `GroupD`
+                                  )->radio_button_group( id = `GroupD` valueState = `Warning`
+                                      )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
+                                      )->radio_button( text = `Option 2` )->get_parent( )->get_parent( )->get_parent(
+                              )->vbox( class = `sapUiMediumMarginEnd`
+                                  )->label( text = `Information` labelfor = `GroupE`
+                                  )->radio_button_group( id = `GroupE` valueState = `Information`
+                                      )->radio_button( text = `Option 1` selected = abap_true )->get_parent(
+                                      )->radio_button( text = `Option 2` )->get_parent(
                    ).
 
     client->view_display( page->stringify( ) ).
