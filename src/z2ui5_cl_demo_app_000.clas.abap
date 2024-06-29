@@ -24,11 +24,11 @@
       PROTECTED SECTION.
       PRIVATE SECTION.
 
-    ENDCLASS.
+ENDCLASS.
 
 
 
-    CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -344,6 +344,14 @@
         panel->generic_tile(
      header    = 'Feed Input'
      press     =  client->_event( 'Z2UI5_CL_DEMO_APP_101' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+        panel->generic_tile(
+     header    = 'Radio Button'
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_207' )
      mode      = 'LineMode'
      class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
@@ -1575,4 +1583,4 @@
         client->view_display( page->stringify( ) ).
 
       ENDMETHOD.
-    ENDCLASS.
+ENDCLASS.
