@@ -7,12 +7,6 @@ public section.
   interfaces IF_SERIALIZABLE_OBJECT .
   interfaces Z2UI5_IF_APP .
 
-  data:
-    BEGIN OF screen,
-        input1 TYPE string,
-        input2 TYPE string,
-        input3 TYPE string,
-      END OF screen .
   data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
 
