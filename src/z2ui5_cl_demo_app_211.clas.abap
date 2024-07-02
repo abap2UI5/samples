@@ -1,5 +1,5 @@
 "!
-CLASS Z2UI5_CL_DEMO_APP_211 DEFINITION
+CLASS z2ui5_cl_demo_app_211 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -33,11 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_211 DEFINITION
     METHODS on_event.
     METHODS render_Main.
 
-    METHODS get_count
-      IMPORTING
-        tabname       TYPE tabname
-      RETURNING
-        VALUE(result) TYPE string.
+
 
     METHODS Render_sub_app.
 
@@ -46,44 +42,8 @@ CLASS Z2UI5_CL_DEMO_APP_211 DEFINITION
 ENDCLASS.
 
 
-CLASS Z2UI5_CL_DEMO_APP_211 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
-  METHOD get_count.
-
-    DATA o_table TYPE REF TO data.
-
-    FIELD-SYMBOLS <table> TYPE ANY TABLE.
-
-    IF NOT ame IS NOT INITIAL.
-  RETURN.
-ENDIF.
-
-    TRY.
-
-        cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = tabname
-                                             RECEIVING  p_descr_ref    = DATA(o_type_desc)
-                                             EXCEPTIONS type_not_found = 1 ).
-
-        IF sy-subrc = 1.
-          RETURN.
-        ENDIF.
-
-        DATA(o_struct_desc) = CAST cl_abap_structdescr( o_type_desc ).
-
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = o_struct_desc
-                                                           p_table_kind = cl_abap_tabledescr=>tablekind_std ).
-
-        CREATE DATA o_table TYPE HANDLE new_table_desc.
-
-        ASSIGN o_table->* TO <table>.
-
-        SELECT * FROM (tabname) INTO CORRESPONDING FIELDS OF TABLE <table>.
-
-        result = lines( <table> ).
-
-      CATCH cx_root.
-    ENDTRY.
-  ENDMETHOD.
 
   METHOD on_event.
     CASE client->get( )-event.
@@ -201,13 +161,17 @@ ENDIF.
 
     ENDCASE.
 
-    IF mo_app->('MV_VIEW_DISPLAY') = abap_true.
-      mo_app->('MV_VIEW_DISPLAY') = abap_false.
+   ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
+
+    IF <view_display> = abap_true.
+      <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
-    IF mo_app->('MV_VIEW_MODEL_UPDATE') = abap_true.
-      mo_app->('MV_VIEW_MODEL_UPDATE') = abap_false.
+   ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
+
+    IF <view_update> = abap_true.
+      <view_update> = abap_false.
       client->view_model_update( ).
     ENDIF.
 
