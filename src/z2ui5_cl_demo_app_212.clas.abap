@@ -128,8 +128,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(simple_form) = popup->dialog( contentwidth = '60%'
-          )->simple_form( title    = ''
-                          layout   = 'ResponsiveGridLayout'
+          )->simple_form( layout   = 'ResponsiveGridLayout'
                           editable = abap_true
           )->content( ns = 'form' ).
 
