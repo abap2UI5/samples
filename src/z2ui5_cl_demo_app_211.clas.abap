@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     mt_t002 = VALUE #( class = 'Z2UI5_CL_DEMO_APP_212'
                        ( id = '1' count = '5' table = 'Z2UI5_T003' descr = 'Table 01' icon = 'sap-icon://add' )
-                       ( id = '2' count = '10' table = 'Z2UI5_T003'  descr = 'Table 01' icon = 'sap-icon://add' )
+*                       ( id = '2' count = '10' table = 'Z2UI5_T003'  descr = 'Table 01' icon = 'sap-icon://add' )
                        ( id = '3' count = '15' table = 'Z2UI5_T004'  descr = 'Table 02' icon = 'sap-icon://accept' ) ).
 
     mv_selectedkey = '1'.
