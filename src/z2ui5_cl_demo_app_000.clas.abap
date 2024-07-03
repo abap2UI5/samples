@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -302,6 +302,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel->generic_tile(
             header    = 'InfoLabel'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_209' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+        panel->generic_tile(
+            header    = 'Busy Indicator'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_215' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
