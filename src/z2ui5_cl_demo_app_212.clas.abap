@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(simple_form) = popup->dialog( contentwidth = '60%'
+    DATA(sform) = popup->dialog( contentwidth = '60%'
           )->simple_form( layout   = 'ResponsiveGridLayout'
                           editable = abap_true
           )->content( ns = 'form' ).
@@ -143,12 +143,12 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
       DATA(text) = ms_layout-t_layout[ fname = dfies->fieldname ]-tlabel.
 
-      simple_form->label( design = COND #( WHEN dfies->keyflag = abap_true THEN 'Bold' )
-                          text   = text ).
+      sform->label( design = COND #( WHEN dfies->keyflag = abap_true THEN 'Bold' )
+                    text   = text ).
 
-      simple_form->input( value         = client->_bind_edit( <val> )
-                          enabled       = abap_false
-                          showvaluehelp = abap_false ).
+      sform->input( value         = client->_bind_edit( <val> )
+                    enabled       = abap_false
+                    showvaluehelp = abap_false ).
 
     ENDLOOP.
 
