@@ -8,19 +8,19 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION
     DATA mv_view_display      TYPE abap_bool.
     DATA mv_view_model_update TYPE abap_bool.
     DATA mo_parent_view       TYPE REF TO z2ui5_cl_xml_view.
-    DATA mv_table             TYPE string.
     DATA mt_table             TYPE REF TO data.
     DATA mt_table_tmp         TYPE REF TO data.
     DATA ms_table_row         TYPE REF TO data.
-    DATA mt_comp              TYPE abap_component_tab.
     DATA ms_layout            TYPE z2ui5_cl_pop_layout_v2=>ty_s_layout.
-    DATA mt_dfies             TYPE z2ui5_cl_stmpncfctn_api=>ty_t_dfies.
 
     METHODS set_app_data
       IMPORTING
         !table TYPE string.
 
   PROTECTED SECTION.
+    DATA mv_table             TYPE string.
+    DATA mt_comp              TYPE abap_component_tab.
+    DATA mt_dfies             TYPE z2ui5_cl_stmpncfctn_api=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
