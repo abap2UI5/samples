@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -566,9 +566,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
 
         panel->generic_tile(
-        header    = 'List'
-        subheader    = 'Action List Item'
+        header    = 'Action List Item'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_216' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
+
+        panel->generic_tile(
+        header    = 'Input List Item'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_219' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
 
