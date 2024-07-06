@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_124 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app .
-
     DATA mv_scan_input TYPE string.
     DATA mv_scan_type TYPE string.
 
@@ -27,6 +26,8 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
         DATA(lt_arg) = client->get( )-t_event_arg.
         mv_scan_input = lt_arg[ 1 ].
         mv_scan_type  = lt_arg[ 2 ].
+        "implement further processing here...
+        "...
         client->view_model_update( ).
         RETURN.
 
