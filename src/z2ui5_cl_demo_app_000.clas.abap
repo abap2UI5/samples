@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -472,6 +472,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         header    = 'Expression Binding'
         subheader = 'Use calculations & more functions directly in views'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_027' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Tile'
+        subheader = 'Numeric Content Without Margins'
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_228' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
