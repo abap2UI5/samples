@@ -21,8 +21,8 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION
       drs4    TYPE t_drs,
       drs5    TYPE t_drs,
 
-      mindate TYPE datum VALUE '20160101',
-      maxdate TYPE datum VALUE '20161231',
+      mindate TYPE d VALUE '20160101',
+      maxdate TYPE d VALUE '20161231',
 
       text    TYPE string.
 
