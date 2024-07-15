@@ -10,8 +10,8 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION
 
     TYPES:
       BEGIN OF t_drs,
-        start TYPE datum,
-        end   TYPE datum,
+        start TYPE d,
+        end   TYPE d,
       END OF t_drs .
 
     DATA:
