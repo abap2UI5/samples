@@ -1,4 +1,4 @@
-class z2ui5_cl_demo_app_234 definition
+class Z2UI5_CL_DEMO_APP_234 definition
   public
   create public .
 
@@ -22,7 +22,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_234 IMPLEMENTATION.
 
 
   METHOD DISPLAY_VIEW.
