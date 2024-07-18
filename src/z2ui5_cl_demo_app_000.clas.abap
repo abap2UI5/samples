@@ -981,8 +981,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
         panel->generic_tile(
-        header    = 'Page, Toolbar & Bar'
+        header    = 'Bar'
+        subheader = 'Page, Toolbar & Bar'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_227' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Bar'
+        subheader = 'Toolbar vs Bar vs OverflowToolbar'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_235' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
