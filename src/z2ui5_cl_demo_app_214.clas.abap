@@ -1,4 +1,4 @@
-class Z2UI5_CL_DEMO_APP_214 definition
+class z2ui5_cl_demo_app_214 definition
   public
   create public .
 
