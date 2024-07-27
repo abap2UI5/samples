@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -920,6 +920,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             header    = 'Standard Margins'
             subheader = 'Negative Margins'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_243' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Flex Box'
+            subheader = 'Size Adjustments'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_244' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
