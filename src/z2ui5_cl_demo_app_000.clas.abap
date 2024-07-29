@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -953,6 +953,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             header    = 'Splitter Layout'
             subheader = '2 areas'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_247' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Splitter Layout'
+            subheader = '2 non-resizable areas'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_248' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
