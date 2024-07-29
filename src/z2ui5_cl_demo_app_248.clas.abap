@@ -1,4 +1,4 @@
-class Z2UI5_CL_DEMO_APP_248 definition
+class z2ui5_cl_demo_app_248 definition
   public
   create public .
 
@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_248 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
 
 
   METHOD DISPLAY_VIEW.
