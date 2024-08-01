@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_244 IMPLEMENTATION.
 
 
   METHOD DISPLAY_VIEW.
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                                           )->flex_item_data( growfactor = `1`)->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
                           )->panel( headertext = `Equal flexibility, different content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
-                              )->flex_box( alignitems = `Start`
+                              )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
                                   )->button( text = `1` width = `100%` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                                           )->flex_item_data( growfactor = `1`)->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
                           )->panel( headertext = `Different flexibility and content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
-                              )->flex_box( alignitems = `Start`
+                              )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
                                   )->button( text = `1` width = `50px` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
