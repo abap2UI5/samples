@@ -1,4 +1,4 @@
-class z2ui5_cl_demo_app_255 definition
+class Z2UI5_CL_DEMO_APP_255 definition
   public
   create public .
 
@@ -26,7 +26,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_255 IMPLEMENTATION.
 
 
   METHOD DISPLAY_VIEW.
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
                 `    width: 25%;`                                &&
                 `    min-width: 15%;`                            &&
                 `    list-style-type: none;`                     &&
-                `	   text-align: center;`                        &&
+                `    text-align: center;`                        &&
                 `    background-color: #193441;`                 &&
                 `    padding: 0.4em;`                            &&
                 `    transition: width 0.5s ease-out, background-color 0.5s ease-out, flex-basis 0.5s ease-out;` &&
