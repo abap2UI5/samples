@@ -997,6 +997,38 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
 
+        panel->generic_tile(
+            header    = 'Flex Box'
+            subheader = 'Equal Height Cols'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_253' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Flex Box'
+            subheader = 'Nested'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_254' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Flex Box'
+            subheader = 'Navigation Examples'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_255' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Fix Flex'
+            subheader = 'Fix container size'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_256' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
         panel = page->panel(
                    expandable = abap_false
                    expanded   = abap_true
