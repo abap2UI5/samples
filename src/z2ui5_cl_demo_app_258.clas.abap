@@ -92,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
     DATA(content) = page->flex_box( width = '100%' height = '90%' alignitems = 'Start' ).
 
     DATA(navlist) = content->flex_box( width = '100%' height = '100%' direction = 'Column' )->layout_data( )->flex_item_data( growfactor = '1'
-    basesize = '0' )->get_parent( )->side_navigation( id = 'sideNavigation' class = 'sapUiTinyMarginTop' selectedkey = client->_bind( selected_menu_entry ) height = '100%'
+    basesize = '0' )->get_parent( )->side_navigation( id = 'sideNavigation' class = 'sapUiTinyMarginTop' selectedkey = client->_bind( selected_menu_entry )
     )->navigation_list( ).
 
     "As per version 1.120.19 icons for sub menu entries are not possible
