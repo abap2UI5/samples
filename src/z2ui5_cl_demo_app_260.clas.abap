@@ -50,7 +50,6 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.SplitterNested1' ).
 
     DATA(layout) = page->splitter( height = `500px` orientation = `Vertical`
-
                           )->splitter( )->get(
                               )->layout_data( ns = `layout`
                                   )->splitter_layout_data( size = `50px` )->get_parent( )->get_parent(
@@ -72,7 +71,6 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
                                       )->button( width = `100%` text = `Content 4` )->get(
                                           )->layout_data(
                                               )->splitter_layout_data( size = `10%` ")->get_parent( )->get_parent( )->get_parent(
-
                                       )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                           )->button( width = `100%` text = `Content 5` )->get(
                               )->layout_data(
@@ -90,7 +88,6 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
                          ).
 
     client->view_display( page->stringify( ) ).
-
 
   ENDMETHOD.
 
