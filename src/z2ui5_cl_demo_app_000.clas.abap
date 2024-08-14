@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -1040,6 +1040,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel->generic_tile(
             header    = 'Generic Tag with Different Configurations'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_257' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+            header    = 'Nested Splitter Layouts'
+            subheader = '7 Areas'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_260' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
