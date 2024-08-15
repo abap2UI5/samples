@@ -28,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_000 IMPLEMENTATION.
 
 
       METHOD z2ui5_if_app~main.
@@ -611,6 +611,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         header    = 'Tile'
         subheader = 'Numeric Content of Different Colors'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_262' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Tile'
+        subheader = 'Numeric Content with Icon'
+        press     = client->_event( 'Z2UI5_CL_DEMO_APP_263' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
