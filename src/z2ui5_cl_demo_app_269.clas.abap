@@ -18,7 +18,19 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
         showCopilot         = abap_true
         showSearch          = abap_true
         showNotifications   = abap_true
-        notificationsNumber = `2` ).
+        notificationsNumber = `2`
+        )->_generic( name = `menu`
+                     ns   = `f`
+            )->_generic( name = `Menu`
+                )->menu_item( text = `Flight booking`
+                              icon = `sap-icon://flight`
+                )->menu_item( text = `Car rental`
+                              icon = `sap-icon://car-rental`
+                )->get_parent(
+            )->get_parent(
+        )->_generic( name = `profile`
+                     ns   = `f`
+            )->avatar( initials = 'UI' ).
 
     DATA(xml) = view->stringify( ).
 
