@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
       WHEN `CALL_POPUP_F4`.
-
         call_f4( ).
 
       WHEN OTHERS.
@@ -49,8 +48,7 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ). "->shell( ).
-
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
                      title          = 'Layout'
                      navbuttonpress = client->_event( 'BACK' )
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
     on_after_f4( ).
 
   ENDMETHOD.
@@ -88,13 +85,12 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
   METHOD call_f4.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
-
     DATA(f4_field) = VALUE string( lt_arg[ 1 ] ).
     DATA(f4_table) = VALUE string( lt_arg[ 2 ] ).
 
     client->nav_app_call( z2ui5_cl_pop_f4_help=>factory( i_table = f4_table
                                                          i_fname = f4_field
-                                                         i_value = CONV #( mv_arbgb ) ) ).
+                                                         i_value = mv_arbgb ) ).
 
   ENDMETHOD.
 
@@ -111,8 +107,7 @@ CLASS z2ui5_cl_demo_app_204 IMPLEMENTATION.
 
           CASE app->mv_field.
             WHEN `ARBGB`.
-
-              mv_arbgb = CONV #( app->mv_return_value ).
+              mv_arbgb = app->mv_return_value.
 
             WHEN OTHERS.
 
