@@ -1673,13 +1673,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                    headertext = `General`
               ).
 
-        panel->generic_tile(
-               header    = 'Create Views'
-               subheader = 'Compare the three ways normal, generic & xml'
-               press     =  client->_event( 'Z2UI5_CL_DEMO_APP_023' )
-               mode      = 'LineMode'
-               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-           ).
+*        panel->generic_tile(
+*               header    = 'Create Views'
+*               subheader = 'Compare the three ways normal, generic & xml'
+*               press     =  client->_event( 'Z2UI5_CL_DEMO_APP_023' )
+*               mode      = 'LineMode'
+*               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*           ).
 
 
         panel->generic_tile(
