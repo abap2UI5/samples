@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD get_dfies.
 
-    mt_dfies = z2ui5_cl_util_api=>rtti_get_t_dfies_by_table_name( mv_table ).
+    mt_dfies = z2ui5_cl_util=>rtti_get_t_dfies_by_table_name( mv_table ).
 
   ENDMETHOD.
 
