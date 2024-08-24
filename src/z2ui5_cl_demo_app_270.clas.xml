@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_023</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_270</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>extension - normal gen xml</DESCRIPT>
+    <DESCRIPT>color picker</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
