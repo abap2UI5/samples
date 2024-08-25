@@ -46,8 +46,8 @@ CLASS z2ui5_cl_demo_app_066 DEFINITION
 
     DATA mv_ui5_version TYPE string.
 
-    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
-    DATA mt_message_manager TYPE z2ui5_cl_cc_message_m=>ty_t_items.
+*    DATA mt_messaging TYPE z2ui5_cl_cc_messaging=>ty_t_items.
+*    DATA mt_message_manager TYPE z2ui5_cl_cc_message_m=>ty_t_items.
 
   PROTECTED SECTION.
 
