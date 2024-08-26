@@ -1003,13 +1003,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
      ).
 
-        panel->generic_tile(
-         header    = 'Popup Display Layout'
-         subheader = ''
-         press     =  client->_event( 'z2ui5_cl_demo_app_200' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
+*        panel->generic_tile(
+*         header    = 'Popup Display Layout'
+*         subheader = ''
+*         press     =  client->_event( 'z2ui5_cl_demo_app_200' )
+*         mode      = 'LineMode'
+*         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*     ).
 
         panel->generic_tile(
          header    = 'Popup Display Download'
@@ -1049,13 +1049,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-             panel->generic_tile(
-        header    = 'Popup to Select Transport Requests'
-        subheader = '(ABAP for Cloud WIP)'
-        press     =  client->_event( 'z2ui5_cl_pop_transport' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-         ).
+*             panel->generic_tile(
+*        header    = 'Popup to Select Transport Requests'
+*        subheader = '(ABAP for Cloud WIP)'
+*        press     =  client->_event( 'z2ui5_cl_pop_transport' )
+*        mode      = 'LineMode'
+*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*         ).
 
 
         page = page2->panel(
