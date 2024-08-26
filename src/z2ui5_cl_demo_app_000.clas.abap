@@ -1041,13 +1041,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 *                   headertext = `Popups (ABAP for Cloud WIP)`
 *              ).
 
-             panel->generic_tile(
-        header    = 'Popup with F4 Help'
-        subheader = '(ABAP for Cloud WIP)'
-        press     =  client->_event( 'z2ui5_cl_demo_app_204' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+*             panel->generic_tile(
+*        header    = 'Popup with F4 Help'
+*        subheader = '(ABAP for Cloud WIP)'
+*        press     =  client->_event( 'z2ui5_cl_demo_app_204' )
+*        mode      = 'LineMode'
+*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*    ).
 
 *             panel->generic_tile(
 *        header    = 'Popup to Select Transport Requests'
