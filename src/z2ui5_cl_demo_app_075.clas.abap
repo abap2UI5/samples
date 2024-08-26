@@ -78,11 +78,6 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
       ui5_view_main_display( ).
 
-*    client->view_display( Z2UI5_cl_xml_view=>factory( client
-*         )->_z2ui5( )->timer(  client->_event( `START` )
-*         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( z2ui5_cl_cc_file_uploader=>get_js( )
-*         )->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -113,6 +108,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'
+*      enabled     = abap_false
       upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
