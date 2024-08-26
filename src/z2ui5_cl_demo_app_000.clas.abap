@@ -1549,57 +1549,57 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        panel->generic_tile(
-            header    = 'Spreadsheet Control'
-            subheader = 'Export Table as XLSX'
-            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_077' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-            header    = 'Font Awesome Icons'
-            press     =  client->_event( 'z2ui5_cl_demo_app_118' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-            header    = 'Generate Barcodes'
-            subheader = 'bwip-js'
-            press     =  client->_event( 'z2ui5_cl_demo_app_102' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-            header    = 'Tours & Contextual Help'
-            subheader = 'driver.js'
-            press     =  client->_event( 'z2ui5_cl_demo_app_119' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-        header    = 'Image Mapster'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_142' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-          header    = 'Animate CSS'
-          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_146' )
-          mode      = 'LineMode'
-          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-      ).
-
-        panel->generic_tile(
-          header    = 'Chart.JS'
-          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_148' )
-          mode      = 'LineMode'
-          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-      ).
+*        panel->generic_tile(
+*            header    = 'Spreadsheet Control'
+*            subheader = 'Export Table as XLSX'
+*            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_077' )
+*            mode      = 'LineMode'
+*            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*        ).
+*
+*        panel->generic_tile(
+*            header    = 'Font Awesome Icons'
+*            press     =  client->_event( 'z2ui5_cl_demo_app_118' )
+*            mode      = 'LineMode'
+*            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*        ).
+*
+*        panel->generic_tile(
+*            header    = 'Generate Barcodes'
+*            subheader = 'bwip-js'
+*            press     =  client->_event( 'z2ui5_cl_demo_app_102' )
+*            mode      = 'LineMode'
+*            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*        ).
+*
+*        panel->generic_tile(
+*            header    = 'Tours & Contextual Help'
+*            subheader = 'driver.js'
+*            press     =  client->_event( 'z2ui5_cl_demo_app_119' )
+*            mode      = 'LineMode'
+*            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*        ).
+*
+*        panel->generic_tile(
+*        header    = 'Image Mapster'
+*        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_142' )
+*        mode      = 'LineMode'
+*        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*    ).
+*
+*        panel->generic_tile(
+*          header    = 'Animate CSS'
+*          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_146' )
+*          mode      = 'LineMode'
+*          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*      ).
+*
+*        panel->generic_tile(
+*          header    = 'Chart.JS'
+*          press     =  client->_event( 'Z2UI5_CL_DEMO_APP_148' )
+*          mode      = 'LineMode'
+*          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*      ).
 
         panel = page->panel(
                 expandable = abap_false
