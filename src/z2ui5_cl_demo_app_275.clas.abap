@@ -140,37 +140,27 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
     lv_url = 'https://raw.githubusercontent.com/SAP/openui5/master/src/sap.ui.documentation/test/sap/ui/documentation/sdk/products.json'.
 
     " Create HTTP client instance
-    CALL METHOD cl_http_client=>create_by_url
-      EXPORTING
-        url    = lv_url
-      IMPORTING
-        client = lo_http_client
-      EXCEPTIONS
-        OTHERS = 1.
+    cl_http_client=>create_by_url( EXPORTING url = lv_url IMPORTING client = lo_http_client EXCEPTIONS OTHERS = 1 ).
     IF sy-subrc <> 0.
       WRITE: / 'Error in creating HTTP client'.
       RETURN.
     ENDIF.
 
     " Send HTTP GET request
-    CALL METHOD lo_http_client->send
-      EXCEPTIONS
-        http_communication_failure = 1
-        http_invalid_state         = 2
-        http_processing_failed     = 3
-        OTHERS                     = 4.
+    lo_http_client->send( EXCEPTIONS http_communication_failure = 1
+                                     http_invalid_state         = 2
+                                     http_processing_failed     = 3
+                                     OTHERS                     = 4 ).
     IF sy-subrc <> 0.
       WRITE: / 'Error in sending HTTP request'.
       RETURN.
     ENDIF.
 
     " Receive HTTP response
-    CALL METHOD lo_http_client->receive
-      EXCEPTIONS
-        http_communication_failure = 1
-        http_invalid_state         = 2
-        http_processing_failed     = 3
-        OTHERS                     = 4.
+    lo_http_client->receive( EXCEPTIONS http_communication_failure = 1
+                                        http_invalid_state         = 2
+                                        http_processing_failed     = 3
+                                        OTHERS                     = 4 ).
     IF sy-subrc <> 0.
       WRITE: / 'Error in receiving HTTP response'.
       RETURN.
