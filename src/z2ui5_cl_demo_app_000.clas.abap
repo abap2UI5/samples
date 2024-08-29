@@ -677,7 +677,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
         panel->generic_tile(
         header    = 'Tile'
-        subheader = 'ImageContent'
+        subheader = 'Image Content'
         press     = client->_event( 'Z2UI5_CL_DEMO_APP_271' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -687,6 +687,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             header    = 'Tile'
             subheader = 'Feed Content'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_275' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+        panel->generic_tile(
+            header    = 'Tile'
+            subheader = 'Monitor Tile'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_276' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
