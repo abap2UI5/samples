@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
           client->nav_app_leave( ).
         ENDIF.
       WHEN 'submit'.
-        dirty = boolc( text_input IS NOT INITIAL ).
+        dirty = xsdbool( text_input IS NOT INITIAL ).
       WHEN 'reset'.
         CLEAR:
           dirty,
