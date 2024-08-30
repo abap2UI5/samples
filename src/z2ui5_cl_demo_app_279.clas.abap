@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     DATA(box) = page->flex_box( direction = `Row` alignitems = `Start` class = 'sapUiTinyMargin' ).
 
     box->input(
-      id = `input`
-      value 			= client->_bind_edit( text_input )
-      submit			= client->_event( 'submit' )
+      id          = `input`
+      value       = client->_bind_edit( text_input )
+      submit      = client->_event( 'submit' )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
@@ -51,6 +51,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       icon        = 'sap-icon://message-success'
       class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
       visible     = client->_bind( info_area_visible ) ).
+
     box->button(
       text    = 'Reset'
       press   = client->_event( 'reset' )
