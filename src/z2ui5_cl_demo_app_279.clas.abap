@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION
     INTERFACES z2ui5_if_app .
 
     DATA text_input TYPE string .
-    DATA info_area_visible TYPE abap_bool .
     DATA dirty TYPE abap_bool.
 
   PRIVATE SECTION.
@@ -50,17 +49,19 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       colorscheme = '8'
       icon        = 'sap-icon://message-success'
       class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
-      visible     = client->_bind( info_area_visible ) ).
+      visible     = client->_bind( dirty ) ).
 
     box->button(
       text    = 'Reset'
       press   = client->_event( 'reset' )
       class   = `sapUiSmallMarginBegin`
-      visible = client->_bind( info_area_visible ) ).
+      visible = client->_bind( dirty ) ).
 
     page->_z2ui5( )->focus( focusid = `input` ).
+
 *    page->_z2ui5( )->dirty( dirty ).
-    page->_z2ui5( )->dirty(  '{= $' &&  client->_bind_Edit( text_input ) && ' !== "" }' ).
+    page->_z2ui5( )->dirty( client->_bind( dirty ) ).
+*    page->_z2ui5( )->dirty(  '{= $' &&  client->_bind_Edit( text_input ) && ' !== "" }' ).
 
     client->view_display( page->stringify( ) ).
 
@@ -71,7 +72,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        IF text_input is not initial.
+        IF text_input IS NOT INITIAL.
           render_popup( ).
         ELSE.
           client->nav_app_leave( ).
@@ -121,13 +122,10 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     on_event( ).
 
-*    client->dirty( dirty ).
-
     IF initialized = abap_false.
       initialized = abap_true.
       display_view( ).
     ELSE.
-      info_area_visible = dirty.
       client->view_model_update( ).
     ENDIF.
 
