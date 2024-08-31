@@ -10,11 +10,11 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION
 
     DATA text_input TYPE string .
     DATA info_area_visible TYPE abap_bool .
+    DATA dirty TYPE abap_bool.
 
   PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA initialized TYPE abap_bool.
-    DATA dirty TYPE abap_bool.
 
     METHODS display_view.
     METHODS on_event.
@@ -59,6 +59,8 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       visible = client->_bind( info_area_visible ) ).
 
     page->_z2ui5( )->focus( focusid = `input` ).
+*    page->_z2ui5( )->dirty( dirty ).
+    page->_z2ui5( )->dirty(  '{= $' &&  client->_bind_Edit( text_input ) && ' !== "" }' ).
 
     client->view_display( page->stringify( ) ).
 
@@ -69,7 +71,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        IF dirty = abap_true.
+        IF text_input is not initial.
           render_popup( ).
         ELSE.
           client->nav_app_leave( ).
@@ -119,7 +121,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     on_event( ).
 
-    client->dirty( dirty ).
+*    client->dirty( dirty ).
 
     IF initialized = abap_false.
       initialized = abap_true.
