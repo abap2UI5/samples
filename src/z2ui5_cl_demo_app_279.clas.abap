@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     page->_z2ui5( )->focus( focusid = `input` ).
 
 *    page->_z2ui5( )->dirty( dirty ).
-    page->_z2ui5( )->dirty( client->_bind_edit( dirty ) ).
+    page->_z2ui5( )->dirty( client->_bind( dirty ) ).
 *    page->_z2ui5( )->dirty(  '{= $' &&  client->_bind_Edit( text_input ) && ' !== "" }' ).
 
     client->view_display( page->stringify( ) ).
