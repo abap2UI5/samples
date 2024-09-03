@@ -31,6 +31,10 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
 
 
   METHOD display_view.
+    DATA(css) = `.tileLayout {`    &&
+                `    float: left;` &&
+                `}`.
+
     " Define the base URL for the server
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
 
