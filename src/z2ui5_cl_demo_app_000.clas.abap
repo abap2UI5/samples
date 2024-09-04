@@ -642,6 +642,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+            panel = page->panel(
+            expandable = abap_false
+            expanded   = abap_true
+            headertext = 'Tiles'
+       ).
+
         panel->generic_tile(
         header    = 'Tile'
         subheader = 'Numeric Content Without Margins'
