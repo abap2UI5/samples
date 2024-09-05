@@ -109,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
           ).
 
 
-    page->segmented_button( client->_bind_edit( mv_key )
+    page->segmented_button( selected_key = client->_bind_edit( mv_key )
         )->items(
             )->segmented_button_item(
                 key = 'VIEW_REFRESH'
