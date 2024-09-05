@@ -226,7 +226,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
       )->get_parent( )->get_parent( ).
 
     lv_test->label( 'Segmented Button'
-    )->segmented_button( client->_bind_edit( screen-segment_key )
+    )->segmented_button( selected_key = client->_bind_edit( screen-segment_key )
         )->items(
             )->segmented_button_item(
                 key = 'BLUE'
