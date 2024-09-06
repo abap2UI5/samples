@@ -27,6 +27,8 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
+
+
   METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
@@ -80,7 +82,8 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     tab_ko->items(
          )->column_list_item(
              )->cells(
-                 )->object_identifier( title = '{ID}' text = '{DESCR}' )->get_parent(
+                 )->object_identifier( title = '{ID}' )->get_parent(
+                 )->text( '{DESCR}'
                  )->text( '{ADATE}'
                  )->text( '{ATIME}' ).
 
@@ -102,12 +105,12 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     tab_ok->items(
          )->column_list_item(
              )->cells(
-                 )->object_identifier( title = '{ID}' text = '{DESCR}' )->get_parent(
+                 )->object_identifier( title = '{ID}' )->get_parent(
+                 )->text( '{DESCR}'
                  )->text( '{ADATE}'
                  )->text( '{ATIME}' ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
