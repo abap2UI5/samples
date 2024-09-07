@@ -34,11 +34,12 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       problematic_rows = VALUE #(
-        ( id = 1 descr = 'First row' adate = sy-datum atime = sy-uzeit )
-        ( id = 2 descr = 'Second row' adate = sy-datum atime = sy-uzeit )
-        ( id = 3 descr = 'Third row' adate = '' atime = '' )
-        ( id = 4 descr = 'Fourth row' adate = '' atime = '' )
-        ( id = 5 descr = 'Fifth row' adate = sy-datum atime = sy-uzeit )
+        ( id = 1 descr = 'filled with the actual date and time in correct format' adate = sy-datum atime = sy-uzeit )
+        ( id = 2 descr = 'correct init values' adate = '00000000' atime = '000000' )
+        ( id = 3 descr = 'correct init values by ignoring'  )
+        ( id = 4 descr = 'filling with a zero leads to a correct init value' adate = 0 atime = 0  )
+        ( id = 5 descr = 'this raises an exception now' adate = ''  atime = '' )
+        ( id = 6 descr = 'Fifth row' adate = sy-datum atime = sy-uzeit )
       ).
 
       these_are_fine_rows = VALUE #(
