@@ -2074,28 +2074,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel = page->panel(
         expandable = abap_false
         expanded   = abap_true
-        headertext = `Deprecated`
-    ).
-        panel->message_strip( `Running out of maintenance....` ).
-
-        panel->generic_tile(
-         header    = 'Message Manager & Validation'
-         subheader = `Constraints & Format Options`
-         press     = client->_event( 'Z2UI5_CL_DEMO_APP_084' )
-         mode      = 'LineMode'
-         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-     ).
-
-        panel->generic_tile(
-              header    = 'Tree Table with Template'
-              press     =  client->_event( 'Z2UI5_CL_DEMO_APP_007' )
-              mode      = 'LineMode'
-              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-          ).
-
-        panel = page->panel(
-        expandable = abap_false
-        expanded   = abap_true
         headertext = `For Testing only...`
     ).
 
