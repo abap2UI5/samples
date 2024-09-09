@@ -120,6 +120,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
          mode      = 'LineMode'
          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
+        panel->generic_tile(
+         header    = 'setSizeLimit'
+*         subheader = 'Table Cell Level'
+         press     =  client->_event( 'z2ui5_cl_demo_app_071' )
+         mode      = 'LineMode'
+         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
         panel = page->panel(
              expandable = abap_false
@@ -254,6 +260,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
+        panel->generic_tile(
+          header    = 'Message III'
+            subheader = 'Message Box & Events'
+          press     =  client->_event( 'z2ui5_cl_demo_app_084' )
+          mode      = 'LineMode'
+          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
 
         page = page2->panel(
             expandable = abap_true
