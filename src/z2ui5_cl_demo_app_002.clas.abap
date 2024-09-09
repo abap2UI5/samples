@@ -51,7 +51,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -59,6 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
     me->client = client.
 
     IF check_initialized = abap_false.
+      check_initialized = abap_true.
 
       DATA(lv_script) = `` && |\n| &&
                         `function setInputFIlter(){` && |\n| &&
@@ -81,8 +82,9 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
          )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
-      check_initialized = abap_true.
+
       z2ui5_on_init( ).
+      RETURN.
     ENDIF.
 
     z2ui5_on_event( ).
@@ -151,7 +153,7 @@ CLASS Z2UI5_CL_DEMO_APP_002 IMPLEMENTATION.
   METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
+*    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
     DATA(page) = view->shell(
          )->page(
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
