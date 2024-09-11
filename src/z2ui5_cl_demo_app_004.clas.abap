@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
           ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
-        )->simple_form( 'Controller' )->content( 'form'
+        )->simple_form( title = 'Controller' editable = abap_true )->content( 'form'
             )->label( 'Roundtrip'
             )->button(
                 text  = 'Client/Server Interaction'
