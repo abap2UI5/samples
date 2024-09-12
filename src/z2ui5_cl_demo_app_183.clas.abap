@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION
     DATA check_initialized TYPE abap_bool .
     DATA check_ui5 TYPE abap_bool .
     DATA mv_key TYPE string .
+    data sortorder type string value `None`.
 
     METHODS refresh_data .
   PROTECTED SECTION.
@@ -132,7 +133,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `$event` ) ) )
        )->column_menu_quick_sort( change = client->_event( 'ONSORT' )
          )->items( ns = `columnmenu`
-           )->column_menu_quick_sort_item(
+           )->column_menu_quick_sort_item( sortorder = client->_bind_edit( sortorder )
        )->get_parent( )->get_parent( )->get_parent(
        )->column_menu_quick_group( change = client->_event( 'ONGROUP' )
          )->items( ns = `columnmenu`
