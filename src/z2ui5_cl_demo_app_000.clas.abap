@@ -238,6 +238,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
            class  = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
+        panel->generic_tile(
+        header    = 'Tab Title'
+        press     = client->_event( 'z2ui5_cl_demo_app_125' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+        header    = 'Tab Favicon'
+        press     = client->_event( 'z2ui5_cl_demo_app_171' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
         panel = page->panel(
              expandable = abap_false
              expanded   = abap_true
@@ -267,6 +281,114 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           mode      = 'LineMode'
           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
+
+         panel = page->panel(
+               expandable = abap_false
+               expanded   = abap_true
+               headertext = `File API`
+          ).
+
+        panel->generic_tile(
+        header    = 'Download CSV'
+        subheader = 'Export Table as CSV'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_057' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+           header    = 'Upload CSV'
+           subheader = 'Import CSV as internal Table'
+           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_074' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
+
+        panel->generic_tile(
+            header    = 'File Uploader'
+            subheader = 'Upload files to the Backend'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_075' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+        panel->generic_tile(
+            header    = 'File Download'
+            subheader = 'Download files to the Frontend'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_186' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+        panel = page->panel(
+                     expandable = abap_false
+                     expanded   = abap_true
+                     headertext = `S-RTTI - Dynamic Typing`
+                ).
+
+
+        panel->generic_tile(
+             header    = 'Dynamic Types'
+             subheader = 'Use S-RTTI to send tables to the frontend'
+             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
+             mode      = 'LineMode'
+             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+
+        panel->generic_tile(
+             header    = 'Dynamic Objects I'
+             subheader = 'Use S-RTTI to render different Subapps'
+             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_131' )
+             mode      = 'LineMode'
+             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+         ).
+
+        panel->generic_tile(
+        header    = 'Dynamic Objects II'
+        subheader = 'User Generic Data Refs in Subapps'
+        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_117' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+     header    = 'Dynamic Objects III'
+     subheader = 'User Generic Data Refs in Subapps'
+     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
+     mode      = 'LineMode'
+     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
+        panel = page->panel(
+                expandable = abap_false
+                expanded   = abap_true
+                headertext = `Device Capabilities`
+           ).
+
+        panel->generic_tile(
+    header    = 'Geolocation'
+    subheader = ''
+    press     =  client->_event( 'z2ui5_cl_demo_app_120' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+        panel->generic_tile(
+    header    = 'Frontend Infos'
+    subheader = ''
+    press     =  client->_event( 'z2ui5_cl_demo_app_122' )
+    mode      = 'LineMode'
+    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+        panel->generic_tile(
+           header    = 'Camera & Picture'
+           press     =  client->_event( 'z2ui5_cl_demo_app_137' )
+           mode      = 'LineMode'
+           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+       ).
 
         page = page2->panel(
             expandable = abap_true
@@ -1566,112 +1688,24 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-        page = page2->panel(
-              expandable = abap_true
-               expanded   = client->_bind_edit( ms_check_expanded-custom_controls )
-              headertext = `Features`
-         ).
-
-
-        panel = page->panel(
-               expandable = abap_false
-               expanded   = abap_true
-               headertext = `File API`
-          ).
-
-        panel->generic_tile(
-        header    = 'Download CSV'
-        subheader = 'Export Table as CSV'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_057' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-           header    = 'Upload CSV'
-           subheader = 'Import CSV as internal Table'
-           press     =  client->_event( 'Z2UI5_CL_DEMO_APP_074' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-        panel->generic_tile(
-            header    = 'File Uploader'
-            subheader = 'Upload files to the Backend'
-            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_075' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel->generic_tile(
-            header    = 'File Download'
-            subheader = 'Download files to the Frontend'
-            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_186' )
-            mode      = 'LineMode'
-            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-        ).
-
-        panel = page->panel(
-                     expandable = abap_false
-                     expanded   = abap_true
-                     headertext = `S-RTTI - Dynamic Typing`
-                ).
-
-
-        panel->generic_tile(
-             header    = 'Dynamic Types'
-             subheader = 'Use S-RTTI to send tables to the frontend'
-             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_061' )
-             mode      = 'LineMode'
-             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-         ).
-
-
-        panel->generic_tile(
-             header    = 'Dynamic Objects I'
-             subheader = 'Use S-RTTI to render different Subapps'
-             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_131' )
-             mode      = 'LineMode'
-             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-         ).
-
-        panel->generic_tile(
-        header    = 'Dynamic Objects II'
-        subheader = 'User Generic Data Refs in Subapps'
-        press     =  client->_event( 'Z2UI5_CL_DEMO_APP_117' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-     header    = 'Dynamic Objects III'
-     subheader = 'User Generic Data Refs in Subapps'
-     press     =  client->_event( 'Z2UI5_CL_DEMO_APP_185' )
-     mode      = 'LineMode'
-     class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
- ).
+*        page = page2->panel(
+*              expandable = abap_true
+*               expanded   = client->_bind_edit( ms_check_expanded-custom_controls )
+*              headertext = `Features`
+*         ).
+*
+*
+*
 
 
 
-        panel = page->panel(
-                expandable = abap_false
-                expanded   = abap_true
-                headertext = `Custom Controls`
-           ).
+*        panel = page->panel(
+*                expandable = abap_false
+*                expanded   = abap_true
+*                headertext = `Custom Controls`
+*           ).
+*
 
-        panel->generic_tile(
-        header    = 'Tab Title'
-        press     = client->_event( 'z2ui5_cl_demo_app_125' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-        header    = 'Tab Favicon'
-        press     = client->_event( 'z2ui5_cl_demo_app_171' )
-        mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
 
 *        panel->generic_tile(
 *            header    = 'Spreadsheet Control'
@@ -1725,65 +1759,36 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 *          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 *      ).
 
-        panel = page->panel(
-                expandable = abap_false
-                expanded   = abap_true
-                headertext = `Device Capabilities`
-           ).
 
-        panel->generic_tile(
-    header    = 'Geolocation'
-    subheader = ''
-    press     =  client->_event( 'z2ui5_cl_demo_app_120' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-    header    = 'Frontend Infos'
-    subheader = ''
-    press     =  client->_event( 'z2ui5_cl_demo_app_122' )
-    mode      = 'LineMode'
-    class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-
-        panel->generic_tile(
-           header    = 'Camera & Picture'
-           press     =  client->_event( 'z2ui5_cl_demo_app_137' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-        panel = page->panel(
-                expandable = abap_false
-                expanded   = abap_true
-                headertext = `Launchpad Integration`
-           ).
-
-        panel->generic_tile(
-           header    = 'Launchpad I'
-           subheader = `Read Startup Parameters`
-           press     =  client->_event( 'z2ui5_cl_demo_app_187' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-        panel->generic_tile(
-           header    = 'Launchpad II'
-           subheader = `Set Title`
-           press     =  client->_event( 'z2ui5_cl_demo_app_188' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
-
-        panel->generic_tile(
-           header    = 'Launchpad III'
-           subheader = `Cross App Navigation`
-           press     =  client->_event( 'z2ui5_cl_demo_app_127' )
-           mode      = 'LineMode'
-           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-       ).
+*        panel = page->panel(
+*                expandable = abap_false
+*                expanded   = abap_true
+*                headertext = `Launchpad Integration`
+*           ).
+*
+*        panel->generic_tile(
+*           header    = 'Launchpad I'
+*           subheader = `Read Startup Parameters`
+*           press     =  client->_event( 'z2ui5_cl_demo_app_187' )
+*           mode      = 'LineMode'
+*           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*       ).
+*
+*        panel->generic_tile(
+*           header    = 'Launchpad II'
+*           subheader = `Set Title`
+*           press     =  client->_event( 'z2ui5_cl_demo_app_188' )
+*           mode      = 'LineMode'
+*           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*       ).
+*
+*        panel->generic_tile(
+*           header    = 'Launchpad III'
+*           subheader = `Cross App Navigation`
+*           press     =  client->_event( 'z2ui5_cl_demo_app_127' )
+*           mode      = 'LineMode'
+*           class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*       ).
 
         page = page2->panel(
               expandable = abap_true
