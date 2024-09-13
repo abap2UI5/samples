@@ -15,12 +15,14 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_check_initialized TYPE abap_bool.
+    DATA mv_multiselect TYPE abap_bool.
     METHODS ui5_display.
     METHODS ui5_event.
     METHODS ui5_callback.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -41,7 +43,13 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
              (  title = 'title_04'  value = 'value_04' )
              (  title = 'title_05'  value = 'value_05' ) ).
 
-        DATA(lo_app) = z2ui5_cl_pop_to_select=>factory( mt_tab ).
+        DATA(lo_app) = z2ui5_cl_pop_to_select=>factory(
+                           i_tab         = mt_tab
+                           i_multiselect = mv_multiselect
+                           i_title       = COND #(
+                                             WHEN mv_multiselect = abap_true
+                                             THEN `Multi select`
+                                             ELSE `Single select` ) ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -66,6 +74,11 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                     target = '_blank'
 
                     )->get_parent(
+           )->hbox(
+           )->text( text = 'Multiselect: ' class = 'sapUiTinyMargin'
+           )->switch(
+             state = client->_bind_edit( mv_multiselect )
+           )->get_parent(
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -98,9 +111,27 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     TRY.
         DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
         DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
-        FIELD-SYMBOLS <row> TYPE ty_row.
-        ASSIGN ls_result-row->* TO <row>.
-        client->message_box_display( `callback after popup to select: ` && <row>-title ).
+
+        IF ls_result-check_confirmed = abap_false.
+          client->message_box_display( `Popup was cancelled` ).
+          RETURN.
+        ENDIF.
+
+        IF mv_multiselect = abap_false.
+
+          FIELD-SYMBOLS <row> TYPE ty_row.
+          ASSIGN ls_result-row->* TO <row>.
+          client->message_box_display( `callback after popup to select: ` && <row>-title ).
+
+        ELSE.
+
+          ASSIGN ls_result-table->* TO FIELD-SYMBOL(<table>).
+          client->nav_app_call( z2ui5_cl_pop_table=>factory(
+                                    i_tab   = <table>
+                                    i_title = 'Selected rows' ) ).
+
+        ENDIF.
+
       CATCH cx_root.
     ENDTRY.
 
