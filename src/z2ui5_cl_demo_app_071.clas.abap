@@ -27,6 +27,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
+      WHEN `UPDATE2`.
+        client->view_model_update( ).
+        RETURN.
+
       WHEN 'BACK'.
         client->nav_app_leave( ).
         RETURN.
@@ -60,7 +64,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                      )->button(
                          text  = 'update'
                          press = client->_event( val = 'UPDATE' )
-        )->stringify( ) t_config = VALUE #( ( n = `setSizeLimit` v = mv_set_size_limit ) ) ).
+*                                )->button(
+*                         text  = 'update model'
+*                         press = client->_event( val = 'UPDATE2' )
+        )->stringify( ) s_config = VALUE #( set_size_limit = mv_set_size_limit ) ).
 
   ENDMETHOD.
 ENDCLASS.
