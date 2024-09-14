@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_284 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -94,12 +94,12 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
                                                   )->segmented_button_item( icon = `sap-icon://bar-chart` )->get_parent( )->get_parent(
                                               )->button( icon = `sap-icon://group-2` type = `Transparent`
                                               )->button( icon = `sap-icon://action-settings` type = `Transparent` )->get_parent( )->get_parent(
-                                          )->columns( ns = `table` )->get(
+                                          )->columns( ns = `table`
                                               )->analytical_column( ns = `table` )->get_parent(
                                               )->analytical_column( ns = `table` )->get_parent(
-                                              )->analytical_column( ns = `table` )->get_parent( )->get_parent( )->get_parent(
-                                          )->layout_data(
-                                              )->flex_item_data( growfactor = `1` basesize = `0%` styleclass = `sapUiResponsiveContentPadding` )->get_parent( )->get_parent( )->get_parent(
+                                              )->analytical_column( ns = `table` )->get_parent( )->get_parent(
+                                          )->layout_data( ns = `table`
+                                              )->flex_item_data( growfactor = `1` basesize = `0%` styleclass = `sapUiResponsiveContentPadding` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                               )->footer(
                                   )->overflow_toolbar(
                                       )->content(
