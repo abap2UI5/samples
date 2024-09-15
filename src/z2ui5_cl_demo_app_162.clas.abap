@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_sql TYPE z2ui5_cl_util=>ty_t_filter_multi.
+    DATA mt_filter TYPE z2ui5_cl_util=>ty_t_filter_multi.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `PREVIEW_FILTER`.
-        client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_sql ) ).
+        client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_filter ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
@@ -53,7 +53,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
   METHOD set_data.
 
-    "replace this with a db select here...
     mt_table = VALUE #(
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -65,7 +64,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     z2ui5_cl_util=>filter_itab(
       EXPORTING
-        filter = mt_sql
+        filter = mt_filter
       CHANGING
         val    = mt_table
     ).
@@ -81,10 +80,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-         )->header_content(
-             )->link(
-                 text = 'Source_Code' target = '_blank'
-        )->get_parent( ).
+          ).
 
     DATA(vbox) = view->vbox( ).
 
@@ -122,7 +118,8 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
-      mt_sql = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
+      mt_filter = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
+      DELETE mt_filter WHERE name = `SELKZ`.
       view_display( ).
       RETURN.
     ENDIF.
@@ -131,7 +128,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
       TRY.
           DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range_m( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           IF lo_value_help->result( )-check_confirmed = abap_true.
-            mt_sql = lo_value_help->result( )-t_sql.
+            mt_filter = lo_value_help->result( )-t_filter.
             set_data( ).
             client->view_model_update( ).
           ENDIF.
