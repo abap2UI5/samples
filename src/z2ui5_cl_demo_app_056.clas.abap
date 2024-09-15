@@ -73,7 +73,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
   METHOD set_data.
 
-    "replace this with a db select here...
     mt_table = VALUE #(
         ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -83,8 +82,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
     ).
 
-    "put the range in the where clause of your abap sql command
-    "here we use an internal table instead
     DELETE mt_table WHERE product NOT IN mt_range.
 
   ENDMETHOD.
@@ -98,17 +95,14 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-         )->header_content(
-             )->link(
-                 text = 'Source_Code' target = '_blank'
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).
     vbox->_z2ui5( )->multiinput_ext(
                        addedtokens      = client->_bind_edit( mt_tokens_added )
                        removedtokens    = client->_bind_edit( mt_tokens_removed )
-                       change    = client->_event( 'UPDATE_TOKENS' )
-                       multiinputid    = `MultiInput`  ).
+                       change           = client->_event( 'UPDATE_TOKENS' )
+                       multiinputid     = `MultiInput`  ).
 
     DATA(tab) = vbox->table(
         items = client->_bind( val = mt_table )
@@ -169,12 +163,15 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
           DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-          IF lo_value_help->result( )-check_confirmed = abap_true.
-            mt_range = lo_value_help->result( )-t_range.
-            mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
-            set_data( ).
-            client->view_model_update( ).
+          IF lo_value_help->result( )-check_confirmed = abap_false.
+            RETURN.
           ENDIF.
+
+          mt_range = lo_value_help->result( )-t_range.
+          mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
+          set_data( ).
+          client->view_model_update( ).
+
         CATCH cx_root.
       ENDTRY.
       RETURN.
