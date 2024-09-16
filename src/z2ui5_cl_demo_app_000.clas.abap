@@ -254,7 +254,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
         panel->generic_tile(
-        header    = 'Session Handling Stateful'
+        header    = 'Session Stickyness'
         press     = client->_event( 'z2ui5_cl_demo_app_137' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
@@ -1118,13 +1118,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
          ).
 
-        panel->generic_tile(
-             header    = 'Popover'
-             subheader = 'Call from Nested Views & Popup'
-             press     =  client->_event( 'z2ui5_cl_demo_app_147' )
-             mode      = 'LineMode'
-             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-         ).
+*        panel->generic_tile(
+*             header    = 'Popover'
+*             subheader = 'Call from Nested Views & Popup'
+*             press     =  client->_event( 'z2ui5_cl_demo_app_147' )
+*             mode      = 'LineMode'
+*             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*         ).
 
 
         panel = page->panel(
