@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-      title          = `abap2UI5 - Sample: Sticky Session with locks`
+      title          = `abap2UI5 - Sample: Sticky Session with locks - (ABAP Standard Only)`
       navbuttonpress = client->_event( 'BACK' )
       shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
