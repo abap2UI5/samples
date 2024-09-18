@@ -17,14 +17,14 @@ CLASS lcl_locking DEFINITION CREATE PRIVATE FINAL.
         gtcode   TYPE c LENGTH 20,   " Transaction Code in the Lock Entry
         gbcktype TYPE c LENGTH 1,    " Backup flag for lock entry
         gthost   TYPE c LENGTH 32,   " Host Name in the Lock Owner ID
-        gtwp     TYPE numc2,         " Work Process Number in Lock Owner ID
-        gtsysnr  TYPE numc2,         " SAP System Number in Lock Owner ID
-        gtdate   TYPE dats,          " Date within lock owner ID
-        gttime   TYPE tims,          " Time in Lock Owner ID
+        gtwp     TYPE n LENGTH 2,         " Work Process Number in Lock Owner ID
+        gtsysnr  TYPE n LENGTH 2,         " SAP System Number in Lock Owner ID
+        gtdate   TYPE d,          " Date within lock owner ID
+        gttime   TYPE t,          " Time in Lock Owner ID
         gtusec   TYPE n LENGTH 6,         " Time/Microseconds Share in Lock Owner ID
         gtmark   TYPE c LENGTH 1,    " Selection Indicator of Lock Entry
-        gusetxt  TYPE numc10,        " Cumulative Counter for Lock Entry
-        gusevbt  TYPE numc10,        " Cumulative Counter for Lock Entry / Update Task
+        gusetxt  TYPE n LENGTH 10,        " Cumulative Counter for Lock Entry
+        gusevbt  TYPE n LENGTH 10,        " Cumulative Counter for Lock Entry / Update Task
       END OF ty_seqg3.
 
     CLASS-METHODS acquire_lock.
@@ -65,7 +65,7 @@ CLASS lcl_locking IMPLEMENTATION.
     argument = |ZTEST                         Z100*|.
 
     DATA(lv_fm) = 'ENQUEUE_READ'.
-    CALL FUNCTION 'ENQUEUE_READ'
+    CALL FUNCTION lv_fm
       EXPORTING
         garg                  = argument
         guname                = sy-uname
