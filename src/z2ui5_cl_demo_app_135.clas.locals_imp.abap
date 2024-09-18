@@ -1,6 +1,32 @@
 CLASS lcl_locking DEFINITION CREATE PRIVATE FINAL.
   PUBLIC SECTION.
 
+    TYPES:
+      BEGIN OF ty_seqg3,
+        gname    TYPE c LENGTH 30,   " Elementary Lock of Lock Entry (Table Name)
+        garg     TYPE c LENGTH 150,  " Argument String (=Key Fields) of Lock Entry
+        gmode    TYPE c LENGTH 1,    " Lock Mode (Shared/Exclusive) of a Lock Entry
+        gusr     TYPE c LENGTH 58,   " Lock Owner, ID of Logical Unit of Work (LUW)
+        gusrvb   TYPE c LENGTH 58,   " Lock Owner, ID of Logical Unit of Work (LUW) / Update Task
+        guse     TYPE int4,          " Cumulative Counter for Lock Entry / Dialog
+        gusevb   TYPE int4,          " Cumulative Counter for Lock Entry / Update Task
+        gobj     TYPE c LENGTH 16,   " Name of Lock Object in the Lock Entry
+        gclient  TYPE c LENGTH 3,    " Client in the lock entry
+        guname   TYPE c LENGTH 12,   " User name in lock entry
+        gtarg    TYPE c LENGTH 50,   " Argument String of Lock Entry (Table Key Fields)
+        gtcode   TYPE c LENGTH 20,   " Transaction Code in the Lock Entry
+        gbcktype TYPE c LENGTH 1,    " Backup flag for lock entry
+        gthost   TYPE c LENGTH 32,   " Host Name in the Lock Owner ID
+        gtwp     TYPE numc2,         " Work Process Number in Lock Owner ID
+        gtsysnr  TYPE numc2,         " SAP System Number in Lock Owner ID
+        gtdate   TYPE dats,          " Date within lock owner ID
+        gttime   TYPE tims,          " Time in Lock Owner ID
+        gtusec   TYPE n LENGTH 6,         " Time/Microseconds Share in Lock Owner ID
+        gtmark   TYPE c LENGTH 1,    " Selection Indicator of Lock Entry
+        gusetxt  TYPE numc10,        " Cumulative Counter for Lock Entry
+        gusevbt  TYPE numc10,        " Cumulative Counter for Lock Entry / Update Task
+      END OF ty_seqg3.
+
     CLASS-METHODS acquire_lock.
 
     CLASS-METHODS get_lock_counter
@@ -33,13 +59,13 @@ CLASS lcl_locking IMPLEMENTATION.
 
 
   METHOD get_lock_counter.
-    DATA: enqueue_table TYPE STANDARD TABLE OF seqg3.
+    DATA: enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
 
     DATA argument TYPE c LENGTH 150.
     argument = |ZTEST                         Z100*|.
 
     DATA(lv_fm) = 'ENQUEUE_READ'.
-    CALL FUNCTION lv_fm
+    CALL FUNCTION 'ENQUEUE_READ'
       EXPORTING
         garg                  = argument
         guname                = sy-uname
