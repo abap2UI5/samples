@@ -254,7 +254,16 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
         panel->generic_tile(
-        header    = 'Session Stickyness'
+        header    = 'Session Stickyness I'
+        subheader = 'Stateful mode'
+        press     = client->_event( 'z2ui5_cl_demo_app_137' )
+        mode      = 'LineMode'
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+            panel->generic_tile(
+        header    = 'Session Stickyness II'
+        subheader = 'Use Locks'
         press     = client->_event( 'z2ui5_cl_demo_app_137' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
