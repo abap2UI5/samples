@@ -264,7 +264,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             panel->generic_tile(
         header    = 'Session Stickyness II'
         subheader = 'Use Locks'
-        press     = client->_event( 'z2ui5_cl_demo_app_137' )
+        press     = client->_event( 'z2ui5_cl_demo_app_135' )
         mode      = 'LineMode'
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
@@ -1958,21 +1958,21 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
              class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
           ).
 
-        panel->generic_tile(
-      header = `Messaging`
-       subheader    = 'Since 1.118'
-       press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
-       mode      = 'LineMode'
-       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
-
-        panel->generic_tile(
-      header = `Messaging & Nested Views`
-       subheader    = 'Since 1.118'
-       press     = client->_event( 'Z2UI5_CL_DEMO_APP_071' )
-       mode      = 'LineMode'
-       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+*        panel->generic_tile(
+*      header = `Messaging`
+*       subheader    = 'Since 1.118'
+*       press     = client->_event( 'Z2UI5_CL_DEMO_APP_135' )
+*       mode      = 'LineMode'
+*       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*    ).
+*
+*        panel->generic_tile(
+*      header = `Messaging & Nested Views`
+*       subheader    = 'Since 1.118'
+*       press     = client->_event( 'Z2UI5_CL_DEMO_APP_071' )
+*       mode      = 'LineMode'
+*       class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*    ).
 
         panel = page->panel(
         expandable = abap_false
