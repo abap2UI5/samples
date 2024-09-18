@@ -1,9 +1,12 @@
 CLASS lcl_locking DEFINITION CREATE PRIVATE FINAL.
   PUBLIC SECTION.
+
     CLASS-METHODS acquire_lock.
+
     CLASS-METHODS get_lock_counter
       RETURNING
         VALUE(result) TYPE i.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -12,7 +15,8 @@ CLASS lcl_locking IMPLEMENTATION.
 
   METHOD acquire_lock.
 
-    CALL FUNCTION 'ENQUEUE_E_TABLE'
+    DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+    CALL FUNCTION lv_fm
       EXPORTING
         tabname        = 'ZTEST'
         varkey         = 'Z100'
@@ -31,9 +35,11 @@ CLASS lcl_locking IMPLEMENTATION.
   METHOD get_lock_counter.
     DATA: enqueue_table TYPE STANDARD TABLE OF seqg3.
 
-    DATA(argument) = CONV eqegraarg( |ZTEST                         Z100*| ).
+    DATA argument TYPE c LENGTH 150.
+    argument = |ZTEST                         Z100*|.
 
-    CALL FUNCTION 'ENQUEUE_READ'
+    DATA(lv_fm) = 'ENQUEUE_READ'.
+    CALL FUNCTION lv_fm
       EXPORTING
         garg                  = argument
         guname                = sy-uname
