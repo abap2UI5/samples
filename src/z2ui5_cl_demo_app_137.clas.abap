@@ -73,6 +73,7 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
+        set_session_stateful( client = client stateful = abap_false ).
         client->nav_app_leave( ).
       WHEN 'INCREMENT'.
         instance_counter = lcl_static_container=>increment( ).
