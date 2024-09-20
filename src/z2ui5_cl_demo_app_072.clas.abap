@@ -93,9 +93,6 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
-    page->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank'  ).
     DATA(lo_items) = page->icon_tab_bar( class = 'sapUiResponsiveContentPadding' selectedKey = client->_bind_edit( lv_selectedKey )  select = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count = client->_bind_edit( lv_cnt_total ) text = 'Products' key = 'ALL' showall = abap_true ).
     lo_items->icon_tab_separator(  ).

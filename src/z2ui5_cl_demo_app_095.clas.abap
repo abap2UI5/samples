@@ -94,11 +94,6 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
-    page->header_content(
-*       )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1683753816716345345`
-       )->link( text = 'Source_Code' target = '_blank'  ).
-
-
     DATA(o_grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 

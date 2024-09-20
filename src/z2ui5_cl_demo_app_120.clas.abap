@@ -45,12 +45,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                       title          = 'abap2UI5 - Device Capabilities'
                       navbuttonpress = client->_event( val = 'BACK' )
                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                  )->header_content(
-                      )->link(
-                          text = 'Source_Code'
-
-                          target = '_blank'
-                  )->get_parent(
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
                                             longitude        = client->_bind_edit( longitude )
@@ -98,12 +92,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                       title          = 'abap2UI5 - Device Capabilities'
                       navbuttonpress = client->_event( val = 'BACK' )
                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                  )->header_content(
-                      )->link(
-                          text = 'Source_Code'
-
-                          target = '_blank'
-                  )->get_parent(
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event(  )
                                             longitude        = client->_bind_edit( longitude )

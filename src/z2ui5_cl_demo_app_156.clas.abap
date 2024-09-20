@@ -39,12 +39,6 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
                 title          = 'abap2UI5 - Popup Input Value'
                 navbuttonpress = client->_event( val = 'BACK' )
                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->header_content(
-                )->link(
-                    text = 'Source_Code'
-                    target = '_blank'
-
-                    )->get_parent(
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

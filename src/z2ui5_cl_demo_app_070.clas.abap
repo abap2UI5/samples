@@ -154,11 +154,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
-    page1->header_content(
-          )->link(
-              text = 'Source_Code' target = '_blank'
-     ).
-
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).

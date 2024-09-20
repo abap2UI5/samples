@@ -60,14 +60,7 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
                 title          = 'abap2UI5 - Table with different Selection Modes'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                )->header_content(
-                    )->link(
-                        text = 'Demo' target = '_blank'
-                        href = 'https://twitter.com/abap2UI5/status/1637852441671528448'
-                    )->link(
-                        text = 'Source_Code' target = '_blank'
-
-                )->get_parent( ).
+                ).
 
         page->segmented_button(
             selected_key     = client->_bind_edit( mv_sel_mode )

@@ -114,13 +114,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
               title          = 'abap2UI5 - List Report Features'
               navbuttonpress = client->_event( 'BACK' )
               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          )->header_content(
-              )->link(
-                  text = 'Demo' target = '_blank'
-                  href = 'https://twitter.com/abap2UI5/status/1661723127595016194'
-              )->link(
-                  text = 'Source_Code' target = '_blank'
-         )->get_parent( ).
+           ).
 
     IF mv_check_download = abap_true.
       mv_check_download = abap_false.

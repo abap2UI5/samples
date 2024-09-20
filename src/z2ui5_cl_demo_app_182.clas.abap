@@ -112,11 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                     title          = 'abap2UI5 - Network Graph - Org Tree'
                     navbuttonpress = client->_event( val = 'BACK' )
                     shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                )->header_content(
-                    )->link(
-                        text = 'Source_Code'
-                        target = '_blank'
-                )->get_parent( ).
+              ).
 
     DATA(graph) = page->network_graph( enablewheelzoom = abap_false
                                        orientation = `TopBottom`

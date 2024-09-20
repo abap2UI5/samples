@@ -67,10 +67,6 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             class = 'sapUiContentPadding' ).
 
-    page->header_content(
-          )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1688451062137573376`
-          )->link(
-              text = 'Source_Code' target = '_blank'  ).
     DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
