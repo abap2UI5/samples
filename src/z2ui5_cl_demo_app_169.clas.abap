@@ -38,14 +38,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
                 title          = 'abap2UI5 - JSON Export ITAB'
                 navbuttonpress = client->_event( 'BACK' )
                   shownavbutton = abap_true
-            )->header_content(
-                )->link(
-                    text = 'Demo' target = '_blank'
-                    href = 'https://twitter.com/abap2UI5/status/1630240894581608448'
-                )->link(
-                    text = 'Source_Code' target = '_blank'
-
-        )->get_parent( ).
+           ).
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
@@ -109,7 +102,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_itab_json_dl=>factory( t_tab ) ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

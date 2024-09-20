@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
   METHOD z2ui5_on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
       WHEN 'POST'.
         IF mv_value IS INITIAL.
@@ -95,9 +95,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                    )->header_content(
-                    )->link( text = 'Source_Code' target = '_blank'
-            )->get_parent( ).
+            ).
 
     DATA(fi) = page->vbox(
       )->feed_input( post = client->_event( val = 'POST' )

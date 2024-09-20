@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
       WHEN mv_cancel_event OR mv_confirm_event.
         mv_event = client->get( )-event.
         client->popup_destroy( ).
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
         return.
     ENDCASE.
 

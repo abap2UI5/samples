@@ -41,10 +41,6 @@ CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
             title = 'abap2UI5 - Visualization'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = abap_true
-            )->header_content(
-                )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1639191954285113344`
-                )->link( text = 'Source_Code' target = '_blank'
-        )->get_parent(
         )->tab_container( ).
 
     DATA(grid) = container->tab(
@@ -162,7 +158,7 @@ CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
 *      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
 *      IF lv_version CS `OPEN`.
 *        client->message_box_display( text = `Charts are not avalaible with OpenUI5, change your UI5 library first` type = `error` ).
-*        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+*        client->nav_app_leave( ).
 *      ENDIF.
 
       render_tab_donut( ).
@@ -183,7 +179,7 @@ CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

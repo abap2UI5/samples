@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
       WHEN 'ALL'.
         z2ui5_view_settings_popup( ).
       WHEN 'SORT'.

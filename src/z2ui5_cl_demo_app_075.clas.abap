@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
             CLEAR mv_path.
 
           WHEN 'BACK'.
-            client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+            client->nav_app_leave( ).
 
         ENDCASE.
 
@@ -88,10 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
             title          = 'abap2UI5 - Upload Files'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        )->header_content(
-            )->toolbar_spacer(
-            )->link( text = 'Source_Code' target = '_blank'
-        )->get_parent( ).
+        ).
 
     IF mv_file IS NOT INITIAL.
 

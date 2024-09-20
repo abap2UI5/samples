@@ -34,12 +34,6 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                   checkactive = client->_bind( mv_check_timer_active )
                   finished    = client->_event_client( val   = client->cs_event-open_new_tab
                                                          t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
-              )->header_content(
-                  )->link(
-                      text = 'Source_Code'
-
-                      target = '_blank'
-              )->get_parent(
               )->simple_form( title = 'Form Title' editable = abap_true
                   )->content( 'form'
                       )->button(

@@ -32,7 +32,7 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
 
@@ -41,10 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
         )->page(
                title          = 'abap2UI5 - Flow Logic - APP 85'
                navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
-           )->header_content(
-               )->link( text = 'Demo'        target = '_blank' href = `https://twitter.com/abap2UI5/status/1640743794206228480`
-               )->link( text = 'Source_Code' target = '_blank'
-           )->get_parent( ).
+       ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
 

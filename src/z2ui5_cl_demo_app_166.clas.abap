@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
 
     client->view_model_update( ).

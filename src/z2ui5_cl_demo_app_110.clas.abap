@@ -35,12 +35,6 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
               title          = 'abap2UI5 - Sample: MaskInput'
               navbuttonpress = client->_event( val = 'BACK' )
               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          )->header_content(
-              )->link( text = 'Demo' target = '_blank' href = `https://twitter.com/abap2UI5/status/1643899059839672321`
-              )->link(
-                  text = 'Source_Code' target = '_blank'
-
-          )->get_parent(
           )->simple_form( title = 'Generic Mask Input' layout = 'ColumnLayout' editable = abap_true
 *              )->content( 'form'
                   )->label( text = 'Unique ID'
@@ -103,7 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

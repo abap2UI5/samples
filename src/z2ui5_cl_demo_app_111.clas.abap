@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
@@ -138,14 +138,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
             title          = 'abap2UI5 - List Report Features'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-
-    page1->header_content(
-          )->link(
-              text = 'Demo' target = '_blank'
-              href = 'https://twitter.com/abap2UI5/status/1674437273943937025'
-          )->link(
-              text = 'Source_Code' target = '_blank'
-     ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true headerpinned = abap_true ).
 
