@@ -267,7 +267,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
         ui5_display_view( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
       WHEN 'CONTINUE'.
         client->popup_destroy( ).

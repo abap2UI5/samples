@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_itab_json_dl=>factory( t_tab ) ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

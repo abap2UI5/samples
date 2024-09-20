@@ -180,7 +180,7 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
         client->popover_destroy( ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 

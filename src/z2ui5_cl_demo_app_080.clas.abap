@@ -135,7 +135,7 @@ CLASS Z2UI5_CL_DEMO_APP_080 IMPLEMENTATION.
         DATA(ls_client) = client->get( ).
         client->message_toast_display( |Event AppSelected with appointment {  ls_client-t_event_arg[ 1 ] }| ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 

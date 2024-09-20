@@ -59,7 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
         client->message_box_display( 'button post was pressed' ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
 
     ENDCASE.
 
