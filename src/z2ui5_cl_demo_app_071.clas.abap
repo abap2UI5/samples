@@ -27,16 +27,21 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
-      WHEN `UPDATE2`.
+      WHEN `UPDATE`.
+        client->follow_up_action( client->_event_client(
+                                    val   = `SET_SIZE_LIMIT`
+                                    t_arg = value #( ( conv #( mv_set_size_limit ) ) )
+                        )    ).
         client->view_model_update( ).
-        RETURN.
+        client->message_toast_display( `SizeLimitUpdated` ).
+*        RETURN.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
         RETURN.
     ENDCASE.
 
-    client->message_toast_display( `View updated` ).
+
 
     DATA(lt_combo) = VALUE ty_T_combo( ).
     DO mv_combo_number TIMES.
@@ -62,12 +67,9 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                         )->item( key = '{KEY}' text = '{TEXT}'
                         )->get_parent( )->get_parent(
                      )->button(
-                         text  = 'update'
+                         text  = 'Press 2x update'
                          press = client->_event( val = 'UPDATE' )
-*                                )->button(
-*                         text  = 'update model'
-*                         press = client->_event( val = 'UPDATE2' )
-        )->stringify( ) s_config = VALUE #( set_size_limit = mv_set_size_limit ) ).
+        )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
