@@ -88,9 +88,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
   METHOD z2ui5_set_search.
 
-    DATA(lt_args) = client->get( )-t_event_arg.
-    mv_search_value = VALUE #( lt_args[ 1 ] OPTIONAL ).
-    IF mv_search_value IS INITIAL.
+    IF client->get_event_arg( 1 ) IS INITIAL.
       RETURN.
     ENDIF.
 

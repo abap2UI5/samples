@@ -105,8 +105,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         z2ui5_on_render( ).
 
       WHEN 'POST'.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( lt_arg[ 1 ] ).
+        client->message_toast_display( client->get_event_arg( 1 ) ).
 
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.

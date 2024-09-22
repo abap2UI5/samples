@@ -115,11 +115,9 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         client->popover_destroy( ).
 
       WHEN `POPOVER_DETAIL`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        DATA(lv_open_by_id) = lt_arg[ 1 ].
         mv_check_popover = abap_true.
-        mv_product = lt_arg[ 2 ].
-        z2ui5_display_popover( lv_open_by_id ).
+        mv_product = client->get_event_arg( 2 ).
+        z2ui5_display_popover( client->get_event_arg( 1 ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
