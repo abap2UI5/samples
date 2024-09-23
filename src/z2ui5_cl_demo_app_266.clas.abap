@@ -50,8 +50,6 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton' ).
 
-    page_01->_generic_property( VALUE #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` ) ).
-
     DATA(page_02) = page_01->page(
                               title = `Page`
                               class = `sapUiContentPadding`
