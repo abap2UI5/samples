@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_283 DEFINITION
+ CLASS z2ui5_cl_demo_app_283 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -52,45 +52,43 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
            target = '_blank'
            href   = base_url && 'sdk/#/entity/sap.m.FeedInput/sample/sap.m.sample.FeedInput' ).
 
-    page->_generic_property( VALUE #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` ) ).
-
     page->label( text = `Without Icon` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+          post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            showicon = abap_false ).
 
     page->label( text = `With Icon Placeholder` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            showicon = abap_true ).
 
     page->label( text = `With Icon Placeholder` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            showicon = abap_true
            icon =  base_url && `test-resources/sap/m/images/george_washington.jpg` ).
 
     page->label( text = `Disabled` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            enabled = abap_false
            showicon = abap_true
            icon =  base_url && `test-resources/sap/m/images/george_washington.jpg` ).
 
     page->label( text = `Rows Set to 5` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            rows = `5` ).
 
     page->label( text = `With Exceeded Text` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            maxlength = `20`
            showexceededtext = abap_true ).
 
     page->label( text = `With Growing` class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-           post =  `MessageToast.show( 'Posted new feed entry: ' + ${$source>/value} )`
+           post = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            growing = abap_true ).
 
     client->view_display( page->stringify( ) ).
@@ -105,6 +103,8 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
         client->nav_app_leave( ).
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
+      WHEN 'onPost'.
+        client->message_toast_display( `Posted new feed entry: ` && client->get_event_arg( 1 ) ).
     ENDCASE.
 
   ENDMETHOD.
