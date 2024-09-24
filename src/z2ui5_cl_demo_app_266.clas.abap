@@ -2,11 +2,12 @@ CLASS z2ui5_cl_demo_app_266 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
 
-  INTERFACES z2ui5_if_app.
+    INTERFACES z2ui5_if_app.
 
-  DATA check_initialized TYPE abap_bool.
+    DATA check_initialized TYPE abap_bool.
+
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -49,57 +50,57 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton' ).
 
-    page_01->_generic_property( VALUE #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` ) ).
-
     DATA(page_02) = page_01->page(
-                             title = `Page`
-                             class = `sapUiContentPadding`
-                             )->custom_header(
-                                 )->bar(
-                                     )->content_middle(
-                                         )->title( level = `H2` text = `Title` )->get_parent(
-                                     )->content_right(
-                                         )->toggle_button( icon = `sap-icon://edit`
-                                                           press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                                                     )->get_parent( )->get_parent( )->get_parent(
-
-
-                             )->sub_header(
-                                 )->bar(
-                                     )->content_left(
-                                         )->toggle_button( text = `Pressed` enabled = abap_true pressed = abap_true
-                                                           press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                         )->toggle_button( text = `Pressed & Disabled` enabled = abap_false pressed = abap_true
-                                                           press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                                                     )->get_parent(
-                                     )->content_right(
-                                         )->toggle_button( icon = `sap-icon://action`
-                                                           press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                         )->toggle_button( icon = `sap-icon://home` enabled = abap_false
-                                                           press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                                                     )->get_parent( )->get_parent( )->get_parent(
-                             )->hbox(
-                                 )->toggle_button( text = `Disabled` enabled = `false`
-                                                   press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')` )->get(
-                                     )->layout_data(
-                                         )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                 )->toggle_button( text = `Pressed` enabled = abap_true pressed = abap_true
-                                                   press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')` )->get(
-                                     )->layout_data(
-                                         )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                 )->toggle_button( icon = `sap-icon://action` enabled = abap_true pressed = abap_true
-                                                   press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')` )->get(
-                                     )->layout_data(
-                                         )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent(
-                             )->footer(
+                              title = `Page`
+                              class = `sapUiContentPadding`
+                              )->custom_header(
                                   )->bar(
+                                      )->content_middle(
+                                          )->title( level = `H2` text = `Title`
+                                      )->get_parent(
                                       )->content_right(
-                                          )->toggle_button( text = `Pressed & Disabled` enabled = abap_false pressed = abap_true
-                                                            press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                                          )->toggle_button( icon = `sap-icon://action`
-                                                            press =  `MessageToast.show(${$source>/pressed} ? ${$source>/id} + ' Pressed' : ${$source>/id} + ' Unpressed')`
-                    ).
-
+                                          )->toggle_button( icon = `sap-icon://edit` press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                      )->get_parent(
+                                  )->get_parent(
+                              )->get_parent(
+                              )->sub_header(
+                                  )->bar(
+                                      )->content_left(
+                                          )->toggle_button( text = `Pressed` enabled = abap_true pressed = abap_true press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                          )->toggle_button( text = `Pressed & Disabled` enabled = abap_false pressed = abap_true press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                      )->get_parent(
+                                      )->content_right(
+                                          )->toggle_button( icon = `sap-icon://action` press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                          )->toggle_button( icon = `sap-icon://home` enabled = abap_false press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                      )->get_parent(
+                                  )->get_parent(
+                              )->get_parent(
+                              )->hbox(
+                                  )->toggle_button( text = `Disabled` enabled = `false` press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `1`
+                                      )->get_parent(
+                                  )->get_parent(
+                                  )->toggle_button( text = `Pressed` enabled = abap_true pressed = abap_true press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `1`
+                                      )->get_parent(
+                                  )->get_parent(
+                                  )->toggle_button( icon = `sap-icon://action` enabled = abap_true pressed = abap_true press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `1`
+                                      )->get_parent(
+                                  )->get_parent(
+                              )->get_parent(
+                              )->footer(
+                                   )->bar(
+                                       )->content_right(
+                                           )->toggle_button( text = `Pressed & Disabled` enabled = abap_false pressed = abap_true press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                           )->toggle_button( icon = `sap-icon://action` press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                       )->get_parent(
+                                   )->get_parent(
+                              )->get_parent(
+                             ).
     client->view_display( page_02->stringify( ) ).
 
   ENDMETHOD.
@@ -112,7 +113,14 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
         client->nav_app_leave( ).
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-    ENDCASE.
+      WHEN 'onPress'.
+        IF  client->get_event_arg( 1 ) = 'X'.
+          client->message_toast_display( client->get_event_arg( 2 ) && ` Pressed` ).
+        ELSE.
+          client->message_toast_display( client->get_event_arg( 2 ) && ` Unpressed` ).
+        ENDIF.
+  ENDCASE.
+
 
   ENDMETHOD.
 
