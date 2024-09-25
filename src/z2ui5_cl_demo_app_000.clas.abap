@@ -784,7 +784,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         panel->generic_tile(
             header    = 'Breadcrumbs'
             subheader = 'sample with current page link'
-            press     =  client->_event( 'z2ui5_cl_demo_app_291' )
+            press     =  client->_event( 'z2ui5_cl_demo_app_292' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
