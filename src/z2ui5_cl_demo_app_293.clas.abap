@@ -27,7 +27,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_293 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
 
 
   METHOD display_view.
@@ -100,7 +100,7 @@ CLASS Z2UI5_CL_DEMO_APP_293 IMPLEMENTATION.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
       WHEN 'handleLinkPress'.
-        client->message_toast_display( `Link was clicked!`).
+        client->message_box_display( `Link was clicked!`).
     ENDCASE.
 
   ENDMETHOD.
