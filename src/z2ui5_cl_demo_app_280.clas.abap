@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
        )->link(
            text   = 'UI5 Demo Kit'
            target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.HeaderContainer/sample/sap.m.sample.HeaderContainerVM' ).
+           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.HeaderContainer/sample/sap.m.sample.HeaderContainerVM' ).
 
     page->header_container( scrollstep = `124` scrolltime = `500` orientation = `Vertical` height = `400px`
          )->numeric_content( scale = `M` value = `1.75` valuecolor = `Good` indicator = `Up` press = client->_event( `press` ) )->get_parent(
