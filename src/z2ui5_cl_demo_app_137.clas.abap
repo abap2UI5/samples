@@ -30,12 +30,18 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      initialize_view( client ).
-    ENDIF.
+    TRY.
 
-    on_event( client ).
+        IF check_initialized = abap_false.
+          check_initialized = abap_true.
+          initialize_view( client ).
+        ENDIF.
+
+        on_event( client ).
+
+      CATCH cx_root INTO DATA(lx).
+        client->message_box_display( lx->get_text( ) ).
+    ENDTRY.
   ENDMETHOD.
 
   METHOD initialize_view.

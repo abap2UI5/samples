@@ -130,23 +130,27 @@ CLASS z2ui5_cl_demo_app_135 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-
-    CLEAR error.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      update_lock_counter( ).
-      initialize_view( client ).
-    ENDIF.
-
     TRY.
-        on_event( client ).
-      CATCH z2ui5_cx_util_error INTO DATA(x_error).
-        error-text = x_error->get_text( ).
-        error-flag = abap_true.
-        client->view_model_update( ).
-    ENDTRY.
 
+        CLEAR error.
+
+        IF check_initialized = abap_false.
+          check_initialized = abap_true.
+          update_lock_counter( ).
+          initialize_view( client ).
+        ENDIF.
+
+        TRY.
+            on_event( client ).
+          CATCH z2ui5_cx_util_error INTO DATA(x_error).
+            error-text = x_error->get_text( ).
+            error-flag = abap_true.
+            client->view_model_update( ).
+        ENDTRY.
+
+      CATCH cx_root INTO DATA(lx).
+        client->message_box_display( lx->get_text( ) ).
+    ENDTRY.
   ENDMETHOD.
 
 
