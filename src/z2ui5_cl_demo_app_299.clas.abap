@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
       ( product_id = 'key4' Name = 'Select option 4' )
       ( product_id = 'key5' Name = 'Select option 5' )
     ).
-    SORT lt_Product_collection2 BY name.
+    SORT lt_product_collection2 BY name.
 
   ENDMETHOD.
 ENDCLASS.
