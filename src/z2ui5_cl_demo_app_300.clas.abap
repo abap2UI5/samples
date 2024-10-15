@@ -371,10 +371,10 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
       WHEN 'handleStatusPressed'.
-        client->message_box_display( title = `Error description` "#TO_DO: Use Dialog instead of Mesage_Box, in order to display custom title instead of default title, and to hide information icon.
-*        client->dialog_display( title = `Error description`
-                                text = `Product was damaged along transportation.`
-        ).
+        client->message_box_display( title = `Error description`
+                                     type  = ``  "Keep this empty to use the custom title instead of the default message type as title
+                                     text  = `Product was damaged along transportation.`
+                                     actions = VALUE string_table( ( `OK ` ) ) ). "Add space after 'OK' to prevent the button type from being 'Emphasized'
     ENDCASE.
 
   ENDMETHOD.
