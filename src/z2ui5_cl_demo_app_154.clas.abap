@@ -26,15 +26,12 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
       WHEN 'POPUP'.
 
-        DATA(lo_app) = z2ui5_cl_pop_messages=>factory( VALUE #(
-            ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-            ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-            ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-            ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-            ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-            ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-       ) ).
-        client->nav_app_call( lo_app ).
+        data(lt_msg) = value bapirettab(
+            ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
+            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' )
+        ).
+
+        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -51,7 +48,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup Messages'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

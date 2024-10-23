@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Illustrated Messages'
-            navbuttonpress = client->_event( val = 'BACK' s_ctrl = value #( check_view_destroy = abap_true )  )
+            navbuttonpress = client->_event( val = 'BACK'  )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
