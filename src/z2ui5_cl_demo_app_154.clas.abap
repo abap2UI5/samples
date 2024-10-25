@@ -5,11 +5,8 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
-    DATA mv_check_initialized TYPE abap_bool.
     METHODS ui5_display.
     METHODS ui5_event.
-    METHODS ui5_callback.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -24,16 +21,31 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP'.
+      WHEN 'POPUP_BAPIRET'.
 
-        DATA(lo_app) = z2ui5_cl_pop_messages=>factory( VALUE #(
-            ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-            ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-            ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-            ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-            ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-            ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-       ) ).
+        DATA(lt_msg) = VALUE bapirettab(
+            ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
+            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' )
+        ).
+
+        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
+
+      WHEN 'POPUP_BALLOG'.
+
+*        DATA(lt_ballog) = VALUE bapirettab(
+*            ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
+*            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' )
+*        ).
+*
+*        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_ballog ) ).
+
+
+      WHEN 'POPUP_EXCEPTION'.
+        TRY.
+            DATA(lv_dummy) = 1 / 0.
+          CATCH cx_root INTO DATA(lx).
+        ENDTRY.
+        DATA(lo_app) = z2ui5_cl_pop_error=>factory( lx ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.
@@ -51,10 +63,17 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup Messages'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
-            text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+            text  = 'Open Popup BAPIRET'
+            press = client->_event( 'POPUP_BAPIRET' )
+*                  )->button(
+*            text  = 'Open Popup BALLOG'
+*            press = client->_event( 'POPUP_BALLOG' )
+                             )->button(
+            text  = 'Open Popup Exception'
+            press = client->_event( 'POPUP_EXCEPTION' )
+             ).
 
     client->view_display( view->stringify( ) ).
 
@@ -65,28 +84,12 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      IF mv_check_initialized = abap_false.
-        mv_check_initialized = abap_true.
-        ui5_display( ).
-      ELSE.
-        ui5_callback( ).
-      ENDIF.
+    IF client->check_on_init( ).
+      ui5_display( ).
       RETURN.
     ENDIF.
 
     ui5_event( ).
-
-  ENDMETHOD.
-
-  METHOD ui5_callback.
-
-    TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
-        DATA(lo_dummy) = CAST z2ui5_cl_pop_messages( lo_prev ).
-        client->message_box_display( `callback after popup messages` ).
-      CATCH cx_root.
-    ENDTRY.
 
   ENDMETHOD.
 

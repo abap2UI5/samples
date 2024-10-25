@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( val = 'SEND' s_ctrl = value #( check_view_destroy = abap_true ) )
+                    press = client->_event( val = 'SEND' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(

@@ -51,8 +51,9 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF client->check_on_navigated( ).
       display_view( client ).
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
@@ -83,7 +84,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
         CASE mv_backend_event.
           WHEN 'CALL_PREVIOUS_APP_INPUT_RETURN'.
-            DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+            DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app_prev( ) ).
             CLEAR mv_backend_event.
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
         ENDCASE.

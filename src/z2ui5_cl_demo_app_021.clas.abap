@@ -3,22 +3,17 @@ CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-
     DATA mv_textarea TYPE string.
-
-    DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
 
-    METHODS display_view
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
+    METHODS display_view.
+    METHODS on_event.
+    METHODS on_init.
 
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -52,13 +47,10 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN 'POST'.
         client->message_box_display( 'success - values send to the server' ).
-
       WHEN 'BACK'.
         client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -66,21 +58,29 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    me->client = client.
 
-      mv_textarea = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magn` &&
-                `a aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd` &&
-            ` gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam n ` &&
-              `  onumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit am ` &&
-              `  et, consetetur sadipscing elitr, sed diam nonumy eirm sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam no ` &&
-                    `numy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`.
-
-
-      display_view( client ).
+    IF client->check_on_init( ).
+      on_init( ).
+      RETURN.
     ENDIF.
 
-    on_event( client ).
+    on_event( ).
 
   ENDMETHOD.
+
+  METHOD on_init.
+
+    mv_textarea = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magn` &&
+              `a aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd` &&
+          ` gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam n ` &&
+            `  onumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit am ` &&
+            `  et, consetetur sadipscing elitr, sed diam nonumy eirm sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam no ` &&
+                  `numy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`.
+
+
+    display_view( ).
+
+  ENDMETHOD.
+
 ENDCLASS.

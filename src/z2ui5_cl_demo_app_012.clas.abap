@@ -73,11 +73,11 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, no background rendering'
-                press = client->_event( val = 'BUTTON_POPUP_01' s_ctrl = value #( check_view_destroy = abap_true ) )
+                press = client->_event( val = 'BUTTON_POPUP_01' )
             )->label( 'Demo'
             )->button(
                 text  = 'popup rendering, background destroyed and rerendering'
-                press = client->_event( val = 'BUTTON_POPUP_02' s_ctrl = value #( check_view_destroy = abap_true ) )
+                press = client->_event( val = 'BUTTON_POPUP_02' )
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close (no roundtrip)'
@@ -85,7 +85,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
             )->label( 'Demo'
             )->button(
                 text  = 'popup, background unchanged (default) - close with server'
-                press = client->_event( val = 'BUTTON_POPUP_04'  )
+                press = client->_event( val = 'BUTTON_POPUP_04' )
         )->get_parent( )->get_parent( ).
 
     grid->simple_form( 'Popup in new App' )->content( 'form'
@@ -121,6 +121,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
 
       WHEN 'BUTTON_POPUP_01'.
         ui5_popup_decide( ).
+        client->view_destroy( ).
 
       WHEN 'POPUP_DECIDE_CONTINUE'.
         client->popup_destroy( ).
