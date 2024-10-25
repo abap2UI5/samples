@@ -39,7 +39,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->message_popover(
-            items      = client->_bind_edit( t_msg )
+            items      = client->_bind( t_msg )
             groupitems = abap_true
             placement = `Top`
             initiallyexpanded = abap_true
@@ -66,7 +66,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
           contentwidth = '50%' ).
 
     popup->message_view(
-            items = client->_bind_edit( val = t_msg
+            items = client->_bind( t_msg
              )
             groupitems = abap_true
         )->message_item(
@@ -110,7 +110,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 *            )->get_parent( ).
     page->button( text = 'Messages in Popup' press = client->_event( 'POPUP' )  ).
     page->message_view(
-        items = client->_bind_edit( t_msg )
+        items = client->_bind( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
