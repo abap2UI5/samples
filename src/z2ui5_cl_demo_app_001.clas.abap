@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
 
@@ -6,8 +6,21 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
+    DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
+
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS z2ui5_set_data.
+
+    METHODS display_view
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -15,20 +28,30 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    me->client = client.
 
-      product  = 'products'.
-      quantity = '500'.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      display_view( client ).
+      z2ui5_set_data( ).
+    ENDIF.
+
+    on_event( client ).
+
+  ENDMETHOD.
+
+
+  METHOD display_view.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( val = view->shell(
            )->page(
                    title          = 'abap2UI5 - First Example'
                    navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = client->check_app_prev_stack( )
+                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+
                )->simple_form( title = 'Form Title' editable = abap_true
                    )->content( 'form'
                        )->title( 'Input'
@@ -41,8 +64,10 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
                            press = client->_event( val = 'BUTTON_POST' )
             )->stringify( ) ).
 
-      RETURN.
-    ENDIF.
+  ENDMETHOD.
+
+
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_POST'.
@@ -50,6 +75,14 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( ).
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_set_data.
+
+      product  = 'products'.
+      quantity = '500'.
 
   ENDMETHOD.
 ENDCLASS.
