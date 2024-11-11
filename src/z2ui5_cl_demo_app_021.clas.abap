@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
 
@@ -7,10 +7,16 @@ CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS display_view.
-    METHODS on_event.
-    METHODS on_init.
+    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA check_initialized TYPE abap_bool.
+
+    METHODS z2ui5_set_data.
+    METHODS display_view
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 
@@ -60,16 +66,18 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
-      on_init( ).
-      RETURN.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
+      display_view( client ).
+      z2ui5_set_data( ).
     ENDIF.
 
-    on_event( ).
+    on_event( client ).
 
   ENDMETHOD.
 
-  METHOD on_init.
+
+  METHOD z2ui5_set_data.
 
     mv_textarea = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magn` &&
               `a aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd` &&
@@ -78,9 +86,5 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
             `  et, consetetur sadipscing elitr, sed diam nonumy eirm sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam no ` &&
                   `numy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`.
 
-
-    display_view( ).
-
   ENDMETHOD.
-
 ENDCLASS.
