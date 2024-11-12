@@ -486,8 +486,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ).
 
         panel->generic_tile(
-            header    = 'Object Header - with Circle-shaped Image'
+            header    = 'Object Header'
+            subheader = 'with Circle-shaped Image'
             press     =  client->_event( 'Z2UI5_CL_DEMO_APP_272' )
+            mode      = 'LineMode'
+            class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
+
+        panel->generic_tile(
+            header    = 'Object Page Header'
+            subheader = 'with Header Container'
+            press     =  client->_event( 'Z2UI5_CL_DEMO_APP_303' )
             mode      = 'LineMode'
             class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
         ).
