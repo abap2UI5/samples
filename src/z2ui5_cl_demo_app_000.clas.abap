@@ -23,6 +23,7 @@
 
       PROTECTED SECTION.
       PRIVATE SECTION.
+        METHODS expand_all.
 
 ENDCLASS.
 
@@ -49,6 +50,10 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           WHEN 'BACK'.
             client->nav_app_leave( ).
 
+          WHEN 'expand-all'.
+            expand_all( ).
+          WHEN 'collapse-all'.
+            CLEAR: ms_check_expanded.
           WHEN OTHERS.
             TRY.
                 DATA(lv_classname) = to_upper( client->get( )-event ).
@@ -89,6 +94,10 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
   `.</p>`  &&
     `<p>Always press CTRL+F12 to see code samples and classname of the app.</p>`
   ).
+
+        page->hbox(
+           )->button( press = client->_event( 'expand-all' ) icon = 'sap-icon://expand-all'
+           )->button( press = client->_event( 'collapse-all' ) icon = 'sap-icon://collapse-all' ).
 
         DATA(page2) = page.
 
@@ -2149,4 +2158,18 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         client->view_display( page->stringify( ) ).
 
       ENDMETHOD.
-ENDCLASS.
+
+
+      METHOD expand_all.
+
+        DO.
+          ASSIGN COMPONENT sy-index OF STRUCTURE ms_check_expanded TO FIELD-SYMBOL(<check>).
+          IF sy-subrc <> 0.
+            EXIT.
+          ENDIF.
+          <check> = abap_true.
+        ENDDO.
+
+      ENDMETHOD.
+
+    ENDCLASS.
