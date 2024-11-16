@@ -61,7 +61,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 DEFINITION
 
     DATA lv_layout TYPE string .
     DATA ls_detail TYPE ty_s_tab .
-    DATA lv_sort_desc TYPE abap_boolean VALUE abap_true.
+    DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
     DATA c_pic_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/'.
     DATA ls_detail_supplier TYPE ty_s_tab_supplier .
     DATA check_detail_active TYPE abap_bool.
