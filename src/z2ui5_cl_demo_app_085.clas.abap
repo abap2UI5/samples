@@ -61,7 +61,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 DEFINITION
 
     DATA lv_layout TYPE string .
     DATA ls_detail TYPE ty_s_tab .
-    DATA lv_sort_desc TYPE boolean VALUE abap_true.
+    DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
     DATA c_pic_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/'.
     DATA ls_detail_supplier TYPE ty_s_tab_supplier .
     DATA check_detail_active TYPE abap_bool.
@@ -151,7 +151,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
              press = client->_event( 'ONCLOSEDETAIL' )
          ).
 
-    DATA(header_content) = page->header_Content( ns = 'uxap').
+    DATA(header_content) = page->header_Content( ns = 'uxap' ).
     header_content->flex_box( wrap = 'Wrap'
        )->avatar( src = c_pic_url && ls_detail-pic class = 'sapUiSmallMarginEnd' displaySize = 'layout'
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
@@ -301,7 +301,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
              )->link(
          )->get_parent( ).
 
-    DATA(lr_master) = page->flexible_column_layout( layout = lv_layout id ='Detail' )->begin_column_pages( ).
+    DATA(lr_master) = page->flexible_column_layout( layout = lv_layout id = 'Detail' )->begin_column_pages( ).
 
     DATA(tab) = lr_master->scroll_container( height = '100%' vertical = abap_true
    )->table(
