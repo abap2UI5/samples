@@ -1,22 +1,23 @@
-class z2ui5_cl_demo_app_242 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_242 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-  interfaces Z2UI5_IF_APP .
+    DATA check_initialized TYPE abap_bool.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
@@ -25,23 +26,20 @@ public section.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
 
-
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Sample: HTML'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = 'abap2UI5 - Sample: HTML'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(
-       )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+       )->button( id      = `hint_icon`
+                  icon    = `sap-icon://hint`
+                  tooltip = `Sample information`
+                  press   = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -49,24 +47,23 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.HTML/sample/sap.ui.core.sample.Html' ).
 
-
-    DATA(layout) = page->vertical_layout(
-                          class  = `sapUiContentPadding`
-                          width = `100%`
+    " TODO: variable is assigned but never used (ABAP cleaner)
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%`
                           )->content( ns = `layout`
-                              )->html( content = `<div class="content"><h4>Lorem ipsum</h4><div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
-                                                 `sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
-                                                 `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
-                                                 `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
-                                                 `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div><a ` &&
-                                                 `target="_blank" href="http://en.wikipedia.org/wiki/Lorem_ipsum">Learn more about Lorem Ipsum ...</a></div>`
+                              )->html(
+                                  content = |<div class="content"><h4>Lorem ipsum</h4><div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, | &&
+                                            |sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. | &&
+                                            |At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. | &&
+                                            |Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. | &&
+                                            |At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div><a | &&
+                                            |target="_blank" href="http://en.wikipedia.org/wiki/Lorem_ipsum">Learn more about Lorem Ipsum ...</a></div>|
                    ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
-
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -77,24 +74,23 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `With the HTML controls you can easily embed any kind of HTML content into your UI5 mobile application.` ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page(
+                  pageid      = `sampleInformationId`
+                  header      = `Sample information`
+                  description = `With the HTML controls you can easily embed any kind of HTML content into your UI5 mobile application.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
+    client->popover_display( xml   = view->stringify( )
+                             by_id = id
     ).
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -106,4 +102,5 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

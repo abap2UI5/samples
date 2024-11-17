@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION
 
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD on_event.
@@ -76,7 +77,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = '{' && comp-name && '}' ).
+      cells->object_identifier( text = |\{{ comp-name }\}| ).
     ENDLOOP.
 
     page->button( text  = 'Clear'
@@ -99,7 +100,8 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
-      client->message_box_display( text = 'Frontend Lines <> Backend!' type = 'error' ).
+      client->message_box_display( text = 'Frontend Lines <> Backend!'
+                                   type = 'error' ).
     ENDIF.
 
     on_event( ).
@@ -129,6 +131,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
   METHOD add_data.
 
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+
     ASSIGN mt_table->* TO <tab>.
     APPEND LINES OF <tab> TO <tab>.
 

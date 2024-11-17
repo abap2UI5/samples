@@ -3,21 +3,21 @@ CLASS z2ui5_cl_demo_app_296 DEFINITION
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
@@ -26,23 +26,20 @@ CLASS z2ui5_cl_demo_app_296 DEFINITION
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
-
 
   METHOD display_view.
 
     DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = `abap2UI5 - Sample: Search Field`
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = `abap2UI5 - Sample: Search Field`
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page_01->header_content(
-       )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+       )->button( id      = `button_hint_id`
+                  icon    = `sap-icon://hint`
+                  tooltip = `Sample information`
+                  press   = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -53,20 +50,22 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
     page_01->page( showheader = abap_false
               )->sub_header(
                   )->toolbar(
-                      )->search_field( width = `100%` search = client->_event( val = `onSearch` )
-                      )->text( text = `Default Search` id = `idSearchListToolbar`
+                      )->search_field( width  = `100%`
+                                       search = client->_event( val = `onSearch` )
+                      )->text( text = `Default Search`
+                               id   = `idSearchListToolbar`
                   )->get_parent(
               )->get_parent(
               )->vbox( class = `sapUiSmallMargin`
                   )->label( text = `Default Search Field:`
-                  )->search_field( width = `90%` class = `sapUiSmallMargin`
+                  )->search_field( width = `90%`
+                                   class = `sapUiSmallMargin`
               )->get_parent(
              ).
 
     client->view_display( page_01->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -81,22 +80,21 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `Use the Search Field to let the user enter a search string and trigger the search process.` ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page(
+                  pageid      = `sampleInformationId`
+                  header      = `Sample information`
+                  description = `Use the Search Field to let the user enter a search string and trigger the search process.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
+    client->popover_display( xml   = view->stringify( )
+                             by_id = id
     ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -110,4 +108,5 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

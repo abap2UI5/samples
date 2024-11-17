@@ -1,7 +1,6 @@
-CLASS Z2UI5_CL_DEMO_APP_046 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
     TYPES:
@@ -15,18 +14,17 @@ CLASS Z2UI5_CL_DEMO_APP_046 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab             TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
-    DATA mv_display TYPE string.
+    DATA mv_display        TYPE string.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
@@ -35,14 +33,15 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
 
       mv_display = 'LIST'.
 
-      t_tab = VALUE #(
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ).
+      t_tab = VALUE #( title = 'Peter'
+                       descr = 'this is a description'
+                       icon  = 'sap-icon://account'
+                       ( info = 'completed' )
+                       ( info = 'incompleted' )
+                       ( info = 'working' )
+                       ( info = 'working' )
+                       ( info = 'completed' )
+                       ( info = 'completed' ) ).
 
     ELSE.
 
@@ -56,36 +55,33 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
     ENDIF.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-            title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
+        )->page( title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = abap_true
             )->header_content(
-                )->button( text = 'Display List'  press = client->_event( 'LIST' )
-                )->button( text = 'Display Table' press = client->_event( 'TABLE' )
+                )->button( text  = 'Display List'
+                           press = client->_event( 'LIST' )
+                )->button( text  = 'Display Table'
+                           press = client->_event( 'TABLE' )
                 )->link(
-
 
             )->get_parent( ).
 
     CASE mv_display.
 
       WHEN 'LIST'.
-        page->list(
-            headertext      = 'List Control'
-            items           = client->_bind( t_tab )
-            )->standard_list_item(
-                title       = '{TITLE}'
-                description = '{DESCR}'
-                icon        = '{ICON}'
-                info        = '{INFO}'
+        page->list( headertext = 'List Control'
+                    items      = client->_bind( t_tab )
+            )->standard_list_item( title       = '{TITLE}'
+                                   description = '{DESCR}'
+                                   icon        = '{ICON}'
+                                   info        = '{INFO}'
                 ).
 
       WHEN 'TABLE'.
 
-        DATA(tab) = page->table(
-        headertext = 'Table Control'
-        items = client->_bind( t_tab ) ).
+        DATA(tab) = page->table( headertext = 'Table Control'
+                                 items      = client->_bind( t_tab ) ).
 
         tab->columns(
             )->column(
@@ -105,7 +101,8 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
 
     ENDCASE.
 
-    client->view_display( page->get_root(  )->xml_get( ) ).
+    client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

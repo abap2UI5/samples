@@ -1,18 +1,16 @@
 CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
-    DATA mv_path TYPE string.
-    DATA mv_value TYPE string.
-    DATA mr_table TYPE REF TO data.
-    DATA mv_check_edit TYPE abap_bool.
+    DATA mv_path           TYPE string.
+    DATA mv_value          TYPE string.
+    DATA mr_table          TYPE REF TO data.
+    DATA mv_check_edit     TYPE abap_bool.
     DATA mv_check_download TYPE abap_bool.
 
   PROTECTED SECTION.
-
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS ui5_on_event.
@@ -25,9 +23,7 @@ CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
-
 
   METHOD ui5_on_event.
     TRY.
@@ -59,15 +55,15 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
 
-
   METHOD ui5_view_init_display.
 
-       ui5_view_main_display( ).
+    ui5_view_main_display( ).
 
 *    client->view_display( z2ui5_cl_xml_view=>factory( client
 *         )->_z2ui5( )->timer( client->_event( `START` )
@@ -76,14 +72,13 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD ui5_view_main_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = 'abap2UI5 - CSV to ABAP internal Table'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                     title          = 'abap2UI5 - CSV to ABAP internal Table'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
        ).
 
     IF mr_table IS NOT INITIAL.
@@ -92,13 +87,14 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
       ASSIGN mr_table->* TO <tab>.
 
       DATA(tab) = page->table(
-              items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
+          items = COND #( WHEN mv_check_edit = abap_true
+                          THEN client->_bind_edit( <tab> )
+                          ELSE client->_bind_edit( <tab> ) )
           )->header_toolbar(
               )->overflow_toolbar(
                   )->title( 'CSV Content'
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
-
 
       DATA(lr_fields) = z2ui5_cl_util=>rtti_get_t_attri_by_any( <tab> ).
       DATA(lo_cols) = tab->columns( ).
@@ -107,22 +103,20 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
       ENDLOOP.
       DATA(lo_cells) = tab->items( )->column_list_item( )->cells( ).
       LOOP AT lr_fields REFERENCE INTO lr_col.
-        lo_cells->text( `{` && lr_col->name && `}` ).
+        lo_cells->text( |\{{ lr_col->name }\}| ).
       ENDLOOP.
     ENDIF.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
 
-    footer->_z2ui5( )->file_uploader(
-      value       = client->_bind_edit( mv_value )
-      path        = client->_bind_edit( mv_path )
-      placeholder = 'filepath here...'
-      upload      = client->_event( 'UPLOAD' ) ).
+    footer->_z2ui5( )->file_uploader( value       = client->_bind_edit( mv_value )
+                                      path        = client->_bind_edit( mv_path )
+                                      placeholder = 'filepath here...'
+                                      upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -141,4 +135,5 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     ui5_on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

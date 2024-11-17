@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_169 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -16,12 +15,13 @@ CLASS z2ui5_cl_demo_app_169 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab                 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_editable_active TYPE abap_bool.
-    DATA check_initialized TYPE abap_bool.
+    DATA check_initialized     TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS set_view.
 
   PRIVATE SECTION.
@@ -34,22 +34,19 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-                title          = 'abap2UI5 - JSON Export ITAB'
-                navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
+        )->page( title          = 'abap2UI5 - JSON Export ITAB'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = abap_true
            ).
 
-    DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+    DATA(tab) = page->table( items = client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'title of the table'
                 )->toolbar_spacer(
-                )->button(
-                    icon  = 'sap-icon://download'
-                    text  = `JSON Export`
-                    press = client->_event( 'EXPORT' )
+                )->button( icon  = 'sap-icon://download'
+                           text  = `JSON Export`
+                           press = client->_event( 'EXPORT' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -73,7 +70,6 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -91,10 +87,9 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
           ( )
           ).
 
-      set_view(  ).
+      set_view( ).
 
     ENDIF.
-
 
     CASE client->get( )-event.
 
@@ -107,4 +102,5 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,11 +1,9 @@
-CLASS Z2UI5_CL_DEMO_APP_086 DEFINITION
+CLASS z2ui5_cl_demo_app_086 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
-
-    INTERFACES Z2UI5_if_app .
+    INTERFACES Z2UI5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab_supplier,
@@ -16,17 +14,17 @@ CLASS Z2UI5_CL_DEMO_APP_086 DEFINITION
         city         TYPE string,
         street       TYPE string,
         country      TYPE string,
-      END OF ty_s_tab_supplier .
+      END OF ty_s_tab_supplier.
 
-    DATA ls_detail_supplier TYPE ty_s_tab_supplier .
+    DATA ls_detail_supplier TYPE ty_s_tab_supplier.
+
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_086 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
@@ -35,12 +33,11 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-               title          = 'abap2UI5 - Flow Logic - APP 85'
-               navbuttonpress = client->_event( 'BACK' ) shownavbutton = abap_true
+        )->page( title          = 'abap2UI5 - Flow Logic - APP 85'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = abap_true
        ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
@@ -48,10 +45,11 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
           )->simple_form( 'Supplier' )->content( 'form'
 
            )->label( 'Value set by previous app'
-           )->input( value = ls_detail_supplier-suppliername  editable = 'false'  ).
-
+           )->input( value    = ls_detail_supplier-SupplierName
+                     editable = 'false'  ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

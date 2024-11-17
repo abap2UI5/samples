@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_043 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
 *    TYPES:
@@ -14,6 +13,7 @@ CLASS z2ui5_cl_demo_app_043 DEFINITION PUBLIC.
 *    DATA: mt_flight TYPE STANDARD TABLE OF t_flight.
 *    DATA mv_key TYPE string.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_043 IMPLEMENTATION.
 
@@ -79,4 +79,5 @@ CLASS z2ui5_cl_demo_app_043 IMPLEMENTATION.
 *    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,18 +1,16 @@
 CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA:
       BEGIN OF screen,
-        progress_value    TYPE string VALUE '3',
+        progress_value TYPE string VALUE '3',
       END OF screen.
 
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -25,30 +23,26 @@ CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
-
 
   METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Progress Indicator Example'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = 'abap2UI5 - Progress Indicator Example'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->label( 'ProgressIndicator'
-        )->progress_indicator(
-            percentvalue    = screen-progress_value
-            displayvalue    = '0,44GB of 32GB used'
-            showvalue       = abap_true
-            state           = 'Success' ).
+        )->progress_indicator( percentvalue = screen-progress_value
+                               displayvalue = '0,44GB of 32GB used'
+                               showvalue    = abap_true
+                               state        = 'Success' ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -61,7 +55,6 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
@@ -72,4 +65,5 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

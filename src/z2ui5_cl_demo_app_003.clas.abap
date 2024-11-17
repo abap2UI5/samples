@@ -1,7 +1,6 @@
-CLASS Z2UI5_CL_DEMO_APP_003 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
     TYPES:
@@ -15,51 +14,49 @@ CLASS Z2UI5_CL_DEMO_APP_003 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab             TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-      t_tab = VALUE #(
-        ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_02'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_03'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_04'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ).
+      t_tab = VALUE #( descr = 'this is a description'
+                       icon  = 'sap-icon://account'
+                       ( title = 'row_01'  info = 'completed' )
+                       ( title = 'row_02'  info = 'incompleted' )
+                       ( title = 'row_03'  info = 'working' )
+                       ( title = 'row_04'  info = 'working' )
+                       ( title = 'row_05'  info = 'completed' )
+                       ( title = 'row_06'  info = 'completed' ) ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
-          )->page(
-              title          = 'abap2UI5 - List'
-              navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+          )->page( title          = 'abap2UI5 - List'
+                   navbuttonpress = client->_event( 'BACK' )
+                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
       page->list(
-          headertext      = 'List Ouput'
-          items           = client->_bind_edit( t_tab )
-          mode            = `SingleSelectMaster`
-          selectionchange = client->_event( 'SELCHANGE' )
-          )->standard_list_item(
-              title       = '{TITLE}'
-              description = '{DESCR}'
-              icon        = '{ICON}'
-              info        = '{INFO}'
-              press       = client->_event( 'TEST' )
-              selected    = `{SELECTED}`
+                  " TODO: check spelling: Ouput (typo) -> Output (ABAP cleaner)
+                  headertext      = 'List Ouput'
+                  items           = client->_bind_edit( t_tab )
+                  mode            = `SingleSelectMaster`
+                  selectionchange = client->_event( 'SELCHANGE' )
+          )->standard_list_item( title       = '{TITLE}'
+                                 description = '{DESCR}'
+                                 icon        = '{ICON}'
+                                 info        = '{INFO}'
+                                 press       = client->_event( 'TEST' )
+                                 selected    = `{SELECTED}`
          ).
 
       client->view_display( view->stringify( ) ).
@@ -69,11 +66,12 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'SELCHANGE'.
-        client->message_box_display( `go to details for item ` && t_tab[ selected = abap_true ]-title ).
+        client->message_box_display( |go to details for item { t_tab[ selected = abap_true ]-title }| ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

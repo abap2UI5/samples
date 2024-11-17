@@ -1,10 +1,9 @@
 CLASS z2ui5_cl_demo_app_101 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_feed,
@@ -15,12 +14,12 @@ CLASS z2ui5_cl_demo_app_101 DEFINITION
         text      TYPE string,
       END OF ty_feed.
 
-    DATA mt_feed TYPE TABLE OF ty_feed.
-    DATA ms_feed TYPE ty_feed.
+    DATA mt_feed  TYPE TABLE OF ty_feed.
+    DATA ms_feed  TYPE ty_feed.
     DATA mv_value TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_event.
@@ -31,9 +30,7 @@ CLASS z2ui5_cl_demo_app_101 DEFINITION
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -50,7 +47,6 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -62,63 +58,63 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
         ENDIF.
         CLEAR ms_feed.
         ms_feed-author = sy-uname.
-        ms_feed-type = 'Respond'.
-        ms_feed-text = mv_value.
+        ms_feed-type   = 'Respond'.
+        ms_feed-text   = mv_value.
         mv_value = ``.
         INSERT ms_feed INTO mt_feed INDEX 1.
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
     mt_feed = VALUE #(
-                      ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
-                        text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
-                          `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-                      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` )
-                    ).
+        author = `choper725`
+        date   = `August 26 2023`
+        ( authorpic = `employee`
+          type      = `Request`
+          text      = |Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| &&
+|Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| &&
+|Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| &&
+|Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| &&
+|Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| &&
+|Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna| &&
+|aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.| )
+        ( authorpic = `sap-icon://employee` type = `Reply` text = `this is feed input` ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'Feed Input'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                     title          = 'Feed Input'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             ).
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(fi) = page->vbox(
-      )->feed_input( post = client->_event( val = 'POST' )
-                             growing = abap_true
-                             rows = `4`
-                             icondensityaware = abap_false
-                             value = client->_bind_edit( mv_value )
-                             class = `sapUiSmallMarginTopBottom`
+      )->feed_input( post             = client->_event( val = 'POST' )
+                     growing          = abap_true
+                     rows             = `4`
+                     icondensityaware = abap_false
+                     value            = client->_bind_edit( mv_value )
+                     class            = `sapUiSmallMarginTopBottom`
       )->get_parent( )->get_parent(
-      )->list(
-        items = client->_bind_edit( mt_feed )
-        showseparators = `Inner`
-          )->feed_list_item(
-            sender = `{AUTHOR}`
-            senderpress   = client->_event( 'SENDER_PRESS' )
-            iconpress   = client->_event( 'ICON_PRESS' )
-            icondensityaware   = abap_false
-            showicon = abap_false
-            info = `Reply`
-            text = `{TEXT}`
-            convertlinkstoanchortags = `All` ).
+      )->list( items          = client->_bind_edit( mt_feed )
+               showseparators = `Inner`
+          )->feed_list_item( sender                   = `{AUTHOR}`
+                             senderpress              = client->_event( 'SENDER_PRESS' )
+                             iconpress                = client->_event( 'ICON_PRESS' )
+                             icondensityaware         = abap_false
+                             showicon                 = abap_false
+                             info                     = `Reply`
+                             text                     = `{TEXT}`
+                             convertlinkstoanchortags = `All` ).
 
     client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

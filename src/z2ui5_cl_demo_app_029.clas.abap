@@ -1,10 +1,9 @@
-CLASS Z2UI5_CL_DEMO_APP_029 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
-    DATA check_initialized TYPE abap_bool.
+    DATA check_initialized    TYPE abap_bool.
 
     DATA mv_tab_radial_active TYPE abap_bool.
 
@@ -13,85 +12,74 @@ CLASS Z2UI5_CL_DEMO_APP_029 DEFINITION PUBLIC.
     DATA client TYPE REF TO Z2UI5_if_client.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_029 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
 
   METHOD render_tab_radial.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(container) = view->shell(
-        )->page(
-            title = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
+        )->page( title          = 'abap2UI5 - Visualization'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = abap_true
         )->tab_container( ).
 
-    DATA(grid) = container->tab(
-            text     = 'Radial Chart'
-            selected = client->_bind( mv_tab_radial_active )
+    DATA(grid) = container->tab( text     = 'Radial Chart'
+                                 selected = client->_bind( mv_tab_radial_active )
         )->grid( 'XL12 L12 M12 S12' ).
 
     grid->link(
-        text = 'Go to the SAP Demos for Radial Charts here...' target = '_blank'
-        href = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.RadialMicroChart/sample/sap.suite.ui.microchart.sample.RadialMicroChart' ).
+        text   = 'Go to the SAP Demos for Radial Charts here...'
+        target = '_blank'
+        href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.RadialMicroChart/sample/sap.suite.ui.microchart.sample.RadialMicroChart' ).
 
     grid->vertical_layout(
         )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '45'
-                press      = client->_event( 'RADIAL_PRESS' )
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '45'
-                press      = client->_event( 'RADIAL_PRESS' )
+            )->radial_micro_chart( size       = 'M'
+                                   percentage = '45'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+            )->radial_micro_chart( size       = 'S'
+                                   percentage = '45'
+                                   press      = client->_event( 'RADIAL_PRESS' )
         )->get_parent(
         )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '99.9'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Good'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '99.9'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Good'
+            )->radial_micro_chart( size       = 'M'
+                                   percentage = '99.9'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Good'
+            )->radial_micro_chart( size       = 'S'
+                                   percentage = '99.9'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Good'
         )->get_parent(
         )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '0'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Error'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '0'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Error'
+            )->radial_micro_chart( size       = 'M'
+                                   percentage = '0'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Error'
+            )->radial_micro_chart( size       = 'S'
+                                   percentage = '0'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Error'
         )->get_parent(
         )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '0.1'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Critical'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '0.1'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valueColor = 'Critical' ).
+            )->radial_micro_chart( size       = 'M'
+                                   percentage = '0.1'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Critical'
+            )->radial_micro_chart( size       = 'S'
+                                   percentage = '0.1'
+                                   press      = client->_event( 'RADIAL_PRESS' )
+                                   valueColor = 'Critical' ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_if_app~main.
 
@@ -116,4 +104,5 @@ CLASS Z2UI5_CL_DEMO_APP_029 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

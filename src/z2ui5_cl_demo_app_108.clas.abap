@@ -1,38 +1,36 @@
-class Z2UI5_CL_DEMO_APP_108 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_108 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-
-  interfaces Z2UI5_IF_APP .
-
-  data:
-    BEGIN OF screen,
+    DATA:
+      BEGIN OF screen,
         input1 TYPE string,
         input2 TYPE string,
         input3 TYPE string,
-      END OF screen .
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  PROTECTED SECTION.
+      END OF screen.
+    DATA check_initialized TYPE abap_bool.
 
+  PROTECTED SECTION.
     METHODS Z2UI5_on_rendering
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
+
     METHODS Z2UI5_on_event
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
+
     METHODS Z2UI5_on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
+CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
 
-CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
-
-
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -44,8 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
@@ -61,24 +58,22 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_ON_RENDERING.
+  METHOD z2ui5_on_rendering.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Side Panel Example'
-            navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = abap_true ).
+         )->page( title          = 'abap2UI5 - Side Panel Example'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = abap_true ).
 
     page->header_content(
          )->link(
          )->get_parent( ).
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(side_panel) = page->side_panel( sidepanelposition = `Left`
       )->main_content(
         )->button( text = `Button 1`
@@ -87,30 +82,37 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
           )->label( text = `Switch 1`
           )->switch(
           )->get_parent(
-        )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut` &&
-                        `labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris` &&
-                        `nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse` &&
-                        `cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui` &&
-                        `officia deserunt mollit anim id est laborum`
+        )->text(
+            text = |Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut| &&
+                   |labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris| &&
+                   |nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse| &&
+                   |cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui| &&
+                   |officia deserunt mollit anim id est laborum|
                         )->get_parent(
           )->items( ns = `f`
-            )->side_panel_item( icon = `sap-icon://physical-activity` text = `Run`
+            )->side_panel_item( icon = `sap-icon://physical-activity`
+                                text = `Run`
               )->vbox(
-                )->text( text = `Static Content` class = `sapUiSmallMarginBottom`
+                )->text( text  = `Static Content`
+                         class = `sapUiSmallMarginBottom`
                 )->switch(
                 )->button( text = `Press Me`
               )->get_parent(
              )->get_parent(
-           )->side_panel_item( icon = `sap-icon://addresses` text = `Go Home`
+           )->side_panel_item( icon = `sap-icon://addresses`
+                               text = `Go Home`
             )->vbox(
-              )->text( text = `Static Content` class = `sapUiSmallMarginBottom`
+              )->text( text  = `Static Content`
+                       class = `sapUiSmallMarginBottom`
               )->button( text = `Press Me`
               )->button( text = `Hit Me`
             )->get_parent(
            )->get_parent(
-          )->side_panel_item( icon = `sap-icon://flight` text = `Fly abroad` ).
+          )->side_panel_item( icon = `sap-icon://flight`
+                              text = `Fly abroad` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

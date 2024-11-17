@@ -16,7 +16,8 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     DATA mt_table_del    TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING !data TYPE string.
+      IMPORTING
+        data TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -31,14 +32,13 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION
     METHODS get_data.
 
     METHODS get_comp
-      RETURNING VALUE(result) TYPE abap_component_tab.
+      RETURNING
+        VALUE(result) TYPE abap_component_tab.
 
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
   METHOD get_comp.
     TRY.
@@ -80,7 +80,6 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_data.
     FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
@@ -101,7 +100,7 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO <table>.
 
-        SELECT * FROM Z2UI5_T_01
+        SELECT * FROM z2ui5_t_01
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 100 ROWS.
 
@@ -114,7 +113,6 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
     <table_tmp> = <table>.
   ENDMETHOD.
 
-
   METHOD on_event.
     CASE client->get( )-event.
 
@@ -125,12 +123,10 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD on_init.
     get_Data( ).
     Render_main( ).
   ENDMETHOD.
-
 
   METHOD render_main.
     IF mo_parent_view IS INITIAL.
@@ -162,11 +158,9 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD set_app_data.
     mv_perc = data.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
     me->client = client.
@@ -180,4 +174,5 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,22 +1,21 @@
 CLASS z2ui5_cl_demo_app_270 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
-    DATA name TYPE string.
-    data color type string.
+
+    DATA name              TYPE string.
+    DATA color             TYPE string.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -25,17 +24,15 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(
-        )->page(
-            title = 'abap2UI5 - Hello World App'
-            shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            navbuttonpress    = client->_event( 'BACK' )
+        )->page( title          = 'abap2UI5 - Hello World App'
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                 navbuttonpress = client->_event( 'BACK' )
         )->simple_form( editable = abap_true
              )->content( ns = `form`
-                )->color_picker(
-                  colorstring = client->_bind_edit( color )
-*                  displaymode =
-*                  change      =
-*                  livechange  =
+                )->color_picker( colorstring = client->_bind_edit( color )
+*                                 displaymode =
+*                                 change      =
+*                                 livechange  =
                 )->input( client->_bind_edit( color )
         )->stringify( ) ).
 

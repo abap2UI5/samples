@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -27,65 +26,70 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
     METHODS main_view
       IMPORTING
         i_client TYPE REF TO z2ui5_if_client.
+
     METHODS nest_view
       IMPORTING
         i_client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
-
 
   METHOD main_view.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(page) = lo_view->shell(
-        )->page(
-                title          = `Main View`
-                id             = `test`
-                navbuttonpress = i_client->_event( 'BACK' )
-                shownavbutton = xsdbool( i_client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        )->page( title          = `Main View`
+                 id             = `test`
+                 navbuttonpress = i_client->_event( 'BACK' )
+                 shownavbutton  = xsdbool( i_client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
       ).
 
     i_client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
 
-
   METHOD nest_view.
 
     i_client->_bind( mt_layout ).
 
-    mt_data = VALUE #( ( name = 'Theo' date = '01.01.2000' age = '5' )
-                       ( name = 'Lore' date = '01.01.2000' age = '1' ) ).
+    mt_data = VALUE #( date = '01.01.2000'
+                       ( name = 'Theo' age = '5' )
+                       ( name = 'Lore' age = '1' ) ).
 
-    mt_layout = VALUE #( ( fname = 'NAME' merge = 'false' visible = 'true'  binding = '{NAME}' )
-                         ( fname = 'DATE' merge = 'false' visible = 'true'  binding = '{DATE}' )
-                         ( fname = 'AGE'  merge = 'false' visible = 'false' binding = '{AGE}' ) ).
+    mt_layout = VALUE #( merge = 'false'
+                         ( fname = 'NAME' visible = 'true'  binding = '{NAME}' )
+                         ( fname = 'DATE' visible = 'true'  binding = '{DATE}' )
+                         ( fname = 'AGE'  visible = 'false' binding = '{AGE}' ) ).
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view_nested->shell( )->page( `Nested View`
     )->table( items = i_client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO`
-          )->column( mergeduplicates = `{LO>MERGE}` visible = `{LO>VISIBLE}` )->get_parent(
+        )->template_repeat( list = `{template>/MT_LAYOUT}`
+                            var  = `LO`
+          )->column( mergeduplicates = `{LO>MERGE}`
+                     visible         = `{LO>VISIBLE}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO2`
+              )->template_repeat( list = `{template>/MT_LAYOUT}`
+                                  var  = `LO2`
                 )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
-    i_client->nest_view_display( val = lo_view_nested->stringify( ) id = `test` method_insert = 'addContent' ).
+    i_client->nest_view_display( val           = lo_view_nested->stringify( )
+                                 id            = `test`
+                                 method_insert = 'addContent' ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -99,4 +103,5 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     nest_view( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,15 +1,13 @@
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA product           TYPE string.
+    DATA quantity          TYPE string.
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS z2ui5_set_data.
@@ -17,13 +15,13 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
@@ -42,30 +40,28 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD display_view.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( val = view->shell(
-           )->page(
-                   title          = 'abap2UI5 - First Example'
-                   navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    client->view_display( val = view->shell(
+         )->page( title          = 'abap2UI5 - First Example'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
 
-               )->simple_form( title = 'Form Title' editable = abap_true
-                   )->content( 'form'
-                       )->title( 'Input'
-                       )->label( 'quantity'
-                       )->input( client->_bind_edit( quantity )
-                       )->label( `product`
-                       )->input( value = product enabled = abap_false
-                       )->button(
-                           text  = 'post'
-                           press = client->_event( val = 'BUTTON_POST' )
-            )->stringify( ) ).
+             )->simple_form( title    = 'Form Title'
+                             editable = abap_true
+                 )->content( 'form'
+                     )->title( 'Input'
+                     )->label( 'quantity'
+                     )->input( client->_bind_edit( quantity )
+                     )->label( `product`
+                     )->input( value   = product
+                               enabled = abap_false
+                     )->button( text  = 'post'
+                                press = client->_event( val = 'BUTTON_POST' )
+          )->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -78,11 +74,11 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
-      product  = 'products'.
-      quantity = '500'.
+    product  = 'products'.
+    quantity = '500'.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,7 +1,6 @@
-CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
     DATA:
@@ -22,7 +21,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items.
-    DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
+
+    DATA mt_suggestion     TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
     DATA mt_suggestion_sel TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
 
     TYPES:
@@ -30,6 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         value TYPE string,
         descr TYPE string,
       END OF s_suggestion_items_city.
+
     DATA mt_suggestion_city TYPE STANDARD TABLE OF s_suggestion_items_city WITH EMPTY KEY.
 
     TYPES:
@@ -40,20 +41,22 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
         name     TYPE string,
         lastname TYPE string,
       END OF s_employee.
-    DATA mt_employees_sel TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
-    DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
+
+    DATA mt_employees_sel  TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
+    DATA mt_employees      TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
 
+    DATA mv_view_popup     TYPE string.
 
-    DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
+
     METHODS popup_f4_table_custom
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
-  PROTECTED SECTION.
 
+  PROTECTED SECTION.
     METHODS Z2UI5_on_rendering
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
@@ -61,25 +64,22 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
     METHODS Z2UI5_on_event
       IMPORTING
         client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_init.
 
+    METHODS Z2UI5_on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
   METHOD popup_f4_table.
 
     DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( 'abap2UI5 - F4 Value Help'
-    )->table(
-            mode  = 'SingleSelectLeft'
-            items = client->_bind_edit( mt_suggestion_sel )
+    )->table( mode  = 'SingleSelectLeft'
+              items = client->_bind_edit( mt_suggestion_sel )
         )->columns(
             )->column( '20rem'
                 )->text( 'Color' )->get_parent(
@@ -93,14 +93,12 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                     )->text( '{DESCR}'
     )->get_parent( )->get_parent( )->get_parent( )->get_parent(
     )->buttons(
-            )->button(
-                text  = 'continue'
-                press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
-                type  = 'Emphasized' ).
+            )->button( text  = 'continue'
+                       press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
+                       type  = 'Emphasized' ).
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD popup_f4_table_custom.
 
@@ -110,23 +108,19 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
     popup2->simple_form(
         )->label( 'Location'
-        )->input(
-                value           = client->_bind_edit( screen-city )
-                suggestionitems = client->_bind( mt_suggestion_city )
-                showsuggestion  = abap_true )->get(
+        )->input( value           = client->_bind_edit( screen-city )
+                  suggestionitems = client->_bind( mt_suggestion_city )
+                  showsuggestion  = abap_true )->get(
             )->suggestion_items( )->get(
-                )->list_item(
-                    text            = '{VALUE}'
-                    additionaltext  = '{DESCR}'
+                )->list_item( text           = '{VALUE}'
+                              additionaltext = '{DESCR}'
         )->get_parent( )->get_parent(
-        )->button(
-            text  = 'search...'
-            press = client->_event( 'SEARCH' ) ).
+        )->button( text  = 'search...'
+                   press = client->_event( 'SEARCH' ) ).
 
-    DATA(tab) = popup2->table(
-        headertext = 'Employees'
-        mode       = 'SingleSelectLeft'
-        items      = client->_bind_edit( mt_employees_sel ) ).
+    DATA(tab) = popup2->table( headertext = 'Employees'
+                               mode       = 'SingleSelectLeft'
+                               items      = client->_bind_edit( mt_employees_sel ) ).
 
     tab->columns(
         )->column( '10rem'
@@ -146,14 +140,12 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
             )->text( '{LASTNAME}' ).
 
     popup2->buttons(
-                )->button(
-                    text  = 'continue'
-                    press = client->_event( 'POPUP_TABLE_F4_CUSTOM_CONTINUE' )
-                    type  = 'Emphasized' ).
+                )->button( text  = 'continue'
+                           press = client->_event( 'POPUP_TABLE_F4_CUSTOM_CONTINUE' )
+                           type  = 'Emphasized' ).
     client->popup_display( popup2->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_if_app~main.
 
@@ -168,7 +160,6 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
     Z2UI5_on_rendering( client ).
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_on_event.
 
@@ -193,7 +184,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
       WHEN 'POPUP_TABLE_F4_CUSTOM_CONTINUE'.
         DELETE mt_employees_sel WHERE selkz = abap_false.
         IF lines( mt_employees_sel ) = 1.
-          screen-name = mt_employees_sel[ 1 ]-name.
+          screen-name     = mt_employees_sel[ 1 ]-name.
           screen-lastname = mt_employees_sel[ 1 ]-lastname.
           client->message_toast_display( 'f4 value selected' ).
           client->popup_destroy( ).
@@ -219,88 +210,82 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD Z2UI5_on_init.
 
-    mt_suggestion = VALUE #(
-        ( descr = 'this is the color Green'  value = 'GREEN' )
-        ( descr = 'this is the color Blue'   value = 'BLUE' )
-        ( descr = 'this is the color Black'  value = 'BLACK' )
-        ( descr = 'this is the color Grey'   value = 'GREY' )
-        ( descr = 'this is the color Blue2'  value = 'BLUE2' )
-        ( descr = 'this is the color Blue3'  value = 'BLUE3' ) ).
+    mt_suggestion = VALUE #( ( descr = 'this is the color Green'  value = 'GREEN' )
+                             ( descr = 'this is the color Blue'   value = 'BLUE' )
+                             ( descr = 'this is the color Black'  value = 'BLACK' )
+                             ( descr = 'this is the color Grey'   value = 'GREY' )
+                             ( descr = 'this is the color Blue2'  value = 'BLUE2' )
+                             ( descr = 'this is the color Blue3'  value = 'BLUE3' ) ).
 
-    mt_suggestion_city = VALUE #(
-        ( value = 'London' descr = 'London' )
-        ( value = 'Paris' descr = 'Paris' )
-        ( value = 'Rome' descr = 'Rome' ) ).
+    mt_suggestion_city = VALUE #( ( value = 'London' descr = 'London' )
+                                  ( value = 'Paris' descr = 'Paris' )
+                                  ( value = 'Rome' descr = 'Rome' ) ).
 
-    mt_employees = VALUE #(
-        ( city = 'London' name = 'Tom'       lastname = 'lastname1' nr = '00001' )
-        ( city = 'London' name = 'Tom2'      lastname = 'lastname2' nr = '00002' )
-        ( city = 'London' name = 'Tom3'      lastname = 'lastname3' nr = '00003' )
-        ( city = 'London' name = 'Tom4'      lastname = 'lastname4' nr = '00004' )
-        ( city = 'Rome'   name = 'Michaela1' lastname = 'lastname5' nr = '00005' )
-        ( city = 'Rome'   name = 'Michaela2' lastname = 'lastname6' nr = '00006' )
-        ( city = 'Rome'   name = 'Michaela3' lastname = 'lastname7' nr = '00007' )
-        ( city = 'Rome'   name = 'Michaela4' lastname = 'lastname8' nr = '00008' )
-        ( city = 'Paris'  name = 'Hermine1'  lastname = 'lastname9' nr = '00009' )
-        ( city = 'Paris'  name = 'Hermine2'  lastname = 'lastname10' nr = '00010' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
-        ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' ) ).
+    mt_employees = VALUE #( ( city = 'London' name = 'Tom'       lastname = 'lastname1' nr = '00001' )
+                            ( city = 'London' name = 'Tom2'      lastname = 'lastname2' nr = '00002' )
+                            ( city = 'London' name = 'Tom3'      lastname = 'lastname3' nr = '00003' )
+                            ( city = 'London' name = 'Tom4'      lastname = 'lastname4' nr = '00004' )
+                            ( city = 'Rome'   name = 'Michaela1' lastname = 'lastname5' nr = '00005' )
+                            ( city = 'Rome'   name = 'Michaela2' lastname = 'lastname6' nr = '00006' )
+                            ( city = 'Rome'   name = 'Michaela3' lastname = 'lastname7' nr = '00007' )
+                            ( city = 'Rome'   name = 'Michaela4' lastname = 'lastname8' nr = '00008' )
+                            ( city = 'Paris'  name = 'Hermine1'  lastname = 'lastname9' nr = '00009' )
+                            ( city = 'Paris'  name = 'Hermine2'  lastname = 'lastname10' nr = '00010' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
+                            ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' ) ).
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-            title          = 'abap2UI5 - Value Help Examples'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        )->page( title          = 'abap2UI5 - Value Help Examples'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         ).
 
     DATA(form) = page->grid( 'L7 M7 S7'
@@ -309,57 +294,49 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                 )->content( 'form' ).
 
     form->label( 'Input with sugestion items'
-        )->input(
-            value           = client->_bind_edit( screen-color_01 )
-            placeholder     = 'fill in your favorite colour'
-            suggestionitems = client->_bind( mt_suggestion )
-            showsuggestion  = abap_true )->get(
+        )->input( value           = client->_bind_edit( screen-color_01 )
+                  " TODO: check spelling: colour (typo) -> color (ABAP cleaner)
+                  placeholder     = 'fill in your favorite colour'
+                  suggestionitems = client->_bind( mt_suggestion )
+                  showsuggestion  = abap_true )->get(
             )->suggestion_items( )->get(
-                )->list_item(
-                    text           = '{VALUE}'
-                    additionaltext = '{DESCR}' ).
+                )->list_item( text           = '{VALUE}'
+                              additionaltext = '{DESCR}' ).
 
     form->label( 'Input only numbers allowed'
-        )->input(
-            value       = client->_bind_edit( screen-quantity )
-            type        = 'Number'
-            placeholder = 'quantity' ).
+        )->input( value       = client->_bind_edit( screen-quantity )
+                  type        = 'Number'
+                  placeholder = 'quantity' ).
 
     form->label( 'Input with F4'
-        )->input(
-            value            = client->_bind_edit( screen-color_02 )
-            placeholder      = 'fill in your favorite colour'
-            showvaluehelp    = abap_true
-            valuehelprequest = client->_event( 'POPUP_TABLE_F4' ) ).
+        )->input( value            = client->_bind_edit( screen-color_02 )
+                  " TODO: check spelling: colour (typo) -> color (ABAP cleaner)
+                  placeholder      = 'fill in your favorite colour'
+                  showvaluehelp    = abap_true
+                  valuehelprequest = client->_event( 'POPUP_TABLE_F4' ) ).
 
     form->label( 'Custom F4 Popup'
-        )->input(
-            value            = client->_bind_edit( screen-name )
-            placeholder      = 'name'
-            showvaluehelp    = abap_true
-            valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' )
-        )->input(
-            value            = client->_bind_edit( screen-lastname )
-            placeholder      = 'lastname'
-            showvaluehelp    = abap_true
-            valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' ) ).
+        )->input( value            = client->_bind_edit( screen-name )
+                  placeholder      = 'name'
+                  showvaluehelp    = abap_true
+                  valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' )
+        )->input( value            = client->_bind_edit( screen-lastname )
+                  placeholder      = 'lastname'
+                  showvaluehelp    = abap_true
+                  valuehelprequest = client->_event( 'POPUP_TABLE_F4_CUSTOM' ) ).
 
     page->footer(
         )->overflow_toolbar(
             )->toolbar_spacer(
-            )->button(
-                text    = 'Clear'
-                press   = client->_event( 'BUTTON_CLEAR' )
-                type    = 'Reject'
-                enabled = abap_false
-                icon    = 'sap-icon://delete'
-            )->button(
-                text    = 'Send to Server'
-                press   = client->_event( 'BUTTON_SEND' )
-                enabled = abap_false
-                type    = 'Success' ).
-
-
+            )->button( text    = 'Clear'
+                       press   = client->_event( 'BUTTON_CLEAR' )
+                       type    = 'Reject'
+                       enabled = abap_false
+                       icon    = 'sap-icon://delete'
+            )->button( text    = 'Send to Server'
+                       press   = client->_event( 'BUTTON_SEND' )
+                       enabled = abap_false
+                       type    = 'Success' ).
 
     CASE mv_view_popup.
 
@@ -377,4 +354,5 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 *    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

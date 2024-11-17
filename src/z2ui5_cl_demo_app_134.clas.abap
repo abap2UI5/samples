@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -11,19 +10,20 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
         descr TYPE string,
         info  TYPE string,
       END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
-    DATA mv_scrollupdate TYPE abap_bool.
+    DATA t_tab             TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+
+    DATA mv_scrollupdate   TYPE abap_bool.
 
     DATA check_initialized TYPE abap_bool.
-    DATA field_01  TYPE string.
-    DATA field_02 TYPE string.
-    DATA focus_id TYPE string.
-    DATA selstart TYPE string.
-    DATA selend TYPE string.
-    DATA update_focus TYPE abap_bool.
+    DATA field_01          TYPE string.
+    DATA field_02          TYPE string.
+    DATA focus_id          TYPE string.
+    DATA selstart          TYPE string.
+    DATA selend            TYPE string.
+    DATA update_focus      TYPE abap_bool.
 
-    DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA mt_scroll         TYPE z2ui5_if_types=>ty_t_name_value.
 
   PROTECTED SECTION.
     METHODS display_view
@@ -38,31 +38,32 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
-
 
   METHOD display_view.
 
-    DATA(ls_row) = VALUE ty_row( title = 'Peter'  value = 'red' info = 'completed'  descr = 'this is a description' ).
+    DATA(ls_row) = VALUE ty_row( title = 'Peter'
+                                 value = 'red'
+                                 info  = 'completed'
+                                 descr = 'this is a description' ).
     DO 100 TIMES.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = view->page(
-        id = 'id_page'
-        title = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'
-        navbuttonpress = client->_event( 'BACK' )
-        shownavbutton = abap_true
+    DATA(page) = view->page( id             = 'id_page'
+                             title          = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'
+                             navbuttonpress = client->_event( 'BACK' )
+                             shownavbutton  = abap_true
     ).
 
-    page->_z2ui5( )->scrolling(
-          setupdate = client->_bind_edit( mv_scrollupdate )
-          items     = client->_bind_edit( mt_scroll )
+    page->_z2ui5( )->scrolling( setupdate = client->_bind_edit( mv_scrollupdate )
+                                items     = client->_bind_edit( mt_scroll )
         ).
 
-    DATA(tab) = page->table( sticky = 'ColumnHeaders,HeaderToolbar' headertext = 'Table with some entries' items = client->_bind( t_tab ) ).
+    DATA(tab) = page->table( sticky     = 'ColumnHeaders,HeaderToolbar'
+                             headertext = 'Table with some entries'
+                             items      = client->_bind( t_tab ) ).
 
     tab->columns(
         )->column( )->text( 'Title' )->get_parent(
@@ -77,16 +78,19 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
       )->text( '{DESCR}' ).
 
     page->footer( )->overflow_toolbar(
-         )->button( text = 'Scroll Top'     press = client->_event( 'BUTTON_SCROLL_TOP' )
-         )->button( text = 'Scroll 500 up'   press = client->_event( 'BUTTON_SCROLL_UP' )
-         )->button( text = 'Scroll 500 down' press = client->_event( 'BUTTON_SCROLL_DOWN' )
-         )->button( text = 'Scroll Bottom'   press = client->_event( 'BUTTON_SCROLL_BOTTOM' )
+         )->button( text  = 'Scroll Top'
+                    press = client->_event( 'BUTTON_SCROLL_TOP' )
+         )->button( text  = 'Scroll 500 up'
+                    press = client->_event( 'BUTTON_SCROLL_UP' )
+         )->button( text  = 'Scroll 500 down'
+                    press = client->_event( 'BUTTON_SCROLL_DOWN' )
+         )->button( text  = 'Scroll Bottom'
+                    press = client->_event( 'BUTTON_SCROLL_BOTTOM' )
        ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD init.
 
@@ -99,7 +103,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     display_view( client ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -116,7 +119,8 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.
-        INSERT VALUE #( n = 'id_page' v = '0' ) INTO TABLE mt_scroll.
+        INSERT VALUE #( n = 'id_page'
+                        v = '0' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
@@ -144,11 +148,13 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
       WHEN 'BUTTON_SCROLL_BOTTOM'.
         CLEAR mt_scroll.
-        INSERT VALUE #( n = 'id_page' v = '99999' ) INTO TABLE mt_scroll.
+        INSERT VALUE #( n = 'id_page'
+                        v = '99999' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

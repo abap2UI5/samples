@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_155 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -11,13 +10,12 @@ CLASS z2ui5_cl_demo_app_155 DEFINITION PUBLIC.
     METHODS ui5_callback.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
-
 
   METHOD ui5_event.
 
@@ -34,23 +32,19 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
-        )->page(
-                title          = 'abap2UI5 - Popup To Text Edit'
-                navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-           )->button(
-            text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+        )->page( title          = 'abap2UI5 - Popup To Text Edit'
+                 navbuttonpress = client->_event( val = 'BACK' )
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+           )->button( text  = 'Open Popup...'
+                      press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -69,9 +63,9 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(lv_text) = CAST z2ui5_cl_pop_textedit( lo_prev )->result( )-text.
-        client->message_box_display( `the result is ` && lv_text ).
+        client->message_box_display( |the result is { lv_text }| ).
       CATCH cx_root.
     ENDTRY.
 

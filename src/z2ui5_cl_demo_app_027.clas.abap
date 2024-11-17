@@ -1,21 +1,19 @@
 CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE i.
-    DATA input2 TYPE string.
-    DATA input31 TYPE i.
-    DATA input32 TYPE i.
-    DATA input41 TYPE string.
-    DATA input51 TYPE string.
-    DATA input52 TYPE string.
+    DATA input2   TYPE string.
+    DATA input31  TYPE i.
+    DATA input32  TYPE i.
+    DATA input41  TYPE string.
+    DATA input51  TYPE string.
+    DATA input52  TYPE string.
 
   PROTECTED SECTION.
-
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
@@ -32,9 +30,7 @@ CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -57,7 +53,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE app-s_get-event.
@@ -69,7 +64,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     product  = 'tomato'.
@@ -79,68 +73,63 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_on_render.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lv_xml) = view->shell(
-      )->page(
-              title          = 'abap2UI5 - Binding Syntax'
-              navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          )->simple_form( title = 'Binding Syntax' editable = abap_true
+      )->page( title          = 'abap2UI5 - Binding Syntax'
+               navbuttonpress = client->_event( 'BACK' )
+               shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+          )->simple_form( title    = 'Binding Syntax'
+                          editable = abap_true
               )->content( 'form'
                 )->title( 'Expression Binding'
 
                 )->label( 'Documentation'
-                )->link(
-                  text = 'Expression Binding'
-                  href = 'https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0'
+                )->link( text = 'Expression Binding'
+                         href = 'https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0'
                 )->label( 'input in uppercase'
                 )->input( client->_bind( input2 )
-                )->input(
-                    value   = '{= $' &&  client->_bind( input2 ) && '.toUpperCase() }'
-                    enabled = abap_false
-
+                )->input( value   = |\{= ${  client->_bind( input2 ) }.toUpperCase() \}|
+                          enabled = abap_false
 
                 )->label( 'max value of the first two inputs'
-                )->input( '{ type : "sap.ui.model.type.Integer",' &&
-                          '  path:"' &&  client->_bind( val = input31 path = abap_true ) && '" }'
-                )->input( '{ type : "sap.ui.model.type.Integer",' && |\n|  &&
-                          '  path:"' &&  client->_bind( val = input32 path = abap_true ) && '" }'
-                )->input(
-                    value   = '{= Math.max($' && client->_bind( input31 ) &&', $' &&  client->_bind( input32 ) &&  ') }'
-                    enabled = abap_false
-
+                )->input( |\{ type : "sap.ui.model.type.Integer",| &&
+                          |  path:"{  client->_bind( val  = input31
+                                                     path = abap_true ) }" \}|
+                )->input( |\{ type : "sap.ui.model.type.Integer",| && |\n|  &&
+                          |  path:"{  client->_bind( val  = input32
+                                                     path = abap_true ) }" \}|
+                )->input( value   = |\{= Math.max(${ client->_bind( input31 ) }, ${  client->_bind( input32 )  }) \}|
+                          enabled = abap_false
 
                 )->label( 'only enabled when the quantity equals 500'
-                )->input( '{ type : "sap.ui.model.type.Integer",' &&
-                          '  path:"' && client->_bind( val = quantity path = abap_true ) && `"  }`
-                )->input(
-                    value   = product
-                    enabled = '{= 500===$' && client->_bind( quantity ) && ' }'
+                )->input( |\{ type : "sap.ui.model.type.Integer",| &&
+                          |  path:"{ client->_bind( val  = quantity
+                                                    path = abap_true ) }"  \}|
+                )->input( value   = product
+                          enabled = |\{= 500===${ client->_bind( quantity ) } \}|
 
                 )->label( 'RegExp Set to enabled if the input contains VIP, ignoring the case.'
                 )->input( client->_bind( val = input41 )
-                )->button(
-                    text   = 'VIP'
-                    enabled = '{= RegExp(''vip'', ''i'').test($' && client->_bind( input41 ) && ') }'
-
+                )->button( text    = 'VIP'
+                           enabled = |\{= RegExp('vip', 'i').test(${ client->_bind( input41 ) }) \}|
 
                 )->label( 'concatenate both inputs'
                 )->input( client->_bind( val = input51 )
                 )->input( client->_bind( val = input52 )
-                )->input(
-                    value   = '{ parts: [' && |\n|  &&
-                              '                "' &&  client->_bind( val = input51 path = abap_true ) && '",' && |\n|  &&
-                              '                "' &&  client->_bind( val = input52 path = abap_true ) && '"' && |\n|  &&
-                              '               ]  }'
-                    enabled = abap_false
+                )->input( value   = |\{ parts: [| && |\n|  &&
+                                    |                "{  client->_bind( val  = input51
+                                                                        path = abap_true ) }",| && |\n|  &&
+                                    |                "{  client->_bind( val  = input52
+                                                                        path = abap_true ) }"| && |\n|  &&
+                                    |               ]  \}|
+                          enabled = abap_false
 
        )->get_root( )->xml_get( ).
-
 
     client->view_display( lv_xml ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,6 +1,5 @@
 CLASS z2ui5_cl_demo_app_078 DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
@@ -17,17 +16,17 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION
 
     DATA mv_value          TYPE string.
     DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-    DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+    DATA mt_tokens_added   TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA check_initialized TYPE abap_bool.
+
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -36,22 +35,20 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-      view = view->shell( )->page( id = `page_main`
-               title          = 'abap2UI5 - Select-Options'
-               navbuttonpress = client->_event( 'BACK' )
-               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+      view = view->shell( )->page( id             = `page_main`
+                                   title          = 'abap2UI5 - Select-Options'
+                                   navbuttonpress = client->_event( 'BACK' )
+                                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         ).
 
-      view->_z2ui5( )->multiinput_ext(
-                            addedtokens      = client->_bind_edit( mt_tokens_added )
-                            removedtokens    = client->_bind_edit( mt_tokens_removed )
-                            change    = client->_event( 'UPDATE_BACKEND' )
-                            MultiInputId    = `test`  ).
+      view->_z2ui5( )->multiinput_ext( addedtokens   = client->_bind_edit( mt_tokens_added )
+                                       removedtokens = client->_bind_edit( mt_tokens_removed )
+                                       change        = client->_event( 'UPDATE_BACKEND' )
+                                       MultiInputId  = `test`  ).
 
-      view->multi_input(
-                            id = `test`
-                           tokens           = client->_bind_edit( mt_token )
-                            showclearicon    = abap_true
+      view->multi_input( id            = `test`
+                         tokens        = client->_bind_edit( mt_token )
+                         showclearicon = abap_true
                        )->tokens(
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`
@@ -60,9 +57,8 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
                                      editable = `{EDITABLE}`
                                       ).
 
-      DATA(tab) = view->table(
-        items = client->_bind_edit( mt_token )
-        mode  = 'MultiSelect' ).
+      DATA(tab) = view->table( items = client->_bind_edit( mt_token )
+                               mode  = 'MultiSelect' ).
 
       tab->columns(
        )->column(
@@ -72,13 +68,14 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       tab->items( )->column_list_item( selected = '{SELKZ}'
         )->cells(
-            )->input( value = '{KEY}' enabled = `{EDITABLE}`
-            )->input( value = '{TEXT}' enabled = `{EDITABLE}`).
+            )->input( value   = '{KEY}'
+                      enabled = `{EDITABLE}`
+            )->input( value   = '{TEXT}'
+                      enabled = `{EDITABLE}` ).
 
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
 
     CASE client->get( )-event.
 
@@ -89,7 +86,10 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
         ENDLOOP.
 
         LOOP AT mt_tokens_added INTO ls_token.
-          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+          INSERT VALUE #( key      = ls_token-key
+                          text     = ls_token-text
+                          visible  = abap_true
+                          editable = abap_true ) INTO TABLE mt_token.
         ENDLOOP.
 
         CLEAR mt_tokens_removed.
@@ -102,4 +102,5 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

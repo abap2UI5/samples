@@ -1,22 +1,23 @@
-class z2ui5_cl_demo_app_252 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_252 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-  interfaces Z2UI5_IF_APP .
+    DATA check_initialized TYPE abap_bool.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
@@ -25,24 +26,20 @@ public section.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
 
-
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Sample: Flex Box - Render Type'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-
+         )->page( title          = 'abap2UI5 - Sample: Flex Box - Render Type'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(
-       )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+       )->button( id      = `hint_icon`
+                  icon    = `sap-icon://hint`
+                  tooltip = `Sample information`
+                  press   = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -50,24 +47,34 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxRenderType' ).
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(layout) = page->vbox(
                           )->panel( headertext = `Render Type - Div`
                               )->flex_box( rendertype = `Div`
-                                  )->button( text = `Some text` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `Some text`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `3` )->get_parent( )->get_parent(
-                                  )->input( value = `Some value` width = `auto` class = `sapUiSmallMarginEnd` )->get(
+                                  )->input( value = `Some value`
+                                            width = `auto`
+                                            class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `2` )->get_parent( )->get_parent(
                                   )->button( icon = `sap-icon://download` )->get(
                                       )->layout_data(
-                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                                          )->flex_item_data(
+                                              growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                           )->panel( headertext = `Render Type - Bare`
                               )->flex_box( rendertype = `Bare`
-                                  )->button( text = `Some text` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `Some text`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `3` )->get_parent( )->get_parent(
-                                  )->input( value = `Some value` width = `auto` class = `sapUiSmallMarginEnd` )->get(
+                                  )->input( value = `Some value`
+                                            width = `auto`
+                                            class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `2` )->get_parent( )->get_parent(
                                   )->button( icon = `sap-icon://download` )->get(
@@ -77,11 +84,9 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
-
   ENDMETHOD.
 
-
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -92,25 +97,24 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `Flex items can be rendered differently. By default, they are wrapped in a div element. ` &&
-                                                `Optionally, the bare controls can be rendered directly. This can affect the resulting layout.` ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page(
+                  pageid      = `sampleInformationId`
+                  header      = `Sample information`
+                  description = |Flex items can be rendered differently. By default, they are wrapped in a div element. | &&
+                                |Optionally, the bare controls can be rendered directly. This can affect the resulting layout.| ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
+    client->popover_display( xml   = view->stringify( )
+                             by_id = id
     ).
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -122,4 +126,5 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

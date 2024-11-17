@@ -1,39 +1,39 @@
 CLASS z2ui5_cl_demo_app_112 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
+    DATA client         TYPE REF TO z2ui5_if_client.
+    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA mv_class_2     TYPE string.
+    DATA mv_init        TYPE abap_bool.
+    DATA mr_data        TYPE REF TO data.
 
-    INTERFACES z2ui5_if_app .
+    METHODS on_init.
+    METHODS on_event.
 
-    DATA client TYPE REF TO z2ui5_if_client .
-    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view .
-    DATA mv_class_2 TYPE string .
-    DATA mv_init TYPE abap_bool .
-    DATA mr_data TYPE REF TO data .
-
-    METHODS on_init .
-    METHODS on_event .
     METHODS display_view
       CHANGING
-        !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL .
+        xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
+
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
-
   METHOD display_view.
+    " TODO: parameter XML is never used or assigned (ABAP cleaner)
 
-    mo_view_parent->input( value = client->_bind_edit( mv_class_2 ) placeholder = `Input From Class 2` ).
+    mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
+                           placeholder = `Input From Class 2` ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -45,7 +45,6 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
-
 
   METHOD on_init.
 
@@ -67,4 +66,5 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

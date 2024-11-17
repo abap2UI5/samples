@@ -1,23 +1,24 @@
-class z2ui5_cl_demo_app_249 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_249 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES if_serializable_object.
+    INTERFACES z2ui5_if_app.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    DATA check_initialized TYPE abap_bool.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
@@ -26,23 +27,20 @@ public section.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
-
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Sample: Splitter Layout - 3 areas'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = 'abap2UI5 - Sample: Splitter Layout - 3 areas'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(
-       )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+       )->button( id      = `hint_icon`
+                  icon    = `sap-icon://hint`
+                  tooltip = `Sample information`
+                  press   = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -50,24 +48,30 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4' ).
 
-    DATA(layout) = page->splitter( height  = `500px` width = `100%`
-                          )->button( width = `100%` text = `Content 1` )->get(
+    " TODO: variable is assigned but never used (ABAP cleaner)
+    DATA(layout) = page->splitter( height = `500px`
+                                   width  = `100%`
+                          )->button( width = `100%`
+                                     text  = `Content 1` )->get(
                               )->layout_data(
                                   )->splitter_layout_data( size = `300px` )->get_parent( )->get_parent( )->get_parent(
-                          )->button( width = `100%` text = `Content 2` )->get(
+                          )->button( width = `100%`
+                                     text  = `Content 2` )->get(
                               )->layout_data(
                                   )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent( )->get_parent(
-                          )->button( width = `100%` text = `Content 3` )->get(
+                          )->button( width = `100%`
+                                     text  = `Content 3` )->get(
                               )->layout_data(
-                                  )->splitter_layout_data( size = `30%` minsize = `200px` )->get_parent( )->get_parent( )->get_parent(
+                                  )->splitter_layout_data(
+                                      size    = `30%`
+                                      minsize = `200px` )->get_parent( )->get_parent( )->get_parent(
                          ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
-
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -78,24 +82,22 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Simple splitter example with three content areas` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
+    client->popover_display( xml   = view->stringify( )
+                             by_id = id
     ).
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -107,4 +109,5 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -2,23 +2,22 @@ CLASS z2ui5_cl_demo_app_195 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-  INTERFACES z2ui5_if_app.
+    TYPES:
+      BEGIN OF ty_s_t002,
+        id    TYPE string,
+        count TYPE string,
+        table TYPE string,
+        class TYPE string,
+      END OF ty_s_t002.
+    TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
 
-  TYPES:
-    BEGIN OF ty_s_t002,
-      id    TYPE string,
-      count TYPE string,
-      table TYPE string,
-      class TYPE string,
-    END OF ty_s_t002.
-  TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
-
-  DATA mv_selectedkey     TYPE string.
-  DATA mv_selectedkey_tmp TYPE string.
-  DATA mt_t002            TYPE ty_t_t002.
-  DATA mo_app             TYPE REF TO object.
+    DATA mv_selectedkey     TYPE string.
+    DATA mv_selectedkey_tmp TYPE string.
+    DATA mt_t002            TYPE ty_t_t002.
+    DATA mo_app             TYPE REF TO object.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -35,9 +34,7 @@ PUBLIC SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_195 IMPLEMENTATION.
 
   METHOD on_event.
 
@@ -59,19 +56,17 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_194'  count = '10' table = 'Z2UI5_T001')
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_194'  count = '20' table = 'Z2UI5_T002')
-                       ( id = '3' class = 'Z2UI5_CL_DEMO_APP_194'  count = '30' table = 'Z2UI5_TOOL_T_001')
-                       ( id = '4' class = 'Z2UI5_CL_DEMO_APP_194'  count = '40' table = 'Z2UI5_TOOL_T_002')
-                       ).
+    mt_t002 = VALUE #( class = 'Z2UI5_CL_DEMO_APP_194'
+                       ( id = '1' count = '10' table = 'Z2UI5_T001' )
+                       ( id = '2' count = '20' table = 'Z2UI5_T002' )
+                       ( id = '3' count = '30' table = 'Z2UI5_TOOL_T_001' )
+                       ( id = '4' count = '40' table = 'Z2UI5_TOOL_T_002' ) ).
 
     mv_selectedkey = '1'.
 
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -88,7 +83,9 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -96,9 +93,7 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD render_sub_app.
-
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
@@ -117,9 +112,8 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
         TRY.
 
             CALL METHOD mo_app->('SET_APP_DATA')
-              EXPORTING
-                count = t002->count
-                table = t002->table.
+              EXPORTING count = t002->count
+                        table = t002->table.
 
             render_main( ).
 
@@ -129,8 +123,7 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
             ENDIF.
 
             CALL METHOD mo_app->('Z2UI5_IF_APP~MAIN')
-              EXPORTING
-                client = client.
+              EXPORTING client = client.
 
           CATCH cx_root.
             RETURN.
@@ -156,7 +149,6 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -172,4 +164,5 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
     render_sub_app( ).
 
   ENDMETHOD.
+
 ENDCLASS.

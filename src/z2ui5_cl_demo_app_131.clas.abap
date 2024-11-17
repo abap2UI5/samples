@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION
       BEGIN OF ty_s_t002,
         id    TYPE string,
         count TYPE string,
-        table type string,
+        table TYPE string,
         class TYPE string,
       END OF ty_s_t002.
     TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
@@ -33,6 +33,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION
   PRIVATE SECTION.
 
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
@@ -58,9 +59,9 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_132'  count = '12' )
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_132'  count = '80' )
-                       ).
+    mt_t002 = VALUE #( class = 'Z2UI5_CL_DEMO_APP_132'
+                       ( id = '1' count = '12' )
+                       ( id = '2' count = '80' ) ).
 
     mv_selectedkey = '1'.
 
@@ -81,7 +82,9 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -107,7 +110,6 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
   METHOD render_sub_app.
 
-
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
 
@@ -125,9 +127,8 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
         TRY.
 
             CALL METHOD mo_app->('SET_APP_DATA')
-              EXPORTING
-                count = t002->count
-                table = t002->table.
+              EXPORTING count = t002->count
+                        table = t002->table.
 
             render_main( ).
 
@@ -137,8 +138,7 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
             ENDIF.
 
             CALL METHOD mo_app->('Z2UI5_IF_APP~MAIN')
-              EXPORTING
-                client = client.
+              EXPORTING client = client.
 
           CATCH cx_root.
             RETURN.

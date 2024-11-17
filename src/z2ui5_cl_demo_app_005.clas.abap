@@ -1,21 +1,19 @@
 CLASS z2ui5_cl_demo_app_005 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
-    DATA value1 TYPE int4.
-    DATA value2 TYPE int4.
+    DATA value1      TYPE int4.
+    DATA value2      TYPE int4.
     DATA initialized TYPE abap_bool.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -32,37 +30,38 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
 
       WHEN 'SLIDER_CHANGE'.
 
-        client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
+        client->message_toast_display(
+            |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
 
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-                title          = 'abap2UI5 - Range Slider Example'
-                navbuttonpress = client->_event( 'BACK' )
+        )->page( title          = 'abap2UI5 - Range Slider Example'
+                 navbuttonpress = client->_event( 'BACK' )
                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              ).
 
     DATA(grid) = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 
-    grid->simple_form( title = 'More Controls' editable = abap_true )->content( 'form'
+    grid->simple_form( title    = 'More Controls'
+                       editable = abap_true )->content( 'form'
         )->label( 'Range Slider'
-        )->range_slider(
-            max           = '100'
-            min           = '0'
-            step          = '10'
-            startvalue    = '10'
-            endvalue      = '20'
-            showtickmarks = abap_true
-            labelinterval = '2'
-            width         = '80%'
-            class         = 'sapUiTinyMargin'
-            value         = client->_bind_edit( value1 )
-            value2        = client->_bind_edit( value2 )
-            change        = client->_event( 'SLIDER_CHANGE' )
+        )->range_slider( max           = '100'
+                         min           = '0'
+                         step          = '10'
+                         startvalue    = '10'
+                         endvalue      = '20'
+                         showtickmarks = abap_true
+                         labelinterval = '2'
+                         width         = '80%'
+                         class         = 'sapUiTinyMargin'
+                         value         = client->_bind_edit( value1 )
+                         value2        = client->_bind_edit( value2 )
+                         change        = client->_event( 'SLIDER_CHANGE' )
     ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,21 +1,18 @@
 CLASS z2ui5_cl_demo_app_189 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+  PUBLIC FINAL
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES:
-      z2ui5_if_app.
+    INTERFACES z2ui5_if_app.
 
-    DATA:
-      one         TYPE string,
-      two         TYPE string,
-      three       TYPE string,
-      focus_field TYPE string.
+    DATA one         TYPE string.
+    DATA two         TYPE string.
+    DATA three       TYPE string.
+    DATA focus_field TYPE string.
 
   PRIVATE SECTION.
     DATA initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS render.
     METHODS dispatch.
@@ -40,21 +37,24 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD render.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page(
-              title          = 'abap2UI5 - Focus II'
-              navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+          )->page( title          = 'abap2UI5 - Focus II'
+                   navbuttonpress = client->_event( 'BACK' )
+                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
           ).
 
     page->simple_form(
        )->content( ns = 'form'
-       )->label( 'One (Press Enter)'   )->input( id = 'IdOne'   value = client->_bind_edit( one ) submit = client->_event( 'one_enter' )
-       )->label( 'Two'   )->input( id = 'IdTwo'   value = client->_bind_edit( two ) submit = client->_event( 'two_enter' )
-       )->label( 'Three' )->input( id = 'IdThree' value = client->_bind_edit( three )
+       )->label( 'One (Press Enter)'   )->input( id     = 'IdOne'
+                                                 value  = client->_bind_edit( one )
+                                                 submit = client->_event( 'one_enter' )
+       )->label( 'Two'   )->input( id     = 'IdTwo'
+                                   value  = client->_bind_edit( two )
+                                   submit = client->_event( 'two_enter' )
+       )->label( 'Three' )->input( id    = 'IdThree'
+                                   value = client->_bind_edit( three )
        ).
 
     page->_z2ui5( )->focus( focusid = client->_bind( focus_field ) ).
@@ -63,7 +63,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -71,11 +70,12 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     IF initialized = abap_false.
       initialized = abap_true.
       focus_field = 'IdOne'.
-      render(  ).
+      render( ).
     ENDIF.
 
     dispatch( ).
 
   ENDMETHOD.
+
 ENDCLASS.
 

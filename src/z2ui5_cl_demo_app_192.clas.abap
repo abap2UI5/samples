@@ -45,6 +45,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
   METHOD ui5_event.
@@ -113,7 +114,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD xml_parse.
 
     LOOP AT mt_new_data2 INTO DATA(lo_data).
@@ -121,7 +121,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
-
 
   METHOD xml_stringify.
 

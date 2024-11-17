@@ -1,43 +1,42 @@
-class Z2UI5_CL_DEMO_APP_258 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_demo_app_258 DEFINITION
+  PUBLIC FINAL
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES if_serializable_object.
+    INTERFACES z2ui5_if_app.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    DATA check_initialized   TYPE abap_bool.
+    DATA selected_menu_entry TYPE string.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
-  data SELECTED_MENU_ENTRY type STRING .
-protected section.
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
 
-  data CLIENT type ref to Z2UI5_IF_CLIENT .
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
 
-  methods ON_EVENT
-    importing
-      !CLIENT type ref to Z2UI5_IF_CLIENT .
-  methods RENDER_MAIN_VIEW
-    importing
-      !CLIENT type ref to Z2UI5_IF_CLIENT .
-  methods RENDER_SITE_CONTENT
-    importing
-      !CLIENT type ref to Z2UI5_IF_CLIENT
-    changing
-      !SITE_CONTENT type ref to Z2UI5_CL_XML_VIEW .
-private section.
+    METHODS render_main_view
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
+    METHODS render_site_content
+      IMPORTING
+        client       TYPE REF TO z2ui5_if_client
+      CHANGING
+        site_content TYPE REF TO z2ui5_cl_xml_view.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
   METHOD on_event.
 
-    "The selected key of the side navigation does not change if the user presses on an menu entry
-    "While the new page loads the key remains the same - After loading the element changes the key on the frontend
-    "but we need it earlier
+    " The selected key of the side navigation does not change if the user presses on an menu entry
+    " While the new page loads the key remains the same - After loading the element changes the key on the frontend
+    " but we need it earlier
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -73,57 +72,99 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD RENDER_MAIN_VIEW.
+  METHOD render_main_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    "Custom CSS
-    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.sapMPage>section { height: 100% }` &&
-    `#mainView--site_content { border-radius: 0.75em }` ).
+    " Custom CSS
+    view->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml( |.sapMPage>section \{ height: 100% \}| &&
+    |#mainView--site_content \{ border-radius: 0.75em \}| ).
 
     DATA(page) = view->page(
-            title          = 'abap2UI5 - Sample: Side Navigation'
-            navbuttonpress = client->_event( 'BACK' )
-            enablescrolling = abap_false
-            class = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer'
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+        title           = 'abap2UI5 - Sample: Side Navigation'
+        navbuttonpress  = client->_event( 'BACK' )
+        enablescrolling = abap_false
+        class           = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer'
+        shownavbutton   = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(content) = page->flex_box( width = '100%' height = '90%' alignitems = 'Start' ).
+    DATA(content) = page->flex_box( width      = '100%'
+                                    height     = '90%'
+                                    alignitems = 'Start' ).
 
-    DATA(navlist) = content->flex_box( width = '100%' height = '100%' direction = 'Column' )->layout_data( )->flex_item_data( growfactor = '1'
-    basesize = '0' )->get_parent( )->side_navigation( id = 'sideNavigation' class = 'sapUiTinyMarginTop' selectedkey = client->_bind( selected_menu_entry )
+    DATA(navlist) = content->flex_box( width     = '100%'
+                                       height    = '100%'
+                                       direction = 'Column' )->layout_data( )->flex_item_data(
+                                                                growfactor = '1'
+                                                                basesize   = '0' )->get_parent( )->side_navigation(
+                                                                    id          = 'sideNavigation'
+                                                                    class       = 'sapUiTinyMarginTop'
+                                                                    selectedkey = client->_bind( selected_menu_entry )
     )->navigation_list( ).
 
-    "As per version 1.120.19 icons for sub menu entries are not possible
-    "This part of the menu is scrollable if there are too many entries for the current screen size
-    navlist->navigation_list_item( text = 'Home' icon = 'sap-icon://home' select = client->_event( 'MENU_HOME' ) key = 'Home'
-     )->get_child( )->navigation_list_item( text = 'Home Sub 1' select = client->_event( 'MENU_HOME_1' ) key = 'Home1'
-     )->navigation_list_item( text = 'Home Sub 2' select = client->_event( 'MENU_HOME_2' ) key = 'Home2'
-     )->navigation_list_item( text = 'Home Sub 3' select = client->_event( 'MENU_HOME_3' ) key = 'Home3' ).
+    " As per version 1.120.19 icons for sub menu entries are not possible
+    " This part of the menu is scrollable if there are too many entries for the current screen size
+    navlist->navigation_list_item( text   = 'Home'
+                                   icon   = 'sap-icon://home'
+                                   select = client->_event( 'MENU_HOME' )
+                                   key    = 'Home'
+     )->get_child( )->navigation_list_item( text   = 'Home Sub 1'
+                                            select = client->_event( 'MENU_HOME_1' )
+                                            key    = 'Home1'
+     )->navigation_list_item( text   = 'Home Sub 2'
+                              select = client->_event( 'MENU_HOME_2' )
+                              key    = 'Home2'
+     )->navigation_list_item( text   = 'Home Sub 3'
+                              select = client->_event( 'MENU_HOME_3' )
+                              key    = 'Home3' ).
 
-    navlist->navigation_list_item( text = 'Customers' icon = 'sap-icon://customer' select = client->_event( 'MENU_CUSTOMER' ) key = 'Customers' ).
-    navlist->navigation_list_item( text = 'Suppliers' icon = 'sap-icon://supplier' select = client->_event( 'MENU_SUPPLIER' ) key = 'Suppliers' ).
+    navlist->navigation_list_item( text   = 'Customers'
+                                   icon   = 'sap-icon://customer'
+                                   select = client->_event( 'MENU_CUSTOMER' )
+                                   key    = 'Customers' ).
+    navlist->navigation_list_item( text   = 'Suppliers'
+                                   icon   = 'sap-icon://supplier'
+                                   select = client->_event( 'MENU_SUPPLIER' )
+                                   key    = 'Suppliers' ).
 
-    "This part of the menu is fixed and always visible
+    " This part of the menu is fixed and always visible
     navlist->get_parent( )->fixed_item( )->navigation_list(
-    )->navigation_list_item( text = 'Fixed Entry 1' icon = 'sap-icon://heart' select = client->_event( 'MENU_FIX1' ) key = 'Fix1'
-    )->navigation_list_item( text = 'Fixed Entry 2' icon = 'sap-icon://flight' select = client->_event( 'MENU_FIX2' ) key = 'Fix2'
-    )->navigation_list_item( text = 'Fixed Entry 3' icon = 'sap-icon://email-read' select = client->_event( 'MENU_FIX3' ) key = 'Fix3'
-    )->navigation_list_item( text = 'Link' icon = 'sap-icon://chain-link' href = 'https://github.com/abap2UI5/abap2UI5' ).
+    )->navigation_list_item( text   = 'Fixed Entry 1'
+                             icon   = 'sap-icon://heart'
+                             select = client->_event( 'MENU_FIX1' )
+                             key    = 'Fix1'
+    )->navigation_list_item( text   = 'Fixed Entry 2'
+                             icon   = 'sap-icon://flight'
+                             select = client->_event( 'MENU_FIX2' )
+                             key    = 'Fix2'
+    )->navigation_list_item( text   = 'Fixed Entry 3'
+                             icon   = 'sap-icon://email-read'
+                             select = client->_event( 'MENU_FIX3' )
+                             key    = 'Fix3'
+    )->navigation_list_item( text = 'Link'
+                             icon = 'sap-icon://chain-link'
+                             href = 'https://github.com/abap2UI5/abap2UI5' ).
 
-    DATA(site_content) = content->flex_box( id = 'site_content' class = 'sapUiTinyMarginTop sapUiTinyMarginBegin' width = '100%' height = '100%' backgrounddesign = 'Solid'
-    alignitems = 'Center' justifycontent = 'Center' )->layout_data( )->flex_item_data( growfactor = '4' backgrounddesign = 'Solid' )->get_parent( ).
+    DATA(site_content) = content->flex_box( id               = 'site_content'
+                                            class            = 'sapUiTinyMarginTop sapUiTinyMarginBegin'
+                                            width            = '100%'
+                                            height           = '100%'
+                                            backgrounddesign = 'Solid'
+                                            alignitems       = 'Center'
+                                            justifycontent   = 'Center' )->layout_data( )->flex_item_data(
+                                                                            growfactor       = '4'
+                                                                            backgrounddesign = 'Solid' )->get_parent( ).
 
-    "Render content depending on the current site
-    me->render_site_content( EXPORTING client = client CHANGING site_content = site_content ).
+    " Render content depending on the current site
+    render_site_content( EXPORTING client       = client
+                         CHANGING  site_content = site_content ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
-
   METHOD render_site_content.
+    " TODO: parameter CLIENT is never used (ABAP cleaner)
 
     CASE selected_menu_entry.
 
@@ -149,8 +190,7 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  method Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -162,5 +202,6 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
     on_event( client ).
     render_main_view( client ).
 
-  endmethod.
+  ENDMETHOD.
+
 ENDCLASS.

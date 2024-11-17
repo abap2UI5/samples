@@ -20,35 +20,39 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
+
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
-                                       navbuttonpress = client->_event( 'BACK' )
-                                       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    DATA(page) = view->shell( )->page(
+                     title          = 'abap2UI5 - File Editor'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         ).
 
-   data(temp) = page->simple_form( title = 'File' editable = abap_true )->content( `form`
-         )->label( 'path'
-         )->input( client->_bind_edit( mv_path )
-         )->label( 'Option' ).
+    DATA(temp) = page->simple_form( title    = 'File'
+                                    editable = abap_true )->content( `form`
+          )->label( 'path'
+          )->input( client->_bind_edit( mv_path )
+          )->label( 'Option' ).
 
-     data(lt_types) = VALUE z2ui5_if_types=>ty_t_name_value( ).
-    lt_types = value #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
-            n = shift_right( shift_left( row ) )
-            v = shift_right( shift_left( row ) ) ) ).
+    DATA(lt_types) = VALUE z2ui5_if_types=>ty_t_name_value( ).
+    lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )
+                        ( n = shift_right( shift_left( row ) )
+                          v = shift_right( shift_left( row ) ) ) ).
 
-    data(temp3) = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems = client->_bind_local( lt_types )
+    DATA(temp3) = temp->input( value           = client->_bind_edit( mv_type )
+                               suggestionitems = client->_bind_local( lt_types )
                     )->get( ).
 
-       temp3->suggestion_items(
-                )->list_item( text = '{N}' additionaltext = '{V}' ).
+    temp3->suggestion_items(
+             )->list_item( text           = '{N}'
+                           additionaltext = '{V}' ).
 
     temp->label( '' )->button( text  = 'Download'
-                    press = client->_event( 'DB_LOAD' )
-                    icon  = 'sap-icon://download-from-cloud' ).
+                               press = client->_event( 'DB_LOAD' )
+                               icon  = 'sap-icon://download-from-cloud' ).
 
     page->code_editor( type     = mv_type
                        editable = mv_check_editable
@@ -92,12 +96,15 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
             WHEN mv_path CS 'text' THEN lcl_file_api=>read_text( )
             WHEN mv_path CS 'js'   THEN lcl_file_api=>read_js( ) ).
 
+        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
         client->message_toast_display( 'Download successfull' ).
 
         client->view_model_update( ).
 
       WHEN 'DB_SAVE'.
-        client->message_box_display( text = 'Upload successfull. File saved!' type = 'success' ).
+        " TODO: check spelling: successfull (typo) -> successful (ABAP cleaner)
+        client->message_box_display( text = 'Upload successfull. File saved!'
+                                     type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
       WHEN 'CLEAR'.
@@ -106,4 +113,5 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
+
 ENDCLASS.

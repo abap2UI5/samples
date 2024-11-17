@@ -1,24 +1,22 @@
 CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
+
     DATA check_initialized TYPE abap_bool.
-    DATA mv_view_main TYPE string.
+    DATA mv_view_main      TYPE string.
 
   PROTECTED SECTION.
-
     METHODS z2ui5_view_main_display.
     METHODS z2ui5_view_second_display.
+
     DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -48,6 +46,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
         ENDCASE.
 
       WHEN 'BUTTON_ERROR'.
+        " TODO: variable is assigned but never used (ABAP cleaner)
         DATA(lv_dummy) = 1 / 0.
 
       WHEN 'BACK'.
@@ -57,62 +56,55 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_view_main_display.
 
     mv_view_main = 'MAIN'.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-            title          = 'abap2UI5 - Controller'
-            navbuttonpress = client->_event( val = 'BACK' )
-               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        )->page( title          = 'abap2UI5 - Controller'
+                 navbuttonpress = client->_event( val = 'BACK' )
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
           ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
-        )->simple_form( title = 'Controller' editable = abap_true )->content( 'form'
+        )->simple_form( title    = 'Controller'
+                        editable = abap_true )->content( 'form'
             )->label( 'Roundtrip'
-            )->button(
-                text  = 'Client/Server Interaction'
-                press = client->_event( 'BUTTON_ROUNDTRIP' )
+            )->button( text  = 'Client/Server Interaction'
+                       press = client->_event( 'BUTTON_ROUNDTRIP' )
             )->label( 'System'
-            )->button(
-                text  = 'Restart App'
-                press = client->_event( 'BUTTON_RESTART' )
+            )->button( text  = 'Restart App'
+                       press = client->_event( 'BUTTON_RESTART' )
             )->label( 'Change View'
-            )->button(
-                text  = 'Display View SECOND'
-                press = client->_event( 'BUTTON_CHANGE_VIEW' )
+            )->button( text  = 'Display View SECOND'
+                       press = client->_event( 'BUTTON_CHANGE_VIEW' )
             )->label( 'CX_SY_ZERO_DIVIDE'
-            )->button(
-                text  = 'Error not catched by the user'
-                press = client->_event( 'BUTTON_ERROR' ) ).
+            )->button( text  = 'Error not catched by the user'
+                       press = client->_event( 'BUTTON_ERROR' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_view_second_display.
 
     mv_view_main = 'SECOND'.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-     title          = 'abap2UI5 - Controller'
-     navbuttonpress = client->_event( 'BACK' )
-     shownavbutton = abap_true
+    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - Controller'
+                                       navbuttonpress = client->_event( 'BACK' )
+                                       shownavbutton  = abap_true
      ).
 
     page->grid( 'L12 M12 S12' )->content( 'layout'
         )->simple_form( 'View Second' )->content( 'form'
             )->label( 'Change View'
-            )->button(
-                text  = 'Display View MAIN'
-                press = client->_event( 'BUTTON_CHANGE_VIEW' ) ).
+            )->button( text  = 'Display View MAIN'
+                       press = client->_event( 'BUTTON_CHANGE_VIEW' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

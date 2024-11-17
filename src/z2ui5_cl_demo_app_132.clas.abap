@@ -10,8 +10,9 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     DATA mv_perc         TYPE string.
 
     METHODS set_app_data
-      IMPORTING !count TYPE string
-                !table TYPE string.
+      IMPORTING
+        count TYPE string
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -24,8 +25,10 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
 
   PRIVATE SECTION.
     METHODS get_comp
-      RETURNING VALUE(result) TYPE abap_component_tab.
+      RETURNING
+        VALUE(result) TYPE abap_component_tab.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 

@@ -16,8 +16,9 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA ms_fixval       TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING !count TYPE string
-                !table TYPE string.
+      IMPORTING
+        count TYPE string
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -32,16 +33,16 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     METHODS get_data.
 
     METHODS get_comp
-      RETURNING VALUE(result) TYPE abap_component_tab.
+      RETURNING
+        VALUE(result) TYPE abap_component_tab.
 
     METHODS get_fixval.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
   METHOD on_event.
-
-    FIELD-SYMBOLS <row> TYPE any.
 
     CASE client->get( )-event.
 
@@ -88,7 +89,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = '{' && comp-name && '}' ).
+      cells->object_identifier( text = |\{{ comp-name }\}| ).
     ENDLOOP.
 
     page->footer( )->overflow_toolbar(

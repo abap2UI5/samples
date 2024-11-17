@@ -4,14 +4,15 @@ CLASS z2ui5_cl_demo_app_137 DEFINITION
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA instance_counter TYPE i READ-ONLY.
-    DATA check_initialized TYPE abap_bool READ-ONLY.
+
+    DATA instance_counter    TYPE i         READ-ONLY.
+    DATA check_initialized   TYPE abap_bool READ-ONLY.
     DATA session_is_stateful TYPE abap_bool READ-ONLY.
-    DATA session_text TYPE string READ-ONLY.
+    DATA session_text        TYPE string    READ-ONLY.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
 
+  PRIVATE SECTION.
     METHODS initialize_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -26,6 +27,7 @@ CLASS z2ui5_cl_demo_app_137 DEFINITION
         stateful TYPE abap_bool.
 
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
 
@@ -45,33 +47,32 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD initialize_view.
-    set_session_stateful( client = client stateful = abap_true ).
+    set_session_stateful( client   = client
+                          stateful = abap_true ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-      title          = `abap2UI5 - Sample: Sticky Session`
-      navbuttonpress = client->_event( 'BACK' )
-      shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                     title          = `abap2UI5 - Sample: Sticky Session`
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(vbox) = page->vbox( ).
     vbox->info_label( text = client->_bind( session_text ) ).
 
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text = 'press button to increment counter in backend session' class = 'sapUiTinyMarginEnd' ).
-    hbox->button(
-      text  = client->_bind( instance_counter )
-      press = client->_event( 'INCREMENT' )
-      type = 'Emphasized' ).
+    hbox->label( text  = 'press button to increment counter in backend session'
+                 class = 'sapUiTinyMarginEnd' ).
+    hbox->button( text  = client->_bind( instance_counter )
+                  press = client->_event( 'INCREMENT' )
+                  type  = 'Emphasized' ).
 
     hbox = vbox->hbox( ).
-    hbox->button(
-      text  = 'End session'
-      press = client->_event( 'END_SESSION' ) ).
+    hbox->button( text  = 'End session'
+                  press = client->_event( 'END_SESSION' ) ).
 
-    hbox->button(
-      text  = 'Start session again'
-      press = client->_event( 'START_SESSION' ) ).
+    hbox->button( text  = 'Start session again'
+                  press = client->_event( 'START_SESSION' ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -79,15 +80,18 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
         client->nav_app_leave( ).
       WHEN 'INCREMENT'.
         instance_counter = lcl_static_container=>increment( ).
         client->view_model_update( ).
       WHEN 'END_SESSION'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
       WHEN 'START_SESSION'.
-        set_session_stateful( client = client stateful = abap_true ).
+        set_session_stateful( client   = client
+                              stateful = abap_true ).
     ENDCASE.
   ENDMETHOD.
 
@@ -101,4 +105,5 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.
+
 ENDCLASS.

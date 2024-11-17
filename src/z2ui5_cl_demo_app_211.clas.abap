@@ -32,8 +32,6 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION
     METHODS on_event.
     METHODS render_Main.
 
-
-
     METHODS Render_sub_app.
 
   PRIVATE SECTION.
@@ -42,7 +40,6 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
-
 
   METHOD on_event.
     CASE client->get( )-event.
@@ -160,14 +157,14 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     ENDCASE.
 
-   ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
+    ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
-   ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
+    ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
 
     IF <view_update> = abap_true.
       <view_update> = abap_false.

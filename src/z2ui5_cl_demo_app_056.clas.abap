@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -15,15 +14,16 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table.
-    DATA mt_token TYPE z2ui5_cl_util=>ty_t_token.
+    DATA mt_table          TYPE ty_t_table.
+    DATA mt_token          TYPE z2ui5_cl_util=>ty_t_token.
 
-    DATA mt_tokens_added TYPE z2ui5_cl_util=>ty_t_token.
+    DATA mt_tokens_added   TYPE z2ui5_cl_util=>ty_t_token.
     DATA mt_tokens_removed TYPE z2ui5_cl_util=>ty_t_token.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client               TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
+
     METHODS on_event.
     METHODS view_display.
     METHODS set_data.
@@ -33,9 +33,7 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -51,7 +49,10 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         ENDLOOP.
 
         LOOP AT mt_tokens_added INTO ls_token.
-          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+          INSERT VALUE #( key      = ls_token-key
+                          text     = ls_token-text
+                          visible  = abap_true
+                          editable = abap_true ) INTO TABLE mt_token.
         ENDLOOP.
 
         CLEAR mt_tokens_removed.
@@ -70,65 +71,61 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+    mt_table = VALUE #( create_date      = `01.01.2023`
+                        create_by        = `Peter`
+                        storage_location = `AREA_001`
+                        quantity         = 400
+                        ( product = 'table' )
+                        ( product = 'chair' )
+                        ( product = 'sofa' )
+                        ( product = 'computer' )
+                        ( product = 'oven' )
+                        ( product = 'table2' ) ).
 
     DELETE mt_table WHERE product NOT IN mt_range.
 
   ENDMETHOD.
 
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Select-Options'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    view = view->shell( )->page( id             = `page_main`
+                                 title          = 'abap2UI5 - Select-Options'
+                                 navbuttonpress = client->_event( 'BACK' )
+                                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).
-    vbox->_z2ui5( )->multiinput_ext(
-                       addedtokens      = client->_bind_edit( mt_tokens_added )
-                       removedtokens    = client->_bind_edit( mt_tokens_removed )
-                       change           = client->_event( 'UPDATE_TOKENS' )
-                       multiinputid     = `MultiInput`  ).
+    vbox->_z2ui5( )->multiinput_ext( addedtokens   = client->_bind_edit( mt_tokens_added )
+                                     removedtokens = client->_bind_edit( mt_tokens_removed )
+                                     change        = client->_event( 'UPDATE_TOKENS' )
+                                     multiinputid  = `MultiInput`  ).
 
-    DATA(tab) = vbox->table(
-        items = client->_bind( val = mt_table )
+    DATA(tab) = vbox->table( items = client->_bind( val = mt_table )
            )->header_toolbar(
              )->overflow_toolbar(
              )->text( `Product:`
-             )->multi_input(
-                width = `30%`
-                id = `MultiInput`
-                tokens           = client->_bind( mt_token )
-                showclearicon    = abap_true
-                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
-            )->item(
-                    key  = `{KEY}`
-                    text = `{TEXT}`
+             )->multi_input( width            = `30%`
+                             id               = `MultiInput`
+                             tokens           = client->_bind( mt_token )
+                             showclearicon    = abap_true
+                             valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
+            )->item( key  = `{KEY}`
+                     text = `{TEXT}`
             )->tokens(
-                )->token(
-                    key      = `{KEY}`
-                    text     = `{TEXT}`
-                    visible  = `{VISIBLE}`
-                    selected = `{SELKZ}`
-                    editable = `{EDITABLE}`
+                )->token( key      = `{KEY}`
+                          text     = `{TEXT}`
+                          visible  = `{VISIBLE}`
+                          selected = `{SELKZ}`
+                          editable = `{EDITABLE}`
                 )->get_parent( )->get_parent(
                  )->toolbar_spacer(
-               )->button(
-        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+               )->button( text  = `Go`
+                          press = client->_event( `BUTTON_START` )
+                          type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).
@@ -148,7 +145,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -182,4 +178,5 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

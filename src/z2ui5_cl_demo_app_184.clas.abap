@@ -17,8 +17,8 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
 
     METHODS set_app_data
       IMPORTING
-        !count TYPE string
-        !table TYPE string.
+        count TYPE string
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -37,6 +37,7 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
         VALUE(result) TYPE abap_component_tab.
 
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
@@ -66,9 +67,9 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing    = 'true'
-                               width      = 'auto'
-                               items      = client->_bind( <tab> )
+    DATA(table) = page->table( growing = 'true'
+                               width   = 'auto'
+                               items   = client->_bind( <tab> )
 *                               headertext = mv_table
                                ).
 
@@ -86,7 +87,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = '{' && comp-name && '}' ).
+      cells->object_identifier( text = |\{{ comp-name }\}| ).
     ENDLOOP.
 
     IF mo_parent_view IS INITIAL.
@@ -114,6 +115,8 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD set_app_data.
+    " TODO: parameter COUNT is never used (ABAP cleaner)
+
     mv_table = table.
   ENDMETHOD.
 

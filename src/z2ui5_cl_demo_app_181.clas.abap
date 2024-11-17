@@ -1,14 +1,12 @@
 CLASS z2ui5_cl_demo_app_181 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-
-    INTERFACES z2ui5_if_app .
-
-    DATA mv_initialized TYPE abap_bool .
-    DATA mv_url TYPE string .
+    DATA mv_initialized TYPE abap_bool.
+    DATA mv_url         TYPE string.
 
     TYPES:
       BEGIN OF ty_cities,
@@ -29,20 +27,17 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION
 
     TYPES t_product_items TYPE STANDARD TABLE OF ty_product_items WITH DEFAULT KEY.
 
+    METHODS on_event.
+    METHODS view_display.
 
-    METHODS on_event .
-    METHODS view_display .
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
   METHOD on_event.
 
@@ -57,89 +52,114 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    data(page) = view->shell( )->page(
-        title = `Cards Demo`
-        class = `sapUiContentPadding`
-        navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    DATA(page) = view->shell( )->page(
+                     title          = `Cards Demo`
+                     class          = `sapUiContentPadding`
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
     ).
 
-    DATA(card_1) = page->card( width = `300px` class = `sapUiMediumMargin`
+    " TODO: variable is assigned but never used (ABAP cleaner)
+    DATA(card_1) = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
       )->header( ns = `f`
-        )->card_header( title = `Buy bus ticket on-line`
+        )->card_header( title    = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
-                        iconsrc = `sap-icon://bus-public-transport`
+                        iconsrc  = `sap-icon://bus-public-transport`
                       )->get_parent( )->get_parent(
                     )->content( ns = `f`
-                      )->vbox( height = `110px`
-                               class = `sapUiSmallMargin`
+                      )->vbox( height         = `110px`
+                               class          = `sapUiSmallMargin`
                                justifycontent = `SpaceBetween`
                         )->hbox( justifycontent = `SpaceBetween`
-                          )->combobox( width = `120px`
-                                       placeholder = `From City`
-                                       items = `{path:'` && client->_bind_local( val = VALUE t_cities( ( text = `Berlin` key = `BR` )
-                                                                                                       ( text = `London` key = `LN` )
-                                                                                                       ( text = `Madrid` key = `MD` )
-                                                                                                       ( text = `Prague` key = `PR` )
-                                                                                                       ( text = `Paris`  key = `PS` )
-                                                                                                       ( text = `Sofia`  key = `SF` )
-                                                                                                       ( text = `Vienna` key = `VN` )
-                                                                                                      ) path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
-                          )->combobox( width = `120px`
-                                       placeholder = `To City`
-                                       items = `{path:'` && client->_bind_local( val = VALUE t_cities( ( text = `Berlin` key = `BR` )
-                                                                                                       ( text = `London` key = `LN` )
-                                                                                                       ( text = `Madrid` key = `MD` )
-                                                                                                       ( text = `Prague` key = `PR` )
-                                                                                                       ( text = `Paris`  key = `PS` )
-                                                                                                       ( text = `Sofia`  key = `SF` )
-                                                                                                       ( text = `Vienna` key = `VN` )
-                                                                                                      ) path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
+                          )->combobox(
+                              width       = `120px`
+                              placeholder = `From City`
+                              items       = |\{path:'{ client->_bind_local(
+                                                           val  = VALUE t_cities( ( text = `Berlin` key = `BR` )
+                                                                                  ( text = `London` key = `LN` )
+                                                                                  ( text = `Madrid` key = `MD` )
+                                                                                  ( text = `Prague` key = `PR` )
+                                                                                  ( text = `Paris`  key = `PS` )
+                                                                                  ( text = `Sofia`  key = `SF` )
+                                                                                  ( text = `Vienna` key = `VN` )
+                                                                                 )
+                                                           path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
+                          )->combobox(
+                              width       = `120px`
+                              placeholder = `To City`
+                              items       = |\{path:'{ client->_bind_local(
+                                                           val  = VALUE t_cities( ( text = `Berlin` key = `BR` )
+                                                                                  ( text = `London` key = `LN` )
+                                                                                  ( text = `Madrid` key = `MD` )
+                                                                                  ( text = `Prague` key = `PR` )
+                                                                                  ( text = `Paris`  key = `PS` )
+                                                                                  ( text = `Sofia`  key = `SF` )
+                                                                                  ( text = `Vienna` key = `VN` )
+                                                                              )
+                                                           path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
                       )->get_parent(
-                   )->hbox( rendertype = `Bare` justifycontent = `SpaceBetween`
-                    )->date_picker( width = `200px`
+                   )->hbox( rendertype     = `Bare`
+                            justifycontent = `SpaceBetween`
+                    )->date_picker( width       = `200px`
                                     placeholder = `Choose Date ...`
-                    )->button( text = `Book`
-                               type = `Emphasized`
+                    )->button( text  = `Book`
+                               type  = `Emphasized`
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
-
-    DATA(card_2) = page->card( width = `300px` class = `sapUiMediumMargin`
+    " TODO: variable is assigned but never used (ABAP cleaner)
+    DATA(card_2) = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
                      )->header( ns = `f`
-                       )->card_header( title = `Project Cloud Transformation`
+                       )->card_header( title    = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
                                      )->get_parent( )->get_parent(
                                    )->content( ns = `f`
-                                    )->list( class = `sapUiSmallMarginBottom`
+                                    )->list( class          = `sapUiSmallMarginBottom`
                                              showseparators = `None`
-                                             items = client->_bind_local( VALUE t_product_items( ( title = `Notebook HT` subtitle = `ID23452256-D44` revenue = `27.25K EUR` status = `success` status_schema = `Success` )
-                                                                                                 ( title = `Notebook XT` subtitle = `ID27852256-D47` revenue = `7.35K EUR` status = `exceeded` status_schema = `Error` )
-                                                                                                 ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` )
+                                             items          = client->_bind_local(
+                                                 VALUE t_product_items( ( title         = `Notebook HT`
+                                                                          subtitle      = `ID23452256-D44`
+                                                                          revenue       = `27.25K EUR`
+                                                                          status        = `success`
+                                                                          status_schema = `Success` )
+                                                                        ( title         = `Notebook XT`
+                                                                          subtitle      = `ID27852256-D47`
+                                                                          revenue       = `7.35K EUR`
+                                                                          status        = `exceeded`
+                                                                          status_schema = `Error` )
+                                                                        ( title         = `Notebook ST`
+                                                                          subtitle      = `ID123555587-I05`
+                                                                          revenue       = `22.89K EUR`
+                                                                          status        = `warning`
+                                                                          status_schema = `Warning` )
 
-                                                                                               ) )
+                                                                      ) )
                                        )->custom_list_item(
-                                        )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
+                                        )->hbox( alignitems     = `Center`
+                                                 justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-                                            )->title( text = `{TITLE}` titlestyle = `H3`
+                                            )->title( text       = `{TITLE}`
+                                                      titlestyle = `H3`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(
                                           )->object_status( class = `sapUiTinyMargin sapUiSmallMarginEnd`
-                                                            text = `{REVENUE}`
+                                                            text  = `{REVENUE}`
                                                             state = `{STATUS_SCHEMA}`
     ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -155,4 +175,5 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

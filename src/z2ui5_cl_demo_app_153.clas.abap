@@ -1,10 +1,10 @@
 CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
+
     TYPES:
       BEGIN OF ty_dataset2,
         label                TYPE string,
@@ -36,18 +36,18 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
       BEGIN OF ty_data,
         labels   TYPE string_table,
         datasets TYPE ty_datasets,
-      END OF ty_data .
+      END OF ty_data.
 
     TYPES:
       BEGIN OF ty_chart,
         data TYPE ty_data,
-      END OF ty_chart .
+      END OF ty_chart.
 
 *    DATA mt_string_table TYPE string_table.
 *    DATA mt_string_table2 TYPE string_table.
 *    DATA mv_value TYPE string.
 *    DATA mv_value2 TYPE string.
-    DATA ms_struc TYPE ty_chart.
+    DATA ms_struc  TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
 *    DATA mv_long_long_long_long_value TYPE string.
 
@@ -55,31 +55,28 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     METHODS ui5_event.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
-
 
   METHOD ui5_display.
 
     client->_bind_edit(
-        val = ms_struc
-        custom_mapper = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
-        custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case(  )
+        val                = ms_struc
+        custom_mapper      = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
+        custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( )
      ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
-        )->page(
-                title          = 'abap2UI5 - Binding'
-                navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-           )->button(
-            text  = 'Rountrip...'
-            press = client->_event( 'POPUP' )
+        )->page( title          = 'abap2UI5 - Binding'
+                 navbuttonpress = client->_event( val = 'BACK' )
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+           )->button( text  = 'Rountrip...'
+                      press = client->_event( 'POPUP' )
 *           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
 *           )->input( value = client->_bind_edit( mv_long_long_long_long_value ) width = `10%`
              ).
@@ -87,7 +84,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD ui5_event.
 
@@ -119,7 +115,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     DATA ls_dataset TYPE ty_dataset.
@@ -131,14 +126,13 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       ms_struc-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
 
       CLEAR ls_dataset.
-      ls_dataset-label = 'Fully Rounded'.
-      ls_dataset-border_width = 2.
+      ls_dataset-label         = 'Fully Rounded'.
+      ls_dataset-border_width  = 2.
       ls_dataset-border_radius = 200.
 *      ls_dataset-border_skipped = abap_true.
-      ls_dataset-data = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
+      ls_dataset-data          = VALUE #( ( `1` ) ( `-12` ) ( `19` ) ( `3` ) ( `5` ) ( `-2` ) ( `3` ) ).
 
-
-      "new value in lvl2
+      " new value in lvl2
 *      ls_dataset-lvl2-border_skipped = '-'.
 
       APPEND ls_dataset TO ms_struc-data-datasets.
@@ -166,4 +160,5 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     ui5_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

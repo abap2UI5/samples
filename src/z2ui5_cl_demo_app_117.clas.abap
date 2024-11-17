@@ -33,6 +33,7 @@ CLASS z2ui5_cl_demo_app_117 DEFINITION
 
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD on_event.
@@ -79,7 +80,9 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -105,7 +108,6 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD render_sub_app.
 
-
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
 
@@ -123,8 +125,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
         TRY.
 
             CALL METHOD mo_app->('SET_APP_DATA')
-              EXPORTING
-                data = t002->count.
+              EXPORTING data = t002->count.
 
             render_main( ).
 
@@ -134,8 +135,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
             ENDIF.
 
             CALL METHOD mo_app->('Z2UI5_IF_APP~MAIN')
-              EXPORTING
-                client = client.
+              EXPORTING client = client.
 
           CATCH cx_root.
             RETURN.

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -18,8 +17,9 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
     DATA mt_table TYPE ty_t_table.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client               TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
+
     METHODS on_event.
     METHODS view_display.
     METHODS set_data.
@@ -28,9 +28,7 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -45,41 +43,42 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD set_data.
 
-    "replace this with a db select here...
-    mt_table = VALUE #(
-        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+    " replace this with a db select here...
+    mt_table = VALUE #( create_date      = `01.01.2023`
+                        create_by        = `Peter`
+                        storage_location = `AREA_001`
+                        quantity         = 400
+                        ( product = 'table' )
+                        ( product = 'chair' )
+                        ( product = 'sofa' )
+                        ( product = 'computer' )
+                        ( product = 'oven' )
+                        ( product = 'table2' ) ).
 
   ENDMETHOD.
-
 
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Popup Display Table'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+    view = view->shell( )->page( id             = `page_main`
+                                 title          = 'abap2UI5 - Popup Display Table'
+                                 navbuttonpress = client->_event( 'BACK' )
+                                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         ).
 
     DATA(vbox) = view->vbox( ).
 
-    DATA(tab) = vbox->table(
-        items = client->_bind( val = mt_table )
+    DATA(tab) = vbox->table( items = client->_bind( val = mt_table )
            )->header_toolbar(
              )->overflow_toolbar(
                  )->toolbar_spacer(
 *                 )->button( text = `Filter` press = client->_event( `PREVIEW_FILTER` ) icon = `sap-icon://filter`
-           )->button(  text = `Display Popup` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+           )->button( text  = `Display Popup`
+                      press = client->_event( `BUTTON_START` )
+                      type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).
@@ -100,7 +99,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -114,6 +112,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true.
       TRY.
+          " TODO: variable is assigned but never used (ABAP cleaner)
           DATA(lo_popup_table) = CAST z2ui5_cl_pop_table( client->get_app( client->get( )-s_draft-id_prev_app ) ).
           set_data( ).
           client->view_model_update( ).
@@ -127,4 +126,5 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

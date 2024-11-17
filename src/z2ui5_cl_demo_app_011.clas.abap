@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -16,53 +15,46 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab                 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_editable_active TYPE abap_bool.
-    DATA check_initialized TYPE abap_bool.
+    DATA check_initialized     TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
-
 
   METHOD set_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-                title          = 'abap2UI5 - Tables and editable'
-                navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true ).
+        )->page( title          = 'abap2UI5 - Tables and editable'
+                 navbuttonpress = client->_event( 'BACK' )
+                 shownavbutton  = abap_true ).
 
-    DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
-            mode  = 'MultiSelect'
+    DATA(tab) = page->table( items = client->_bind_edit( t_tab )
+                             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'title of the table'
-                )->button(
-                    text  = 'test'
-                    press = client->_event( 'BUTTON_TEST' )
+                )->button( text  = 'test'
+                           press = client->_event( 'BUTTON_TEST' )
                 )->toolbar_spacer(
-                )->button(
-                    icon  = 'sap-icon://delete'
-                    text  = 'delete selected row'
-                    press = client->_event( 'BUTTON_DELETE' )
-                )->button(
-                    icon  = 'sap-icon://add'
-                    text  = 'add'
-                    press = client->_event( 'BUTTON_ADD' )
-                )->button(
-                    icon  = 'sap-icon://edit'
-                    text  = SWITCH #( check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
-                    press = client->_event( 'BUTTON_EDIT' )
+                )->button( icon  = 'sap-icon://delete'
+                           text  = 'delete selected row'
+                           press = client->_event( 'BUTTON_DELETE' )
+                )->button( icon  = 'sap-icon://add'
+                           text  = 'add'
+                           press = client->_event( 'BUTTON_ADD' )
+                )->button( icon  = 'sap-icon://edit'
+                           text  = SWITCH #( check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
+                           press = client->_event( 'BUTTON_EDIT' )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -79,16 +71,20 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{TITLE}' enabled = `{EDITABLE}`
-          )->input( value = '{VALUE}' enabled = `{EDITABLE}`
-          )->input( value = '{INFO}' enabled = `{EDITABLE}`
-          )->input( value = '{DESCR}' enabled = `{EDITABLE}`
-          )->checkbox( selected = '{CHECKBOX}' enabled = `{EDITABLE}` ).
+          )->input( value   = '{TITLE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{VALUE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{INFO}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{DESCR}'
+                    enabled = `{EDITABLE}`
+          )->checkbox( selected = '{CHECKBOX}'
+                       enabled  = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -112,7 +108,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     ENDIF.
 
-
     CASE client->get( )-event.
 
       WHEN 'BUTTON_EDIT'.
@@ -133,4 +128,5 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

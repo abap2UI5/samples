@@ -3,21 +3,21 @@ CLASS z2ui5_cl_demo_app_274 DEFINITION
   CREATE PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS z2ui5_display_popover
       IMPORTING
         id TYPE string.
@@ -26,9 +26,7 @@ CLASS z2ui5_cl_demo_app_274 DEFINITION
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -36,62 +34,67 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = 'abap2UI5 - Sample: Slide Tile'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = 'abap2UI5 - Sample: Slide Tile'
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(
-       )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+       )->button( id      = `button_hint_id`
+                  icon    = `sap-icon://hint`
+                  tooltip = `Sample information`
+                  press   = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
-       )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = base_url && 'sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile' ).
+       )->link( text   = 'UI5 Demo Kit'
+                target = '_blank'
+                href   = |{ base_url }sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile| ).
 
     page->vertical_layout(
            )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop`
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
-                   frametype = `TwoByOne` press = client->_event( 'pressOnTileOne' )
+                   backgroundimage = |{ base_url }test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png|
+                   frametype       = `TwoByOne`
+                   press           = client->_event( 'pressOnTileOne' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
+                           " TODO: check spelling: Comparision (typo) -> Comparison (ABAP cleaner)
                            contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
-                           subheader = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
+                           subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
-                   frametype = `TwoByOne` press = client->_event( 'pressOnTileTwo' )
+                   backgroundimage = |{ base_url }test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png|
+                   frametype       = `TwoByOne`
+                   press           = client->_event( 'pressOnTileTwo' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
-                           subheader = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                           subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
 
-           )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop` transitionTime = `250` displayTime = `2500`
+           )->slide_tile( class          = `sapUiTinyMarginBegin sapUiTinyMarginTop`
+                          transitionTime = `250`
+                          displayTime    = `2500`
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
-                   frametype = `TwoByOne` press = client->_event( 'pressOnTileOne' )
+                   backgroundimage = |{ base_url }test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png|
+                   frametype       = `TwoByOne`
+                   press           = client->_event( 'pressOnTileOne' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
-                           subheader = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
+                           subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
-                   frametype = `TwoByOne` state = `Failed`
+                   backgroundimage = |{ base_url }test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png|
+                   frametype       = `TwoByOne`
+                   state           = `Failed`
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
+                           " TODO: check spelling: Comparision (typo) -> Comparison (ABAP cleaner)
                            contenttext = `AP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
-                           subheader = `Today, SAP News`
+                           subheader   = `Today, SAP News`
 
           ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -104,22 +107,21 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `Shows Generic Tile with the 2x1 frame type displayed as sliding tiles.` ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page(
+                  pageid      = `sampleInformationId`
+                  header      = `Sample information`
+                  description = `Shows Generic Tile with the 2x1 frame type displayed as sliding tiles.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
+    client->popover_display( xml   = view->stringify( )
+                             by_id = id
     ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -133,4 +135,5 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

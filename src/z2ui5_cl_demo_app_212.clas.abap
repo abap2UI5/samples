@@ -14,12 +14,12 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        table TYPE string.
 
   PROTECTED SECTION.
-    DATA mv_table             TYPE string.
-    DATA mt_comp              TYPE abap_component_tab.
-    DATA mt_dfies             TYPE z2ui5_cl_util=>ty_t_dfies.
+    DATA mv_table          TYPE string.
+    DATA mt_comp           TYPE abap_component_tab.
+    DATA mt_dfies          TYPE z2ui5_cl_util=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION
 
     METHODS prefill_popup_values
       IMPORTING
-        !index TYPE string.
+        index TYPE string.
 
     METHODS render_popup.
 
@@ -142,11 +142,11 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
 *      DATA(text) = ms_layout-t_layout[ fname = dfies->fieldname ]-tlabel.
 
-      content->label(  text   = `text` ).
+      content->label( text = `text` ).
 
-      content->input( value       = client->_bind_edit( <val> )
-                    enabled       = abap_false
-                    showvaluehelp = abap_false ).
+      content->input( value         = client->_bind_edit( <val> )
+                      enabled       = abap_false
+                      showvaluehelp = abap_false ).
 
     ENDLOOP.
 
@@ -198,7 +198,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                                width   = 'auto'
                                items   = client->_bind_edit( val = <tab> ) ).
 
-    " TODO: variable is assigned but never used (ABAP cleaner)
+    " TODO: variable is assigned but only used in commented-out code (ABAP cleaner)
     DATA(headder) = table->header_toolbar(
                )->overflow_toolbar(
                  )->toolbar_spacer( ).

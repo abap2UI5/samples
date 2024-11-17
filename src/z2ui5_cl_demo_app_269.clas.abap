@@ -16,6 +16,7 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
+
   METHOD z2ui5_if_app~main.
     me->client = client.
 
@@ -29,7 +30,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(  ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->shell_bar(
         title               = `Shell Bar`
@@ -66,4 +67,5 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
+
 ENDCLASS.

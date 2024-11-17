@@ -1,16 +1,16 @@
 CLASS z2ui5_cl_demo_app_088 DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
+
     DATA mv_selected_key TYPE string.
 
   PROTECTED SECTION.
-
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
+
     METHODS z2ui5_view_display.
     METHODS z2ui5_on_event.
 
@@ -20,13 +20,11 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -38,7 +36,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
     z2ui5_on_event( ).
 
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -55,41 +52,45 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_view_display.
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-        navbuttonpress = client->_event( val = 'BACK' )
-        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        title = `abap2UI5 - Sample: Nav Container`
-    )->content( ).
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+                     navbuttonpress = client->_event( val = 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                     title          = `abap2UI5 - Sample: Nav Container`
+   )->content( ).
 
-    page->icon_tab_header( selectedkey = client->_bind_edit( mv_selected_key )
-                                                  select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
-                                                  mode = `Inline`
+    page->icon_tab_header(
+        selectedkey = client->_bind_edit( mv_selected_key )
+        select      = client->_event_client( val   = client->cs_event-nav_container_to
+                                             t_arg = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+        mode        = `Inline`
                                   )->items(
-                                    )->icon_tab_filter( key = `page1` text = `Home` )->get_parent(
-                                    )->icon_tab_filter( key = `page2` text = `Applications` )->get_parent(
-                                    )->icon_tab_filter( key = `page3` text = `Users and Groups` ).
+                                    )->icon_tab_filter( key  = `page1`
+                                                        text = `Home` )->get_parent(
+                                    )->icon_tab_filter( key  = `page2`
+                                                        text = `Applications` )->get_parent(
+                                    )->icon_tab_filter( key  = `page3`
+                                                        text = `Users and Groups` ).
 
-       page->nav_container( id = `NavCon` initialpage = `page1` defaulttransitionname = `flip`
-                                     )->pages(
-                                     )->page(
-                                       title          = 'first page'
-                                       id             = `page1`
-                                    )->get_parent(
-                                     )->page(
-                                       title          = 'second page'
-                                       id             = `page2`
-                                    )->get_parent(
-                                     )->page(
-                                       title          = 'third page'
-                                       id             = `page3`
-                                ).
-
+    page->nav_container( id                    = `NavCon`
+                         initialpage           = `page1`
+                         defaulttransitionname = `flip`
+                                  )->pages(
+                                  )->page( title = 'first page'
+                                           id    = `page1`
+                                 )->get_parent(
+                                  )->page( title = 'second page'
+                                           id    = `page2`
+                                 )->get_parent(
+                                  )->page( title = 'third page'
+                                           id    = `page3`
+                             ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,18 +1,18 @@
-class z2ui5_cl_demo_app_205 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_205 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES if_serializable_object.
+    INTERFACES z2ui5_if_app.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    DATA check_initialized TYPE abap_bool.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
   PROTECTED SECTION.
-
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -21,90 +21,132 @@ public section.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
 
-
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = `abap2UI5 - Sample: Flex Box - Basic Alignment`
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+         )->page( title          = `abap2UI5 - Sample: Flex Box - Basic Alignment`
+                  navbuttonpress = client->_event( 'BACK' )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
+    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(layout) = page->vbox(
                    )->panel( headertext = `Upper left`
-                   )->flex_box( height = `100px`
-                                alignItems = `Start`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Start`
                                 justifyContent = `Start`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Upper center`
-                   )->flex_box( height = `100px`
-                                alignItems = `Start`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Start`
                                 justifyContent = `Center`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Upper right`
-                   )->flex_box( height = `100px`
-                                alignItems = `Start`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Start`
                                 justifyContent = `End`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Middle left`
-                   )->flex_box( height = `100px`
-                                alignItems = `Center`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Center`
                                 justifyContent = `Start`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Middle center`
-                   )->flex_box( height = `100px`
-                                alignItems = `Center`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Center`
                                 justifyContent = `Center`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Middle right`
-                   )->flex_box( height = `100px`
-                                alignItems = `Center`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `Center`
                                 justifyContent = `End`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Lower left`
-                   )->flex_box( height = `100px`
-                                alignItems = `End`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `End`
                                 justifyContent = `Start`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Lower center`
-                   )->flex_box( height = `100px`
-                                alignItems = `End`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `End`
                                 justifyContent = `Center`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept` )->get_parent( )->get_parent(
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept` )->get_parent( )->get_parent(
                    )->panel( headertext = `Lower right`
-                   )->flex_box( height = `100px`
-                                alignItems = `End`
+                   )->flex_box( height         = `100px`
+                                alignItems     = `End`
                                 justifyContent = `End`
-                              )->button( text = `1` type = `Emphasized` class = `sapUiSmallMarginEnd`
-                              )->button( text = `2` type = `Reject` class = `sapUiSmallMarginEnd`
-                              )->button( text = `3` type = `Accept`
+                              )->button( text  = `1`
+                                         type  = `Emphasized`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text  = `2`
+                                         type  = `Reject`
+                                         class = `sapUiSmallMarginEnd`
+                              )->button( text = `3`
+                                         type = `Accept`
                    ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
-
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -113,8 +155,7 @@ CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -124,4 +165,5 @@ CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

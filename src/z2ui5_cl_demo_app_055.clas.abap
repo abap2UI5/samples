@@ -1,7 +1,6 @@
-CLASS Z2UI5_CL_DEMO_APP_055 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_055 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
     TYPES:
@@ -18,27 +17,26 @@ CLASS Z2UI5_CL_DEMO_APP_055 DEFINITION PUBLIC.
 
     METHODS refresh_data.
 
+  PROTECTED SECTION.
 
-protected section.
-private section.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_055 IMPLEMENTATION.
 
   METHOD refresh_data.
 
     DO 100 TIMES.
-      DATA(ls_row) = VALUE ty_row( count = sy-index  value = 'red'
-        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-        descr = 'this is a description' checkbox = abap_true ).
+      DATA(ls_row) = VALUE ty_row( count    = sy-index
+                                   value    = 'red'
+                                   info     = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
+                                   descr    = 'this is a description'
+                                   checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_if_app~main.
 
@@ -144,4 +142,5 @@ CLASS Z2UI5_CL_DEMO_APP_055 IMPLEMENTATION.
 *    client->set_next( next ).
 
   ENDMETHOD.
+
 ENDCLASS.

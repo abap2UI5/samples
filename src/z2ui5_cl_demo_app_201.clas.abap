@@ -1,28 +1,25 @@
-class Z2UI5_CL_DEMO_APP_201 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_201 DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES if_serializable_object.
+    INTERFACES z2ui5_if_app.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
-
-  types:
-    BEGIN OF ty_s_currency,
+    TYPES:
+      BEGIN OF ty_s_currency,
         language          TYPE string,
         currency          TYPE string,
         currencyname      TYPE string,
         currencyshortname TYPE string,
-      END OF ty_s_currency .
+      END OF ty_s_currency.
 
-  data:
-    mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency .
-  data:
-    mt_suggestion TYPE STANDARD TABLE OF ty_s_currency .
-  data INPUT type STRING .
+    DATA mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency.
+    DATA mt_suggestion     TYPE STANDARD TABLE OF ty_s_currency.
+    DATA input             TYPE string.
+
   PROTECTED SECTION.
-
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client            TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_event.
@@ -33,15 +30,13 @@ public section.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->SET_DATA
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD SET_DATA.
+  METHOD set_data.
 
     TYPES:
       BEGIN OF ty_s_currency,
@@ -52,247 +47,246 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
       END OF ty_s_currency.
 
     mt_suggestion = VALUE #(
-( language = 'E' currency = 'ADP' currencyname = 'Andorran Peseta --> (Old --> EUR)' currencyshortname = 'Peseta'  )
-( language = 'E' currency = 'AED' currencyname = 'United Arab Emirates Dirham' currencyshortname = 'Dirham'  )
-( language = 'E' currency = 'AFA' currencyname = 'Afghani (Old)' currencyshortname = 'Afghani'  )
-( language = 'E' currency = 'AFN' currencyname = 'Afghani' currencyshortname = 'Afghani'  )
-( language = 'E' currency = 'ALL' currencyname = 'Albanian Lek' currencyshortname = 'Lek'  )
-( language = 'E' currency = 'AMD' currencyname = 'Armenian Dram' currencyshortname = 'Dram'  )
-( language = 'E' currency = 'ANG' currencyname = 'West Indian Guilder' currencyshortname = 'W.Ind.Guilder'  )
-( language = 'E' currency = 'AOA' currencyname = 'Angolanische Kwanza' currencyshortname = 'Kwansa'  )
-( language = 'E' currency = 'AON' currencyname = 'Angolan New Kwanza (Old)' currencyshortname = 'New Kwanza'  )
-( language = 'E' currency = 'AOR' currencyname = 'Angolan Kwanza Reajustado (Old)' currencyshortname = 'Kwanza Reajust.'  )
-( language = 'E' currency = 'ARS' currencyname = 'Argentine Peso' currencyshortname = 'Arg. Peso'  )
-( language = 'E' currency = 'ATS' currencyname = 'Austrian Schilling (Old --> EUR)' currencyshortname = 'Shilling'  )
-( language = 'E' currency = 'AUD' currencyname = 'Australian Dollar' currencyshortname = 'Austr. Dollar'  )
-( language = 'E' currency = 'AWG' currencyname = 'Aruban Florin' currencyshortname = 'Aruban Florin'  )
-( language = 'E' currency = 'AZM' currencyname = 'Azerbaijani Manat (Old)' currencyshortname = 'Manat'  )
-( language = 'E' currency = 'AZN' currencyname = 'Azerbaijani Manat' currencyshortname = 'Manat'  )
-( language = 'E' currency = 'BAM' currencyname = 'Bosnia and Herzegovina Convertible Mark' currencyshortname = 'Convert. Mark'  )
-( language = 'E' currency = 'BBD' currencyname = 'Barbados Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'BDT' currencyname = 'Bangladesh Taka' currencyshortname = 'Taka'  )
-( language = 'E' currency = 'BEF' currencyname = 'Belgian Franc (Old --> EUR)' currencyshortname = 'Belgian Franc'  )
-( language = 'E' currency = 'BGN' currencyname = 'Bulgarian Lev' currencyshortname = 'Lev'  )
-( language = 'E' currency = 'BHD' currencyname = 'Bahraini Dinar' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'BIF' currencyname = 'Burundi Franc' currencyshortname = 'Burundi Franc'  )
-( language = 'E' currency = 'BMD' currencyname = 'Bermudan Dollar' currencyshortname = 'Bermudan Dollar'  )
-( language = 'E' currency = 'BND' currencyname = 'Brunei Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'BOB' currencyname = 'Boliviano' currencyshortname = 'Boliviano'  )
-( language = 'E' currency = 'BRL' currencyname = 'Brazilian Real' currencyshortname = 'Real'  )
-( language = 'E' currency = 'BSD' currencyname = 'Bahaman Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'BTN' currencyname = 'Bhutan Ngultrum' currencyshortname = 'Ngultrum'  )
-( language = 'E' currency = 'BWP' currencyname = 'Botswana Pula' currencyshortname = 'Pula'  )
-( language = 'E' currency = 'BYB' currencyname = 'Belarusian Ruble (Old)' currencyshortname = 'Belarus. Ruble'  )
-( language = 'E' currency = 'BYN' currencyname = 'Belarusian Ruble (New)' currencyshortname = 'Bela. Ruble N.'  )
-( language = 'E' currency = 'BYR' currencyname = 'Belarusian Ruble' currencyshortname = 'Ruble'  )
-( language = 'E' currency = 'BZD' currencyname = 'Belize Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'CAD' currencyname = 'Canadian Dollar' currencyshortname = 'Canadian Dollar'  )
-( language = 'E' currency = 'CDF' currencyname = 'Congolese Franc' currencyshortname = 'test data'  )
-( language = 'E' currency = 'CFP' currencyname = 'French Franc (Pacific Islands)' currencyshortname = 'Fr. Franc (Pac)'  )
-( language = 'E' currency = 'CHF' currencyname = 'Swiss Franc' currencyshortname = 'Swiss Franc'  )
-( language = 'E' currency = 'CLP' currencyname = 'Chilean Peso' currencyshortname = 'Peso'  )
-( language = 'E' currency = 'CNY' currencyname = 'Chinese Renminbi' currencyshortname = 'Renminbi'  )
-( language = 'E' currency = 'COP' currencyname = 'Colombian Peso' currencyshortname = 'Peso'  )
-( language = 'E' currency = 'CRC' currencyname = 'Costa Rica Colon' currencyshortname = 'Cost.Rica Colon'  )
-( language = 'E' currency = 'CSD' currencyname = 'Serbian Dinar (Old)' currencyshortname = 'Serbian Dinar'  )
-( language = 'E' currency = 'CUC' currencyname = 'Peso Convertible' currencyshortname = 'Peso Convertib.'  )
-( language = 'E' currency = 'CUP' currencyname = 'Cuban Peso' currencyshortname = 'Cuban Peso'  )
-( language = 'E' currency = 'CVE' currencyname = 'Cape Verde Escudo' currencyshortname = 'Escudo'  )
-( language = 'E' currency = 'CYP' currencyname = 'Cyprus Pound  (Old --> EUR)' currencyshortname = 'Cyprus Pound'  )
-( language = 'E' currency = 'CZK' currencyname = 'Czech Krona' currencyshortname = 'Krona'  )
-( language = 'E' currency = 'DEM' currencyname = 'German Mark    (Old --> EUR)' currencyshortname = 'German Mark'  )
-( language = 'E' currency = 'DEM3' currencyname = '(Internal) German Mark (3 dec.places)' currencyshortname = '(Int.) DEM 3 DP'  )
-( language = 'E' currency = 'DJF' currencyname = 'Djibouti Franc' currencyshortname = 'Djibouti Franc'  )
-( language = 'E' currency = 'DKK' currencyname = 'Danish Krone' currencyshortname = 'Danish Krone'  )
-( language = 'E' currency = 'DOP' currencyname = 'Dominican Peso' currencyshortname = 'Dominican Peso'  )
-( language = 'E' currency = 'DZD' currencyname = 'Algerian Dinar' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'ECS' currencyname = 'Ecuadorian Sucre (Old --> USD)' currencyshortname = 'Sucre'  )
-( language = 'E' currency = 'EEK' currencyname = 'Estonian Krone (Old --> EUR)' currencyshortname = 'Krona'  )
-( language = 'E' currency = 'EGP' currencyname = 'Egyptian Pound' currencyshortname = 'Pound'  )
-( language = 'E' currency = 'ERN' currencyname = 'Eritrean Nafka' currencyshortname = 'Nakfa'  )
-( language = 'E' currency = 'ESP' currencyname = 'Spanish Peseta (Old --> EUR)' currencyshortname = 'Peseta'  )
-( language = 'E' currency = 'ETB' currencyname = 'Ethiopian Birr' currencyshortname = 'Birr'  )
-( language = 'E' currency = 'EUR' currencyname = 'European Euro' currencyshortname = 'Euro'  )
-( language = 'E' currency = 'FIM' currencyname = 'Finnish Markka (Old --> EUR)' currencyshortname = 'Finnish markka'  )
-( language = 'E' currency = 'FJD' currencyname = 'Fiji Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'FKP' currencyname = 'Falkland Pound' currencyshortname = 'Falkland Pound'  )
-( language = 'E' currency = 'FRF' currencyname = 'French Franc (Old --> EUR)' currencyshortname = 'French Franc'  )
-( language = 'E' currency = 'GBP' currencyname = 'British Pound' currencyshortname = 'Pound sterling'  )
-( language = 'E' currency = 'GEL' currencyname = 'Georgian Lari' currencyshortname = 'Lari'  )
-( language = 'E' currency = 'GHC' currencyname = 'Ghanaian Cedi (Old)' currencyshortname = 'Cedi'  )
-( language = 'E' currency = 'GHS' currencyname = 'Ghanian Cedi' currencyshortname = 'Cedi'  )
-( language = 'E' currency = 'GIP' currencyname = 'Gibraltar Pound' currencyshortname = 'Gibraltar Pound'  )
-( language = 'E' currency = 'GMD' currencyname = 'Gambian Dalasi' currencyshortname = 'Dalasi'  )
-( language = 'E' currency = 'GNF' currencyname = 'Guinean Franc' currencyshortname = 'Franc'  )
-( language = 'E' currency = 'GRD' currencyname = 'Greek Drachma (Old --> EUR)' currencyshortname = 'Drachma'  )
-( language = 'E' currency = 'GTQ' currencyname = 'Guatemalan Quetzal' currencyshortname = 'Quetzal'  )
-( language = 'E' currency = 'GWP' currencyname = 'Guinea Peso (Old --> SHP)' currencyshortname = 'Guinea Peso'  )
-( language = 'E' currency = 'GYD' currencyname = 'Guyana Dollar' currencyshortname = 'Guyana Dollar'  )
-( language = 'E' currency = 'HKD' currencyname = 'Hong Kong Dollar' currencyshortname = 'H.K.Dollar'  )
-( language = 'E' currency = 'HNL' currencyname = 'Honduran Lempira' currencyshortname = 'Lempira'  )
-( language = 'E' currency = 'HRK' currencyname = 'Croatian Kuna' currencyshortname = 'Kuna'  )
-( language = 'E' currency = 'HTG' currencyname = 'Haitian Gourde' currencyshortname = 'Gourde'  )
-( language = 'E' currency = 'HUF' currencyname = 'Hungarian Forint' currencyshortname = 'Forint'  )
-( language = 'E' currency = 'IDR' currencyname = 'Indonesian Rupiah' currencyshortname = 'Rupiah'  )
-( language = 'E' currency = 'IEP' currencyname = 'Irish Punt (Old --> EUR)' currencyshortname = 'Irish Punt'  )
-( language = 'E' currency = 'ILS' currencyname = 'Israeli Scheckel' currencyshortname = 'Scheckel'  )
-( language = 'E' currency = 'INR' currencyname = 'Indian Rupee' currencyshortname = 'Rupee'  )
-( language = 'E' currency = 'IQD' currencyname = 'Iraqui Dinar' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'IRR' currencyname = 'Iranian Rial' currencyshortname = 'Rial'  )
-( language = 'E' currency = 'ISK' currencyname = 'Iceland Krona' currencyshortname = 'Krona'  )
-( language = 'E' currency = 'ITL' currencyname = 'Italian Lira (Old --> EUR)' currencyshortname = 'Lire'  )
-( language = 'E' currency = 'JMD' currencyname = 'Jamaican Dollar' currencyshortname = 'Jamaican Dollar'  )
-( language = 'E' currency = 'JOD' currencyname = 'Jordanian Dinar' currencyshortname = 'Jordanian Dinar'  )
-( language = 'E' currency = 'JPY' currencyname = 'Japanese Yen' currencyshortname = 'Yen'  )
-( language = 'E' currency = 'KES' currencyname = 'Kenyan Shilling' currencyshortname = 'Shilling'  )
-( language = 'E' currency = 'KGS' currencyname = 'Kyrgyzstan Som' currencyshortname = 'Som'  )
-( language = 'E' currency = 'KHR' currencyname = 'Cambodian Riel' currencyshortname = 'Riel'  )
-( language = 'E' currency = 'KMF' currencyname = 'Comoros Franc' currencyshortname = 'Comoros Franc'  )
-( language = 'E' currency = 'KPW' currencyname = 'North Korean Won' currencyshortname = 'N. Korean Won'  )
-( language = 'E' currency = 'KRW' currencyname = 'South Korean Won' currencyshortname = 'S.Korean Won'  )
-( language = 'E' currency = 'KWD' currencyname = 'Kuwaiti Dinar' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'KYD' currencyname = 'Cayman Dollar' currencyshortname = 'Cayman Dollar'  )
-( language = 'E' currency = 'KZT' currencyname = 'Kazakstanian Tenge' currencyshortname = 'Tenge'  )
-( language = 'E' currency = 'LAK' currencyname = 'Laotian Kip' currencyshortname = 'Kip'  )
-( language = 'E' currency = 'LBP' currencyname = 'Lebanese Pound' currencyshortname = 'Lebanese Pound'  )
-( language = 'E' currency = 'LKR' currencyname = 'Sri Lankan Rupee' currencyshortname = 'Sri Lanka Rupee'  )
-( language = 'E' currency = 'LRD' currencyname = 'Liberian Dollar' currencyshortname = 'Liberian Dollar'  )
-( language = 'E' currency = 'LSL' currencyname = 'Lesotho Loti' currencyshortname = 'Loti'  )
-( language = 'E' currency = 'LTL' currencyname = 'Lithuanian Lita' currencyshortname = 'Lita'  )
-( language = 'E' currency = 'LUF' currencyname = 'Luxembourg Franc (Old --> EUR)' currencyshortname = 'Lux. Franc'  )
-( language = 'E' currency = 'LVL' currencyname = 'Latvian Lat' currencyshortname = 'Lat'  )
-( language = 'E' currency = 'LYD' currencyname = 'Libyan Dinar' currencyshortname = 'Libyan Dinar'  )
-( language = 'E' currency = 'MAD' currencyname = 'Moroccan Dirham' currencyshortname = 'Dirham'  )
-( language = 'E' currency = 'MDL' currencyname = 'Moldavian Leu' currencyshortname = 'Leu'  )
-( language = 'E' currency = 'MGA' currencyname = 'Madagascan Ariary' currencyshortname = 'Madagasc.Ariary'  )
-( language = 'E' currency = 'MGF' currencyname = 'Madagascan Franc (Old' currencyshortname = 'Madagascan Fr.'  )
-( language = 'E' currency = 'MKD' currencyname = 'Macedonian Denar' currencyshortname = 'Maced. Denar'  )
-( language = 'E' currency = 'MMK' currencyname = 'Myanmar Kyat' currencyshortname = 'Kyat'  )
-( language = 'E' currency = 'MNT' currencyname = 'Mongolian Tugrik' currencyshortname = 'Tugrik'  )
-( language = 'E' currency = 'MOP' currencyname = 'Macao Pataca' currencyshortname = 'Pataca'  )
-( language = 'E' currency = 'MRO' currencyname = 'Mauritanian Ouguiya' currencyshortname = 'Ouguiya'  )
-( language = 'E' currency = 'MTL' currencyname = 'Maltese Lira (Old --> EUR)' currencyshortname = 'Lira'  )
-( language = 'E' currency = 'MUR' currencyname = 'Mauritian Rupee' currencyshortname = 'Rupee'  )
-( language = 'E' currency = 'MVR' currencyname = 'Maldive Rufiyaa' currencyshortname = 'Rufiyaa'  )
-( language = 'E' currency = 'MWK' currencyname = 'Malawi Kwacha' currencyshortname = 'Malawi Kwacha'  )
-( language = 'E' currency = 'MXN' currencyname = 'Mexican Pesos' currencyshortname = 'Peso'  )
-( language = 'E' currency = 'MYR' currencyname = 'Malaysian Ringgit' currencyshortname = 'Ringgit'  )
-( language = 'E' currency = 'MZM' currencyname = 'Mozambique Metical (Old)' currencyshortname = 'Metical'  )
-( language = 'E' currency = 'MZN' currencyname = 'Mozambique Metical' currencyshortname = 'Metical'  )
-( language = 'E' currency = 'NAD' currencyname = 'Namibian Dollar' currencyshortname = 'Namibian Dollar'  )
-( language = 'E' currency = 'NGN' currencyname = 'Nigerian Naira' currencyshortname = 'Naira'  )
-( language = 'E' currency = 'NIO' currencyname = 'Nicaraguan Cordoba Oro' currencyshortname = 'Cordoba Oro'  )
-( language = 'E' currency = 'NLG' currencyname = 'Dutch Guilder (Old --> EUR)' currencyshortname = 'Guilder'  )
-( language = 'E' currency = 'NOK' currencyname = 'Norwegian Krone' currencyshortname = 'Norwegian Krone'  )
-( language = 'E' currency = 'NPR' currencyname = 'Nepalese Rupee' currencyshortname = 'Rupee'  )
-( language = 'E' currency = 'NZD' currencyname = 'New Zealand Dollars' currencyshortname = 'N.Zeal.Dollars'  )
-( language = 'E' currency = 'OMR' currencyname = 'Omani Rial' currencyshortname = 'Omani Rial'  )
-( language = 'E' currency = 'PAB' currencyname = 'Panamanian Balboa' currencyshortname = 'Balboa'  )
-( language = 'E' currency = 'PEN' currencyname = 'Peruvian New Sol' currencyshortname = 'New Sol'  )
-( language = 'E' currency = 'PGK' currencyname = 'Papua New Guinea Kina' currencyshortname = 'Kina'  )
-( language = 'E' currency = 'PHP' currencyname = 'Philippine Peso' currencyshortname = 'Peso'  )
-( language = 'E' currency = 'PKR' currencyname = 'Pakistani Rupee' currencyshortname = 'Rupee'  )
-( language = 'E' currency = 'PLN' currencyname = 'Polish Zloty (new)' currencyshortname = 'Zloty'  )
-( language = 'E' currency = 'PTE' currencyname = 'Portuguese Escudo (Old --> EUR)' currencyshortname = 'Escudo'  )
-( language = 'E' currency = 'PYG' currencyname = 'Paraguayan Guarani' currencyshortname = 'Guarani'  )
-( language = 'E' currency = 'QAR' currencyname = 'Qatar Rial' currencyshortname = 'Rial'  )
-( language = 'E' currency = 'RMB' currencyname = 'Chinese Yuan Renminbi' currencyshortname = 'Yuan Renminbi'  )
-( language = 'E' currency = 'ROL' currencyname = 'Romanian Leu (Old)' currencyshortname = 'Leu (Old)'  )
-( language = 'E' currency = 'RON' currencyname = 'Romanian Leu' currencyshortname = 'Leu'  )
-( language = 'E' currency = 'RSD' currencyname = 'Serbian Dinar' currencyshortname = 'Serbian Dinar'  )
-( language = 'E' currency = 'RUB' currencyname = 'Russian Ruble' currencyshortname = 'Ruble'  )
-( language = 'E' currency = 'RWF' currencyname = 'Rwandan Franc' currencyshortname = 'Franc'  )
-( language = 'E' currency = 'SAR' currencyname = 'Saudi Riyal' currencyshortname = 'Rial'  )
-( language = 'E' currency = 'SBD' currencyname = 'Solomon Islands Dollar' currencyshortname = 'Sol.Isl.Dollar'  )
-( language = 'E' currency = 'SCR' currencyname = 'Seychelles Rupee' currencyshortname = 'Rupee'  )
-( language = 'E' currency = 'SDD' currencyname = 'Sudanese Dinar (Old)' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'SDG' currencyname = 'Sudanese Pound' currencyshortname = 'Pound'  )
-( language = 'E' currency = 'SDP' currencyname = 'Sudanese Pound (until 1992)' currencyshortname = 'Pound'  )
-( language = 'E' currency = 'SEK' currencyname = 'Swedish Krona' currencyshortname = 'Swedish Krona'  )
-( language = 'E' currency = 'SGD' currencyname = 'Singapore Dollar' currencyshortname = 'Sing.Dollar'  )
-( language = 'E' currency = 'SHP' currencyname = 'St.Helena Pound' currencyshortname = 'St.Helena Pound'  )
-( language = 'E' currency = 'SIT' currencyname = 'Slovenian Tolar (Old --> EUR)' currencyshortname = 'Tolar'  )
-( language = 'E' currency = 'SKK' currencyname = 'Slovakian Krona (Old --> EUR)' currencyshortname = 'Krona'  )
-( language = 'E' currency = 'SLL' currencyname = 'Sierra Leone Leone' currencyshortname = 'Leone'  )
-( language = 'E' currency = 'SOS' currencyname = 'Somalian Shilling' currencyshortname = 'Shilling'  )
-( language = 'E' currency = 'SRD' currencyname = 'Surinam Dollar' currencyshortname = 'Surinam Doillar'  )
-( language = 'E' currency = 'SRG' currencyname = 'Surinam Guilder (Old)' currencyshortname = 'Surinam Guilder'  )
-( language = 'E' currency = 'SSP' currencyname = 'South Sudanese Pound' currencyshortname = 'Pound'  )
-( language = 'E' currency = 'STD' currencyname = 'Sao Tome / Principe Dobra' currencyshortname = 'Dobra'  )
-( language = 'E' currency = 'SVC' currencyname = 'El Salvador Colon' currencyshortname = 'Colon'  )
-( language = 'E' currency = 'SYP' currencyname = 'Syrian Pound' currencyshortname = 'Syrian Pound'  )
-( language = 'E' currency = 'SZL' currencyname = 'Swaziland Lilangeni' currencyshortname = 'Lilangeni'  )
-( language = 'E' currency = 'THB' currencyname = 'Thailand Baht' currencyshortname = 'Baht'  )
-( language = 'E' currency = 'TJR' currencyname = 'Tajikistani Ruble (Old)' currencyshortname = 'Ruble'  )
-( language = 'E' currency = 'TJS' currencyname = 'Tajikistani Somoni' currencyshortname = 'Somoni'  )
-( language = 'E' currency = 'TMM' currencyname = 'Turkmenistani Manat (Old)' currencyshortname = 'Manat (Old)'  )
-( language = 'E' currency = 'TMT' currencyname = 'Turkmenistani Manat' currencyshortname = 'Manat'  )
-( language = 'E' currency = 'TND' currencyname = 'Tunisian Dinar' currencyshortname = 'Dinar'  )
-( language = 'E' currency = 'TOP' currencyname = 'Tongan Pa''anga' currencyshortname = 'Pa''anga'  )
-( language = 'E' currency = 'TPE' currencyname = 'Timor Escudo --> USD' currencyshortname = 'Timor Escudo'  )
-( language = 'E' currency = 'TRL' currencyname = 'Turkish Lira (Old)' currencyshortname = 'Lira (Old)'  )
-( language = 'E' currency = 'TRY' currencyname = 'Turkish Lira' currencyshortname = 'Lira'  )
-( language = 'E' currency = 'TTD' currencyname = 'Trinidad and Tobago Dollar' currencyshortname = 'T.+ T. Dollar'  )
-( language = 'E' currency = 'TWD' currencyname = 'New Taiwan Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'TZS' currencyname = 'Tanzanian Shilling' currencyshortname = 'Shilling'  )
-( language = 'E' currency = 'UAH' currencyname = 'Ukraine Hryvnia' currencyshortname = 'Hryvnia'  )
-( language = 'E' currency = 'UGX' currencyname = 'Ugandan Shilling' currencyshortname = 'Shilling'  )
-( language = 'E' currency = 'USD' currencyname = 'United States Dollar' currencyshortname = 'US Dollar'  )
-( language = 'E' currency = 'USDN' currencyname = '(Internal) United States Dollar (5 Dec.)' currencyshortname = 'US Dollar'  )
-( language = 'E' currency = 'UYU' currencyname = 'Uruguayan Peso' currencyshortname = 'Peso'  )
-( language = 'E' currency = 'UZS' currencyname = 'Uzbekistan Som' currencyshortname = 'Total'  )
-( language = 'E' currency = 'VEB' currencyname = 'Venezuelan Bolivar (Old)' currencyshortname = 'Bolivar (Old)'  )
-( language = 'E' currency = 'VEF' currencyname = 'Venezuelan Bolivar' currencyshortname = 'Bolivar'  )
-( language = 'E' currency = 'VND' currencyname = 'Vietnamese Dong' currencyshortname = 'Dong'  )
-( language = 'E' currency = 'VUV' currencyname = 'Vanuatu Vatu' currencyshortname = 'Vatu'  )
-( language = 'E' currency = 'WST' currencyname = 'Samoan Tala' currencyshortname = 'Tala'  )
-( language = 'E' currency = 'XAF' currencyname = 'Gabon CFA Franc BEAC' currencyshortname = 'CFA Franc BEAC'  )
-( language = 'E' currency = 'XCD' currencyname = 'East Carribean Dollar' currencyshortname = 'Dollar'  )
-( language = 'E' currency = 'XEU' currencyname = 'European Currency Unit (E.C.U.)' currencyshortname = 'E.C.U.'  )
-( language = 'E' currency = 'XOF' currencyname = 'Benin CFA Franc BCEAO' currencyshortname = 'CFA Franc BCEAO'  )
-( language = 'E' currency = 'XPF' currencyname = 'CFP Franc' currencyshortname = 'Franc'  )
-( language = 'E' currency = 'YER' currencyname = 'Yemeni Ryal' currencyshortname = 'Yemeni Ryal'  )
-( language = 'E' currency = 'YUM' currencyname = 'New Yugoslavian Dinar (Old)' currencyshortname = 'New Dinar'  )
-( language = 'E' currency = 'ZAR' currencyname = 'South African Rand' currencyshortname = 'Rand'  )
-( language = 'E' currency = 'ZMK' currencyname = 'Zambian Kwacha (Old)' currencyshortname = 'Kwacha'  )
-( language = 'E' currency = 'ZMW' currencyname = 'Zambian Kwacha (New)' currencyshortname = 'Kwacha'  )
-( language = 'E' currency = 'ZRN' currencyname = 'Zaire (Old)' currencyshortname = 'Zaire'  )
-( language = 'E' currency = 'ZWD' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar'  )
-( language = 'E' currency = 'ZWL' currencyname = 'Zimbabwean Dollar (New)' currencyshortname = 'Zimbabwe Dollar'  )
-( language = 'E' currency = 'ZWN' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar'  )
-( language = 'E' currency = 'ZWR' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar'  )
- ).
+        Language = 'E'
+        ( Currency = 'ADP' CurrencyName = 'Andorran Peseta --> (Old --> EUR)' CurrencyShortName = 'Peseta'  )
+        ( Currency = 'AED' CurrencyName = 'United Arab Emirates Dirham' CurrencyShortName = 'Dirham'  )
+        ( Currency = 'AFA' CurrencyName = 'Afghani (Old)' CurrencyShortName = 'Afghani'  )
+        ( Currency = 'AFN' CurrencyName = 'Afghani' CurrencyShortName = 'Afghani'  )
+        ( Currency = 'ALL' CurrencyName = 'Albanian Lek' CurrencyShortName = 'Lek'  )
+        ( Currency = 'AMD' CurrencyName = 'Armenian Dram' CurrencyShortName = 'Dram'  )
+        ( Currency = 'ANG' CurrencyName = 'West Indian Guilder' CurrencyShortName = 'W.Ind.Guilder'  )
+        ( Currency = 'AOA' CurrencyName = 'Angolanische Kwanza' CurrencyShortName = 'Kwansa'  )
+        ( Currency = 'AON' CurrencyName = 'Angolan New Kwanza (Old)' CurrencyShortName = 'New Kwanza'  )
+        ( Currency = 'AOR' CurrencyName = 'Angolan Kwanza Reajustado (Old)' CurrencyShortName = 'Kwanza Reajust.'  )
+        ( Currency = 'ARS' CurrencyName = 'Argentine Peso' CurrencyShortName = 'Arg. Peso'  )
+        ( Currency = 'ATS' CurrencyName = 'Austrian Schilling (Old --> EUR)' CurrencyShortName = 'Shilling'  )
+        ( Currency = 'AUD' CurrencyName = 'Australian Dollar' CurrencyShortName = 'Austr. Dollar'  )
+        ( Currency = 'AWG' CurrencyName = 'Aruban Florin' CurrencyShortName = 'Aruban Florin'  )
+        ( Currency = 'AZM' CurrencyName = 'Azerbaijani Manat (Old)' CurrencyShortName = 'Manat'  )
+        ( Currency = 'AZN' CurrencyName = 'Azerbaijani Manat' CurrencyShortName = 'Manat'  )
+        ( Currency = 'BAM' CurrencyName = 'Bosnia and Herzegovina Convertible Mark' CurrencyShortName = 'Convert. Mark'  )
+        ( Currency = 'BBD' CurrencyName = 'Barbados Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'BDT' CurrencyName = 'Bangladesh Taka' CurrencyShortName = 'Taka'  )
+        ( Currency = 'BEF' CurrencyName = 'Belgian Franc (Old --> EUR)' CurrencyShortName = 'Belgian Franc'  )
+        ( Currency = 'BGN' CurrencyName = 'Bulgarian Lev' CurrencyShortName = 'Lev'  )
+        ( Currency = 'BHD' CurrencyName = 'Bahraini Dinar' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'BIF' CurrencyName = 'Burundi Franc' CurrencyShortName = 'Burundi Franc'  )
+        ( Currency = 'BMD' CurrencyName = 'Bermudan Dollar' CurrencyShortName = 'Bermudan Dollar'  )
+        ( Currency = 'BND' CurrencyName = 'Brunei Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'BOB' CurrencyName = 'Boliviano' CurrencyShortName = 'Boliviano'  )
+        ( Currency = 'BRL' CurrencyName = 'Brazilian Real' CurrencyShortName = 'Real'  )
+        ( Currency = 'BSD' CurrencyName = 'Bahaman Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'BTN' CurrencyName = 'Bhutan Ngultrum' CurrencyShortName = 'Ngultrum'  )
+        ( Currency = 'BWP' CurrencyName = 'Botswana Pula' CurrencyShortName = 'Pula'  )
+        ( Currency = 'BYB' CurrencyName = 'Belarusian Ruble (Old)' CurrencyShortName = 'Belarus. Ruble'  )
+        ( Currency = 'BYN' CurrencyName = 'Belarusian Ruble (New)' CurrencyShortName = 'Bela. Ruble N.'  )
+        ( Currency = 'BYR' CurrencyName = 'Belarusian Ruble' CurrencyShortName = 'Ruble'  )
+        ( Currency = 'BZD' CurrencyName = 'Belize Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'CAD' CurrencyName = 'Canadian Dollar' CurrencyShortName = 'Canadian Dollar'  )
+        ( Currency = 'CDF' CurrencyName = 'Congolese Franc' CurrencyShortName = 'test data'  )
+        ( Currency = 'CFP' CurrencyName = 'French Franc (Pacific Islands)' CurrencyShortName = 'Fr. Franc (Pac)'  )
+        ( Currency = 'CHF' CurrencyName = 'Swiss Franc' CurrencyShortName = 'Swiss Franc'  )
+        ( Currency = 'CLP' CurrencyName = 'Chilean Peso' CurrencyShortName = 'Peso'  )
+        ( Currency = 'CNY' CurrencyName = 'Chinese Renminbi' CurrencyShortName = 'Renminbi'  )
+        ( Currency = 'COP' CurrencyName = 'Colombian Peso' CurrencyShortName = 'Peso'  )
+        ( Currency = 'CRC' CurrencyName = 'Costa Rica Colon' CurrencyShortName = 'Cost.Rica Colon'  )
+        ( Currency = 'CSD' CurrencyName = 'Serbian Dinar (Old)' CurrencyShortName = 'Serbian Dinar'  )
+        ( Currency = 'CUC' CurrencyName = 'Peso Convertible' CurrencyShortName = 'Peso Convertib.'  )
+        ( Currency = 'CUP' CurrencyName = 'Cuban Peso' CurrencyShortName = 'Cuban Peso'  )
+        ( Currency = 'CVE' CurrencyName = 'Cape Verde Escudo' CurrencyShortName = 'Escudo'  )
+        ( Currency = 'CYP' CurrencyName = 'Cyprus Pound  (Old --> EUR)' CurrencyShortName = 'Cyprus Pound'  )
+        ( Currency = 'CZK' CurrencyName = 'Czech Krona' CurrencyShortName = 'Krona'  )
+        ( Currency = 'DEM' CurrencyName = 'German Mark    (Old --> EUR)' CurrencyShortName = 'German Mark'  )
+        ( Currency = 'DEM3' CurrencyName = '(Internal) German Mark (3 dec.places)' CurrencyShortName = '(Int.) DEM 3 DP'  )
+        ( Currency = 'DJF' CurrencyName = 'Djibouti Franc' CurrencyShortName = 'Djibouti Franc'  )
+        ( Currency = 'DKK' CurrencyName = 'Danish Krone' CurrencyShortName = 'Danish Krone'  )
+        ( Currency = 'DOP' CurrencyName = 'Dominican Peso' CurrencyShortName = 'Dominican Peso'  )
+        ( Currency = 'DZD' CurrencyName = 'Algerian Dinar' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'ECS' CurrencyName = 'Ecuadorian Sucre (Old --> USD)' CurrencyShortName = 'Sucre'  )
+        ( Currency = 'EEK' CurrencyName = 'Estonian Krone (Old --> EUR)' CurrencyShortName = 'Krona'  )
+        ( Currency = 'EGP' CurrencyName = 'Egyptian Pound' CurrencyShortName = 'Pound'  )
+        ( Currency = 'ERN' CurrencyName = 'Eritrean Nafka' CurrencyShortName = 'Nakfa'  )
+        ( Currency = 'ESP' CurrencyName = 'Spanish Peseta (Old --> EUR)' CurrencyShortName = 'Peseta'  )
+        ( Currency = 'ETB' CurrencyName = 'Ethiopian Birr' CurrencyShortName = 'Birr'  )
+        ( Currency = 'EUR' CurrencyName = 'European Euro' CurrencyShortName = 'Euro'  )
+        ( Currency = 'FIM' CurrencyName = 'Finnish Markka (Old --> EUR)' CurrencyShortName = 'Finnish markka'  )
+        ( Currency = 'FJD' CurrencyName = 'Fiji Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'FKP' CurrencyName = 'Falkland Pound' CurrencyShortName = 'Falkland Pound'  )
+        ( Currency = 'FRF' CurrencyName = 'French Franc (Old --> EUR)' CurrencyShortName = 'French Franc'  )
+        ( Currency = 'GBP' CurrencyName = 'British Pound' CurrencyShortName = 'Pound sterling'  )
+        ( Currency = 'GEL' CurrencyName = 'Georgian Lari' CurrencyShortName = 'Lari'  )
+        ( Currency = 'GHC' CurrencyName = 'Ghanaian Cedi (Old)' CurrencyShortName = 'Cedi'  )
+        ( Currency = 'GHS' CurrencyName = 'Ghanian Cedi' CurrencyShortName = 'Cedi'  )
+        ( Currency = 'GIP' CurrencyName = 'Gibraltar Pound' CurrencyShortName = 'Gibraltar Pound'  )
+        ( Currency = 'GMD' CurrencyName = 'Gambian Dalasi' CurrencyShortName = 'Dalasi'  )
+        ( Currency = 'GNF' CurrencyName = 'Guinean Franc' CurrencyShortName = 'Franc'  )
+        ( Currency = 'GRD' CurrencyName = 'Greek Drachma (Old --> EUR)' CurrencyShortName = 'Drachma'  )
+        ( Currency = 'GTQ' CurrencyName = 'Guatemalan Quetzal' CurrencyShortName = 'Quetzal'  )
+        ( Currency = 'GWP' CurrencyName = 'Guinea Peso (Old --> SHP)' CurrencyShortName = 'Guinea Peso'  )
+        ( Currency = 'GYD' CurrencyName = 'Guyana Dollar' CurrencyShortName = 'Guyana Dollar'  )
+        ( Currency = 'HKD' CurrencyName = 'Hong Kong Dollar' CurrencyShortName = 'H.K.Dollar'  )
+        ( Currency = 'HNL' CurrencyName = 'Honduran Lempira' CurrencyShortName = 'Lempira'  )
+        ( Currency = 'HRK' CurrencyName = 'Croatian Kuna' CurrencyShortName = 'Kuna'  )
+        ( Currency = 'HTG' CurrencyName = 'Haitian Gourde' CurrencyShortName = 'Gourde'  )
+        ( Currency = 'HUF' CurrencyName = 'Hungarian Forint' CurrencyShortName = 'Forint'  )
+        ( Currency = 'IDR' CurrencyName = 'Indonesian Rupiah' CurrencyShortName = 'Rupiah'  )
+        ( Currency = 'IEP' CurrencyName = 'Irish Punt (Old --> EUR)' CurrencyShortName = 'Irish Punt'  )
+        ( Currency = 'ILS' CurrencyName = 'Israeli Scheckel' CurrencyShortName = 'Scheckel'  )
+        ( Currency = 'INR' CurrencyName = 'Indian Rupee' CurrencyShortName = 'Rupee'  )
+        ( Currency = 'IQD' CurrencyName = 'Iraqui Dinar' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'IRR' CurrencyName = 'Iranian Rial' CurrencyShortName = 'Rial'  )
+        ( Currency = 'ISK' CurrencyName = 'Iceland Krona' CurrencyShortName = 'Krona'  )
+        ( Currency = 'ITL' CurrencyName = 'Italian Lira (Old --> EUR)' CurrencyShortName = 'Lire'  )
+        ( Currency = 'JMD' CurrencyName = 'Jamaican Dollar' CurrencyShortName = 'Jamaican Dollar'  )
+        ( Currency = 'JOD' CurrencyName = 'Jordanian Dinar' CurrencyShortName = 'Jordanian Dinar'  )
+        ( Currency = 'JPY' CurrencyName = 'Japanese Yen' CurrencyShortName = 'Yen'  )
+        ( Currency = 'KES' CurrencyName = 'Kenyan Shilling' CurrencyShortName = 'Shilling'  )
+        ( Currency = 'KGS' CurrencyName = 'Kyrgyzstan Som' CurrencyShortName = 'Som'  )
+        ( Currency = 'KHR' CurrencyName = 'Cambodian Riel' CurrencyShortName = 'Riel'  )
+        ( Currency = 'KMF' CurrencyName = 'Comoros Franc' CurrencyShortName = 'Comoros Franc'  )
+        ( Currency = 'KPW' CurrencyName = 'North Korean Won' CurrencyShortName = 'N. Korean Won'  )
+        ( Currency = 'KRW' CurrencyName = 'South Korean Won' CurrencyShortName = 'S.Korean Won'  )
+        ( Currency = 'KWD' CurrencyName = 'Kuwaiti Dinar' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'KYD' CurrencyName = 'Cayman Dollar' CurrencyShortName = 'Cayman Dollar'  )
+        ( Currency = 'KZT' CurrencyName = 'Kazakstanian Tenge' CurrencyShortName = 'Tenge'  )
+        ( Currency = 'LAK' CurrencyName = 'Laotian Kip' CurrencyShortName = 'Kip'  )
+        ( Currency = 'LBP' CurrencyName = 'Lebanese Pound' CurrencyShortName = 'Lebanese Pound'  )
+        ( Currency = 'LKR' CurrencyName = 'Sri Lankan Rupee' CurrencyShortName = 'Sri Lanka Rupee'  )
+        ( Currency = 'LRD' CurrencyName = 'Liberian Dollar' CurrencyShortName = 'Liberian Dollar'  )
+        ( Currency = 'LSL' CurrencyName = 'Lesotho Loti' CurrencyShortName = 'Loti'  )
+        ( Currency = 'LTL' CurrencyName = 'Lithuanian Lita' CurrencyShortName = 'Lita'  )
+        ( Currency = 'LUF' CurrencyName = 'Luxembourg Franc (Old --> EUR)' CurrencyShortName = 'Lux. Franc'  )
+        ( Currency = 'LVL' CurrencyName = 'Latvian Lat' CurrencyShortName = 'Lat'  )
+        ( Currency = 'LYD' CurrencyName = 'Libyan Dinar' CurrencyShortName = 'Libyan Dinar'  )
+        ( Currency = 'MAD' CurrencyName = 'Moroccan Dirham' CurrencyShortName = 'Dirham'  )
+        ( Currency = 'MDL' CurrencyName = 'Moldavian Leu' CurrencyShortName = 'Leu'  )
+        ( Currency = 'MGA' CurrencyName = 'Madagascan Ariary' CurrencyShortName = 'Madagasc.Ariary'  )
+        ( Currency = 'MGF' CurrencyName = 'Madagascan Franc (Old' CurrencyShortName = 'Madagascan Fr.'  )
+        ( Currency = 'MKD' CurrencyName = 'Macedonian Denar' CurrencyShortName = 'Maced. Denar'  )
+        ( Currency = 'MMK' CurrencyName = 'Myanmar Kyat' CurrencyShortName = 'Kyat'  )
+        ( Currency = 'MNT' CurrencyName = 'Mongolian Tugrik' CurrencyShortName = 'Tugrik'  )
+        ( Currency = 'MOP' CurrencyName = 'Macao Pataca' CurrencyShortName = 'Pataca'  )
+        ( Currency = 'MRO' CurrencyName = 'Mauritanian Ouguiya' CurrencyShortName = 'Ouguiya'  )
+        ( Currency = 'MTL' CurrencyName = 'Maltese Lira (Old --> EUR)' CurrencyShortName = 'Lira'  )
+        ( Currency = 'MUR' CurrencyName = 'Mauritian Rupee' CurrencyShortName = 'Rupee'  )
+        ( Currency = 'MVR' CurrencyName = 'Maldive Rufiyaa' CurrencyShortName = 'Rufiyaa'  )
+        ( Currency = 'MWK' CurrencyName = 'Malawi Kwacha' CurrencyShortName = 'Malawi Kwacha'  )
+        ( Currency = 'MXN' CurrencyName = 'Mexican Pesos' CurrencyShortName = 'Peso'  )
+        ( Currency = 'MYR' CurrencyName = 'Malaysian Ringgit' CurrencyShortName = 'Ringgit'  )
+        ( Currency = 'MZM' CurrencyName = 'Mozambique Metical (Old)' CurrencyShortName = 'Metical'  )
+        ( Currency = 'MZN' CurrencyName = 'Mozambique Metical' CurrencyShortName = 'Metical'  )
+        ( Currency = 'NAD' CurrencyName = 'Namibian Dollar' CurrencyShortName = 'Namibian Dollar'  )
+        ( Currency = 'NGN' CurrencyName = 'Nigerian Naira' CurrencyShortName = 'Naira'  )
+        ( Currency = 'NIO' CurrencyName = 'Nicaraguan Cordoba Oro' CurrencyShortName = 'Cordoba Oro'  )
+        ( Currency = 'NLG' CurrencyName = 'Dutch Guilder (Old --> EUR)' CurrencyShortName = 'Guilder'  )
+        ( Currency = 'NOK' CurrencyName = 'Norwegian Krone' CurrencyShortName = 'Norwegian Krone'  )
+        ( Currency = 'NPR' CurrencyName = 'Nepalese Rupee' CurrencyShortName = 'Rupee'  )
+        ( Currency = 'NZD' CurrencyName = 'New Zealand Dollars' CurrencyShortName = 'N.Zeal.Dollars'  )
+        ( Currency = 'OMR' CurrencyName = 'Omani Rial' CurrencyShortName = 'Omani Rial'  )
+        ( Currency = 'PAB' CurrencyName = 'Panamanian Balboa' CurrencyShortName = 'Balboa'  )
+        ( Currency = 'PEN' CurrencyName = 'Peruvian New Sol' CurrencyShortName = 'New Sol'  )
+        ( Currency = 'PGK' CurrencyName = 'Papua New Guinea Kina' CurrencyShortName = 'Kina'  )
+        ( Currency = 'PHP' CurrencyName = 'Philippine Peso' CurrencyShortName = 'Peso'  )
+        ( Currency = 'PKR' CurrencyName = 'Pakistani Rupee' CurrencyShortName = 'Rupee'  )
+        ( Currency = 'PLN' CurrencyName = 'Polish Zloty (new)' CurrencyShortName = 'Zloty'  )
+        ( Currency = 'PTE' CurrencyName = 'Portuguese Escudo (Old --> EUR)' CurrencyShortName = 'Escudo'  )
+        ( Currency = 'PYG' CurrencyName = 'Paraguayan Guarani' CurrencyShortName = 'Guarani'  )
+        ( Currency = 'QAR' CurrencyName = 'Qatar Rial' CurrencyShortName = 'Rial'  )
+        ( Currency = 'RMB' CurrencyName = 'Chinese Yuan Renminbi' CurrencyShortName = 'Yuan Renminbi'  )
+        ( Currency = 'ROL' CurrencyName = 'Romanian Leu (Old)' CurrencyShortName = 'Leu (Old)'  )
+        ( Currency = 'RON' CurrencyName = 'Romanian Leu' CurrencyShortName = 'Leu'  )
+        ( Currency = 'RSD' CurrencyName = 'Serbian Dinar' CurrencyShortName = 'Serbian Dinar'  )
+        ( Currency = 'RUB' CurrencyName = 'Russian Ruble' CurrencyShortName = 'Ruble'  )
+        ( Currency = 'RWF' CurrencyName = 'Rwandan Franc' CurrencyShortName = 'Franc'  )
+        ( Currency = 'SAR' CurrencyName = 'Saudi Riyal' CurrencyShortName = 'Rial'  )
+        ( Currency = 'SBD' CurrencyName = 'Solomon Islands Dollar' CurrencyShortName = 'Sol.Isl.Dollar'  )
+        ( Currency = 'SCR' CurrencyName = 'Seychelles Rupee' CurrencyShortName = 'Rupee'  )
+        ( Currency = 'SDD' CurrencyName = 'Sudanese Dinar (Old)' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'SDG' CurrencyName = 'Sudanese Pound' CurrencyShortName = 'Pound'  )
+        ( Currency = 'SDP' CurrencyName = 'Sudanese Pound (until 1992)' CurrencyShortName = 'Pound'  )
+        ( Currency = 'SEK' CurrencyName = 'Swedish Krona' CurrencyShortName = 'Swedish Krona'  )
+        ( Currency = 'SGD' CurrencyName = 'Singapore Dollar' CurrencyShortName = 'Sing.Dollar'  )
+        ( Currency = 'SHP' CurrencyName = 'St.Helena Pound' CurrencyShortName = 'St.Helena Pound'  )
+        ( Currency = 'SIT' CurrencyName = 'Slovenian Tolar (Old --> EUR)' CurrencyShortName = 'Tolar'  )
+        ( Currency = 'SKK' CurrencyName = 'Slovakian Krona (Old --> EUR)' CurrencyShortName = 'Krona'  )
+        ( Currency = 'SLL' CurrencyName = 'Sierra Leone Leone' CurrencyShortName = 'Leone'  )
+        ( Currency = 'SOS' CurrencyName = 'Somalian Shilling' CurrencyShortName = 'Shilling'  )
+        ( Currency = 'SRD' CurrencyName = 'Surinam Dollar' CurrencyShortName = 'Surinam Doillar'  )
+        ( Currency = 'SRG' CurrencyName = 'Surinam Guilder (Old)' CurrencyShortName = 'Surinam Guilder'  )
+        ( Currency = 'SSP' CurrencyName = 'South Sudanese Pound' CurrencyShortName = 'Pound'  )
+        ( Currency = 'STD' CurrencyName = 'Sao Tome / Principe Dobra' CurrencyShortName = 'Dobra'  )
+        ( Currency = 'SVC' CurrencyName = 'El Salvador Colon' CurrencyShortName = 'Colon'  )
+        ( Currency = 'SYP' CurrencyName = 'Syrian Pound' CurrencyShortName = 'Syrian Pound'  )
+        ( Currency = 'SZL' CurrencyName = 'Swaziland Lilangeni' CurrencyShortName = 'Lilangeni'  )
+        ( Currency = 'THB' CurrencyName = 'Thailand Baht' CurrencyShortName = 'Baht'  )
+        ( Currency = 'TJR' CurrencyName = 'Tajikistani Ruble (Old)' CurrencyShortName = 'Ruble'  )
+        ( Currency = 'TJS' CurrencyName = 'Tajikistani Somoni' CurrencyShortName = 'Somoni'  )
+        ( Currency = 'TMM' CurrencyName = 'Turkmenistani Manat (Old)' CurrencyShortName = 'Manat (Old)'  )
+        ( Currency = 'TMT' CurrencyName = 'Turkmenistani Manat' CurrencyShortName = 'Manat'  )
+        ( Currency = 'TND' CurrencyName = 'Tunisian Dinar' CurrencyShortName = 'Dinar'  )
+        ( Currency = 'TOP' CurrencyName = 'Tongan Pa''anga' CurrencyShortName = 'Pa''anga'  )
+        ( Currency = 'TPE' CurrencyName = 'Timor Escudo --> USD' CurrencyShortName = 'Timor Escudo'  )
+        ( Currency = 'TRL' CurrencyName = 'Turkish Lira (Old)' CurrencyShortName = 'Lira (Old)'  )
+        ( Currency = 'TRY' CurrencyName = 'Turkish Lira' CurrencyShortName = 'Lira'  )
+        ( Currency = 'TTD' CurrencyName = 'Trinidad and Tobago Dollar' CurrencyShortName = 'T.+ T. Dollar'  )
+        ( Currency = 'TWD' CurrencyName = 'New Taiwan Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'TZS' CurrencyName = 'Tanzanian Shilling' CurrencyShortName = 'Shilling'  )
+        ( Currency = 'UAH' CurrencyName = 'Ukraine Hryvnia' CurrencyShortName = 'Hryvnia'  )
+        ( Currency = 'UGX' CurrencyName = 'Ugandan Shilling' CurrencyShortName = 'Shilling'  )
+        ( Currency = 'USD' CurrencyName = 'United States Dollar' CurrencyShortName = 'US Dollar'  )
+        ( Currency = 'USDN' CurrencyName = '(Internal) United States Dollar (5 Dec.)' CurrencyShortName = 'US Dollar'  )
+        ( Currency = 'UYU' CurrencyName = 'Uruguayan Peso' CurrencyShortName = 'Peso'  )
+        ( Currency = 'UZS' CurrencyName = 'Uzbekistan Som' CurrencyShortName = 'Total'  )
+        ( Currency = 'VEB' CurrencyName = 'Venezuelan Bolivar (Old)' CurrencyShortName = 'Bolivar (Old)'  )
+        ( Currency = 'VEF' CurrencyName = 'Venezuelan Bolivar' CurrencyShortName = 'Bolivar'  )
+        ( Currency = 'VND' CurrencyName = 'Vietnamese Dong' CurrencyShortName = 'Dong'  )
+        ( Currency = 'VUV' CurrencyName = 'Vanuatu Vatu' CurrencyShortName = 'Vatu'  )
+        ( Currency = 'WST' CurrencyName = 'Samoan Tala' CurrencyShortName = 'Tala'  )
+        ( Currency = 'XAF' CurrencyName = 'Gabon CFA Franc BEAC' CurrencyShortName = 'CFA Franc BEAC'  )
+        ( Currency = 'XCD' CurrencyName = 'East Carribean Dollar' CurrencyShortName = 'Dollar'  )
+        ( Currency = 'XEU' CurrencyName = 'European Currency Unit (E.C.U.)' CurrencyShortName = 'E.C.U.'  )
+        ( Currency = 'XOF' CurrencyName = 'Benin CFA Franc BCEAO' CurrencyShortName = 'CFA Franc BCEAO'  )
+        ( Currency = 'XPF' CurrencyName = 'CFP Franc' CurrencyShortName = 'Franc'  )
+        ( Currency = 'YER' CurrencyName = 'Yemeni Ryal' CurrencyShortName = 'Yemeni Ryal'  )
+        ( Currency = 'YUM' CurrencyName = 'New Yugoslavian Dinar (Old)' CurrencyShortName = 'New Dinar'  )
+        ( Currency = 'ZAR' CurrencyName = 'South African Rand' CurrencyShortName = 'Rand'  )
+        ( Currency = 'ZMK' CurrencyName = 'Zambian Kwacha (Old)' CurrencyShortName = 'Kwacha'  )
+        ( Currency = 'ZMW' CurrencyName = 'Zambian Kwacha (New)' CurrencyShortName = 'Kwacha'  )
+        ( Currency = 'ZRN' CurrencyName = 'Zaire (Old)' CurrencyShortName = 'Zaire'  )
+        ( Currency = 'ZWD' CurrencyName = 'Zimbabwean Dollar (Old)' CurrencyShortName = 'Zimbabwe Dollar'  )
+        ( Currency = 'ZWL' CurrencyName = 'Zimbabwean Dollar (New)' CurrencyShortName = 'Zimbabwe Dollar'  )
+        ( Currency = 'ZWN' CurrencyName = 'Zimbabwean Dollar (Old)' CurrencyShortName = 'Zimbabwe Dollar'  )
+        ( Currency = 'ZWR' CurrencyName = 'Zimbabwean Dollar (Old)' CurrencyShortName = 'Zimbabwe Dollar'  ) ).
 
   ENDMETHOD.
-
 
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Public Method Z2UI5_CL_DEMO_APP_201->Z2UI5_IF_APP~MAIN
 * +-------------------------------------------------------------------------------------------------+
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
 
-* ---------- This script will skip the frontend suggestion filtering ------------------------------
-      DATA(lv_script) = `   debugger;` && |\n| &&
-                  `function setInputFIlter(){` && |\n| &&
-                  ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
-                  ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
-                  `         return true;` && |\n| &&
-                  ` });` && |\n| &&
-                  `}`.
-
+      " ---------- This script will skip the frontend suggestion filtering ------------------------------
+      DATA(lv_script) = |   debugger;| && |\n| &&
+                  |function setInputFIlter()\{| && |\n| &&
+                  | var inp = sap.z2ui5.oView.byId('suggInput');| && |\n| &&
+                  | inp.setFilterFunction(function(sValue, oItem)\{| && |\n| &&
+                  |         return true;| && |\n| &&
+                  | \});| && |\n| &&
+                  |\}|.
 
       check_initialized = abap_true.
       set_data( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory(
-       )->_z2ui5( )->timer(  client->_event( `START` )
-         )->_generic( ns = `html` name = `script` )->_cc_plain_xml( lv_script
+       )->_z2ui5( )->timer( client->_event( `START` )
+         )->_generic( ns   = `html`
+                      name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
     ENDIF.
@@ -303,12 +297,11 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->Z2UI5_ON_EVENT
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'START'.
@@ -316,11 +309,11 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
       WHEN 'ON_SUGGEST'.
 
         DATA lt_range TYPE RANGE OF string.
-        lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
+        lt_range = VALUE #( (  sign = 'I' option = 'CP' low = |*{ input }*| ) ).
 
         CLEAR mt_suggestion_out.
         LOOP AT mt_suggestion INTO DATA(ls_sugg)
-            WHERE currencyname IN lt_range.
+             WHERE CurrencyName IN lt_range.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
 
@@ -339,18 +332,16 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
 * <SIGNATURE>---------------------------------------------------------------------------------------+
 * | Instance Protected Method Z2UI5_CL_DEMO_APP_201->Z2UI5_VIEW_DISPLAY
 * +-------------------------------------------------------------------------------------------------+
 * +--------------------------------------------------------------------------------------</SIGNATURE>
-  METHOD Z2UI5_VIEW_DISPLAY.
+  METHOD z2ui5_view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-       title          = 'abap2UI5 - Live Suggestion Event'
-       navbuttonpress = client->_event( 'BACK' )
-       shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-
+                     title          = 'abap2UI5 - Live Suggestion Event'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
@@ -358,15 +349,14 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
     DATA(input) = grid->simple_form( 'Input'
         )->content( 'form'
             )->label( 'Input with value help'
-            )->input(
-                    id              = `suggInput`
-                    value           = client->_bind_edit( input )
-                    suggest         = client->_event( 'ON_SUGGEST' )
-                    showtablesuggestionvaluehelp = abap_false
-                    suggestionrows  = client->_bind( mt_suggestion_out )
-                    showsuggestion  = abap_true
-                    valueliveupdate = abap_true
-                    autocomplete    = abap_false
+            )->input( id                           = `suggInput`
+                      value                        = client->_bind_edit( input )
+                      suggest                      = client->_event( 'ON_SUGGEST' )
+                      showtablesuggestionvaluehelp = abap_false
+                      suggestionrows               = client->_bind( mt_suggestion_out )
+                      showsuggestion               = abap_true
+                      valueliveupdate              = abap_true
+                      autocomplete                 = abap_false
                  )->get( ).
 
     input->suggestion_columns(
@@ -378,9 +368,11 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
             )->label( text = '{CURRENCYNAME}'
             )->label( text = '{CURRENCY}' ).
 
-    page->_generic( name = `script` ns = `html` )->_cc_plain_xml( `setInputFIlter()` ).
+    page->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

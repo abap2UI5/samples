@@ -1,20 +1,18 @@
-CLASS Z2UI5_CL_DEMO_APP_075 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES Z2UI5_if_app.
 
-    DATA mv_path TYPE string.
-    DATA mv_value TYPE string.
-    DATA mr_table TYPE REF TO data.
-    DATA mv_check_edit TYPE abap_bool.
+    DATA mv_path           TYPE string.
+    DATA mv_value          TYPE string.
+    DATA mr_table          TYPE REF TO data.
+    DATA mv_check_edit     TYPE abap_bool.
     DATA mv_check_download TYPE abap_bool.
 
-    DATA mv_file TYPE string.
+    DATA mv_file           TYPE string.
 
   PROTECTED SECTION.
-
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client            TYPE REF TO Z2UI5_if_client.
     DATA check_initialized TYPE abap_bool.
 
     METHODS ui5_on_init.
@@ -28,9 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
 
   METHOD ui5_on_event.
     TRY.
@@ -61,11 +57,11 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
-
 
   METHOD ui5_on_init.
 
@@ -73,45 +69,40 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD ui5_view_init_display.
 
-      ui5_view_main_display( ).
+    ui5_view_main_display( ).
 
   ENDMETHOD.
-
 
   METHOD ui5_view_main_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = 'abap2UI5 - Upload Files'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                     title          = 'abap2UI5 - Upload Files'
+                     navbuttonpress = client->_event( 'BACK' )
+                     shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         ).
 
     IF mv_file IS NOT INITIAL.
 
-      page->code_editor(
-          value    = client->_bind( mv_file )
-          editable = abap_false
+      page->code_editor( value    = client->_bind( mv_file )
+                         editable = abap_false
       ).
 
     ENDIF.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
 
-    footer->_z2ui5( )->file_uploader(
-      value       = client->_bind_edit( mv_value )
-      path        = client->_bind_edit( mv_path )
-      placeholder = 'filepath here...'
-*      enabled     = abap_false
-      upload      = client->_event( 'UPLOAD' ) ).
+    footer->_z2ui5( )->file_uploader( value       = client->_bind_edit( mv_value )
+                                      path        = client->_bind_edit( mv_path )
+                                      placeholder = 'filepath here...'
+*                                      enabled     = abap_false
+                                      upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 
   METHOD Z2UI5_if_app~main.
 
@@ -130,4 +121,5 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
     ui5_on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.
