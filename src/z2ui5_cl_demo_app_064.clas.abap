@@ -118,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
     DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp5 TYPE xsdboolean.
+    DATA temp5 TYPE abap_bool.
     CLEAR temp1.
 
     mv_check_enabled = abap_true.

@@ -8,7 +8,7 @@ public section.
 
   interfaces Z2UI5_IF_APP .
 
-  data IS_INITIALIZED type BOOLEAN .
+  data IS_INITIALIZED type abap_bool .
   data FILE_CONTENT_64 type STRING .
   data FILE_NAME type STRING .
   data MIME_TYPE type STRING .
