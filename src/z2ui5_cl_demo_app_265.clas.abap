@@ -30,10 +30,10 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( title          = 'abap2UI5 - Sample: Code Editor'
-                  navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( ).
+    page->page( title          = 'abap2UI5 - Sample: Code Editor'
+                navbuttonpress = client->_event( 'BACK' )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(
        )->button( id      = `button_hint_id`
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk#/entity/sap.ui.codeeditor.CodeEditor/sample/sap.ui.codeeditor.sample.CodeEditor' ).
 
     page->code_editor( type   = `json`
-                       value  = |\\\{  |                     &&
+                       value  = |\{  |                     &&
                         | "Chinese" : "你好世界",  |       &&
                         | "Dutch" : "Hallo wereld",  |     &&
                         | "English" : "Hello world",  |    &&
