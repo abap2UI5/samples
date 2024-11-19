@@ -1131,19 +1131,22 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         subheader = 'Events & Visualization'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_048' )
         mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
 
         panel->generic_tile(
         header    = 'Action List Item'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_216' )
         mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
 
         panel->generic_tile(
         header    = 'Input List Item'
         press     =  client->_event( 'Z2UI5_CL_DEMO_APP_219' )
         mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom').
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+        ).
 
         panel->generic_tile(
             header    = 'Standard List Item'
@@ -2179,5 +2182,4 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ENDDO.
 
       ENDMETHOD.
-
-    ENDCLASS.
+ENDCLASS.
