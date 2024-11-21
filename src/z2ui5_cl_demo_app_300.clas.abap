@@ -323,13 +323,13 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                   title = `Product status`
                   text = `Shipped`
                   state = `Success`
-                  icon = `sap-icon://sys-enter-2`)->get_parent(
+                  icon = `sap-icon://sys-enter-2` )->get_parent(
               )->object_status(
                   class = `sapMObjectStatusLarge`
                   text = `Shipped`
                   state = `Success`
                   inverted = abap_true
-                  icon = `sap-icon://sys-enter-2`)->get_parent(
+                  icon = `sap-icon://sys-enter-2` )->get_parent(
              ).
 
     page_01->vertical_layout(
