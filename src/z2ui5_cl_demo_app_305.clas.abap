@@ -14,8 +14,7 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION
       END OF ty_row .
 
     DATA:
-      t_tab             TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY,
-      check_initialized TYPE abap_bool.
+      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -31,39 +30,38 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
-        )->page(
-                title          = 'abap2UI5 - Tables and cell colors'
-                navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true ).
+                    )->page(
+                      title          = 'abap2UI5 - Tables and cell colors'
+                      navbuttonpress = client->_event( 'BACK' )
+                      shownavbutton  = abap_true ).
 
     page->_generic(
-        name   = `style`
-        ns     = `html`
-    )->_cc_plain_xml(
-        `td:has([data-color="red"]){ `
-     && `    background-color: red;`
-     && `}`
-     && ``
-     && `td:has([data-color="green"]){`
-     && `    background-color: green;`
-     && `}`
-     && ``
-     && `td:has([data-color="blue"]){`
-     && `    background-color: blue;`
-     && `}`
-     && ``
-     && `td:has([data-color="orange"]){`
-     && `    background-color: orange;`
-     && `}`
-     && ``
-     && `td:has([data-color="grey"]){`
-     && `    background-color: grey;`
-     && `}`
-     && ``
-     && `td:has([data-color="yellow"]){`
-     && `    background-color: yellow;`
-     && `}`
-    ).
+            name   = `style`
+            ns     = `html`
+       )->_cc_plain_xml(
+           `td:has([data-color="red"]){ `
+        && `    background-color: red;`
+        && `}`
+        && ``
+        && `td:has([data-color="green"]){`
+        && `    background-color: green;`
+        && `}`
+        && ``
+        && `td:has([data-color="blue"]){`
+        && `    background-color: blue;`
+        && `}`
+        && ``
+        && `td:has([data-color="orange"]){`
+        && `    background-color: orange;`
+        && `}`
+        && ``
+        && `td:has([data-color="grey"]){`
+        && `    background-color: grey;`
+        && `}`
+        && ``
+        && `td:has([data-color="yellow"]){`
+        && `    background-color: yellow;`
+        && `}` ).
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
@@ -81,13 +79,13 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     tab->items( )->column_list_item(
       )->cells(
-          )->text( text = '{TITLE}'
-              )->get(
-              )->custom_data(
+        )->text( text = '{TITLE}'
+          )->get(
+            )->custom_data(
               )->core_custom_data( key = 'color' value = '{VALUE}' writetodom = abap_true
-              )->get_parent(
-              )->get_parent(
-          )->input( value = '{VALUE}' enabled = abap_true ).
+            )->get_parent(
+          )->get_parent(
+        )->input( value = '{VALUE}' enabled = abap_true ).
 
     client->view_display( view->stringify( ) ).
 
@@ -98,9 +96,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-
+    IF z2ui5_if_app~check_initialized = abap_false.
       t_tab = VALUE #(
           ( title = 'entry 01'  value = 'red'    )
           ( title = 'entry 02'  value = 'blue'   )
@@ -110,10 +106,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
           ( title = 'entry 06'  value = 'grey'   ) ).
 
       set_view( ).
-      RETURN.
-
     ENDIF.
-
 
     CASE client->get( )-event.
       WHEN 'BACK'.
