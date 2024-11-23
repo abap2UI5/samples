@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
          )->tile_content( unit = `Unit` footer = `Footer`
            )->feed_content(
                contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the design was well received. Berlin, Tokyo, Rome, Budapest, New York, Munich, London`
-               subheader = `Subheader` value = `9`)->get_parent( )->get_parent( )->get_parent(
+               subheader = `Subheader` value = `9` )->get_parent( )->get_parent( )->get_parent(
        )->generic_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout` header = `Status Failed - with press event`
            subheader = `Subheader` frametype = `TwoByOne` state = `Failed`  press = client->_event( `press` )
          )->tile_content( unit = `Unit` footer = `Footer`
