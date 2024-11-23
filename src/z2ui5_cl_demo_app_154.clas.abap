@@ -32,7 +32,9 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
       WHEN 'POPUP_BALLOG'.
 
-        DATA(lt_bal) = VALUE bal_t_msgr(
+
+        DATA lt_bal TYPE STANDARD TABLE OF bal_s_msgr WITH EMPTY KEY.
+        lt_bal = VALUE #(
           ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
           ( msgid = 'Z001' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( )  msgnumber = '02' ) ).
 
