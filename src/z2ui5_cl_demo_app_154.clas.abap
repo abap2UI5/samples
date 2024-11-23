@@ -32,12 +32,36 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
       WHEN 'POPUP_BALLOG'.
 
-*        DATA(lt_ballog) = VALUE bapirettab(
-*            ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
-*            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' )
-*        ).
-*
-*        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_ballog ) ).
+
+TYPES: BEGIN OF ty_log_entry,
+         msgnumber   TYPE n LENGTH 6,      " Application Log: Internal Message Serial Number
+         msgty       TYPE c LENGTH 1,      " Message Type
+         msgid       TYPE c LENGTH 20,     " Message Class
+         msgno       TYPE n LENGTH 3,      " Message Number
+         msgv1       TYPE c LENGTH 50,     " Message Variable
+         msgv2       TYPE c LENGTH 50,     " Message Variable
+         msgv3       TYPE c LENGTH 50,     " Message Variable
+         msgv4       TYPE c LENGTH 50,     " Message Variable
+         msgv1_src   TYPE c LENGTH 15,     " Origin of a Message Variable
+         msgv2_src   TYPE c LENGTH 15,     " Origin of a Message Variable
+         msgv3_src   TYPE c LENGTH 15,     " Origin of a Message Variable
+         msgv4_src   TYPE c LENGTH 15,     " Origin of a Message Variable
+         detlevel    TYPE c LENGTH 1,      " Level of Detail
+         probclass   TYPE c LENGTH 1,      " Problem Class
+         alsort      TYPE c LENGTH 3,      " Sort Criterion/Grouping
+         time_stmp   TYPE p LENGTH 8 DECIMALS 7, " Message Time Stamp
+         msg_count   TYPE i,               " Cumulated Message Count
+         context     TYPE c LENGTH 255,    " Context (Generic Placeholder)
+         params      TYPE c LENGTH 255,    " Parameters (Generic Placeholder)
+         msg_txt     TYPE string,          " Message Text
+       END OF ty_log_entry.
+
+        DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
+        lt_bal = VALUE #(
+          ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
+          ( msgid = 'Z001' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( )  msgnumber = '02' ) ).
+
+        client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
 
 
       WHEN 'POPUP_EXCEPTION'.
@@ -67,9 +91,9 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
            )->button(
             text  = 'Open Popup BAPIRET'
             press = client->_event( 'POPUP_BAPIRET' )
-*                  )->button(
-*            text  = 'Open Popup BALLOG'
-*            press = client->_event( 'POPUP_BALLOG' )
+                  )->button(
+            text  = 'Open Popup BALLOG'
+            press = client->_event( 'POPUP_BALLOG' )
                              )->button(
             text  = 'Open Popup Exception'
             press = client->_event( 'POPUP_EXCEPTION' )
