@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
       WHEN 'onPress'.
-        client->message_toast_display( client->get_event_arg( 1 ) && ` has been clicked`).
+        client->message_toast_display( client->get_event_arg( 1 ) && ` has been clicked` ).
     ENDCASE.
 
   ENDMETHOD.
