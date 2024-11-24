@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
     layout->label( text = `Password` labelfor = `passwordInput` ).
     layout->input( id = `passwordInput`
                    type = `Password`
-                   placeholder = `Enter password`).
+                   placeholder = `Enter password` ).
 
     client->view_display( page->stringify( ) ).
 
