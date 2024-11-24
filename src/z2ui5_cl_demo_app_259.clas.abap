@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                                       )->button( type = `Accept`
                                                  text = `Accept`
                                                  press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
-                                                 ariadescribedby = `acceptButtonDescription genericButtonDescription`)->get(
+                                                 ariadescribedby = `acceptButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(

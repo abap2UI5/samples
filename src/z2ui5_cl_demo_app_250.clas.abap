@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_250 IMPLEMENTATION.
         DATA(page_02) = page_01->page(
                          )->invisible_text( ns = `core`
                                             id = `inputLabel`
-                                            text = `Input label`)->get_parent(
+                                            text = `Input label` )->get_parent(
 
                          )->message_strip( text = `Left and Right aligned content.` class = `sapUiTinyMargin`
                          )->overflow_toolbar( class = `sapUiMediumMarginTop`
