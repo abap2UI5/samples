@@ -1126,13 +1126,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
-            panel->generic_tile(
-        header    = 'Grid List with Drag&Drop'
-        subheader = 'Focus Handling'
-        press     =  client->_event( 'z2ui5_cl_demo_app_307' )
+    panel->generic_tile(
+        header    = 'Grid List'
+        subheader = 'with Drag&Drop'
+        press     = client->_event( 'z2ui5_cl_demo_app_307' )
         mode      = 'LineMode'
-        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-    ).
+        class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
         panel = page->panel(
                expandable = abap_false
