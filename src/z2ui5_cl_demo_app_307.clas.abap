@@ -184,7 +184,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD display_view.
-    FINAL(view) = z2ui5_cl_xml_view=>factory( ).
+    data(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
 
@@ -241,7 +241,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
             DATA(drop_position) = CONV i( onDropParameters[ 2 ] ) + 1.
             DATA(insert_position) = onDropParameters[ 3 ].
             DATA(item) = items[ drag_position ].
-          CATCH cx_sy_itab_line_not_found.
+          CATCH cx_root.
             RETURN.
         ENDTRY.
 
