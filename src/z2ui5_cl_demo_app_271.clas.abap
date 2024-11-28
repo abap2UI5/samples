@@ -43,9 +43,9 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -54,19 +54,18 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
            href   = base_url && '/sdk/#/entity/sap.m.ImageContent/sample/sap.m.sample.ImageContent' ).
 
     page->image_content(
-           class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
-           src = `sap-icon://area-chart`
+           class       = `sapUiLargeMarginTop sapUiLargeMarginBottom`
+           src         = `sap-icon://area-chart`
            description = `Icon`
-           press = client->_event( 'press' ) )->get_parent(
+           press       = client->_event( 'press' ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
-              src = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/ProfileImage_LargeGenTile.png`
-              description = `Profile image`
-              press = client->_event( 'press' ) )->get_parent(
+              src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/ProfileImage_LargeGenTile.png`
+              description         = `Profile image`
+              press               = client->_event( 'press' ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
-              src = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/SAPLogoLargeTile_28px_height.png`
-              description = `Logo`
-              press = client->_event( 'press' )
-        ).
+              src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/SAPLogoLargeTile_28px_height.png`
+              description         = `Logo`
+              press               = client->_event( 'press' ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -90,15 +89,15 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Shows ImageContent that can include an icon, a profile image, or a logo with a tooltip.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

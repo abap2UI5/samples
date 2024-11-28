@@ -52,14 +52,14 @@ CLASS lcl_locking IMPLEMENTATION.
         OTHERS         = 3.
     IF sy-subrc <> 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO DATA(error_text).
-      RAISE EXCEPTION TYPE z2ui5_cx_util_error EXPORTING val = error_text.
+      RAISE EXCEPTION NEW z2ui5_cx_util_error( val = error_text ).
     ENDIF.
 
   ENDMETHOD.
 
 
   METHOD get_lock_counter.
-    DATA: enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
+    DATA enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
 
     DATA argument TYPE c LENGTH 150.
     argument = |ZTEST                         Z100*|.
@@ -77,7 +77,7 @@ CLASS lcl_locking IMPLEMENTATION.
         OTHERS                = 3.
     IF sy-subrc <> 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO DATA(error_text).
-      RAISE EXCEPTION TYPE z2ui5_cx_util_error EXPORTING val = error_text.
+      RAISE EXCEPTION NEW z2ui5_cx_util_error( val = error_text ).
     ENDIF.
 
     result = VALUE #( enqueue_table[ 1 ]-gusevb OPTIONAL ).

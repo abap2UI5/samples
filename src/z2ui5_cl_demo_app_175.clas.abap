@@ -34,23 +34,24 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
     lr_view = lr_view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Demo Wizard Control'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             title                        = 'abap2UI5 - Demo Wizard Control'
+             navbuttonpress               = client->_event( 'BACK' )
+             shownavbutton                = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(lr_wizard) = lr_view->wizard( ).
-    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title = 'Step1'  validated          = abap_true ).
+    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'Step1'
+                                                 validated = abap_true ).
     lr_wiz_step1->message_strip( text = 'STEP1' ).
-    DATA(lr_wiz_step2) = lr_wizard->wizard_step( title              = 'Step2'
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step2) = lr_wizard->wizard_step( title     = 'Step2'
+                                                 validated = abap_true ).
 
     lr_wiz_step2->message_strip( text = 'STEP2' ).
-    DATA(lr_wiz_step3) = lr_wizard->wizard_step( title              = 'Step3'
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = 'Step3'
+                                                 validated = abap_true ).
 
     lr_wiz_step3->message_strip( text = 'STEP3' ).
-    DATA(lr_wiz_step4) = lr_wizard->wizard_step( title              = 'Step4'
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step4) = lr_wizard->wizard_step( title     = 'Step4'
+                                                 validated = abap_true ).
 
     lr_wiz_step4->message_strip( text = 'STEP4' ).
 

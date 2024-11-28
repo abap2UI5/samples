@@ -21,11 +21,11 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION
       END OF ty_struc.
     DATA ms_struc TYPE ty_struc.
 
-    DATA:
+    DATA
       BEGIN OF ms_struc2.
         INCLUDE TYPE ty_struc.
         INCLUDE TYPE ty_struc_incl.
-      DATA  END OF ms_struc2.
+    DATA END OF ms_struc2.
 
     DATA check_initialized TYPE abap_bool.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -47,17 +47,17 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Structure Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    page->input( client->_bind_edit( val = ms_struc-title  ) ).
+    page->input( client->_bind_edit( val = ms_struc-title ) ).
     page->input( client->_bind_edit( val = ms_struc-value ) ).
     page->input( client->_bind_edit( val = ms_struc-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-title  ) ).
+    page->input( client->_bind_edit( val = ms_struc2-title ) ).
     page->input( client->_bind_edit( val = ms_struc2-value ) ).
     page->input( client->_bind_edit( val = ms_struc2-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-incl_title  ) ).
+    page->input( client->_bind_edit( val = ms_struc2-incl_title ) ).
     page->input( client->_bind_edit( val = ms_struc2-incl_value ) ).
     page->input( client->_bind_edit( val = ms_struc2-incl_value2 ) ).
 
@@ -81,11 +81,11 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
       ms_struc2-title  = `title`.
       ms_struc2-value  = `val01`.
       ms_struc2-value2 = `val02`.
-      ms_struc2-incl_title =  `title_incl`.
-      ms_struc2-incl_value =  `val01_incl`.
-      ms_struc2-incl_value2 =  `val02_incl`.
+      ms_struc2-incl_title = `title_incl`.
+      ms_struc2-incl_value = `val01_incl`.
+      ms_struc2-incl_value2 = `val02_incl`.
 
-      set_view(  ).
+      set_view( ).
     ENDIF.
 
     CASE client->get( )-event.

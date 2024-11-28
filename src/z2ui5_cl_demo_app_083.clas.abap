@@ -101,6 +101,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+    DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
 
     CASE client->get( )-event.
 
@@ -111,7 +112,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
-          DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
+
           ls_range = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
@@ -120,11 +121,11 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         CLEAR ms_filter-product.
         LOOP AT mt_filter REFERENCE INTO DATA(lr_filter).
           INSERT VALUE #(
-              sign = `I`
+              sign   = `I`
               option = lr_filter->option
-              low = lr_filter->low
-              high = lr_filter->high
-           ) INTO TABLE ms_filter-product.
+              low    = lr_filter->low
+              high   = lr_filter->high
+            ) INTO TABLE ms_filter-product.
         ENDLOOP.
 
         client->popup_destroy( ).
@@ -148,11 +149,11 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         CLEAR mt_filter.
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
           INSERT VALUE #(
-                   low = lr_product->low
-                   high = lr_product->high
+                   low    = lr_product->low
+                   high   = lr_product->high
                    option = lr_product->option
-                   key = z2ui5_cl_util=>uuid_get_c32( )
-           ) INTO TABLE mt_filter.
+                   key    = z2ui5_cl_util=>uuid_get_c32( )
+            ) INTO TABLE mt_filter.
 
         ENDLOOP.
 
@@ -168,26 +169,24 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
 
     mt_02 = VALUE #(
-    ( screen_name = `screen_01` field_doma = `CHAR30` field = `MATNR` )
-    ( screen_name = `screen_01` field_doma = `STRING` field = `LGNUM` )
-    ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` )
-    ).
+      ( screen_name = `screen_01` field_doma = `CHAR30` field = `MATNR` )
+      ( screen_name = `screen_01` field_doma = `STRING` field = `LGNUM` )
+      ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` ) ).
 
     mv_name = `screen_01`.
     z2ui5_on_render_main( ).
 
     mt_mapping = VALUE #(
-    (   n = `EQ`     v = `={LOW}`    )
-    (   n = `LT`     v = `<{LOW}`   )
-    (   n = `LE`     v = `<={LOW}`  )
-    (   n = `GT`     v = `>{LOW}`   )
-    (   n = `GE`     v = `>={LOW}`  )
-    (   n = `CP`     v = `*{LOW}*`  )
-    (   n = `BT`     v = `{LOW}...{HIGH}` )
-    (   n = `NE`     v = `!(={LOW})`    )
-    (   n = `NE`     v = `!(<leer>)`    )
-    (   n = `<leer>` v = `<leer>`    )
-    ).
+      (   n = `EQ`     v = `={LOW}` )
+      (   n = `LT`     v = `<{LOW}` )
+      (   n = `LE`     v = `<={LOW}` )
+      (   n = `GT`     v = `>{LOW}` )
+      (   n = `GE`     v = `>={LOW}` )
+      (   n = `CP`     v = `*{LOW}*` )
+      (   n = `BT`     v = `{LOW}...{HIGH}` )
+      (   n = `NE`     v = `!(={LOW})` )
+      (   n = `NE`     v = `!(<leer>)` )
+      (   n = `<leer>` v = `<leer>` ) ).
 
   ENDMETHOD.
 
@@ -195,16 +194,14 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->page( id = `page_main`
+    view = view->page( id   = `page_main`
              title          = 'abap2UI5 - Select-Options'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        ).
+             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(page) = view->dynamic_page(
             headerexpanded = abap_true
-            headerpinned   = abap_true
-            ).
+            headerpinned   = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f'
             )->get( )->dynamic_page_title( ).
@@ -215,20 +212,20 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+         )->flex_box( alignitems     = `Start`
+                      justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
     DATA(vbox) = lo_box->vbox( ).
-    vbox->simple_form(  editable = abap_true
+    vbox->simple_form( editable = abap_true
             )->content( `form`
                 )->title( 'Table'
                 )->label( 'Name' ).
 
-    vbox->input( client->_bind_edit( mv_name  ) ).
+    vbox->input( client->_bind_edit( mv_name ) ).
 
     vbox->button(
                 text  = 'read'
-                press = client->_event( 'BUTTON_POST' )
-            ).
+                press = client->_event( 'BUTTON_POST' ) ).
 
     vbox = lo_box->vbox( ).
 
@@ -247,19 +244,19 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       ENDLOOP.
 *
       vbox->list(
-        items = client->_bind( mt_tab_02_input )
-        headertext      = `Filter`
+        items      = client->_bind( mt_tab_02_input )
+        headertext = `Filter`
         )->custom_list_item(
             )->hbox(
                 )->text( `{NAME}`
             )->multi_input(
-                tokens          = client->_bind( mt_token )
-                showclearicon   = abap_true
-                value           = `{VALUE}`
-                tokenupdate     = client->_event( val = 'FILTER_UPDATE1'  )
-                submit          = client->_event( 'FILTER_UPDATE' )
-                id              = `FILTER`
-                valuehelprequest  = client->_event( 'FILTER_VALUE_HELP' )
+                tokens           = client->_bind( mt_token )
+                showclearicon    = abap_true
+                value            = `{VALUE}`
+                tokenupdate      = client->_event( val = 'FILTER_UPDATE1' )
+                submit           = client->_event( 'FILTER_UPDATE' )
+                id               = `FILTER`
+                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
             )->item(
                     key  = `{KEY}`
                     text = `{TEXT}`
@@ -282,20 +279,20 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog(
-    contentheight = `50%`
-    contentwidth = `50%`
-        title = 'Define Conditons - Product' ).
+      contentheight = `50%`
+      contentwidth  = `50%`
+        title       = 'Define Conditons - Product' ).
 
-    DATA(vbox) = lo_popup->vbox( height = `100%` justifycontent = 'SpaceBetween' ).
+    DATA(vbox) = lo_popup->vbox( height         = `100%`
+                                 justifycontent = 'SpaceBetween' ).
 
     DATA(pan)  = vbox->panel(
          expandable = abap_false
          expanded   = abap_true
-         headertext = `Product`
-     ).
+         headertext = `Product` ).
     DATA(item) = pan->list(
            "   headertext = `Product`
-              nodata = `no conditions defined`
+              nodata         = `no conditions defined`
              items           = client->_bind_edit( mt_filter )
              selectionchange = client->_event( 'SELCHANGE' )
                 )->custom_list_item( ).
@@ -306,17 +303,24 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key = '{N}'
+                     key  = '{N}'
                      text = '{N}'
              )->get_parent(
              )->input( value = `{LOW}`
-             )->input( value = `{HIGH}`  visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline' type = `Transparent` press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) )
-             ).
+             )->input( value   = `{HIGH}`
+                       visible = `{= ${OPTION} === 'BT' }`
+             )->button( icon  = 'sap-icon://decline'
+                        type  = `Transparent`
+                        press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
-        )->button( text = `Delete All` icon = 'sap-icon://delete' type = `Transparent` press = client->_event( val = `POPUP_DELETE_ALL` )
-        )->button( text = `Add Item`   icon = `sap-icon://add` press = client->_event( val = `POPUP_ADD` )
+        )->button( text  = `Delete All`
+                   icon  = 'sap-icon://delete'
+                   type  = `Transparent`
+                   press = client->_event( val = `POPUP_DELETE_ALL` )
+        )->button( text  = `Add Item`
+                   icon  = `sap-icon://add`
+                   press = client->_event( val = `POPUP_ADD` )
         )->toolbar_spacer(
         )->button(
             text  = 'OK'
@@ -324,8 +328,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             type  = 'Emphasized'
        )->button(
             text  = 'Cancel'
-            press = client->_event( 'FILTER_VALUE_HELP_CANCEL' )
-       ).
+            press = client->_event( 'FILTER_VALUE_HELP_CANCEL' ) ).
 
     client->popup_display( lo_popup->stringify( ) ).
 
@@ -334,19 +337,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    "replace this with a db select here...
-*    mt_table = VALUE #(
-*        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-*    ).
 
-    "put the range in the where clause of your abap sql command
-    "using internal table instead
-*    DELETE mt_table WHERE product NOT IN ms_filter-product.
 
   ENDMETHOD.
 ENDCLASS.

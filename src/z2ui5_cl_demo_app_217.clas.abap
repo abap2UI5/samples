@@ -1,13 +1,13 @@
-class z2ui5_cl_demo_app_217 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_217 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -25,7 +25,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -33,9 +33,11 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->overflow_toolbar( design  = `Transparent` height = `3rem`
+    DATA(layout) = page->overflow_toolbar( design = `Transparent`
+                                           height = `3rem`
                           )->title( text = `Title Only` ).
-                   page->overflow_toolbar( design  = `Transparent` height = `3rem`
+    page->overflow_toolbar( design = `Transparent`
+                            height = `3rem`
                           )->title( text = `Title and Actions`
                           )->toolbar_spacer(
                           )->button( icon = `sap-icon://group-2`
@@ -46,7 +48,7 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -56,7 +58,7 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

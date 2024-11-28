@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_251 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_251 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_251 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_251 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -49,48 +49,51 @@ CLASS z2ui5_cl_demo_app_251 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Input/sample/sap.m.sample.InputDescription' ).
 
-    DATA(layout) = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
 
-    layout->input( value = `10`
+    layout->input( value       = `10`
                    description = `PC`
-                   width = `100px`
-                   fieldWidth = `60%`
-                   class = `sapUiSmallMarginBottom` ).
+                   width       = `100px`
+                   fieldwidth  = `60%`
+                   class       = `sapUiSmallMarginBottom` ).
 
-    layout->input( value = `220`
+    layout->input( value       = `220`
                    description = `EUR / 5 pieces`
-                   width = `200px`
-                   fieldWidth = `60px`
-                   class = `sapUiSmallMarginBottom` ).
+                   width       = `200px`
+                   fieldwidth  = `60px`
+                   class       = `sapUiSmallMarginBottom` ).
 
-    layout->input( value = `220.00`
-                   description = `EUR`
-                   width = `250px`
-                   fieldWidth = `80%`
-                   showClearIcon = abap_true
-                   class = `sapUiSmallMarginBottom` ).
+    layout->input( value         = `220.00`
+                   description   = `EUR`
+                   width         = `250px`
+                   fieldwidth    = `80%`
+                   showclearicon = abap_true
+                   class         = `sapUiSmallMarginBottom` ).
 
-    layout->input( value = `007`
+    layout->input( value       = `007`
                    description = `Bastian Schweinsteiger`
-                   width = `300px`
-                   fieldWidth = `50px`
-                   class = `sapUiSmallMarginBottom` ).
+                   width       = `300px`
+                   fieldwidth  = `50px`
+                   class       = `sapUiSmallMarginBottom` ).
 
-    layout->input( value = `EDP_LAPTOP`
-                   ariaDescribedBy = `descriptionNodeId`
-                   description = `IT Laptops`
-                   width = `400px`
-                   fieldWidth = `75%`
-                   class = `sapUiSmallMarginBottom` ).
+    layout->input( value           = `EDP_LAPTOP`
+                   ariadescribedby = `descriptionNodeId`
+                   description     = `IT Laptops`
+                   width           = `400px`
+                   fieldwidth      = `75%`
+                   class           = `sapUiSmallMarginBottom` ).
 
-    layout->invisible_text( ns = `core` id = `descriptionNodeId` text = `Additional input description refferenced by aria-describedby.` ).
+    layout->invisible_text( ns   = `core`
+                            id   = `descriptionNodeId`
+                            text = `Additional input description refferenced by aria-describedby.` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -102,23 +105,23 @@ CLASS z2ui5_cl_demo_app_251 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This sample illustrates the usage of the description with input fields, e.g. description for units of measurements and currencies.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

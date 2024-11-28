@@ -27,39 +27,46 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog( stretch = abap_true
-            afterclose = client->_event( 'BTN_OK_1ND' )
+            afterclose                    = client->_event( 'BTN_OK_1ND' )
          )->content( ).
 
-    DATA(content) = dialog->icon_tab_bar( selectedkey = client->_bind_edit( mv_selected_key )
-                                                  select = client->_event_client( val = `POPUP_NAV_CONTAINER_TO` t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+    DATA(content) = dialog->icon_tab_bar( selectedkey        = client->_bind_edit( mv_selected_key )
+                                                  select     = client->_event_client( val = `POPUP_NAV_CONTAINER_TO` t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   headermode = `Inline`
-                                                  expanded = abap_true
+                                                  expanded   = abap_true
                                                   expandable = abap_false
                                   )->items(
-                                    )->icon_tab_filter( key = `page1` text = `Home` )->get_parent(
-                                    )->icon_tab_filter( key = `page2` text = `Applications` )->get_parent(
-                                    )->icon_tab_filter( key = `page3` text = `Users and Groups`
+                                    )->icon_tab_filter( key  = `page1`
+                                                        text = `Home` )->get_parent(
+                                    )->icon_tab_filter( key  = `page2`
+                                                        text = `Applications` )->get_parent(
+                                    )->icon_tab_filter( key  = `page3`
+                                                        text = `Users and Groups`
                                       )->items(
-                                         )->icon_tab_filter( key = `page11` text = `User 1` )->get_parent(
-                                         )->icon_tab_filter( key = `page32` text = `User 2` )->get_parent(
-                                         )->icon_tab_filter( key = `page33` text = `User 3`
-
-                                      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                                         )->icon_tab_filter( key  = `page11`
+                                                             text = `User 1` )->get_parent(
+                                         )->icon_tab_filter( key  = `page32`
+                                                             text = `User 2` )->get_parent(
+                                         )->icon_tab_filter( key  = `page33`
+                                                             text = `User 3`
+      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                                         )->content( )->vbox( height = `100%`
-                                         )->nav_container( id = `NavCon` initialpage = `page1` defaulttransitionname = `flip` height = '400px'
+                                         )->nav_container( id                    = `NavCon`
+                                                           initialpage           = `page1`
+                                                           defaulttransitionname = `flip`
+                                                           height                = '400px'
                                            )->pages(
                                             )->page(
-                                              title          = 'first page'
-                                              id             = `page1`
+                                              title = 'first page'
+                                              id    = `page1`
                                            )->get_parent(
                                             )->page(
-                                              title          = 'second page'
-                                              id             = `page2`
+                                              title = 'second page'
+                                              id    = `page2`
                                            )->get_parent(
                                             )->page(
-                                              title          = 'third page'
-                                              id             = `page3`
-                                ).
+                                              title = 'third page'
+                                              id    = `page3` ).
 
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
@@ -102,7 +109,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Popup'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -119,11 +126,11 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
         simple_popup2( ).
 
       WHEN 'BTN_OK_2ND'.
-        client->popup_destroy(  ).
+        client->popup_destroy( ).
         simple_popup1( ).
 
       WHEN 'BTN_OK_1ND'.
-        client->popup_destroy(  ).
+        client->popup_destroy( ).
 
       WHEN 'POPUP'.
         simple_popup1( ).

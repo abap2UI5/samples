@@ -80,8 +80,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
         ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
-    ).
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
 
@@ -117,18 +116,18 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->shell( )->page( id = `page_main`
-            title          = 'abap2UI5 - Search Field with Backend Live Change'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            title                          = 'abap2UI5 - Search Field with Backend Live Change'
+            navbuttonpress                 = client->_event( 'BACK' )
+            shownavbutton                  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    data(ls_cnt) = value z2ui5_if_types=>ty_s_event_control( check_allow_multi_req = abap_true ).
-    DATA(lo_box) =  page1->vbox( )->text( `Search` )->search_field(
+    DATA(ls_cnt) = VALUE z2ui5_if_types=>ty_s_event_control( check_allow_multi_req = abap_true ).
+    DATA(lo_box) = page1->vbox( )->text( `Search` )->search_field(
          livechange = client->_event(
-            val = 'BUTTON_SEARCH'
-            t_arg = VALUE #( ( `${$source>/value}` ) )
+            val    = 'BUTTON_SEARCH'
+            t_arg  = VALUE #( ( `${$source>/value}` ) )
             s_ctrl = ls_cnt
             )
-         width  = `17.5rem` ).
+         width      = `17.5rem` ).
 
     DATA(tab) = lo_box->table( client->_bind( mt_table ) ).
 

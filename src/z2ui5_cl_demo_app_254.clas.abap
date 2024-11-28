@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_254 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_254 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(css) = `.nestedFlexboxes .item1 {`      &&
                 `    padding: 1rem;`             &&
@@ -55,13 +55,13 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
                 `    padding: 1rem;`             &&
                 `    background-color: #FF8598;` &&
                 `}`                              &&
-
-                `.nestedFlexboxes h2 {`          &&
+      `.nestedFlexboxes h2 {`          &&
                 `    color: #32363a;`            &&
                 `}`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
     DATA(page) = view->shell(
          )->page(
@@ -71,9 +71,9 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -83,45 +83,46 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
 
     DATA(layout) = page->hbox(
                           fitcontainer = `abap_true`
-                          alignItems = `Stretch`
-                          class = `sapUiSmallMargin nestedFlexboxes`
+                          alignitems   = `Stretch`
+                          class        = `sapUiSmallMargin nestedFlexboxes`
                           )->html( content = `<h2>1</h2>`
                               )->layout_data( ns = `core`
-                                  )->flex_item_data( growFactor = `2` styleClass = `item1` )->get_parent( )->get_parent(
+                                  )->flex_item_data( growfactor = `2`
+                                                     styleclass = `item1` )->get_parent( )->get_parent(
                           )->html( content = `<h2>2</h2>`
                               )->layout_data( ns = `core`
-                                  )->flex_item_data( growFactor = `3` styleClass = `item2` )->get_parent( )->get_parent(
-
-                          )->vbox( fitcontainer = abap_false
+                                  )->flex_item_data( growfactor = `3`
+                                                     styleclass = `item2` )->get_parent( )->get_parent(
+      )->vbox( fitcontainer = abap_false
                               )->layout_data(
-                                  )->flex_item_data( growFactor = `7` )->get_parent(
-
-                              )->html( content = `<h2>3</h2>`
+                                  )->flex_item_data( growfactor = `7` )->get_parent(
+      )->html( content = `<h2>3</h2>`
                                   )->layout_data( ns = `core`
-                                      )->flex_item_data( growFactor = `5` styleClass = `item3` )->get_parent( )->get_parent(
-
-                              )->hbox( fitcontainer = `abap_true` alignitems = `Stretch`
+                                      )->flex_item_data( growfactor = `5`
+                                                         styleclass = `item3` )->get_parent( )->get_parent(
+      )->hbox( fitcontainer = `abap_true`
+               alignitems   = `Stretch`
                                   )->layout_data(
-                                      )->flex_item_data( growFactor = `3` )->get_parent(
-
-                                      )->html( content = `<h2>4</h2>`
+                                      )->flex_item_data( growfactor = `3` )->get_parent(
+      )->html( content = `<h2>4</h2>`
                                           )->layout_data( ns = `core`
-                                              )->flex_item_data( growFactor = `1` styleClass = `item4` )->get_parent( )->get_parent(
+                                              )->flex_item_data( growfactor = `1`
+                                                                 styleclass = `item4` )->get_parent( )->get_parent(
                                       )->html( content = `<h2>5</h2>`
                                           )->layout_data( ns = `core`
-                                              )->flex_item_data( growFactor = `1` styleClass = `item5` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-
-                          )->html( content = `<h2>6</h2>`
+                                              )->flex_item_data( growfactor = `1`
+                                                                 styleclass = `item5` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->html( content = `<h2>6</h2>`
                               )->layout_data( ns = `core`
-                                  )->flex_item_data( growFactor = `5` styleClass = `item6` )->get_parent( )->get_parent(
-                         ).
+                                  )->flex_item_data( growfactor = `5`
+                                                     styleclass = `item6` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -133,23 +134,23 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Flex Boxes can be nested. Remember also that HBox and VBox are 'convenience' controls based on the Flex Box control.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

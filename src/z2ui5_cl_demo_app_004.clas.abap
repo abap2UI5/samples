@@ -65,13 +65,13 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Controller'
-            navbuttonpress = client->_event( val = 'BACK' )
-               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          ).
+            title            = 'abap2UI5 - Controller'
+            navbuttonpress   = client->_event( val = 'BACK' )
+               shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
-        )->simple_form( title = 'Controller' editable = abap_true )->content( 'form'
+        )->simple_form( title    = 'Controller'
+                        editable = abap_true )->content( 'form'
             )->label( 'Roundtrip'
             )->button(
                 text  = 'Client/Server Interaction'
@@ -100,10 +100,9 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-     title          = 'abap2UI5 - Controller'
-     navbuttonpress = client->_event( 'BACK' )
-     shownavbutton = abap_true
-     ).
+      title          = 'abap2UI5 - Controller'
+      navbuttonpress = client->_event( 'BACK' )
+      shownavbutton  = abap_true ).
 
     page->grid( 'L12 M12 S12' )->content( 'layout'
         )->simple_form( 'View Second' )->content( 'form'

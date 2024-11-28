@@ -32,12 +32,13 @@ CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->button(
-                text    = 'Emphasized Button with Badge'
-                type    = 'Emphasized'
-                class   = 'sapUiTinyMarginBeginEnd'
-                icon    = 'sap-icon://cart' )->get(
+                text  = 'Emphasized Button with Badge'
+                type  = 'Emphasized'
+                class = 'sapUiTinyMarginBeginEnd'
+                icon  = 'sap-icon://cart' )->get(
                 )->custom_data(
                     )->badge_custom_data(
                         key     = 'badge'

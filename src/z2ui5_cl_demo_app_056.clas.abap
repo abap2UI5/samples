@@ -79,8 +79,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
     DELETE mt_table WHERE product NOT IN mt_range.
 
@@ -92,17 +91,17 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Select-Options'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+             title                  = 'abap2UI5 - Select-Options'
+             navbuttonpress         = client->_event( 'BACK' )
+             shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).
     vbox->_z2ui5( )->multiinput_ext(
-                       addedtokens      = client->_bind_edit( mt_tokens_added )
-                       removedtokens    = client->_bind_edit( mt_tokens_removed )
-                       change           = client->_event( 'UPDATE_TOKENS' )
-                       multiinputid     = `MultiInput`  ).
+                       addedtokens   = client->_bind_edit( mt_tokens_added )
+                       removedtokens = client->_bind_edit( mt_tokens_removed )
+                       change        = client->_event( 'UPDATE_TOKENS' )
+                       multiinputid  = `MultiInput` ).
 
     DATA(tab) = vbox->table(
         items = client->_bind( val = mt_table )
@@ -110,8 +109,8 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
              )->overflow_toolbar(
              )->text( `Product:`
              )->multi_input(
-                width = `30%`
-                id = `MultiInput`
+                width            = `30%`
+                id               = `MultiInput`
                 tokens           = client->_bind( mt_token )
                 showclearicon    = abap_true
                 valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
@@ -128,7 +127,9 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
                 )->get_parent( )->get_parent(
                  )->toolbar_spacer(
                )->button(
-        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+        text  = `Go`
+        press = client->_event( `BUTTON_START` )
+        type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).

@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
     DATA mt_table TYPE ty_t_table .
@@ -43,18 +43,26 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id = `page_main`
-            title          = 'abap2UI5 - List Report Features'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            title               = 'abap2UI5 - List Report Features'
+            navbuttonpress      = client->_event( 'BACK' )
+            shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(facet) = page->facet_filter( id = `idFacetFilter` type = `Light` showpersonalization = abap_true showreset = abap_true reset = client->_event( val = `RESET` )
-      )->facet_filter_list( title = `Products` mode = `MultiSelect` items = client->_bind( mt_table_products ) listclose = client->_event( val = `FILTER`
+    DATA(facet) = page->facet_filter( id                  = `idFacetFilter`
+                                      type                = `Light`
+                                      showpersonalization = abap_true
+                                      showreset           = abap_true
+                                      reset               = client->_event( val = `RESET` )
+      )->facet_filter_list( title     = `Products`
+                            mode      = `MultiSelect`
+                            items     = client->_bind( mt_table_products )
+                            listclose = client->_event( val                      = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
 *                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
                                                                            t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
-    DATA(tab) = page->table( id = `tab` items = client->_bind_edit( val = mt_table ) ).
+    DATA(tab) = page->table( id    = `tab`
+                             items = client->_bind_edit( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -63,8 +71,10 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items(  )->column_list_item( ).
-    lo_cells->link( id = `link` text = '{PRODUCT}' press = client->_event( val = `POPOVER_DETAIL` ) ).
+    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    lo_cells->link( id    = `link`
+                    text  = '{PRODUCT}'
+                    press = client->_event( val = `POPOVER_DETAIL` ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
@@ -76,6 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA lt_range TYPE RANGE OF string.
 
     me->client = client.
 
@@ -92,7 +103,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
         client->view_model_update( ).
       WHEN 'FILTER'.
 
-        DATA lt_range TYPE RANGE OF string.
+
 
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].
@@ -102,7 +113,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
             DATA(l_members) = lo_json->members( '/' ).
 
             LOOP AT l_members INTO DATA(l_member).
-              DATA(lv_val) =  lo_json->get( '/' && l_member && '/mProperties/text' ).
+              DATA(lv_val) = lo_json->get( '/' && l_member && '/mProperties/text' ).
 
               APPEND VALUE #( sign = 'I' option = 'EQ' low = lv_val ) TO lt_range.
 
@@ -179,8 +190,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
         ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
-    ).
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
     SORT mt_table BY product.
     mt_table_full = mt_table.

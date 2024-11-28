@@ -45,7 +45,8 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD initialize_view.
-    set_session_stateful( client = client stateful = abap_true ).
+    set_session_stateful( client   = client
+                          stateful = abap_true ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -58,11 +59,12 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
     vbox->info_label( text = client->_bind( session_text ) ).
 
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text = 'press button to increment counter in backend session' class = 'sapUiTinyMarginEnd' ).
+    hbox->label( text  = 'press button to increment counter in backend session'
+                 class = 'sapUiTinyMarginEnd' ).
     hbox->button(
       text  = client->_bind( instance_counter )
       press = client->_event( 'INCREMENT' )
-      type = 'Emphasized' ).
+      type  = 'Emphasized' ).
 
     hbox = vbox->hbox( ).
     hbox->button(
@@ -79,15 +81,18 @@ CLASS z2ui5_cl_demo_app_137 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
         client->nav_app_leave( ).
       WHEN 'INCREMENT'.
         instance_counter = lcl_static_container=>increment( ).
         client->view_model_update( ).
       WHEN 'END_SESSION'.
-        set_session_stateful( client = client stateful = abap_false ).
+        set_session_stateful( client   = client
+                              stateful = abap_false ).
       WHEN 'START_SESSION'.
-        set_session_stateful( client = client stateful = abap_true ).
+        set_session_stateful( client   = client
+                              stateful = abap_true ).
     ENDCASE.
   ENDMETHOD.
 

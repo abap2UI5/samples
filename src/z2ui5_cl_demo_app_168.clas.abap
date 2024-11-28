@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         IF CAST z2ui5_cl_pop_file_dl( lo_prev )->result( ).
           client->message_box_display( `the input is downloaded` ).
         ENDIF.
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup File Download'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
                 text  = 'Open Popup...'
                 press = client->_event( 'POPUP' ) ).

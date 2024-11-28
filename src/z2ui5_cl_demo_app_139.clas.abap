@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
         client->message_toast_display( |{ search } - title changed| ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 
@@ -51,8 +51,9 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
          )->page(
                  title          = 'abap2UI5 - Change URL History'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-             )->simple_form( title = 'Form Title' editable = abap_true
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+             )->simple_form( title    = 'Form Title'
+                             editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
                      )->label( 'search'

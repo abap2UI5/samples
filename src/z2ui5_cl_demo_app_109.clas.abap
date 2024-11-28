@@ -34,41 +34,40 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = mv_placement
-              )->quick_view_page( pageid = `employeePageId`
-                                  header = `Employee Info`
-                                  title  = `choper725`
-                                  titleurl = `https://github.com/abap2UI5/abap2UI5`
+              )->quick_view_page( pageid      = `employeePageId`
+                                  header      = `Employee Info`
+                                  title       = `choper725`
+                                  titleurl    = `https://github.com/abap2UI5/abap2UI5`
                                   description = `Enjoy`
                             )->quick_view_group( heading = `Contact Details`
                               )->quick_view_group_element( label = `Mobile`
                                                            value = `123-456-789`
-                                                           type = `mobile`
+                                                           type  = `mobile`
                                                          )->get_parent(
                               )->quick_view_group_element( label = `Phone`
                                                            value = `789-456-123`
-                                                           type = `phone`
+                                                           type  = `phone`
                                                          )->get_parent(
-                              )->quick_view_group_element( label = `Email`
-                                                           value = `thisisemail@email.com`
+                              )->quick_view_group_element( label        = `Email`
+                                                           value        = `thisisemail@email.com`
                                                            emailsubject = `Subject`
-                                                           type = `email`
+                                                           type         = `email`
                                                          )->get_parent(
                               )->get_parent(
                            )->quick_view_group( heading = `Company`
-                            )->quick_view_group_element( label = `Name`
+                            )->quick_view_group_element( label   = `Name`
                                                            value = `Adventure Company`
-                                                           url = `https://github.com/abap2UI5/abap2UI5`
-                                                           type = `link`
+                                                           url   = `https://github.com/abap2UI5/abap2UI5`
+                                                           type  = `link`
                                                          )->get_parent(
-                            )->quick_view_group_element( label = `Address`
+                            )->quick_view_group_element( label   = `Address`
                                                            value = `Here"`
                                                          )->get_parent( ).
 
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
@@ -80,7 +79,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
       )->page(
               title          = 'abap2UI5 - Popover Quickview Examples'
               navbuttonpress = client->_event( val = 'BACK' )
-              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+              shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
           )->simple_form( 'QuickView Popover'
               )->content( 'form'
                   )->title( 'QuickView Popover'
@@ -88,19 +87,19 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                   )->segmented_button( selected_key = client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
-                                key = 'Left'
+                                key  = 'Left'
                                 icon = 'sap-icon://add-favorite'
                                 text = 'Left'
                         )->segmented_button_item(
-                                key = 'Top'
+                                key  = 'Top'
                                 icon = 'sap-icon://accept'
                                 text = 'Top'
                         )->segmented_button_item(
-                                key = 'Bottom'
+                                key  = 'Bottom'
                                 icon = 'sap-icon://accept'
                                 text = 'Bottom'
                         )->segmented_button_item(
-                                key = 'Right'
+                                key  = 'Right'
                                 icon = 'sap-icon://attachment'
                                 text = 'Right'
                   )->get_parent( )->get_parent(
@@ -108,9 +107,8 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                     )->button(
                         text  = 'show'
                         press = client->_event( 'POPOVER' )
-                        id = 'TEST'
-                        width = `10rem`
-          ).
+                        id    = 'TEST'
+                        width = `10rem` ).
 
     client->view_display( view->stringify( ) ).
 

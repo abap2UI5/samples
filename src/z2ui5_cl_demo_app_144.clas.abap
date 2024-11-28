@@ -33,8 +33,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Cell Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
@@ -50,10 +49,10 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
             )->overflow_toolbar(
                 )->title( 'title of the table'
         )->get_parent( )->get_parent(
-    )->columns(
+      )->columns(
         )->column( )->text( 'Title' )->get_parent(
         )->column( )->text( 'Value' )->get_parent( )->get_parent(
-    )->items( )->column_list_item( selected = '{SELKZ}'
+      )->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->input( value = '{TITLE}'
           )->input( value = '{VALUE}' ).
@@ -77,10 +76,10 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
       DO 1 TIMES.
         t_tab = VALUE #( BASE t_tab
-            ( title = 'entry 01'  value = 'red'   )
-            ( title = 'entry 02'  value = 'blue'  ) ).
+            ( title = 'entry 01'  value = 'red' )
+            ( title = 'entry 02'  value = 'blue' ) ).
       ENDDO.
-      set_view(  ).
+      set_view( ).
     ENDIF.
 
     CASE client->get( )-event.

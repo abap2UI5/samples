@@ -17,8 +17,8 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION
     DATA device_desktop TYPE abap_bool.
     DATA device_tablet  TYPE abap_bool.
     DATA device_combi   TYPE abap_bool.
-    DATA device_height  type string.
-    DATA device_width   type string.
+    DATA device_height  TYPE string.
+    DATA device_width   TYPE string.
 
 
 
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->_z2ui5( )->info_frontend(
                                         finished          = client->_event( `INFO_FINISHED` )
                                         device_browser    = client->_bind_edit( device_browser )
@@ -49,13 +49,14 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                                         ui5_gav           = client->_bind_edit( ui5_gav )
                                         ui5_theme         = client->_bind_edit( ui5_theme )
                                         ui5_version       = client->_bind_edit( ui5_version )
-                                        device_phone        = client->_bind_edit( device_phone   )
-                                        device_desktop      = client->_bind_edit( device_desktop )
-                                        device_tablet       = client->_bind_edit( device_tablet  )
-                                        device_combi        = client->_bind_edit( device_combi   )
-                                        device_height       = client->_bind_edit( device_height  )
-                                        device_width        = client->_bind_edit( device_width   )
-              )->simple_form( title = 'Information' editable = abap_true
+                                        device_phone      = client->_bind_edit( device_phone )
+                                        device_desktop    = client->_bind_edit( device_desktop )
+                                        device_tablet     = client->_bind_edit( device_tablet )
+                                        device_combi      = client->_bind_edit( device_combi )
+                                        device_height     = client->_bind_edit( device_height )
+                                        device_width      = client->_bind_edit( device_width )
+              )->simple_form( title    = 'Information'
+                              editable = abap_true
                   )->content( 'form'
                       )->label( 'device_browser'
                       )->input( client->_bind_edit( device_browser )
@@ -81,10 +82,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                       )->input( client->_bind_edit( device_height )
                       )->label( `device_width`
                       )->input( client->_bind_edit( device_width )
-
-
-
-           )->stringify( ) ).
+      )->stringify( ) ).
 
   ENDMETHOD.
 
@@ -95,12 +93,12 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      display_view(  ).
+      display_view( ).
     ENDIF.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
   ENDMETHOD.

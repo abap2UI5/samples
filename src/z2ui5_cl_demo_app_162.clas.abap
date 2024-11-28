@@ -58,15 +58,13 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
     z2ui5_cl_util=>filter_itab(
       EXPORTING
         filter = mt_filter
       CHANGING
-        val    = mt_table
-    ).
+        val    = mt_table ).
 
   ENDMETHOD.
 
@@ -76,10 +74,9 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Select-Options'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          ).
+             title                  = 'abap2UI5 - Select-Options'
+             navbuttonpress         = client->_event( 'BACK' )
+             shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(vbox) = view->vbox( ).
 
@@ -88,8 +85,12 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
            )->header_toolbar(
              )->overflow_toolbar(
                  )->toolbar_spacer(
-                 )->button( text = `Filter` press = client->_event( `PREVIEW_FILTER` ) icon = `sap-icon://filter`
-           )->button(  text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
+                 )->button( text  = `Filter`
+                            press = client->_event( `PREVIEW_FILTER` )
+                            icon  = `sap-icon://filter`
+           )->button( text  = `Go`
+                      press = client->_event( `BUTTON_START` )
+                      type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
     DATA(lo_columns) = tab->columns( ).

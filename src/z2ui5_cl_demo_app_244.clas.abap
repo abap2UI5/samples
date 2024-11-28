@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_244 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_244 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
 
     DATA(css) = `.sapUiDemoFlexBoxSizeAdjustments .sapMFlexItem {`               &&
@@ -37,17 +37,16 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
                 `    margin: 0.1875rem;`                                         &&
                 `    padding: 0.1875rem;`                                        &&
                 `}`                                                              &&
-
-                `.sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems .sapMFlexItem {` &&
+      `.sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems .sapMFlexItem {` &&
                 `    width: 0;`                                                  &&
                 `}`                                                              &&
-
-                `.sapMFlexItem {`                                                &&
+      `.sapMFlexItem {`                                                &&
                 `    position: relative;`                                        &&
                 `}`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
     DATA(page) = view->shell(
          )->page(
@@ -57,9 +56,9 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -68,74 +67,115 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxSizeAdjustments' ).
 
     DATA(layout) = page->vbox(
-                          )->panel( headertext = `Equal flexibility and content` class = `sapUiDemoFlexBoxSizeAdjustments`
+                          )->panel( headertext = `Equal flexibility and content`
+                                    class      = `sapUiDemoFlexBoxSizeAdjustments`
                               )->flex_box( alignitems = `Start`
-                                  )->button( text = `1` width = `100%` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `1`
+                                             width = `100%`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `2` width = `100%` type = `Reject` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `2`
+                                             width = `100%`
+                                             type  = `Reject`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `3` width = `100%` type = `Accept` )->get(
+                                  )->button( text  = `3`
+                                             width = `100%`
+                                             type  = `Accept` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-
-                          )->panel( headertext = `Different flexibility, equal content` class = `sapUiDemoFlexBoxSizeAdjustments`
+      )->panel( headertext = `Different flexibility, equal content`
+                class      = `sapUiDemoFlexBoxSizeAdjustments`
                               )->flex_box( alignitems = `Start`
-                                  )->button( text = `1` width = `100%` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `1`
+                                             width = `100%`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `2` width = `100%` type = `Reject` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `2`
+                                             width = `100%`
+                                             type  = `Reject`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                          )->flex_item_data( growfactor = `2` )->get_parent( )->get_parent(
-                                  )->button( text = `3` width = `100%` type = `Accept` )->get(
+                                  )->button( text  = `3`
+                                             width = `100%`
+                                             type  = `Accept` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `3` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-
-                          )->panel( headertext = `Equal flexibility, different content` class = `sapUiDemoFlexBoxSizeAdjustments`
+      )->panel( headertext = `Equal flexibility, different content`
+                class      = `sapUiDemoFlexBoxSizeAdjustments`
                               )->flex_box( alignitems = `Start`
-                                  )->button( text = `1` width = `50px` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `1`
+                                             width = `50px`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `2` width = `100px` type = `Reject` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `2`
+                                             width = `100px`
+                                             type  = `Reject`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `3` width = `150px` type = `Accept` )->get(
+                                  )->button( text  = `3`
+                                             width = `150px`
+                                             type  = `Accept` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-
-                          )->panel( headertext = `Equal flexibility, different content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
-                              )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
-                                  )->button( text = `1` width = `100%` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+      )->panel( headertext = `Equal flexibility, different content, width 0`
+                class      = `sapUiDemoFlexBoxSizeAdjustments`
+                              )->flex_box( alignitems = `Start`
+                                           class      = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
+                                  )->button( text  = `1`
+                                             width = `100%`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `2` width = `100%` type = `Reject` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `2`
+                                             width = `100%`
+                                             type  = `Reject`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `3` width = `100%` type = `Accept` )->get(
+                                  )->button( text  = `3`
+                                             width = `100%`
+                                             type  = `Accept` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-
-                          )->panel( headertext = `Different flexibility and content, width 0` class = `sapUiDemoFlexBoxSizeAdjustments`
-                              )->flex_box( alignitems = `Start` class = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
-                                  )->button( text = `1` width = `50px` type = `Emphasized` class = `sapUiSmallMarginEnd` )->get(
+      )->panel( headertext = `Different flexibility and content, width 0`
+                class      = `sapUiDemoFlexBoxSizeAdjustments`
+                              )->flex_box( alignitems = `Start`
+                                           class      = `sapUiDemoFlexBoxSizeAdjustmentsZeroWidthItems`
+                                  )->button( text  = `1`
+                                             width = `50px`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `2` width = `100px` type = `Reject` class = `sapUiSmallMarginEnd` )->get(
+                                  )->button( text  = `2`
+                                             width = `100px`
+                                             type  = `Reject`
+                                             class = `sapUiSmallMarginEnd` )->get(
                                       )->layout_data(
                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
-                                  )->button( text = `3` width = `150px` type = `Accept` )->get(
+                                  )->button( text  = `3`
+                                             width = `150px`
+                                             type  = `Accept` )->get(
                                       )->layout_data(
-                                          )->flex_item_data( growfactor = `1` )->get_parent(
-
-                   ).
+                                          )->flex_item_data( growfactor = `1` )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -147,24 +187,23 @@ CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `Automatic size adjustments can be achieved for Flex Items with the use of Flex Item Data settings on the contained controls.`
-          ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
+                                  description = `Automatic size adjustments can be achieved for Flex Items with the use of Flex Item Data settings on the contained controls.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

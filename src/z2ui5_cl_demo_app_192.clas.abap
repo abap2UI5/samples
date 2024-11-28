@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
            END OF ty_s_merged_data,
            ty_t_merged_data TYPE STANDARD TABLE OF ty_s_merged_data WITH EMPTY KEY.
 
-*    DATA mt_new_data TYPE ty_t_merged_data.
+
 
     DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH EMPTY KEY.
 
@@ -82,18 +82,18 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_data.
+    DATA lr_structdescr TYPE REF TO cl_abap_structdescr.
+    DATA lr_tabdescr TYPE REF TO cl_abap_tabledescr.
+    FIELD-SYMBOLS <fs_s_head> TYPE any.
+    FIELD-SYMBOLS <fs_t_head_new> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <fs_s_head_new> TYPE any.
 
-    mt_out = VALUE #( ( aa = 'aa' bb = 'bb' cc = 'cc'  )
-                      ( aa = 'a1' bb = 'b1' cc = 'c1'  ) ).
+    mt_out = VALUE #( ( aa = 'aa' bb = 'bb' cc = 'cc' )
+                      ( aa = 'a1' bb = 'b1' cc = 'c1' ) ).
 
     DATA(kopf) = REF #( mt_out ).
 
-    DATA lr_structdescr TYPE REF TO cl_abap_structdescr.
-    DATA lr_tabdescr    TYPE REF TO cl_abap_tabledescr.
 
-    FIELD-SYMBOLS <fs_s_head>     TYPE any.
-    FIELD-SYMBOLS <fs_t_head_new> TYPE STANDARD TABLE.
-    FIELD-SYMBOLS <fs_s_head_new> TYPE any.
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 

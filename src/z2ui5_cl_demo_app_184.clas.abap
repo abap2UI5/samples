@@ -11,8 +11,7 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-*    DATA ms_table_row    TYPE REF TO data.
-*    DATA mt_table_del    TYPE REF TO data.
+
     DATA mt_comp         TYPE abap_component_tab.
 
     METHODS set_app_data
@@ -56,6 +55,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD render_main.
+    FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -63,12 +63,12 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
 
-    FIELD-SYMBOLS <tab> TYPE data.
+
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing    = 'true'
-                               width      = 'auto'
-                               items      = client->_bind( <tab> )
+    DATA(table) = page->table( growing = 'true'
+                               width   = 'auto'
+                               items   = client->_bind( <tab> )
 *                               headertext = mv_table
                                ).
 
@@ -132,9 +132,9 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-*        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
+
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-*        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+
 
         ASSIGN mt_table->* TO <table>.
 
@@ -153,14 +153,15 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_comp.
+    DATA index TYPE int4.
     TRY.
 
-        DATA index TYPE int4.
+
 
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 

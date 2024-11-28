@@ -1,10 +1,10 @@
-CLASS Z2UI5_CL_DEMO_APP_096 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
-    DATA mo_view_parent TYPE REF TO Z2UI5_cl_xml_view.
+    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_descr       TYPE string.
 
     DATA mv_init TYPE abap_bool.
@@ -14,7 +14,7 @@ CLASS Z2UI5_CL_DEMO_APP_096 DEFINITION PUBLIC.
     DATA mr_data TYPE REF TO data.
 
     METHODS display_view
-      CHANGING xml TYPE REF TO Z2UI5_cl_xml_view OPTIONAL.
+      CHANGING xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -23,7 +23,7 @@ ENDCLASS.
 
 
 CLASS Z2UI5_CL_DEMO_APP_096 IMPLEMENTATION.
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
     me->client = client.
 
     IF mv_init = abap_false.
@@ -73,7 +73,8 @@ CLASS Z2UI5_CL_DEMO_APP_096 IMPLEMENTATION.
     ENDIF.
 
     mo_view_parent->input( value = client->_bind_edit( mv_descr ) ).
-    mo_view_parent->button( text = `event sub app`  press = client->_event( `MESSAGE_SUB` ) ).
+    mo_view_parent->button( text  = `event sub app`
+                            press = client->_event( `MESSAGE_SUB` ) ).
 
   ENDMETHOD.
 ENDCLASS.

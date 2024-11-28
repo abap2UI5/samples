@@ -38,16 +38,24 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
-    layout->label( text = 'Input mandatory' labelfor = `input1` ).
-    layout->input( id = `input1` required = abap_true ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
+    layout->label( text     = 'Input mandatory'
+                   labelfor = `input1` ).
+    layout->input( id       = `input1`
+                   required = abap_true ).
 
 
-    layout->label( text = 'Input bold' labelfor = `input2` design = `Bold` ).
-    layout->input( id = `input2` value = client->_bind_edit( screen-input2 ) ).
+    layout->label( text     = 'Input bold'
+                   labelfor = `input2`
+                   design   = `Bold` ).
+    layout->input( id    = `input2`
+                   value = client->_bind_edit( screen-input2 ) ).
 
-    layout->label( text = 'Input normal' labelfor = `input3` ).
-    layout->input( id = `input3` value = client->_bind_edit( screen-input3 ) ).
+    layout->label( text     = 'Input normal'
+                   labelfor = `input3` ).
+    layout->input( id    = `input3`
+                   value = client->_bind_edit( screen-input3 ) ).
 
     client->view_display( page->stringify( ) ).
 

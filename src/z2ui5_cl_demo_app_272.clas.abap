@@ -43,9 +43,9 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -54,18 +54,21 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
            href   = base_url && 'sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderCircleImage' ).
 
     page->object_header(
-           icon = base_url && `test-resources/sap/m/images/Woman_04.png`
+           icon             = base_url && `test-resources/sap/m/images/Woman_04.png`
            icondensityaware = abap_false
-           iconalt = `Denise Smith`
-           imageshape = `Circle`
-           responsive = abap_true
-           title = `Denise Smith`
-           intro = `Senior Developer`
-           class = `sapUiResponsivePadding--header`
-             )->object_attribute( title = `Email address` text = `DeniseSmith@sap.com` active = abap_true
-             )->object_attribute( title = `Office Phone` text = `+33 6 453 564`
-             )->object_attribute( title = `Functional Area` text = `Development`
-          ).
+           iconalt          = `Denise Smith`
+           imageshape       = `Circle`
+           responsive       = abap_true
+           title            = `Denise Smith`
+           intro            = `Senior Developer`
+           class            = `sapUiResponsivePadding--header`
+             )->object_attribute( title  = `Email address`
+                                  text   = `DeniseSmith@sap.com`
+                                  active = abap_true
+             )->object_attribute( title = `Office Phone`
+                                  text  = `+33 6 453 564`
+             )->object_attribute( title = `Functional Area`
+                                  text  = `Development` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -87,9 +90,10 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `An Object Header can set shape of the image by using 'imageShape' property.`                      &&
                                                 `The shapes could be Square (by default) and Circle.`                                              &&
                                                 `Note: This example shows the image inside ObjectHeader with the responsive property set to true.` &&
@@ -97,8 +101,7 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION
         value TYPE string,
       END OF ty_row .
 
-    DATA:
+    DATA
       t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
@@ -36,8 +36,8 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
                       shownavbutton  = abap_true ).
 
     page->_generic(
-            name   = `style`
-            ns     = `html`
+            name = `style`
+            ns   = `html`
        )->_cc_plain_xml(
            `td:has([data-color="red"]){ `
         && `    background-color: red;`
@@ -82,10 +82,13 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
         )->text( text = '{TITLE}'
           )->get(
             )->custom_data(
-              )->core_custom_data( key = 'color' value = '{VALUE}' writetodom = abap_true
+              )->core_custom_data( key        = 'color'
+                                   value      = '{VALUE}'
+                                   writetodom = abap_true
             )->get_parent(
           )->get_parent(
-        )->input( value = '{VALUE}' enabled = abap_true ).
+        )->input( value   = '{VALUE}'
+                  enabled = abap_true ).
 
     client->view_display( view->stringify( ) ).
 
@@ -98,12 +101,12 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       t_tab = VALUE #(
-          ( title = 'entry 01'  value = 'red'    )
-          ( title = 'entry 02'  value = 'blue'   )
-          ( title = 'entry 03'  value = 'green'  )
+          ( title = 'entry 01'  value = 'red' )
+          ( title = 'entry 02'  value = 'blue' )
+          ( title = 'entry 03'  value = 'green' )
           ( title = 'entry 04'  value = 'yellow' )
           ( title = 'entry 05'  value = 'orange' )
-          ( title = 'entry 06'  value = 'grey'   ) ).
+          ( title = 'entry 06'  value = 'grey' ) ).
 
       set_view( ).
     ENDIF.

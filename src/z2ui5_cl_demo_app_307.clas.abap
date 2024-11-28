@@ -184,26 +184,26 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD display_view.
-    data(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
 
     view->panel( id               = `panelForGridList`
-                 backgroundDesign = `Transparent`
+                 backgrounddesign = `Transparent`
         )->header_toolbar(
             )->toolbar( height = `3rem`
                 )->title( text = `Grid List with Drag and Drop`
             )->get_parent(
         )->get_parent(
         )->grid_list( id         = `gridList`
-                      headerText = `GridList header`
+                      headertext = `GridList header`
                       items      = client->_bind_edit( items )
             )->drag_drop_config(
-                )->drag_info( sourceAggregation = `items`
+                )->drag_info( sourceaggregation = `items`
                 )->grid_drop_info(
-                    targetAggregation = `items`
-                    dropPosition      = `Between`
-                    dropLayout        = `Horizontal`
+                    targetaggregation = `items`
+                    dropposition      = `Between`
+                    droplayout        = `Horizontal`
                     drop              = client->_event(
                         val   = 'onDrop'
                         t_arg = VALUE #(
@@ -212,21 +212,21 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                             ( `${$parameters>/dropPosition}` ) ) )
             )->get_parent(
             )->custom_layout( ns = 'f'
-                )->grid_box_layout( boxMinWidth = `17rem`
+                )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
             )->grid_list_item( counter   = '{COUNTER}'
                                highlight = '{HIGHLIGHT}'
                                type      = '{TYPE}'
                                unread    = '{UNREAD}'
                 )->vbox( height = `100%`
-                    )->VBox( class = `sapUiSmallMargin`
-                        )->layout_Data(
-                            )->Flex_Item_Data( growFactor   = `1`
-                                               shrinkFactor = `0`
+                    )->vbox( class = `sapUiSmallMargin`
+                        )->layout_data(
+                            )->flex_item_data( growfactor   = `1`
+                                               shrinkfactor = `0`
                         )->get_parent(
                         )->title( text     = '{TITLE}'
                                   wrapping = abap_true
-                        )->Label( text     = '{SUBTITLE}'
+                        )->label( text     = '{SUBTITLE}'
                                   wrapping = abap_true ).
 
     client->view_display( view->stringify( ) ).
@@ -235,11 +235,11 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'onDrop'.
-        DATA(onDropParameters) = client->get( )-t_event_arg.
+        DATA(ondropparameters) = client->get( )-t_event_arg.
         TRY.
-            DATA(drag_position) = CONV i( onDropParameters[ 1 ] ) + 1.
-            DATA(drop_position) = CONV i( onDropParameters[ 2 ] ) + 1.
-            DATA(insert_position) = onDropParameters[ 3 ].
+            DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.
+            DATA(drop_position) = CONV i( ondropparameters[ 2 ] ) + 1.
+            DATA(insert_position) = ondropparameters[ 3 ].
             DATA(item) = items[ drag_position ].
           CATCH cx_root.
             RETURN.

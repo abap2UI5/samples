@@ -1,9 +1,9 @@
 *"* use this source file for the definition and implementation of
 *"* local helper classes, interface definitions and type
 *"* declarations
-class lcl_merged_data DEFINITION.
+CLASS lcl_merged_data DEFINITION.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
 
     TYPES: BEGIN OF ty_s_key_value,
              fname   TYPE char30,
@@ -20,4 +20,4 @@ PUBLIC SECTION.
            END OF ty_s_merged_data.
 
 
-endclass.
+ENDCLASS.

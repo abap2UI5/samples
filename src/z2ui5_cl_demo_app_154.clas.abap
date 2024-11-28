@@ -18,6 +18,29 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
   METHOD ui5_event.
+    TYPES BEGIN OF ty_log_entry.
+    TYPES msgnumber TYPE n LENGTH 6.
+    TYPES msgty     TYPE c LENGTH 1.
+    TYPES msgid     TYPE c LENGTH 20.
+    TYPES msgno     TYPE n LENGTH 3.
+    TYPES msgv1     TYPE c LENGTH 50.
+    TYPES msgv2     TYPE c LENGTH 50.
+    TYPES msgv3     TYPE c LENGTH 50.
+    TYPES msgv4     TYPE c LENGTH 50.
+    TYPES msgv1_src TYPE c LENGTH 15.
+    TYPES msgv2_src TYPE c LENGTH 15.
+    TYPES msgv3_src TYPE c LENGTH 15.
+    TYPES msgv4_src TYPE c LENGTH 15.
+    TYPES detlevel  TYPE c LENGTH 1.
+    TYPES probclass TYPE c LENGTH 1.
+    TYPES alsort    TYPE c LENGTH 3.
+    TYPES time_stmp TYPE p LENGTH 8 DECIMALS 7.
+    TYPES msg_count TYPE i.
+    TYPES context   TYPE c LENGTH 255.
+    TYPES params    TYPE c LENGTH 255.
+    TYPES msg_txt   TYPE string.
+    TYPES END OF ty_log_entry.
+    DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
 
     CASE client->get( )-event.
 
@@ -25,38 +48,14 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
         DATA(lt_msg) = VALUE bapirettab(
             ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
-            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' )
-        ).
+            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' ) ).
 
         client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
 
       WHEN 'POPUP_BALLOG'.
 
 
-TYPES: BEGIN OF ty_log_entry,
-         msgnumber   TYPE n LENGTH 6,      " Application Log: Internal Message Serial Number
-         msgty       TYPE c LENGTH 1,      " Message Type
-         msgid       TYPE c LENGTH 20,     " Message Class
-         msgno       TYPE n LENGTH 3,      " Message Number
-         msgv1       TYPE c LENGTH 50,     " Message Variable
-         msgv2       TYPE c LENGTH 50,     " Message Variable
-         msgv3       TYPE c LENGTH 50,     " Message Variable
-         msgv4       TYPE c LENGTH 50,     " Message Variable
-         msgv1_src   TYPE c LENGTH 15,     " Origin of a Message Variable
-         msgv2_src   TYPE c LENGTH 15,     " Origin of a Message Variable
-         msgv3_src   TYPE c LENGTH 15,     " Origin of a Message Variable
-         msgv4_src   TYPE c LENGTH 15,     " Origin of a Message Variable
-         detlevel    TYPE c LENGTH 1,      " Level of Detail
-         probclass   TYPE c LENGTH 1,      " Problem Class
-         alsort      TYPE c LENGTH 3,      " Sort Criterion/Grouping
-         time_stmp   TYPE p LENGTH 8 DECIMALS 7, " Message Time Stamp
-         msg_count   TYPE i,               " Cumulated Message Count
-         context     TYPE c LENGTH 255,    " Context (Generic Placeholder)
-         params      TYPE c LENGTH 255,    " Parameters (Generic Placeholder)
-         msg_txt     TYPE string,          " Message Text
-       END OF ty_log_entry.
 
-        DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
         lt_bal = VALUE #(
           ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
           ( msgid = 'Z001' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( )  msgnumber = '02' ) ).
@@ -96,8 +95,7 @@ TYPES: BEGIN OF ty_log_entry,
             press = client->_event( 'POPUP_BALLOG' )
                              )->button(
             text  = 'Open Popup Exception'
-            press = client->_event( 'POPUP_EXCEPTION' )
-             ).
+            press = client->_event( 'POPUP_EXCEPTION' ) ).
 
     client->view_display( view->stringify( ) ).
 

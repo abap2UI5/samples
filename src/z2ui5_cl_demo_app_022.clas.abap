@@ -37,13 +37,14 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->label( 'ProgressIndicator'
         )->progress_indicator(
-            percentvalue    = screen-progress_value
-            displayvalue    = '0,44GB of 32GB used'
-            showvalue       = abap_true
-            state           = 'Success' ).
+            percentvalue = screen-progress_value
+            displayvalue = '0,44GB of 32GB used'
+            showvalue    = abap_true
+            state        = 'Success' ).
 
     client->view_display( page->stringify( ) ).
 

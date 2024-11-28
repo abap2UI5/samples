@@ -132,8 +132,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       WHEN `BUTTON_SAVE_LAYOUT`.
         DATA(ls_layout) = VALUE ty_s_db_layout(
           data = z2ui5_cl_util=>xml_stringify( ms_layout )
-          name = mv_layout
-          ).
+          name = mv_layout ).
         INSERT ls_layout INTO TABLE mt_db_layout.
         app-view_popup = `POPUP_SAVE`.
 
@@ -155,8 +154,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( name = `CREATE_DAT` title = `CREATE_DAT` visible = abap_true )
         ( name = `CREATE_BY`  title = `CREATE_BY` visible = abap_true )
         ( name = `STORAGE_LOCATION` title = `STORAGE_LOCATION`  visible = abap_true )
-        ( name = `QUANTITY`   title = `QUANTITY` visible = abap_true )
-    ).
+        ( name = `QUANTITY`   title = `QUANTITY` visible = abap_true ) ).
 
   ENDMETHOD.
 
@@ -182,55 +180,30 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view = view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Table Layout Sample'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-              ).
-*
-*    DATA(page) = view->dynamic_page(
-*            headerexpanded = abap_true
-*            headerpinned   = abap_true
-*            ).
-*
-*    DATA(header_title) = page->title( ns = 'f'
-*            )->get( )->dynamic_page_title( ).
-*
-*    header_title->heading( ns = 'f' )->hbox(
-*        )->title( `Layout` ).
-*
-*    header_title->expanded_content( 'f' ).
-*
-*    header_title->snapped_content( ns = 'f' ).
-*
-*    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-*         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
-*
-*    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-*        text = `Go` press = client->_event( `BUTTON_START` ) type = `Emphasized`
-*        ).
+             title                  = 'abap2UI5 - Table Layout Sample'
+             navbuttonpress         = client->_event( 'BACK' )
+             shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-*    DATA(cont) = view->content( ).
+
 
     DATA(tab) = view->table(
-        headertext = ms_layout-title
-        items = client->_bind( mt_table )
+        headertext         = ms_layout-title
+        items              = client->_bind( mt_table )
         alternaterowcolors = ms_layout-check_zebra
-        sticky = ms_layout-sticky_header
+        sticky             = ms_layout-sticky_header
 *        autopopinmode = abap_true
-        mode = ms_layout-selmode ).
+        mode               = ms_layout-selmode ).
 
     tab->header_toolbar(
           )->toolbar(
               )->title( text = ms_layout-title && ` (` && shift_right( CONV string( lines( mt_table ) ) ) && `)`
-
       )->toolbar_spacer(
               )->button(
-                  icon = 'sap-icon://save'
+                  icon  = 'sap-icon://save'
                   press = client->_event( 'BUTTON_SAVE' )
               )->button(
-                  icon = 'sap-icon://action-settings'
-                  press = client->_event( 'BUTTON_SETUP' )
-              ).
+                  icon  = 'sap-icon://action-settings'
+                  press = client->_event( 'BUTTON_SETUP' ) ).
 
     DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
@@ -238,13 +211,13 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           WHERE visible = abap_true.
       lo_columns->column(
             minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
-            demandpopin = abap_true width = lr_field->length )->text( text = CONV char10( lr_field->title )
-            ).
+            demandpopin    = abap_true
+            width          = lr_field->length )->text( text = CONV char10( lr_field->title ) ).
       lv_width = lv_width + 10.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press = client->_event( val = 'DETAIL' t_arg = VALUE #( ( `${UUID}` ) ) )
+        press    = client->_event( val = 'DETAIL' t_arg = VALUE #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
       )->cells( ).
 
@@ -266,17 +239,21 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    ro_popup = ro_popup->dialog( title = 'View Setup'  resizable = abap_true
-          contentheight = `50%` contentwidth = `50%` ).
+    ro_popup = ro_popup->dialog( title        = 'View Setup'
+                                 resizable    = abap_true
+          contentheight                       = `50%`
+                                 contentwidth = `50%` ).
 
     ro_popup->custom_header(
           )->bar(
               )->content_right(
-          )->button( text = `zurücksetzten` press = client->_event( 'BUTTON_INIT' ) ).
+          )->button( text  = `zurücksetzten`
+                     press = client->_event( 'BUTTON_INIT' ) ).
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
-    lo_tab->tab( text = 'Table' selected = client->_bind_edit( mv_check_table )
+    lo_tab->tab( text     = 'Table'
+                 selected = client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true
            )->content( 'form'
                )->label( 'zebra mode'
@@ -294,7 +271,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                        ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )
                        ( key = 'MultiSelect'  text = 'MultiSelect' ) ) )
                    )->item(
-                       key = '{KEY}'
+                       key  = '{KEY}'
                        text = '{TEXT}' ).
 
     lo_tab->tab(
@@ -317,18 +294,13 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                   )->checkbox( '{EDITABLE}'
                   )->input( '{LENGTH}'
          "       )->text( '{DESCR}'
-    )->get_parent( )->get_parent( )->get_parent( )->get_parent(  )->get_parent( ).
+      )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( ).
 
     lo_tab->tab(
                     text     = 'Sort'
                     selected = client->_bind( mv_check_sort ) ).
 
-*    ro_popup->footer( )->overflow_toolbar(
-*          )->toolbar_spacer(
-*          )->button(
-*              text  = 'continue'
-*              press = client->_event( 'POPUP_FILTER_CONTINUE' )
-*              type  = 'Emphasized' ).
+
 
     ro_popup->end_button( )->button(
               text  = 'continue'
@@ -345,11 +317,14 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    lo_popup = lo_popup->dialog( title = 'abap2UI5 - Layout'  contentwidth = `50%`
-        )->input( description = `Name` value = client->_bind( mv_layout )
-        )->button( text = `Save` press = client->_event( `BUTTON_SAVE_LAYOUT` )
+    lo_popup = lo_popup->dialog( title        = 'abap2UI5 - Layout'
+                                 contentwidth = `50%`
+        )->input( description = `Name`
+                  value       = client->_bind( mv_layout )
+        )->button( text  = `Save`
+                   press = client->_event( `BUTTON_SAVE_LAYOUT` )
         )->table(
-            mode = 'SingleSelectLeft'
+            mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_db_layout )
             )->columns(
                 )->column( )->text( 'Name' )->get_parent(
@@ -387,8 +362,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-    ).
+        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
   ENDMETHOD.
 ENDCLASS.

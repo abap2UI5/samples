@@ -45,13 +45,13 @@ CLASS z2ui5_cl_demo_app_304 IMPLEMENTATION.
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml(
                         |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3").play(); \}|
-                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}|  ).
+                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
 
     DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
     vbox->message_strip(
-        text                = client->_bind( message-text )
-        type                = client->_bind( message-type )
-        visible             = `{= !!$` && client->_bind( message-text ) && ` }` ).
+        text    = client->_bind( message-text )
+        type    = client->_bind( message-type )
+        visible = `{= !!$` && client->_bind( message-text ) && ` }` ).
     vbox->text( text = `The magic key is: abap2UI5` ).
     vbox->input( id          = `inputApp`
                  value       = client->_bind_edit( magic_key )

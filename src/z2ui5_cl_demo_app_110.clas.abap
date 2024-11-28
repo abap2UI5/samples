@@ -34,38 +34,60 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
       )->page(
               title          = 'abap2UI5 - Sample: MaskInput'
               navbuttonpress = client->_event( val = 'BACK' )
-              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-          )->simple_form( title = 'Generic Mask Input' layout = 'ColumnLayout' editable = abap_true
+              shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+          )->simple_form( title    = 'Generic Mask Input'
+                          layout   = 'ColumnLayout'
+                          editable = abap_true
 *              )->content( 'form'
                   )->label( text = 'Unique ID'
-                  )->mask_input( mask = `~~~~~~~~~~` placeholdersymbol = `_` placeholder = 'All characters allowed' )->get(
+                  )->mask_input( mask              = `~~~~~~~~~~`
+                                 placeholdersymbol = `_`
+                                 placeholder       = 'All characters allowed' )->get(
                     )->rules(
-                      )->mask_input_rule( maskformatsymbol = '~' regex = `[^_]`
+                      )->mask_input_rule( maskformatsymbol = '~'
+                                          regex            = `[^_]`
                     )->get_parent( )->get_parent( )->get_parent(
                  )->label( text = `Promo code`
-                 )->mask_input( mask = `**********` placeholdersymbol = `_` placeholder = `Latin characters (case insensitive) and numbers` )->get(
+                 )->mask_input( mask              = `**********`
+                                placeholdersymbol = `_`
+                                placeholder       = `Latin characters (case insensitive) and numbers` )->get(
                   )->rules(
                     )->mask_input_rule(
                   )->get_parent( )->get_parent( )->get_parent(
                 )->label( text = `Phone number`
-                 )->mask_input( mask = `(999) 999 999999` placeholdersymbol = `_` placeholder = `Enter twelve-digit number` showclearicon = abap_true )->get(
+                 )->mask_input( mask              = `(999) 999 999999`
+                                placeholdersymbol = `_`
+                                placeholder       = `Enter twelve-digit number`
+                                showclearicon     = abap_true )->get(
                   )->rules(
                     )->mask_input_rule(
-                  )->get_parent( )->get_parent( )->get_parent(  )->get_parent(
-
-          )->simple_form( title = 'Possible usages (may require additional coding)' layout = 'ColumnLayout' editable = abap_true
+                  )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->simple_form( title    = 'Possible usages (may require additional coding)'
+                      layout   = 'ColumnLayout'
+                      editable = abap_true
                 )->label( text = `Serial number`
-                 )->mask_input( mask = `CCCC-CCCC-CCCC-CCCC-CCCC` placeholdersymbol = `_` placeholder = `Enter digits and capital letters` showclearicon = abap_true )->get(
+                 )->mask_input( mask              = `CCCC-CCCC-CCCC-CCCC-CCCC`
+                                placeholdersymbol = `_`
+                                placeholder       = `Enter digits and capital letters`
+                                showclearicon     = abap_true )->get(
                   )->rules(
-                    )->mask_input_rule( maskformatsymbol = `C` regex = `[A-Z0-9]`
+                    )->mask_input_rule( maskformatsymbol = `C`
+                                        regex            = `[A-Z0-9]`
                   )->get_parent( )->get_parent( )->get_parent(
                 )->label( text = `Product activation key`
-                 )->mask_input( mask = `SAP-CCCCC-CCCCC` placeholdersymbol = `_` placeholder = `Starts with 'SAP' followed by digits and capital letters` showclearicon = abap_true )->get(
+                 )->mask_input( mask              = `SAP-CCCCC-CCCCC`
+                                placeholdersymbol = `_`
+                                placeholder       = `Starts with 'SAP' followed by digits and capital letters`
+                                showclearicon     = abap_true )->get(
                   )->rules(
-                    )->mask_input_rule( maskformatsymbol = `C` regex = `[A-Z0-9]`
+                    )->mask_input_rule( maskformatsymbol = `C`
+                                        regex            = `[A-Z0-9]`
                   )->get_parent( )->get_parent( )->get_parent(
                 )->label( text = `ISBN`
-                 )->mask_input( mask = `999-99-999-9999-9` placeholdersymbol = `_` placeholder = `Enter thirteen-digit number` showclearicon = abap_true )->get(
+                 )->mask_input( mask              = `999-99-999-9999-9`
+                                placeholdersymbol = `_`
+                                placeholder       = `Enter thirteen-digit number`
+                                showclearicon     = abap_true )->get(
 *                  )->rules(
 *                    )->mask_input_rule(
 *                  )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(

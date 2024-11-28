@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_020 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     CLASS-METHODS factory
       IMPORTING
@@ -12,7 +12,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 DEFINITION PUBLIC.
         i_confirm_text  TYPE string
         i_confirm_event TYPE string
       RETURNING
-        VALUE(result)   TYPE REF TO Z2UI5_CL_DEMO_APP_020.
+        VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
     DATA check_initialized TYPE abap_bool.
 
@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -57,10 +57,10 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
         mv_event = client->get( )-event.
         client->popup_destroy( ).
         client->nav_app_leave( ).
-        return.
+        RETURN.
     ENDCASE.
 
-    client->popup_display(  Z2UI5_cl_xml_view=>factory_popup(
+    client->popup_display( z2ui5_cl_xml_view=>factory_popup(
          )->dialog( 'abap2UI5 - Popup to decide'
                 )->vbox(
                     )->text( mv_text )->get_parent(
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
                             text  = mv_confirm_text
                             press = client->_event( mv_confirm_event )
                             type  = 'Emphasized'
-                        )->stringify(  ) ).
+                        )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

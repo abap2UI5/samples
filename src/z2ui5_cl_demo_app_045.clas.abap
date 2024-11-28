@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_045 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -40,7 +40,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -68,23 +68,23 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
             )->header_content(
                 )->link(
+      )->get_parent( ).
 
-
-        )->get_parent( ).
-
-    page->simple_form( title = 'Form Title' editable = abap_true
+    page->simple_form( title    = 'Form Title'
+                       editable = abap_true
                 )->content( 'form'
                     )->title( 'Filter'
                     )->label( 'info'
-                    )->input(  client->_bind( mv_info_filter )
+                    )->input( client->_bind( mv_info_filter )
                     )->button(
                         text  = 'filter'
                         press = client->_event( 'FLTER_INFO' ) ).
 
-    DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
+    DATA(tab) = page->scroll_container( height   = '70%'
+                                        vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = '20'
@@ -112,7 +112,8 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}' enabled = abap_false
+       )->checkbox( selected = '{CHECKBOX}'
+                    enabled  = abap_false
        )->text( '{COUNT}' ).
 
     client->view_display( page->get_root( )->xml_get( ) ).

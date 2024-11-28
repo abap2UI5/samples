@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION
     METHODS on_init.
     METHODS on_event.
 
-    METHODS Render_main.
+    METHODS render_main.
 
   PRIVATE SECTION.
     METHODS get_comp
@@ -30,14 +30,15 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD get_comp.
+    DATA index TYPE int4.
     TRY.
 
-        DATA index TYPE int4.
+
 
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -81,7 +82,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD on_init.
 
-    Render_main( ).
+    render_main( ).
   ENDMETHOD.
 
   METHOD render_main.

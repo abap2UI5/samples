@@ -1,7 +1,7 @@
-CLASS Z2UI5_CL_DEMO_APP_094 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_01,
@@ -20,10 +20,10 @@ CLASS Z2UI5_CL_DEMO_APP_094 DEFINITION PUBLIC.
     DATA ms_screen TYPE ty_s_01.
     DATA mr_input  TYPE REF TO data.
     DATA mr_screen TYPE REF TO data.
-    DATA mo_app    TYPE REF TO Z2UI5_CL_DEMO_APP_094.
+    DATA mo_app    TYPE REF TO z2ui5_cl_demo_app_094.
     DATA mv_val    TYPE string.
 
-    DATA client      TYPE REF TO Z2UI5_if_client.
+    DATA client      TYPE REF TO z2ui5_if_client.
     DATA mv_init     TYPE abap_bool.
 
     METHODS on_init.
@@ -31,7 +31,7 @@ CLASS Z2UI5_CL_DEMO_APP_094 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA: page TYPE REF TO Z2UI5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
 
 ENDCLASS.
 
@@ -41,16 +41,18 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
 
 
   METHOD on_init.
+    FIELD-SYMBOLS <input> TYPE any.
+    FIELD-SYMBOLS <screen> TYPE ty_s_01.
 
     ms_screen-input = `structure level 01 - working`.
 
-    FIELD-SYMBOLS <input> TYPE any.
+
     CREATE DATA mr_input TYPE string.
     ASSIGN mr_input->* TO <input>.
 
     <input> = `ref data - working`.
 
-    FIELD-SYMBOLS <screen> TYPE ty_s_01.
+
     CREATE DATA mr_screen TYPE ty_s_01.
     ASSIGN mr_screen->* TO <screen>.
 
@@ -60,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
 
     ms_screen-ty_s_02-ty_s_03-ty_s_04-input = `struc deep switch guid name - working`.
 
-    mo_app = new #( ).
+    mo_app = NEW #( ).
     mo_app->mv_val = `instance attribute val - working`.
     mo_app->ms_screen-input = `instance attribute struc - working`.
 
@@ -70,13 +72,14 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
   METHOD view_build.
 
     FIELD-SYMBOLS <input> TYPE any.
+    FIELD-SYMBOLS <screen> TYPE ty_s_01.
     ASSIGN mr_input->* TO <input>.
 
-    FIELD-SYMBOLS <screen> TYPE ty_s_01.
+
     ASSIGN mr_screen->* TO <screen>.
 
     page = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page( title  = `test` ).
+          )->page( title = `test` ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
@@ -97,32 +100,31 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
       )->label( 'instance attribute val'
       )->input( client->_bind_edit( mo_app->mv_val )
       )->label( 'instance attribute struc'
-      )->input( client->_bind_edit( mo_app->ms_screen-input )
-       ).
+      )->input( client->_bind_edit( mo_app->ms_screen-input ) ).
 
     page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(
                    )->button(
-                       text    = 'Delete'
-                       press   = client->_event( 'BUTTON_DELETE' )
-                       type    = 'Reject'
-                       icon    = 'sap-icon://delete'
+                       text  = 'Delete'
+                       press = client->_event( 'BUTTON_DELETE' )
+                       type  = 'Reject'
+                       icon  = 'sap-icon://delete'
                    )->button(
-                       text    = 'Add'
-                       press   = client->_event( 'BUTTON_ADD' )
-                       type    = 'Default'
-                       icon    = 'sap-icon://add'
+                       text  = 'Add'
+                       press = client->_event( 'BUTTON_ADD' )
+                       type  = 'Default'
+                       icon  = 'sap-icon://add'
                    )->button(
-                       text    = 'Save'
-                       press   = client->_event( 'BUTTON_SAVE' )
-                       type    = 'Success' ).
+                       text  = 'Save'
+                       press = client->_event( 'BUTTON_SAVE' )
+                       type  = 'Success' ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
@@ -132,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
 
     ENDIF.
 
-    view_build(  ).
+    view_build( ).
     client->message_toast_display( `server roundtrip` ).
 
   ENDMETHOD.

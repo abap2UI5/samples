@@ -2,11 +2,11 @@ CLASS z2ui5_cl_demo_app_265 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
 
-  INTERFACES z2ui5_if_app.
+    INTERFACES z2ui5_if_app.
 
-  DATA check_initialized TYPE abap_bool.
+    DATA check_initialized TYPE abap_bool.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk#/entity/sap.ui.codeeditor.CodeEditor/sample/sap.ui.codeeditor.sample.CodeEditor' ).
 
     page->code_editor(
-             type = `json`
+             type  = `json`
              value = `\{  `                     &&
              ` "Chinese" : "你好世界",  `       &&
              ` "Dutch" : "Hallo wereld",  `     &&
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
              ` "Russian" : "Здравствуй мир",  ` &&
              ` "Spanish" : "Hola mundo"  `      &&
           `}`
-          height = `300px` ).
+          height   = `300px` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -87,15 +87,15 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Display or edit source code with syntax highlighting for various source types.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

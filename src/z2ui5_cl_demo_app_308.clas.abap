@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
                                      totalscale    = abap_true
 *  RECEIVING
 *                                   result        =
-      )->harveyballmicrochartitem(
+        )->harveyballmicrochartitem(
 *                                 id            =
                                    color         = 'Good'
                                    fraction      = '8'
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 *                                 class         =
 *  RECEIVING
 *                                 result        =
-      ).
+        ).
 
       client->view_display( view->stringify( ) ).
 

@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -55,37 +55,38 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
             width = `100%`
             )->content( ns = `layout`
                 )->link(
-                    text = `Open message box`
+                    text  = `Open message box`
                     press = client->_event( `handleLinkPress` )
                 )->link(
-                    text = `Disabled link`
+                    text    = `Disabled link`
                     enabled = abap_false
                 )->link(
-                    text = `Open SAP Homepage`
+                    text   = `Open SAP Homepage`
                     target = `_blank`
-                    href = `http://www.sap.com`
-                )->get_parent(
-           ).
+                    href   = `http://www.sap.com`
+                )->get_parent( ).
 
     page->vertical_layout(
            class = `sapUiContentPadding`
            width = `100%`
            )->content( ns = `layout`
-               )->label( text = `Links with Icons` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginTop`
+               )->label( text     = `Links with Icons`
+                         design   = `Bold`
+                         wrapping = abap_true
+                         class    = `sapUiSmallMarginTop`
                    )->link(
-                       text = `Show more information`
+                       text    = `Show more information`
                        endicon = `sap-icon://inspect`
-                       press = client->_event( `handleLinkPress` )
+                       press   = client->_event( `handleLinkPress` )
                    )->link(
-                       text = `Disabled link with icon`
-                       icon = `sap-icon://cart`
+                       text    = `Disabled link with icon`
+                       icon    = `sap-icon://cart`
                        enabled = abap_false
                    )->link(
                        text = `Open SAP Homepage`
                        icon = `sap-icon://globe`
                        href = `http://www.sap.com`
-           )->get_parent(
-          ).
+           )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -109,15 +110,15 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Here are some links. Typically links are used in user interfaces to trigger navigation to related content inside or outside of the current application.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

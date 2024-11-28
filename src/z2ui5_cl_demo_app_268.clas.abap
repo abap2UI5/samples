@@ -2,11 +2,11 @@ CLASS z2ui5_cl_demo_app_268 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
 
-  INTERFACES z2ui5_if_app.
+    INTERFACES z2ui5_if_app.
 
-  DATA check_initialized TYPE abap_bool.
+    DATA check_initialized TYPE abap_bool.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -46,8 +46,7 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
                 `.size5 {`                    &&
                 `  font-size : 10rem;`        &&
                 `}`                           &&
-
-                `@media (max-width:599px) {`  &&
+      `@media (max-width:599px) {`  &&
                 ` .size1 {`                   &&
                 `   font-size : 1rem;`        &&
                 ` }`                          &&
@@ -66,7 +65,8 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
                 `}`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
     DATA(page) = view->shell(
          )->page(
@@ -76,9 +76,9 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -88,37 +88,36 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
 
     page->hbox( class = `sapUiSmallMargin`
            )->icon(
-               src = `sap-icon://syringe`
+               src   = `sap-icon://syringe`
                class = `size1`
                color = `#031E48` )->get(
                )->layout_data( ns = `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
-               src = `sap-icon://pharmacy`
+               src   = `sap-icon://pharmacy`
                class = `size2`
                color = `#64E4CE` )->get(
                )->layout_data( ns = `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
-               src = `sap-icon://electrocardiogram`
+               src   = `sap-icon://electrocardiogram`
                class = `size3`
                color = `#E69A17` )->get(
                )->layout_data( ns = `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
-               src = `sap-icon://doctor`
+               src   = `sap-icon://doctor`
                class = `size4`
                color = `#1C4C98` )->get(
                )->layout_data( ns = `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
-               src = `sap-icon://stethoscope`
+               src   = `sap-icon://stethoscope`
                class = `size5`
                color = `#8875E7`
                press = client->_event( `handleStethoscopePress` ) )->get(
                )->layout_data( ns = `core`
-                   )->flex_item_data( growfactor = `1`
-          ).
+                   )->flex_item_data( growfactor = `1` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -142,16 +141,16 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Built with an embedded font, icons scale well, and can be altered with CSS. ` &&
                                                 `They can also fire a press event. See the Icon Explorer for more icons.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

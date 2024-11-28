@@ -29,16 +29,16 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(  ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->shell_bar(
         title               = `Shell Bar`
-        secondTitle         = `with title mega menu`
-        homeIcon            = `https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/documentation/sdk/images/logo_sap.png`
+        secondtitle         = `with title mega menu`
+        homeicon            = `https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/documentation/sdk/images/logo_sap.png`
         shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        showSearch          = abap_true
-        showNotifications   = abap_true
-        notificationsNumber = `2`
+        showsearch          = abap_true
+        shownotifications   = abap_true
+        notificationsnumber = `2`
         navbuttonpressed    = client->_event( 'BACK' )
         )->_generic( name = `menu`
                      ns   = `f`

@@ -57,11 +57,11 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
       WHEN 'TIMER_FINISHED'.
         mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account'  )
+        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
             INTO TABLE t_tab.
 
         IF mv_counter = 3.
-           mv_check_active = abap_false.
+          mv_check_active = abap_false.
           client->message_toast_display( `timer deactivated` ).
         ENDIF.
 
@@ -91,15 +91,14 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view->_z2ui5( )->timer(
-        finished = client->_event( 'TIMER_FINISHED' )
-        delayms  = `2000`
-        checkactive = client->_bind( mv_check_active )  ).
+        finished    = client->_event( 'TIMER_FINISHED' )
+        delayms     = `2000`
+        checkactive = client->_bind( mv_check_active ) ).
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-         ).
+             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->list(
          headertext = 'Data auto refresh (2 sec)'
