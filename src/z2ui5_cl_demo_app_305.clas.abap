@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     me->client = client.
 
-    IF z2ui5_if_app~check_initialized = abap_false.
+    IF client->check_on_init( ).
       t_tab = VALUE #(
           ( title = 'entry 01'  value = 'red'    )
           ( title = 'entry 02'  value = 'blue'   )
