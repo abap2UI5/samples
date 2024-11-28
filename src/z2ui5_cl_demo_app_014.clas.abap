@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
     point->interact_line_chart_point( selected = client->_bind( mv_sel8  ) label = 'June' value = '12'  ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel9  ) label = 'July' value = '51.4' secondarylabel = 'Q3' ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel10 ) label = 'Aug'  value = '52'  ).
-    point->interact_line_chart_point( selected = client->_bind( mv_sel11 ) label = 'Sep'  value = '69.9').
+    point->interact_line_chart_point( selected = client->_bind( mv_sel11 ) label = 'Sep'  value = '69.9' ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel12 ) label = 'Oct'  value = '0.9' secondarylabel = 'Q4' ).
 
     point = grid->flex_box(

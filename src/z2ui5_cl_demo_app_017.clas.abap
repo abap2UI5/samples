@@ -141,7 +141,7 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
                           )->label( text    = 'goals2'
                           )->label( text    = 'goals2'
                           )->label( text    = 'goals2'
-                          )->label( text    = 'goals2').
+                          )->label( text    = 'goals2' ).
 
          sections->object_page_section( titleuppercase = abap_false id = 'PersonalSection' title = 'Personal'
             )->heading( ns = `uxap`
