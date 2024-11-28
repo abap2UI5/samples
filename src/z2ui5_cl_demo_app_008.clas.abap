@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
 
       WHEN 'BUTTON_MESSAGE_TOAST2'.
         client->message_toast_display( text = 'this is a message toast'  at = 'left bottom'
-            offset = '0 -15' animationtimingfunction = `ease-in` class = 'my-style').
+            offset = '0 -15' animationtimingfunction = `ease-in` class = 'my-style' ).
 
       WHEN 'BUTTON_MESSAGE_STRIP_INFO'.
         check_strip_active = abap_true.
