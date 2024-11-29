@@ -200,4 +200,5 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.
