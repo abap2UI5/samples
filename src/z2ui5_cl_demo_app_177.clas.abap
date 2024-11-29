@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_177 DEFINITION PUBLIC.
         icon       TYPE string,
         info       TYPE string,
         checkbox   TYPE abap_bool,
-        percentage (5) TYPE p DECIMALS 2,
+        percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
       END OF ty_row.
 
