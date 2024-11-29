@@ -1,13 +1,13 @@
-class z2ui5_cl_demo_app_239 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_239 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -30,7 +30,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -51,51 +51,74 @@ CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.CheckBox/sample/sap.m.sample.CheckBox' ).
 
     DATA(layout) = page->vbox(
-                          )->checkbox( text = `Option a` selected = abap_true
+                          )->checkbox( text     = `Option a`
+                                       selected = abap_true
                           )->checkbox( text = `Option b`
-                          )->checkbox( text = `Option c` selected = abap_true
+                          )->checkbox( text     = `Option c`
+                                       selected = abap_true
                           )->checkbox( text = `Option d`
-                          )->checkbox( text = `Option e` enabled = abap_false
-                          )->checkbox( text = `Option partially selected` selected = abap_true partiallyselected = abap_true
-                          )->checkbox( text = `Required option` required = abap_true
-                          )->checkbox( text = `Warning` valuestate = `Warning`
-                          )->checkbox( text = `Warning disabled` valuestate = `Warning` enabled = abap_false selected = abap_true
-                          )->checkbox( text = `Error` valuestate = `Error`
-                          )->checkbox( text = `Error disabled` valuestate = `Error` enabled = abap_false selected = abap_true
-                          )->checkbox( text = `Information` valuestate = `Information`
-                          )->checkbox( text = `Information disabled` valuestate = `Information` enabled = abap_false selected = abap_true
-                          )->checkbox( text = `Checkbox with wrapping='true' and long text` wrapping = abap_true width = `150px` ).
+                          )->checkbox( text    = `Option e`
+                                       enabled = abap_false
+                          )->checkbox( text              = `Option partially selected`
+                                       selected          = abap_true
+                                       partiallyselected = abap_true
+                          )->checkbox( text     = `Required option`
+                                       required = abap_true
+                          )->checkbox( text       = `Warning`
+                                       valuestate = `Warning`
+                          )->checkbox( text       = `Warning disabled`
+                                       valuestate = `Warning`
+                                       enabled    = abap_false
+                                       selected   = abap_true
+                          )->checkbox( text       = `Error`
+                                       valuestate = `Error`
+                          )->checkbox( text       = `Error disabled`
+                                       valuestate = `Error`
+                                       enabled    = abap_false
+                                       selected   = abap_true
+                          )->checkbox( text       = `Information`
+                                       valuestate = `Information`
+                          )->checkbox( text       = `Information disabled`
+                                       valuestate = `Information`
+                                       enabled    = abap_false
+                                       selected   = abap_true
+                          )->checkbox( text     = `Checkbox with wrapping='true' and long text`
+                                       wrapping = abap_true
+                                       width    = `150px` ).
     layout->simple_form(
-             editable = abap_true
-             layout = `ResponsiveGridLayout`
+             editable   = abap_true
+             layout     = `ResponsiveGridLayout`
              labelspanl = `4`
              labelspanm = `4`
              )->content( ns = `form`
                  )->label( text = `Clearing with Customer`
                  )->checkbox( text = `Option`
-                 )->checkbox( text = `Option 2` selected = abap_true )->get(
+                 )->checkbox( text     = `Option 2`
+                              selected = abap_true )->get(
                      )->layout_data(
                          )->grid_data( linebreak = abap_true
-                                       indentl = `4`
-                                       indentm = `4` )->get_parent( )->get_parent(
-                 )->checkbox( id = `focusMe` text = `Option 3` )->get(
+                                       indentl   = `4`
+                                       indentm   = `4` )->get_parent( )->get_parent(
+                 )->checkbox( id   = `focusMe`
+                              text = `Option 3` )->get(
                      )->layout_data(
                          )->grid_data( linebreak = abap_true
-                                       indentl = `4`
-                                       indentm = `4` )->get_parent( )->get_parent(
-                 )->checkbox( text = `Checkbox with wrapping='true' and long text placed in a form` wrapping = abap_true width = `200px` )->get(
+                                       indentl   = `4`
+                                       indentm   = `4` )->get_parent( )->get_parent(
+                 )->checkbox( text     = `Checkbox with wrapping='true' and long text placed in a form`
+                              wrapping = abap_true
+                              width    = `200px` )->get(
                      )->layout_data(
                          )->grid_data( linebreak = abap_true
-                                       indentl = `4`
-                                       indentm = `4`
-            ).
+                                       indentl   = `4`
+                                       indentm   = `4` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -107,23 +130,23 @@ CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you should use the Switch control instead.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

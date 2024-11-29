@@ -72,8 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
       ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
       ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
       ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-       ).
+      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
 
   ENDMETHOD.
 
@@ -85,11 +84,12 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
     DATA(dialog) = popup->dialog(
        contentheight = '500px'
        contentwidth  = '500px'
-       title = 'Title' ).
+       title         = 'Title' ).
 
-       dialog->content(
+    dialog->content(
            )->simple_form(
-               )->label( text = 'Input1'  id = 'lbl1'
+               )->label( text = 'Input1'
+                         id   = 'lbl1'
                )->input( client->_bind_edit( ms_popup_input-value1 )
                )->label( 'Input2'
                )->input( client->_bind_edit( ms_popup_input-value2 )
@@ -98,8 +98,8 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                    selected = client->_bind_edit( ms_popup_input-check_is_active )
                    text     = 'this is a checkbox'
                    enabled  = abap_true
-       )->get_parent( )->get_parent(
-       )->footer( )->overflow_toolbar(
+         )->get_parent( )->get_parent(
+         )->footer( )->overflow_toolbar(
            )->toolbar_spacer(
            )->button(
                text  = 'Cancel'
@@ -109,7 +109,9 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
                press = client->_event_client( client->cs_event-popup_close )
                type  = 'Emphasized' ).
 
-     dialog->_generic( name = `HTML` ns = `core` t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
+    dialog->_generic( name   = `HTML`
+                      ns     = `core`
+                      t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
                                                                    ( n = `preferDOM`  v = `true` )
                                                                   ) )->get_parent( ).
 
@@ -132,14 +134,15 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style` ns = `html` )->_cc_plain_xml( css )->get_parent( ).
-    view->_generic( name = `script` ns = `html` )->_cc_plain_xml( script )->get_parent( ).
+    view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( script )->get_parent( ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
 

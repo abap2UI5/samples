@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_241 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_241 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -49,29 +49,38 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.TileContent/sample/sap.m.sample.TileContent' ).
 
-    DATA(layout) = page->grid( containerquery = abap_true class = `sapUiSmallMarginTop`
-                          )->tile_content( footer = `Current Quarter` unit = `EUR` "class = `sapUiSmallMargin`
-                              )->numeric_content( scale = `M` value = `1.96`
-                                                  valuecolor = `Error` indicator = `Up` )->get_parent( )->get_parent(
-                          )->tile_content( footer = `Leave Requests` class = `sapUiSmallMargin`
+    DATA(layout) = page->grid( containerquery = abap_true
+                               class          = `sapUiSmallMarginTop`
+                          )->tile_content( footer = `Current Quarter`
+                                           unit   = `EUR` "class = `sapUiSmallMargin`
+                              )->numeric_content( scale      = `M`
+                                                  value      = `1.96`
+                                                  valuecolor = `Error`
+                                                  indicator  = `Up` )->get_parent( )->get_parent(
+                          )->tile_content( footer = `Leave Requests`
+                                           class  = `sapUiSmallMargin`
                               )->numeric_content( value = `3`
-                                                  icon = `sap-icon://travel-expense`  )->get_parent( )->get_parent(
-                          )->tile_content( footer = `Hours since last Activity` class = `sapUiSmallMargin`
-                              )->numeric_content( value = `9` icon = `sap-icon://locked` )->get_parent( )->get_parent(
-                          )->tile_content( footer = `New Notifications` class = `sapUiSmallMargin`
+                                                  icon  = `sap-icon://travel-expense` )->get_parent( )->get_parent(
+                          )->tile_content( footer = `Hours since last Activity`
+                                           class  = `sapUiSmallMargin`
+                              )->numeric_content( value = `9`
+                                                  icon  = `sap-icon://locked` )->get_parent( )->get_parent(
+                          )->tile_content( footer = `New Notifications`
+                                           class  = `sapUiSmallMargin`
                               )->feed_content( contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`
-                                               subheader = `about 1 minute ago in Computer Market` value = `132` )->get_parent( )->get_parent(
-                          )->tile_content( footer = `August 21, 2013` class = `sapUiSmallMargin`
+                                               subheader   = `about 1 minute ago in Computer Market`
+                                               value       = `132` )->get_parent( )->get_parent(
+                          )->tile_content( footer = `August 21, 2013`
+                                           class  = `sapUiSmallMargin`
                               )->news_content( contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
-                                               subheader = `SAP News`
-                   ).
+                                               subheader   = `SAP News` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -83,23 +92,23 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Shows the universal container for different content types and context information in the footer area.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

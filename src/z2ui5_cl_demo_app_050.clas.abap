@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_050 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_050 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
@@ -16,7 +16,7 @@ ENDCLASS.
 
 CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -28,48 +28,49 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-   client->view_display( Z2UI5_cl_xml_view=>factory(
+    client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(
         )->page(
                 title          = 'abap2UI5 - Changed CSS'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->_generic( ns = `html` name = `style` )->_cc_plain_xml(
-                    `.sapMInput {` && |\n|  &&
-                         `    height: 80px !important;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `input {` && |\n|  &&
-                         `    height: 80% !important;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `input[role="textbox"] {` && |\n|  &&
-                         `    height: 80px !important;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `input[role="text"] {` && |\n|  &&
-                         `    height: 80px !important;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `.sapUiSearchField {` && |\n|  &&
-                         `    height: 35px;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `.sapUiTfCombo:hover {` && |\n|  &&
-                         `    height: 2rem;` && |\n|  &&
-                         `    font-size: 2.5rem !important;` && |\n|  &&
-                         `}` && |\n|  &&
-                         |\n|  &&
-                         `.sapMInputBaseInner::placeholder {` && |\n|  &&
-                         `    font-size: 1.4rem !important;` && |\n|  &&
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            )->_generic( ns   = `html`
+                         name = `style` )->_cc_plain_xml(
+                    `.sapMInput {` && |\n| &&
+                         `    height: 80px !important;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `input {` && |\n| &&
+                         `    height: 80% !important;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `input[role="textbox"] {` && |\n| &&
+                         `    height: 80px !important;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `input[role="text"] {` && |\n| &&
+                         `    height: 80px !important;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `.sapUiSearchField {` && |\n| &&
+                         `    height: 35px;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `.sapUiTfCombo:hover {` && |\n| &&
+                         `    height: 2rem;` && |\n| &&
+                         `    font-size: 2.5rem !important;` && |\n| &&
+                         `}` && |\n| &&
+                         |\n| &&
+                         `.sapMInputBaseInner::placeholder {` && |\n| &&
+                         `    font-size: 1.4rem !important;` && |\n| &&
                          `}`
             )->get_parent(
             )->button(
@@ -77,7 +78,8 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
                         press = client->_event( 'BUTTON_POST' )
                         class = `mySuperRedButton`
             )->input( value = client->_bind( quantity )
-            )->simple_form( title = 'Form Title' editable = abap_true
+            )->simple_form( title    = 'Form Title'
+                            editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
                     )->label( 'quantity'

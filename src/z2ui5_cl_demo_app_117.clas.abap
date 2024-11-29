@@ -57,8 +57,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_126'  count = '12' )
-                       ).
+    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_126'  count = '12' ) ).
 
     mv_selectedkey = '1'.
 
@@ -79,7 +78,9 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -104,6 +105,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD render_sub_app.
+    FIELD-SYMBOLS <view_display> TYPE any.
 
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
@@ -145,7 +147,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    FIELD-SYMBOLS <view_display> TYPE any.
+
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
     IF <view_display> = abap_true.

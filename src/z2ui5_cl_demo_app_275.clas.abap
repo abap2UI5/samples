@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -52,13 +52,15 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
 
     page->feed_content(
            contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`
-           subheader = `about 1 minute ago in Computer Market`
-           class = `sapUiSmallMargin` press = client->_event( `press` )  )->get_parent(
+           subheader   = `about 1 minute ago in Computer Market`
+           class       = `sapUiSmallMargin`
+           press       = client->_event( `press` ) )->get_parent(
        )->feed_content(
            contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`
-           subheader = `about 1 minute ago in Computer Market` value = `999`
-           class = `sapUiSmallMargin` press = client->_event( `press` )
-      ).
+           subheader   = `about 1 minute ago in Computer Market`
+           value       = `999`
+           class       = `sapUiSmallMargin`
+           press       = client->_event( `press` ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -83,15 +85,15 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Shows the tile containing the text of the feed, a subheader, and a numeric value.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

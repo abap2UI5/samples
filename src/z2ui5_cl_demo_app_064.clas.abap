@@ -1,6 +1,6 @@
 CLASS z2ui5_cl_demo_app_064 DEFINITION
-PUBLIC
-CREATE PUBLIC .
+  PUBLIC
+  CREATE PUBLIC .
 
   PUBLIC SECTION.
 
@@ -16,7 +16,7 @@ CREATE PUBLIC .
         fldate    TYPE string,
         planetype TYPE string,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
     TYPES:
       BEGIN OF ty_s_filter_pop,
@@ -61,7 +61,7 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
 
   METHOD set_selkz.
 
-    FIELD-SYMBOLS: <ls_table> TYPE ty_s_tab.
+    FIELD-SYMBOLS <ls_table> TYPE ty_s_tab.
 
     LOOP AT mt_table ASSIGNING <ls_table>.
       <ls_table>-selkz = iv_selkz.
@@ -119,34 +119,35 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
     DATA view TYPE REF TO z2ui5_cl_xml_view.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp5 TYPE abap_bool.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
     CLEAR temp1.
 
     mv_check_enabled = abap_true.
     view = z2ui5_cl_xml_view=>factory( ).
 
     view->_z2ui5( )->timer(
-        finished = client->_event( 'LOAD' )
-        checkactive = client->_bind( mv_check_active )
-    ).
+        finished    = client->_event( 'LOAD' )
+        checkactive = client->_bind( mv_check_active ) ).
 
     temp5 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->shell( )->page( id = 'page_main'
-    title = 'abap2UI5 - Progress Bar while Server Request'
-    navbuttonpress = client->_event( 'BACK' )
-    shownavbutton = temp5
-    class = 'sapUiContentPadding' ).
+      title                          = 'abap2UI5 - Progress Bar while Server Request'
+      navbuttonpress                 = client->_event( 'BACK' )
+      shownavbutton                  = temp5
+      class                          = 'sapUiContentPadding' ).
 
-    DATA layout TYPE REF TO z2ui5_cl_xml_view.
-    layout = page1->vertical_layout( class = 'sapuicontentpadding' width = '100%' ).
+
+    layout = page1->vertical_layout( class = 'sapuicontentpadding'
+                                     width = '100%' ).
     layout->vbox( )->progress_indicator(
-    percentvalue = client->_bind_edit( mv_percent )
-    displayvalue = client->_bind_edit( screen-display_value )
-    showvalue = abap_true
-           state           = 'Success'  ).
+      percentvalue = client->_bind_edit( mv_percent )
+      displayvalue = client->_bind_edit( screen-display_value )
+      showvalue    = abap_true
+           state   = 'Success' ).
 
     layout->button(
-        text = `Load`
-        press = client->_event( 'LOAD' )
+        text    = `Load`
+        press   = client->_event( 'LOAD' )
         enabled = client->_bind( mv_check_enabled ) ).
 
     client->view_display( view->stringify( ) ).

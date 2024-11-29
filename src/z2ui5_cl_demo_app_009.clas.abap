@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA:
       BEGIN OF screen,
@@ -48,20 +48,20 @@ CLASS Z2UI5_CL_DEMO_APP_009 DEFINITION PUBLIC.
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
     METHODS popup_f4_table_custom
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
 
-    METHODS Z2UI5_on_rendering
+    METHODS z2ui5_on_rendering
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
-    METHODS Z2UI5_on_event
+    METHODS z2ui5_on_event
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_init.
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_init.
 
 
   PRIVATE SECTION.
@@ -74,10 +74,10 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table.
 
-    DATA(popup) = Z2UI5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( 'abap2UI5 - F4 Value Help'
-    )->table(
+      )->table(
             mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_suggestion_sel )
         )->columns(
@@ -91,8 +91,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                 )->cells(
                     )->text( '{VALUE}'
                     )->text( '{DESCR}'
-    )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-    )->buttons(
+      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->buttons(
             )->button(
                 text  = 'continue'
                 press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
@@ -104,7 +104,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
   METHOD popup_f4_table_custom.
 
-    DATA(popup2) = Z2UI5_cl_xml_view=>factory_popup( ).
+    DATA(popup2) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup2 = popup2->dialog( 'abap2UI5 - F4 Value Help' ).
 
@@ -116,8 +116,8 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
                 showsuggestion  = abap_true )->get(
             )->suggestion_items( )->get(
                 )->list_item(
-                    text            = '{VALUE}'
-                    additionaltext  = '{DESCR}'
+                    text           = '{VALUE}'
+                    additionaltext = '{DESCR}'
         )->get_parent( )->get_parent(
         )->button(
             text  = 'search...'
@@ -155,22 +155,22 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     CLEAR mv_view_popup.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
     ENDIF.
-    Z2UI5_on_event( client ).
+    z2ui5_on_event( client ).
 
-    Z2UI5_on_rendering( client ).
+    z2ui5_on_rendering( client ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
@@ -220,7 +220,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     mt_suggestion = VALUE #(
         ( descr = 'this is the color Green'  value = 'GREEN' )
@@ -293,15 +293,14 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_rendering.
+  METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Value Help Examples'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        ).
+            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(form) = page->grid( 'L7 M7 S7'
         )->content( 'layout'
@@ -374,7 +373,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
     ENDCASE.
 
     client->view_display( page->stringify( ) ).
-*    client->popup_display( popup->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.

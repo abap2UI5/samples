@@ -50,9 +50,9 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -60,8 +60,8 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ExpandableText/sample/sap.m.sample.ExpandableText' ).
 
-    page_01->table( mode = `MultiSelect`
-                 items = client->_bind( lt_o_data )
+    page_01->table( mode       = `MultiSelect`
+                 items         = client->_bind( lt_o_data )
                  autopopinmode = abap_true
                )->columns(
                    )->column(
@@ -77,18 +77,18 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
                        )->text( text = `Status`
                    )->get_parent(
                )->get_parent(
-
-               )->items(
+      )->items(
                    )->column_list_item(
                        )->cells(
                            )->text( text = `{NAME}` ")->get_parent(
-                           )->expandable_text( class = `sapUiTinyMarginBottom sapUiTinyMarginTop` text = `{ATTRIBUTE_1}` overflowmode = `{OVERFLOW_MODE}` )->get_parent(
+                           )->expandable_text( class        = `sapUiTinyMarginBottom sapUiTinyMarginTop`
+                                               text         = `{ATTRIBUTE_1}`
+                                               overflowmode = `{OVERFLOW_MODE}` )->get_parent(
                            )->text( text = `{ATTRIBUTE_2}` )->get_parent(
                            )->text( text = `{STATUS}` )->get_parent(
                        )->get_parent(
                    )->get_parent(
-               )->get_parent(
-             ).
+               )->get_parent( ).
 
     client->view_display( page_01->stringify( ) ).
 
@@ -110,15 +110,15 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `The ExpandableText control can be used to display a larger texts inside a table, list or form.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
@@ -143,35 +143,34 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
     CLEAR lt_o_data.
 
     lt_o_data = VALUE #(
-      ( name = 'Product 1'
-        attribute_1 = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
+      ( name          = 'Product 1'
+        attribute_1   = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `  &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2 = 'Attribute related to label'
-        status = 'Some status'
+        attribute_2   = 'Attribute related to label'
+        status        = 'Some status'
         overflow_mode = 'InPlace' )
-      ( name = 'Product 2'
-        attribute_1 = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
+      ( name          = 'Product 2'
+        attribute_1   = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `      &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2 = 'Attribute related to label'
-        status = 'Some status'
+        attribute_2   = 'Attribute related to label'
+        status        = 'Some status'
         overflow_mode = 'Popover' )
-      ( name = 'Product 3'
-        attribute_1 = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
+      ( name          = 'Product 3'
+        attribute_1   = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `  &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2 = 'Attribute related to label'
-        status = 'Some status'
+        attribute_2   = 'Attribute related to label'
+        status        = 'Some status'
         overflow_mode = 'InPlace' )
-      ( name = 'Product 4'
-        attribute_1 = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
+      ( name          = 'Product 4'
+        attribute_1   = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `      &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2 = 'Attribute related to label'
-        status = 'Some status'
-        overflow_mode = 'Popover' )
-    ).
+        attribute_2   = 'Attribute related to label'
+        status        = 'Some status'
+        overflow_mode = 'Popover' ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -78,14 +78,18 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Select'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->hbox(
-           )->text( text = 'Multiselect: ' class = 'sapUiTinyMargin'
-           )->switch( state = client->_bind_edit( mv_multiselect ) change = client->_event( `MULTISELECT_TOGGLE` )
+           )->text( text  = 'Multiselect: '
+                    class = 'sapUiTinyMargin'
+           )->switch( state  = client->_bind_edit( mv_multiselect )
+                      change = client->_event( `MULTISELECT_TOGGLE` )
            )->get_parent(
            )->hbox(
-           )->text( text = 'Preselect all entries: ' class = 'sapUiTinyMargin'
-           )->switch( state = client->_bind_edit( mv_preselect ) enabled = client->_bind_edit( mv_multiselect )
+           )->text( text  = 'Preselect all entries: '
+                    class = 'sapUiTinyMargin'
+           )->switch( state   = client->_bind_edit( mv_preselect )
+                      enabled = client->_bind_edit( mv_multiselect )
            )->get_parent(
            )->button(
             text  = 'Open Popup...'
@@ -115,9 +119,10 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD ui5_callback.
+    FIELD-SYMBOLS <row> TYPE ty_row.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
 
         IF ls_result-check_confirmed = abap_false.
@@ -127,7 +132,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
         IF mv_multiselect = abap_false.
 
-          FIELD-SYMBOLS <row> TYPE ty_row.
+
           ASSIGN ls_result-row->* TO <row>.
           client->message_box_display( `callback after popup to select: ` && <row>-title ).
 

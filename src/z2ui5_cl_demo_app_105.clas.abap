@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_105 DEFINITION
 
     DATA client TYPE REF TO z2ui5_if_client .
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view .
-    DATA MV_CLASS_1 TYPE string .
+    DATA mv_class_1 TYPE string .
     DATA mv_init TYPE abap_bool .
     DATA mr_data TYPE REF TO data .
 
@@ -29,7 +29,8 @@ CLASS Z2UI5_CL_DEMO_APP_105 IMPLEMENTATION.
 
   METHOD display_view.
 
-    mo_view_parent->input( value = client->_bind_edit( MV_CLASS_1 ) placeholder = `Input From Class 1` ).
+    mo_view_parent->input( value       = client->_bind_edit( mv_class_1 )
+                           placeholder = `Input From Class 1` ).
 
   ENDMETHOD.
 

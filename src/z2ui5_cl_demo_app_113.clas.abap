@@ -72,19 +72,16 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
               ( author = `Developer3` authorpic = `sap-icon://employee` type = `Reply`  datetime = `01.05.2023` text = `this is another entry Product C` )
               ( author = `Developer2` authorpic = `sap-icon://employee` type = `Reply`  datetime = `01.04.2023` text = `this is another entry Product B` )
               ( author = `Developer1` authorpic = `sap-icon://employee` type = `Reply`  datetime = `01.03.2023` text = `this is another entry Product A` )
-
-                      ( author = `Developer` title = `this is a title` datetime = `01.02.2023` authorpic = `sap-icon://employee` type = `Request` date = `August 26 2023`
+      ( author = `Developer` title = `this is a title` datetime = `01.02.2023` authorpic = `sap-icon://employee` type = `Request` date = `August 26 2023`
                         text =
-`this is a long text Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+      `this is a long text Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-
-                      ( title = `first entry` author = `Developer` datetime = `01.01.2023`  authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is the beginning of a timeline` )
-                    ).
+      ( title = `first entry` author = `Developer` datetime = `01.01.2023`  authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is the beginning of a timeline` ) ).
 
   ENDMETHOD.
 
@@ -95,18 +92,17 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'Timeline'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-           ).
+             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(timeline) = page->timeline(
           content = client->_bind( mt_feed ) ).
 
     timeline->content( ns = `commons` )->timeline_item(
-        datetime          = `{DATETIME}`
-        title             = `{TITLE}`
-        userpicture       = `{AUTHORPIC}`
-        text              = `{TEXT}`
-        username          = `{AUTHOR}` ).
+        datetime    = `{DATETIME}`
+        title       = `{TITLE}`
+        userpicture = `{AUTHORPIC}`
+        text        = `{TEXT}`
+        username    = `{AUTHOR}` ).
 
     client->view_display( lo_view->stringify( ) ).
 

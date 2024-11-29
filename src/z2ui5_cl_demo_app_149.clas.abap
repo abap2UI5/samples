@@ -22,7 +22,7 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(lo_dummy) = CAST z2ui5_cl_pop_to_inform( lo_prev ).
         client->message_box_display( `callback after popup to inform` ).
       CATCH cx_root.
@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup HTML'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -53,9 +53,9 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_pop_html=>factory( `<h2>HTML Links</h2>` && |\n|  &&
-                                                     `<p>HTML links are defined with the a tag:</p>` && |\n|  &&
-                                                     |\n|  &&
+        DATA(lo_app) = z2ui5_cl_pop_html=>factory( `<h2>HTML Links</h2>` && |\n| &&
+                                                     `<p>HTML links are defined with the a tag:</p>` && |\n| &&
+                                                     |\n| &&
                                                      `<a href="https://www.w3schools.com" target="_blank">This is a link</a>` ).
         client->nav_app_call( lo_app ).
 

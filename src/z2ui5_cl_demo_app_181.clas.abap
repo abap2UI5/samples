@@ -62,27 +62,27 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    data(page) = view->shell( )->page(
-        title = `Cards Demo`
-        class = `sapUiContentPadding`
+    DATA(page) = view->shell( )->page(
+        title          = `Cards Demo`
+        class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-    ).
+        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(card_1) = page->card( width = `300px` class = `sapUiMediumMargin`
+    DATA(card_1) = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
       )->header( ns = `f`
-        )->card_header( title = `Buy bus ticket on-line`
+        )->card_header( title    = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
-                        iconsrc = `sap-icon://bus-public-transport`
+                        iconsrc  = `sap-icon://bus-public-transport`
                       )->get_parent( )->get_parent(
                     )->content( ns = `f`
-                      )->vbox( height = `110px`
-                               class = `sapUiSmallMargin`
+                      )->vbox( height         = `110px`
+                               class          = `sapUiSmallMargin`
                                justifycontent = `SpaceBetween`
                         )->hbox( justifycontent = `SpaceBetween`
-                          )->combobox( width = `120px`
+                          )->combobox( width       = `120px`
                                        placeholder = `From City`
-                                       items = `{path:'` && client->_bind_local( val = VALUE t_cities( ( text = `Berlin` key = `BR` )
+                                       items       = `{path:'` && client->_bind_local( val                   = VALUE t_cities( ( text = `Berlin` key = `BR` )
                                                                                                        ( text = `London` key = `LN` )
                                                                                                        ( text = `Madrid` key = `MD` )
                                                                                                        ( text = `Prague` key = `PR` )
@@ -90,10 +90,11 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                                                                                        ( text = `Sofia`  key = `SF` )
                                                                                                        ( text = `Vienna` key = `VN` )
                                                                                                       ) path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
-                          )->combobox( width = `120px`
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
+                          )->combobox( width       = `120px`
                                        placeholder = `To City`
-                                       items = `{path:'` && client->_bind_local( val = VALUE t_cities( ( text = `Berlin` key = `BR` )
+                                       items       = `{path:'` && client->_bind_local( val                   = VALUE t_cities( ( text = `Berlin` key = `BR` )
                                                                                                        ( text = `London` key = `LN` )
                                                                                                        ( text = `Madrid` key = `MD` )
                                                                                                        ( text = `Prague` key = `PR` )
@@ -101,40 +102,43 @@ CLASS Z2UI5_CL_DEMO_APP_181 IMPLEMENTATION.
                                                                                                        ( text = `Sofia`  key = `SF` )
                                                                                                        ( text = `Vienna` key = `VN` )
                                                                                                       ) path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-                                       )->get( )->item( key = `{KEY}` text = `{TEXT}` )->get_parent(
+                                       )->get( )->item( key  = `{KEY}`
+                                                        text = `{TEXT}` )->get_parent(
                       )->get_parent(
-                   )->hbox( rendertype = `Bare` justifycontent = `SpaceBetween`
-                    )->date_picker( width = `200px`
+                   )->hbox( rendertype     = `Bare`
+                            justifycontent = `SpaceBetween`
+                    )->date_picker( width       = `200px`
                                     placeholder = `Choose Date ...`
-                    )->button( text = `Book`
-                               type = `Emphasized`
+                    )->button( text  = `Book`
+                               type  = `Emphasized`
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
 
-    DATA(card_2) = page->card( width = `300px` class = `sapUiMediumMargin`
+    DATA(card_2) = page->card( width = `300px`
+                               class = `sapUiMediumMargin`
                      )->header( ns = `f`
-                       )->card_header( title = `Project Cloud Transformation`
+                       )->card_header( title    = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
                                      )->get_parent( )->get_parent(
                                    )->content( ns = `f`
-                                    )->list( class = `sapUiSmallMarginBottom`
+                                    )->list( class          = `sapUiSmallMarginBottom`
                                              showseparators = `None`
-                                             items = client->_bind_local( VALUE t_product_items( ( title = `Notebook HT` subtitle = `ID23452256-D44` revenue = `27.25K EUR` status = `success` status_schema = `Success` )
+                                             items          = client->_bind_local( VALUE t_product_items( ( title = `Notebook HT` subtitle = `ID23452256-D44` revenue = `27.25K EUR` status = `success` status_schema = `Success` )
                                                                                                  ( title = `Notebook XT` subtitle = `ID27852256-D47` revenue = `7.35K EUR` status = `exceeded` status_schema = `Error` )
                                                                                                  ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` )
-
-                                                                                               ) )
+      ) )
                                        )->custom_list_item(
-                                        )->hbox( alignitems = `Center`  justifycontent = `SpaceBetween`
+                                        )->hbox( alignitems     = `Center`
+                                                 justifycontent = `SpaceBetween`
                                           )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
-                                            )->title( text = `{TITLE}` titlestyle = `H3`
+                                            )->title( text       = `{TITLE}`
+                                                      titlestyle = `H3`
                                             )->text( text = `{SUBTITLE}`
                                           )->get_parent(
                                           )->object_status( class = `sapUiTinyMargin sapUiSmallMarginEnd`
-                                                            text = `{REVENUE}`
-                                                            state = `{STATUS_SCHEMA}`
-    ).
+                                                            text  = `{REVENUE}`
+                                                            state = `{STATUS_SCHEMA}` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -41,12 +41,12 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Range Slider Example'
                 navbuttonpress = client->_event( 'BACK' )
-                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-             ).
+                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(grid) = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 
-    grid->simple_form( title = 'More Controls' editable = abap_true )->content( 'form'
+    grid->simple_form( title    = 'More Controls'
+                       editable = abap_true )->content( 'form'
         )->label( 'Range Slider'
         )->range_slider(
             max           = '100'
@@ -60,8 +60,7 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
             class         = 'sapUiTinyMargin'
             value         = client->_bind_edit( value1 )
             value2        = client->_bind_edit( value2 )
-            change        = client->_event( 'SLIDER_CHANGE' )
-    ).
+            change        = client->_event( 'SLIDER_CHANGE' ) ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

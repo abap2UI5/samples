@@ -26,12 +26,11 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
 
     FIELD-SYMBOLS <tab> TYPE table.
-    ASSIGN  t_tab->* TO <tab>.
+    ASSIGN t_tab->* TO <tab>.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( <tab> )
@@ -65,6 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    FIELD-SYMBOLS <tab> TYPE table.
 
     me->client = client.
 
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
       check_initialized = abap_true.
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
-      FIELD-SYMBOLS <tab> TYPE table.
+
       ASSIGN t_tab->* TO <tab>.
 
       INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
@@ -92,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     ENDCASE.
 
-    set_view(  ).
+    set_view( ).
 
   ENDMETHOD.
 ENDCLASS.

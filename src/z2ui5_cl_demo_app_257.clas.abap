@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_257 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_257 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_257 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_257 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -50,47 +50,114 @@ CLASS z2ui5_cl_demo_app_257 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.GenericTag/sample/sap.m.sample.GenericTag' ).
 
     DATA(layout) = page->vertical_layout(
-                          class  = `sapUiContentPadding`
+                          class = `sapUiContentPadding`
                           width = `100%`
-                          )->grid( class = `sapUiSmallMarginBottom` hspacing = `0` vspacing = `0` default_span = `L4 M6 S12` width = `100%`
-                              )->flex_box( class = `sapUiTinyMarginBottom` direction = `Column` fitContainer = abap_true alignItems = `Start` justifyContent = `Start`
-                                  )->text( text = `Generic Tag - KPI`  class = `sapUiSmallMarginBottom`
-                                  )->generic_tag( text = `Project Cost` design = `StatusIconHidden` status = `Error`  class = `sapUiSmallMarginBottom`
-                                      )->object_number( state = `Error` emphasized = abap_false number = `3.5M` unit = `EUR` )->get_parent(
-
-                                  )->generic_tag( text = `Project Cost`  design = `StatusIconHidden` status = `Warning`  class = `sapUiSmallMarginBottom`
-                                      )->object_number( state = `Warning` emphasized = abap_false number = `2.4M` unit = `EUR` )->get_parent(
-
-                                  )->generic_tag( text = `Project Cost`  design = `StatusIconHidden` status = `Success` class = `sapUiSmallMarginBottom`
-                                      )->object_number( state = `Success` emphasized = abap_false number = `1.6M` unit = `EUR` )->get_parent(
-
-                                  )->generic_tag( text = `PC`  design = `StatusIconHidden` status = `Error`  class = `sapUiSmallMarginBottom`
-                                      )->object_number( state = `Error` emphasized = `false` number = `35` unit = `%` )->get_parent(
-
-                                  )->generic_tag( text = `PC`  design = `StatusIconHidden` status = `Warning`  class = `sapUiSmallMarginBottom`
-                                       )->object_number( state = `Warning` emphasized = abap_false number = `71` unit = `%` )->get_parent(
-
-                                  )->generic_tag( text = `PC`  design = `StatusIconHidden` status = `Success` class = `sapUiSmallMarginBottom`
-                                      )->object_number( state = `Success` emphasized = abap_false number = `96` unit = `%` )->get_parent( )->get_parent(
-                              )->flex_box( direction = `Column` fitContainer = `true` alignItems = `Start` justifyContent = `Start`
-                                  )->text( text = `Generic Tag - KPI (error handling)` class = `sapUiSmallMarginBottom`
-                                  )->generic_tag( text = `Project Cost`  design = `StatusIconHidden` status = `Error` valuestate = `Error` class = `sapUiSmallMarginBottom` )->get_parent( )->get_parent(
-                              )->flex_box( direction = `Column` fitContainer = abap_true alignItems = `Start` justifyContent = `Start`
-                                  )->text( text = `Generic Tag - Situation` class = `sapUiSmallMarginBottom`
-                                  )->generic_tag( text = `Shortage Expected` status = `Warning` class = `sapUiSmallMarginBottom` )->get_parent(
-                                  )->generic_tag( text = `Material Shortage` status = `Warning` class = `sapUiSmallMarginBottom` )->get_parent( )->get_parent(
-                              )->flex_box( direction = `Column` fitContainer = abap_true alignItems = `Start` justifyContent = `Start`
-                                  )->text( text = `Generic Tag with label` id = `genericTagLabel` class = `sapUiSmallMarginBottom`
-                                  )->generic_tag( ariaLabelledBy = `genericTagLabel` text = `Project Cost` design = `StatusIconHidden` status = `Error`  class = `sapUiSmallMarginBottom`
-                                  )->object_number( state = `Error` emphasized = `false` number = `3.5M` unit = `EUR`
-                       ).
+                          )->grid( class        = `sapUiSmallMarginBottom`
+                                   hspacing     = `0`
+                                   vspacing     = `0`
+                                   default_span = `L4 M6 S12`
+                                   width        = `100%`
+                              )->flex_box( class          = `sapUiTinyMarginBottom`
+                                           direction      = `Column`
+                                           fitcontainer   = abap_true
+                                           alignitems     = `Start`
+                                           justifycontent = `Start`
+                                  )->text( text  = `Generic Tag - KPI`
+                                           class = `sapUiSmallMarginBottom`
+                                  )->generic_tag( text   = `Project Cost`
+                                                  design = `StatusIconHidden`
+                                                  status = `Error`
+                                                  class  = `sapUiSmallMarginBottom`
+                                      )->object_number( state      = `Error`
+                                                        emphasized = abap_false
+                                                        number     = `3.5M`
+                                                        unit       = `EUR` )->get_parent(
+      )->generic_tag( text   = `Project Cost`
+                      design = `StatusIconHidden`
+                      status = `Warning`
+                      class  = `sapUiSmallMarginBottom`
+                                      )->object_number( state      = `Warning`
+                                                        emphasized = abap_false
+                                                        number     = `2.4M`
+                                                        unit       = `EUR` )->get_parent(
+      )->generic_tag( text   = `Project Cost`
+                      design = `StatusIconHidden`
+                      status = `Success`
+                      class  = `sapUiSmallMarginBottom`
+                                      )->object_number( state      = `Success`
+                                                        emphasized = abap_false
+                                                        number     = `1.6M`
+                                                        unit       = `EUR` )->get_parent(
+      )->generic_tag( text   = `PC`
+                      design = `StatusIconHidden`
+                      status = `Error`
+                      class  = `sapUiSmallMarginBottom`
+                                      )->object_number( state      = `Error`
+                                                        emphasized = `false`
+                                                        number     = `35`
+                                                        unit       = `%` )->get_parent(
+      )->generic_tag( text   = `PC`
+                      design = `StatusIconHidden`
+                      status = `Warning`
+                      class  = `sapUiSmallMarginBottom`
+                                       )->object_number( state      = `Warning`
+                                                         emphasized = abap_false
+                                                         number     = `71`
+                                                         unit       = `%` )->get_parent(
+      )->generic_tag( text   = `PC`
+                      design = `StatusIconHidden`
+                      status = `Success`
+                      class  = `sapUiSmallMarginBottom`
+                                      )->object_number( state      = `Success`
+                                                        emphasized = abap_false
+                                                        number     = `96`
+                                                        unit       = `%` )->get_parent( )->get_parent(
+                              )->flex_box( direction      = `Column`
+                                           fitcontainer   = `true`
+                                           alignitems     = `Start`
+                                           justifycontent = `Start`
+                                  )->text( text  = `Generic Tag - KPI (error handling)`
+                                           class = `sapUiSmallMarginBottom`
+                                  )->generic_tag( text       = `Project Cost`
+                                                  design     = `StatusIconHidden`
+                                                  status     = `Error`
+                                                  valuestate = `Error`
+                                                  class      = `sapUiSmallMarginBottom` )->get_parent( )->get_parent(
+                              )->flex_box( direction      = `Column`
+                                           fitcontainer   = abap_true
+                                           alignitems     = `Start`
+                                           justifycontent = `Start`
+                                  )->text( text  = `Generic Tag - Situation`
+                                           class = `sapUiSmallMarginBottom`
+                                  )->generic_tag( text   = `Shortage Expected`
+                                                  status = `Warning`
+                                                  class  = `sapUiSmallMarginBottom` )->get_parent(
+                                  )->generic_tag( text   = `Material Shortage`
+                                                  status = `Warning`
+                                                  class  = `sapUiSmallMarginBottom` )->get_parent( )->get_parent(
+                              )->flex_box( direction      = `Column`
+                                           fitcontainer   = abap_true
+                                           alignitems     = `Start`
+                                           justifycontent = `Start`
+                                  )->text( text  = `Generic Tag with label`
+                                           id    = `genericTagLabel`
+                                           class = `sapUiSmallMarginBottom`
+                                  )->generic_tag( arialabelledby = `genericTagLabel`
+                                                  text           = `Project Cost`
+                                                  design         = `StatusIconHidden`
+                                                  status         = `Error`
+                                                  class          = `sapUiSmallMarginBottom`
+                                  )->object_number( state      = `Error`
+                                                    emphasized = `false`
+                                                    number     = `3.5M`
+                                                    unit       = `EUR` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -102,23 +169,23 @@ CLASS z2ui5_cl_demo_app_257 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Previews of the GenericTag control based on combinations of different sets of properties.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

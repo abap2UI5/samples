@@ -12,14 +12,14 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION
         key  TYPE string,
         text TYPE string,
       END OF s_combobox .
-    TYPES:
+    TYPES
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY .
 
     DATA client TYPE REF TO z2ui5_if_client .
     DATA check_initialized TYPE abap_bool .
-    DATA: gt_multi TYPE ty_t_combo.
-    DATA: gt_sel_multi TYPE ty_t_combo.
-    DATA: gt_sel_multi2 TYPE string_table.
+    DATA gt_multi TYPE ty_t_combo.
+    DATA gt_sel_multi TYPE ty_t_combo.
+    DATA gt_sel_multi2 TYPE string_table.
     METHODS ui5_on_init .
     METHODS ui5_on_event .
     METHODS ui5_view_main_display .
@@ -42,11 +42,12 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
         DATA(ok_code) = client->get( )-event.
         CASE ok_code.
           WHEN 'FILTERBAR'.
-*            gt_sel_multi2[] = gt_sel_multi[].
+
             client->view_model_update( ).
         ENDCASE.
       CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( ) type = `error` ).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
     ENDTRY.
 
   ENDMETHOD.
@@ -63,10 +64,9 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
       ( key = 'A02' text = 'T2' )
       ( key = 'A03' text = 'T3' )
       ( key = 'A04' text = 'T4' )
-      ( key = 'A05' text = 'T5' )
-      ).
+      ( key = 'A05' text = 'T5' ) ).
 
-    gt_sel_multi2 = value #( ( `A01` ) ).
+    gt_sel_multi2 = VALUE #( ( `A01` ) ).
 
   ENDMETHOD.
 
@@ -83,17 +83,18 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-               )->simple_form( title = 'Form Title' editable = abap_true
+                    shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+               )->simple_form( title    = 'Form Title'
+                               editable = abap_true
                     )->content( 'form'
                   )->multi_combobox(
 *                            name = 'Multi'
-                           name = 'MultiComboBox'
-                    selectedkeys = client->_bind_edit( gt_sel_multi2 )
+                           name          = 'MultiComboBox'
+                    selectedkeys         = client->_bind_edit( gt_sel_multi2 )
 *                            selecteditems = client->_bind_edit( gt_sel_multi )
                                    items = client->_bind_edit( val = gt_multi )
                                    )->item(
-                                      key = '{KEY}'
+                                      key  = '{KEY}'
                                       text = '{TEXT}'
                                   )->get_parent(
                   )->button(

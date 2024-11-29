@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_248 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_248 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -52,18 +52,18 @@ CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
     DATA(layout) = page->splitter(
                           )->text( text = `Content 1` )->get(
                               )->layout_data(
-                                  )->splitter_layout_data( size = `30%` resizable = abap_false )->get_parent( )->get_parent( )->get_parent(
+                                  )->splitter_layout_data( size      = `30%`
+                                                           resizable = abap_false )->get_parent( )->get_parent( )->get_parent(
                           )->text( text = `Content 2` )->get(
                               )->layout_data(
-                                  )->splitter_layout_data( size = `auto`
-                         ).
+                                  )->splitter_layout_data( size = `auto` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -75,23 +75,23 @@ CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Simple splitter example with two content areas that cannot be resized` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

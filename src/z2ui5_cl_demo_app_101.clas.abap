@@ -82,8 +82,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-                      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` )
-                    ).
+                      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
 
   ENDMETHOD.
 
@@ -94,28 +93,27 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            ).
+             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(fi) = page->vbox(
-      )->feed_input( post = client->_event( val = 'POST' )
-                             growing = abap_true
-                             rows = `4`
+      )->feed_input( post                     = client->_event( val = 'POST' )
+                             growing          = abap_true
+                             rows             = `4`
                              icondensityaware = abap_false
-                             value = client->_bind_edit( mv_value )
-                             class = `sapUiSmallMarginTopBottom`
+                             value            = client->_bind_edit( mv_value )
+                             class            = `sapUiSmallMarginTopBottom`
       )->get_parent( )->get_parent(
       )->list(
-        items = client->_bind_edit( mt_feed )
+        items          = client->_bind_edit( mt_feed )
         showseparators = `Inner`
           )->feed_list_item(
-            sender = `{AUTHOR}`
-            senderpress   = client->_event( 'SENDER_PRESS' )
-            iconpress   = client->_event( 'ICON_PRESS' )
-            icondensityaware   = abap_false
-            showicon = abap_false
-            info = `Reply`
-            text = `{TEXT}`
+            sender                   = `{AUTHOR}`
+            senderpress              = client->_event( 'SENDER_PRESS' )
+            iconpress                = client->_event( 'ICON_PRESS' )
+            icondensityaware         = abap_false
+            showicon                 = abap_false
+            info                     = `Reply`
+            text                     = `{TEXT}`
             convertlinkstoanchortags = `All` ).
 
     client->view_display( lo_view->stringify( ) ).

@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - Tables and editable'
-                navbuttonpress = client->_event( 'BACK' )
+                title           = 'abap2UI5 - Tables and editable'
+                navbuttonpress  = client->_event( 'BACK' )
                   shownavbutton = abap_true ).
 
     DATA(tab) = page->table(
@@ -79,11 +79,16 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{TITLE}' enabled = `{EDITABLE}`
-          )->input( value = '{VALUE}' enabled = `{EDITABLE}`
-          )->input( value = '{INFO}' enabled = `{EDITABLE}`
-          )->input( value = '{DESCR}' enabled = `{EDITABLE}`
-          )->checkbox( selected = '{CHECKBOX}' enabled = `{EDITABLE}` ).
+          )->input( value   = '{TITLE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{VALUE}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{INFO}'
+                    enabled = `{EDITABLE}`
+          )->input( value   = '{DESCR}'
+                    enabled = `{EDITABLE}`
+          )->checkbox( selected = '{CHECKBOX}'
+                       enabled  = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -104,8 +109,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
           ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
           ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = '' checkbox = abap_true )
           ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( )
-          ).
+          ( ) ).
 
       set_view( ).
       RETURN.

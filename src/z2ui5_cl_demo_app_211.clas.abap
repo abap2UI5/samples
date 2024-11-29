@@ -30,11 +30,11 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_Main.
+    METHODS render_main.
 
 
 
-    METHODS Render_sub_app.
+    METHODS render_sub_app.
 
   PRIVATE SECTION.
 
@@ -82,13 +82,13 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
                              class          = 'sapUiContentPadding' ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
-                                         selectedKey = client->_bind_edit( mv_selectedkey )
+                                         selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( val = 'ONSELECTICONTABBAR' )
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
 
-      DATA(text) =  line->descr.
+      DATA(text) = line->descr.
       DATA(with_icon) = line->icon.
 
       lo_items->icon_tab_filter( icon      = line->icon
@@ -113,16 +113,16 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
       on_init( ).
 
-      render_Main( ).
+      render_main( ).
 
     ENDIF.
 
     on_event( ).
 
-    Render_sub_app( ).
+    render_sub_app( ).
   ENDMETHOD.
 
-  METHOD Render_sub_app.
+  METHOD render_sub_app.
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
             CALL METHOD mo_app->('SET_APP_DATA')
               EXPORTING table = t002->table.
 
-            render_Main( ).
+            render_main( ).
 
             ASSIGN mo_app->('MO_PARENT_VIEW') TO FIELD-SYMBOL(<view>).
             IF <view> IS ASSIGNED.
@@ -160,14 +160,14 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     ENDCASE.
 
-   ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
+    ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
-   ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
+    ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
 
     IF <view_update> = abap_true.
       <view_update> = abap_false.

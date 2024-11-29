@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_214 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_214 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +24,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -32,20 +32,25 @@ CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->icon_tab_header( mode  = `Inline`
+    DATA(layout) = page->icon_tab_header( mode = `Inline`
                           )->items(
-                              )->icon_tab_filter( key = `info` text = `Info` )->get_parent(
-                              )->icon_tab_filter( key = `attachments` text = `Attachments` count = `3` )->get_parent(
-                              )->icon_tab_filter( key = `notes` text = `Notes` count = `12` )->get_parent(
-                              )->icon_tab_filter( key = `people` text = `People`
-                   ).
+                              )->icon_tab_filter( key  = `info`
+                                                  text = `Info` )->get_parent(
+                              )->icon_tab_filter( key   = `attachments`
+                                                  text  = `Attachments`
+                                                  count = `3` )->get_parent(
+                              )->icon_tab_filter( key   = `notes`
+                                                  text  = `Notes`
+                                                  count = `12` )->get_parent(
+                              )->icon_tab_filter( key  = `people`
+                                                  text = `People` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -55,7 +60,7 @@ CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

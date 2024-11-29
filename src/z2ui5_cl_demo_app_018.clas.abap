@@ -1,23 +1,23 @@
-CLASS Z2UI5_CL_DEMO_APP_018 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_018 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA quantity TYPE string.
     DATA mv_textarea TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA check_initialized TYPE abap_bool.
 
-    METHODS Z2UI5_on_init.
-    METHODS Z2UI5_on_event.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
 
-    METHODS Z2UI5_display_view_main.
-    METHODS Z2UI5_display_view_second.
-    METHODS Z2UI5_display_popup_input.
+    METHODS z2ui5_display_view_main.
+    METHODS z2ui5_display_view_second.
+    METHODS z2ui5_display_popup_input.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -27,12 +27,12 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_display_popup_input.
+  METHOD z2ui5_display_popup_input.
 
-    DATA(view) = Z2UI5_cl_xml_view=>factory_popup( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->dialog(
              title = 'Title'
-             icon = 'sap-icon://edit'
+             icon  = 'sap-icon://edit'
                   )->content(
                       )->text_area(
                           height = '100%'
@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
                       )->button(
                           text  = 'Confirm'
                           press = client->_event( 'POPUP_CONFIRM' )
-                          type  = 'Emphasized'  ).
+                          type  = 'Emphasized' ).
 *                  )->get_parent(
 *                  )->footer( )->overflow_toolbar(
 *                      )->toolbar_spacer(
@@ -61,15 +61,16 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_display_view_main.
+  METHOD z2ui5_display_view_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-            )->simple_form( title = 'VIEW_MAIN' editable = abap_true
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            )->simple_form( title    = 'VIEW_MAIN'
+                            editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
                     )->label( 'quantity'
@@ -98,18 +99,17 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_display_view_second.
+  METHOD z2ui5_display_view_second.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->simple_form( 'VIEW_SECOND'
                   )->content( 'form'
-
-            )->get_parent( )->get_parent( )->footer(
+      )->get_parent( )->get_parent( )->footer(
             )->overflow_toolbar(
                 )->toolbar_spacer(
                 )->overflow_toolbar_button(
@@ -126,27 +126,27 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
+      z2ui5_on_init( ).
       RETURN.
     ENDIF.
 
-    Z2UI5_on_event( ).
+    z2ui5_on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_event.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
       WHEN 'SHOW_POPUP'.
-        Z2UI5_display_popup_input( ).
+        z2ui5_display_popup_input( ).
 
       WHEN 'POPUP_CONFIRM'.
         client->message_toast_display( |confirm| ).
@@ -158,10 +158,10 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
         client->popup_destroy( ).
 
       WHEN 'SHOW_VIEW_MAIN'.
-        Z2UI5_display_view_main( ).
+        z2ui5_display_view_main( ).
 
       WHEN 'SHOW_VIEW_SECOND'.
-        Z2UI5_display_view_second( ).
+        z2ui5_display_view_second( ).
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -171,10 +171,10 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_on_init.
+  METHOD z2ui5_on_init.
 
     quantity = '500'.
-    Z2UI5_display_view_main( ).
+    z2ui5_display_view_main( ).
 
   ENDMETHOD.
 ENDCLASS.

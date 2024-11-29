@@ -1,15 +1,15 @@
-class Z2UI5_CL_DEMO_APP_202 definition
-  public
-  final
-  create public .
+CLASS z2ui5_cl_demo_app_202 DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    INTERFACES if_serializable_object .
+    INTERFACES z2ui5_if_app .
 
-  data AV_NEXT type STRING value 'Step22' ##NO_TEXT.
-  data AV_INIT type ABAP_BOOL .
+    DATA av_next TYPE string VALUE 'Step22' ##NO_TEXT.
+    DATA av_init TYPE abap_bool .
   PROTECTED SECTION.
     METHODS display_view
       IMPORTING
@@ -26,7 +26,8 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
-    lr_view->_generic( name = `script` ns = `html` )->_cc_plain_xml( `sap.z2ui5.decideNextStep = (stepId, nextStepId) => {debugger;` && |\n| &&
+    lr_view->_generic( name = `script`
+                       ns   = `html` )->_cc_plain_xml( `sap.z2ui5.decideNextStep = (stepId, nextStepId) => {debugger;` && |\n| &&
                                                                      ` var wiz = sap.z2ui5.oView.byId('wiz');` && |\n| &&
                                                                      ` wiz.discardProgress(sap.z2ui5.oView.byId(stepId));` && |\n| &&
                                                                      ` var step = sap.z2ui5.oView.byId(stepId);` && |\n| &&
@@ -35,48 +36,50 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
                                                                      `}` ).
 
     lr_view = lr_view->shell( )->page( id = `page_main`
-             title          = 'abap2UI5 - Demo Wizard Control'
-             navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             title                        = 'abap2UI5 - Demo Wizard Control'
+             navbuttonpress               = client->_event( 'BACK' )
+             shownavbutton                = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(lr_wizard) = lr_view->wizard( id = `wiz` enablebranching = abap_true ).
-    DATA(lr_wiz_step1) = lr_wizard->wizard_step(  title = 'STEP1'  validated  = abap_true nextstep = 'STEP2' ).
+    DATA(lr_wizard) = lr_view->wizard( id              = `wiz`
+                                       enablebranching = abap_true ).
+    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'STEP1'
+                                                 validated = abap_true
+                                                 nextstep  = 'STEP2' ).
     lr_wiz_step1->message_strip( text = 'STEP1' ).
 
 
-    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id = 'STEP2'
-                                                 title              = `STEP2`
-                                                 validated          = abap_true
-                                                 subsequentSteps = 'STEP22, STEP23'
-                                                ).
+    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = 'STEP2'
+                                                 title           = `STEP2`
+                                                 validated       = abap_true
+                                                 subsequentsteps = 'STEP22, STEP23' ).
 
     lr_wiz_step2->message_strip( text = `STEP2` ).
     lr_wiz_step2->button(
 *      EXPORTING
-        text             = `Press Step 2.2`
-        press            = client->_event('STEP22' ) ).
+        text  = `Press Step 2.2`
+        press = client->_event('STEP22' ) ).
     lr_wiz_step2->button(
 *      EXPORTING
-        text             = `Press Step 2.3`
-        press            = client->_event( `STEP23` ) ).
+        text  = `Press Step 2.3`
+        press = client->_event( `STEP23` ) ).
 
 
-    DATA(lr_wiz_step22) = lr_wizard->wizard_step( id = `STEP22`
-                                                 title              = `STEP2.2`
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step22) = lr_wizard->wizard_step( id       = `STEP22`
+                                                 title     = `STEP2.2`
+                                                 validated = abap_true ).
 
     lr_wiz_step22->message_strip( text = 'STEP22' ).
 
 
-    DATA(lr_wiz_step23) = lr_wizard->wizard_step( id = `STEP23`
-                                                 title              = `STEP2.3`
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step23) = lr_wizard->wizard_step( id       = `STEP23`
+                                                 title     = `STEP2.3`
+                                                 validated = abap_true ).
 
     lr_wiz_step23->message_strip( text = 'STEP23' ).
 
 
-    DATA(lr_wiz_step3) = lr_wizard->wizard_step( title              = `STEP3`
-                                                 validated          = abap_true ).
+    DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = `STEP3`
+                                                 validated = abap_true ).
 
     lr_wiz_step3->message_strip( text = 'STEP3' ).
 

@@ -35,10 +35,9 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - JSON Export ITAB'
-                navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton = abap_true
-           ).
+                title           = 'abap2UI5 - JSON Export ITAB'
+                navbuttonpress  = client->_event( 'BACK' )
+                  shownavbutton = abap_true ).
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
@@ -88,10 +87,9 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
           ( title = 'entry 03'  value = 'green'  info = 'completed'  descr = 'this is a description' checkbox = abap_true )
           ( title = 'entry 04'  value = 'orange' info = 'completed'  descr = '' checkbox = abap_true )
           ( title = 'entry 05'  value = 'grey'   info = 'completed'  descr = 'this is a description' checkbox = abap_true )
-          ( )
-          ).
+          ( ) ).
 
-      set_view(  ).
+      set_view( ).
 
     ENDIF.
 

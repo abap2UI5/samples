@@ -50,16 +50,17 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
            )->page(
-              title          = 'abap2UI5 - Side Panel Example'
-              navbuttonpress = client->_event( 'BACK' )
+              title           = 'abap2UI5 - Side Panel Example'
+              navbuttonpress  = client->_event( 'BACK' )
                 shownavbutton = abap_true ).
 
     page->header_content(
-         )->link(    ).
+         )->link( ).
 
     page->responsive_splitter( defaultpane = `default`
        )->pane_container(
-         )->split_pane( requiredparentwidth = `400` id = `default`
+         )->split_pane( requiredparentwidth = `400`
+                        id                  = `default`
            )->layout_data( ns = `layout`
              )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
            )->panel( headertext = `first pane` )->get_parent( )->get_parent(

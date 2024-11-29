@@ -49,9 +49,9 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -60,20 +60,21 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithWrappedItemText' ).
 
     page_01->select(
-                width = `300px`
+                width         = `300px`
                 wrapitemstext = abap_true
-                class = `sapUiLargeMargin`
-                items = client->_bind( lt_product_collection )
-                )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                class         = `sapUiLargeMargin`
+                items         = client->_bind( lt_product_collection )
+                )->item( key  = '{PRODUCT_ID}'
+                         text = '{NAME}'
              )->get_parent(
              )->select(
-                width = `300px`
+                width         = `300px`
                 wrapitemstext = abap_true
-                class = `sapUiLargeMargin`
-                items = client->_bind( lt_product_collection2 )
-                )->item( key = '{PRODUCT_ID}' text = '{NAME}'
-             )->get_parent(
-            ).
+                class         = `sapUiLargeMargin`
+                items         = client->_bind( lt_product_collection2 )
+                )->item( key  = '{PRODUCT_ID}'
+                         text = '{NAME}'
+             )->get_parent( ).
 
     client->view_display( page_01->stringify( ) ).
 
@@ -95,15 +96,15 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Illustrates how the text in items wrap.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
@@ -126,26 +127,24 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     CLEAR lt_product_collection.
-    CLEAR lt_Product_collection2.
+    CLEAR lt_product_collection2.
 
     " Populating lt_product_collection
     lt_product_collection = VALUE #(
-      ( product_id = 'HT-1001' Name = 'Select option 1' )
-      ( product_id = 'HT-1002' Name = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' )
-      ( product_id = 'HT-1003' Name = 'Select option 3' )
-      ( product_id = 'HT-1007' Name = 'Select option 4' )
-      ( product_id = 'HT-1010' Name = 'Select option 5' )
-    ).
+      ( product_id = 'HT-1001' name = 'Select option 1' )
+      ( product_id = 'HT-1002' name = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.' )
+      ( product_id = 'HT-1003' name = 'Select option 3' )
+      ( product_id = 'HT-1007' name = 'Select option 4' )
+      ( product_id = 'HT-1010' name = 'Select option 5' ) ).
     SORT lt_product_collection BY name.
 
     " Populating lt_product_collection2
-    lt_Product_collection2 = VALUE #(
-      ( product_id = 'key1' Name = 'Select option 1' )
-      ( product_id = 'key2' Name = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.' )
-      ( product_id = 'key3' Name = 'Select option 3' )
-      ( product_id = 'key4' Name = 'Select option 4' )
-      ( product_id = 'key5' Name = 'Select option 5' )
-    ).
+    lt_product_collection2 = VALUE #(
+      ( product_id = 'key1' name = 'Select option 1' )
+      ( product_id = 'key2' name = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.' )
+      ( product_id = 'key3' name = 'Select option 3' )
+      ( product_id = 'key4' name = 'Select option 4' )
+      ( product_id = 'key5' name = 'Select option 5' ) ).
     SORT lt_product_collection2 BY name.
 
   ENDMETHOD.

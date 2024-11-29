@@ -28,19 +28,22 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01'
         navbuttonpress = client->_event( val = 'BACK' )
-        shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
        )->grid( 'L6 M12 S12' )->content( 'layout'
        )->simple_form( 'Controller' )->content( 'form'
-
+      )->label( 'Demo'
+         )->button( text  = 'call new app (first View)'
+                    press = client->_event( 'CALL_NEW_APP' )
          )->label( 'Demo'
-         )->button( text = 'call new app (first View)' press = client->_event( 'CALL_NEW_APP' )
+         )->button( text  = 'call new app (second View)'
+                    press = client->_event( 'CALL_NEW_APP_VIEW' )
          )->label( 'Demo'
-         )->button( text = 'call new app (second View)' press = client->_event( 'CALL_NEW_APP_VIEW' )
-         )->label( 'Demo'
-         )->button( text = 'call new app (set Event)' press = client->_event( 'CALL_NEW_APP_EVENT' )
+         )->button( text  = 'call new app (set Event)'
+                    press = client->_event( 'CALL_NEW_APP_EVENT' )
          )->label( 'Demo'
          )->input( client->_bind_edit( mv_input )
-         )->button( text = 'call new app (set data)' press = client->_event( 'CALL_NEW_APP_READ' )
+         )->button( text  = 'call new app (set data)'
+                    press = client->_event( 'CALL_NEW_APP_READ' )
               )->label( 'some data, you can read in the next app'
          )->input( client->_bind_edit( mv_input2 ) ).
 
@@ -74,7 +77,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
       WHEN 'CALL_NEW_APP_EVENT'.
         lo_app_next = NEW z2ui5_cl_demo_app_025( ).
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
-        client->nav_app_call( lo_app_next  ).
+        client->nav_app_call( lo_app_next ).
 
       WHEN 'BACK'.
         DATA(lo_prev_stack_app) = client->get_app( client->get( )-s_draft-id_prev_app_stack ).

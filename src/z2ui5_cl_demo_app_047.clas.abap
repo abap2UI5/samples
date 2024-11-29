@@ -52,34 +52,39 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
       WHEN 'BUTTON_DEC'.
         dec_sum = dec1 + dec2.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) =  z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
                 title          = 'abap2UI5 - Integer and Decimals'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-    page->simple_form( title = 'Integer and Decimals' editable = abap_true
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+    page->simple_form( title    = 'Integer and Decimals'
+                       editable = abap_true
              )->content( 'form'
                  )->title( 'Input'
                  )->label( 'integer'
                  )->input( value = client->_bind_edit( int1 )
                  )->input( value = client->_bind_edit( int2 )
-                 )->input( enabled = abap_false value = client->_bind_edit( int_sum )
-                 )->button( text  = 'calc sum' press = client->_event( 'BUTTON_INT' )
+                 )->input( enabled = abap_false
+                           value   = client->_bind_edit( int_sum )
+                 )->button( text  = 'calc sum'
+                            press = client->_event( 'BUTTON_INT' )
                  )->label( 'decimals'
                  )->input( client->_bind_edit( dec1 )
                  )->input( client->_bind_edit( dec2 )
-                 )->input( enabled = abap_false value = client->_bind_edit( dec_sum )
-                 )->button( text  = 'calc sum' press = client->_event( 'BUTTON_DEC' )
+                 )->input( enabled = abap_false
+                           value   = client->_bind_edit( dec_sum )
+                 )->button( text  = 'calc sum'
+                            press = client->_event( 'BUTTON_DEC' )
                  )->label( 'date'
                  )->input( client->_bind_edit( date )
                  )->label( 'time'
-                 )->input( client->_bind_edit( time )
-    ).
+                 )->input( client->_bind_edit( time ) ).
 
-    DATA(tab) = page->scroll_container( height = '70%' vertical = abap_true
+    DATA(tab) = page->scroll_container( height   = '70%'
+                                        vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = '20'

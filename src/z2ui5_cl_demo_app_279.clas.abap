@@ -36,7 +36,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
                       navbuttonpress = client->_event( 'BACK' )
                       shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(box) = page->flex_box( direction = `Row` alignitems = `Start` class = 'sapUiTinyMargin' ).
+    DATA(box) = page->flex_box( direction  = `Row`
+                                alignitems = `Start`
+                                class      = 'sapUiTinyMargin' ).
 
     box->input(
       id          = `input`
@@ -60,9 +62,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     page->_z2ui5( )->focus( focusid = `input` ).
 
-*    page->_z2ui5( )->dirty( dirty ).
+
     page->_z2ui5( )->dirty( client->_bind( dirty ) ).
-*    page->_z2ui5( )->dirty(  '{= $' &&  client->_bind_Edit( text_input ) && ' !== "" }' ).
+
 
     client->view_display( page->stringify( ) ).
 

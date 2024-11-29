@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_302 DEFINITION
       BEGIN OF ty_product,
         product        TYPE string,
         supplier       TYPE string,
-        additionalInfo TYPE string,
+        additionalinfo TYPE string,
       END OF ty_product.
 
     DATA check_initialized TYPE abap_bool.
@@ -48,9 +48,9 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page->header_content(
        )->link(
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectAttributeInTable' ).
 
     page->table( id = `idProductsTable`
-           items = client->_bind( lt_a_data )
+           items    = client->_bind( lt_a_data )
            )->columns(
                )->column(
                    )->text( text = `Products`
@@ -76,10 +76,9 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
                )->object_attribute(
                    text = '{SUPPLIER}'
                )->object_attribute(
-                   text = '{SUPPLIER}'
+                   text   = '{SUPPLIER}'
                    active = abap_true
-           )->get_parent(
-          ).
+           )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -103,15 +102,15 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `This is an example of Object Attribute used inside Table.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
@@ -134,8 +133,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
         ( product = 'ITelO Vault SAT'         supplier = 'New Line Design' )
         ( product = 'Hurricane GX'            supplier = 'Robert Brown Entertainment' )
         ( product = 'Webcam'                  supplier = 'Getränkegroßhandel Janssen' )
-        ( product = 'Deskjet Super Highspeed' supplier = 'Vente Et Réparation de Ordinateur' )
-      ).
+        ( product = 'Deskjet Super Highspeed' supplier = 'Vente Et Réparation de Ordinateur' ) ).
     ENDIF.
 
     on_event( client ).

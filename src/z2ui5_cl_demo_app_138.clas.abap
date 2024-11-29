@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_138 DEFINITION PUBLIC.
         val2 TYPE string,
       END OF ms_data.
 
-*    DATA product  TYPE string.
+
     DATA quantity TYPE string.
     DATA check_initialized TYPE abap_bool.
 
@@ -53,8 +53,9 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - First Example'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                )->simple_form( title = 'Form Title' editable = abap_true
+                    shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                )->simple_form( title    = 'Form Title'
+                                editable = abap_true
                     )->content( 'form'
                         )->title( 'Input'
                         )->label( 'quantity'
@@ -74,7 +75,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
         client->message_toast_display( |{ quantity } - send to the server| ).
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
 

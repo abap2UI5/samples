@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_034 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA t_bapiret TYPE bapirettab.
     DATA check_initialized TYPE abap_bool.
@@ -12,10 +12,10 @@ CLASS Z2UI5_CL_DEMO_APP_034 DEFINITION PUBLIC.
 
     METHODS view_main
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
     METHODS view_popup_bal
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -29,12 +29,11 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
   METHOD view_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    data(page) = view->shell(
+    DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
 
@@ -42,8 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
         )->label( '01'
         )->button(
             text  = 'Show bapiret tab'
-            press = client->_event( 'POPUP_BAL' )
-        ).
+            press = client->_event( 'POPUP_BAL' ) ).
 
     mv_main_xml = page->get_root( )->xml_get( ).
 
@@ -52,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
 
   METHOD view_popup_bal.
 
-    DATA(popup) = Z2UI5_CL_XML_VIEW=>factory_popup(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( 'abap2ui5 - Popup Message Log'
             )->table( client->_bind( t_bapiret )
                 )->columns(
@@ -85,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
@@ -96,8 +94,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
         ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
         ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
         ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-        ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-         ).
+        ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
 
     ENDIF.
 
@@ -106,7 +103,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP_BAL'.
-        mv_popup_name =  'POPUP_BAL'.
+        mv_popup_name = 'POPUP_BAL'.
 
       WHEN 'BACK'.
         client->nav_app_leave( ).

@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_238 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_238 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_238 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_238 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -49,58 +49,58 @@ CLASS z2ui5_cl_demo_app_238 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageStrip/sample/sap.m.sample.MessageStrip' ).
 
- DATA(layout) = page->vertical_layout( class  = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
 
-    layout->message_strip( text = `Default (Information) with default icon and close button:`
-                   showIcon = abap_true
-                   showCloseButton = abap_true
-                   class = `sapUiMediumMarginBottom` ).
+    layout->message_strip( text    = `Default (Information) with default icon and close button:`
+                   showicon        = abap_true
+                   showclosebutton = abap_true
+                   class           = `sapUiMediumMarginBottom` ).
 
-    layout->message_strip( text = `Error with default icon and close button:`
-                   type = `Error`
-                   showIcon = abap_true
-                   showCloseButton = abap_true
-                   class = `sapUiMediumMarginBottom` ).
+    layout->message_strip( text    = `Error with default icon and close button:`
+                   type            = `Error`
+                   showicon        = abap_true
+                   showclosebutton = abap_true
+                   class           = `sapUiMediumMarginBottom` ).
 
-    layout->message_strip( text = `Warning with default icon and close button:`
-                   type = `Warning`
-                   showIcon = abap_true
-                   showCloseButton = abap_true
-                   class = `sapUiMediumMarginBottom` ).
+    layout->message_strip( text    = `Warning with default icon and close button:`
+                   type            = `Warning`
+                   showicon        = abap_true
+                   showclosebutton = abap_true
+                   class           = `sapUiMediumMarginBottom` ).
 
-    layout->message_strip( text = `Success with default icon and close button:`
-                   type = `Success`
-                   showIcon = abap_true
-                   showCloseButton = abap_true
-                   class = `sapUiMediumMarginBottom` ).
+    layout->message_strip( text    = `Success with default icon and close button:`
+                   type            = `Success`
+                   showicon        = abap_true
+                   showclosebutton = abap_true
+                   class           = `sapUiMediumMarginBottom` ).
 
     layout->message_strip( text = `Information with default icon.`
-                   type = `Information`
-                   showIcon = abap_true
-                   class = `sapUiMediumMarginBottom` ).
+                   type         = `Information`
+                   showicon     = abap_true
+                   class        = `sapUiMediumMarginBottom` ).
 
     layout->message_strip( text = `Information with custom icon`
-                   type = `Information`
-                   showIcon = abap_true
-                   customIcon = `sap-icon://locked`
-                   class = `sapUiMediumMarginBottom` ).
+                   type         = `Information`
+                   showicon     = abap_true
+                   customicon   = `sap-icon://locked`
+                   class        = `sapUiMediumMarginBottom` ).
 
-    layout->message_strip( text = `Error with link`
-                   type = `Error`
-                   showCloseButton = abap_true
-                   class = `sapUiMediumMarginBottom`
+    layout->message_strip( text    = `Error with link`
+                   type            = `Error`
+                   showclosebutton = abap_true
+                   class           = `sapUiMediumMarginBottom`
                    )->get(
-                       )->link( text = `Open SAP Homepage`
+                       )->link( text   = `Open SAP Homepage`
                                 target = `_blank`
-                                href = `http://www.sap.com`
-                   ).
+                                href   = `http://www.sap.com` ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -112,23 +112,22 @@ CLASS z2ui5_cl_demo_app_238 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `MessageStrip for showing status messages.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

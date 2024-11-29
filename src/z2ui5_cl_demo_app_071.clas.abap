@@ -30,11 +30,11 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
       WHEN `UPDATE`.
         client->follow_up_action( client->_event_client(
                                     val   = `SET_SIZE_LIMIT`
-                                    t_arg = value #( ( conv #( mv_set_size_limit ) ) ( client->cs_view-main ) )
-                        )    ).
+                                    t_arg = VALUE #( ( CONV #( mv_set_size_limit ) ) ( client->cs_view-main ) )
+                        ) ).
         client->view_model_update( ).
         client->message_toast_display( `SizeLimitUpdated` ).
-*        RETURN.
+
 
       WHEN 'BACK'.
         client->nav_app_leave( ).
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
 
 
 
-    DATA(lt_combo) = VALUE ty_T_combo( ).
+    DATA(lt_combo) = VALUE ty_t_combo( ).
     DO mv_combo_number TIMES.
       INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE lt_combo.
     ENDDO.
@@ -53,15 +53,15 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
          )->page(
                  title          = 'abap2UI5 - First Example'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
                      )->label( 'Link'
                      )->label( 'setSizeLimit'
-                     )->input( value =  client->_bind_edit( mv_set_size_limit )
+                     )->input( value = client->_bind_edit( mv_set_size_limit )
                      )->label( 'Number of Entries'
-                     )->input( value =  client->_bind_edit( mv_combo_number )
+                     )->input( value = client->_bind_edit( mv_combo_number )
                      )->label( 'demo'
                      )->combobox( items = client->_bind_local( lt_combo )
                         )->item( key = '{KEY}' text = '{TEXT}'

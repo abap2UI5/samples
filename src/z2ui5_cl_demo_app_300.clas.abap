@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -55,287 +55,308 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                )->block_layout( background = `transparent`
                    )->block_layout_row(
                        )->block_layout_cell(
-                           )->vertical_layout( class = `sapUiContentPadding` width = `100%`
-                               )->label( text = `ObjectStatus with different value states` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginTop`
+                           )->vertical_layout( class = `sapUiContentPadding`
+                                               width = `100%`
+                               )->label( text     = `ObjectStatus with different value states`
+                                         design   = `Bold`
+                                         wrapping = abap_true
+                                         class    = `sapUiSmallMarginTop`
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Unknown`
+                                   text  = `Unknown`
                                    state = `None` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Currently closed`
-                                   icon = `sap-icon://information`
+                                   text  = `Currently closed`
+                                   icon  = `sap-icon://information`
                                    state = `Information` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Product Shipped`
-                                   icon = `sap-icon://sys-enter-2`
+                                   text  = `Product Shipped`
+                                   icon  = `sap-icon://sys-enter-2`
                                    state = `Success` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Product Missing`
-                                   icon = `sap-icon://alert`
+                                   text  = `Product Missing`
+                                   icon  = `sap-icon://alert`
                                    state = `Warning` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Product Damaged`
-                                   icon = `sap-icon://error`
+                                   text  = `Product Damaged`
+                                   icon  = `sap-icon://error`
                                    state = `Error` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Product Damaged`
+                                   text  = `Product Damaged`
                                    state = `Error` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   title = `Product status`
-                                   text = `Damaged`
+                                   class  = `sapUiSmallMarginBottom`
+                                   title  = `Product status`
+                                   text   = `Damaged`
                                    active = abap_true
-                                   state = `Error`
-                                   press = client->_event( `handleStatusPressed` )
-                                   icon = `sap-icon://error` )->get_parent(
+                                   state  = `Error`
+                                   press  = client->_event( `handleStatusPressed` )
+                                   icon   = `sap-icon://error` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   title = `Test`
+                                   class  = `sapUiSmallMarginBottom`
+                                   title  = `Test`
                                    active = abap_true
-                                   state = `Error`
-                                   icon = `sap-icon://error` )->get_parent(
+                                   state  = `Error`
+                                   icon   = `sap-icon://error` )->get_parent(
                            )->get_parent(
                        )->get_parent(
                        )->block_layout_cell(
-                           )->vertical_layout( class = `sapUiContentPadding` width = `100%`
-                               )->label( text = `Inverted ObjectStatus with different value states.` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginTop`
+                           )->vertical_layout( class = `sapUiContentPadding`
+                                               width = `100%`
+                               )->label( text     = `Inverted ObjectStatus with different value states.`
+                                         design   = `Bold`
+                                         wrapping = abap_true
+                                         class    = `sapUiSmallMarginTop`
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Unknown`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Unknown`
                                    inverted = abap_true
-                                   state = `None` )->get_parent(
+                                   state    = `None` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Currently closed (click)`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Currently closed (click)`
                                    inverted = abap_true
-                                   active = abap_true
-                                   icon = `sap-icon://information`
-                                   state = `Information` )->get_parent(
+                                   active   = abap_true
+                                   icon     = `sap-icon://information`
+                                   state    = `Information` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Product Shipped`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Product Shipped`
                                    inverted = abap_true
-                                   icon = `sap-icon://sys-enter-2`
-                                   state = `Success` )->get_parent(
+                                   icon     = `sap-icon://sys-enter-2`
+                                   state    = `Success` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Product Missing`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Product Missing`
                                    inverted = abap_true
-                                   icon = `sap-icon://alert`
-                                   state = `Warning` )->get_parent(
+                                   icon     = `sap-icon://alert`
+                                   state    = `Warning` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Product Damaged`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Product Damaged`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Error`
-                                   icon = `sap-icon://error` )->get_parent(
+                                   state    = `Error`
+                                   icon     = `sap-icon://error` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Error`
-                                   icon = `sap-icon://error` )->get_parent(
+                                   state    = `Error`
+                                   icon     = `sap-icon://error` )->get_parent(
                            )->get_parent(
                        )->get_parent(
                    )->get_parent(
-               )->get_parent(
-             ).
-    page_01->vertical_layout( class = `sapUiContentPadding` width = `100%`
+               )->get_parent( ).
+    page_01->vertical_layout( class = `sapUiContentPadding`
+                              width = `100%`
                )->block_layout( background = `transparent`
                    )->block_layout_row(
                        )->block_layout_cell(
-                           )->label( text = `ObjectStatus with different indication states.` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginBottom`
+                           )->label( text     = `ObjectStatus with different indication states.`
+                                     design   = `Bold`
+                                     wrapping = abap_true
+                                     class    = `sapUiSmallMarginBottom`
                            )->vertical_layout( width = `100%`
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 1`
+                                   text  = `Indication 1`
                                    state = `Indication01` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 2`
+                                   text  = `Indication 2`
                                    state = `Indication02` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 3`
+                                   text  = `Indication 3`
                                    state = `Indication03` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Indication 4 active`
+                                   class  = `sapUiSmallMarginBottom`
+                                   text   = `Indication 4 active`
                                    active = abap_true
-                                   state = `Indication04` )->get_parent(
+                                   state  = `Indication04` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 5`
+                                   text  = `Indication 5`
                                    state = `Indication05` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 6`
+                                   text  = `Indication 6`
                                    state = `Indication06` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 7`
+                                   text  = `Indication 7`
                                    state = `Indication07` )->get_parent(
                                )->object_status(
                                    class = `sapUiSmallMarginBottom`
-                                   text = `Indication 8`
+                                   text  = `Indication 8`
                                    state = `Indication08` )->get_parent(
                            )->get_parent(
                        )->get_parent(
                        )->block_layout_cell(
-                           )->label( text = `Inverted ObjectStatus with different indication states.` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginBottom`
+                           )->label( text     = `Inverted ObjectStatus with different indication states.`
+                                     design   = `Bold`
+                                     wrapping = abap_true
+                                     class    = `sapUiSmallMarginBottom`
                            )->vertical_layout( width = `100%`
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication1`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication1`
                                    inverted = abap_true
-                                   state = `Indication01` )->get_parent(
+                                   state    = `Indication01` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication2`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication2`
                                    inverted = abap_true
-                                   state = `Indication02` )->get_parent(
+                                   state    = `Indication02` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication3 active`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication3 active`
                                    inverted = abap_true
-                                   active = abap_true
-                                   state = `Indication03` )->get_parent(
+                                   active   = abap_true
+                                   state    = `Indication03` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication4`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication4`
                                    inverted = abap_true
-                                   state = `Indication04` )->get_parent(
+                                   state    = `Indication04` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication5 active`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication5 active`
                                    inverted = abap_true
-                                   active = abap_true
-                                   state = `Indication05` )->get_parent(
+                                   active   = abap_true
+                                   state    = `Indication05` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication6 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication6 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   icon = `sap-icon://attachment`
-                                   state = `Indication06` )->get_parent(
+                                   icon     = `sap-icon://attachment`
+                                   state    = `Indication06` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication7 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication7 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication07` )->get_parent(
+                                   state    = `Indication07` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication8 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication8 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication08` )->get_parent(
+                                   state    = `Indication08` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication9 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication9 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication09` )->get_parent(
+                                   state    = `Indication09` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication10`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication10`
                                    inverted = abap_true
-                                   state = `Indication10` )->get_parent(
+                                   state    = `Indication10` )->get_parent(
                            )->get_parent(
                        )->get_parent(
                        )->block_layout_cell(
                            )->vertical_layout( width = `100%`
-                           )->label( text = `Inverted ObjectStatus with different indication states.` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginBottom`
+                           )->label( text     = `Inverted ObjectStatus with different indication states.`
+                                     design   = `Bold`
+                                     wrapping = abap_true
+                                     class    = `sapUiSmallMarginBottom`
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication11`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication11`
                                    inverted = abap_true
-                                   state = `Indication11` )->get_parent(
+                                   state    = `Indication11` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication12 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication12 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication12` )->get_parent(
+                                   state    = `Indication12` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication13 active`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication13 active`
                                    inverted = abap_true
-                                   active = abap_true
-                                   state = `Indication13` )->get_parent(
+                                   active   = abap_true
+                                   state    = `Indication13` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication14 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication14 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   icon = `sap-icon://notes`
-                                   state = `Indication14` )->get_parent(
+                                   icon     = `sap-icon://notes`
+                                   state    = `Indication14` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication15 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication15 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication15` )->get_parent(
+                                   state    = `Indication15` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication16`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication16`
                                    inverted = abap_true
-                                   state = `Indication16` )->get_parent(
+                                   state    = `Indication16` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication17 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication17 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication17` )->get_parent(
+                                   state    = `Indication17` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication18`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication18`
                                    inverted = abap_true
-                                   state = `Indication18` )->get_parent(
+                                   state    = `Indication18` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication19 active`
-                                   active = abap_true
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication19 active`
+                                   active   = abap_true
                                    inverted = abap_true
-                                   state = `Indication19` )->get_parent(
+                                   state    = `Indication19` )->get_parent(
                                )->object_status(
-                                   class = `sapUiSmallMarginBottom`
-                                   text = `Inverted Indication20`
+                                   class    = `sapUiSmallMarginBottom`
+                                   text     = `Inverted Indication20`
                                    inverted = abap_true
-                                   state = `Indication20` )->get_parent(
+                                   state    = `Indication20` )->get_parent(
                            )->get_parent(
                        )->get_parent(
                    )->get_parent(
-               )->get_parent(
-             ).
+               )->get_parent( ).
     page_01->vertical_layout(
               class = `sapUiContentPadding`
               width = `100%`
-              )->label( text = `ObjectStatus with style sapMObjectStatusLarge applied` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginTop`
+              )->label( text     = `ObjectStatus with style sapMObjectStatusLarge applied`
+                        design   = `Bold`
+                        wrapping = abap_true
+                        class    = `sapUiSmallMarginTop`
               )->object_status(
                   class = `sapMObjectStatusLarge`
                   title = `Product status`
-                  text = `Shipped`
+                  text  = `Shipped`
                   state = `Success`
-                  icon = `sap-icon://sys-enter-2` )->get_parent(
+                  icon  = `sap-icon://sys-enter-2` )->get_parent(
               )->object_status(
-                  class = `sapMObjectStatusLarge`
-                  text = `Shipped`
-                  state = `Success`
+                  class    = `sapMObjectStatusLarge`
+                  text     = `Shipped`
+                  state    = `Success`
                   inverted = abap_true
-                  icon = `sap-icon://sys-enter-2` )->get_parent(
-             ).
+                  icon     = `sap-icon://sys-enter-2` )->get_parent( ).
 
     page_01->vertical_layout(
               class = `sapUiContentPadding`
               width = `100%`
-              )->label( text = `ObjectStatus with and without sapMObjectStatusLongText CSS class` design = `Bold` wrapping = abap_true class = `sapUiSmallMarginTop`
+              )->label( text     = `ObjectStatus with and without sapMObjectStatusLongText CSS class`
+                        design   = `Bold`
+                        wrapping = abap_true
+                        class    = `sapUiSmallMarginTop`
               )->table(
                   )->columns(
                       )->column(
@@ -348,16 +369,14 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                           )->object_status(
                               class = ``
                               title = `Product status`
-                              text = `VeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrapping` )->get_parent(
-
-                          )->object_status(
+                              text  = `VeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrapping` )->get_parent(
+      )->object_status(
                               class = `sapMObjectStatusLongText`
                               title = `Product status`
-                              text = `VeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrapping` )->get_parent(
+                              text  = `VeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrappingVeryLongTextToDemonstrateWrapping` )->get_parent(
                       )->get_parent(
                   )->get_parent(
-              )->get_parent(
-             ).
+              )->get_parent( ).
     client->view_display( page_01->stringify( ) ).
 
   ENDMETHOD.
@@ -371,9 +390,9 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
       WHEN 'handleStatusPressed'.
-        client->message_box_display( title = `Error description`
-                                     type  = ``  "Keep this empty to use the custom title instead of the default message type as title
-                                     text  = `Product was damaged along transportation.`
+        client->message_box_display( title   = `Error description`
+                                     type    = ``  "Keep this empty to use the custom title instead of the default message type as title
+                                     text    = `Product was damaged along transportation.`
                                      actions = VALUE string_table( ( `OK ` ) ) ). "Add space after 'OK' to prevent the button type from being 'Emphasized'
     ENDCASE.
 
@@ -383,15 +402,15 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `The object status is a small building block representing a status with a semantic color.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

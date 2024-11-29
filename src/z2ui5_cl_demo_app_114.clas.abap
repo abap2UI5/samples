@@ -83,9 +83,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-
-                      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` )
-                    ).
+      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
 
   ENDMETHOD.
 
@@ -97,39 +95,38 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-           ).
+             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->flex_box(
             justifycontent = `Start`
             class          = `sapUiSmallMarginEnd`
             alignitems     = `Center`
             )->avatar(
-                    class           = `sapUiSmallMarginEnd`
+                    class = `sapUiSmallMarginEnd`
             )->text_area(
-                    value           = client->_bind_edit( mv_value )
-                    rows            = `4`
-                    cols            = `120`
-                    class           = `sapUiSmallMarginEnd`
-                    placeholder     = `Post something here...`
-                    editable        = abap_true
-                    enabled         = abap_true
+                    value       = client->_bind_edit( mv_value )
+                    rows        = `4`
+                    cols        = `120`
+                    class       = `sapUiSmallMarginEnd`
+                    placeholder = `Post something here...`
+                    editable    = abap_true
+                    enabled     = abap_true
             )->button(
-                    icon            = `sap-icon://paper-plane`
-                    press           = client->_event( val = 'POST' )
-                    iconfirst       = abap_true ).
+                    icon      = `sap-icon://paper-plane`
+                    press     = client->_event( val = 'POST' )
+                    iconfirst = abap_true ).
 
     page->list(
-      items = client->_bind_edit( mt_feed )
+      items          = client->_bind_edit( mt_feed )
       showseparators = `Inner`
         )->feed_list_item(
-          sender = `{AUTHOR}`
-          senderpress   = client->_event( 'SENDER_PRESS' )
-          iconpress   = client->_event( 'ICON_PRESS' )
-          icondensityaware   = abap_false
-          showicon = abap_false
-          info = `Reply`
-          text = `{TEXT}`
+          sender                   = `{AUTHOR}`
+          senderpress              = client->_event( 'SENDER_PRESS' )
+          iconpress                = client->_event( 'ICON_PRESS' )
+          icondensityaware         = abap_false
+          showicon                 = abap_false
+          info                     = `Reply`
+          text                     = `{TEXT}`
           convertlinkstoanchortags = `All` ).
 
     client->view_display( lo_view->stringify( ) ).

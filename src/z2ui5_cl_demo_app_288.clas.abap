@@ -54,9 +54,9 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
     page_01->header_content(
        )->button( id = `button_hint_id`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'CLICK_HINT_ICON' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'CLICK_HINT_ICON' ) ).
 
     page_01->header_content(
        )->link(
@@ -66,36 +66,42 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
     DATA(page_02) = page_01->page(
                               showheader = abap_false
-                              class = `sapUiContentPadding`
+                              class      = `sapUiContentPadding`
                               )->sub_header(
                                   )->toolbar(
                                       )->toolbar_spacer(
                                       )->select(
                                          forceselection = abap_false
-                                         selectedkey = client->_bind( selected_product )
-                                         items = client->_bind( lt_product_collection )
-                                         )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                                         selectedkey    = client->_bind( selected_product )
+                                         items          = client->_bind( lt_product_collection )
+                                         )->item( key  = '{PRODUCT_ID}'
+                                                  text = '{NAME}'
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
                               )->content(
-                                  )->hbox( justifyContent = `SpaceAround`
+                                  )->hbox( justifycontent = `SpaceAround`
                                       )->select(
-                                            enabled = client->_bind( enabled )
-                                            editable = client->_bind( editable )
+                                            enabled        = client->_bind( enabled )
+                                            editable       = client->_bind( editable )
                                             forceselection = abap_false
-                                            selectedkey = client->_bind( selected_product2 )
-                                            items = client->_bind( lt_product_collection2 )
-                                            )->item( key = '{PRODUCT_ID}' text = '{NAME}'
+                                            selectedkey    = client->_bind( selected_product2 )
+                                            items          = client->_bind( lt_product_collection2 )
+                                            )->item( key  = '{PRODUCT_ID}'
+                                                     text = '{NAME}'
                                       )->get_parent(
                                       )->vbox(
                                           )->hbox( alignitems = `Center`
-                                              )->label( text = `Enabled:` class = `sapUiTinyMarginEnd`
-                                              )->switch( type = `AcceptReject` state = client->_bind( enabled )
+                                              )->label( text  = `Enabled:`
+                                                        class = `sapUiTinyMarginEnd`
+                                              )->switch( type  = `AcceptReject`
+                                                         state = client->_bind( enabled )
                                           )->get_parent(
                                           )->hbox( alignitems = `Center`
-                                              )->label( text = `Editable:` class = `sapUiTinyMarginEnd`
-                                              )->switch( type = `AcceptReject` state = client->_bind( editable )
+                                              )->label( text  = `Editable:`
+                                                        class = `sapUiTinyMarginEnd`
+                                              )->switch( type  = `AcceptReject`
+                                                         state = client->_bind( editable )
                                           )->get_parent(
                                       )->get_parent(
                                   )->get_parent(
@@ -104,14 +110,14 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                   )->toolbar(
                                       )->toolbar_spacer(
                                           )->select(
-                                              forceselection = abap_false
-                                              selectedkey = client->_bind( selected_product3 )
-                                              type = `IconOnly`
-                                              icon = `sap-icon://filter`
+                                              forceselection  = abap_false
+                                              selectedkey     = client->_bind( selected_product3 )
+                                              type            = `IconOnly`
+                                              icon            = `sap-icon://filter`
                                               autoadjustwidth = abap_true
-                                              items = client->_bind( lt_product_collection3 )
-                                              )->item( key = '{PRODUCT_ID}' text = '{NAME}'
-                             ).
+                                              items           = client->_bind( lt_product_collection3 )
+                                              )->item( key  = '{PRODUCT_ID}'
+                                                       text = '{NAME}' ).
 
     client->view_display( page_02->stringify( ) ).
 
@@ -133,15 +139,15 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
   METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Illustrates the usage of a Select in header, footer and content of a page. Note the different display options.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 

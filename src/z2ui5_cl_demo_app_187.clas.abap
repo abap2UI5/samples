@@ -8,6 +8,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+    DATA ls_msg TYPE bapiret2.
 
 
     IF client->check_on_init( ).
@@ -17,7 +18,7 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
             title          = 'abap2UI5 - Popup To Confirm'
             navbuttonpress = client->_event( val = 'BACK' )
             shownavbutton  = client->check_app_prev_stack( )
-       )->button(
+        )->button(
             text  = 'SY'
             press = client->_event( 'SY' )
                 )->button(
@@ -26,7 +27,7 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
                 )->button(
             text  = 'CX_ROOT'
             press = client->_event( 'CX_ROOT' )
-       )->stringify( ) ).
+        )->stringify( ) ).
 
       RETURN.
     ENDIF.
@@ -38,11 +39,9 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
         client->message_box_display( sy ).
 
       WHEN 'BAPIRET'.
-        DATA ls_msg TYPE bapiret2.
 
-*        CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
-*          IMPORTING
-*            return = ls_msg.
+
+
         ls_msg = VALUE #( id = 'NET' number = '001' ).
         client->message_box_display( ls_msg ).
 

@@ -2,23 +2,23 @@ CLASS z2ui5_cl_demo_app_185 DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
 
-  INTERFACES z2ui5_if_app.
+    INTERFACES z2ui5_if_app.
 
-  TYPES:
-    BEGIN OF ty_s_t002,
+    TYPES:
+      BEGIN OF ty_s_t002,
       id    TYPE string,
       count TYPE string,
       table TYPE string,
       class TYPE string,
-    END OF ty_s_t002.
-  TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
+      END OF ty_s_t002.
+    TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
 
-  DATA mv_selectedkey     TYPE string.
-  DATA mv_selectedkey_tmp TYPE string.
-  DATA mt_t002            TYPE ty_t_t002.
-  DATA mo_app             TYPE REF TO object.
+    DATA mv_selectedkey     TYPE string.
+    DATA mv_selectedkey_tmp TYPE string.
+    DATA mt_t002            TYPE ty_t_t002.
+    DATA mo_app             TYPE REF TO object.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
@@ -63,8 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_185 IMPLEMENTATION.
   METHOD on_init.
 
     mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_184'  count = '10' table = 'Z2UI5_T001')
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_184'  count = '12' table = 'Z2UI5_T002')
-                       ).
+                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_184'  count = '12' table = 'Z2UI5_T002') ).
 
     mv_selectedkey = '1'.
 
@@ -86,7 +85,9 @@ CLASS Z2UI5_CL_DEMO_APP_185 IMPLEMENTATION.
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text = line->class count = line->count key = line->id ).
+      lo_items->icon_tab_filter( text  = line->class
+                                 count = line->count
+                                 key   = line->id ).
       lo_items->icon_tab_separator( ).
     ENDLOOP.
 
@@ -96,6 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_185 IMPLEMENTATION.
 
 
   METHOD render_sub_app.
+    FIELD-SYMBOLS <view_display> TYPE any.
 
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
@@ -138,7 +140,7 @@ CLASS Z2UI5_CL_DEMO_APP_185 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    FIELD-SYMBOLS <view_display> TYPE any.
+
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
     IF <view_display> = abap_true.

@@ -37,18 +37,21 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
             title          = 'abap2UI5 - Popup To Select'
             navbuttonpress = client->_event( val = 'BACK' )
             shownavbutton  = client->check_app_prev_stack( )
-       )->hbox(
-       )->text( text = 'Multiselect: ' class = 'sapUiTinyMargin'
-       )->switch( state = client->_bind_edit( mv_multiselect ) change = client->_event( `MULTISELECT_TOGGLE` )
-       )->get_parent(
-       )->hbox(
-       )->text( text = 'Preselect all entries: ' class = 'sapUiTinyMargin'
-       )->switch( state = client->_bind_edit( mv_preselect ) enabled = client->_bind_edit( mv_multiselect )
-       )->get_parent(
-       )->button(
+        )->hbox(
+        )->text( text  = 'Multiselect: '
+                 class = 'sapUiTinyMargin'
+        )->switch( state  = client->_bind_edit( mv_multiselect )
+                   change = client->_event( `MULTISELECT_TOGGLE` )
+        )->get_parent(
+        )->hbox(
+        )->text( text  = 'Preselect all entries: '
+                 class = 'sapUiTinyMargin'
+        )->switch( state   = client->_bind_edit( mv_preselect )
+                   enabled = client->_bind_edit( mv_multiselect )
+        )->get_parent(
+        )->button(
         text  = 'Open Popup...'
-        press = client->_event( 'POPUP' ) )->stringify( )
-        ).
+        press = client->_event( 'POPUP' ) )->stringify( ) ).
 
       RETURN.
     ENDIF.
@@ -68,7 +71,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
                            i_multiselect     = mv_multiselect
                            i_event_confirmed = 'POPUP_CONFIRMED'
                            i_event_canceled  = 'POPUP_CANCEL'
-        ) ).
+          ) ).
 
       WHEN 'POPUP_CANCELED'.
         client->message_box_display( `Popup was cancelled` ).
@@ -80,7 +83,8 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         IF mv_multiselect = abap_false.
           client->message_box_display( `callback after popup to select: ` && lt3[ 1 ]-title ).
         ELSE.
-          client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab = lt3 i_title = 'Selected rows' ) ).
+          client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab   = lt3
+                                                             i_title = 'Selected rows' ) ).
         ENDIF.
 
       WHEN 'MULTISELECT_TOGGLE'.

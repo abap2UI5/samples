@@ -30,7 +30,8 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
   METHOD display_view.
 
-    mo_view_parent->input( value = client->_bind_edit( mv_class_2 ) placeholder = `Input From Class 2` ).
+    mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
+                           placeholder = `Input From Class 2` ).
 
   ENDMETHOD.
 
@@ -49,7 +50,7 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
   METHOD on_init.
 
-*    mv_descr = `data sub app`.
+
     display_view( ).
 
   ENDMETHOD.

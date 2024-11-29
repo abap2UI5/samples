@@ -32,7 +32,8 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding` width = `100%` ).
+    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+                                          width = `100%` ).
     layout->generic_tag(
             arialabelledby = 'genericTagLabel'
             text           = 'Project Cost'

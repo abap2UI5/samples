@@ -39,11 +39,11 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->message_popover(
-            items      = client->_bind( t_msg )
-            groupitems = abap_true
-            placement = `Top`
+            items             = client->_bind( t_msg )
+            groupitems        = abap_true
+            placement         = `Top`
             initiallyexpanded = abap_true
-            beforeclose = client->_event( val = 'POPOVER_CLOSE' )
+            beforeclose       = client->_event( val = 'POPOVER_CLOSE' )
         )->message_item(
             type        = `{TYPE}`
             title       = `{TITLE}`
@@ -51,7 +51,8 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
             description = `{DESCRIPTION}`
             groupname   = `{GROUP}` ).
 
-    client->popover_display( xml = popup->stringify( ) by_id = id ).
+    client->popover_display( xml   = popup->stringify( )
+                             by_id = id ).
 
   ENDMETHOD.
 
@@ -61,12 +62,12 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup = popup->dialog(
-          title = `Messages`
+          title         = `Messages`
           contentheight = '50%'
-          contentwidth = '50%' ).
+          contentwidth  = '50%' ).
 
     popup->message_view(
-            items = client->_bind( t_msg
+            items      = client->_bind( t_msg
              )
             groupitems = abap_true
         )->message_item(
@@ -94,11 +95,12 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
   METHOD z2ui5_display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( ns = `html` name = `style` )->_cc_plain_xml( `.sapMDialogScroll { height:100%; }` ).
+    view->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml( `.sapMDialogScroll { height:100%; }` ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( val = 'BACK' )
+            title           = 'abap2UI5 - List'
+            navbuttonpress  = client->_event( val = 'BACK' )
               shownavbutton = abap_true ).
 *            )->header_content(
 *                )->link(
@@ -108,9 +110,10 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 *
 *
 *            )->get_parent( ).
-    page->button( text = 'Messages in Popup' press = client->_event( 'POPUP' )  ).
+    page->button( text  = 'Messages in Popup'
+                  press = client->_event( 'POPUP' ) ).
     page->message_view(
-        items = client->_bind( t_msg )
+        items      = client->_bind( t_msg )
         groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -121,7 +124,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
          )->button(
-             id = 'test'
+             id    = 'test'
              text  = 'Messages (6)'
              press = client->_event( 'POPOVER' )
              type  = 'Emphasized'

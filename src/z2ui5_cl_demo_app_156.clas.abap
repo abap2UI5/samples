@@ -22,7 +22,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(lv_text) = CAST z2ui5_cl_pop_input_val( lo_prev )->result( )-value.
         client->message_box_display( `the input is ` && lv_text ).
       CATCH cx_root.
@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup Input Value'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

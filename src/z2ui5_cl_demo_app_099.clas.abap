@@ -23,13 +23,13 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION
         selected TYPE abap_bool,
       END OF ty_sort .
 
-    DATA:
+    DATA
       t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
-    DATA:
+    DATA
       t_tab_sort TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY .
-    DATA:
+    DATA
       t_tab_group TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY .
-    DATA:
+    DATA
       t_tab_filter TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY .
     DATA mv_sorter_group TYPE string .
     DATA mv_filter TYPE string .
@@ -185,12 +185,12 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
     t_tab_group = VALUE #(
        ( text = `Title`       key = `title` )
-       ( text = `Info`        key = `info`  )
+       ( text = `Info`        key = `info` )
        ( text = `Description` key = `descr` ) ).
 
     t_tab_sort = VALUE #(
        ( text = `Title`       key = `title` )
-       ( text = `Info`        key = `info`  )
+       ( text = `Info`        key = `info` )
        ( text = `Description` key = `descr` ) ).
 
     t_tab_filter = VALUE #(
@@ -207,30 +207,37 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - List'
-            navbuttonpress = client->_event( 'BACK' )
+            title           = 'abap2UI5 - List'
+            navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
-
-
-            )->get_parent( ).
+      )->get_parent( ).
 
 
     page->table(
-        headertext      = 'Table Output'
-        items           = `{path:'` && client->_bind_edit( val = t_tab path = abap_true )
+        headertext = 'Table Output'
+        items      = `{path:'` && client->_bind_edit( val = t_tab path = abap_true )
                             && `',sorter:{path:'` && mv_sorter_group
                             && `',group:` && `true` && `}`
                             && `,filters:[` && mv_filter && `] }`
        )->header_toolbar(
         )->overflow_toolbar(
-          )->title( text = `Table` level = `H2`
+          )->title( text  = `Table`
+                    level = `H2`
           )->toolbar_spacer(
-          )->button( icon = `sap-icon://sort` tooltip  = `Sort` press = client->_event( `SORT` )
-          )->button( icon = `sap-icon://filter` tooltip  = `Filter` press = client->_event( `FILTER` )
-          )->button( icon = `sap-icon://group-2` tooltip  = `Group` press = client->_event( `GROUP` )
-          )->button( icon = `sap-icon://action-settings` tooltip  = `Group` press = client->_event( `ALL` )
+          )->button( icon    = `sap-icon://sort`
+                     tooltip = `Sort`
+                     press   = client->_event( `SORT` )
+          )->button( icon    = `sap-icon://filter`
+                     tooltip = `Filter`
+                     press   = client->_event( `FILTER` )
+          )->button( icon    = `sap-icon://group-2`
+                     tooltip = `Group`
+                     press   = client->_event( `GROUP` )
+          )->button( icon    = `sap-icon://action-settings`
+                     tooltip = `Group`
+                     press   = client->_event( `ALL` )
          )->get_parent( )->get_parent(
        )->columns(
         )->column( )->text( text = `Title` )->get_parent(
@@ -256,17 +263,20 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
     DATA(popup_filter) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(filter_view) = popup_filter->view_settings_dialog( filteritems = client->_bind_edit( t_tab_filter )
-                                                            confirm = client->_event( val = `CONFIRM_FILTER` t_arg = VALUE #( ( `${$parameters>/filterString}` ) ) )
+                                                            confirm     = client->_event( val = `CONFIRM_FILTER` t_arg = VALUE #( ( `${$parameters>/filterString}` ) ) )
       )->filter_items(
-        )->view_settings_filter_item( multiselect = abap_true text = `{TEXT}` key = `{KEY}`
+        )->view_settings_filter_item( multiselect = abap_true
+                                      text        = `{TEXT}`
+                                      key         = `{KEY}`
           )->items(
-            )->view_settings_item( text = `{TEXT}` key = `{KEY}` )->get_parent(
+            )->view_settings_item( text = `{TEXT}`
+                                   key  = `{KEY}` )->get_parent(
 *            )->view_settings_item( text = `Completed` key = `Completed` )->get_parent(
 *            )->view_settings_item( text = `Incompleted` key = `Incompleted` )->get_parent(
 *            )->view_settings_item( text = `Working` key = `Working`
         ).
 
-    client->popup_display( filter_view->stringify( ) ) .
+    client->popup_display( filter_view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -275,13 +285,14 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
 
     DATA(popup_group) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(group_view) = popup_group->view_settings_dialog( confirm = client->_event( val = `CONFIRM_GROUP` t_arg = VALUE #( ( `${$parameters>/groupItem/mProperties/key}` ) ) )
-                                                          reset = client->_event( `RESET_GROUP` )
+    DATA(group_view) = popup_group->view_settings_dialog( confirm         = client->_event( val = `CONFIRM_GROUP` t_arg = VALUE #( ( `${$parameters>/groupItem/mProperties/key}` ) ) )
+                                                          reset           = client->_event( `RESET_GROUP` )
                                                           groupdescending = client->_bind_edit( mv_group_descending )
-                                                          groupitems = client->_bind_edit( t_tab_group )
+                                                          groupitems      = client->_bind_edit( t_tab_group )
                         )->group_items(
-                          )->view_settings_item( text = `{TEXT}` key = `{KEY}` selected = `{SELECTED}`
-                         ).
+                          )->view_settings_item( text     = `{TEXT}`
+                                                 key      = `{KEY}`
+                                                 selected = `{SELECTED}` ).
 
     client->popup_display( group_view->stringify( ) ).
 
@@ -292,18 +303,25 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(
-                                    confirm = client->_event( 'ALL_EVENT' )
-                                    sortitems = client->_bind_edit( t_tab_sort )
-                                    groupitems = client->_bind_edit( t_tab_group )
+                                    confirm     = client->_event( 'ALL_EVENT' )
+                                    sortitems   = client->_bind_edit( t_tab_sort )
+                                    groupitems  = client->_bind_edit( t_tab_group )
                                     filteritems = client->_bind_edit( t_tab_filter )
                         )->sort_items(
-                          )->view_settings_item( text = `{TEXT}` key = `{KEY}` selected = `{SELECTED}` )->get_parent( )->get_parent(
+                          )->view_settings_item( text     = `{TEXT}`
+                                                 key      = `{KEY}`
+                                                 selected = `{SELECTED}` )->get_parent( )->get_parent(
                         )->group_items(
-                          )->view_settings_item( text = `{TEXT}` key = `{KEY}` selected = `{SELECTED}` )->get_parent( )->get_parent(
+                          )->view_settings_item( text     = `{TEXT}`
+                                                 key      = `{KEY}`
+                                                 selected = `{SELECTED}` )->get_parent( )->get_parent(
                         )->filter_items(
-                          )->view_settings_filter_item( text = `{TEXT}` key = `{KEY}` multiselect = abap_true
+                          )->view_settings_filter_item( text        = `{TEXT}`
+                                                        key         = `{KEY}`
+                                                        multiselect = abap_true
                             )->items(
-                              )->view_settings_item( text = `{TEXT}` key = `{KEY}` ).
+                              )->view_settings_item( text = `{TEXT}`
+                                                     key  = `{KEY}` ).
 
     client->popup_display( popup_settings->stringify( ) ).
 
@@ -315,11 +333,13 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
     DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(sort_view) = popup_sort->view_settings_dialog(
-                                    confirm = client->_event( val = `CONFIRM_SORT` t_arg = VALUE #( ( `${$parameters>/sortItem/mProperties/key}` ) ) )
-                                    sortitems = client->_bind_edit( t_tab_sort )
+                                    confirm        = client->_event( val = `CONFIRM_SORT` t_arg = VALUE #( ( `${$parameters>/sortItem/mProperties/key}` ) ) )
+                                    sortitems      = client->_bind_edit( t_tab_sort )
                                     sortdescending = client->_bind_edit( mv_sort_descending )
                         )->sort_items(
-                          )->view_settings_item( text = `{TEXT}` key = `{KEY}` selected = `{SELECTED}` ).
+                          )->view_settings_item( text     = `{TEXT}`
+                                                 key      = `{KEY}`
+                                                 selected = `{SELECTED}` ).
 
     client->popup_display( sort_view->stringify( ) ).
 

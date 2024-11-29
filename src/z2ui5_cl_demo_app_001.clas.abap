@@ -45,14 +45,13 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD display_view.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( val = view->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    client->view_display( val = view->shell(
            )->page(
                    title          = 'abap2UI5 - First Example'
                    navbuttonpress = client->_event( 'BACK' )
                    shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-
-               )->simple_form( title = 'Form Title' editable = abap_true
+        )->simple_form( title = 'Form Title' editable = abap_true
                    )->content( 'form'
                        )->title( 'Input'
                        )->label( 'quantity'
@@ -81,8 +80,8 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-      product  = 'products'.
-      quantity = '500'.
+    product  = 'products'.
+    quantity = '500'.
 
   ENDMETHOD.
 ENDCLASS.

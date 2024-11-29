@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab .
-    TYPES:
+    TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
 
     DATA mt_table TYPE ty_t_table .
@@ -110,38 +110,41 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->page( id = `page_main`
+    view = view->page( id    = `page_main`
               title          = 'abap2UI5 - List Report Features'
               navbuttonpress = client->_event( 'BACK' )
-              shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-           ).
+              shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     IF mv_check_download = abap_true.
       mv_check_download = abap_false.
 
       DATA(lv_csv) = z2ui5_cl_util=>itab_get_csv_by_itab( mt_table ).
-      data(lv_csv_x) = z2ui5_cl_util=>conv_get_xstring_by_string( lv_csv ).
+      DATA(lv_csv_x) = z2ui5_cl_util=>conv_get_xstring_by_string( lv_csv ).
       DATA(lv_base64) = z2ui5_cl_util=>conv_encode_x_base64( lv_csv_x ).
 
-      view->_generic( ns = `html` name = `iframe` t_prop = VALUE #( ( n = `src` v = `data:text/csv;base64,` && lv_base64 ) ( n = `hidden` v = `hidden` ) ) ).
+      view->_generic( ns     = `html`
+                      name   = `iframe`
+                      t_prop = VALUE #( ( n = `src` v = `data:text/csv;base64,` && lv_base64 ) ( n = `hidden` v = `hidden` ) ) ).
 
     ENDIF.
 
-    DATA(page) = view->dynamic_page( headerexpanded = abap_true  headerpinned = abap_true ).
+    DATA(page) = view->dynamic_page( headerexpanded = abap_true
+                                     headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f'  )->get( )->dynamic_page_title( ).
+    DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
     header_title->heading( ns = 'f' )->hbox( )->title( `Download CSV` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( ns = 'f' ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
-         )->flex_box( alignitems = `Start` justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+         )->flex_box( alignitems     = `Start`
+                      justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text = `Go`
+        text  = `Go`
         press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
+        type  = `Emphasized` ).
 
     DATA(cont) = page->content( ns = 'f' ).
 
@@ -151,9 +154,8 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
             )->toolbar(
                 )->toolbar_spacer(
                 )->button(
-                    icon = 'sap-icon://download'
-                    press = client->_event( 'BUTTON_DOWNLOAD' )
-                ).
+                    icon  = 'sap-icon://download'
+                    press = client->_event( 'BUTTON_DOWNLOAD' ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
@@ -182,8 +184,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
         ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
-    ).
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
 ENDCLASS.

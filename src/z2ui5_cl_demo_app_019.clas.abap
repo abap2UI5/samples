@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_019 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_019 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -26,43 +26,42 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+    IF check_initialized = abap_false.
+      check_initialized = abap_true.
 
-          mv_sel_mode = 'None'.
-          t_tab = VALUE #( descr = 'this is a description'
+      mv_sel_mode = 'None'.
+      t_tab = VALUE #( descr = 'this is a description'
               (  title = 'title_01'  value = 'value_01' )
               (  title = 'title_02'  value = 'value_02' )
               (  title = 'title_03'  value = 'value_03' )
               (  title = 'title_04'  value = 'value_04' )
               (  title = 'title_05'  value = 'value_05' ) ).
 
-        ENDIF.
+    ENDIF.
 
-        CASE client->get( )-event.
-          WHEN 'BUTTON_SEGMENT_CHANGE'.
-            client->message_toast_display( `Selection Mode changed` ).
+    CASE client->get( )-event.
+      WHEN 'BUTTON_SEGMENT_CHANGE'.
+        client->message_toast_display( `Selection Mode changed` ).
 
-          WHEN 'BUTTON_READ_SEL'.
-            t_tab_sel = t_tab.
-            DELETE t_tab_sel WHERE selkz <> abap_true.
+      WHEN 'BUTTON_READ_SEL'.
+        t_tab_sel = t_tab.
+        DELETE t_tab_sel WHERE selkz <> abap_true.
 
-          WHEN 'BACK'.
-            client->nav_app_leave( ).
+      WHEN 'BACK'.
+        client->nav_app_leave( ).
 
-        ENDCASE.
+    ENDCASE.
 
-    data(view) = z2ui5_cl_xml_view=>factory( ).
-        DATA(page) = view->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
             )->page(
                 title          = 'abap2UI5 - Table with different Selection Modes'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-                ).
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-        page->segmented_button(
+    page->segmented_button(
             selected_key     = client->_bind_edit( mv_sel_mode )
             selection_change = client->_event( 'BUTTON_SEGMENT_CHANGE' ) )->get(
                 )->items( )->get(
@@ -79,13 +78,13 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
                         key  = 'SingleSelectMaster'
                         text = 'SingleSelectMaster'
                     )->segmented_button_item(
-                        key = 'MultiSelect'
+                        key  = 'MultiSelect'
                         text = 'MultiSelect' ).
 
-        page->table(
+    page->table(
             headertext = 'Table'
-            mode = mv_sel_mode
-            items = client->_bind_edit( t_tab )
+            mode       = mv_sel_mode
+            items      = client->_bind_edit( t_tab )
             )->columns(
                 )->column( )->text( 'Title' )->get_parent(
                 )->column( )->text( 'Value' )->get_parent(
@@ -98,13 +97,13 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
                         )->text( '{VALUE}'
                         )->text( '{DESCR}' ).
 
-        page->table( client->_bind( t_tab_sel )
+    page->table( client->_bind( t_tab_sel )
             )->header_toolbar(
                 )->overflow_toolbar(
                     )->title( 'Selected Entries'
                     )->button(
-                        icon = 'sap-icon://pull-down'
-                        text = 'copy selected entries'
+                        icon  = 'sap-icon://pull-down'
+                        text  = 'copy selected entries'
                         press = client->_event( 'BUTTON_READ_SEL' )
           )->get_parent( )->get_parent(
           )->columns(
@@ -117,7 +116,7 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
                 )->text( '{VALUE}'
                 )->text( '{DESCR}' ).
 
-  client->view_display( view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

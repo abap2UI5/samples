@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_016 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_016 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool.
 
@@ -14,7 +14,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 DEFINITION PUBLIC.
 
     METHODS render_tab_bar.
 
-    DATA client TYPE REF TO Z2UI5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -31,10 +31,10 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
 
     DATA(container) = view->shell(
         )->page(
-             showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title = 'abap2UI5 - Visualization'
+             showheader    = xsdbool( abap_false = client->get( )-check_launchpad_active )
+            title          = 'abap2UI5 - Visualization'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = abap_true
+            shownavbutton  = abap_true
         )->tab_container( ).
 
     DATA(grid) = container->tab(
@@ -43,8 +43,9 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
         )->grid( 'XL6 L6 M6 S12' ).
 
     grid->link(
-            text = 'Go to the SAP Demos for Interactive bar Charts here...' target = '_blank'
-            href = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.InteractiveBarChart/sample/sap.suite.ui.microchart.sample.InteractiveBarChart'
+            text   = 'Go to the SAP Demos for Interactive bar Charts here...'
+            target = '_blank'
+            href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.InteractiveBarChart/sample/sap.suite.ui.microchart.sample.InteractiveBarChart'
         )->text(
                 text  = 'Absolute and Percentage value'
                 class = 'sapUiSmallMargin'
@@ -62,9 +63,15 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
                 labelwidth       = '25%'
                 displayedbars    = `4`
             )->bars( ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel1 ) label = 'Product 1' value = '10' ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel2 ) label = 'Product 2' value = '20' ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel3 ) label = 'Product 3' value = '70' ).
+    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel1 )
+                                 label    = 'Product 1'
+                                 value    = '10' ).
+    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel2 )
+                                 label    = 'Product 2'
+                                 value    = '20' ).
+    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel3 )
+                                 label    = 'Product 3'
+                                 value    = '70' ).
 
     bar = grid->flex_box(
             width      = '22rem'
@@ -74,9 +81,15 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
         )->items( )->interact_bar_chart(
                 selectionchanged = client->_event( 'BAR_CHANGED' )
             )->bars( ).
-    bar->interact_bar_chart_bar( label = 'Product 1' value = '10' displayedvalue = '10%' ).
-    bar->interact_bar_chart_bar( label = 'Product 2' value = '20' displayedvalue = '20%' ).
-    bar->interact_bar_chart_bar( label = 'Product 3' value = '70' displayedvalue = '70%' ).
+    bar->interact_bar_chart_bar( label          = 'Product 1'
+                                 value          = '10'
+                                 displayedvalue = '10%' ).
+    bar->interact_bar_chart_bar( label          = 'Product 2'
+                                 value          = '20'
+                                 displayedvalue = '20%' ).
+    bar->interact_bar_chart_bar( label          = 'Product 3'
+                                 value          = '70'
+                                 displayedvalue = '70%' ).
 
     bar = grid->vertical_layout(
         )->layout_data( 'layout'
@@ -95,28 +108,26 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
                 press            = client->_event( 'BAR_PRESS' )
                 labelwidth       = '25%'
             )->bars( ).
-    bar->interact_bar_chart_bar( label = 'Product 1' value = '25' ).
-    bar->interact_bar_chart_bar( label = 'Product 2' value = '-50' ).
-    bar->interact_bar_chart_bar( label = 'Product 3' value = '-100' ).
+    bar->interact_bar_chart_bar( label = 'Product 1'
+                                 value = '25' ).
+    bar->interact_bar_chart_bar( label = 'Product 2'
+                                 value = '-50' ).
+    bar->interact_bar_chart_bar( label = 'Product 3'
+                                 value = '-100' ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-*      DATA(lv_version) = to_upper( client->get( )-s_config-version ).
-*      IF lv_version CS `OPEN`.
-*        client->message_box_display( text = `Charts are not available with OpenUI5, change your UI5 library first` type = `error` ).
-*        client->nav_app_leave( ).
-*        return.
-*      ENDIF.
+
 
       render_tab_bar( ).
     ENDIF.

@@ -32,18 +32,19 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
         RETURN.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
 
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
           )->page(
-                 showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
+                 showheader      = xsdbool( abap_false = client->get( )-check_launchpad_active )
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-              )->simple_form( title = 'Information' editable = abap_true
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+              )->simple_form( title    = 'Information'
+                              editable = abap_true
                   )->content( 'form'
                       )->label( 'mv_scan_input'
                       )->input( client->_bind_edit( mv_scan_input )
@@ -51,8 +52,8 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                       )->input( client->_bind_edit( mv_scan_type )
                       )->label( `scanner`
                       )->barcode_scanner_button(
-                        scansuccess     = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
-                        dialogtitle     = `Barcode Scanner`
+                        scansuccess = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
+                        dialogtitle = `Barcode Scanner`
            )->stringify( ) ).
 
   ENDMETHOD.

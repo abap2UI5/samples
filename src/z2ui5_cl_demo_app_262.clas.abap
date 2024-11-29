@@ -1,12 +1,12 @@
-class z2ui5_cl_demo_app_262 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_262 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,7 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
 
 
-  METHOD DISPLAY_VIEW.
+  METHOD display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
 
     page->header_content(
        )->button( id = `hint_icon`
-           icon = `sap-icon://hint`
-           tooltip = `Sample information`
-           press = client->_event( 'POPOVER' ) ).
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( 'POPOVER' ) ).
 
     page->header_content(
        )->link(
@@ -49,27 +49,47 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentDifColors' ).
 
-    page->numeric_content( value = `888.8` scale = `MM` class = `sapUiSmallMargin`
-                             press = client->_event( 'press' ) truncatevalueto = `4` ).
-    page->numeric_content( value = `65.5` scale = `MM`
-                             valueColor = `Good` indicator = `Up` class = `sapUiSmallMargin`
-                             press = client->_event( 'press' ) ).
-    page->numeric_content( value = `6666` scale = `MM`
-                             valueColor = `Critical` indicator = `Up` class = `sapUiSmallMargin`
-                             press = client->_event( 'press' ) ).
-    page->numeric_content( value = `65.5` scale = `MMill`
-                             valueColor = `Error` indicator = `Down` class = `sapUiSmallMargin`
-                             press = client->_event( 'press' ) ).
-    page->generic_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout` header = `Country-Specific Profit Margin` subheader = `Expenses` press = client->_event( 'press' )
-             )->tile_content( unit = `EUR` footer = `Current Quarter`
-                 )->numeric_content( scale = `M` value = `1.96` valueColor = `Error` indicator = `Up` withMargin = abap_false ).
+    page->numeric_content( value           = `888.8`
+                           scale           = `MM`
+                           class           = `sapUiSmallMargin`
+                             press         = client->_event( 'press' )
+                           truncatevalueto = `4` ).
+    page->numeric_content( value        = `65.5`
+                           scale        = `MM`
+                             valuecolor = `Good`
+                           indicator    = `Up`
+                           class        = `sapUiSmallMargin`
+                             press      = client->_event( 'press' ) ).
+    page->numeric_content( value        = `6666`
+                           scale        = `MM`
+                             valuecolor = `Critical`
+                           indicator    = `Up`
+                           class        = `sapUiSmallMargin`
+                             press      = client->_event( 'press' ) ).
+    page->numeric_content( value        = `65.5`
+                           scale        = `MMill`
+                             valuecolor = `Error`
+                           indicator    = `Down`
+                           class        = `sapUiSmallMargin`
+                             press      = client->_event( 'press' ) ).
+    page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
+                        header    = `Country-Specific Profit Margin`
+                        subheader = `Expenses`
+                        press     = client->_event( 'press' )
+             )->tile_content( unit   = `EUR`
+                              footer = `Current Quarter`
+                 )->numeric_content( scale      = `M`
+                                     value      = `1.96`
+                                     valuecolor = `Error`
+                                     indicator  = `Up`
+                                     withmargin = abap_false ).
 
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD ON_EVENT.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -83,24 +103,24 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+  METHOD z2ui5_display_popover.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
                                   description = `Shows NumericContent including numbers, units of measurement, and status arrows indicating a trend. ` &&
                                                 `The numbers can be colored according to their meaning.` ).
 
     client->popover_display(
       xml   = view->stringify( )
-      by_id = id
-    ).
+      by_id = id ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     me->client = client.
 

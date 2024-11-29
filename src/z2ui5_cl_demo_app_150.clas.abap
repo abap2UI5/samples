@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(lv_confirm_result) = CAST z2ui5_cl_pop_to_confirm( lo_prev )->result( ).
         client->message_box_display( `the result is ` && lv_confirm_result ).
       CATCH cx_root.
@@ -52,7 +52,7 @@ CLASS Z2UI5_CL_DEMO_APP_150 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Confirm'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

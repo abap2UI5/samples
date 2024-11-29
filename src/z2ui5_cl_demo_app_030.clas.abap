@@ -1,8 +1,8 @@
-CLASS Z2UI5_CL_DEMO_APP_030 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -25,12 +25,12 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
 
-          t_tab = VALUE #(
+      t_tab = VALUE #(
             ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
             ( title = 'Peter'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
             ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
@@ -50,8 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
             ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
             ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
             ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-            ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-          ).
+            ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
 
     ENDIF.
 
@@ -78,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
         showfooter = abap_true
        "  headerExpanded = abap_true
       "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
-     ).
+      ).
 
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
@@ -103,38 +102,47 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
              type    = 'Emphasized'
              tooltip = 'pull-down'
          )->overflow_toolbar_button(
-             icon = `sap-icon://show`
-             text = 'show state'
+             icon    = `sap-icon://show`
+             text    = 'show state'
              tooltip = 'show'
          )->button(
             " icon = `sap-icon://edit`
-             text = 'Go Back'
-             press = client->_event( 'BACK' )
-         ).
+             text  = 'Go Back'
+             press = client->_event( 'BACK' ) ).
 
     header_title->navigation_actions(
-            )->button( icon = 'sap-icon://full-screen' type  = 'Transparent'
-            )->button( icon = 'sap-icon://exit-full-screen' type  = 'Transparent'
-            )->button( icon = 'sap-icon://decline' type  = 'Transparent'
-    ).
+            )->button( icon = 'sap-icon://full-screen'
+                       type = 'Transparent'
+            )->button( icon = 'sap-icon://exit-full-screen'
+                       type = 'Transparent'
+            )->button( icon = 'sap-icon://decline'
+                       type = 'Transparent' ).
 
-     page->header( )->dynamic_page_header(  pinnable = abap_true
+    page->header( )->dynamic_page_header( pinnable = abap_true
         )->horizontal_layout(
             )->vertical_layout(
-                   )->object_attribute( title = 'Location' text = 'Warehouse A'
-                   )->object_attribute( title = 'Halway' text = '23L'
-                   )->object_attribute( title = 'Rack' text = '34'
+                   )->object_attribute( title = 'Location'
+                                        text  = 'Warehouse A'
+                   )->object_attribute( title = 'Halway'
+                                        text  = '23L'
+                   )->object_attribute( title = 'Rack'
+                                        text  = '34'
              )->get_parent(
                )->vertical_layout(
-                    )->object_attribute( title = 'Location' text = 'Warehouse A'
-                    )->object_attribute( title = 'Halway' text = '23L'
-                    )->object_attribute( title = 'Rack' text = '34'
+                    )->object_attribute( title = 'Location'
+                                         text  = 'Warehouse A'
+                    )->object_attribute( title = 'Halway'
+                                         text  = '23L'
+                    )->object_attribute( title = 'Rack'
+                                         text  = '34'
              )->get_parent(
               )->vertical_layout(
-                   )->object_attribute( title = 'Location' text = 'Warehouse A'
-                   )->object_attribute( title = 'Halway' text = '23L'
-                   )->object_attribute( title = 'Rack' text = '34'
-             ).
+                   )->object_attribute( title = 'Location'
+                                        text  = 'Warehouse A'
+                   )->object_attribute( title = 'Halway'
+                                        text  = '23L'
+                   )->object_attribute( title = 'Rack'
+                                        text  = '34' ).
 
 
     DATA(cont) = page->content( ns = 'f' ).
@@ -149,7 +157,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
              info        = '{INFO}' ).
 
 
-        page->footer( ns = `f` )->overflow_toolbar(
+    page->footer( ns = `f` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = 'edit header'
@@ -159,8 +167,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
                  icon    = `sap-icon://pull-down`
                  text    = 'show section'
                  type    = 'Emphasized'
-                 tooltip = 'pull-down'
-                 ).
+                 tooltip = 'pull-down' ).
 
     client->view_display( page->stringify( ) ).
 

@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 
-*      client->timer_set( client->_event( ) ).
+
       RETURN.
     ENDIF.
 
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         RETURN.
 
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
 
     ENDCASE.
@@ -59,11 +59,12 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
               )->_z2ui5( )->timer(
                                         finished = client->_event( `TIMER_FINISHED` )
                                         delayms  = `2000`
-              )->simple_form( title = 'Timer Interval 2000 ms' editable = abap_true
+              )->simple_form( title    = 'Timer Interval 2000 ms'
+                              editable = abap_true
                   )->content( 'form'
            )->stringify( ) ).
 

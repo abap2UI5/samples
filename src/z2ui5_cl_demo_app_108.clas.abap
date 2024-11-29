@@ -1,28 +1,28 @@
-class Z2UI5_CL_DEMO_APP_108 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_108 DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
 
-  interfaces Z2UI5_IF_APP .
+    INTERFACES z2ui5_if_app .
 
-  data:
-    BEGIN OF screen,
+    DATA:
+      BEGIN OF screen,
         input1 TYPE string,
         input2 TYPE string,
         input3 TYPE string,
       END OF screen .
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
-    METHODS Z2UI5_on_rendering
+    METHODS z2ui5_on_rendering
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_event
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_event
       IMPORTING
-        client TYPE REF TO Z2UI5_if_client.
-    METHODS Z2UI5_on_init.
+        client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -32,20 +32,20 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
 
 
-  METHOD Z2UI5_IF_APP~MAIN.
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      Z2UI5_on_init( ).
-      Z2UI5_on_rendering( client ).
+      z2ui5_on_init( ).
+      z2ui5_on_rendering( client ).
     ENDIF.
 
-    Z2UI5_on_event( client ).
+    z2ui5_on_event( client ).
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_EVENT.
+  METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
 
@@ -62,17 +62,17 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_INIT.
+  METHOD z2ui5_on_init.
 
   ENDMETHOD.
 
 
-  METHOD Z2UI5_ON_RENDERING.
+  METHOD z2ui5_on_rendering.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Side Panel Example'
-            navbuttonpress = client->_event( 'BACK' )
+            title           = 'abap2UI5 - Side Panel Example'
+            navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
     page->header_content(
@@ -94,21 +94,26 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
                         `officia deserunt mollit anim id est laborum`
                         )->get_parent(
           )->items( ns = `f`
-            )->side_panel_item( icon = `sap-icon://physical-activity` text = `Run`
+            )->side_panel_item( icon = `sap-icon://physical-activity`
+                                text = `Run`
               )->vbox(
-                )->text( text = `Static Content` class = `sapUiSmallMarginBottom`
+                )->text( text  = `Static Content`
+                         class = `sapUiSmallMarginBottom`
                 )->switch(
                 )->button( text = `Press Me`
               )->get_parent(
              )->get_parent(
-           )->side_panel_item( icon = `sap-icon://addresses` text = `Go Home`
+           )->side_panel_item( icon = `sap-icon://addresses`
+                               text = `Go Home`
             )->vbox(
-              )->text( text = `Static Content` class = `sapUiSmallMarginBottom`
+              )->text( text  = `Static Content`
+                       class = `sapUiSmallMarginBottom`
               )->button( text = `Press Me`
               )->button( text = `Hit Me`
             )->get_parent(
            )->get_parent(
-          )->side_panel_item( icon = `sap-icon://flight` text = `Fly abroad` ).
+          )->side_panel_item( icon = `sap-icon://flight`
+                              text = `Fly abroad` ).
 
     client->view_display( page->stringify( ) ).
 

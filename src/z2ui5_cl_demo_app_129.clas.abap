@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION
         key  TYPE string,
         text TYPE string,
       END OF s_combobox .
-    TYPES:
+    TYPES
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY .
     DATA lv_text TYPE string.
     DATA:
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION
         check_switch_01 TYPE abap_bool VALUE abap_false,
         check_switch_02 TYPE abap_bool VALUE abap_false,
       END OF screen .
-    DATA:
+    DATA
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY .
     DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
@@ -81,22 +81,17 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'REFRESH'.
         lv_text = lv_text + 10.
-*        client->timer_set(
-*            interval_ms    = `3000`
-*            event_finished = client->_event( 'REFRESH' )
-*        ).
 
-       client->view_model_update( ).
+
+        client->view_model_update( ).
 
       WHEN 'BUTTON_SEND'.
-*        client->message_box_display( 'success - values send to the server' ).
+
         z2ui5_on_rendering_popup( client ).
       WHEN 'BUTTON_POPOVER'.
-        z2ui5_on_rendering_popover( client = client id = 'ppvr' ).
-*        client->timer_set(
-*                interval_ms    = `3000`
-*                event_finished = client->_event( 'REFRESH' )
-*        ).
+        z2ui5_on_rendering_popover( client = client
+                                    id     = 'ppvr' ).
+
       WHEN 'BACK'.
         client->nav_app_leave( ).
 
@@ -132,17 +127,16 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
-    page->_z2ui5( )->timer( finished = client->_event( 'REFRESH' ) checkrepeat = abap_true delayms = `3000` ).
+    page->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
+                            checkrepeat = abap_true
+                            delayms     = `3000` ).
 
-*    client->timer_set(
-*        interval_ms    = `3000`
-*        event_finished = client->_event( 'REFRESH' )
-*    ).
+
 
     page = page->shell(
          )->page(
-            title          = 'abap2UI5 - Selection-Screen Example'
-            navbuttonpress = client->_event( 'BACK' )
+            title           = 'abap2UI5 - Selection-Screen Example'
+            navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
@@ -154,7 +148,7 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
          )->toolbar_spacer(
          )->button(
-             id = `ppvr`
+             id    = `ppvr`
              text  = 'Open Popover'
              press = client->_event( val = 'BUTTON_POPOVER' t_arg = VALUE #( ( `${$source>/sId}` ) ) )
              type  = 'Ghost'
@@ -172,7 +166,8 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
     popover->text( text = 'this is popover in middle with timer auto refresh' ).
-    client->popover_display( xml = popover->stringify( ) by_id = id ).
+    client->popover_display( xml   = popover->stringify( )
+                             by_id = id ).
   ENDMETHOD.
 
 
@@ -181,7 +176,8 @@ CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( )->dialog( ).
 
     dialog->text( text = 'this is popup in middle with timer auto refresh' ).
-    dialog->button( text = 'close' press = client->_event_client( client->cs_event-popup_close ) ).
+    dialog->button( text  = 'close'
+                    press = client->_event_client( client->cs_event-popup_close ) ).
     client->popup_display( dialog->stringify( ) ).
 
   ENDMETHOD.

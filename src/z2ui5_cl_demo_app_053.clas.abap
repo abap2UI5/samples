@@ -76,9 +76,9 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page( id = `page_main`
-            title          = 'abap2UI5 - Search with Enter'
-            navbuttonpress = client->_event( 'BACK' )
-            shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            title                         = 'abap2UI5 - Search with Enter'
+            navbuttonpress                = client->_event( 'BACK' )
+            shownavbutton                 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(vbox) = page->vbox( ).
 
@@ -89,9 +89,9 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` )->button(
-        text = `Go`
+        text  = `Go`
         press = client->_event( `BUTTON_START` )
-        type = `Emphasized` ).
+        type  = `Emphasized` ).
 
     DATA(tab) = vbox->table( items = client->_bind( val = mt_table ) ).
 
@@ -122,8 +122,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 )
-    ).
+        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
 
@@ -136,8 +135,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         EXPORTING
           val = mv_search_value
         CHANGING
-          tab = mt_table
-      ).
+          tab = mt_table ).
 
     ENDIF.
 

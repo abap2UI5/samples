@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Text Edit'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get(  )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(lv_text) = CAST z2ui5_cl_pop_textedit( lo_prev )->result( )-text.
         client->message_box_display( `the result is ` && lv_text ).
       CATCH cx_root.
