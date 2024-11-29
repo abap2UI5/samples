@@ -51,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_040 IMPLEMENTATION.
     CASE app-get-event.
 
       WHEN 'LOAD_BC'.
-        client->message_box_display( 'JSBarcode Library loaded').
+        client->message_box_display( 'JSBarcode Library loaded' ).
         mv_load_lib = abap_true.
 
       WHEN 'BACK'.
