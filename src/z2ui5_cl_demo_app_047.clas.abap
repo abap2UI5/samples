@@ -37,12 +37,15 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.
-      date = sy-datum.
-      time = sy-uzeit.
+*      date = sy-datum.
+      date = cl_abap_context_info=>get_system_date( ).
+*      time = sy-uzeit.
+      time = cl_abap_context_info=>get_system_time( ).
       dec1 = - 1 / 3.
       dec2 = 2 / 3.
 
-      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+*      mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
+      mt_tab = VALUE #( ( date = cl_abap_context_info=>get_system_date( ) time = cl_abap_context_info=>get_system_time( ) ) ).
       client->_bind_edit( mt_tab ).
     ENDIF.
 
