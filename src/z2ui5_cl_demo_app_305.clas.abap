@@ -4,21 +4,16 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
-
+    INTERFACES z2ui5_if_app.
     TYPES:
       BEGIN OF ty_row,
         title TYPE string,
         value TYPE string,
-      END OF ty_row .
-
-    DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      END OF ty_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-
     METHODS set_view.
 
 ENDCLASS.
