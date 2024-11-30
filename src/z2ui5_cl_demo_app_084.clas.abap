@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      actions          = VALUE #( ( `First Button` ) ( `Second Button` ) )
                                      emphasizedaction = `First Button`
                                      onclose          = `callMessageToast()`
-                                     details          = `<h3>these are details</h3>`).
+                                     details          = `<h3>these are details</h3>` ).
       WHEN 'BUTTON_MCONFIRM'.
         client->message_box_display( type = 'confirm'
                                      text = 'Confirm MessageBox' ).
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         date            = '07.12.22'
         date_time       = '23.12.2022, 19:27:20'
         time_start      = '05:24:00'
-        time_end        = '17:23:57').
+        time_end        = '17:23:57' ).
 
     mt_suggestion = VALUE #(
         ( descr = 'Green'  value = 'GREEN' )
