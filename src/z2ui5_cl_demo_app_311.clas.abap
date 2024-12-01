@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_311 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -31,7 +31,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_311 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_popover.
@@ -95,6 +95,8 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
   METHOD z2ui5_display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    view->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml( `.sapMDialogScroll { height:100%; }` ).
     DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - List'
