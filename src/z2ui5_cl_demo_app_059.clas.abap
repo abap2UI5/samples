@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mv_search_value TYPE string.
+*    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
   PROTECTED SECTION.
@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
 
     METHODS z2ui5_on_event.
-    METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
 
@@ -61,7 +60,12 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
       WHEN 'BUTTON_SEARCH'.
         z2ui5_set_data( ).
-        z2ui5_set_search( ).
+        z2ui5_cl_util=>itab_filter_by_val(
+            EXPORTING
+                val = client->get_event_arg( 1 )
+            CHANGING
+                tab = mt_table ).
+
         client->view_model_update( ).
 
       WHEN 'BACK'.
@@ -85,32 +89,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
-
-    IF client->get_event_arg( 1 ) IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-      DATA(lv_row) = ``.
-      DATA(lv_index) = 1.
-      DO.
-        ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-        IF sy-subrc <> 0.
-          EXIT.
-        ENDIF.
-        lv_row = lv_row && <field>.
-        lv_index = lv_index + 1.
-      ENDDO.
-
-      IF lv_row NS mv_search_value.
-        DELETE mt_table.
-      ENDIF.
-    ENDLOOP.
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -120,17 +98,13 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
             navbuttonpress                 = client->_event( 'BACK' )
             shownavbutton                  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-    DATA(ls_cnt) = VALUE z2ui5_if_types=>ty_s_event_control( check_allow_multi_req = abap_true ).
-    DATA(lo_box) = page1->vbox( )->text( `Search` )->search_field(
-         livechange = client->_event(
+    DATA(lo_box) = page1->vbox( )->text( `Search`
+        )->search_field(  width  = `17.5rem` livechange = client->_event(
             val    = 'BUTTON_SEARCH'
             t_arg  = VALUE #( ( `${$source>/value}` ) )
-            s_ctrl = ls_cnt
-            )
-         width      = `17.5rem` ).
+            s_ctrl = VALUE #( check_allow_multi_req = abap_true ) )  ).
 
     DATA(tab) = lo_box->table( client->_bind( mt_table ) ).
-
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).

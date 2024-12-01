@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_008 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_310 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
@@ -13,7 +13,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -71,6 +71,8 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    view->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml( `.my-style{ background: black !important; opacity: 0.6; color: white; }` ).
 
     DATA(page) = view->shell(
         )->page(

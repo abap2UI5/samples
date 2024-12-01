@@ -34,9 +34,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.
 
-    " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(ls_get) = client->get( ).
-
     IF client->get( )-check_on_navigated = abap_true.
       IF mt_scroll IS INITIAL.
         mt_scroll = VALUE #( ( n = `page` ) ).
@@ -284,12 +281,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-    panel->generic_tile( header    = 'Messages'
-                         subheader = 'More...'
-                         press     = client->_event( 'z2ui5_cl_demo_app_084' )
-                         mode      = 'LineMode'
-                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-  ).
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
@@ -1601,6 +1592,42 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          expanded   = client->_bind_edit( ms_check_expanded-extensions )
                          headertext = `Custom Extensions`
      ).
+
+    panel = page->panel( expandable = abap_false
+                         expanded   = abap_true
+                         headertext = `JS`
+          ).
+
+   panel->generic_tile( header    = 'Follow Up Action with JS Function'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_309' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+    panel = page->panel( expandable = abap_false
+                         expanded   = abap_true
+                         headertext = `CSS`
+      ).
+
+   panel->generic_tile( header    = 'Messages with Styles I'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_310' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+       panel->generic_tile( header    =  'Messages with Styles II'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_311' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
+
+    panel->generic_tile( header    = 'Messages with Styles III'
+                         subheader = 'More...'
+                         press     = client->_event( 'z2ui5_cl_demo_app_084' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+  ).
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
