@@ -1818,7 +1818,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
-   panel->generic_tile( header    = 'VizFrame Charts'
+    panel->generic_tile( header    = 'VizFrame Charts'
                          subheader = ``
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_312' )
                          mode      = 'LineMode'
@@ -1932,6 +1932,20 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile( header    = 'Gantt Chart with Relationships'
                          subheader = ``
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_179' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
+     panel->generic_tile( header    = 'Growing Table with OData'
+                         subheader = ``
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_314' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
+      panel->generic_tile( header    = 'Smart Controls with Variants'
+                         subheader = ``
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_313' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
