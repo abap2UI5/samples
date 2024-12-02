@@ -17,8 +17,8 @@ public section.
     tt_data_chart TYPE STANDARD TABLE OF ts_data_chart WITH DEFAULT KEY .
   types:
     BEGIN OF ts_combobox,
-        key  TYPE stringval,
-        text TYPE stringval,
+        key  TYPE string,
+        text TYPE string,
       END OF ts_combobox .
   types:
     tt_combobox TYPE STANDARD TABLE OF ts_combobox WITH KEY key .
