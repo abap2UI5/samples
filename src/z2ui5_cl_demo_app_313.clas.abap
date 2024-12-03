@@ -68,47 +68,7 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
         enableautobinding       = abap_true
     ).
 
-*      page->_cc_plain_xml(   `     <smartFilterBar:SmartFilterBar ` && |\n|  &&
-*                             `     id="smartFilterBar"` && |\n|  &&
-*                             `     entitySet="BookingSupplement" persistencyKey="SmartFilterPKey" >` && |\n|  &&
-*                             `     <smartFilterBar:controlConfiguration>` && |\n|  &&
-*                             `         <smartFilterBar:ControlConfiguration` && |\n|  &&
-*                             `             key="TravelID" visibleInAdvancedArea="true"` && |\n|  &&
-*                             `             preventInitialDataFetchInValueHelpDialog="false">` && |\n|  &&
-*                             `         </smartFilterBar:ControlConfiguration>` && |\n|  &&
-*                            `     </smartFilterBar:controlConfiguration>` && |\n|  &&
-*                             ` </smartFilterBar:SmartFilterBar> <smartTable:SmartTable ` && |\n|  &&
-*       `       id="smartTable_ResponsiveTable"` && |\n|  &&
-*       `       smartFilterId="smartFilterBar" ` && |\n|  &&
-*       `       tableType="ResponsiveTable" ` && |\n|  &&
-*       `       editable="false"` && |\n|  &&
-*       `       initiallyVisibleFields="TravelID,BookingID"` && |\n|  &&
-*       `       entitySet="BookingSupplement" ` && |\n|  &&
-*       `       useVariantManagement="true"` && |\n|  &&
-*       `       useExportToExcel="true"` && |\n|  &&
-*       `       useTablePersonalisation="true" ` && |\n|  &&
-*       `       header="Test" ` && |\n|  &&
-*       `       showRowCount="true"` && |\n|  &&
-*       `       enableExport="false" ` && |\n|  &&
-*       `       enableAutoBinding="true">` && |\n|  &&
-*       `</smartTable:SmartTable>` ).
-**       `   <smartForm:SmartForm editable="true">` && |\n|  &&
-*       `       <smartForm:layout>` && |\n|  &&
-*       `           <smartForm:ColumnLayout ` && |\n|  &&
-*       `               emptyCellsLarge="4"` && |\n|  &&
-*       `               labelCellsLarge="4"` && |\n|  &&
-*       `               columnsM="1"` && |\n|  &&
-*       `               columnsL="1"` && |\n|  &&
-*       `               columnsXL="1"/>` && |\n|  &&
-*       `       </smartForm:layout>` && |\n|  &&
-*       `       <smartForm:Group>` && |\n|  &&
-*       `           <smartForm:GroupElement>` && |\n|  &&
-*       `               <smartField:SmartField value="{City}" id="idPrice"/>` && |\n|  &&
-*       `           </smartForm:GroupElement>` && |\n|  &&
-*       `       </smartForm:Group>` && |\n|  &&
-*       `   </smartForm:SmartForm>` ).
-
-      client->view_display( val = view->stringify( ) switchdefaultmodel = abap_true ).
+      client->view_display( val = view->stringify( ) switchdefaultmodel = 'test' ).
     ENDIF.
 
     CASE client->get( )-event.

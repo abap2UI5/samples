@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION
     DATA mv_prop           TYPE string.
     DATA mt_feed_values    TYPE TABLE OF string.
     DATA check_initialized TYPE abap_bool.
-    DATA mt_viztypes       TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA mt_viztypes       TYPE z2ui5_if_types=>ty_t_name_value..
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
