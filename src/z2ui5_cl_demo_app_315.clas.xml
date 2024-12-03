@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_314</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_315</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>tab - odata, device, http</DESCRIPT>
+    <DESCRIPT>tab -different odata models</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
