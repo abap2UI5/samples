@@ -789,7 +789,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ).
 
     panel->generic_tile( header    = 'URL Helper'
-                         subheader = `T rigger a phone's native apps like Email, Telephone and SMS`
+                         subheader = `Trigger a phone's native apps like Email, Telephone and SMS`
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_316' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
