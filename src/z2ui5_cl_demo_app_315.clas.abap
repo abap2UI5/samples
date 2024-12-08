@@ -24,71 +24,61 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
 
      data(tab) = page->table(
         items = `{TRAVEL>/BookingSupplement}`
-        growing = abap_true
-         ).
+        growing = abap_true ).
 
-             tab->header_toolbar(
-        )->toolbar(
-            )->title( 'table with odata model' ).
+    tab->header_toolbar( )->toolbar(
+      )->title( 'table with odata model' ).
 
-      tab->columns(
-          )->column(  )->text( 'TravelID' )->get_parent(
-          )->column( )->text( 'BookingID' )->get_parent(
-          )->column( )->text( 'BookingSupplementID' )->get_parent(
-          )->column( )->text( 'SupplementID' )->get_parent(
-          )->column( )->text( 'SupplementText' )->get_parent(
-          )->column( )->text( 'Price' )->get_parent(
-          )->column( )->text( 'CurrencyCode' )->get_parent(
-          ).
+    tab->columns(
+      )->column(  )->text( 'TravelID' )->get_parent(
+      )->column( )->text( 'BookingID' )->get_parent(
+      )->column( )->text( 'BookingSupplementID' )->get_parent(
+      )->column( )->text( 'SupplementID' )->get_parent(
+      )->column( )->text( 'SupplementText' )->get_parent(
+      )->column( )->text( 'Price' )->get_parent(
+      )->column( )->text( 'CurrencyCode' )->get_parent( ).
 
-      tab->items( )->column_list_item( )->cells(
-         )->text( '{TRAVEL>TravelID}'
-         )->text( '{TRAVEL>BookingID}'
-         )->text( '{TRAVEL>BookingSupplementID}'
-         )->text( '{TRAVEL>SupplementID}'
-         )->text( '{TRAVEL>SupplementText}'
-         )->text( '{TRAVEL>Price}'
-         )->text( '{TRAVEL>CurrencyCode}'
-         ).
+    tab->items( )->column_list_item( )->cells(
+      )->text( '{TRAVEL>TravelID}'
+      )->text( '{TRAVEL>BookingID}'
+      )->text( '{TRAVEL>BookingSupplementID}'
+      )->text( '{TRAVEL>SupplementID}'
+      )->text( '{TRAVEL>SupplementText}'
+      )->text( '{TRAVEL>Price}'
+      )->text( '{TRAVEL>CurrencyCode}' ).
 
-     tab = page->table(
-        items = `{FLIGHT>/Airport}`
-        growing = abap_true
-         ).
+    tab = page->table(
+      items = `{FLIGHT>/Airport}`
+      growing = abap_true ).
 
-             tab->header_toolbar(
-        )->toolbar(
-            )->title( 'table with odata model' ).
+    tab->header_toolbar( )->toolbar(
+      )->title( 'table with odata model' ).
 
-      tab->columns(
-          )->column(  )->text( 'AirportID' )->get_parent(
-          )->column( )->text( 'Name' )->get_parent(
-          )->column( )->text( 'City' )->get_parent(
-          )->column( )->text( 'CountryCode' )->get_parent(
-          ).
+    tab->columns(
+      )->column(  )->text( 'AirportID' )->get_parent(
+      )->column( )->text( 'Name' )->get_parent(
+      )->column( )->text( 'City' )->get_parent(
+      )->column( )->text( 'CountryCode' )->get_parent( ).
 
-      tab->items( )->column_list_item( )->cells(
-         )->text( '{FLIGHT>AirportID}'
-         )->text( '{FLIGHT>Name}'
-         )->text( '{FLIGHT>City}'
-         )->text( '{FLIGHT>CountryCode}'
-         ).
+    tab->items( )->column_list_item( )->cells(
+      )->text( '{FLIGHT>AirportID}'
+      )->text( '{FLIGHT>Name}'
+      )->text( '{FLIGHT>City}'
+      )->text( '{FLIGHT>CountryCode}' ).
 
-      client->view_display( val = view->stringify( ) switchdefaultmodel = `` ).
+    client->view_display( val = view->stringify( ) switchdefaultmodel = `` ).
 
-       client->follow_up_action( client->_event_client(
-            val = z2ui5_if_client=>cs_event-set_odata_model
-            t_arg = value #(
-                ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-                ( `TRAVEL` )
-                 ) ) ).
+    client->follow_up_action( client->_event_client(
+      val = z2ui5_if_client=>cs_event-set_odata_model
+      t_arg = value #(
+        ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
+        ( `TRAVEL` ) ) ) ).
 
-       client->follow_up_action( client->_event_client(
-            val = z2ui5_if_client=>cs_event-set_odata_model
-            t_arg = value #(
-                ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
-                ( `FLIGHT` )
-                 ) ) ).
+    client->follow_up_action( client->_event_client(
+      val = z2ui5_if_client=>cs_event-set_odata_model
+      t_arg = value #(
+        ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
+        ( `FLIGHT` )  ) ) ).
 
     ENDIF.
 
