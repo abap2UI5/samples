@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         growing = abap_true ).
 
     tab->header_toolbar( )->toolbar(
-      )->title( 'table with odata model' ).
+      )->title( 'table with OData model TRAVEL' ).
 
     tab->columns(
       )->column(  )->text( 'TravelID' )->get_parent(
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
       growing = abap_true ).
 
     tab->header_toolbar( )->toolbar(
-      )->title( 'table with odata model' ).
+      )->title( 'table with odata model FLIGHT' ).
 
     tab->columns(
       )->column(  )->text( 'AirportID' )->get_parent(
