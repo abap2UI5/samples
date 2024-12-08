@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_135 DEFINITION
 
   PUBLIC SECTION.
 
-    INTERFACES if_serializable_object .
     INTERFACES z2ui5_if_app .
 
     DATA lock_counter TYPE i READ-ONLY .
