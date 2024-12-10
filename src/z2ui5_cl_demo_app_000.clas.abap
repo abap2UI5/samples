@@ -1065,6 +1065,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
     ).
 
+    panel->generic_tile( header    = 'Tree Table IV'
+                         subheader = 'Drag & Drop'
+                         press     = client->_event( 'z2ui5_cl_demo_app_116' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+    ).
+
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-popups )
                          headertext = `Popups & Popovers` ).
