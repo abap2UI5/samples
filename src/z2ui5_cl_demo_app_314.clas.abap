@@ -49,9 +49,9 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       page->input( description = `device model` value = `{device>/resize/width}` enabled = abap_false ).
 
       mv_val = `input value with http model`.
-      page->input( client->_bind_edit( val = mv_val switchdefaultmodel = abap_true ) ).
+      page->input( client->_bind_edit( val = mv_val switch_default_model = abap_true ) ).
 
-      DATA(tab) = page->table( client->_bind_edit( val = t_tab switchdefaultmodel = abap_true ) ).
+      DATA(tab) = page->table( client->_bind_edit( val = t_tab switch_default_model = abap_true ) ).
 
       tab->header_toolbar(
           )->toolbar(
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( '{CurrencyCode}'
          ).
 
-      client->view_display( val = view->stringify( ) switchdefaultmodelpath = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
+      client->view_display( val = view->stringify( ) switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
 
