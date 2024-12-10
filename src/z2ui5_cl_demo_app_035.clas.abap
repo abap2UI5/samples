@@ -10,12 +10,13 @@ CLASS z2ui5_cl_demo_app_035 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool.
 
     DATA client            TYPE REF TO z2ui5_if_client.
-
+    DATA: lt_types TYPE z2ui5_if_types=>ty_t_name_value.
     METHODS view_display.
 
   PROTECTED SECTION.
 
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -34,13 +35,13 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
 
-    DATA(lt_types) = VALUE z2ui5_if_types=>ty_t_name_value( ).
-    lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
+    lt_types = VALUE z2ui5_if_types=>ty_t_name_value( ).
+    LT_TYPES = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
             n = shift_right( shift_left( row ) )
             v = shift_right( shift_left( row ) ) ) ).
 
     DATA(temp3) = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems   = client->_bind_local( lt_types )
+                   suggestionitems   = client->_bind_local( LT_TYPES )
                     )->get( ).
 
     temp3->suggestion_items(
@@ -51,8 +52,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                     press           = client->_event( 'DB_LOAD' )
                     icon            = 'sap-icon://download-from-cloud' ).
 
-    page->code_editor( type     = mv_type
-                       editable = mv_check_editable
+    page->code_editor( type     = client->_bind_edit( mv_type )
+                       editable = client->_bind( mv_check_editable )
                        value    = client->_bind( mv_editor ) ).
 
     page->footer( )->overflow_toolbar(
@@ -102,6 +103,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                                      type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
+        client->view_model_update( ).
+
       WHEN 'CLEAR'.
         mv_editor = ``.
       WHEN 'BACK'.
