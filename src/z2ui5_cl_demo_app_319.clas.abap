@@ -58,9 +58,9 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       showheader       = abap_true ).
 
     l_page->_z2ui5( )->smartmultiinput_ext(
-                          addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switchdefaultmodel = abap_true )
-                          removedtokens = m_client->_bind_edit( val = m_selection-product_type-tokens_removed switchdefaultmodel = abap_true )
-                          rangeData = m_client->_bind_edit( val = m_selection-product_type-ranges switchdefaultmodel = abap_true )
+                          addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
+                          removedtokens = m_client->_bind_edit( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
+                          rangeData = m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
                           change   = m_client->_event( 'PRODTYPE_CHANGED' )
                           multiinputid  = `ProductTypeMultiInput` ).
 
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       enableodataselect = 'true' ).
 
     m_client->view_display( val                       = l_page->stringify( )
-                            switchdefaultmodel        = `/sap/opu/odata/sap/UI_PRODUCTLIST`
+                            switch_default_model_path        = `/sap/opu/odata/sap/UI_PRODUCTLIST`
                             switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value` ).
 
   ENDMETHOD.
