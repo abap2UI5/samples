@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
           enableautobinding       = abap_true
       ).
 
-      client->view_display( val = view->stringify( ) switchdefaultmodel = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
+      client->view_display( val = view->stringify( ) switchdefaultmodelpath = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
 
