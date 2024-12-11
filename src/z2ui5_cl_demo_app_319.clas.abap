@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         value1    TYPE string,
         value2    TYPE string,
         keyField  TYPE string,
+        tokenText TYPE string,
       END OF t_range,
       t_ranges TYPE STANDARD TABLE OF t_range WITH EMPTY KEY.
     DATA:
@@ -64,7 +65,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     l_page->smart_multi_input(
       id                = 'ProductTypeMultiInput'
-*      value             = '{ProductType}'
+*     value             = '{ProductType}'
       value             = '{CurrencyCode}'
       entityset         = 'Booking'
       supportranges     = 'true'
@@ -85,6 +86,8 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       WHEN 'BACK'.
         m_client->nav_app_leave( ).
       WHEN 'PRODTYPE_CHANGED'.
+        INSERT VALUE #( operation = 'EQ' value1 = 'EUR' keyField = 'CurrencyCode' tokenText = 'Euro (auto added line)' ) INTO TABLE m_selection-product_type-ranges.
+        m_client->view_model_update( ).
         TRY.
             m_client->message_box_display(
               text  = z2ui5_cl_ajson=>new( )->set( iv_path = '/' iv_val = m_selection-product_type-ranges )->stringify( )
