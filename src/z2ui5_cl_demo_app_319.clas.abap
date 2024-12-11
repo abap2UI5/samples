@@ -51,11 +51,9 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(l_page) = l_view->shell( appwidthlimited = 'false' )->page(
-      id               = 'SearchPage'
-      title            = TEXT-001
-      shownavbutton    = abap_false
-      showheader       = abap_true ).
+    DATA(l_page) = l_view->shell( )->page( title          = 'SearchPage'
+                                       navbuttonpress = m_client->_event( 'BACK' )
+                                       shownavbutton  = m_client->check_app_prev_stack( ) ).
 
     l_page->_z2ui5( )->smartmultiinput_ext(
                           addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
@@ -66,20 +64,26 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     l_page->smart_multi_input(
       id                = 'ProductTypeMultiInput'
-      value             = '{ProductType}'
-      entityset         = 'ProductList'
+*      value             = '{ProductType}'
+      value             = '{CurrencyCode}'
+      entityset         = 'Booking'
       supportranges     = 'true'
       enableodataselect = 'true' ).
 
     m_client->view_display( val                       = l_page->stringify( )
-                            switch_default_model_path        = `/sap/opu/odata/sap/UI_PRODUCTLIST`
-                            switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value` ).
+*       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
+       switch_default_model_path = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
+*       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
+       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value`
+     ).
 
   ENDMETHOD.
 
   METHOD on_event.
 
     CASE m_client->get( )-event.
+      WHEN 'BACK'.
+        m_client->nav_app_leave( ).
       WHEN 'PRODTYPE_CHANGED'.
         TRY.
             m_client->message_box_display(
