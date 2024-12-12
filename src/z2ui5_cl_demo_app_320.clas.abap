@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION
     INTERFACES z2ui5_if_app.
 
     DATA check_initialized    TYPE abap_bool.
-    DATA viewPortPercentWidth TYPE float VALUE 100.
+    DATA viewPortPercentWidth TYPE i VALUE 100.
 
     TYPES: BEGIN OF ty_item,
              id           TYPE string,
