@@ -88,6 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
                         )->item( key = `DoubleBackSlash` text = `DoubleBackSlash`
                         )->item( key = `GreaterThan` text = `GreaterThan`
                         )->item( key = `DoubleGreaterThan` text = `DoubleGreaterThan`
+                      ).
 
     client->view_display( page->stringify( ) ).
 
