@@ -54,7 +54,9 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
             class = `sapUiContentPadding`
             width = `100%`
            )->title( text = `Breadcrumbs with current page aggregation set`
-           )->breadcrumbs(
+           )->breadcrumbs( id             = `idBreadcrumbs`
+                           separatorstyle = `{/selected}`
+                           currentlocationtext = `Page 7`
                )->link( text  = `Home`
                         press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
                )->link( text  = `Page 1`
@@ -67,11 +69,25 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
                         press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
                )->link( text  = `Page 5`
                         press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
-               )->current_location(
                    )->link( text  = `Page 6`
                             press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
                )->get_parent(
            )->get_parent( ).
+
+     page->hbox( alignitems = `Center`
+                )->label( labelfor = `idSeparatorSelect`
+                    text = `Change separator style`
+
+          )->select( class = `sapUiSmallMarginBegin`
+                       id = `idSeparatorSelect`
+                       selectedkey = `{/selected}`
+                       change = 'onChange'
+                        )->item( key = `Slash` text = `Slash`
+                        )->item( key = `BackSlash` text = `BackSlash`
+                        )->item( key = `DoubleSlash` text = `DoubleSlash`
+                        )->item( key = `DoubleBackSlash` text = `DoubleBackSlash`
+                        )->item( key = `GreaterThan` text = `GreaterThan`
+                        )->item( key = `DoubleGreaterThan` text = `DoubleGreaterThan`
 
     client->view_display( page->stringify( ) ).
 
