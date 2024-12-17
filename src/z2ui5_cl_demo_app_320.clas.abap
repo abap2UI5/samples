@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized    TYPE abap_bool.
     DATA viewPortPercentWidth TYPE i VALUE 100.
 
     TYPES: BEGIN OF ty_item,
@@ -53,8 +52,8 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF client->check_on_init( ).
+
       items = VALUE #(
           mobile = `+89181818181`
           phone  = `+2828282828`
