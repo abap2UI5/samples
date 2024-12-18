@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_321 DEFINITION
+CLASS z2ui5_cl_demo_app_322 DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_321 DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
       client->view_display( val = view->shell(
              )->page(
                      title          = 'abap2UI5 - Navigation with app state'
-                     navbuttonpress = client->_event( 'BACK' )
+                     navbuttonpress = client->_event_client( 'HISTORY_BACK' )
                      shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title = 'Form Title' editable = abap_true
                      )->content( 'form'
@@ -32,20 +32,22 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
                          )->button(
                              text  = 'post'
                              press = client->_event( val = 'BUTTON_POST' )
+                         )->button(
+                             text  = 'back'
+                             press = client->_event( val = 'BUTTON_BACK' )
               )->stringify( ) ).
+
+      client->set_push_state( ).
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-
-      WHEN `BUTTON_POST`.
-        client->message_toast_display( `data updated` ).
-        "this is where the magic happens...
-        client->set_app_state_active( ).
-      WHEN `BACK`.
-        client->nav_app_leave( ).
+      WHEN 'BUTTON_POST'.
+        client->set_push_state( ).
     ENDCASE.
+    client->message_toast_display( `data updated` ).
+
+
   ENDMETHOD.
-
-
 
 ENDCLASS.
