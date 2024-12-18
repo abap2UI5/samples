@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
                              press = client->_event( val = 'BUTTON_POST' )
                          )->button(
                              text  = 'back'
-                             press = client->_event( val = 'BUTTON_BACK' )
+                             press = client->_event_client( 'HISTORY_BACK' )
               )->stringify( ) ).
 
       client->set_push_state( ).
