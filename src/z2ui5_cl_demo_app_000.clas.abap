@@ -1994,6 +1994,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
  ).
 
+        panel->generic_tile( header    = 'Share Button'
+                         subheader = ``
+                         press     = client->_event( 'z2ui5_cl_demo_app_323' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+ ).
+
         panel->generic_tile( header    = 'History'
                          subheader = ``
                          press     = client->_event( 'z2ui5_cl_demo_app_322' )

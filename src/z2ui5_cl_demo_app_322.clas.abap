@@ -37,13 +37,15 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
                              press = client->_event_client( 'HISTORY_BACK' )
               )->stringify( ) ).
 
-      client->set_push_state( ).
+      IF client->check_app_prev_stack( ).
+        client->set_push_state( `/head/pos/` && client->get( )-s_draft-id ).
+      ENDIF.
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_POST'.
-        client->set_push_state( ).
+        client->set_push_state( `/head/pos/` && client->get( )-s_draft-id  ).
     ENDCASE.
     client->message_toast_display( `data updated` ).
 

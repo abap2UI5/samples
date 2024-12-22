@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_321 DEFINITION
+CLASS z2ui5_cl_demo_app_323 DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_321 DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -30,24 +30,17 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
                          )->label( 'quantity'
                          )->input( client->_bind_edit( mv_quantity )
                          )->button(
-                             text  = 'post with state'
+                             text  = 'share'
                              press = client->_event( val = 'BUTTON_POST' )
-                          )->button(
-                             text  = 'post'
-                             press = client->_event( val = 'BUTTON_POST2' )
               )->stringify( ) ).
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `BUTTON_POST`.
-        client->message_toast_display( `data updated` ).
-        "this is where the magic happens...
-        client->set_app_state_active( ).
-      WHEN `BUTTON_POST2`.
-        client->message_toast_display( `data updated` ).
-        "this is where the magic happens...
-*        client->set_app_state_active( ).
+        client->follow_up_action( client->_event_client( z2ui5_if_client=>cs_event-CLIPBOARD_APP_STATE ) ).
+        client->message_toast_display( `clipboard copied` ).
+
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
