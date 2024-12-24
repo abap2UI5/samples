@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             )->toolbar_spacer(
             )->link( text   = 'Install with abapGit from GitHub'
                      target = '_blank'
-                     href   = 'https://github.com/oblomov-dev/abap2ui5'
+                     href   = 'https://github.com/abap2UI5/samples'
         )->get_parent( ).
 
     IF client->get( )-check_launchpad_active = abap_true.
