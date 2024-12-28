@@ -23,29 +23,25 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
               shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
      data(tab) = page->table(
-        items = `{TRAVEL>/BookingSupplement}`
+        items = `{TRAVEL>/Currency}`
         growing = abap_true ).
 
     tab->header_toolbar( )->toolbar(
       )->title( 'table with OData model TRAVEL' ).
 
     tab->columns(
-      )->column(  )->text( 'TravelID' )->get_parent(
-      )->column( )->text( 'BookingID' )->get_parent(
-      )->column( )->text( 'BookingSupplementID' )->get_parent(
-      )->column( )->text( 'SupplementID' )->get_parent(
-      )->column( )->text( 'SupplementText' )->get_parent(
-      )->column( )->text( 'Price' )->get_parent(
-      )->column( )->text( 'CurrencyCode' )->get_parent( ).
+      )->column(  )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent(
+      ).
 
     tab->items( )->column_list_item( )->cells(
-      )->text( '{TRAVEL>TravelID}'
-      )->text( '{TRAVEL>BookingID}'
-      )->text( '{TRAVEL>BookingSupplementID}'
-      )->text( '{TRAVEL>SupplementID}'
-      )->text( '{TRAVEL>SupplementText}'
-      )->text( '{TRAVEL>Price}'
-      )->text( '{TRAVEL>CurrencyCode}' ).
+      )->text( '{TRAVEL>Currency}'
+      )->text( '{TRAVEL>Currency_Text}'
+      )->text( '{TRAVEL>Decimals}'
+      )->text( '{TRAVEL>CurrencyISOCode}'
+      ).
 
     tab = page->table(
       items = `{FLIGHT>/Airport}`
