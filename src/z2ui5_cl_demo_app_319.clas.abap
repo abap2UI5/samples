@@ -17,6 +17,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         value2    TYPE string,
         keyField  TYPE string,
         tokenText TYPE string,
+        tokenLongKey type string,
       END OF t_range,
       t_ranges TYPE STANDARD TABLE OF t_range WITH EMPTY KEY.
     DATA:
