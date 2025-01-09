@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_321 DEFINITION
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
     DATA mv_quantity TYPE string.
 
   PROTECTED SECTION.
@@ -32,27 +31,18 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
                          )->button(
                              text  = 'post with state'
                              press = client->_event( val = 'BUTTON_POST' )
-                          )->button(
-                             text  = 'post'
-                             press = client->_event( val = 'BUTTON_POST2' )
               )->stringify( ) ).
     ENDIF.
 
-    CASE client->get( )-event.
-
+    CASE client->get( )-event.´
       WHEN `BUTTON_POST`.
         client->message_toast_display( `data updated` ).
         "this is where the magic happens...
         client->set_app_state_active( ).
-      WHEN `BUTTON_POST2`.
-        client->message_toast_display( `data updated` ).
-        "this is where the magic happens...
-*        client->set_app_state_active( ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
+
   ENDMETHOD.
-
-
 
 ENDCLASS.
