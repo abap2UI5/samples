@@ -20,7 +20,8 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
+CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -42,7 +43,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'TIMER_FINISHED'.
-        client->message_box_display( `Timer finished!`).
+        client->message_box_display( `Timer finished!` ).
         RETURN.
 
       WHEN 'BACK'.

@@ -142,16 +142,16 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
                            filterproperty = 'CREATE_DATE' )->text( text = `Date` )->ui_template( )->text( text = `{CREATE_DATE}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'CREATE_BY'
-                           filterproperty = 'CREATE_BY')->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
+                           filterproperty = 'CREATE_BY' )->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'STORAGE_LOCATION'
-                           filterproperty = 'STORAGE_LOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGE_LOCATION}`).
+                           filterproperty = 'STORAGE_LOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGE_LOCATION}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'QUANTITY'
-                           filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}`).
+                           filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}` ).
     lo_columns->ui_column( width          = '6rem'
                            sortproperty   = 'MEINS'
-                           filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}`).
+                           filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'PRICE'
                            filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value    = `{PRICE}`
