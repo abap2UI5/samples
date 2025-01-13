@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
               )->stringify( ) ).
     ENDIF.
 
-    CASE client->get( )-event.´
+    CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( `data updated` ).
         "this is where the magic happens...
