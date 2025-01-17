@@ -1937,6 +1937,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
 ).
 
+    panel->generic_tile( header    = 'Catch exceptions and display popup'
+                         subheader = ''
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_324' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+).
+
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `Work in Progress`
