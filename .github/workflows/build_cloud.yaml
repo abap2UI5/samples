@@ -7,7 +7,7 @@ permissions:
   contents: write
   pull-requests: write
 jobs:
-  productionPromotion:
+  build_cloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
