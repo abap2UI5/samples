@@ -1,24 +1,18 @@
 name: build_cloud
-
 on:
   push:
-    branches: [standard]
-
-permissions:
-  contents: write
-
+    branches:
+      - standard
 jobs:
-  build_downport:
+  productionPromotion:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - run: rm -rf src/00
-    - name: Open PR
-      uses: peter-evans/create-pull-request@v4
-      with:
-        title: js files as abap classes
-        branch: cloud
+      - uses: actions/checkout@v4
+        with:
+          ref: production
+      - name: build_cloud
+        run: rm -rf src/00
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: cloud
