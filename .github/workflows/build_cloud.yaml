@@ -19,6 +19,6 @@ jobs:
     - run: rm -rf src/00
     - name: Open PR
       uses: peter-evans/create-pull-request@v4
-      branch: cloud
       with:
         title: js files as abap classes
+        branch: cloud
