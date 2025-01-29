@@ -1,0 +1,24 @@
+name: build_downport
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build_downport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: rm -rf src/00
+    - name: Open PR
+      uses: peter-evans/create-pull-request@v4
+      branch: cloud
+      with:
+        title: js files as abap classes
