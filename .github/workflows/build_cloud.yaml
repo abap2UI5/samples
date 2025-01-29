@@ -5,6 +5,7 @@ on:
       - standard
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   productionPromotion:
     runs-on: ubuntu-latest
