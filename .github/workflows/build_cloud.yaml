@@ -1,8 +1,8 @@
-name: build_downport
+name: build_cloud
 
 on:
   push:
-    branches: [main]
+    branches: [standard]
 
 permissions:
   contents: read
