@@ -3,8 +3,10 @@ on:
   push:
     branches:
       - standard
+permissions:
+  contents: write
 jobs:
-  build_cloud:
+  productionPromotion:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
