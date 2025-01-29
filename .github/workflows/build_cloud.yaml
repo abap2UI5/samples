@@ -7,9 +7,6 @@ jobs:
   productionPromotion:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: production
       - name: build_cloud
         run: rm -rf src/00
       - name: Create Pull Request
