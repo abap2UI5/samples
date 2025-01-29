@@ -5,7 +5,7 @@ on:
     branches: [standard]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build_downport:
