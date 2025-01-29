@@ -4,7 +4,7 @@ on:
     branches:
       - standard
 jobs:
-  productionPromotion:
+  build_cloud:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
