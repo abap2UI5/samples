@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: 750
+          ref: cloud
       - name: build_cloud
         run: |
           git clone https://github.com/abap2UI5/samples
