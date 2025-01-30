@@ -34,10 +34,7 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-
-
     DATA check_initialized TYPE abap_bool.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
