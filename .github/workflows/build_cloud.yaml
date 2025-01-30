@@ -11,9 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: 750
       - name: build_cloud
-        run: rm -rf src/00
+        run: |
+          git clone https://github.com/abap2UI5/samples
+          cp -r samples/src/* src/
+          rm -rf samples
+          rm -rf src/00 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
