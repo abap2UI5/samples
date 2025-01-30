@@ -20,7 +20,8 @@ jobs:
           cp -r samples/src/* src/
           rm -rf samples
           rm -rf src/00 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+      - name: Open Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          branch: cloud
+          title: Automatic Update
+          commit-message: "Automatic Update"
