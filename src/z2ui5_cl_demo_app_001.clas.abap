@@ -32,6 +32,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     me->client = client.
 
+
     IF check_initialized = abap_false.
       check_initialized = abap_true.
       display_view( client ).
