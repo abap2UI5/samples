@@ -44,12 +44,12 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
   METHOD get_custom_js.
 
     result  = `` && |\n| &&
-                 `sap.z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
+                 `z2ui5.fileGet = (oEvent,oController) => {` && |\n| &&
                  ` var oFileUploadComponent = oEvent.getParameters("items").item.getFileObject();` && |\n| &&
                  ` if (oFileUploadComponent) {` && |\n| &&
                  `   _handleRawFile(oFileUploadComponent,oController);` && |\n| &&
                  ` }` && |\n| &&
-                 ` console.log(sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW.data);` && |\n| &&
+                 ` console.log(z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW.data);` && |\n| &&
                  `};` && |\n| &&
                  `_handleRawFile = (oFile, oController) => {` && |\n| &&
                  ` var oFileRaw = {` && |\n| &&
@@ -58,7 +58,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
                  ` var reader = new FileReader();` && |\n| &&
                  ` reader.onload = function (e) {` && |\n| &&
                  `   oFileRaw.data = e.target.result;` && |\n| &&
-                 `   sap.z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW = oFileRaw;` && |\n| &&
+                 `   z2ui5.oResponse.OVIEWMODEL.XX.MV_FILE_RAW = oFileRaw;` && |\n| &&
                  ` }` && |\n| &&
                  `  reader.readAsDataURL(oFile);` && |\n| &&
                  `};`.
@@ -103,7 +103,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-        title          = 'abap2UI5 - P13N Dialog'
+        title          = 'abap2UI5 - UploadSet Dialog'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         class          = 'sapUiContentPadding' ).
@@ -119,8 +119,8 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
                              mode               = `MultiSelect`
                              items              = client->_bind_edit( mt_items )
 *                             afteritemadded = client->_event( val = 'AFTER' t_arg = VALUE #( ( `${$parameters>/}` ) ) )
-                             afteritemadded     = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
-                             uploadcompleted    = `sap.z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
+                             afteritemadded     = `z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
+                             uploadcompleted    = `z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
                               )->_generic( name = `toolbar`
                                            ns   = `upload`
                                 )->overflow_toolbar(
