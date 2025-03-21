@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     TYPES detlevel  TYPE c LENGTH 1.
     TYPES probclass TYPE c LENGTH 1.
     TYPES alsort    TYPE c LENGTH 3.
-    TYPES time_stmp TYPE p LENGTH 8 DECIMALS 7.
+    TYPES time_stmp TYPE p LENGTH 16 DECIMALS 7.
     TYPES msg_count TYPE i.
     TYPES context   TYPE c LENGTH 255.
     TYPES params    TYPE c LENGTH 255.
@@ -54,11 +54,9 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
       WHEN 'POPUP_BALLOG'.
 
-
-
         lt_bal = VALUE #(
-          ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
-          ( msgid = 'Z001' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( )  msgnumber = '02' ) ).
+          ( msgid = 'MSG1' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
+          ( msgid = 'MSG2' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '02' ) ).
 
         client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
 
