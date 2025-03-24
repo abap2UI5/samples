@@ -17,21 +17,25 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->object_page_layout(
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      page = view->object_page_layout(
             showtitleinheadercontent = abap_true
             showeditheaderbutton = abap_true
             uppercaseanchorbar =  abap_false ).
 
-      DATA(header_title) = page->header_title(
+      DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+      header_title = page->header_title(
          )->object_page_dyn_header_title( ).
 
       header_title->expanded_heading( )->hbox( )->title( text = 'Test' wrapping = abap_true ).
       header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text = 'Test' wrapping = abap_true ).
 
-      DATA(sections) = page->sections( ).
+      DATA sections TYPE REF TO z2ui5_cl_xml_view.
+      sections = page->sections( ).
 
       sections->object_page_section( titleuppercase = abap_false id = 'id_sec1' title = '...' )->heading( ns = `uxap`
         )->get_parent( )->sub_sections( )->object_page_sub_section( id = 'id_input' title = 'Input field'
@@ -53,15 +57,21 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'COPY_INPUT'.
+        DATA temp1 TYPE string_table.
+        CLEAR temp1.
+        INSERT input INTO TABLE temp1.
         client->follow_up_action( client->_event_client(
             val = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #(  ( input ) ) ) ).
+            t_arg = temp1 ) ).
         client->message_toast_display( `input field copied` && input ).
 
       WHEN 'COPY_TEXT_AREA'.
+        DATA temp3 TYPE string_table.
+        CLEAR temp3.
+        INSERT text INTO TABLE temp3.
         client->follow_up_action( client->_event_client(
              val = z2ui5_if_client=>cs_event-clipboard_copy
-             t_arg = VALUE #(  ( text ) ) ) ).
+             t_arg = temp3 ) ).
         client->message_toast_display( `text area copied: ` && text ).
 
     ENDCASE.
