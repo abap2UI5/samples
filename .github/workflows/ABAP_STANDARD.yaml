@@ -16,4 +16,4 @@ jobs:
       with:
         node-version: 20
     - run: npm ci
-    - run: npx abaplint ./abaplint.jsonc
+    - run: npx abaplint .github/abaplint/abaplint.jsonc
