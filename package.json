@@ -5,7 +5,8 @@
   "description": "Learn how to code with abap2UI5.",
   "scripts": {
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
-    "downport": "abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && cp -f .github/abaplint/abap_702.jsonc abaplint.jsonc",
+    "abaplintpathfix": "sed -i 's|\"files\": \"/\\.\\.\\/\\.\\.\\/src\\/\\*\\*\\/\\*\\.\\*\"|\"files\": \"/src/**/*.*\"|g' abaplint.jsonc",
+    "downport": "abaplint --fix .github/abaplint/abap_702.jsonc && npm run syfixes && cp -f .github/abaplint/abap_702.jsonc abaplint.jsonc && npm run abaplintpathfix",
     "init_downport": "git clone --branch 702 https://github.com/abap2UI5/abap2UI5 && cp -r abap2UI5/src src",
     "cleanup_downport": "rm -rf abap2UI5 && rm -rf src/src"
   },
