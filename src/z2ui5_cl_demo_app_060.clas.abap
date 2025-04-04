@@ -262,8 +262,7 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-
+    IF client->check_on_init( ).
 
       DATA(lv_script) = `   debugger;` && |\n| &&
                   `function setInputFIlter(){` && |\n| &&

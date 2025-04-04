@@ -75,8 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
 
-    ELSEIF check_initialized = abap_false.
-      check_initialized = abap_true.
+    ELSEIF client->check_on_init( ).
       z2ui5_view_display( ).
       RETURN.
     ENDIF.

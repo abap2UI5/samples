@@ -273,7 +273,7 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
+    IF client->check_on_init( ).
 
 * ---------- This script will skip the frontend suggestion filtering ------------------------------
       DATA(lv_script) = `   debugger;` && |\n| &&

@@ -18,8 +18,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
 
   METHOD Z2UI5_if_app~main.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+    IF client->check_on_init( ).
 
           mv_html_text = `<h3>subheader</h3><p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
 `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
