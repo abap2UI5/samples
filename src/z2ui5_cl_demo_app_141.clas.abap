@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 
     DATA t_bapiret TYPE bapirettab.
 
-    
+
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS ui5_view_display.

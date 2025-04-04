@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    
+
 
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.

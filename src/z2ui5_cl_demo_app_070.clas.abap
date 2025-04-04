@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    
+
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.

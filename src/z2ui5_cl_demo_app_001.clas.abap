@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
-    
+
 
   PROTECTED SECTION.
 

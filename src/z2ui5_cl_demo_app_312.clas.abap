@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION
 
     DATA mv_prop           TYPE string.
     DATA mt_feed_values    TYPE TABLE OF string.
-    
+
     DATA mt_viztypes       TYPE z2ui5_if_types=>ty_t_name_value..
 
   PROTECTED SECTION.
@@ -69,30 +69,30 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                            ).
     " ---------- Set vizframe properties (optional) ---------------------------------------------------
     mv_prop = |\{| && |\n| &&
-    |"plotArea": \{| && |\n| &&
+      |"plotArea": \{| && |\n| &&
         |"dataLabel": \{| && |\n| &&
             |"formatString": "",| && |\n| &&
             |"visible": true| && |\n| &&
-        |\}| && |\n|  &&
-    |\},| && |\n|  &&
-    |"valueAxis": \{| && |\n| &&
+        |\}| && |\n| &&
+      |\},| && |\n| &&
+      |"valueAxis": \{| && |\n| &&
         |"label": \{| && |\n| &&
             |"formatString": ""| && |\n| &&
         |\},| && |\n| &&
         |"title": \{| && |\n| &&
             |"visible": true| && |\n| &&
-        |\}| && |\n|  &&
-    |\},| && |\n|  &&
-    |"categoryAxis": \{| && |\n|  &&
+        |\}| && |\n| &&
+      |\},| && |\n| &&
+      |"categoryAxis": \{| && |\n| &&
         |"title": \{| && |\n| &&
             |"visible": true| && |\n| &&
-        |\}| && |\n|  &&
-    |\},| && |\n|  &&
-    |"title": \{| && |\n| &&
-        |"visible": true,| && |\n|  &&
+        |\}| && |\n| &&
+      |\},| && |\n| &&
+      |"title": \{| && |\n| &&
+        |"visible": true,| && |\n| &&
         |"text": "Vizframe Charts for 2UI5"| && |\n| &&
-    |\}| && |\n|  &&
-|\}|.
+      |\}| && |\n| &&
+      |\}|.
 
     " ---------- Set vizframe feed item values for value axis -----------------------------------------
     mt_feed_values = VALUE #( ( `Revenue` )
@@ -185,7 +185,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                              v = 'area' )
                            ( n = 'radar'
                              v = 'radar' )
-    ).
+      ).
 
   ENDMETHOD.
 

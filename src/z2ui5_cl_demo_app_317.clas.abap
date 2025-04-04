@@ -31,12 +31,12 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION
     DATA mt_tree    TYPE ty_tree.
 
     TYPES:
-      BEGIN OF ty_S_node,
+      BEGIN OF ty_s_node,
         id        TYPE string,
         id_parent TYPE string,
         text      TYPE string,
-      END OF ty_S_node.
-    DATA mt_node TYPE STANDARD TABLE OF ty_S_node WITH EMPTY KEY.
+      END OF ty_s_node.
+    DATA mt_node TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY.
 
   PROTECTED SECTION.
     METHODS build_tree.
@@ -53,14 +53,14 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       mt_node = VALUE #(
-          ( id   = '01' id_parent = ''   text = 'Machines'     )
-          ( id   = '03' id_parent = '01' text = 'Pumps'        )
-          ( id   = '04' id_parent = '03' text = 'Pump 001'     )
-          ( id   = '05' id_parent = '03' text = 'Pump 002'     )
-          ( id   = '02' id_parent = ''   text = 'Paints'       )
+          ( id   = '01' id_parent = ''   text = 'Machines' )
+          ( id   = '03' id_parent = '01' text = 'Pumps' )
+          ( id   = '04' id_parent = '03' text = 'Pump 001' )
+          ( id   = '05' id_parent = '03' text = 'Pump 002' )
+          ( id   = '02' id_parent = ''   text = 'Paints' )
           ( id   = '06' id_parent = '02' text = 'Gloss paints' )
-          ( id   = '07' id_parent = '06' text = 'Paint 001'    )
-          ( id   = '08' id_parent = '06' text = 'Paint 002'    ) ).
+          ( id   = '07' id_parent = '06' text = 'Paint 001' )
+          ( id   = '08' id_parent = '06' text = 'Paint 002' ) ).
 
       build_tree( ).
       display_view( client ).
@@ -134,28 +134,31 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
 
-    page->_generic( name = `script` ns = `html`
+    page->_generic( name = `script`
+                    ns   = `html`
         )->_cc_plain_xml(
           |function myFunction() \{ z2ui5.oView.byId('tree').expandToLevel(5); \}|
         ).
 
-    DATA(tree) = page->tree( items = client->_bind( mt_tree ) id = `tree` ).
+    DATA(tree) = page->tree( items = client->_bind( mt_tree )
+                             id    = `tree` ).
     tree->items(
         )->standard_tree_item( title = '{TEXT}'
         )->get(
           )->custom_data(
-              )->core_custom_data( key   = 'ID' value = '{ID}').
+              )->core_custom_data( key   = 'ID'
+                                   value = '{ID}').
 
-    tree->drag_drop_config( ns = `` )->Drag_Drop_Info(
-      sourceAggregation = `items`
-      targetAggregation = `items`
-      dragStart         = `Horizontal`
+    tree->drag_drop_config( ns = `` )->drag_drop_info(
+      sourceaggregation = `items`
+      targetaggregation = `items`
+      dragstart         = `Horizontal`
       drop              = client->_event(
                               val   = 'onDrop'
                               t_arg = VALUE #(
                            ( `${$parameters>/draggedControl/mAggregations/customData/0/mProperties/value}` )
                            ( `${$parameters>/droppedControl/mAggregations/customData/0/mProperties/value}` )
-    ) ) ).
+      ) ) ).
 
     client->follow_up_action( `myFunction()` ).
     client->view_display( page->stringify( ) ).

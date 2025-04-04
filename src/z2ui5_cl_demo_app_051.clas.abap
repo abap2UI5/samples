@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
         input3 TYPE string,
       END OF screen.
 
-    
+
 
   PROTECTED SECTION.
 

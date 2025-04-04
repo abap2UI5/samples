@@ -1,16 +1,12 @@
 {
   "global": {
-    "files": "/src/**/*.*"
+    "files": "/src/**/*.*",
+    "noIssues": [ "/src/00" ]
   },
   "dependencies": [
     {
       "url": "https://github.com/abapedia/steampunk-2305-api-intersect-702",
       "folder": "/deps",
-      "files": "/src/**/*.*"
-    },
-    {
-      "url": "https://github.com/abap2UI5/abap2UI5",
-      "folder": "/abap2UI5",
       "files": "/src/**/*.*"
     }
   ],
@@ -19,18 +15,23 @@
     "errorNamespace": "."
   },
   "rules": {
-    "downport": true,
-    "begin_end_names": true,
-    "check_ddic": true,
-    "check_include": true,
-    "check_syntax": true,
-    "global_class": true,
-    "definitions_top": false,
-    "implement_methods": true,
-    "method_implemented_twice": true,
-    "parser_error": true,
-    "superclass_final": true,
-    "unknown_types": true,
-    "xml_consistency": true
+
+    "in_statement_indentation": true,
+    "indentation" : true,
+    "double_space": true,
+    "align_parameters": true,
+    "align_pseudo_comments": true,
+    "align_type_expressions": true,
+    "keyword_case": true,    
+    "contains_tab": true,
+    "colon_missing_space": true,
+    "line_break_multiple_parameters": true,
+    "max_one_method_parameter_per_line": true,
+    "sequential_blank": true,
+    "whitespace_end": true,
+    "space_before_colon": true,
+    "space_before_dot": true,
+    "commented_code": false,
+
   }
 }

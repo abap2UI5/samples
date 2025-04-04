@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    
+
     DATA mv_display TYPE string.
 
   PROTECTED SECTION.

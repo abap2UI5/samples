@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_014 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    
+
 
     DATA mv_sel7 TYPE abap_bool.
     DATA mv_sel8 TYPE abap_bool.

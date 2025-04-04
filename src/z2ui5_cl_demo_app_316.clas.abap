@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_316 DEFINITION
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
-    
+
 
     DATA phone  TYPE string.
     DATA mobile TYPE string.
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     email_form->button( text  = `Trigger Email`
                         press = client->_event_client( val   = client->cs_event-urlhelper
                                                        t_arg = VALUE #( ( `TRIGGER_EMAIL` )
-                                                                        ( |${  client->_bind_edit( email ) }| ) ) ) ).
+                                                                        ( |${ client->_bind_edit( email ) }| ) ) ) ).
 
     DATA(telephone_form) = layout->simple_form( title = `Trigger Telephone` ).
 
@@ -124,7 +124,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     mobile_form->button( text  = `Trigger SMS`
                          press = client->_event_client( val   = client->cs_event-urlhelper
                                                         t_arg = VALUE #( ( `TRIGGER_SMS` )
-                                                                         ( |${ client->_bind_edit( mobile ) }| ) ) )  ).
+                                                                         ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
 
     DATA(url_form) = layout->simple_form( title = `Redirect` ).
     url_form->label( text     = `URL`

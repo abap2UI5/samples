@@ -46,12 +46,16 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
               navbuttonpress = client->_event( 'BACK' )
               shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
-      page->input( description = `device model` value = `{device>/resize/width}` enabled = abap_false ).
+      page->input( description = `device model`
+                   value       = `{device>/resize/width}`
+                   enabled     = abap_false ).
 
       mv_val = `input value with http model`.
-      page->input( client->_bind_edit( val = mv_val switch_default_model = abap_true ) ).
+      page->input( client->_bind_edit( val                  = mv_val
+                                       switch_default_model = abap_true ) ).
 
-      DATA(tab) = page->table( client->_bind_edit( val = t_tab switch_default_model = abap_true ) ).
+      DATA(tab) = page->table( client->_bind_edit( val                  = t_tab
+                                                   switch_default_model = abap_true ) ).
 
       tab->header_toolbar(
           )->toolbar(
@@ -72,7 +76,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
 
 
       tab = page->table(
-         items = `{/BookingSupplement}`
+         items   = `{/BookingSupplement}`
          growing = abap_true
           ).
 
@@ -81,7 +85,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
         )->title( 'table with odata model' ).
 
       tab->columns(
-          )->column(  )->text( 'TravelID' )->get_parent(
+          )->column( )->text( 'TravelID' )->get_parent(
           )->column( )->text( 'BookingID' )->get_parent(
           )->column( )->text( 'BookingSupplementID' )->get_parent(
           )->column( )->text( 'SupplementID' )->get_parent(
@@ -100,7 +104,8 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( '{CurrencyCode}'
          ).
 
-      client->view_display( val = view->stringify( ) switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
+      client->view_display( val                       = view->stringify( )
+                            switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
 

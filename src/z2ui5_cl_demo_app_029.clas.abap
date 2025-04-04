@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    
+
 
     DATA mv_tab_radial_active TYPE abap_bool.
 

@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    
+
     DATA check_cc_loaded TYPE abap_bool.
 
     METHODS z2ui5_view_display.

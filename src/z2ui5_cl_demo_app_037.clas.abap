@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    
+
 
     DATA mv_load_cc    TYPE abap_bool.
     DATA mv_display_cc TYPE abap_bool.

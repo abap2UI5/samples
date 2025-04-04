@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_139 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA search  TYPE string.
-    
+
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

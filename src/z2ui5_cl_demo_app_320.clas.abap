@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA viewPortPercentWidth TYPE i VALUE 100.
+    DATA viewportpercentwidth TYPE i VALUE 100.
 
     TYPES: BEGIN OF ty_item,
              id           TYPE string,
@@ -58,29 +58,29 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
           mobile = `+89181818181`
           phone  = `+2828282828`
           email  = `blabla@blabla`
-          ( id = `1` initials = `JD` name = `John Doe` tooltip = `1` jobPosition = `Marketing Manager` )
-          ( id = `2` initials = `SP` name = `Sarah Parker` tooltip = `2` jobPosition = `Visual Designer` )
-          ( id = `3` initials = `JG` name = `Jason Goldwell` tooltip = `3` jobPosition = `Software Developer` )
-          ( id = `4` name = `Christian Bow` jobPosition = `Marketing Manager` tooltip = `4` )
+          ( id = `1` initials = `JD` name = `John Doe` tooltip = `1` jobposition = `Marketing Manager` )
+          ( id = `2` initials = `SP` name = `Sarah Parker` tooltip = `2` jobposition = `Visual Designer` )
+          ( id = `3` initials = `JG` name = `Jason Goldwell` tooltip = `3` jobposition = `Software Developer` )
+          ( id = `4` name = `Christian Bow` jobposition = `Marketing Manager` tooltip = `4` )
           ( id          = `5`
             src         = `https://sapui5.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_01.png`
             tooltip     = `5`
             name        = `Jessica Parker`
-            jobPosition = `Visual Designer` )
-          ( id = `6` initials = `JB` name = `Jonathan Bale` jobPosition = `Software Developer` tooltip = `6` )
-          ( id = `7` initials = `GS` name = `Gordon Smith` jobPosition = `Marketing Manager` tooltip = `7` )
-          ( id = `8` fallbackIcon = `sap-icon =//person-placeholder` name = `Simon Jason` tooltip = `8` jobPosition = `Visual Designer` )
-          ( id = `9` initials = `JS` name = `Jason Swan` jobPosition = `Software Developer` tooltip = `9` )
-          ( id = `10` initials = `JC` name = `John Carter` jobPosition = `Marketing Manager` tooltip = `10` )
+            jobposition = `Visual Designer` )
+          ( id = `6` initials = `JB` name = `Jonathan Bale` jobposition = `Software Developer` tooltip = `6` )
+          ( id = `7` initials = `GS` name = `Gordon Smith` jobposition = `Marketing Manager` tooltip = `7` )
+          ( id = `8` fallbackicon = `sap-icon =//person-placeholder` name = `Simon Jason` tooltip = `8` jobposition = `Visual Designer` )
+          ( id = `9` initials = `JS` name = `Jason Swan` jobposition = `Software Developer` tooltip = `9` )
+          ( id = `10` initials = `JC` name = `John Carter` jobposition = `Marketing Manager` tooltip = `10` )
           ( id          = `11`
             src         = `https://sapui5.hana.ondemand.com/test-resources/sap/f/images/Woman_avatar_02.png`
             name        = `Whitney Parker`
             tooltip     = `11`
-            jobPosition = `Visual Designer` )
-          ( id = `12` fallbackIcon = `sap-icon =//person-placeholder` name = `Jason Goldwell` tooltip = `12` jobPosition = `Software Developer` )
-          ( id = `13` initials = `CD` name = `Chris Doe` jobPosition = `Marketing Manager` tooltip = `13` )
-          ( id = `14` initials = `SS` name = `Sarah Smith` jobPosition = `Visual Designer` tooltip = `14` )
-          ( id = `15` initials = `DC` name = `David Copper` jobPosition = `Software Developer` tooltip = `15` ) ).
+            jobposition = `Visual Designer` )
+          ( id = `12` fallbackicon = `sap-icon =//person-placeholder` name = `Jason Goldwell` tooltip = `12` jobposition = `Software Developer` )
+          ( id = `13` initials = `CD` name = `Chris Doe` jobposition = `Marketing Manager` tooltip = `13` )
+          ( id = `14` initials = `SS` name = `Sarah Smith` jobposition = `Visual Designer` tooltip = `14` )
+          ( id = `15` initials = `DC` name = `David Copper` jobposition = `Software Developer` tooltip = `15` ) ).
       display_avatar_group_view( ).
     ENDIF.
 
@@ -93,16 +93,16 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     view->page( title          = 'abap2UI5 - Sample: Avatar Group'
                 navbuttonpress = client->_event( 'BACK' )
                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-        )->slider( value = client->_bind_edit( viewPortPercentWidth )
+        )->slider( value = client->_bind_edit( viewportpercentwidth )
             )->vertical_layout( id    = `vl1`
-                                width = |{ client->_bind_edit( viewPortPercentWidth ) }%|
+                                width = |{ client->_bind_edit( viewportpercentwidth ) }%|
                                 class = `sapUiContentPadding`
                 )->label( text  = `AvatarGroup control in Individual mode`
                           class = `sapUiSmallMarginBottom sapUiMediumMarginTop`
                 )->avatar_group(
                     id                = `avatarGroup1`
-                    groupType         = `Individual`
-                    avatarDisplaySize = `S`
+                    grouptype         = `Individual`
+                    avatardisplaysize = `S`
                     press             = client->_event(
                                             val   = `onIndividualPress`
                                             t_arg = VALUE #(
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
                     items             = client->_bind( items )
                     )->avatar_group_item( initials     = `{INITIALS}`
-                                          fallbackIcon = `{FALLBACKICON}`
+                                          fallbackicon = `{FALLBACKICON}`
                                           src          = `{SRC}`
                                           tooltip      = `{NAME}`
 
@@ -124,9 +124,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                 )->label( text  = `AvatarGroup control in Group mode`
                           class = `sapUiSmallMarginBottom sapUiMediumMarginTop`
                 )->avatar_group( id                = `avatarGroup2`
-                                 groupType         = `Group`
+                                 grouptype         = `Group`
                                  tooltip           = `Avatar Group`
-                                 avatarDisplaySize = `M`
+                                 avatardisplaysize = `M`
                                  press             = client->_event( val   = `onGroupPress`
                                                                      t_arg = VALUE #(
                                                                          ( `${$source>/id}` )
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                                                          ( `${$parameters>/avatarsDisplayed}` ) ) )
                                  items             = client->_bind( items )
                     )->avatar_group_item( initials     = `{INITIALS}`
-                                          fallbackIcon = `{FALLBACKICON}`
+                                          fallbackicon = `{FALLBACKICON}`
                                           src          = `{SRC}` ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -145,30 +145,30 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     individual_popover->popover( id             = `individualPopover`
                                  class          = `sapFAvatarGroupPopover`
                                  title          = `Business card`
-                                 titleAlignment = `Center`
+                                 titlealignment = `Center`
                                  placement      = `Bottom`
-                                 contentWidth   = `250px`
-                                 contentHeight  = `332px`
+                                 contentwidth   = `250px`
+                                 contentheight  = `332px`
         )->card(
             )->content( ns = `f`
                 )->vertical_layout( class = `sapUiContentPadding`
-                    )->HBox( alignItems = `Center`
-                        )->Avatar( src          = client->_bind( item-src )
+                    )->hbox( alignitems = `Center`
+                        )->avatar( src          = client->_bind( item-src )
                                    initials     = client->_bind( item-initials )
                                    badgetooltip = client->_bind( item-tooltip )
-                                   fallbackIcon = client->_bind( item-fallbackicon )
+                                   fallbackicon = client->_bind( item-fallbackicon )
                         )->vbox( class = `sapUiTinyMarginBegin`
-                            )->Title( text = client->_bind_local( item-name )
-                            )->Text( text = client->_bind_local( item-jobposition )
+                            )->title( text = client->_bind_local( item-name )
+                            )->text( text = client->_bind_local( item-jobposition )
                         )->get_parent(
                     )->get_parent(
-                    )->Title( text = `Contact Details`
-                    )->Label( text = `Mobile`
-                    )->Text( text = client->_bind( item-mobile )
-                    )->Label( text = `Phone`
-                    )->Text( text = client->_bind( item-phone )
-                    )->Label( text = `Email`
-                    )->Text( text = client->_bind( item-email ) ).
+                    )->title( text = `Contact Details`
+                    )->label( text = `Mobile`
+                    )->text( text = client->_bind( item-mobile )
+                    )->label( text = `Phone`
+                    )->text( text = client->_bind( item-phone )
+                    )->label( text = `Email`
+                    )->text( text = client->_bind( item-email ) ).
 
     client->popover_display( xml   = individual_popover->stringify( )
                              by_id = id ).
@@ -180,24 +180,24 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     DATA(nav_container) = view->popover( id            = `groupPopover`
                                          class         = `sapFAvatarGroupPopover`
                                          showheader    = abap_false
-                                         contentWidth  = client->_bind( content_width )
-                                         contentHeight = client->_bind( content_height )
+                                         contentwidth  = client->_bind( content_width )
+                                         contentheight = client->_bind( content_height )
                                          placement     = `Bottom`
         )->nav_container( id = `navContainer` ).
 
     nav_container->page( id             = `main`
-                         titleAlignment = `Center`
+                         titlealignment = `Center`
                          title          = |Team Members ({ lines( group_items ) })|
                 )->vertical_layout( class = `sapUiTinyMarginTop`
                                     width = `100%`
-                    )->grid( default_Span = `XL6 L6 M6 S12`
+                    )->grid( default_span = `XL6 L6 M6 S12`
                              content      = client->_bind( group_items )
 
-                        )->hbox( alignItems = `Center`
+                        )->hbox( alignitems = `Center`
                             )->vbox(
                                 )->avatar( class           = `sapUiTinyMarginEnd`
                                            initials        = `{INITIALS}`
-                                           fallbackIcon    = `{FALLBACKICON}`
+                                           fallbackicon    = `{FALLBACKICON}`
                                            src             = `{SRC}`
                                            badgetooltip    = `{NAME}`
                                            backgroundcolor = `{BACKGROUNDCOLOR}`
@@ -205,34 +205,34 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                                                              t_arg = VALUE #( ( `${ID}` ) ) )
                             )->get_parent(
                             )->vbox(
-                                )->Text( text = `{NAME}`
-                                )->Text( text = `{JOBPOSITION}` ).
+                                )->text( text = `{NAME}`
+                                )->text( text = `{JOBPOSITION}` ).
 
     nav_container->page( id             = `detail`
-                         showNavButton  = abap_true
-                         navButtonPress = client->_event( val = `onNavBack` )
-                         titleAlignment = `Center`
+                         shownavbutton  = abap_true
+                         navbuttonpress = client->_event( val = `onNavBack` )
+                         titlealignment = `Center`
                          title          = |Team Members ({ lines( group_items ) })|
         )->card(
             )->content( ns = `f`
                 )->vertical_layout( class = `sapUiContentPadding`
-                    )->HBox( alignItems = `Center`
-                        )->Avatar( src          = client->_bind( item-src )
+                    )->hbox( alignitems = `Center`
+                        )->avatar( src          = client->_bind( item-src )
                                    initials     = client->_bind( item-initials )
                                    badgetooltip = client->_bind( item-tooltip )
-                                   fallbackIcon = client->_bind( item-fallbackicon )
+                                   fallbackicon = client->_bind( item-fallbackicon )
                         )->vbox( class = `sapUiTinyMarginBegin`
-                            )->Title( text = client->_bind( item-name )
-                            )->Text( text = client->_bind( item-jobposition )
+                            )->title( text = client->_bind( item-name )
+                            )->text( text = client->_bind( item-jobposition )
                         )->get_parent(
                     )->get_parent(
-                    )->Title( text = `Contact Details`
-                    )->Label( text = `Mobile`
-                    )->Text( text = client->_bind( item-mobile )
-                    )->Label( text = `Phone`
-                    )->Text( text = client->_bind( item-phone )
-                    )->Label( text = `Email`
-                    )->Text( text = client->_bind( item-email ) ).
+                    )->title( text = `Contact Details`
+                    )->label( text = `Mobile`
+                    )->text( text = client->_bind( item-mobile )
+                    )->label( text = `Phone`
+                    )->text( text = client->_bind( item-phone )
+                    )->label( text = `Email`
+                    )->text( text = client->_bind( item-email ) ).
 
     client->popover_display( xml   = view->stringify( )
                              by_id = id ).

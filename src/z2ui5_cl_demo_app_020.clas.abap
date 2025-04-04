@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
-    
+
 
     DATA mv_text TYPE string.
     DATA mv_cancel_text TYPE string.

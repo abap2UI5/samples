@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
         progress_value    TYPE string VALUE '3',
       END OF screen.
 
-    
+
 
   PROTECTED SECTION.
 

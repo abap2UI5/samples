@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION
 
     DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
     DATA s_text TYPE string.
-    
+
 
   PROTECTED SECTION.
 

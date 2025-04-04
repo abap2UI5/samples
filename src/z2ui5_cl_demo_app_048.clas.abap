@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_048 DEFINITION
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.

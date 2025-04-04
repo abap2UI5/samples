@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_270 DEFINITION
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
     DATA color TYPE string.
-    
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.

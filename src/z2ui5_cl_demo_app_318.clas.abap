@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     DATA mv_path           TYPE string.
     DATA mv_editor         TYPE string.
     DATA mv_check_editable TYPE abap_bool.
-    
+
 
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA: lt_types TYPE z2ui5_if_types=>ty_t_name_value.
@@ -23,11 +23,11 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
   METHOD view_display.
 
-    mv_editor = `<html> ` && |\n|  &&
-                `    <body> ` && |\n|  &&
-                `        <h1> Hi there 👋</h1>` && |\n|  &&
-                `        <p>This example was rendered by providing HTML code to the API. You can also tell the API to convert from a URL. Just remove the html parameter and add the url paramter.</p>` && |\n|  &&
-                `    </body> ` && |\n|  &&
+    mv_editor = `<html> ` && |\n| &&
+                `    <body> ` && |\n| &&
+                `        <h1> Hi there 👋</h1>` && |\n| &&
+                `        <p>This example was rendered by providing HTML code to the API. You can also tell the API to convert from a URL. Just remove the html parameter and add the url paramter.</p>` && |\n| &&
+                `    </body> ` && |\n| &&
                 `</html>`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -43,12 +43,12 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
          )->label( 'Option' ).
 
     lt_types = VALUE z2ui5_if_types=>ty_t_name_value( ).
-    LT_TYPES = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
+    lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
             n = shift_right( shift_left( row ) )
             v = shift_right( shift_left( row ) ) ) ).
 
     DATA(temp3) = temp->input( value = client->_bind_edit( mv_type )
-                   suggestionitems   = client->_bind_local( LT_TYPES )
+                   suggestionitems   = client->_bind_local( lt_types )
                     )->get( ).
 
     temp3->suggestion_items(

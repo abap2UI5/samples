@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    
+
     DATA field_01  TYPE string.
     DATA field_02 TYPE string.
     DATA focus_id TYPE string.

@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_042 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.

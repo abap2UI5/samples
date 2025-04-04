@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION
     DATA mt_comp              TYPE abap_component_tab.
     DATA mt_dfies             TYPE z2ui5_cl_util=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
-    
+
 
     METHODS on_init.
 

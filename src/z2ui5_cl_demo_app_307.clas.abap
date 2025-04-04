@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION
     TYPES ty_items TYPE STANDARD TABLE OF ty_item WITH DEFAULT KEY.
 
     DATA client            TYPE REF TO z2ui5_if_client.
-    
+
     DATA items             TYPE ty_items.
 
     METHODS initialization.

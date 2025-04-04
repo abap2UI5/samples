@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_313 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    
+
     DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
 
@@ -46,13 +46,13 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
           id             = 'smartFilterBar'
           persistencykey = 'SmartFilterPKey'
           entityset      = 'BookingSupplement'
-      )->_control_configuration(
+        )->_control_configuration(
           )->control_configuration(
           previnitdatafetchinvalhelpdia = abap_false
           visibleinadvancedarea         = abap_true
           key                           = 'TravelID'
-      )->get_parent(
-      )->smart_table(
+        )->get_parent(
+        )->smart_table(
           id                      = 'smartFiltertable'
           smartfilterid           = 'smartFilterBar'
           tabletype               = 'ResponsiveTable'
@@ -66,9 +66,10 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
           showrowcount            = abap_true
           enableexport            = abap_false
           enableautobinding       = abap_true
-      ).
+        ).
 
-      client->view_display( val = view->stringify( ) switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
+      client->view_display( val                       = view->stringify( )
+                            switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
 

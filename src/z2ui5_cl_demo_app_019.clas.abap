@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_019 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA t_tab_sel TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA mv_sel_mode TYPE string.
-    
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.

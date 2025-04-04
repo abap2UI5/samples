@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_071 DEFINITION PUBLIC.
 
     DATA mv_set_size_limit TYPE i VALUE 100.
     DATA mv_combo_number TYPE i VALUE 105.
-    
+
 
   PROTECTED SECTION.
   PRIVATE SECTION.

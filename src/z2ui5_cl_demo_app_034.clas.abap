@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA t_bapiret TYPE bapirettab.
-    
+
     DATA mv_popup_name TYPE string.
     DATA mv_main_xml TYPE string.
     DATA mv_popup_xml TYPE string.

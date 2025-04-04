@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION
       END OF ty_spot.
     DATA mt_spot TYPE TABLE OF ty_spot.
 
-    
+
 
     TYPES:
       BEGIN OF ty_route,

@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_297 DEFINITION
         icon       TYPE string,
       END OF ty_product_collection.
 
-    
+
     DATA lt_product_collection  TYPE TABLE OF ty_product_collection.
     DATA selected_product TYPE string.
 

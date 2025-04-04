@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION
     INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
-    
+
 
     METHODS display_view.
     METHODS on_event.

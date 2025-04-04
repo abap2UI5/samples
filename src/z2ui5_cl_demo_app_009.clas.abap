@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
       END OF s_employee.
     DATA mt_employees_sel TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
     DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
-    
+
 
 
     DATA mv_view_popup TYPE string.

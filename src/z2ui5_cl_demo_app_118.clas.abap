@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_118 DEFINITION
     DATA problematic_rows TYPE t_rows.
     DATA these_are_fine_rows TYPE t_rows.
 
-    
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

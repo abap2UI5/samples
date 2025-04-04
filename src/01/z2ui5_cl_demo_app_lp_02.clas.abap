@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_lp_02 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_title          TYPE string VALUE `my title`.
-    
+
 
   PROTECTED SECTION.
 
@@ -25,13 +25,14 @@ CLASS Z2UI5_CL_DEMO_APP_LP_02 IMPLEMENTATION.
 
       DATA(shell) = z2ui5_cl_xml_view=>factory( )->shell( ).
       IF client->get( )-check_launchpad_active = abap_true.
-         DATA(page) = shell->page( showheader = abap_false  ).
-         page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
+        DATA(page) = shell->page( showheader = abap_false ).
+        page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
       ELSE.
-         page = shell->page( title = client->_bind_edit( mv_title ) ).
+        page = shell->page( title = client->_bind_edit( mv_title ) ).
       ENDIF.
 
-      client->view_display( page->simple_form( title = 'Set Launchpad Title Dynamically' editable = abap_true
+      client->view_display( page->simple_form( title    = 'Set Launchpad Title Dynamically'
+                                               editable = abap_true
                      )->content( 'form'
                          )->label( ``
                          )->input( client->_bind_edit( mv_title )
@@ -41,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_LP_02 IMPLEMENTATION.
 
     ENDIF.
 
-   CASE client->get( )-event.
+    CASE client->get( )-event.
 
       WHEN 'READ_PARAMS'.
         DATA(lv_text) = `Start Parameter: `.

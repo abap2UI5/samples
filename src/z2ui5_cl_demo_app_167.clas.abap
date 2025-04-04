@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_167 DEFINITION
 
     DATA mv_value TYPE string.
 
-    
+
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 

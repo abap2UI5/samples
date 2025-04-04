@@ -11,13 +11,13 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
       t_tokens TYPE STANDARD TABLE OF t_token WITH EMPTY KEY.
     TYPES:
       BEGIN OF t_range,
-        exclude   TYPE boole_d,
-        operation TYPE string,
-        value1    TYPE string,
-        value2    TYPE string,
-        keyField  TYPE string,
-        tokenText TYPE string,
-        tokenLongKey type string,
+        exclude      TYPE boole_d,
+        operation    TYPE string,
+        value1       TYPE string,
+        value2       TYPE string,
+        keyfield     TYPE string,
+        tokentext    TYPE string,
+        tokenlongkey TYPE string,
       END OF t_range,
       t_ranges TYPE STANDARD TABLE OF t_range WITH EMPTY KEY.
     DATA:
@@ -53,15 +53,15 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(l_page) = l_view->shell( )->page( title          = 'SearchPage'
+    DATA(l_page) = l_view->shell( )->page( title      = 'SearchPage'
                                        navbuttonpress = m_client->_event( 'BACK' )
                                        shownavbutton  = m_client->check_app_prev_stack( ) ).
 
     l_page->_z2ui5( )->smartmultiinput_ext(
                           addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
                           removedtokens = m_client->_bind_edit( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
-                          rangeData = m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
-                          change   = m_client->_event( 'PRODTYPE_CHANGED' )
+                          rangedata     = m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
+                          change        = m_client->_event( 'PRODTYPE_CHANGED' )
                           multiinputid  = `ProductTypeMultiInput` ).
 
     l_page->smart_multi_input(
@@ -72,12 +72,12 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       supportranges     = 'true'
       enableodataselect = 'true' ).
 
-    m_client->view_display( val                       = l_page->stringify( )
+    m_client->view_display( val      = l_page->stringify( )
 *       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
-       switch_default_model_path = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
+       switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
 *       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
        switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value`
-     ).
+      ).
 
   ENDMETHOD.
 
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       WHEN 'BACK'.
         m_client->nav_app_leave( ).
       WHEN 'PRODTYPE_CHANGED'.
-        INSERT VALUE #( operation = 'EQ' value1 = 'EUR' keyField = 'CurrencyCode' tokenText = 'Euro (auto added line)' ) INTO TABLE m_selection-product_type-ranges.
+        INSERT VALUE #( operation = 'EQ' value1 = 'EUR' keyfield = 'CurrencyCode' tokentext = 'Euro (auto added line)' ) INTO TABLE m_selection-product_type-ranges.
         m_client->view_model_update( ).
         TRY.
             m_client->message_box_display(
