@@ -27,8 +27,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
 
     DATA(lt_startup_params) = client->get( )-s_config-t_startup_params.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       nav_params-product  = '102343333'.
 

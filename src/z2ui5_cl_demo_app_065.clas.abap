@@ -48,8 +48,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                          press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) )
               )->input( value = client->_bind_edit( mv_input_nest ) ).
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       client->view_display( lo_view->stringify( ) ).
 

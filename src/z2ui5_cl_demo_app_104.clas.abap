@@ -128,8 +128,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       t_tab = VALUE #(
         ( title = 'Class 1'  info = 'z2ui5_cl_demo_app_105'   descr = 'this is a description' icon = 'sap-icon://account' )

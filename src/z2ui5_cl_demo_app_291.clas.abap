@@ -123,8 +123,7 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       display_view( client ).
 
       lv_default = `Default <em>(Information)</em> with default icon and <strong>close button</strong>:`.

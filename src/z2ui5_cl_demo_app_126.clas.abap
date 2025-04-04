@@ -172,8 +172,7 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       on_init( ).
 

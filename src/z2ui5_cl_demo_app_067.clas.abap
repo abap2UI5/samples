@@ -19,8 +19,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       numeric = '000000000012'.
       amount = '123456789.123'.

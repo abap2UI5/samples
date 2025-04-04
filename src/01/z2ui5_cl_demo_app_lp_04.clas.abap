@@ -32,8 +32,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
     product = lt_params[ n = `PRODUCT` ]-v.
     catch cx_root.
     endtry.
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       quantity = '500'.
 

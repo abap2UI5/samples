@@ -77,8 +77,7 @@ CLASS z2ui5_cl_demo_app_169 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       check_editable_active = abap_false.
       t_tab = VALUE #(

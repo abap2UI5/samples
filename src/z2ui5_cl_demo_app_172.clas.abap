@@ -224,8 +224,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       load_output_table( ).
       render_main_screen( ).

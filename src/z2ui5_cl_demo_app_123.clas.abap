@@ -50,8 +50,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       mt_spot = VALUE #(
         ( pos = `9.98336;53.55024;0`         contentoffset = `0;-6` scale = `1;1;1` key = `Hamburg`     tooltip = `Hamburg`     type = `Default` icon = `factory` )

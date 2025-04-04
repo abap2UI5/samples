@@ -35,8 +35,7 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       date = sy-datum.
       time = sy-uzeit.
       dec1 = - 1 / 3.

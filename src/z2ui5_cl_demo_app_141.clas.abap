@@ -163,8 +163,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.

@@ -159,8 +159,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
     CLEAR mv_view_popup.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       z2ui5_on_init( ).
     ENDIF.
     z2ui5_on_event( client ).

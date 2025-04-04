@@ -68,8 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
 

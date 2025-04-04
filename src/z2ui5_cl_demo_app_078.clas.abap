@@ -31,8 +31,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

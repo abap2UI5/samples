@@ -59,8 +59,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
   `><li>list item 1</li><li>list item 2<ul><li>sub item 1</li><li>sub item 2</li></ul></li></ul><p>pre:</p><pre>abc    def    ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
   `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       mv_type = `sapIllus-NoActivities`.
       display_view( ).
       RETURN.

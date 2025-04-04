@@ -12,8 +12,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       IF client->get( )-check_launchpad_active = abap_false.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).

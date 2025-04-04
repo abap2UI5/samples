@@ -192,8 +192,7 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       selected_menu_entry = 'Home'.
     ENDIF.
 

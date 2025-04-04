@@ -28,8 +28,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
       mv_page = `page1`.
       z2ui5_view_display( ).
       RETURN.

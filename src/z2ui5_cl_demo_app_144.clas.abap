@@ -71,8 +71,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF  client->check_on_init( ).
 
       DO 1 TIMES.
         t_tab = VALUE #( BASE t_tab
