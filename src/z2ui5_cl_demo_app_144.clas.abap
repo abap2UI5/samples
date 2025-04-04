@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION
       END OF ty_row .
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
-    DATA check_initialized TYPE abap_bool.
+    
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       DO 1 TIMES.
         t_tab = VALUE #( BASE t_tab

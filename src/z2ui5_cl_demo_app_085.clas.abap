@@ -401,7 +401,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_set_data( ).
       sort( ).
       z2ui5_on_init( ).

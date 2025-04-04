@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_016 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA mv_sel1 TYPE abap_bool.
     DATA mv_sel2 TYPE abap_bool.
@@ -124,7 +124,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
 
 

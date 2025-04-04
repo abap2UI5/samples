@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION
     INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS display_view.
     METHODS on_event.
@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( ).
     ENDIF.
 

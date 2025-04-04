@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_on_init( ).
       z2ui5_on_rendering( client ).
     ENDIF.

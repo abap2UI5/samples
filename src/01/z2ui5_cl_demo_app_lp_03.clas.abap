@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_lp_03 DEFINITION PUBLIC.
 
 *    DATA product  TYPE string.
 *    DATA quantity TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA:
       BEGIN OF nav_params,
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
 
     DATA(lt_startup_params) = client->get( )-s_config-t_startup_params.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       nav_params-product  = '102343333'.
 

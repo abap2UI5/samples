@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA t_tab TYPE REF TO data.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
 

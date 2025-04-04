@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_set_data( ).
       z2ui5_view_display( ).
       RETURN.

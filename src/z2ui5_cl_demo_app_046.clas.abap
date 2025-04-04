@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA mv_display TYPE string.
 
   PROTECTED SECTION.
@@ -30,7 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       mv_display = 'LIST'.
 

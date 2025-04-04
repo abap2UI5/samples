@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(

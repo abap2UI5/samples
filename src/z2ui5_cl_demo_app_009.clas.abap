@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
       END OF s_employee.
     DATA mt_employees_sel TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
     DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+    
 
 
     DATA mv_view_popup TYPE string.
@@ -159,7 +159,7 @@ CLASS Z2UI5_CL_DEMO_APP_009 IMPLEMENTATION.
 
     CLEAR mv_view_popup.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_on_init( ).
     ENDIF.
     z2ui5_on_event( client ).

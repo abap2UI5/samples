@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_270 DEFINITION
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
     DATA color TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(

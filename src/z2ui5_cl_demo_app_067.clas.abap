@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
     DATA currency          TYPE string.
     DATA numeric           TYPE n length 12.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       numeric = '000000000012'.
       amount = '123456789.123'.

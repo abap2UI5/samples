@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA mv_view_main TYPE string.
 
   PROTECTED SECTION.
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_view_main_display( ).
       client->message_box_display( 'app started, init values set' ).
       RETURN.

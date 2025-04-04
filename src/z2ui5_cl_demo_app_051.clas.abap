@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
         input3 TYPE string,
       END OF screen.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_051 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
     ENDIF.
 

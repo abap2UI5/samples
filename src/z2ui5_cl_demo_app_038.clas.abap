@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
       END OF ty_msg.
 
     DATA t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS z2ui5_display_view.
     METHODS z2ui5_display_popup.
@@ -133,7 +133,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       t_msg = VALUE #(
           ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Error'     group = 'group 01' )

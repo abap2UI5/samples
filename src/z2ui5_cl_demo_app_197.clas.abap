@@ -90,7 +90,7 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_display_view( ).
       z2ui5_set_data( ).
       RETURN.

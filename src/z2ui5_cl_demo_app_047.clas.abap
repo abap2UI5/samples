@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       date = sy-datum.
       time = sy-uzeit.
       dec1 = - 1 / 3.

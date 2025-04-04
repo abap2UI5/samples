@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA mv_info_filter TYPE string.
     METHODS refresh_data.
 
@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       refresh_data( ).
     ENDIF.
 

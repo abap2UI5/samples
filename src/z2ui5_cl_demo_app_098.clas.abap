@@ -147,7 +147,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       t_tab = VALUE #(
         ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )

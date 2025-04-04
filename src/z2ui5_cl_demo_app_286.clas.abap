@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_286 DEFINITION
       END OF ty_name .
 
     DATA lt_o_model TYPE TABLE OF ty_name.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
 
       lt_o_model = VALUE #(

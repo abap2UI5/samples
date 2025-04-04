@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION
     TYPES ty_items TYPE STANDARD TABLE OF ty_item WITH DEFAULT KEY.
 
     DATA client            TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA items             TYPE ty_items.
 
     METHODS initialization.
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       initialization( ).
       display_view( client ).
     ENDIF.

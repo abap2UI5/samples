@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
         progress_value    TYPE string VALUE '3',
       END OF screen.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
     ENDIF.
 

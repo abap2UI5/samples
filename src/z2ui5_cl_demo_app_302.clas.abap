@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_302 DEFINITION
         additionalinfo TYPE string,
       END OF ty_product.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA lt_a_data TYPE TABLE OF ty_product.
 
   PROTECTED SECTION.
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
 
       lt_a_data = VALUE #(

@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION
 
     DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
     DATA s_text TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
       z2ui5_set_data( ).
     ENDIF.

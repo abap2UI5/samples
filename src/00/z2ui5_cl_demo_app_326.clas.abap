@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_326 DEFINITION PUBLIC CREATE PUBLIC.
 
     DATA unit              TYPE meins.
     DATA numc              TYPE z2ui5_numc12.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_326 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
       z2ui5_set_data( ).
     ENDIF.

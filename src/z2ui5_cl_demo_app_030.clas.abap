@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       t_tab = VALUE #(
             ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )

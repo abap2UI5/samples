@@ -5,7 +5,7 @@ CLASS Z2UI5_CL_DEMO_APP_015 DEFINITION PUBLIC.
     INTERFACES Z2UI5_if_app.
 
     DATA mv_html_text TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.

@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
 
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     me->client = client.
 
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
       z2ui5_set_data( ).
     ENDIF.

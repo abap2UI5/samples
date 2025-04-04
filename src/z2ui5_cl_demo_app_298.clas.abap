@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_298 DEFINITION
         name       TYPE string,
       END OF ty_product_collection.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA lt_a_products TYPE TABLE OF ty_product_collection.
     DATA selectedproducterrorcollection TYPE string.
     DATA selectedproductwrnngcollection TYPE string.
@@ -163,7 +163,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
       z2ui5_set_data( ).
     ENDIF.

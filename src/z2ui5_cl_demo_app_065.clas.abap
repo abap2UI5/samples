@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_065 DEFINITION PUBLIC.
 
     DATA mv_input_main  TYPE string.
     DATA mv_input_nest  TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                          press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) )
               )->input( value = client->_bind_edit( mv_input_nest ) ).
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       client->view_display( lo_view->stringify( ) ).
 

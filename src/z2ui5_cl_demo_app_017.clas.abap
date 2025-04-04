@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_017 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -17,7 +17,7 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
     ENDIF.
 

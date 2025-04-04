@@ -134,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       mt_tree = VALUE #( ( text = 'Apps'
                     nodes       = VALUE #( ( text = 'Frontend'

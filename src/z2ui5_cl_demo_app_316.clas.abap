@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_316 DEFINITION
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA phone  TYPE string.
     DATA mobile TYPE string.
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       display_view( client ).
     ENDIF.
 

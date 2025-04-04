@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_138 DEFINITION PUBLIC.
 
 
     DATA quantity TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val  = 'tomato'.
       quantity = '500'.

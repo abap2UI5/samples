@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_lp_04 DEFINITION PUBLIC.
     DATA product  TYPE string.
     DATA product_url  TYPE string.
     DATA quantity TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA check_launchpad_active TYPE abap_bool.
 
   PROTECTED SECTION.
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
     product = lt_params[ n = `PRODUCT` ]-v.
     catch cx_root.
     endtry.
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       quantity = '500'.
 

@@ -27,7 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
 
 
     "on init
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( )

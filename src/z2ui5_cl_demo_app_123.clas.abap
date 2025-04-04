@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION
       END OF ty_spot.
     DATA mt_spot TYPE TABLE OF ty_spot.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
     TYPES:
       BEGIN OF ty_route,
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       mt_spot = VALUE #(
         ( pos = `9.98336;53.55024;0`         contentoffset = `0;-6` scale = `1;1;1` key = `Hamburg`     tooltip = `Hamburg`     type = `Default` icon = `factory` )

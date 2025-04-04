@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION
         INCLUDE TYPE ty_struc_incl.
     DATA END OF ms_struc2.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       ms_struc-title  = `title`.
       ms_struc-value  = `val01`.

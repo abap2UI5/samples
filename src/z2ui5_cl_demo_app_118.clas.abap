@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_118 DEFINITION
     DATA problematic_rows TYPE t_rows.
     DATA these_are_fine_rows TYPE t_rows.
 
-    DATA check_initialized TYPE abap_bool.
+    
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       problematic_rows = VALUE #(
         ( id = 1 descr = 'filled with the actual date and time in correct format' adate = sy-datum atime = sy-uzeit )
         ( id = 2 descr = 'correct init values' adate = '00000000' atime = '000000' )

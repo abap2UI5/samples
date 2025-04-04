@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS on_init.
     METHODS on_event.
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       on_init( ).
     ENDIF.
 

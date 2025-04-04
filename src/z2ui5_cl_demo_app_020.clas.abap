@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA mv_text TYPE string.
     DATA mv_cancel_text TYPE string.
@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
     ENDIF.
 
     CASE client->get( )-event.

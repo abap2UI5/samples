@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_editable_active TYPE abap_bool.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       check_editable_active = abap_false.
       t_tab = VALUE #(

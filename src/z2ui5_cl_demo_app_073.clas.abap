@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA mv_url TYPE string.
     DATA mv_check_timer_active TYPE abap_bool.
 
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       mv_check_timer_active = abap_false.
       display_view( ).
     ENDIF.

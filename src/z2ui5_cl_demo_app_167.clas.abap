@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_167 DEFINITION
 
     DATA mv_value TYPE string.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       mv_value = `my value`.
       set_view( ).
     ENDIF.

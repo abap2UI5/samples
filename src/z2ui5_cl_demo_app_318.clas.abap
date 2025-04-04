@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     DATA mv_path           TYPE string.
     DATA mv_editor         TYPE string.
     DATA mv_check_editable TYPE abap_bool.
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA: lt_types TYPE z2ui5_if_types=>ty_t_name_value.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       mv_path = '../../demo/text'.
       mv_type = 'plain_text'.
       view_display( ).

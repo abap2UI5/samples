@@ -268,7 +268,7 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       set_mock_data( ).
       set_view( ).
       RETURN.

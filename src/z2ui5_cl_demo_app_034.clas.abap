@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA t_bapiret TYPE bapirettab.
-    DATA check_initialized TYPE abap_bool.
+    
     DATA mv_popup_name TYPE string.
     DATA mv_main_xml TYPE string.
     DATA mv_popup_xml TYPE string.
@@ -85,7 +85,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       t_bapiret = VALUE #(
         ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )

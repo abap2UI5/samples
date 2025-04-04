@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_048 DEFINITION
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       t_tab = VALUE #(
         ( title = 'entry_01'   info = 'Information'   descr = 'this is a description1 1234567890 1234567890'  icon = 'sap-icon://badge'      highlight = 'Information' wrapcharlimit = '100' )

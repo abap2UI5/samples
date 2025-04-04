@@ -55,7 +55,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client     = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       z2ui5_set_data( ).
       z2ui5_on_init( ).
       RETURN.

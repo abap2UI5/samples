@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_125 DEFINITION PUBLIC.
 
     DATA title  TYPE string.
     DATA favicon  TYPE string.
-    DATA check_initialized TYPE abap_bool.
+    
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_125 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       title = `my title`.
 
       display_view( ).

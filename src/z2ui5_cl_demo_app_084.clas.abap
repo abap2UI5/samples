@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
 
 
-    DATA check_initialized TYPE abap_bool.
+    
 
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       DATA(lv_script) = `` && |\n| &&
                         `function setInputFIlter(){` && |\n| &&

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 
     DATA t_bapiret TYPE bapirettab.
 
-    DATA check_initialized TYPE abap_bool.
+    
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS ui5_view_display.
@@ -163,7 +163,7 @@ CLASS Z2UI5_CL_DEMO_APP_141 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.

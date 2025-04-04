@@ -192,7 +192,7 @@ CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
 
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
       selected_menu_entry = 'Home'.
     ENDIF.
 

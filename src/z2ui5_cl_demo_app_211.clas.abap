@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION
     DATA mo_main_page      TYPE REF TO z2ui5_cl_xml_view.
 
     DATA client            TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS on_init.
     METHODS on_event.
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       on_init( ).
 

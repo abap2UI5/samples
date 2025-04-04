@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION
     DATA mt_comp              TYPE abap_component_tab.
     DATA mt_dfies             TYPE z2ui5_cl_util=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
-    DATA check_initialized TYPE abap_bool.
+    
 
     METHODS on_init.
 
@@ -207,7 +207,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF  client->check_on_init( ).
+    IF client->check_on_init( ).
 
       on_init( ).
 
