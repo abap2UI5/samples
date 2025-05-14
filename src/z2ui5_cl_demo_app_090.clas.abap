@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    DATA check_cc_loaded TYPE abap_bool.
+    DATA check_view_loaded TYPE abap_bool.
 
     METHODS z2ui5_view_display.
     METHODS z2ui5_view_p13n.
@@ -84,12 +84,12 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF check_cc_loaded = abap_false.
-      check_cc_loaded = abap_true.
+    IF client->check_on_init( ).
       init_data_set( ).
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
-    ELSEIF client->check_on_init( ).
+    ELSEIF  check_view_loaded = abap_false.
+      check_view_loaded = abap_true.
       init_data_set( ).
       z2ui5_view_display( ).
       RETURN.
@@ -142,7 +142,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     page->_generic( name         = `Popup`
                     ns           = `p13n`
                           t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
-                                            ( n = `close` v = `sap.z2ui5.updateData(${$parameters>/reason})` )
+                                            ( n = `close` v = `z2ui5.updateData(${$parameters>/reason})` )
 *                                            ( n = `warningText`  v = `Are you sure?` )
                                             ( n = `id`  v = `p13nPopup` )
 *                                            ( n = `reset`  v = client->_event( `P13N_RESET` ) )
@@ -180,7 +180,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                   press = client->_event( 'P13N_OPEN' )
                   class = `sapUiTinyMarginBeginEnd`
       )->button( text  = `Open P13N.POPUP`
-                 press = `sap.z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
+                 press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 
@@ -308,8 +308,8 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
   METHOD get_custom_js.
 
-    result  = `sap.z2ui5.setInitialData = () => {` && |\n| &&
-                    `    var oView = sap.z2ui5.oView` && |\n| &&
+    result  = `z2ui5.setInitialData = () => {` && |\n| &&
+                    `    var oView = z2ui5.oView` && |\n| &&
                     `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
                     `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
                     `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
@@ -319,9 +319,9 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                     `    var oPopup = oView.byId("p13nPopup");` && |\n| &&
                     `    oPopup.open();` && |\n| &&
                     `};` && |\n| &&
-                    `sap.z2ui5.updateData = (oReason) => {` && |\n| &&
+                    `z2ui5.updateData = (oReason) => {` && |\n| &&
                     `  if( oReason === "Ok" ) {` && |\n| &&
-                    `    var oView = sap.z2ui5.oView` && |\n| &&
+                    `    var oView = z2ui5.oView` && |\n| &&
                     `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
                     `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
                     `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
