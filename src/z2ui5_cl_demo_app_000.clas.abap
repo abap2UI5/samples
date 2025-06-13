@@ -359,6 +359,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
+    panel->generic_tile( header    = 'Dynamic Objects IV'
+                         subheader = 'User Generic Data Refs from Prev App'
+                         press     = client->_event( 'ZZ2UI5_CL_DEMO_APP_328' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `Device Capabilities`
