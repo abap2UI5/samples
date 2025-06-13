@@ -1,7 +1,7 @@
 name: ABAP_702
 
 on:
-  push:
+  pull_request:
 
 permissions:
   contents: read
