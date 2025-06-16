@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
 
     DATA prodh_nodes TYPE ty_prodh_nodes .
     DATA is_initialized TYPE abap_bool .
-    DATA gv_user TYPE uname.
+    DATA gv_user TYPE c length 12.
     DATA gv_date TYPE d.
 
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
@@ -145,8 +145,8 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                     text   = 'Date:'
         )->get_parent(
       )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-        )->text( text = client->_bind( gv_user )
-        )->text( text = client->_bind( gv_date ) ).
+        )->text( client->_bind( gv_user )
+        )->text( client->_bind( gv_date ) ).
 
 
     DATA(sections) = page->sections( ).

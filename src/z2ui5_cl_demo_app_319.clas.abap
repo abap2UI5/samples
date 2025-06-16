@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
       t_tokens TYPE STANDARD TABLE OF t_token WITH EMPTY KEY.
     TYPES:
       BEGIN OF t_range,
-        exclude      TYPE boole_d,
+        exclude      TYPE abap_bool,
         operation    TYPE string,
         value1       TYPE string,
         value2       TYPE string,

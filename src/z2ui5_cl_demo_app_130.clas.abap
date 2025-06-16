@@ -32,9 +32,9 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
       ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
     TYPES:
       BEGIN OF ty_s_fieldsdb,
-        screen_name TYPE char10,
-        field       TYPE char10,
-        field_doma  TYPE char10,
+        screen_name TYPE string,
+        field       TYPE string,
+        field_doma  TYPE string,
       END OF ty_s_fieldsdb .
     TYPES
       ty_t_fieldsdb TYPE STANDARD TABLE OF ty_s_fieldsdb WITH DEFAULT KEY .
@@ -46,21 +46,21 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
           END OF ty_s_fields .
     TYPES:
       BEGIN OF ty_s_var_val,
-        screen_name TYPE char10,
-        var         TYPE     char10,
-        field       TYPE     char10,
-        guid        TYPE     string,
-        sign        TYPE char1,
-        opt         TYPE char2,
-        low         TYPE char255,
-        high        TYPE char255,
+        screen_name TYPE string,
+        var         TYPE string,
+        field       TYPE string,
+        guid        TYPE string,
+        sign        TYPE string,
+        opt         TYPE string,
+        low         TYPE string,
+        high        TYPE string,
       END OF ty_s_var_val .
     TYPES
       ty_t_var_val TYPE STANDARD TABLE OF ty_s_var_val WITH DEFAULT KEY .
     TYPES:
       BEGIN OF ty_s_variants,
-        screen_name TYPE char10,
-        var         TYPE char10,
+        screen_name TYPE string,
+        var         TYPE string,
         descr       TYPE string,
       END OF ty_s_variants .
     TYPES
@@ -68,11 +68,11 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
     TYPES
       BEGIN OF ty_s_var_pop.
         INCLUDE TYPE ty_s_variants.
-    TYPES: selkz TYPE xfeld,
+    TYPES: selkz TYPE abap_bool,
           END OF ty_s_var_pop .
     TYPES:
       BEGIN OF ty_s_screens,
-        screen_name TYPE char10,
+        screen_name TYPE string,
         descr       TYPE string,
       END OF ty_s_screens .
 
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION
     METHODS get_txt
       IMPORTING
                 roll          TYPE string
-                type          TYPE char1 OPTIONAL
+                type          TYPE string OPTIONAL
       RETURNING VALUE(result) TYPE string.
 
     METHODS get_txt_l

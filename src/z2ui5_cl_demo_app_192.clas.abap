@@ -6,9 +6,9 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     TYPES: BEGIN OF ty_s_key_value,
-             fname   TYPE char30,
+             fname   TYPE string,
              value   TYPE string,
-             tabname TYPE char30,
+             tabname TYPE string,
              comp    TYPE abap_componentdescr,
            END OF ty_s_key_value,
            ty_t_key_values TYPE STANDARD TABLE OF ty_s_key_value WITH EMPTY KEY.
@@ -19,8 +19,6 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
              t_keyva TYPE ty_t_key_values,
            END OF ty_s_merged_data,
            ty_t_merged_data TYPE STANDARD TABLE OF ty_s_merged_data WITH EMPTY KEY.
-
-
 
     DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH EMPTY KEY.
 
@@ -66,19 +64,18 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
                  navbuttonpress = client->_event( val = 'BACK' )
                  shownavbutton  = abap_true
             )->header_content( ).
-
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
-    xml_parse( ).
 
+    xml_parse( ).
     me->client = client.
     get_data( ).
     ui5_display( ).
-
     xml_stringify( ).
+
   ENDMETHOD.
 
   METHOD get_data.
@@ -92,7 +89,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
                       ( aa = 'a1' bb = 'b1' cc = 'c1' ) ).
 
     DATA(kopf) = REF #( mt_out ).
-
 
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.

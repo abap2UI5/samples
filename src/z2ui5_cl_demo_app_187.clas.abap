@@ -3,6 +3,8 @@ CLASS z2ui5_cl_demo_app_187 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
@@ -35,8 +37,10 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'SY'.
-        MESSAGE ID 'NET' TYPE 'E' NUMBER '001' INTO DATA(lv_dummy).
-        client->message_box_display( sy ).
+        DATA(ls_msg2) = z2ui5_cl_util=>msg_get_by_msg(
+                  id     = 'NET'
+                  no     = `001` ).
+        client->message_box_display( ls_msg2 ).
 
       WHEN 'BAPIRET'.
 

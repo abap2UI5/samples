@@ -107,7 +107,6 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
           UP TO 100 ROWS.
 
       CATCH cx_root.
-
     ENDTRY.
 
     ASSIGN mt_table_tmp->* TO <table_tmp>.

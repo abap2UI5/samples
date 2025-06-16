@@ -6,9 +6,9 @@ CLASS lcl_merged_data DEFINITION.
   PUBLIC SECTION.
 
     TYPES: BEGIN OF ty_s_key_value,
-             fname   TYPE char30,
+             fname   TYPE string,
              value   TYPE string,
-             tabname TYPE char30,
+             tabname TYPE string,
              comp    TYPE abap_componentdescr,
            END OF ty_s_key_value,
            ty_t_key_values TYPE STANDARD TABLE OF ty_s_key_value WITH EMPTY KEY.
