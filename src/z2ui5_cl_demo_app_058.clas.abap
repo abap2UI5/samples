@@ -212,7 +212,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       lo_columns->column(
             minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
             demandpopin    = abap_true
-            width          = lr_field->length )->text( text = CONV char10( lr_field->title ) ).
+            width          = lr_field->length )->text( text = CONV string( lr_field->title ) ).
       lv_width = lv_width + 10.
     ENDLOOP.
 

@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION
 
     TYPES: BEGIN OF ty_item,
              id           TYPE string,
-             initials     TYPE char2,
+             initials     TYPE string,
              fallbackicon TYPE string,
              src          TYPE string,
              name         TYPE string,
