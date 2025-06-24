@@ -10,10 +10,8 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
 
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
-    DATA mt_table_tmp    TYPE REF TO data.
 
     DATA mt_comp         TYPE abap_component_tab.
-    DATA ms_fixval       TYPE REF TO data.
 
     METHODS set_app_data
       IMPORTING !count TYPE string
@@ -34,7 +32,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     METHODS get_comp
       RETURNING VALUE(result) TYPE abap_component_tab.
 
-    METHODS get_fixval.
+
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
@@ -143,7 +141,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
 
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
+*        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
 
 
         ASSIGN mt_table->* TO <table>.
@@ -157,43 +155,8 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
     ENDTRY.
 
-    ASSIGN mt_table_tmp->* TO <table_tmp>.
-
-    <table_tmp> = <table>.
-    get_fixval( ).
-
   ENDMETHOD.
 
-  METHOD get_fixval.
-
-    TYPES:
-      BEGIN OF fixvalue,
-        low        TYPE string,
-        high       TYPE string,
-        option     TYPE string,
-        ddlanguage TYPE string,
-        ddtext     TYPE string,
-      END OF fixvalue.
-    TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
-
-    DATA comp        TYPE cl_abap_structdescr=>component_table.
-    DATA structdescr TYPE REF TO cl_abap_structdescr.
-    DATA lt_fixval   TYPE fixvalues.
-
-    LOOP AT mt_comp REFERENCE INTO DATA(dfies).
-
-      comp = VALUE cl_abap_structdescr=>component_table(
-                       BASE comp
-                       ( name = dfies->name
-                         type = CAST #( cl_abap_datadescr=>describe_by_data( lt_fixval ) ) ) ).
-    ENDLOOP.
-
-    structdescr = cl_abap_structdescr=>create( comp ).
-
-    CREATE DATA ms_fixval TYPE HANDLE structdescr.
-
-
-  ENDMETHOD.
 
   METHOD get_comp.
     DATA index TYPE int4.
