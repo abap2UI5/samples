@@ -10,8 +10,9 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
 
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
-
     DATA mt_comp         TYPE abap_component_tab.
+
+    DATA mv_init type abap_boolean.
 
     METHODS set_app_data
       IMPORTING !count TYPE string
@@ -110,8 +111,8 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF client->check_on_init( ).
-
+    IF mv_init = abap_false.
+    mv_init = abap_true.
       on_init( ).
 
     ENDIF.

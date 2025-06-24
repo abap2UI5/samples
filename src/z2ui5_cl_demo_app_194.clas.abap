@@ -14,14 +14,14 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION
     DATA ms_table_row    TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
     DATA ms_fixval       TYPE REF TO data.
+    DATA mv_init         TYPE abap_bool.
 
     METHODS set_app_data
-      IMPORTING !count TYPE string
-                !table TYPE string.
+      IMPORTING
+        !table TYPE string.
 
   PROTECTED SECTION.
-    DATA client            TYPE REF TO z2ui5_if_client.
-
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -32,10 +32,12 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION
     METHODS get_data.
 
     METHODS get_comp
-      RETURNING VALUE(result) TYPE abap_component_tab.
+      RETURNING
+        VALUE(result) TYPE abap_component_tab.
 
     METHODS get_fixval.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
@@ -82,7 +84,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
 
-
     ASSIGN mt_table->* TO <tab>.
 
     DATA(table) = page->table( growing = 'true'
@@ -105,7 +106,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = '{' && comp-name && '}' ).
+      cells->object_identifier( text = |\{{ comp-name }\}| ).
     ENDLOOP.
 
     page->footer( )->overflow_toolbar(
@@ -128,7 +129,8 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF mv_init = abap_false.
+      mv_init = abap_true.
 
       on_init( ).
 
@@ -193,8 +195,8 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
 
     DATA comp        TYPE cl_abap_structdescr=>component_table.
-    DATA structdescr TYPE REF TO cl_abap_structdescr.
     DATA lt_fixval   TYPE fixvalues.
+    DATA structdescr TYPE REF TO cl_abap_structdescr.
 
     LOOP AT mt_comp REFERENCE INTO DATA(dfies).
 
@@ -208,19 +210,17 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     CREATE DATA ms_fixval TYPE HANDLE structdescr.
 
-
   ENDMETHOD.
 
   METHOD get_comp.
     DATA index TYPE int4.
+
     TRY.
-
-
 
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING p_descr_ref     = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
