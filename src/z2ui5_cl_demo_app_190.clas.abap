@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION
     DATA mt_table        TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
 
-    DATA mv_init type abap_boolean.
+    DATA mv_init type abap_bool.
 
     METHODS set_app_data
       IMPORTING !count TYPE string
