@@ -62,10 +62,10 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_194'  count = '10' table = 'Z2UI5_T001')
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_194'  count = '20' table = 'Z2UI5_T002')
-                       ( id = '3' class = 'Z2UI5_CL_DEMO_APP_194'  count = '30' table = 'Z2UI5_TOOL_T_001')
-                       ( id = '4' class = 'Z2UI5_CL_DEMO_APP_194'  count = '40' table = 'Z2UI5_TOOL_T_002') ).
+    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_194'  count = '10' table = 'Z2UI5_T_11')
+                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_194'  count = '20' table = 'Z2UI5_T_12')
+                       ( id = '3' class = 'Z2UI5_CL_DEMO_APP_194'  count = '30' table = 'Z2UI5_T_11')
+                       ( id = '4' class = 'Z2UI5_CL_DEMO_APP_194'  count = '40' table = 'Z2UI5_T_12') ).
 
     mv_selectedkey = '1'.
 
@@ -120,7 +120,6 @@ CLASS Z2UI5_CL_DEMO_APP_195 IMPLEMENTATION.
 
             CALL METHOD mo_app->('SET_APP_DATA')
               EXPORTING
-                count = t002->count
                 table = t002->table.
 
             render_main( ).
