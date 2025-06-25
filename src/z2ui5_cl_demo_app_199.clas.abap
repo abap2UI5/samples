@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-    mv_counter = lines( <tab> ).
+
 
   ENDMETHOD.
 
@@ -114,8 +114,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     TRY.
 
-
-
         CREATE DATA mt_table TYPE ty_t_01.
         ASSIGN mt_table->* TO <table>.
         mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <table> ).
@@ -123,6 +121,8 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
         SELECT id, id_prev FROM z2ui5_t_01
           INTO CORRESPONDING FIELDS OF TABLE @<table>
           UP TO 2 ROWS.
+
+        mv_counter = 2.
 
       CATCH cx_root.
     ENDTRY.
@@ -134,6 +134,8 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     ASSIGN mt_table->* TO <tab>.
     APPEND LINES OF <tab> TO <tab>.
+
+    mv_counter = lines( <tab> ).
 
   ENDMETHOD.
 
