@@ -359,12 +359,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
-    panel->generic_tile( header    = 'Dynamic Objects IV'
-                         subheader = 'User Generic Data Refs'
-                         press     = client->_event( 'ZZ2UI5_CL_DEMO_APP_328' )
-                         mode      = 'LineMode'
-                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
-      ).
+
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
@@ -1922,6 +1917,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
+
+    panel->generic_tile( header    = 'Model IV'
+                         subheader = 'RTTI Data'
+                         press     = client->_event( 'ZZ2UI5_CL_DEMO_APP_328' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
 
     panel->generic_tile( header    = 'Date Format Error in internal table'
                          subheader = ''
