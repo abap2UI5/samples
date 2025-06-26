@@ -360,7 +360,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       ).
 
     panel->generic_tile( header    = 'Dynamic Objects IV'
-                         subheader = 'User Generic Data Refs from Prev App'
+                         subheader = 'User Generic Data Refs'
                          press     = client->_event( 'ZZ2UI5_CL_DEMO_APP_328' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
