@@ -50,7 +50,9 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title      = 'RTTI IV'
+                                       navbuttonpress = client->_event( 'BACK' )
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'GO'
                   press = client->_event( 'GO' )

@@ -26,6 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_329 IMPLEMENTATION.
 
     result->mr_data = i_data.
 
+
   ENDMETHOD.
 
 ENDCLASS.
