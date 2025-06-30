@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
                                     adjustlabelspan = abap_true
                               )->content( ns = `form` ).
 
-    ASSIGN COMPONENT 'ID' OF STRUCTURE mo_table_obj->mr_data TO FIELD-SYMBOL(<value>).
+    ASSIGN COMPONENT 'ID' OF STRUCTURE mo_table_obj->mr_data->* TO FIELD-SYMBOL(<value>).
     IF <value> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
