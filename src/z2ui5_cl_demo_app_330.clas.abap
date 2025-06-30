@@ -1,346 +1,96 @@
-class z2ui5_cl_demo_app_330 definition
-  public
-  create public .
+CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
 
-public section.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-  interfaces IF_SERIALIZABLE_OBJECT .
-  interfaces Z2UI5_IF_APP .
+    DATA ms_struc     TYPE z2ui5_t_01.
+    DATA mo_table_obj TYPE REF TO z2ui5_cl_demo_app_329.
 
-  data CHECK_INITIALIZED type ABAP_BOOL .
+    METHODS get_data.
+
+    METHODS ui5_view_display
+      IMPORTING
+        !client TYPE REF TO z2ui5_if_client.
+
   PROTECTED SECTION.
-
-    DATA client TYPE REF TO z2ui5_if_client.
-
-    METHODS display_view
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
-      IMPORTING
-        id TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
 
-  METHOD DISPLAY_VIEW.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->object_page_layout( uppercaseanchorbar = abap_false ).
-
-    DATA(header_title) = object_page_layout->header_title(
-        )->object_page_dyn_header_title( ).
-
-    header_title->expanded_heading(
-                  )->title( text = `Robot Arm Series 9` ).
-
-    header_title->snapped_heading(
-                  )->hbox(
-                     )->avatar( src = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
-                           class = `sapUiMediumMarginEnd`
-                           displayshape = `Square`
-                     )->vbox(
-                        )->title( text = `Robot Arm Series 9`
-                        )->label( text = `PO-48865` ).
-
-    header_title->expanded_content( ns = `uxap`
-                  )->label( text = `PO-48865` ).
-
-    header_title->snapped_title_on_mobile(
-                  )->title( text = `Robot Arm Series 9` ).
-
-    header_title->actions( 'uxap'
-                  )->button( text = `Edit` type = `Emphasized`
-                  )->button( text = `Delete`
-                  )->button( text = `Simulate Assembly` ).
-
-    DATA(header_content) = object_page_layout->header_content( ns = `uxap`
-                                               )->flex_box( wrap = `Wrap` fitcontainer = abap_true ).
-
-    header_content->avatar( src = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
-                            class = `sapUiMediumMarginEnd`
-                            displayshape = `Square`
-                            displaysize = `L`
-
-                 )->vbox( class = `sapUiLargeMarginEnd sapUiSmallMarginBottom`
-                    )->hbox( class = `sapUiTinyMarginBottom` rendertype = `Bare`
-                       )->label( text = `Manufacturer:` class = `sapUiTinyMarginEnd`
-                       )->text( text = `Robotech`
-                    )->get_parent(
-
-                    )->hbox( class = `sapUiTinyMarginBottom` rendertype = `Bare`
-                       )->label( text = `Factory:` class = `sapUiTinyMarginEnd`
-                       )->text( text = `Orlando, Florida`
-                    )->get_parent(
-
-                    )->hbox(
-                       )->label( text = `Supplier:` class = `sapUiTinyMarginEnd`
-                       )->link( text = `Robotech (234242343)`
-                    )->get_parent(
-                 )->get_parent(
-
-                 )->vbox( class = `sapUiLargeMarginEnd sapUiSmallMarginBottom`
-                    )->title( text = `Status` class = `sapUiTinyMarginBottom`
-                    )->object_status( text = `Delivery`
-                                      state = `Success`
-                                      class = `sapMObjectStatusLarge`
-                    )->get_parent(
-                 )->get_parent(
-
-                 )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
-                    )->title( text  = `Delivery Time` class = `sapUiTinyMarginBottom`
-                    )->object_status( text = `12 Days`
-                                      icon = `sap-icon://shipping-status`
-                                      class = `sapMObjectStatusLarge`
-                    )->get_parent(
-                 )->get_parent(
-
-                 )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
-                    )->title( text  = `Assembly Option` class = `sapUiTinyMarginBottom`
-                    )->object_status( text = `To Be Selected`
-                                      state = `Error`
-                                      class = `sapMObjectStatusLarge`
-                    )->get_parent(
-                 )->get_parent(
-
-                 )->vbox( class = `sapUiLargeMarginEnd`
-                    )->title( text  = `Monthly Leasing Instalment` class = `sapUiTinyMarginBottom`
-                    )->object_number( number  = `379.99`
-                                      unit = `USD`
-                                      emphasized = abap_false
-                                      class = `sapMObjectNumberLarge`
-                    )->get_parent(
-                 )->get_parent( ).
-
-    DATA(section) = object_page_layout->sections( ).
-
-    section->object_page_section( titleuppercase = abap_false title = `General Information`
-             )->sub_sections(
-                )->object_page_sub_section( title = `Order Details` showTitle = abap_false
-                   )->blocks(
-                      )->simple_form( class = `sapUxAPObjectPageSubSectionAlignContent`
-                                      layout = `ColumnLayout`
-                                      columnsm = `2`
-                                      columnsl = `3`
-                                      columnsxl = `4`
-                                      )->title( ns = `core` text = `Order Details`
-
-                                      )->label( text = `Order ID`
-                                      )->text( text = `589946637`
-
-                                      )->label( text = `Contract`
-                                      )->link( text = `10045876`
-
-                                      )->label( text = `Transaction Date`
-                                      )->text( text = `May 6, 2018`
-
-                                      )->label( text = `Expected Delivery Date`
-                                      )->text( text = `June 23, 2018`
-
-                                      )->label( text = `Factory`
-                                      )->text( text = `Orlando, FL`
-
-                                      )->label( text = `Supplier`
-                                      )->text( text = `Robotech`
-
-                                      )->title( ns = `core` text = `Configuration Accounts`
-
-                                      )->label( text = `Model`
-                                      )->text( text = `Robot Arm Series 9`
-
-                                      )->label( text = `Color`
-                                      )->text( text = `White (default)`
-
-                                      )->label( text = `Socket`
-                                      )->text( text = `Default Socket 10`
-
-                                      )->label( text = `Leasing Instalment`
-                                      )->text( text = `379.99 USD per month`
-
-                                      )->label( text = `Axis`
-                                      )->text( text = `6 Axis`
-                      )->get_parent(
-                   )->get_parent(
-                )->get_parent(
-
-                )->object_page_sub_section( title = `Products` showtitle = abap_false
-                   )->blocks(
-                      )->table( class = `sapUxAPObjectPageSubSectionAlignContent` width = `auto`
-                         )->header_toolbar(
-                            )->overflow_toolbar(
-                               )->title( text = `Products` level = `H2`
-                               )->toolbar_spacer(
-                               )->search_field( width = `17.5rem`
-                               )->overflow_toolbar_button( tooltip = `Sort`
-                                                           text = `Sort`
-                                                           icon = `sap-icon://sort`
-                               )->overflow_toolbar_button( tooltip = `Filter`
-                                                           text = `Filter`
-                                                           icon = `sap-icon://filter`
-                               )->overflow_toolbar_button( tooltip = `Group`
-                                                           text = `Group`
-                                                           icon = `sap-icon://group-2`
-                               )->overflow_toolbar_button( tooltip = `Settings`
-                                                           text = `Settings`
-                                                           icon = `sap-icon://action-settings`
-                            )->get_parent(
-                         )->get_parent(
-
-                         )->columns(
-                            )->column(
-                               )->text( text = `Document Number`
-                            )->get_parent(
-                            )->column( minScreenWidth = `Tablet` demandpopin = abap_true
-                               )->text( text = `Company`
-                            )->get_parent(
-                            )->column( minScreenWidth = `Tablet` demandpopin = abap_true
-                               )->text( text = `Contact Person`
-                            )->get_parent(
-                            )->column( minScreenWidth = `Tablet` demandpopin = abap_true
-                               )->text( text = `Posting Date`
-                            )->get_parent(
-                            )->column( halign = `End`
-                               )->text( text = `Amount (Local Currency)`
-                            )->get_parent(
-                         )->get_parent(
-
-                         )->items(
-                            )->column_list_item(
-                               )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
-                            )->get_parent(
-                            )->column_list_item(
-                               )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
-                            )->get_parent(
-                            )->column_list_item(
-                               )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
-                            )->get_parent(
-                            )->column_list_item(
-                               )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
-                            )->get_parent(
-                            )->column_list_item(
-                               )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
-                            )->get_parent(
-                         )->get_parent(
-                      )->get_parent(
-                   )->get_parent(
-                )->get_parent(
-             )->get_parent(
-            ).
-
-    section->object_page_section( titleuppercase = abap_false title = `Contact Information`
-             )->sub_sections(
-                )->object_page_sub_section( title = `Contact information`
-                   )->blocks(
-                      )->simple_form( layout = `ColumnLayout`
-                                      columnsm = `2`
-                                      columnsl = `3`
-                                      columnsxl = `4`
-                                      )->title( ns   = `core` text = `Phone Numbers`
-
-                                      )->label( text = `Home`
-                                      )->text( text = `+ 1 415-321-1234`
-
-                                      )->label( text = `Office phone`
-                                      )->text( text = `+ 1 415-321-5555`
-
-                                      )->title( ns = `core` text = `Social Accounts`
-
-                                      )->label( text = `LinkedIn`
-                                      )->text( text = `/DeniseSmith`
-
-                                      )->label( text = `Twitter`
-                                      )->text( text = `@DeniseSmith`
-
-                                      )->title( ns = `core` text = `Addresses`
-
-                                      )->label( text = `Home Address`
-                                      )->text( text = `2096 Mission Street`
-
-                                      )->label( text = `Mailing Address`
-                                      )->text( text = `PO Box 32114`
-
-                                      )->title( ns   = `core` text = `Mailing Address`
-
-                                      )->label( text = `Work`
-                                      )->text( text = `DeniseSmith@sap.com`
-
-                      )->get_parent(
-                   )->get_parent(
-                )->get_parent(
-             )->get_parent(
-            ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD ON_EVENT.
+    IF client->check_on_init( ).
+      get_data( ).
+      mo_table_obj = z2ui5_cl_demo_app_329=>factory( ref #( ms_struc ) ).
+      ui5_view_display( client ).
+    ENDIF.
 
     CASE client->get( )-event.
+
       WHEN 'BACK'.
         client->nav_app_leave( ).
-      WHEN 'CLICK_HINT_ICON'.
-        z2ui5_display_popover( `button_hint_id` ).
+
     ENDCASE.
 
   ENDMETHOD.
 
+  METHOD ui5_view_display.
 
-  METHOD Z2UI5_DISPLAY_POPOVER.
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom` width = `auto`
-              )->quick_view_page( pageid = `sampleInformationId`
-                                  header = `Sample information`
-                                  description = `ObjectPage sample that demonstrates the combination of header facets and showTitle properties of sections and subsections.` ).
+    page->button( text  = 'GO'
+                  press = client->_event( 'GO' )
+                  type  = 'Success' ).
 
-    client->popover_display(
-      xml   = view->stringify( )
-      by_id = id
-    ).
+    DATA(form) = page->simple_form( editable        = abap_true
+                                    layout          = `ResponsiveGridLayout`
+                                    adjustlabelspan = abap_true
+                              )->content( ns = `form` ).
 
-  ENDMETHOD.
-
-
-  METHOD Z2UI5_IF_APP~MAIN.
-
-    me->client = client.
-
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      display_view( client ).
-
+    ASSIGN COMPONENT 'ID' OF STRUCTURE mo_table_obj->mr_data TO FIELD-SYMBOL(<value>).
+    IF <value> IS NOT ASSIGNED.
+      RETURN.
     ENDIF.
 
-    on_event( client ).
+    DATA(line) = form->label( wrapping = abap_false
+                              text     = 'ID'  ).
+
+    line->input( value = client->_bind( <value> ) ).
+
+    client->view_display( page ).
 
   ENDMETHOD.
+
+  METHOD get_data.
+
+*    DATA selkz TYPE abap_bool.
+*
+*    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
+*
+*    APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
+*                              ( name = 'SELKZ'
+*                                type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
+*
+*    TRY.
+*
+*        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+*
+*        CREATE DATA ms_struc TYPE HANDLE new_struct_desc.
+*
+*        ASSIGN ms_struc->* TO FIELD-SYMBOL(<struc>).
+
+        SELECT SINGLE * FROM z2ui5_t_01
+          INTO CORRESPONDING FIELDS OF @ms_STRUC.
+
+*      CATCH cx_root.
+
+*    ENDTRY.
+
+  ENDMETHOD.
+
 ENDCLASS.
