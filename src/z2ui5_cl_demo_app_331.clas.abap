@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_331 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

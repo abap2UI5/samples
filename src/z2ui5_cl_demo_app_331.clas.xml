@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_330</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_331</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>basic - popups with ref from prev App</DESCRIPT>
     <STATE>1</STATE>

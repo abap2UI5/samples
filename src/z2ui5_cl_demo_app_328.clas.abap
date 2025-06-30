@@ -2,6 +2,7 @@ CLASS z2ui5_cl_demo_app_328 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA mt_table     TYPE REF TO data.
     DATA mo_table_obj TYPE REF TO z2ui5_cl_demo_app_329.
 
@@ -9,9 +10,10 @@ CLASS z2ui5_cl_demo_app_328 DEFINITION PUBLIC.
 
     METHODS ui5_view_display
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        !client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -19,6 +21,8 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
+    FIELD-SYMBOLS <line> TYPE any.
 
     IF client->check_on_init( ).
       get_data( ).
@@ -45,7 +49,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
         ASSIGN mt_table->* TO FIELD-SYMBOL(<tab>).
 
-        LOOP AT <tab> ASSIGNING FIELD-SYMBOL(<line>).
+        LOOP AT <tab> ASSIGNING <line>.
 
           ASSIGN COMPONENT 'SELKZ' OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
           IF <selkz> IS NOT ASSIGNED.
