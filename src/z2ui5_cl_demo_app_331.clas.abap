@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       get_data( ).
-      mo_table_obj = z2ui5_cl_demo_app_329=>factory( ref #( ms_struc ) ).
+      mo_table_obj = z2ui5_cl_demo_app_329=>factory( REF #( ms_struc ) ).
       ui5_view_display( client ).
     ENDIF.
 
@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
     ENDCASE.
 
-client->view_model_update( ).
+    client->view_model_update( ).
 
   ENDMETHOD.
 
@@ -86,8 +86,8 @@ client->view_model_update( ).
 *
 *        ASSIGN ms_struc->* TO FIELD-SYMBOL(<struc>).
 
-        SELECT SINGLE * FROM z2ui5_t_01
-          INTO CORRESPONDING FIELDS OF @ms_STRUC.
+    SELECT SINGLE * FROM z2ui5_t_01
+      INTO CORRESPONDING FIELDS OF @ms_STRUC.
 
 *      CATCH cx_root.
 
