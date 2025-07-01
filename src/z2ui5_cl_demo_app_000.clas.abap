@@ -1946,7 +1946,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
-
+    panel->generic_tile( header    = 'Model VII'
+                         subheader = 'RTTI Data - Struc and Class Data'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_334' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
 
 
 
