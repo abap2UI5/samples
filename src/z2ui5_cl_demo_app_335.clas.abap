@@ -1,10 +1,10 @@
-CLASS z2ui5_cl_demo_app_334 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_335 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA ms_struc     TYPE z2ui5_t_01.
-    DATA mo_layout_obj TYPE REF TO z2ui5_cl_demo_app_333.
+    DATA ms_struc        TYPE z2ui5_t_01.
+    DATA mo_layout_obj   TYPE REF TO z2ui5_cl_demo_app_333.
     DATA mo_layout_obj_2 TYPE REF TO z2ui5_cl_demo_app_333.
 
     METHODS get_data.
@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_334 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -39,6 +39,11 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
       WHEN 'BACK'.
 
         client->nav_app_leave( ).
+
+      WHEN 'GO'.
+
+      DATA(app) = Z2UI5_CL_DEMO_APP_336=>factory(  ).
+      client->nav_app_call( app ).
 
     ENDCASE.
 
