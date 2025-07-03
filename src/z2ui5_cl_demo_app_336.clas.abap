@@ -8,6 +8,10 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
         !client TYPE REF TO z2ui5_if_client.
 
 
+    DATA ms_struc        TYPE z2ui5_t_01.
+    DATA mo_layout_obj   TYPE REF TO z2ui5_cl_demo_app_333.
+    DATA mo_layout_obj_2 TYPE REF TO z2ui5_cl_demo_app_333.
+
     CLASS-METHODS factory
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_336.
@@ -23,6 +27,9 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
+
+      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
 
       ui5_view_display( client ).
 

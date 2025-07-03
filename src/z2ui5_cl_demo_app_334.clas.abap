@@ -27,8 +27,8 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( REF #( ms_struc ) ).
-      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( REF #( ms_struc ) ).
+      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 5 ).
 
       ui5_view_display( client ).
 
@@ -52,6 +52,10 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
     IF mo_layout_obj_2->mr_data IS not BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
+    ENDIF.
+
+ IF mo_layout_obj_2->ms_data-guid eq mo_layout_obj->ms_data-guid.
+      client->message_toast_display( 'ERROR - GUIDS!' ).
     ENDIF.
 
     client->view_model_update( ).
