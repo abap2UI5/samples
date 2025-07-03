@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_table_obj = z2ui5_cl_demo_app_333=>factory( REF #( ms_struc ) ).
+      mo_table_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
 
       ui5_view_display( client ).
 
