@@ -17,8 +17,6 @@ CLASS z2ui5_cl_demo_app_337 DEFINITION PUBLIC.
   PROTECTED SECTION.
 
   PRIVATE SECTION.
-    METHODS get_data_2.
-
     METHODS xml_table
       IMPORTING
         i_page   TYPE REF TO z2ui5_cl_xml_view
@@ -37,52 +35,57 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-
-      get_data( ).
-
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_data )
                                                       vis_cols = 5 ).
-
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_data )
                                                         vis_cols = 3 ).
-
       ui5_view_display( client ).
-
     ENDIF.
 
+
+
+
     CASE client->get( )-event.
-
       WHEN 'BACK'.
-
         client->nav_app_leave( ).
-
       WHEN 'GO'.
-
         DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
         client->nav_app_call( app ).
-
-      WHEN 'CHANGE'.
-
-        get_data_2( ).
-
     ENDCASE.
+
+    " Kommen wir aus einer anderen APP
+    IF client->get( )-check_on_navigated = abap_true.
+      TRY.
+          " Kommen wir aus einer anderen APP
+          DATA(obj) = CAST z2ui5_cl_demo_app_336( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          get_data( ).
+        CATCH cx_root.
+      ENDTRY.
+    ENDIF.
+
+
 
     IF     client->get( )-check_on_navigated = abap_true
        AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
-    IF mt_data IS INITIAL.
-      client->message_toast_display( 'ERROR - MT_DATA is initial!' ).
-    ENDIF.
+
+
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
     ENDIF.
-
     IF mo_layout_obj_2->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
     ENDIF.
+    IF mo_layout_obj->mr_data->* <> mt_data.
+      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
+    ENDIF.
+    IF mo_layout_obj_2->mr_data->* <> ms_data.
+      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
+    ENDIF.
+
 
 
 
@@ -99,10 +102,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     page->button( text  = 'CALL Next App'
                   press = client->_event( 'GO' )
-                  type  = 'Success' ).
-
-    page->button( text  = 'Change Data'
-                  press = client->_event( 'CHANGE' )
                   type  = 'Success' ).
 
     xml_table( i_page   = page
@@ -156,22 +155,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
            id_prev_app_stack,
            timestampl
       FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF TABLE  @mt_data
-      UP TO 10 ROWS.
-
-    ms_data = VALUE #( mt_data[ 1 ] OPTIONAL ).
-
-  ENDMETHOD.
-
-  METHOD get_data_2.
-
-    SELECT id,
-           id_prev,
-           id_prev_app,
-           id_prev_app_stack,
-           timestampl
-      FROM z2ui5_t_01
-      WHERE id <> @ms_data-id
       INTO CORRESPONDING FIELDS OF TABLE  @mt_data
       UP TO 10 ROWS.
 
