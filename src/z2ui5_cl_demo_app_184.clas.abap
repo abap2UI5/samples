@@ -11,6 +11,7 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
+    DATA mv_init type abap_bool.
 
     DATA mt_comp         TYPE abap_component_tab.
 
@@ -103,7 +104,8 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF client->check_on_init( ).
+ If mv_init = abap_false.
+ mv_init = abap_true.
 
       on_init( ).
 
@@ -140,7 +142,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
         SELECT *
           FROM (mv_table)
           INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO 100 ROWS.
+          UP TO 2 ROWS.
 
       CATCH cx_root.
 

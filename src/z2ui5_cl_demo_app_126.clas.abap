@@ -104,7 +104,7 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
         SELECT * FROM z2ui5_t_01
           INTO CORRESPONDING FIELDS OF TABLE @<table>
-          UP TO 100 ROWS.
+          UP TO 3 ROWS.
 
       CATCH cx_root.
     ENDTRY.
@@ -143,9 +143,9 @@ CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-                                          width = `100%` ).
-    layout->label( 'ProgressIndicator'
+*    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+*                                          width = `100%` ).
+    page->label( 'ProgressIndicator'
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = '0,44GB of 32GB used'
                                showvalue    = abap_true
