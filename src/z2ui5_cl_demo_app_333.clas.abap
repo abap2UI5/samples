@@ -4,18 +4,36 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
     INTERFACES if_serializable_object.
 
     TYPES:
+      BEGIN OF ty_s_test,
+        v1 type abap_bool,
+        BEGIN OF test2,
+         v2 type abap_bool,
+        BEGIN OF test3,
+         v3 type abap_bool,
+        BEGIN OF test4,
+        v4 type abap_bool,
+        END OF test4,
+        end of test3,
+        end of test2,
+      END OF ty_s_test.
+    TYPES ty_t_test TYPE STANDARD TABLE OF ty_s_test WITH EMPTY KEY.
+
+    TYPES:
       BEGIN OF ty_s_layout,
         name    TYPE string,
         visible TYPE abap_bool,
+        s_test  type ty_s_test,
       END OF ty_s_layout.
     TYPES ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
     TYPES: BEGIN OF ty_s_DATA,
              guid TYPE sysuuid_c32,
+             t_layout type ty_t_layout,
+             s_test   type ty_s_test,
            END OF ty_s_DATA.
     TYPES ty_t_DATA TYPE STANDARD TABLE OF ty_s_DATA WITH EMPTY KEY.
 
-    DATA mt_layout TYPE ty_t_layout.
+*    DATA mt_layout TYPE ty_t_layout.
     DATA ms_DATA TYPE ty_s_data.
     DATA mr_data   TYPE REF TO data.
 
@@ -44,7 +62,7 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
 
     LOOP AT t_comp INTO DATA(comp).
 
-      APPEND INITIAL LINE TO result->mt_layout REFERENCE INTO DATA(layout).
+      APPEND INITIAL LINE TO result->ms_data-t_layout REFERENCE INTO DATA(layout).
 
       layout->name = comp-name.
       IF sy-tabix <= vis_cols.

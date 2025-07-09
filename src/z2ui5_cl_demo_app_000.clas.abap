@@ -1965,6 +1965,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
+    panel->generic_tile( header    = 'Model X'
+                         subheader = 'RTTI Data - Sub Apps with deep truc'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_338' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
     panel->generic_tile( header    = 'Date Format Error in internal table'
                          subheader = ''
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_118' )
