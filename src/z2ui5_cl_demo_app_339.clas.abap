@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_339 DEFINITION
     DATA mt_table_tmp    TYPE REF TO data.
     DATA mt_table        TYPE REF TO data.
 
-    DATA mo_layout_obj   TYPE REF TO z2ui5_cl_demo_app_333.
+    DATA mo_layout   TYPE REF TO z2ui5_cl_demo_app_333.
 
     METHODS set_app_data
       IMPORTING
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   METHOD get_comp.
 
-    DATA index TYPE int4.
+    DATA selkz TYPE abap_bool.
 
     IF mv_table IS INITIAL.
       mv_table = 'Z2UI5_T_01'.
@@ -70,8 +70,8 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'ROW_ID'
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
+                                    ( name = 'SELKZ'
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
 
         APPEND LINES OF component TO result.
 
@@ -82,6 +82,12 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   METHOD on_event.
     CASE client->get( )-event.
+
+      WHEN 'SELECTION_CHANGE'.
+
+    client->nav_app_call( Z2UI5_CL_DEMO_APP_340=>factory(
+                            io_table  = mt_table
+                            io_layout = mo_layout  ) ).
 
       WHEN 'BACK'.
 
@@ -106,31 +112,34 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
+    mo_layout = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
                                                     vis_cols = 5 ).
 
     DATA(table) = page->table( width = 'auto'
+                               mode  = 'SingleSelectLeft'
+                               selectionchange  = client->_event( 'SELECTION_CHANGE' )
                                items = client->_bind_edit( val = mt_table->* ) ).
 
     DATA(columns) = table->columns( ).
 
-    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
+    LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
       columns->column( visible = client->_bind( val       = layout->visible
-                                                tab       = mo_layout_obj->ms_data-t_layout
+                                                tab       = mo_layout->ms_data-t_layout
                                                 tab_index = lv_index )
        )->text( layout->name ).
 
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
-                                                            type   = `Inactive`   ).
+                                       )->column_list_item( valign   = 'Middle'
+                                                            type     = `Inactive`
+                                                            selected = `{SELKZ}` ).
 
     DATA(cells) = column_list_item->cells( ).
 
-    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO layout.
+    LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
@@ -166,9 +175,10 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    IF mo_layout_obj->mr_data->* <> mt_table->*.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*'  ).
+    IF mo_layout->mr_data->* <> mt_table->*.
+      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
     ENDIF.
+
     on_event( client ).
 
   ENDMETHOD.
