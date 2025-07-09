@@ -257,7 +257,7 @@ mt_combo = VALUE ty_t_combo(
                        ( key = 'SingleSelect' text = 'SingleSelect' )
                        ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )
                        ( key = 'MultiSelect'  text = 'MultiSelect' ) ).
- 
+
     lo_tab->tab( text     = 'Table'
                  selected = client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true

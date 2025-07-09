@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mt_combo type ty_T_combo.
-    
+
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering.
@@ -182,7 +182,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
                   ( key = 'BLUE'  text = 'green' )
                   ( key = 'GREEN' text = 'blue' )
                   ( key = 'BLACK' text = 'red' )
-                  ( key = 'GRAY'  text = 'gray' ) ).    
+                  ( key = 'GRAY'  text = 'gray' ) ).
 
     lv_test->label( 'Combobox'
       )->combobox(
