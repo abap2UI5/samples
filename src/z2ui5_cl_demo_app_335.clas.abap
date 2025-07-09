@@ -28,8 +28,10 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
-      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
+                                                      vis_cols = 3 ).
+      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
+                                                        vis_cols = 3 ).
 
       ui5_view_display( client ).
 
@@ -48,7 +50,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
       WHEN 'CHANGE'.
 
-             get_data_2( ).
+        get_data_2( ).
 
     ENDCASE.
 
@@ -86,7 +88,6 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     page->button( text  = 'Change Data'
                   press = client->_event( 'CHANGE' )
                   type  = 'Success' ).
-
 
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
@@ -129,8 +130,8 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
   METHOD get_data_2.
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_STRUC
-      where id ne @ms_struc-id.
+      WHERE id <> @ms_struc-id
+      INTO CORRESPONDING FIELDS OF @ms_STRUC.
 
   ENDMETHOD.
 
