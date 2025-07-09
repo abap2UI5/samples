@@ -121,11 +121,11 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     DATA(columns) = table->columns( ).
 
-    LOOP AT mo_layout_obj->mt_layout REFERENCE INTO DATA(layout).
+    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
       columns->column( visible = i_client->_bind( val       = layout->visible
-                                                  tab       = mo_layout_obj->mt_layout
+                                                  tab       = mo_layout_obj->ms_data-t_layout
                                                   tab_index = lv_index )
        )->text( layout->name ).
 
@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     DATA(cells) = column_list_item->cells( ).
 
-    LOOP AT mo_layout_obj->mt_layout REFERENCE INTO layout.
+    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
@@ -171,7 +171,7 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     DATA(index) = 0.
 
-    LOOP AT mo_layout_obj_2->mt_layout REFERENCE INTO DATA(layout).
+    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
 
       index = index + 1.
 
@@ -186,7 +186,7 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
       line->input( value   = i_client->_bind( <value> )
                    visible = I_client->_bind( val       = layout->visible
-                                              tab       = mo_layout_obj_2->mt_layout
+                                              tab       = mo_layout_obj->ms_data-t_layout
                                               tab_index = index )
                    enabled = abap_false ).
     ENDLOOP.

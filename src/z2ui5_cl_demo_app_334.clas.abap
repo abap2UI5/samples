@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
     DATA(index) = 0.
 
-    LOOP AT mo_layout_obj->mt_layout REFERENCE INTO DATA(layout).
+    LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
 
       index = index + 1.
 
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
       line->input( value   = client->_bind( <value> )
                    visible = client->_bind( val       = layout->visible
-                                            tab       = mo_layout_obj->mt_layout
+                                            tab       = mo_layout_obj->ms_data-t_layout
                                             tab_index = index )
                    enabled = abap_false ).
     ENDLOOP.
