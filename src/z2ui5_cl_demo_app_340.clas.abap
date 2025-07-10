@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION
     CLASS-METHODS factory
       IMPORTING
         io_table      TYPE REF TO data
-        io_layout     TYPE REF TO z2ui5_cl_demo_app_333
+        io_layout     TYPE REF TO z2ui5_cl_demo_app_333 OPTIONAL
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_340.
 

@@ -1971,6 +1971,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
+     panel->generic_tile( header    = 'Model XI'
+                         subheader = 'Popups Flow Logic'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_341' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+    panel->generic_tile( header    = 'Model XII'
+                         subheader = 'Many Sub Objects with Ref'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_343' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
+
 
     panel->generic_tile( header    = 'Date Format Error in internal table'
                          subheader = ''
