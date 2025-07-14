@@ -115,16 +115,10 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                   type  = 'Success' ).
 
 
-    TRY.
-        xml_table( i_page   = page
-          i_client = client
-          i_data   = mt_data1
-          i_layout = mo_layout_obj1 ).
-        client->message_box_display( `error - reference processed in binding without error` ).
-      CATCH cx_root.
-        client->message_box_display( `success - reference not allowed for binding throwed` ).
-    ENDTRY.
-
+    xml_table( i_page   = page
+      i_client = client
+      i_data   = mt_data1
+      i_layout = mo_layout_obj1 ).
 
     client->view_display( page ).
 
@@ -134,7 +128,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
   METHOD xml_table.
 
     DATA(table) = i_page->table( width = 'auto'
-                                 items = i_client->_bind( val = i_data ) ).
+                                 items = i_client->_bind( i_data->* ) ).
 
     DATA(columns) = table->columns( ).
 
