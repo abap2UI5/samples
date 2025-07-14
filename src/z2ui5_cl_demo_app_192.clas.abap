@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
       APPEND INITIAL LINE TO <fs_t_head_new> ASSIGNING <fs_s_head_new>.
       CLEAR: <fs_s_head_new>.
-      MOVE <fs_s_head> TO <fs_s_head_new>.
+      <fs_s_head_new> = <fs_s_head>.
 
     ENDLOOP.
 
