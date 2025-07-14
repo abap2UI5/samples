@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION
     DATA mv_init         TYPE abap_bool.
     DATA mv_table        TYPE string.
 
-    DATA mt_DATA_tmp    TYPE REF TO data.
+    DATA mt_data_tmp    TYPE REF TO data.
     DATA mt_data        TYPE REF TO data.
 
     DATA mo_lay   TYPE REF TO z2ui5_cl_demo_app_333.
@@ -85,9 +85,9 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
       WHEN 'SELECTION_CHANGE'.
 
-    client->nav_app_call( Z2UI5_CL_DEMO_APP_340=>factory(
-                            io_table  = mt_data
-                            io_layout = mo_lay  ) ).
+        client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
+                                io_table  = mt_data
+                                io_layout = mo_lay  ) ).
 
       WHEN 'BACK'.
 
@@ -115,10 +115,12 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     mo_lay = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data
                                                     vis_cols = 5 ).
 
+    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+
     DATA(table) = page->table( width = 'auto'
                                mode  = 'SingleSelectLeft'
                                selectionchange  = client->_event( 'SELECTION_CHANGE' )
-                               items = client->_bind_edit( val = mt_data->* ) ).
+                               items = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -175,7 +177,10 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     ENDIF.
 
-    IF mo_lay->mr_data->* <> mt_data->*.
+    ASSIGN mo_lay->mr_data->* TO FIELD-SYMBOL(<data>).
+    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+
+    IF <data> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
     ENDIF.
 
@@ -196,7 +201,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_data     TYPE HANDLE new_table_desc.
-        CREATE DATA mt_DATA_tmp TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data_tmp TYPE HANDLE new_table_desc.
 
         ASSIGN mt_data->* TO <table>.
 
@@ -211,7 +216,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     ENDTRY.
 
-    mt_DATA_tmp = mt_data.
+    mt_data_tmp = mt_data.
 
   ENDMETHOD.
 

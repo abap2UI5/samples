@@ -58,7 +58,8 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
                                     adjustlabelspan = abap_true
                               )->content( ns = `form` ).
 
-    ASSIGN COMPONENT 'ID' OF STRUCTURE mo_table_obj->mr_data->* TO FIELD-SYMBOL(<value>).
+    ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+    ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
     IF <value> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
@@ -91,7 +92,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 *        ASSIGN ms_struc->* TO FIELD-SYMBOL(<struc>).
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_STRUC.
+      INTO CORRESPONDING FIELDS OF @ms_struc.
 
 *      CATCH cx_root.
 

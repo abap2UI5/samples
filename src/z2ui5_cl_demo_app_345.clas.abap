@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
         CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
-        SELECT * FROM Z2ui5_t_01
+        SELECT * FROM z2ui5_t_01
           INTO TABLE @<table1>
           UP TO 5 ROWS.
 
@@ -190,7 +190,9 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
     ENDIF.
 
-    IF mo_layout_obj1->mr_data->* <> mt_data1->*.
+    ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
+    ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
+    IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
 

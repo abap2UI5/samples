@@ -85,9 +85,9 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
       WHEN 'SELECTION_CHANGE'.
 
-    client->nav_app_call( Z2UI5_CL_DEMO_APP_340=>factory(
-                            io_table  = mt_table
-                            io_layout = mo_layout  ) ).
+        client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
+                                io_table  = mt_table
+                                io_layout = mo_layout  ) ).
 
       WHEN 'BACK'.
 
@@ -114,11 +114,12 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     mo_layout = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
                                                     vis_cols = 5 ).
+    ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
     DATA(table) = page->table( width = 'auto'
                                mode  = 'SingleSelectLeft'
                                selectionchange  = client->_event( 'SELECTION_CHANGE' )
-                               items = client->_bind_edit( val = mt_table->* ) ).
+                               items = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -175,7 +176,10 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    IF mo_layout->mr_data->* <> mt_table->*.
+    ASSIGN mo_layout->mr_data->* TO FIELD-SYMBOL(<data>).
+    ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
+
+    IF <data> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
     ENDIF.
 

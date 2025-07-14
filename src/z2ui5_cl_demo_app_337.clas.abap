@@ -79,10 +79,13 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
     IF mo_layout_obj_2->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
     ENDIF.
-    IF mo_layout_obj->mr_data->* <> mt_data.
+
+    ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+    IF <val> <> mt_data.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
-    IF mo_layout_obj_2->mr_data->* <> ms_data.
+    ASSIGN mo_layout_obj_2->mr_data->* TO FIELD-SYMBOL(<val2>).
+    IF <val2> <> ms_data.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
 
@@ -185,7 +188,7 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
                                 text     = layout->name  ).
 
       line->input( value   = i_client->_bind( <value> )
-                   visible = I_client->_bind( val       = layout->visible
+                   visible = i_client->_bind( val       = layout->visible
                                               tab       = mo_layout_obj->ms_data-t_layout
                                               tab_index = index )
                    enabled = abap_false ).

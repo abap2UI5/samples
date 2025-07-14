@@ -82,10 +82,14 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     IF mo_layout_obj2->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
     ENDIF.
-    IF mo_layout_obj->mr_data->* <> mt_data->*.
+
+    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+    ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+    IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
-    IF mo_layout_obj2->mr_data->* <> mt_data2->*.
+    ASSIGN mo_layout_obj2->mr_data->* TO FIELD-SYMBOL(<val2>).
+    IF <val2> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
 
@@ -119,8 +123,9 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD xml_table.
 
+    ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
     DATA(table) = i_page->table( width = 'auto'
-                                 items = i_client->_bind_edit( val = i_data->* ) ).
+                                 items = i_client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -162,9 +167,9 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
         DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_DATA TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data TYPE HANDLE new_table_desc.
 
-        ASSIGN mt_DATA->* TO <table>.
+        ASSIGN mt_data->* TO <table>.
 
         SELECT *
           FROM (iv_tabname)
@@ -191,9 +196,9 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
         DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_DATA2 TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data2 TYPE HANDLE new_table_desc.
 
-        ASSIGN mt_DATA2->* TO <table>.
+        ASSIGN mt_data2->* TO <table>.
 
         SELECT *
           FROM (iv_tabname)

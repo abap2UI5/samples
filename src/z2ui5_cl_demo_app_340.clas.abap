@@ -6,9 +6,9 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION
     INTERFACES z2ui5_if_app.
 
     DATA mv_init     TYPE abap_bool.
-    DATA mt_DATA_tmp TYPE REF TO data.
-    DATA mt_DATA     TYPE REF TO data.
-    DATA ms_DATA_row TYPE REF TO data.
+    DATA mt_data_tmp TYPE REF TO data.
+    DATA mt_data     TYPE REF TO data.
+    DATA ms_data_row TYPE REF TO data.
 
     DATA mo_layout   TYPE REF TO z2ui5_cl_demo_app_333.
 
@@ -82,7 +82,10 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    IF mo_layout->mr_data->* <> mt_data->*.
+    ASSIGN mo_layout->mr_data->* TO FIELD-SYMBOL(<data>).
+    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+
+    IF <data> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*'  ).
     ENDIF.
     on_event( client ).
@@ -115,8 +118,13 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
 
-    result->mt_data->* = io_table->*.
-    result->mt_data_tmp->* = io_table->*.
+    ASSIGN io_table->* TO FIELD-SYMBOL(<table>).
+
+    ASSIGN result->mt_data->* TO FIELD-SYMBOL(<data>).
+    <data> = <table>.
+
+    ASSIGN result->mt_data_tmp->* TO <data>.
+    <data> = <table>.
 
   ENDMETHOD.
 

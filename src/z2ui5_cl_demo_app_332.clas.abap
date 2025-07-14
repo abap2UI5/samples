@@ -69,7 +69,8 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
       index = index + 1.
 
-      ASSIGN COMPONENT layout->name OF STRUCTURE mo_table_obj->mr_data->* TO FIELD-SYMBOL(<value>).
+      ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+      ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
       IF <value> IS NOT ASSIGNED.
         RETURN.
@@ -92,7 +93,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_STRUC.
+      INTO CORRESPONDING FIELDS OF @ms_struc.
 
   ENDMETHOD.
 

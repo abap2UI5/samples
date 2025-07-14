@@ -46,15 +46,15 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - MS_STRUC is initial!' ).
     ENDIF.
 
-    IF mo_layout_obj->mr_data  IS not BOUND.
+    IF mo_layout_obj->mr_data  IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
     ENDIF.
 
-    IF mo_layout_obj_2->mr_data IS not BOUND.
+    IF mo_layout_obj_2->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
     ENDIF.
 
- IF mo_layout_obj_2->ms_data-guid eq mo_layout_obj->ms_data-guid.
+    IF mo_layout_obj_2->ms_data-guid EQ mo_layout_obj->ms_data-guid.
       client->message_toast_display( 'ERROR - GUIDS!' ).
     ENDIF.
 
@@ -83,7 +83,9 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
       index = index + 1.
 
-      ASSIGN COMPONENT layout->name OF STRUCTURE mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<value>).
+      ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+
+      ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
       IF <value> IS NOT ASSIGNED.
         RETURN.
@@ -106,7 +108,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_STRUC.
+      INTO CORRESPONDING FIELDS OF @ms_struc.
 
   ENDMETHOD.
 
