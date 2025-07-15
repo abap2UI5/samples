@@ -35,6 +35,10 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
+
+      get_data( ).
+
+
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_data )
                                                       vis_cols = 5 ).
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_data )
@@ -53,15 +57,15 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
         client->nav_app_call( app ).
     ENDCASE.
 
-    " Kommen wir aus einer anderen APP
-    IF client->get( )-check_on_navigated = abap_true.
-      TRY.
-          " Kommen wir aus einer anderen APP
-          DATA(obj) = CAST z2ui5_cl_demo_app_336( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-          get_data( ).
-        CATCH cx_root.
-      ENDTRY.
-    ENDIF.
+*    " Kommen wir aus einer anderen APP
+*    IF client->get( )-check_on_navigated = abap_true.
+*      TRY.
+*          " Kommen wir aus einer anderen APP
+*          DATA(obj) = CAST z2ui5_cl_demo_app_336( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+*          get_data( ).
+*        CATCH cx_root.
+*      ENDTRY.
+*    ENDIF.
 
 
 
@@ -88,9 +92,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
     IF <val2> <> ms_data.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
-
-
-
 
 
     client->view_model_update( ).

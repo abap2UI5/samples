@@ -2011,7 +2011,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
-
+    panel->generic_tile( header    = 'Model XVII'
+                         subheader = 'Check Error Tabel and Sruc with Ref'
+                         press     = client->_event( 'z2ui5_cl_demo_app_349' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+      ).
 
 
 
