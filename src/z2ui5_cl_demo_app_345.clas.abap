@@ -127,8 +127,10 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
   METHOD xml_table.
 
+ASSIGN i_data->* to FIELD-SYMBOL(<data>).
+
     DATA(table) = i_page->table( width = 'auto'
-                                 items = i_client->_bind( i_data->* ) ).
+                                 items = i_client->_bind( <data> ) ).
 
     DATA(columns) = table->columns( ).
 
