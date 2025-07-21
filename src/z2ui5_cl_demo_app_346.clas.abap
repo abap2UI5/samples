@@ -94,7 +94,6 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
-            id    = 'tab1'
         )->header_toolbar(
             )->overflow_toolbar(
                 )->label( `Column Id` )->input( submit = client->_event( 'FOCUS' ) value = client->_bind_edit( focusColumn ) placeholder = `Focus Column` width = `10%`
