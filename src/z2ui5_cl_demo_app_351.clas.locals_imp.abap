@@ -28,7 +28,7 @@ ENDCLASS.
 CLASS zcl_2ui5_start IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     TRY.
-        IF client->check_on_init( ).
+        IF client->check_on_init( ) or  client->check_on_navigated( )..
           DATA(view) = z2ui5_cl_xml_view=>factory( ).
           DATA(page) = view->shell( )->page(
             title          = `Startview` ).
@@ -42,10 +42,10 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
           client->set_app_state_active( ).
           RETURN.
         ENDIF.
-        IF client->check_on_navigated( ).
-          client->view_model_update( ).
-          RETURN.
-        ENDIF.
+      "  IF client->check_on_navigated( ).
+      "    client->view_model_update( ).
+     "     RETURN.
+      "  ENDIF.
         CASE client->get( )-event.
           WHEN `CALL_BOOKING_MASK`.
             DATA: lf_key TYPE n LENGTH 4.
