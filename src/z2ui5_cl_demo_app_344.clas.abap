@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       get_data( 'Z2UI5_T_01' ).
       get_data2( 'Z2UI5_T_01' ).
 
@@ -55,7 +55,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       WHEN 'BACK'.
         client->nav_app_leave( ).
       WHEN 'GO'.
-        DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
+        DATA app TYPE REF TO z2ui5_cl_demo_app_336.
+        app = z2ui5_cl_demo_app_336=>factory( ).
         client->nav_app_call( app ).
     ENDCASE.
 
@@ -83,14 +84,18 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
     ENDIF.
 
-    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
-    ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_data->* TO <table>.
+    FIELD-SYMBOLS <val> TYPE data.
+    ASSIGN mo_layout_obj->mr_data->* TO <val>.
     IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
 
-    ASSIGN mt_data2->* TO FIELD-SYMBOL(<table2>).
-    ASSIGN mo_layout_obj2->mr_data->* TO FIELD-SYMBOL(<val2>).
+    FIELD-SYMBOLS <table2> TYPE data.
+    ASSIGN mt_data2->* TO <table2>.
+    FIELD-SYMBOLS <val2> TYPE data.
+    ASSIGN mo_layout_obj2->mr_data->* TO <val2>.
     IF <table2> <> <val2>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
@@ -101,7 +106,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -125,14 +131,20 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD xml_table.
 
-    ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
-    DATA(table) = i_page->table( width = 'auto'
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN i_data->* TO <table>.
+    DATA table TYPE REF TO z2ui5_cl_xml_view.
+    table = i_page->table( width = 'auto'
                                  items = i_client->_bind_edit( val = <table> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA columns TYPE REF TO z2ui5_cl_xml_view.
+    columns = table->columns( ).
 
-    LOOP AT i_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
-      DATA(lv_index) = sy-tabix.
+    DATA temp1 LIKE LINE OF i_layout->ms_data-t_layout.
+    DATA layout LIKE REF TO temp1.
+    LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
+      DATA lv_index LIKE sy-tabix.
+      lv_index = sy-tabix.
 
       columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
@@ -141,11 +153,13 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA column_list_item TYPE REF TO z2ui5_cl_xml_view.
+    column_list_item = columns->get_parent( )->items(
                                        )->column_list_item( valign = 'Middle'
                                                             type   = `Inactive`   ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA cells TYPE REF TO z2ui5_cl_xml_view.
+    cells = column_list_item->cells( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
 
@@ -161,12 +175,15 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( iv_tabname ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = get_comp( iv_tabname ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_data TYPE HANDLE new_table_desc.
@@ -175,7 +192,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
         SELECT *
           FROM (iv_tabname)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 3 ROWS.
 
         SORT <table>.
@@ -190,12 +207,15 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( iv_tabname ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = get_comp( iv_tabname ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_data2 TYPE HANDLE new_table_desc.
@@ -204,7 +224,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
         SELECT *
           FROM (iv_tabname)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 4 ROWS.
 
         SORT <table>.
@@ -222,16 +242,22 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     TRY.
         TRY.
 
+            DATA typedesc TYPE REF TO cl_abap_typedescr.
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = iv_tabname
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA temp2 TYPE REF TO cl_abap_structdescr.
+            temp2 ?= typedesc.
+            DATA structdesc LIKE temp2.
+            structdesc = temp2.
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA comp TYPE abap_component_tab.
+            comp = structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            DATA com LIKE LINE OF comp.
+            LOOP AT comp INTO com.
 
               IF com-as_include = abap_false.
 
@@ -241,13 +267,21 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+            DATA root TYPE REF TO cx_root.
+          CATCH cx_root INTO root. " TODO: variable is assigned but never used (ABAP cleaner)
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'SELKZ'
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
+        DATA temp3 TYPE cl_abap_structdescr=>component_table.
+        CLEAR temp3.
+        DATA temp4 LIKE LINE OF temp3.
+        temp4-name = 'SELKZ'.
+        DATA temp1 TYPE REF TO cl_abap_datadescr.
+        temp1 ?= cl_abap_datadescr=>describe_by_data( selkz ).
+        temp4-type = temp1.
+        INSERT temp4 INTO TABLE temp3.
+        DATA component LIKE temp3.
+        component = temp3.
 
         APPEND LINES OF component TO result.
 

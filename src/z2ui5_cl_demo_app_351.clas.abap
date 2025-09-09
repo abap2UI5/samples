@@ -13,7 +13,9 @@ ENDCLASS.
 CLASS Z2UI5_CL_DEMO_APP_351 IMPLEMENTATION.
 
     METHOD z2ui5_if_app~main.
-        client->nav_app_call( NEW zcl_2ui5_start( ) ).
+        DATA temp3 TYPE REF TO zcl_2ui5_start.
+        CREATE OBJECT temp3 TYPE zcl_2ui5_start.
+        client->nav_app_call( temp3 ).
     ENDMETHOD.
 
 ENDCLASS.

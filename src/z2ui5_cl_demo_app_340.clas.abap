@@ -53,10 +53,12 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(simple_form) = popup->dialog( title        = 'Test'
+    DATA simple_form TYPE REF TO z2ui5_cl_xml_view.
+    simple_form = popup->dialog( title        = 'Test'
                                        contentwidth = '60%'
                                        afterclose   = client->_event( 'POPUP_CLOSE' )
           )->simple_form( title    = ''
@@ -82,8 +84,10 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    ASSIGN mo_layout->mr_data->* TO FIELD-SYMBOL(<data>).
-    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <data> TYPE data.
+    ASSIGN mo_layout->mr_data->* TO <data>.
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_data->* TO <table>.
 
     IF <data> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*'  ).
@@ -96,19 +100,22 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
     " Add new empty row
 
-    result = NEW #( ).
+    CREATE OBJECT result.
 
     result->mo_layout = io_layout.
 
     TRY.
-        DATA(comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( io_table ).
+        DATA comp TYPE abap_component_tab.
+        comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( io_table ).
       CATCH cx_root.
     ENDTRY.
 
     TRY.
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( comp ).
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA result->mt_data     TYPE HANDLE new_table_desc.
@@ -118,9 +125,11 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
 
-    ASSIGN io_table->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN io_table->* TO <table>.
 
-    ASSIGN result->mt_data->* TO FIELD-SYMBOL(<data>).
+    FIELD-SYMBOLS <data> TYPE data.
+    ASSIGN result->mt_data->* TO <data>.
     <data> = <table>.
 
     ASSIGN result->mt_data_tmp->* TO <data>.

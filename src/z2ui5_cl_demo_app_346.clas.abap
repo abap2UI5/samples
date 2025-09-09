@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
         checkbox    TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
     DATA focusColumn TYPE string.
     DATA focusRow TYPE string.
     DATA focusid TYPE string READ-ONLY.
@@ -47,7 +47,8 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `window.addEventListener('focus', function(e) {`
@@ -86,13 +87,15 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                                                 &&  `  } catch(e){}`
                                                 &&  `}` ).
 
-    DATA(page) = view->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
         )->page(
             title           = 'abap2UI5 - Tables and focus'
             navbuttonpress  = client->_event( 'BACK' )
             shownavbutton   = abap_true ).
 
-    DATA(tab) = page->table(
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    tab = page->table(
             items = client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
@@ -172,15 +175,49 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_tab = VALUE #(
-          ( index = 0 title = 'entry 01'  value = 'red'    info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 1 title = 'entry 02'  value = 'blue'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 2 title = 'entry 03'  value = 'green'  info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 3 title = 'entry 04'  value = 'orange' info = 'completed'  description = '' checkbox = abap_true )
-          ( index = 4 title = 'entry 05'  value = 'grey'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 5 ) ).
+      DATA temp1 LIKE t_tab.
+      CLEAR temp1.
+      DATA temp2 LIKE LINE OF temp1.
+      temp2-index = 0.
+      temp2-title = 'entry 01'.
+      temp2-value = 'red'.
+      temp2-info = 'completed'.
+      temp2-description = 'this is a description'.
+      temp2-checkbox = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-index = 1.
+      temp2-title = 'entry 02'.
+      temp2-value = 'blue'.
+      temp2-info = 'completed'.
+      temp2-description = 'this is a description'.
+      temp2-checkbox = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-index = 2.
+      temp2-title = 'entry 03'.
+      temp2-value = 'green'.
+      temp2-info = 'completed'.
+      temp2-description = 'this is a description'.
+      temp2-checkbox = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-index = 3.
+      temp2-title = 'entry 04'.
+      temp2-value = 'orange'.
+      temp2-info = 'completed'.
+      temp2-description = ''.
+      temp2-checkbox = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-index = 4.
+      temp2-title = 'entry 05'.
+      temp2-value = 'grey'.
+      temp2-info = 'completed'.
+      temp2-description = 'this is a description'.
+      temp2-checkbox = abap_true.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-index = 5.
+      INSERT temp2 INTO TABLE temp1.
+      t_tab = temp1.
 
       default_focus( ).
       set_view( ).
@@ -209,17 +246,29 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD next_focus.
 
-    focuscolumn = SWITCH #(
-                    focuscolumn
-                      WHEN c_id-Title THEN c_id-Color
-                      WHEN c_id-Color THEN c_id-Info
-                      WHEN c_id-Info  THEN c_id-Checkbox
-                      WHEN c_id-checkbox THEN c_id-description
-                      ELSE c_id-title ).
+    DATA temp3 TYPE string.
+    CASE focuscolumn.
+      WHEN c_id-Title.
+        temp3 = c_id-Color.
+      WHEN c_id-Color.
+        temp3 = c_id-Info.
+      WHEN c_id-Info.
+        temp3 = c_id-Checkbox.
+      WHEN c_id-checkbox.
+        temp3 = c_id-description.
+      WHEN OTHERS.
+        temp3 = c_id-title.
+    ENDCASE.
+    focuscolumn = temp3.
 
     IF focuscolumn = c_id-title.
-      IF line_exists( t_tab[ focusrow + 2 ] ).
-        focusrow = condense( CONV i( focusrow + 1 ) ).
+      DATA temp4 LIKE sy-subrc.
+      READ TABLE t_tab INDEX focusrow + 2 TRANSPORTING NO FIELDS.
+      temp4 = sy-subrc.
+      IF temp4 = 0.
+        DATA temp5 TYPE i.
+        temp5 = focusrow + 1.
+        focusrow = condense( temp5 ).
       ELSE.
         focusrow = '0'.
       ENDIF.

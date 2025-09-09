@@ -33,9 +33,11 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     IF view_id IS INITIAL OR view_id = 1.
       view_id = 1.
       TRY.
-          IF client->check_on_init( ) OR  client->check_on_navigated( ).
-            DATA(view) = z2ui5_cl_xml_view=>factory( ).
-            DATA(page) = view->shell( )->page(
+          IF client->check_on_init( ) IS NOT INITIAL OR  client->check_on_navigated( ) IS NOT INITIAL.
+            DATA view TYPE REF TO z2ui5_cl_xml_view.
+            view = z2ui5_cl_xml_view=>factory( ).
+            DATA page TYPE REF TO z2ui5_cl_xml_view.
+            page = view->shell( )->page(
               title          = `Startview` ).
             page->simple_form(
                   )->content( 'form'
@@ -51,7 +53,8 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           CASE client->get( )-event.
             WHEN `CALL_BOOKING_MASK`.
               DATA: lf_key TYPE n LENGTH 4.
-              DATA(lr_view2) = NEW z2ui5_cl_demo_app_350( ).
+              DATA lr_view2 TYPE REF TO z2ui5_cl_demo_app_350.
+              CREATE OBJECT lr_view2 TYPE z2ui5_cl_demo_app_350.
               lr_view2->view_id = 2.
               lr_view2->varkey = '001'.
               client->nav_app_call( lr_view2 ).
@@ -62,7 +65,8 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           ENDCASE.
 
           client->view_model_update( ).
-        CATCH cx_root INTO DATA(lx).
+          DATA lx TYPE REF TO cx_root.
+        CATCH cx_root INTO lx.
           client->message_box_display( lx ).
       ENDTRY.
 
@@ -71,7 +75,8 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           IF check_initialized = abap_false.
             check_initialized = abap_true.
 
-            DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+            DATA lv_fm TYPE c LENGTH 15.
+            lv_fm = 'ENQUEUE_E_TABLE'.
             CALL FUNCTION lv_fm
               EXPORTING
                 tabname        = 'ZTEST'
@@ -90,7 +95,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
             RETURN.
           ENDIF.
 
-          IF client->check_on_navigated( ).
+          IF client->check_on_navigated( ) IS NOT INITIAL.
             client->set_session_stateful( abap_false ).
             TRY.
                 client->nav_app_leave( ).
@@ -102,7 +107,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           CASE client->get( )-event.
             WHEN `NEXT_LOCK`.
               client->set_session_stateful( abap_false ).
-              lr_view2 = NEW z2ui5_cl_demo_app_350( ).
+              CREATE OBJECT lr_view2 TYPE z2ui5_cl_demo_app_350.
               lr_view2->view_id = 2.
               DATA: lf_new_varkey TYPE n LENGTH 4.
               lf_new_varkey = varkey+0(4).
@@ -130,13 +135,19 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 * | [--->] CLIENT                         TYPE REF TO Z2UI5_IF_CLIENT
 * +--------------------------------------------------------------------------------------</SIGNATURE>
   METHOD initialize_view2.
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    page = view->shell( )->page(
       title          = `Stateful Application with lock`
       navbuttonpress = client->_event( 'BACK' )
-      shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
-    DATA(vbox) = page->vbox( ).
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+      shownavbutton  = temp1 ).
+    DATA vbox TYPE REF TO z2ui5_cl_xml_view.
+    vbox = page->vbox( ).
+    DATA hbox TYPE REF TO z2ui5_cl_xml_view.
+    hbox = vbox->hbox( alignitems = 'Center' ).
     hbox->title(
       text  = 'Current Lock Value in Table ZTEST' ).
     hbox->input(

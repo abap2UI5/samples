@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     FIELD-SYMBOLS <line> TYPE any.
     FIELD-SYMBOLS: <tab> TYPE ANY TABLE.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       get_data( ).
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
       ui5_view_display( client ).
@@ -52,13 +52,15 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
         LOOP AT <tab> ASSIGNING <line>.
 
-          ASSIGN COMPONENT 'SELKZ' OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
+          FIELD-SYMBOLS <selkz> TYPE any.
+          ASSIGN COMPONENT 'SELKZ' OF STRUCTURE <line> TO <selkz>.
           IF <selkz> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
 
           IF <selkz> = abap_true.
-            DATA(okay) = abap_true.
+            DATA okay LIKE abap_true.
+            okay = abap_true.
             EXIT.
           ENDIF.
 
@@ -70,8 +72,10 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
           mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
           ui5_view_display( client ).
 
-          ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
-          ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+          FIELD-SYMBOLS <table> TYPE data.
+          ASSIGN mt_table->* TO <table>.
+          FIELD-SYMBOLS <val> TYPE data.
+          ASSIGN mo_table_obj->mr_data->* TO <val>.
 
           IF <table> <> <val>.
             client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA'  ).
@@ -89,7 +93,8 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -98,7 +103,8 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                   type  = 'Success' ).
 
 
-    ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_table->* TO <table>.
     page->table( headertext      = 'Table'
                  mode            = 'MultiSelect'
                  items           = client->_bind_edit( <table> )
@@ -121,17 +127,26 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
 
-    APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
-                              ( name = 'SELKZ'
-                                type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
+    DATA temp1 TYPE cl_abap_structdescr=>component_table.
+    CLEAR temp1.
+    DATA temp2 LIKE LINE OF temp1.
+    temp2-name = 'SELKZ'.
+    DATA temp3 TYPE REF TO cl_abap_datadescr.
+    temp3 ?= cl_abap_datadescr=>describe_by_data( selkz ).
+    temp2-type = temp3.
+    INSERT temp2 INTO TABLE temp1.
+    APPEND LINES OF temp1 TO t_comp.
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_table TYPE HANDLE new_table_desc.
@@ -139,7 +154,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
         ASSIGN mt_table->* TO <table>.
 
         SELECT id FROM z2ui5_t_01
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 4 ROWS.
 
       CATCH cx_root.

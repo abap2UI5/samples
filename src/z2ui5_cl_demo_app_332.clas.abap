@@ -22,11 +22,13 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       get_data( ).
 
-      mo_table_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      DATA temp1 LIKE REF TO ms_struc.
+      GET REFERENCE OF ms_struc INTO temp1.
+mo_table_obj = z2ui5_cl_demo_app_333=>factory( i_data = temp1 vis_cols = 3 ).
 
       ui5_view_display( client ).
 
@@ -50,7 +52,8 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -58,25 +61,32 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-    DATA(form) = page->simple_form( editable        = abap_true
+    DATA form TYPE REF TO z2ui5_cl_xml_view.
+    form = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
                                     adjustlabelspan = abap_true
                               )->content( ns = `form` ).
 
-    DATA(index) = 0.
+    DATA index TYPE i.
+    index = 0.
 
-    LOOP AT mo_table_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
+    DATA temp2 LIKE LINE OF mo_table_obj->ms_data-t_layout.
+    DATA layout LIKE REF TO temp2.
+    LOOP AT mo_table_obj->ms_data-t_layout REFERENCE INTO layout.
 
       index = index + 1.
 
-      ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-      ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
+      FIELD-SYMBOLS <val> TYPE data.
+      ASSIGN mo_table_obj->mr_data->* TO <val>.
+      FIELD-SYMBOLS <value> TYPE any.
+      ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO <value>.
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
       IF <value> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
 
-      DATA(line) = form->label( wrapping = abap_false
+      DATA line TYPE REF TO z2ui5_cl_xml_view.
+      line = form->label( wrapping = abap_false
                                 text     = layout->name  ).
 
       line->input( value   = client->_bind( <value> )
@@ -93,7 +103,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+      INTO CORRESPONDING FIELDS OF ms_struc.
 
   ENDMETHOD.
 

@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
           END OF test3,
         END OF test2,
       END OF ty_s_test.
-    TYPES ty_t_test TYPE STANDARD TABLE OF ty_s_test WITH EMPTY KEY.
+    TYPES ty_t_test TYPE STANDARD TABLE OF ty_s_test WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_layout,
@@ -24,14 +24,14 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
         visible TYPE abap_bool,
         s_test  TYPE ty_s_test,
       END OF ty_s_layout.
-    TYPES ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
+    TYPES ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH DEFAULT KEY.
 
     TYPES: BEGIN OF ty_s_DATA,
              guid     TYPE sysuuid_c32,
              t_layout TYPE ty_t_layout,
              s_test   TYPE ty_s_test,
            END OF ty_s_DATA.
-    TYPES ty_t_DATA TYPE STANDARD TABLE OF ty_s_DATA WITH EMPTY KEY.
+    TYPES ty_t_DATA TYPE STANDARD TABLE OF ty_s_DATA WITH DEFAULT KEY.
 
     DATA ms_DATA TYPE ty_s_data.
     DATA mr_data TYPE REF TO data.
@@ -55,17 +55,21 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data  ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data  ).
 
-    DATA(index) = 0.
+    DATA index TYPE i.
+    index = 0.
 
-    LOOP AT t_comp INTO DATA(comp).
+    DATA comp LIKE LINE OF t_comp.
+    LOOP AT t_comp INTO comp.
 
       index = index + 1.
 
-      APPEND INITIAL LINE TO result->ms_data-t_layout REFERENCE INTO DATA(layout).
+      DATA layout TYPE REF TO z2ui5_cl_demo_app_333=>ty_s_layout.
+      APPEND INITIAL LINE TO result->ms_data-t_layout REFERENCE INTO layout.
 
       layout->name = comp-name.
       IF index <= vis_cols.

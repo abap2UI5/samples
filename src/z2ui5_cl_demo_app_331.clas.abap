@@ -22,9 +22,11 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       get_data( ).
-      mo_table_obj = z2ui5_cl_demo_app_329=>factory( REF #( ms_struc ) ).
+      DATA temp1 LIKE REF TO ms_struc.
+      GET REFERENCE OF ms_struc INTO temp1.
+mo_table_obj = z2ui5_cl_demo_app_329=>factory( temp1 ).
       ui5_view_display( client ).
     ENDIF.
 
@@ -45,7 +47,8 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -53,18 +56,22 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-    DATA(form) = page->simple_form( editable        = abap_true
+    DATA form TYPE REF TO z2ui5_cl_xml_view.
+    form = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
                                     adjustlabelspan = abap_true
                               )->content( ns = `form` ).
 
-    ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-    ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
+    FIELD-SYMBOLS <val> TYPE data.
+    ASSIGN mo_table_obj->mr_data->* TO <val>.
+    FIELD-SYMBOLS <value> TYPE any.
+    ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO <value>.
     IF <value> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
 
-    DATA(line) = form->label( wrapping = abap_false
+    DATA line TYPE REF TO z2ui5_cl_xml_view.
+    line = form->label( wrapping = abap_false
                               text     = 'ID'  ).
 
     line->input( value = client->_bind( <value> ) ).
@@ -92,7 +99,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 *        ASSIGN ms_struc->* TO FIELD-SYMBOL(<struc>).
 
     SELECT SINGLE * FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF @ms_struc.
+      INTO CORRESPONDING FIELDS OF ms_struc.
 
 *      CATCH cx_root.
 

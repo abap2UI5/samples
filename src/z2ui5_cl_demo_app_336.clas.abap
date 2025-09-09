@@ -26,10 +26,14 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
-      mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      DATA temp1 LIKE REF TO ms_struc.
+      GET REFERENCE OF ms_struc INTO temp1.
+mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data = temp1 vis_cols = 3 ).
+      DATA temp2 LIKE REF TO ms_struc.
+      GET REFERENCE OF ms_struc INTO temp2.
+mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data = temp2 vis_cols = 3 ).
 
       ui5_view_display( client ).
 
@@ -49,7 +53,8 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -65,7 +70,7 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
 
   ENDMETHOD.
 

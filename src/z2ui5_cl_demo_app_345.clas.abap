@@ -49,16 +49,22 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     TRY.
         TRY.
 
+            DATA typedesc TYPE REF TO cl_abap_typedescr.
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA temp1 TYPE REF TO cl_abap_structdescr.
+            temp1 ?= typedesc.
+            DATA structdesc LIKE temp1.
+            structdesc = temp1.
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA comp TYPE abap_component_tab.
+            comp = structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            DATA com LIKE LINE OF comp.
+            LOOP AT comp INTO com.
 
               IF com-as_include = abap_false.
 
@@ -81,18 +87,21 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table1> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = get_comp( ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
         SELECT * FROM z2ui5_t_01
-          INTO TABLE @<table1>
+          INTO TABLE <table1>
           UP TO 5 ROWS.
 
       CATCH cx_root.
@@ -106,7 +115,8 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -127,15 +137,21 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
   METHOD xml_table.
 
-ASSIGN i_data->* to FIELD-SYMBOL(<data>).
+FIELD-SYMBOLS <data> TYPE data.
+ASSIGN i_data->* to <data>.
 
-    DATA(table) = i_page->table( width = 'auto'
+    DATA table TYPE REF TO z2ui5_cl_xml_view.
+    table = i_page->table( width = 'auto'
                                  items = i_client->_bind( <data> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA columns TYPE REF TO z2ui5_cl_xml_view.
+    columns = table->columns( ).
 
-    LOOP AT i_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
-      DATA(lv_index) = sy-tabix.
+    DATA temp2 LIKE LINE OF i_layout->ms_data-t_layout.
+    DATA layout LIKE REF TO temp2.
+    LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
+      DATA lv_index LIKE sy-tabix.
+      lv_index = sy-tabix.
 
       columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
@@ -144,10 +160,12 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA column_list_item TYPE REF TO z2ui5_cl_xml_view.
+    column_list_item = columns->get_parent( )->items(
                                        )->column_list_item(    ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA cells TYPE REF TO z2ui5_cl_xml_view.
+    cells = column_list_item->cells( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
 
@@ -162,7 +180,7 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       get_data( ).
       render_main( client ).
     ENDIF.
@@ -171,7 +189,8 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
       WHEN 'BACK'.
         client->nav_app_leave( ).
       WHEN 'GO'.
-        DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
+        DATA app TYPE REF TO z2ui5_cl_demo_app_336.
+        app = z2ui5_cl_demo_app_336=>factory( ).
         client->nav_app_call( app ).
     ENDCASE.
 
@@ -186,8 +205,10 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
     ENDIF.
 
-    ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
-    ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_data1->* TO <table>.
+    FIELD-SYMBOLS <val> TYPE data.
+    ASSIGN mo_layout_obj1->mr_data->* TO <val>.
     IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.

@@ -20,9 +20,11 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
         )->page(
             title           = 'abap2UI5 - Illustrated Messages'
             navbuttonpress  = client->_event( val = 'BACK' )
@@ -68,7 +70,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
       `ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
       `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       mv_type = `sapIllus-NoActivities`.
       display_view( ).
       RETURN.

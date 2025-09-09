@@ -46,16 +46,22 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     TRY.
         TRY.
 
+            DATA typedesc TYPE REF TO cl_abap_typedescr.
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA temp1 TYPE REF TO cl_abap_structdescr.
+            temp1 ?= typedesc.
+            DATA structdesc LIKE temp1.
+            structdesc = temp1.
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA comp TYPE abap_component_tab.
+            comp = structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            DATA com LIKE LINE OF comp.
+            LOOP AT comp INTO com.
 
               IF com-as_include = abap_false.
 
@@ -65,13 +71,21 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+            DATA root TYPE REF TO cx_root.
+          CATCH cx_root INTO root. " TODO: variable is assigned but never used (ABAP cleaner)
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'SELKZ'
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
+        DATA temp2 TYPE cl_abap_structdescr=>component_table.
+        CLEAR temp2.
+        DATA temp3 LIKE LINE OF temp2.
+        temp3-name = 'SELKZ'.
+        DATA temp4 TYPE REF TO cl_abap_datadescr.
+        temp4 ?= cl_abap_datadescr=>describe_by_data( selkz ).
+        temp3-type = temp4.
+        INSERT temp3 INTO TABLE temp2.
+        DATA component LIKE temp2.
+        component = temp2.
 
         APPEND LINES OF component TO result.
 
@@ -104,7 +118,8 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      page = z2ui5_cl_xml_view=>factory( ).
 
     ELSE.
 
@@ -114,17 +129,23 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     mo_layout = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
                                                     vis_cols = 5 ).
-    ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_table->* TO <table>.
 
-    DATA(table) = page->table( width = 'auto'
+    DATA table TYPE REF TO z2ui5_cl_xml_view.
+    table = page->table( width = 'auto'
                                mode  = 'SingleSelectLeft'
                                selectionchange  = client->_event( 'SELECTION_CHANGE' )
                                items = client->_bind_edit( val = <table> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA columns TYPE REF TO z2ui5_cl_xml_view.
+    columns = table->columns( ).
 
-    LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
-      DATA(lv_index) = sy-tabix.
+    DATA temp4 LIKE LINE OF mo_layout->ms_data-t_layout.
+    DATA layout LIKE REF TO temp4.
+    LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO layout.
+      DATA lv_index LIKE sy-tabix.
+      lv_index = sy-tabix.
 
       columns->column( visible = client->_bind( val       = layout->visible
                                                 tab       = mo_layout->ms_data-t_layout
@@ -133,12 +154,14 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA column_list_item TYPE REF TO z2ui5_cl_xml_view.
+    column_list_item = columns->get_parent( )->items(
                                        )->column_list_item( valign   = 'Middle'
                                                             type     = `Inactive`
                                                             selected = `{SELKZ}` ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA cells TYPE REF TO z2ui5_cl_xml_view.
+    cells = column_list_item->cells( ).
 
     LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO layout.
 
@@ -176,8 +199,10 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    ASSIGN mo_layout->mr_data->* TO FIELD-SYMBOL(<data>).
-    ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
+    FIELD-SYMBOLS <data> TYPE data.
+    ASSIGN mo_layout->mr_data->* TO <data>.
+    FIELD-SYMBOLS <table> TYPE data.
+    ASSIGN mt_table->* TO <table>.
 
     IF <data> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
@@ -191,12 +216,15 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = get_comp( ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
@@ -206,7 +234,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
         SELECT *
           FROM (mv_table)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE <table>
           UP TO 3 ROWS.
 
         SORT <table>.

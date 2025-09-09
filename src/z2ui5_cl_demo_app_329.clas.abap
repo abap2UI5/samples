@@ -22,7 +22,7 @@ CLASS Z2UI5_CL_DEMO_APP_329 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
 
     result->mr_data = i_data.
 

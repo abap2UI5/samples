@@ -24,30 +24,49 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION
 
     DATA storage       TYPE ty_storage.
     DATA stored_value  TYPE string.
-    DATA storage_types TYPE STANDARD TABLE OF ty_storage_type.
+    TYPES temp1_91cf2135c4 TYPE STANDARD TABLE OF ty_storage_type.
+DATA storage_types TYPE temp1_91cf2135c4.
 
 ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      storage_types = VALUE #( ( type = `local` )
-                               ( type =  `session` ) ).
-      storage = VALUE #( type   = `local`
-                         prefix = `prefix1`
-                         key    = 'key1'
-*                         value  = VALUE #( field1 = 1
-*                         field2 = 'textfld1' )
-                                           ).
+      DATA temp1 LIKE storage_types.
+      CLEAR temp1.
+      DATA temp2 LIKE LINE OF temp1.
+      temp2-type = `local`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-type = `session`.
+      INSERT temp2 INTO TABLE temp1.
+      storage_types = temp1.
+      CLEAR storage.
+      storage-type = `local`.
+      storage-prefix = `prefix1`.
+      storage-key = 'key1'.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
 
+      DATA temp3 TYPE string_table.
+      CLEAR temp3.
+      DATA temp4 LIKE LINE OF temp3.
+      temp4 = |${ client->_bind_edit( storage ) }|.
+      INSERT temp4 INTO TABLE temp3.
+      DATA temp5 TYPE string_table.
+      CLEAR temp5.
+      INSERT `${$parameters>/type}` INTO TABLE temp5.
+      INSERT `${$parameters>/prefix}` INTO TABLE temp5.
+      INSERT `${$parameters>/key}` INTO TABLE temp5.
+      INSERT `${$parameters>/value}` INTO TABLE temp5.
+      DATA temp6 TYPE xsdboolean.
+      temp6 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
       view->shell(
         )->page( title          = 'abap2UI5 - Storage'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                 shownavbutton  = temp6
 
         )->simple_form( title    = 'Local/Session Storage'
                         editable = abap_true
@@ -67,7 +86,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                 )->input( client->_bind_edit( storage-value )
                 )->button( text  = 'store'
                            press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data
-                                                          t_arg = VALUE #( ( |${ client->_bind_edit( storage ) }| ) ) )
+                                                          t_arg = temp3 )
 
                 )->button( text  = 'get'
                            press = client->_event( 'GET_STORED_VALUE' )
@@ -77,7 +96,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
         )->_z2ui5( )->storage(
             finished = client->_event(
                 val   = `LOCAL_STORAGE_LOADED`
-                t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` )  ) )
+                t_arg = temp5 )
             type     = client->_bind_edit( storage-type )
             prefix   = client->_bind_edit( storage-prefix )
             key      = client->_bind_edit( storage-key )

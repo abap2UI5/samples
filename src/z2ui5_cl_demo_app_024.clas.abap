@@ -24,11 +24,14 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA temp1 TYPE xsdboolean.
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01'
         navbuttonpress = client->_event( val = 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton  = temp1
        )->grid( 'L6 M12 S12' )->content( 'layout'
        )->simple_form( 'Controller' )->content( 'form'
       )->label( 'Demo'
@@ -54,10 +57,13 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       display_view( client ).
       IF mv_backend_event = 'CALL_PREVIOUS_APP_INPUT_RETURN'.
-        DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app_prev( ) ).
+        DATA temp1 TYPE REF TO z2ui5_cl_demo_app_025.
+        temp1 ?= client->get_app_prev( ).
+        DATA lo_called_app LIKE temp1.
+        lo_called_app = temp1.
         CLEAR mv_backend_event.
         client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
       ENDIF.
@@ -67,20 +73,24 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'CALL_NEW_APP'.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_025( ) ).
+        DATA temp2 TYPE REF TO z2ui5_cl_demo_app_025.
+        CREATE OBJECT temp2 TYPE z2ui5_cl_demo_app_025.
+        client->nav_app_call( temp2 ).
 
       WHEN 'CALL_NEW_APP_VIEW'.
-        DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
+        DATA lo_app TYPE REF TO z2ui5_cl_demo_app_025.
+        CREATE OBJECT lo_app TYPE z2ui5_cl_demo_app_025.
         lo_app->mv_show_view = 'SECOND'.
         client->nav_app_call( lo_app ).
 
       WHEN 'CALL_NEW_APP_READ'.
-        DATA(lo_app_next) = NEW z2ui5_cl_demo_app_025( ).
+        DATA lo_app_next TYPE REF TO z2ui5_cl_demo_app_025.
+        CREATE OBJECT lo_app_next TYPE z2ui5_cl_demo_app_025.
         lo_app_next->mv_input_previous_set = mv_input.
         client->nav_app_call( lo_app_next ).
 
       WHEN 'CALL_NEW_APP_EVENT'.
-        lo_app_next = NEW z2ui5_cl_demo_app_025( ).
+        CREATE OBJECT lo_app_next TYPE z2ui5_cl_demo_app_025.
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
         client->nav_app_call( lo_app_next ).
 

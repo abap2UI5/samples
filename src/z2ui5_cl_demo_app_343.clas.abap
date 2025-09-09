@@ -30,16 +30,22 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     TRY.
         TRY.
 
+            DATA typedesc TYPE REF TO cl_abap_typedescr.
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = typedesc
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA temp1 TYPE REF TO cl_abap_structdescr.
+            temp1 ?= typedesc.
+            DATA structdesc LIKE temp1.
+            structdesc = temp1.
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA comp TYPE abap_component_tab.
+            comp = structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            DATA com LIKE LINE OF comp.
+            LOOP AT comp INTO com.
 
               IF com-as_include = abap_false.
 
@@ -62,18 +68,21 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table1> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    DATA t_comp TYPE abap_component_tab.
+    t_comp = get_comp( ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+        new_struct_desc = cl_abap_structdescr=>create( t_comp ).
+        DATA new_table_desc TYPE REF TO cl_abap_tabledescr.
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
         CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
         SELECT * FROM Z2ui5_t_01
-          INTO TABLE @<table1>
+          INTO TABLE <table1>
           UP TO 5 ROWS.
 
       CATCH cx_root.
@@ -84,13 +93,15 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
                                                                 navbuttonpress = client->_event( 'BACK' )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     TRY.
 
-        DATA(table) = page->table( width = 'auto'
+        DATA table TYPE REF TO z2ui5_cl_xml_view.
+        table = page->table( width = 'auto'
                                      items = client->_bind( mt_data1 ) ).
 
         client->message_box_display( `error - reference processed in binding without error` ).
@@ -106,7 +117,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       get_data( ).
       render_main( client ).
     ENDIF.

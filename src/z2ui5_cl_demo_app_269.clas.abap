@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( ).
     ENDIF.
 
@@ -28,13 +28,16 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
+    DATA temp1 TYPE xsdboolean.
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     view->shell_bar(
         title               = `Shell Bar`
         secondtitle         = `with title mega menu`
         homeicon            = `https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/documentation/sdk/images/logo_sap.png`
-        shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton       = temp1
         showsearch          = abap_true
         shownotifications   = abap_true
         notificationsnumber = `2`
@@ -53,7 +56,8 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
             )->avatar( ns       = `f`
                        initials = 'UI' ).
 
-    DATA(xml) = view->stringify( ).
+    DATA xml TYPE string.
+    xml = view->stringify( ).
 
     client->view_display( xml ).
 

@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       numeric = '000000000012'.
       amount = '123456789.123'.
@@ -32,10 +32,13 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
+    temp1 = boolc( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( title          = 'abap2UI5 - Currency Format'
                   navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                  shownavbutton  = temp1 ).
 
     page->simple_form( title    = 'Currency'
                        editable = abap_true
