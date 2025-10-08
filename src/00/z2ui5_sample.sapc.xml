@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SAPC" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SAPC>
+    <HEADER>
+     <APPLICATION_ID>Z2UI5_SAMPLE</APPLICATION_ID>
+     <VERSION>A</VERSION>
+     <PATH>/sap/bc/apc/sap/z2ui5_sample</PATH>
+     <CLASS_NAME>Z2UI5_CL_DEMO_APP_352_WS</CLASS_NAME>
+     <APPLICATION_VERSION>1</APPLICATION_VERSION>
+    </HEADER>
+    <TEXT>
+     <APPLICATION_ID>Z2UI5_SAMPLE</APPLICATION_ID>
+     <VERSION>A</VERSION>
+     <LANG>E</LANG>
+     <DESCRIPTION>abap2ui5</DESCRIPTION>
+    </TEXT>
+   </SAPC>
+  </asx:values>
+ </asx:abap>
+</abapGit>
