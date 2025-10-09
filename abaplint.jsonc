@@ -4,7 +4,7 @@
   },
   "dependencies": [
     {
-      "url": "https://github.com/abapedia/steampunk-2305-api-intersect-702",
+      "url": "https://github.com/abaplint/deps",
       "folder": "/deps",
       "files": "/src/**/*.*"
     },
@@ -34,3 +34,4 @@
     "xml_consistency": true
   }
 }
+
