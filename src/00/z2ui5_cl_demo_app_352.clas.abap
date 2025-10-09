@@ -5,8 +5,6 @@ CLASS z2ui5_cl_demo_app_352 DEFINITION PUBLIC.
     TYPES:
       BEGIN OF t_news,
         text   TYPE string,
-        date   TYPE datum,
-        time   TYPE uzeit,
         author TYPE string,
       END OF t_news,
       tt_News TYPE STANDARD TABLE OF t_news
@@ -63,8 +61,6 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
       WHEN `SEND`.
 
         news = VALUE t_news( text   = news_input
-                             date   = sy-datum
-                             time   = sy-uzeit
                              author = author_input ).
         distribute_news( news ).
 
