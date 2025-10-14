@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
     DATA mv_pic_display TYPE string.
     DATA mv_check_init TYPE abap_bool.
     DATA mv_picture_base TYPE string.
+    DATA facing_mode TYPE string.
 
   PROTECTED SECTION.
 
@@ -28,6 +29,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
         client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -42,15 +44,20 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
                navbuttonpress      = client->_event( 'BACK' )
-               shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
-              )->header_content(
-                  )->link( text   = 'Source_Code'
-                           target = '_blank'
-          )->get_parent( ).
+               shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+
+    page->vbox( class = `sapUiSmallMargin`
+       )->label( text = `facingMode: ` labelfor = `Combo`
+       )->combobox( id = `Combo` selectedkey = client->_bind_edit( facing_mode )
+       )->item( key = `environment` text = `environment`
+       )->item( key = `user` text = `user`
+       )->item( key = `left` text = `left`
+       )->item( key = `right` text = `right` ).
 
     page->_z2ui5( )->camera_picture(
                       value   = client->_bind_edit( mv_picture_base )
-                      onphoto = client->_event( 'CAPTURE' ) ).
+                      onphoto = client->_event( 'CAPTURE' )
+                      facingmode = client->_bind_edit( facing_mode ) ).
 
     page->list(
         headertext      = 'List Ouput'
@@ -84,6 +91,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     IF mv_check_init = abap_false.
       mv_check_init = abap_true.
 
+      facing_mode = `environment`.
       view_display( client ).
 
 
