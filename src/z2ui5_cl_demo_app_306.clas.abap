@@ -15,12 +15,23 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
         selected TYPE abap_bool,
       END OF ty_picture.
 
+    TYPES:
+      BEGIN OF t_combo,
+        key  TYPE string,
+        text TYPE string,
+      END OF t_combo,
+      tt_combo TYPE STANDARD TABLE OF t_combo WITH EMPTY KEY.
+
+
     DATA mt_picture TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
     DATA mt_picture_out TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
     DATA mv_pic_display TYPE string.
     DATA mv_check_init TYPE abap_bool.
     DATA mv_picture_base TYPE string.
     DATA facing_mode TYPE string.
+    DATA facing_modes TYPE tt_combo.
+    DATA device TYPE string.
+    DATA devices TYPE tt_combo.
 
   PROTECTED SECTION.
 
@@ -29,7 +40,6 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
         client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 
@@ -47,17 +57,24 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->vbox( class = `sapUiSmallMargin`
-       )->label( text = `facingMode: ` labelfor = `Combo`
-       )->combobox( id = `Combo` selectedkey = client->_bind_edit( facing_mode )
-       )->item( key = `environment` text = `environment`
-       )->item( key = `user` text = `user`
-       )->item( key = `left` text = `left`
-       )->item( key = `right` text = `right` ).
+       )->label( text = `facingMode: ` labelfor = `ComboFacingMode`
+       )->combobox( id = `ComboFacingMode` selectedkey = client->_bind_edit( facing_mode )
+                    items = `{path:'` && client->_bind_edit( val = facing_modes  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+       )->get( )->item( key = `{KEY}` text = `{TEXT}` ).
+
+    page->vbox( class = `sapUiSmallMargin`
+       )->label( text = `device: ` labelfor = `ComboDevice`
+       )->_z2ui5( )->camera_selector(
+                    id = `ComboDevice`
+                    selectedkey = client->_bind_edit( device )
+                    items = `{path:'` && client->_bind_edit( val = devices  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+       )->get( )->item( key = `{KEY}` text = `{TEXT}` ).
 
     page->_z2ui5( )->camera_picture(
                       value   = client->_bind_edit( mv_picture_base )
                       onphoto = client->_event( 'CAPTURE' )
-                      facingmode = client->_bind_edit( facing_mode ) ).
+                      facingmode = client->_bind_edit( facing_mode )
+                      deviceid = client->_bind_edit( device ) ).
 
     page->list(
         headertext      = 'List Ouput'
@@ -89,11 +106,16 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF mv_check_init = abap_false.
+
       mv_check_init = abap_true.
 
-      facing_mode = `environment`.
-      view_display( client ).
+      facing_modes = VALUE tt_combo( ( key = `` text = `` )
+                                     ( key = `environment` text = `environment` )
+                                     ( key = `user` text = `user` )
+                                     ( key = `left` text = `left` )
+                                     ( key = `right` text = `right` ) ).
 
+      view_display( client ).
 
     ENDIF.
 
