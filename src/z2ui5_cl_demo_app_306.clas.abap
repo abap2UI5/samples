@@ -23,15 +23,16 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
       tt_combo TYPE STANDARD TABLE OF t_combo WITH EMPTY KEY.
 
 
-    DATA mt_picture TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
-    DATA mt_picture_out TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
-    DATA mv_pic_display TYPE string.
-    DATA mv_check_init TYPE abap_bool.
-    DATA mv_picture_base TYPE string.
-    DATA facing_mode TYPE string.
-    DATA facing_modes TYPE tt_combo.
-    DATA device TYPE string.
-    DATA devices TYPE tt_combo.
+    DATA:
+      mt_picture      TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
+      mt_picture_out  TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
+      mv_pic_display  TYPE string,
+      mv_check_init   TYPE abap_bool,
+      mv_picture_base TYPE string,
+      facing_mode     TYPE string,
+      facing_modes    TYPE tt_combo,
+      device          TYPE string,
+      devices         TYPE tt_combo.
 
   PROTECTED SECTION.
 
@@ -39,7 +40,14 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
+    METHODS edit
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
+    DATA selected_picture TYPE ty_picture.
+
   PRIVATE SECTION.
+
 ENDCLASS.
 
 
@@ -53,8 +61,8 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
-               navbuttonpress      = client->_event( 'BACK' )
-               shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                   navbuttonpress = client->_event( 'BACK' )
+                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->vbox( class = `sapUiSmallMargin`
        )->label( text = `facingMode: ` labelfor = `ComboFacingMode`
@@ -71,10 +79,10 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
        )->get( )->item( key = `{KEY}` text = `{TEXT}` ).
 
     page->_z2ui5( )->camera_picture(
-                      value   = client->_bind_edit( mv_picture_base )
-                      onphoto = client->_event( 'CAPTURE' )
+                      value      = client->_bind_edit( mv_picture_base )
+                      onphoto    = client->_event( 'CAPTURE' )
                       facingmode = client->_bind_edit( facing_mode )
-                      deviceid = client->_bind_edit( device ) ).
+                      deviceid   = client->_bind_edit( device ) ).
 
     page->list(
         headertext      = 'List Ouput'
@@ -91,12 +99,25 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     IF mv_pic_display IS NOT INITIAL.
       page->_generic( ns   = 'html'
                       name = 'center'
-        )->_generic( ns     = 'html'
-                     name   = 'img'
-                     t_prop = VALUE #(
-        (  n = 'src'  v = mv_pic_display )
-        ) ).
+         )->_generic( ns     = 'html'
+                      name   = 'img'
+                      t_prop = VALUE #(
+                        ( n = 'src'  v = mv_pic_display )
+         ) ).
+
+      page->button( text = 'Edit' icon = 'sap-icon://edit' press = client->_event( 'EDIT' ) ).
     ENDIF.
+
+
+    view->_generic( name = `script`
+                    ns   = `html`
+       )->_cc_plain_xml(
+         'z2ui5.sendImage = () => { ' &&
+         '  const image = sap.ui.core.Fragment.byId("popupId", "imageEditor").getImagePngDataURL();' &&
+         '  z2ui5.oController.PopupDestroy();' && |\n| &&
+         '  z2ui5.oController.eB([`SAVE`],image);' &&
+         '}'
+       ).
 
     client->view_display( view->stringify( ) ).
 
@@ -119,6 +140,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     ENDIF.
 
+
     CASE client->get( )-event.
 
       WHEN 'CAPTURE'.
@@ -126,17 +148,29 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
         CLEAR mv_picture_base.
         client->view_model_update( ).
 
-      WHEN 'START'.
-
-
       WHEN 'DISPLAY'.
-        DATA(lt_sel) = mt_picture_out.
-        DELETE lt_sel WHERE selected = abap_false.
-        DATA(ls_sel) = lt_sel[ 1 ].
-        mv_pic_display = mt_picture[ ls_sel-id ]-data.
+
+        selected_picture = mt_picture_out[ selected = abap_true ].
+        mv_pic_display = mt_picture[ selected_picture-id ]-data.
+        view_display( client ).
+
+      WHEN 'EDIT'.
+
+        edit( client ).
+
+      WHEN 'SAVE'.
+
+        DATA(args) = client->get( )-t_event_arg.
+
+        ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+        IF sy-subrc = 0.
+          mv_pic_display = <picture>-data = args[ 1 ].
+        ENDIF.
+
         view_display( client ).
 
       WHEN 'BACK'.
+
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
 
     ENDCASE.
@@ -147,4 +181,39 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDLOOP.
 
   ENDMETHOD.
+
+  METHOD edit.
+
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
+                                  )->dialog(
+                                      title = 'Edit Picture'
+                                      icon = 'sap-icon://edit'
+                                      contentheight = `80%`
+                                      contentwidth = `80%` ).
+
+    popup->_generic(
+              name   = 'ImageEditorContainer'
+              ns     = 'ie'
+        )->_generic(
+              name   = 'ImageEditor'
+              ns     = 'ie'
+              t_prop = VALUE #(
+                ( n = `id`  v = `imageEditor` )
+                ( n = `src` v = mv_pic_display ) ) ).
+
+    popup->footer( )->overflow_toolbar(
+      )->button(
+          text  = 'Cancel'
+          type  = 'Reject'
+          press = client->_event_client( client->cs_event-popup_close )
+      )->toolbar_spacer(
+      )->button(
+          text  = 'Save'
+          type  = 'Emphasized'
+          press = client->_event_client( val = `Z2UI5` t_arg = VALUE #( ( `sendImage` ) ) ) ).
+
+    client->popup_display( popup->stringify( ) ).
+
+  ENDMETHOD.
+
 ENDCLASS.
