@@ -1,6 +1,5 @@
 CLASS z2ui5_cl_demo_app_306 DEFINITION
   PUBLIC
-  FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
@@ -36,17 +35,12 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
 
   PROTECTED SECTION.
 
-    METHODS view_display
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-    METHODS edit
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    METHODS view_display.
+    METHODS edit_image.
+    METHODS ui5_callback.
 
     DATA selected_picture TYPE ty_picture.
-
-  PRIVATE SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
 
 ENDCLASS.
 
@@ -108,17 +102,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       page->button( text = 'Edit' icon = 'sap-icon://edit' press = client->_event( 'EDIT' ) ).
     ENDIF.
 
-
-    view->_generic( name = `script`
-                    ns   = `html`
-       )->_cc_plain_xml(
-         'z2ui5.sendImage = () => { ' &&
-         '  const image = sap.ui.core.Fragment.byId("popupId", "imageEditor").getImagePngDataURL();' &&
-         '  z2ui5.oController.PopupDestroy();' && |\n| &&
-         '  z2ui5.oController.eB([`SAVE`],image);' &&
-         '}'
-       ).
-
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -126,18 +109,22 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_check_init = abap_false.
+    me->client = client.
 
-      mv_check_init = abap_true.
-
+    IF me->z2ui5_if_app~check_initialized = abap_false.
       facing_modes = VALUE tt_combo( ( key = `` text = `` )
                                      ( key = `environment` text = `environment` )
                                      ( key = `user` text = `user` )
                                      ( key = `left` text = `left` )
                                      ( key = `right` text = `right` ) ).
 
-      view_display( client ).
+      view_display( ).
+    ENDIF.
 
+    IF client->get( )-check_on_navigated = abap_true.
+      ui5_callback( ).
+      view_display( ).
+      RETURN.
     ENDIF.
 
 
@@ -152,22 +139,11 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
         selected_picture = mt_picture_out[ selected = abap_true ].
         mv_pic_display = mt_picture[ selected_picture-id ]-data.
-        view_display( client ).
+        view_display( ).
 
       WHEN 'EDIT'.
 
-        edit( client ).
-
-      WHEN 'SAVE'.
-
-        DATA(args) = client->get( )-t_event_arg.
-
-        ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
-        IF sy-subrc = 0.
-          mv_pic_display = <picture>-data = args[ 1 ].
-        ENDIF.
-
-        view_display( client ).
+        edit_image( ).
 
       WHEN 'BACK'.
 
@@ -182,38 +158,29 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD edit.
+  METHOD edit_image.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
-                                  )->dialog(
-                                      title = 'Edit Picture'
-                                      icon = 'sap-icon://edit'
-                                      contentheight = `80%`
-                                      contentwidth = `80%` ).
+    client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
 
-    popup->_generic(
-              name   = 'ImageEditorContainer'
-              ns     = 'ie'
-        )->_generic(
-              name   = 'ImageEditor'
-              ns     = 'ie'
-              t_prop = VALUE #(
-                ( n = `id`  v = `imageEditor` )
-                ( n = `src` v = mv_pic_display ) ) ).
+  ENDMETHOD.
 
-    popup->footer( )->overflow_toolbar(
-      )->button(
-          text  = 'Cancel'
-          type  = 'Reject'
-          press = client->_event_client( client->cs_event-popup_close )
-      )->toolbar_spacer(
-      )->button(
-          text  = 'Save'
-          type  = 'Emphasized'
-          press = client->_event_client( val = `Z2UI5` t_arg = VALUE #( ( `sendImage` ) ) ) ).
 
-    client->popup_display( popup->stringify( ) ).
+  METHOD ui5_callback.
 
+    TRY.
+        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
+
+        IF result-check_confirmed = abap_true.
+          mv_pic_display = result-image.
+          ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+          IF sy-subrc = 0.
+            <picture>-data = mv_pic_display.
+          ENDIF.
+        ENDIF.
+
+      CATCH cx_root.
+    ENDTRY.
   ENDMETHOD.
 
 ENDCLASS.
