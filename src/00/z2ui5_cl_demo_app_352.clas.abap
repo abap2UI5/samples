@@ -21,13 +21,9 @@ CLASS z2ui5_cl_demo_app_352 DEFINITION PUBLIC.
 
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render.
+    METHODS z2ui5_display_popover.
 
   PRIVATE SECTION.
-
-    METHODS distribute_news
-      IMPORTING
-        i_news TYPE z2ui5_cl_demo_app_352=>t_news.
-    METHODS z2ui5_display_popover.
 
 ENDCLASS.
 
@@ -58,14 +54,6 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
     DATA: news TYPE z2ui5_cl_demo_app_352=>t_news.
 
     CASE client->get( )-event.
-      WHEN `SEND`.
-
-        news = VALUE t_news( text   = news_input
-                             author = author_input ).
-        distribute_news( news ).
-
-        CLEAR: news_input.
-
       WHEN `CLEAR`.
 
         CLEAR: news_list.
@@ -105,7 +93,10 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
     form->feed_input(
         value = client->_bind_edit( news_input )
-        post  = client->_event( 'SEND' ) ).
+        post  = client->_event_client(
+                  val   = `Z2UI5`
+                  t_arg = VALUE #( ( `feedInputPost` ) )
+                ) ).
 
     form->label( text = `Author`
        )->input( value       = client->_bind_edit( author_input )
@@ -150,37 +141,31 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
             `    } else if (msg.data === '` && z2ui5_cl_demo_app_352_ws=>c_msg-__closed__ && `') {` &&
             `      data.XX.CONNECTIONS -= 1;` &&
             `    } else {` &&
-            `      data.XX.NEWS_LIST.push(JSON.parse(msg.data).NEWS_ITEM);` &&
+            `      data.XX.NEWS_LIST.push(JSON.parse(msg.data));` &&
             `    }` &&
             `    model.setData(data);` &&
             `  };` &&
             `  ws.onclose = (msg)=>{};` &&
             `})()` ).
+
+      view->_generic( name = `script`
+                      ns   = `html`
+          )->_cc_plain_xml(
+             `z2ui5.feedInputPost = () => { ` &&
+             `  const model = z2ui5.oView.getModel();` &&
+             `  const data = model.getData();` &&
+             `  ws.send(JSON.stringify({ ` &&
+             `    TEXT : data.XX.NEWS_INPUT,` &&
+             `    AUTHOR : data.XX.AUTHOR_INPUT ` &&
+             `  }));` &&
+             `  setTimeout( () => { ` &&
+             `    data.XX.NEWS_INPUT = "";` &&
+             `    model.setData(data);` &&
+             `  }, 10 ); ` &&
+             `}` ).
     ENDIF.
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-
-  METHOD distribute_news.
-
-    IF i_news-text IS INITIAL.
-      RETURN.
-    ENDIF.
-
-    TRY.
-        INSERT i_news INTO TABLE news_list.
-
-        z2ui5_cl_demo_app_352_ws=>send( z2ui5_cl_ajson=>create_empty( ii_custom_mapping = z2ui5_cl_ajson_mapping=>create_upper_case( )
-                                            )->set( iv_path = `NEWS_ITEM`
-                                                    iv_val  = i_news
-                                            )->stringify( ) ).
-
-      CATCH cx_root INTO DATA(error).
-        RAISE SHORTDUMP error.
-    ENDTRY.
 
   ENDMETHOD.
 

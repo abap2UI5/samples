@@ -3,16 +3,9 @@ CLASS z2ui5_cl_demo_app_352_ws DEFINITION PUBLIC
 
   PUBLIC SECTION.
 
-    CLASS-METHODS:
-      send
-        IMPORTING
-          i_message TYPE string
-        RAISING
-          cx_amc_error,
-
-      get_active_connections
-        RETURNING
-          VALUE(result) TYPE i.
+    CLASS-METHODS: get_active_connections
+      RETURNING
+        VALUE(result) TYPE i.
 
     METHODS:
       if_apc_wsp_extension~on_message REDEFINITION,
@@ -34,6 +27,11 @@ CLASS z2ui5_cl_demo_app_352_ws DEFINITION PUBLIC
         RETURNING
           VALUE(producer) TYPE REF TO if_amc_message_producer_text
         RAISING
+          cx_amc_error,
+      send
+        IMPORTING
+          i_message TYPE string
+        RAISING
           cx_amc_error.
 
 ENDCLASS.
@@ -51,6 +49,12 @@ CLASS z2ui5_cl_demo_app_352_ws IMPLEMENTATION.
 
 
   METHOD if_apc_wsp_extension~on_message.
+
+    TRY.
+        send( i_message->get_text( ) ).
+      CATCH cx_root INTO DATA(error).
+        RAISE SHORTDUMP error.
+    ENDTRY.
 
   ENDMETHOD.
 
