@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->shell( )->page( id             = `page`
                            title          = c_title
                            navbuttonpress = client->_event( val = 'BACK' )
-                           shownavbutton  = client->check_app_prev_stack( )
+                           shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(
             )->link( text   = 'Install with abapGit from GitHub'
@@ -238,14 +238,14 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = 'Session Stickyness I'
                          subheader = 'Stateful mode'
-                         press     = client->_event( 'z2ui5_cl_demo_app_137' )
+                         press     = client->_event( 'z2ui5_cl_demo_app_s_02' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
 
     panel->generic_tile( header    = 'Session Stickyness II'
                          subheader = 'Use Locks'
-                         press     = client->_event( 'z2ui5_cl_demo_app_135' )
+                         press     = client->_event( 'z2ui5_cl_demo_app_s_01' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
@@ -804,7 +804,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = 'Sound'
                          subheader = 'Play success and error sounds'
-                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_304' )
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_S_03' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).
@@ -1193,11 +1193,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
 
+*        panel->generic_tile(
+*               header    = 'Popup to Error'
+*               press     =  client->_event( 'z2ui5_cl_demo_app_165' )
+*               mode      = 'LineMode'
+*               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*           ).
+
     panel->generic_tile( header = 'Popup to Select'
                          press  = client->_event( 'z2ui5_cl_demo_app_174' )
                          mode   = 'LineMode'
                          class  = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
        ).
+
+*        panel->generic_tile(
+*               header    = 'Popup Messages'
+*               press     =  client->_event( 'Z2UI5_CL_DEMO_APP_154' )
+*               mode      = 'LineMode'
+*               class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
+*           ).
 
     panel->generic_tile( header = 'Popup Textedit'
                          press  = client->_event( 'Z2UI5_CL_DEMO_APP_155' )
@@ -1713,7 +1727,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = 'Websocket'
                          subheader = 'Consume APC-Messages with Websocket'
-                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_352' )
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_S_05' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom'
       ).

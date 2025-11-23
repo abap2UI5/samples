@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_304 DEFINITION
+CLASS z2ui5_cl_demo_app_s_03 DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_304 DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_304 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
