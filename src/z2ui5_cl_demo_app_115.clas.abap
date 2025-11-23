@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_115 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5 - CL_DEMO_OUTPUT - TODO uncomment the source code'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = client->check_app_prev_stack( )
             )->_z2ui5( )->demo_output( mv_output
             )->stringify( ) ).
 

@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     view->_z2ui5( )->title( `Avatar Group Sample` ).
     view->page( title          = 'abap2UI5 - Sample: Avatar Group'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = client->check_app_prev_stack( )
         )->slider( value = client->_bind_edit( viewportpercentwidth )
             )->vertical_layout( id    = `vl1`
                                 width = |{ client->_bind_edit( viewportpercentwidth ) }%|
@@ -209,7 +209,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                 )->text( text = `{JOBPOSITION}` ).
 
     nav_container->page( id             = `detail`
-                         shownavbutton  = abap_true
+                         shownavbutton  = client->check_app_prev_stack( )
                          navbuttonpress = client->_event( val = `onNavBack` )
                          titlealignment = `Center`
                          title          = |Team Members ({ lines( group_items ) })|

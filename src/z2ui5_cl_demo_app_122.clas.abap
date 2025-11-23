@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->info_frontend(
                                         finished          = client->_event( `INFO_FINISHED` )
                                         device_browser    = client->_bind_edit( device_browser )

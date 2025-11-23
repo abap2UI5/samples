@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Customizing'
                              navbuttonpress = client->_event( 'BACK' )
-                             shownavbutton  = abap_true
+                             shownavbutton  = client->check_app_prev_stack( )
                              class          = 'sapUiContentPadding' ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'

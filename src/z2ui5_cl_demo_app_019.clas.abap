@@ -58,7 +58,7 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
             )->page(
                 title          = 'abap2UI5 - Table with different Selection Modes'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->segmented_button(
             selected_key     = client->_bind_edit( mv_sel_mode )

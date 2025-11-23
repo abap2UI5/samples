@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(
          headertext = 'Data auto refresh (2 sec)'

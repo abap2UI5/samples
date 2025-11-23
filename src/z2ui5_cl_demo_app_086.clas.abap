@@ -41,7 +41,7 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
         )->page(
                title          = 'abap2UI5 - Flow Logic - APP 85'
                navbuttonpress = client->_event( 'BACK' )
-               shownavbutton  = abap_true ).
+               shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
       )->simple_form( 'Supplier' )->content( 'form'

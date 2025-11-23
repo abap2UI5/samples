@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(tab) = page->scroll_container( height   = '70%'
                                         vertical = abap_true

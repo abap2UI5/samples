@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'PDF Output'
                                                                   navbuttonpress = client->_event( 'BACK' )
-                                                                  shownavbutton  = abap_true
+                                                                  shownavbutton  = client->check_app_prev_stack( )
                       )->_generic(
                         ns     = `html`
                         name   = `iframe`

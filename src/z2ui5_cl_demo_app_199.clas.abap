@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Refresh'
                              navbuttonpress = client->_event( 'BACK' )
-                             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                             shownavbutton  = client->check_app_prev_stack( )
                              class          = 'sapUiContentPadding' ).
     DATA(table) = page->table( growing = 'true'
                                width   = 'auto'

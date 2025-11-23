@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Event with add Information and t_arg'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->link( text   = 'More Infos..'
                 target = '_blank'

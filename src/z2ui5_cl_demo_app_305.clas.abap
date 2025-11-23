@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
                     )->page(
                       title          = 'abap2UI5 - Tables and cell colors'
                       navbuttonpress = client->_event( 'BACK' )
-                      shownavbutton  = abap_true ).
+                      shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->_generic(
             name = `style`

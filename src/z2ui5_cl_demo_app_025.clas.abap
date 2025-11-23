@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
             )->page(
                    title          = 'abap2UI5 - flow logic - APP 02'
                    navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = abap_true ).
+                   shownavbutton  = client->check_app_prev_stack( ) ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'
           )->simple_form( 'View: FIRST' )->content( 'form'
@@ -91,7 +91,7 @@ CLASS Z2UI5_CL_DEMO_APP_025 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - flow logic - APP 02'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton  = abap_true ).
+                    shownavbutton  = client->check_app_prev_stack( ) ).
 
         page->grid( 'L6 M12 S12' )->content( 'layout'
             )->simple_form( 'View: SECOND' )->content( 'form'

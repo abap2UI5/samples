@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         id             = 'id_page'
         title          = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = abap_true ).
+        shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->_z2ui5( )->scrolling(
           setupdate = client->_bind_edit( mv_scrollupdate )

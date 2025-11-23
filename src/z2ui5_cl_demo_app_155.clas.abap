@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Text Edit'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup...'
             press = client->_event( 'POPUP' ) ).

@@ -82,7 +82,7 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup Display PDF'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = client->check_app_prev_stack( )
            )->button(
                 text  = 'Open Popup...'
                 press = client->_event( 'POPUP' ) ).

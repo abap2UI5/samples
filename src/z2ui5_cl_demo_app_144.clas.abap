@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Cell Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = client->check_app_prev_stack( ) ).
 
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).

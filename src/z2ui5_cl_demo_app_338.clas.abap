@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Main App calling Subapps'
                              navbuttonpress = client->_event( 'BACK' )
-                             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                             shownavbutton  = client->check_app_prev_stack( )
                              class          = 'sapUiContentPadding' ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'

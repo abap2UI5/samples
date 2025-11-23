@@ -30,7 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_208 IMPLEMENTATION.
          )->page(
             title          = `abap2UI5 - Sample: Radio Button Group`
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vbox( class = `sapUiSmallMargin`
                           )->label( labelfor = `rbg1`

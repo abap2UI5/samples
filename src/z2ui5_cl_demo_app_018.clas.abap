@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Template'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = client->check_app_prev_stack( )
             )->simple_form( title    = 'VIEW_MAIN'
                             editable = abap_true
                 )->content( 'form'
@@ -106,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
           )->page(
                   title          = 'abap2UI5 - Template'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = client->check_app_prev_stack( )
               )->simple_form( 'VIEW_SECOND'
                   )->content( 'form'
       )->get_parent( )->get_parent( )->footer(

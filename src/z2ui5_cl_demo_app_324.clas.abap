@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
     TRY.
         IF client->check_on_init( ).
           client->view_display( z2ui5_cl_xml_view=>factory(
-                                    )->page( shownavbutton  = abap_true
+                                    )->page( shownavbutton  = client->check_app_prev_stack( )
                                              navbuttonpress = client->_event( 'BACK' )
                                     )->button( text  = 'Call dynpro'
                                                press = client->_event( 'PRESS' )

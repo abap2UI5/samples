@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
       )->page(
                   title          = 'abap2UI5 - Focus'
                   navbuttonpress = client->_event( val = 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                  shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
                               focusid          = client->_bind_edit( focus_id )
                                 selectionstart = client->_bind_edit( selstart )

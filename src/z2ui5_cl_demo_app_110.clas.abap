@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
       )->page(
               title          = 'abap2UI5 - Sample: MaskInput'
               navbuttonpress = client->_event( val = 'BACK' )
-              shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+              shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title    = 'Generic Mask Input'
                           layout   = 'ColumnLayout'
                           editable = abap_true

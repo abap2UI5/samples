@@ -97,7 +97,7 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton  = client->check_app_prev_stack( ) ).
 
 
     page->segmented_button( selected_key = client->_bind_edit( mv_key )

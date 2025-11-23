@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
                    navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                   shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->vbox( class = `sapUiSmallMargin`
        )->label( text = `facingMode: ` labelfor = `ComboFacingMode`

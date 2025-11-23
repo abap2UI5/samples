@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_012 IMPLEMENTATION.
     DATA(page) = lo_main->page(
             title          = 'abap2UI5 - Popups'
             navbuttonpress = client->_event( val = 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'
         )->simple_form( 'Popup in same App' )->content( 'form'

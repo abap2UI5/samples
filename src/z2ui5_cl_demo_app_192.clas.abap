@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     view->shell(
         )->page( title          = 'xxx'
                  navbuttonpress = client->_event( val = 'BACK' )
-                 shownavbutton  = abap_true
+                 shownavbutton  = client->check_app_prev_stack( )
             )->header_content( ).
     client->view_display( view->stringify( ) ).
 

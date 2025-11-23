@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     page = page->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton  = client->check_app_prev_stack( )
         class          = 'sapUiContentPadding' ).
 
     page = page->vbox( ).

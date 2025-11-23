@@ -104,7 +104,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - UploadSet Dialog'
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton  = client->check_app_prev_stack( )
         class          = 'sapUiContentPadding' ).
 
     page = page->upload_set( instantupload      = abap_true

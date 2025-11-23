@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01'
         navbuttonpress = client->_event( val = 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+        shownavbutton  = client->check_app_prev_stack( )
        )->grid( 'L6 M12 S12' )->content( 'layout'
        )->simple_form( 'Controller' )->content( 'form'
       )->label( 'Demo'

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Icon Tab Bar - Sub tabs'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->label(
              wrapping = `true`

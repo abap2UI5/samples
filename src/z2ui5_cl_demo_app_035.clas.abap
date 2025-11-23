@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
                                        navbuttonpress = client->_event( 'BACK' )
-                                       shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(temp) = page->simple_form( title    = 'File'
                                     editable = abap_true )->content( `form`

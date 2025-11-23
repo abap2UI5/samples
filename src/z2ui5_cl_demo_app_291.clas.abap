@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Message Strip with enableFormattedText'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
        )->button( id = `button_hint_id`

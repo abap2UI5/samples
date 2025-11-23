@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( title          = 'abap2UI5 - Currency Format'
                   navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                  shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->simple_form( title    = 'Currency'
                        editable = abap_true

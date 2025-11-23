@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
       DATA(page) = view->shell(
           )->page( title          = 'Harvey Chart'
                    navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                   shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->harvey_ball_micro_chart(
 *                                   colorpalette  =

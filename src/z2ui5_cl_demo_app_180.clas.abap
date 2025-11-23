@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
         title          = `Client->FOLLOW_UP_ACTION use cases`
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+        shownavbutton  = client->check_app_prev_stack( ) ).
     page = page->vbox( ).
     page->button( text  = `call frontend event from backend event`
                   press = client->_event( `CALL_EF` ) ).

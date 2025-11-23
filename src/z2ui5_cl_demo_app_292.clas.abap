@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Breadcrumbs sample with current page link'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
        )->button( id = `button_hint_id`

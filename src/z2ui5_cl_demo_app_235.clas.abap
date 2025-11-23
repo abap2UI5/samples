@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Toolbar vs Bar vs OverflowToolbar'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(page_02) = page_01->page(
                          title         = `Bar can center a Title.`

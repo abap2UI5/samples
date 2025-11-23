@@ -94,7 +94,7 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - Roundtrip Speed Test'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(
          headertext = 'Data auto refresh (2 sec)'

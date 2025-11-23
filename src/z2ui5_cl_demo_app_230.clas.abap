@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_230 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Segmented Button in Input List Item'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->list(
                           headertext = `Input List Item`

@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Visualization'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
     DATA(tab) = container->tab( text     = 'Line Chart'

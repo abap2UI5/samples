@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Binding Structure Level'
                 navbuttonpress = client->_event( 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->input( client->_bind_edit( val = ms_struc-title ) ).
     page->input( client->_bind_edit( val = ms_struc-value ) ).

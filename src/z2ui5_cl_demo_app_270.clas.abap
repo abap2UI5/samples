@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->shell(
         )->page(
             title          = 'abap2UI5 - Hello World App'
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            shownavbutton  = client->check_app_prev_stack( )
             navbuttonpress = client->_event( 'BACK' )
         )->simple_form( editable = abap_true
              )->content( ns = `form`

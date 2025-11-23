@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).

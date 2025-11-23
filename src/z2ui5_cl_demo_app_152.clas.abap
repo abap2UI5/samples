@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Popup To Select'
                 navbuttonpress = client->_event( val = 'BACK' )
-                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                shownavbutton  = client->check_app_prev_stack( )
            )->hbox(
            )->text( text  = 'Multiselect: '
                     class = 'sapUiTinyMargin'

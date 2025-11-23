@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+                    shownavbutton  = client->check_app_prev_stack( )
                )->simple_form( title    = 'Form Title'
                                editable = abap_true
                     )->content( 'form'

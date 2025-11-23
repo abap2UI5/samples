@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'Timeline'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(timeline) = page->timeline(
           content = client->_bind( mt_feed ) ).

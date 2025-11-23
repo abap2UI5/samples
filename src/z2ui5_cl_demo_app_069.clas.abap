@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Master-Detail View with Nested Views'
           navbuttonpress = client->_event( 'BACK' )
-          shownavbutton  = abap_true ).
+          shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded'
                                                     id     ='test' )->begin_column_pages( ).

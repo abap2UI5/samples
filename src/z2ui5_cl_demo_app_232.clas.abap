@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_232 IMPLEMENTATION.
          )->page(
             title          = 'Sample: MultiInput - Suggestions wrapping'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).

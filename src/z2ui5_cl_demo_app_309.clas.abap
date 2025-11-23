@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_309 IMPLEMENTATION.
         title          = `Client->FOLLOW_UP_ACTION use cases`
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+        shownavbutton  = client->check_app_prev_stack( ) ).
     page = page->vbox( ).
     page->get_parent( )->hbox( class = `sapUiSmallMargin` ).
     page->button( text  = `call custom JS from EB`

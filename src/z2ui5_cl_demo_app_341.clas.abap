@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = lo_main->page( title          = 'abap2UI5 - Popups'
                                 navbuttonpress = client->_event( val = 'BACK' )
-                                shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                                shownavbutton  = client->check_app_prev_stack( ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'

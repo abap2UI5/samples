@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_243 IMPLEMENTATION.
          )->page(
             title          = 'abap2UI5 - Sample: Negative Margins'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            shownavbutton  = client->check_app_prev_stack( )
       )->page( showheader = `false`
                class      = `sapUiContentPadding`
              )->sub_header( )->toolbar( design = `Info`

@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
         title          = `Cards Demo`
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event( 'BACK' )
-        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+        shownavbutton  = client->check_app_prev_stack( ) ).
 
 
     mt_cities = VALUE #( ( text = `Berlin` key = `BR` )

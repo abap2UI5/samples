@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
          )->page(
             title          = `abap2UI5 - Sample: Icon`
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
        )->button( id = `button_hint_id`

@@ -57,7 +57,7 @@ CLASS Z2UI5_CL_DEMO_APP_046 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
             navbuttonpress = client->_event( 'BACK' )
-            shownavbutton  = abap_true
+            shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->button( text  = 'Display List'
                            press = client->_event( 'LIST' )

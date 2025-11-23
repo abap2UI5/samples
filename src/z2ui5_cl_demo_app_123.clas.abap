@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
             )->page(
                     title          = 'abap2UI5 - Map Container'
                     navbuttonpress = client->_event( val = 'BACK' )
-                    shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                    shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(map) = page->map_container( autoadjustheight = abap_true
          )->content( ns = `vk`

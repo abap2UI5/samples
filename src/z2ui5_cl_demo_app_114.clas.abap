@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'
              navbuttonpress = client->_event( 'BACK' )
-             shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->flex_box(
             justifycontent = `Start`

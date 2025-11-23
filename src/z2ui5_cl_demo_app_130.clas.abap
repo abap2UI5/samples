@@ -340,7 +340,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                )->page(
                   title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
                   navbuttonpress = client->_event( 'BACK' )
-                  shownavbutton  = abap_true ).
+                  shownavbutton  = client->check_app_prev_stack( ) ).
 
     ELSE.
 
