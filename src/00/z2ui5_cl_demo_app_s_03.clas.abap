@@ -40,6 +40,12 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
+    SELECT
+      SINGLE FROM icfservloc
+      FIELDS icfactive
+      WHERE icf_name = 'MIME_DEMO'
+      INTO @DATA(icfactive).
+
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
     " They are NOT meant to use in production.
     view->_generic( name = `script`
@@ -48,6 +54,14 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
                      && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
 
     DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
+
+    IF icfactive = abap_false.
+      vbox->message_strip(
+          text    = `ICF Service '/SAP/PUBLIC/BC/ABAP/mime_demo' is not active. Sounds will not play. Please activate the ICF service first.`
+          type    = `Warning`
+          visible = abap_true ).
+    ENDIF.
+
     vbox->message_strip(
         text    = client->_bind( message-text )
         type    = client->_bind( message-type )

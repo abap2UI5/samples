@@ -72,6 +72,12 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
   METHOD z2ui5_on_render.
 
+    SELECT
+      SINGLE FROM icfservloc
+      FIELDS icfactive
+      WHERE icf_name = 'Z2UI5_SAMPLE'
+      INTO @DATA(icfactive).
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
                     )->page(
@@ -84,6 +90,13 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
            press     = client->_event( 'CLICK_HINT_ICON' ) ).
+
+    IF icfactive = abap_false.
+      page->message_strip(
+          text    = `ICF Service '/sap/bc/apc/sap/z2ui5_sample' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
+          type    = `Warning`
+          visible = abap_true ).
+    ENDIF.
 
     DATA(form) = page->simple_form( editable = abap_true
                                     title    = `Publish news`
