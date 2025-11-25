@@ -39,10 +39,11 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         )->page(
                 title           = 'abap2UI5 - Tables and editable'
                 navbuttonpress  = client->_event( 'BACK' )
-                  shownavbutton = abap_true ).
+                  shownavbutton = abap_true
+                  id = `test2` ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            items = `{path: '` && client->_bind_edit( val = t_tab path = abap_true ) && `' , templateShareable: false }`
             mode  = 'MultiSelect'
         )->header_toolbar(
             )->overflow_toolbar(
@@ -81,6 +82,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
       )->cells(
           )->input( value   = '{TITLE}'
                     enabled = `{EDITABLE}`
+                    id = `test`
           )->input( value   = '{VALUE}'
                     enabled = `{EDITABLE}`
           )->input( value   = '{INFO}'
