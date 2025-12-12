@@ -75,6 +75,8 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     page->_z2ui5( )->camera_picture(
                       value      = client->_bind_edit( mv_picture_base )
                       onphoto    = client->_event( 'CAPTURE' )
+                      height = `10`
+                      width = `1000`
                       facingmode = client->_bind_edit( facing_mode )
                       deviceid   = client->_bind_edit( device ) ).
 
