@@ -19,7 +19,8 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = 'abap2UI5 - Demo Layout'
             navbuttonpress = client->_event( 'BACK' )
@@ -42,7 +43,8 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
             )->link( text = 'link'
                      href = 'https://twitter.com/abap2UI5' ).
 
-    DATA(grid) = page->grid( 'L4 M4 S4' )->content( 'layout' ).
+    DATA grid TYPE REF TO z2ui5_cl_xml_view.
+    grid = page->grid( 'L4 M4 S4' )->content( 'layout' ).
 
     grid->simple_form( 'Grid width 33%' )->content( 'form'
        )->button( text = 'button'

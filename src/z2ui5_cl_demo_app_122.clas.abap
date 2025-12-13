@@ -35,7 +35,8 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5'
@@ -91,7 +92,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( ).
     ENDIF.
 

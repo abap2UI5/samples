@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
 
-    ELSEIF client->check_on_init( ).
+    ELSEIF client->check_on_init( ) IS NOT INITIAL.
       z2ui5_view_display( ).
       RETURN.
     ENDIF.
@@ -99,9 +99,11 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
 
     client->_bind_edit( mv_file_raw ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell( )->page(
         title          = 'abap2UI5 - UploadSet Dialog'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = client->check_app_prev_stack( )

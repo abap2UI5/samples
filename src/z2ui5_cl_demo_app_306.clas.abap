@@ -19,12 +19,12 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION
         key  TYPE string,
         text TYPE string,
       END OF t_combo,
-      tt_combo TYPE STANDARD TABLE OF t_combo WITH EMPTY KEY.
+      tt_combo TYPE STANDARD TABLE OF t_combo WITH DEFAULT KEY.
 
 
     DATA:
-      mt_picture      TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
-      mt_picture_out  TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
+      mt_picture      TYPE STANDARD TABLE OF ty_picture WITH DEFAULT KEY,
+      mt_picture_out  TYPE STANDARD TABLE OF ty_picture WITH DEFAULT KEY,
       mv_pic_display  TYPE string,
       mv_check_init   TYPE abap_bool,
       mv_picture_base TYPE string,
@@ -51,10 +51,13 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(cont) = view->shell( ).
-    DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
+    DATA cont TYPE REF TO z2ui5_cl_xml_view.
+    cont = view->shell( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = cont->page( title = 'abap2UI5 - Device Camera Picture'
                    navbuttonpress  = client->_event( 'BACK' )
                    shownavbutton   = client->check_app_prev_stack( ) ).
 
@@ -98,13 +101,17 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
             selected    = `{SELECTED}` ).
 
     IF mv_pic_display IS NOT INITIAL.
+      DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
+      CLEAR temp1.
+      DATA temp2 LIKE LINE OF temp1.
+      temp2-n = 'src'.
+      temp2-v = mv_pic_display.
+      INSERT temp2 INTO TABLE temp1.
       page->_generic( ns   = 'html'
                       name = 'center'
          )->_generic( ns     = 'html'
                       name   = 'img'
-                      t_prop = VALUE #(
-                        ( n = 'src'  v = mv_pic_display )
-         ) ).
+                      t_prop = temp1 ).
 
       page->button( text  = 'Edit'
                     icon  = 'sap-icon://edit'
@@ -121,11 +128,25 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     me->client = client.
 
     IF me->z2ui5_if_app~check_initialized = abap_false.
-      facing_modes = VALUE tt_combo( ( key = `` text = `` )
-                                     ( key = `environment` text = `environment` )
-                                     ( key = `user` text = `user` )
-                                     ( key = `left` text = `left` )
-                                     ( key = `right` text = `right` ) ).
+      DATA temp3 TYPE tt_combo.
+      CLEAR temp3.
+      DATA temp4 LIKE LINE OF temp3.
+      temp4-key = ``.
+      temp4-text = ``.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `environment`.
+      temp4-text = `environment`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `user`.
+      temp4-text = `user`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `left`.
+      temp4-text = `left`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `right`.
+      temp4-text = `right`.
+      INSERT temp4 INTO TABLE temp3.
+      facing_modes = temp3.
 
       view_display( ).
     ENDIF.
@@ -140,14 +161,34 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'CAPTURE'.
-        INSERT VALUE #( data = mv_picture_base time = sy-uzeit ) INTO TABLE mt_picture.
+        DATA temp5 TYPE z2ui5_cl_demo_app_306=>ty_picture.
+        CLEAR temp5.
+        temp5-data = mv_picture_base.
+        temp5-time = sy-uzeit.
+        INSERT temp5 INTO TABLE mt_picture.
         CLEAR mv_picture_base.
         client->view_model_update( ).
 
       WHEN 'DISPLAY'.
 
-        selected_picture = mt_picture_out[ selected = abap_true ].
-        mv_pic_display = mt_picture[ selected_picture-id ]-data.
+        DATA temp6 LIKE LINE OF mt_picture_out.
+        DATA temp7 LIKE sy-tabix.
+        temp7 = sy-tabix.
+        READ TABLE mt_picture_out WITH KEY selected = abap_true INTO temp6.
+        sy-tabix = temp7.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        selected_picture = temp6.
+        DATA temp8 LIKE LINE OF mt_picture.
+        DATA temp9 LIKE sy-tabix.
+        temp9 = sy-tabix.
+        READ TABLE mt_picture INDEX selected_picture-id INTO temp8.
+        sy-tabix = temp9.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        mv_pic_display = temp8-data.
         view_display( ).
 
       WHEN 'EDIT'.
@@ -160,9 +201,16 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     ENDCASE.
 
-    mt_picture_out = VALUE #( ).
-    LOOP AT mt_picture INTO DATA(ls_pic).
-      INSERT VALUE #( name = `picture ` && sy-tabix id = sy-tabix ) INTO TABLE mt_picture_out.
+    DATA temp10 LIKE mt_picture_out.
+    CLEAR temp10.
+    mt_picture_out = temp10.
+    DATA ls_pic LIKE LINE OF mt_picture.
+    LOOP AT mt_picture INTO ls_pic.
+      DATA temp11 TYPE z2ui5_cl_demo_app_306=>ty_picture.
+      CLEAR temp11.
+      temp11-name = `picture ` && sy-tabix.
+      temp11-id = sy-tabix.
+      INSERT temp11 INTO TABLE mt_picture_out.
     ENDLOOP.
 
   ENDMETHOD.
@@ -177,12 +225,17 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
+        DATA lo_prev TYPE REF TO z2ui5_if_app.
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA temp12 TYPE REF TO z2ui5_cl_pop_image_editor.
+        temp12 ?= lo_prev.
+        DATA result TYPE z2ui5_cl_pop_image_editor=>t_result.
+        result = temp12->result( ).
 
         IF result-check_confirmed = abap_true.
           mv_pic_display = result-image.
-          ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+          FIELD-SYMBOLS <picture> TYPE z2ui5_cl_demo_app_306=>ty_picture.
+          READ TABLE mt_picture INDEX selected_picture-id ASSIGNING <picture>.
           IF sy-subrc = 0.
             <picture>-data = mv_pic_display.
           ENDIF.

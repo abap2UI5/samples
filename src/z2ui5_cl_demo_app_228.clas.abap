@@ -26,13 +26,15 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Numeric Content Without Margins'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->label( text = `Numeric content with margins` ).
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    layout = page->label( text = `Numeric content with margins` ).
     layout->numeric_content( value      = `65.5`
                              scale      = `MM`
                              class      = `sapUiSmallMargin`
@@ -97,7 +99,7 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 

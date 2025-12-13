@@ -26,13 +26,15 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Page, Toolbar and Bar'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(page_02) = page_01->page( title         = `Title`
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_02 = page_01->page( title         = `Title`
                                    class         = `sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer`
                                    shownavbutton = `true`
                               )->header_content(
@@ -78,7 +80,7 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 

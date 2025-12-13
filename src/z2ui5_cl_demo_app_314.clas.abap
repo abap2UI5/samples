@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_314 DEFINITION PUBLIC.
         percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
       END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
 
     DATA mv_val TYPE string.
   PROTECTED SECTION.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       DO 10 TIMES.
         DATA ls_row TYPE ty_row.
@@ -39,8 +39,10 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
         INSERT ls_row INTO TABLE t_tab.
       ENDDO.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      page = view->shell(
           )->page(
               title          = 'abap2UI5 - Device Model, HTTP Model, OData Model'
               navbuttonpress = client->_event( 'BACK' )
@@ -54,7 +56,8 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       page->input( client->_bind_edit( val                  = mv_val
                                        switch_default_model = abap_true ) ).
 
-      DATA(tab) = page->table( client->_bind_edit( val                  = t_tab
+      DATA tab TYPE REF TO z2ui5_cl_xml_view.
+      tab = page->table( client->_bind_edit( val                  = t_tab
                                                    switch_default_model = abap_true ) ).
 
       tab->header_toolbar(

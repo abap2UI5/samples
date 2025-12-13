@@ -42,8 +42,10 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
         )->page(
                 title          = 'abap2UI5 - Binding Structure Level'
                 navbuttonpress = client->_event( 'BACK' )
@@ -70,7 +72,7 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       ms_struc-title  = `title`.
       ms_struc-value  = `val01`.

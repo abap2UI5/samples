@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
     on_event( client ).
@@ -30,7 +30,8 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = (id , mode) => { ` &&
@@ -40,7 +41,8 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                         `input.setAttribute("inputmode" , mode);` &&
                         ` alert("inputmode changed to" + mode); }` ).
 
-    DATA(page) = view->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
              )->page( title          = 'abap2UI5 - Softkeyboard on/off'
                       navbuttonpress = client->_event( 'BACK' )
                       shownavbutton  = client->check_app_prev_stack( )

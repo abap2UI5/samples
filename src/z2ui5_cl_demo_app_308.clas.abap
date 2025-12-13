@@ -16,10 +16,12 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      page = view->shell(
           )->page( title          = 'Harvey Chart'
                    navbuttonpress = client->_event( 'BACK' )
                    shownavbutton  = client->check_app_prev_stack( ) ).

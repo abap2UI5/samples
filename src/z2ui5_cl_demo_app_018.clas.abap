@@ -29,7 +29,8 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD z2ui5_display_popup_input.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->dialog(
              title = 'Title'
              icon  = 'sap-icon://edit'
@@ -63,7 +64,8 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD z2ui5_display_view_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
@@ -101,7 +103,8 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
   METHOD z2ui5_display_view_second.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
@@ -130,7 +133,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       z2ui5_on_init( ).
       RETURN.
     ENDIF.

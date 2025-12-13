@@ -43,7 +43,8 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
           )->page(
               title          = 'abap2UI5 - Focus II'
               navbuttonpress = client->_event( 'BACK' )

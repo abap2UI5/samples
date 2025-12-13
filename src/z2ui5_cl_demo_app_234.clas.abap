@@ -27,13 +27,15 @@ CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: TextArea - Value States'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout(
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    layout = page->vertical_layout(
                          class = `sapUiContentPadding`
                          width = `100%`
                           )->content( ns = `layout`
@@ -69,7 +71,7 @@ CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 

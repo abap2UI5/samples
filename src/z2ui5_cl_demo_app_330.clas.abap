@@ -32,10 +32,13 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->object_page_layout( uppercaseanchorbar = abap_false ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA object_page_layout TYPE REF TO z2ui5_cl_xml_view.
+    object_page_layout = view->object_page_layout( uppercaseanchorbar = abap_false ).
 
-    DATA(header_title) = object_page_layout->header_title(
+    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+    header_title = object_page_layout->header_title(
         )->object_page_dyn_header_title( ).
 
     header_title->expanded_heading(
@@ -62,7 +65,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                   )->button( text = `Delete`
                   )->button( text = `Simulate Assembly` ).
 
-    DATA(header_content) = object_page_layout->header_content( ns = `uxap`
+    DATA header_content TYPE REF TO z2ui5_cl_xml_view.
+    header_content = object_page_layout->header_content( ns = `uxap`
                                                )->flex_box( wrap         = `Wrap`
                                                             fitcontainer = abap_true ).
 
@@ -130,7 +134,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent( ).
 
-    DATA(section) = object_page_layout->sections( ).
+    DATA section TYPE REF TO z2ui5_cl_xml_view.
+    section = object_page_layout->sections( ).
 
     section->object_page_section( titleuppercase = abap_false
                                   title          = `General Information`
@@ -340,7 +345,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

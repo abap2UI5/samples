@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_087 DEFINITION PUBLIC.
         valuecolor TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
 
     DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       refresh_data( ).
     ENDIF.
 
@@ -68,14 +68,17 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
         )->page(
             title          = 'abap2UI5 - Table with Cell Copy'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->table(
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    tab = page->table(
             growing             = abap_true
             growingthreshold    = '20'
             growingscrolltoload = abap_true

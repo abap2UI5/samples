@@ -36,9 +36,10 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
               )->page(
                       title          = 'abap2UI5 - Device Capabilities'
@@ -82,7 +83,17 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       WHEN 'MAP_CONTAINER_DISPLAY'.
 
         IF longitude IS NOT INITIAL.
-          mt_spot = VALUE #( ( pos = longitude && `;` && latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).
+          DATA temp1 LIKE mt_spot.
+          CLEAR temp1.
+          DATA temp2 LIKE LINE OF temp1.
+          temp2-pos = longitude && `;` && latitude && `;0`.
+          temp2-type = `Default`.
+          temp2-contentoffset = `0;-6`.
+          temp2-scale = `1;1;1`.
+          temp2-key = `Your Position`.
+          temp2-tooltip = `Your Position`.
+          INSERT temp2 INTO TABLE temp1.
+          mt_spot = temp1.
         ENDIF.
 
         view = z2ui5_cl_xml_view=>factory( ).

@@ -35,7 +35,8 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
     " Define the base URL for the server
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com'.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: ImageContent'
             navbuttonpress = client->_event( 'BACK' )
@@ -88,7 +89,8 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -106,7 +108,7 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 

@@ -13,7 +13,8 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
 
       WHEN client->check_on_init( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory( ).
+        DATA view TYPE REF TO z2ui5_cl_xml_view.
+        view = z2ui5_cl_xml_view=>factory( ).
         view->shell(
             )->page( title          = 'abap2UI5 - Popup To Confirm'
                      navbuttonpress = client->_event_nav_app_leave( )
@@ -24,7 +25,8 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
 
       WHEN client->check_on_event( `POPUP` ).
 
-        DATA(lo_app) = z2ui5_cl_pop_to_confirm=>factory( i_question_text = `this is a question`
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_to_confirm.
+        lo_app = z2ui5_cl_pop_to_confirm=>factory( i_question_text = `this is a question`
                                                          i_event_confirm = `POPUP_TRUE`
                                                          i_event_cancel  = 'POPUP_FALSE' ).
         client->nav_app_call( lo_app ).

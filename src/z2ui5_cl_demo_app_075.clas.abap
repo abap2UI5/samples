@@ -42,10 +42,13 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
           WHEN 'UPLOAD'.
 
-            SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
+            DATA lv_dummy TYPE string.
+            DATA lv_data TYPE string.
+            SPLIT mv_value AT `;` INTO lv_dummy lv_data.
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+            DATA lv_data2 TYPE xstring.
+            lv_data2 = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
             mv_file = z2ui5_cl_util=>conv_get_string_by_xstring( lv_data2 ).
 
             client->message_box_display( `CSV loaded to table` ).
@@ -60,7 +63,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
         ENDCASE.
 
-      CATCH cx_root INTO DATA(x).
+        DATA x TYPE REF TO cx_root.
+      CATCH cx_root INTO x.
         client->message_box_display( text = x->get_text( )
                                      type = `error` ).
     ENDTRY.
@@ -84,8 +88,10 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
   METHOD ui5_view_main_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell( )->page(
             title          = 'abap2UI5 - Upload Files'
             navbuttonpress = client->_event( 'BACK' )
             shownavbutton  = client->check_app_prev_stack( ) ).
@@ -98,7 +104,8 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(footer) = page->footer( )->overflow_toolbar( ).
+    DATA footer TYPE REF TO z2ui5_cl_xml_view.
+    footer = page->footer( )->overflow_toolbar( ).
 
     footer->_z2ui5( )->file_uploader(
       value       = client->_bind_edit( mv_value )
@@ -116,7 +123,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       ui5_on_init( ).
       RETURN.
     ENDIF.

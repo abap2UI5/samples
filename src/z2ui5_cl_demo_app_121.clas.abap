@@ -27,7 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
 
 
     "on init
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( )
@@ -53,7 +53,8 @@ CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
 
 
     "render view
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     client->view_display( view->shell(
           )->page(

@@ -41,7 +41,8 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Step Input - Value States'
             navbuttonpress = client->_event( 'BACK' )
@@ -89,7 +90,8 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -108,17 +110,25 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
 
       s_text = 'StepInput with valueState '.
 
-      lt_a_data = VALUE #(
-        ( value_state = 'None' )
-        ( value_state = 'Information' )
-        ( value_state = 'Success' )
-        ( value_state = 'Warning' )
-        ( value_state = 'Error' ) ).
+      DATA temp1 LIKE lt_a_data.
+      CLEAR temp1.
+      DATA temp2 LIKE LINE OF temp1.
+      temp2-value_state = 'None'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-value_state = 'Information'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-value_state = 'Success'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-value_state = 'Warning'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-value_state = 'Error'.
+      INSERT temp2 INTO TABLE temp1.
+      lt_a_data = temp1.
 
       " Use field symbols to concatenate the string and store it in the label column
 

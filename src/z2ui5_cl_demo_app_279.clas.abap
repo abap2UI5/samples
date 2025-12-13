@@ -28,14 +28,16 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory(
                    )->shell(
                    )->page(
                       title          = 'abap2UI5 - data loss protection'
                       navbuttonpress = client->_event( 'BACK' )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(box) = page->flex_box( direction  = `Row`
+    DATA box TYPE REF TO z2ui5_cl_xml_view.
+    box = page->flex_box( direction  = `Row`
                                 alignitems = `Start`
                                 class      = 'sapUiTinyMargin' ).
 
@@ -80,7 +82,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
           client->nav_app_leave( ).
         ENDIF.
       WHEN 'submit'.
-        dirty = xsdbool( text_input IS NOT INITIAL ).
+        DATA temp1 TYPE xsdboolean.
+        temp1 = boolc( text_input IS NOT INITIAL ).
+        dirty = temp1.
       WHEN 'reset'.
         CLEAR:
           dirty,
@@ -125,8 +129,12 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(confirm_leave) = CAST z2ui5_cl_pop_to_confirm( prev )->result( ).
+        DATA prev TYPE REF TO z2ui5_if_app.
+        prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_to_confirm.
+        temp1 ?= prev.
+        DATA confirm_leave TYPE abap_bool.
+        confirm_leave = temp1->result( ).
 
       CATCH cx_root.
     ENDTRY.

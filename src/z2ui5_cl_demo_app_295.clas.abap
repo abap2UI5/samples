@@ -42,7 +42,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Date Range Selection - Value States'
             navbuttonpress = client->_event( 'BACK' )
@@ -89,7 +90,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -107,7 +109,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
       z2ui5_set_data( ).
     ENDIF.
@@ -125,13 +127,26 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     s_text = 'DateRangeSelection with valueState '.
 
     " Append entries to the internal table
-    lt_a_data = VALUE #(
-      ( label = s_text && 'None'        value_state = 'None' )
-      ( label = s_text && 'Information' value_state = 'Information' )
-      ( label = s_text && 'Success'     value_state = 'Success' )
-      ( label = s_text && 'Warning and long valueStateText' value_state = 'Warning'
-                value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
-                                   'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.' )
-      ( label = s_text && 'Error'    value_state = 'Error' ) ).
+    DATA temp1 LIKE lt_a_data.
+    CLEAR temp1.
+    DATA temp2 LIKE LINE OF temp1.
+    temp2-label = s_text && 'None'.
+    temp2-value_state = 'None'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Information'.
+    temp2-value_state = 'Information'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Success'.
+    temp2-value_state = 'Success'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Warning and long valueStateText'.
+    temp2-value_state = 'Warning'.
+    temp2-value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
+'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.'.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = s_text && 'Error'.
+    temp2-value_state = 'Error'.
+    INSERT temp2 INTO TABLE temp1.
+    lt_a_data = temp1.
   ENDMETHOD.
 ENDCLASS.

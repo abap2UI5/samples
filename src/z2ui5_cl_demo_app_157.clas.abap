@@ -22,8 +22,12 @@ CLASS Z2UI5_CL_DEMO_APP_157 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_pop_file_ul( lo_prev )->result( )-value.
+        DATA lo_prev TYPE REF TO z2ui5_if_app.
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_file_ul.
+        temp1 ?= lo_prev.
+        DATA lv_text TYPE z2ui5_cl_pop_file_ul=>ty_s_result-value.
+        lv_text = temp1->result( )-value.
         client->message_box_display( `the input is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.
@@ -33,7 +37,8 @@ CLASS Z2UI5_CL_DEMO_APP_157 IMPLEMENTATION.
 
   METHOD ui5_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Popup File Upload'
@@ -53,7 +58,8 @@ CLASS Z2UI5_CL_DEMO_APP_157 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lo_app) = z2ui5_cl_pop_file_ul=>factory( ).
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_file_ul.
+        lo_app = z2ui5_cl_pop_file_ul=>factory( ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

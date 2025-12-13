@@ -34,7 +34,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
 
     result->mv_text = i_text.
     result->mv_cancel_text = i_cancel_text.
@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
     ENDIF.
 
     CASE client->get( )-event.

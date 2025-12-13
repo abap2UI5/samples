@@ -32,7 +32,8 @@ CLASS z2ui5_cl_demo_app_285 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Flexible sizing - Icon Tab Bar'
             navbuttonpress = client->_event( 'BACK' )
@@ -50,7 +51,8 @@ CLASS z2ui5_cl_demo_app_285 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Page/sample/sap.m.sample.PageListReportIconTabBar' ).
 
-    DATA(page_02) = page_01->page( title           = `Title`
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_02 = page_01->page( title           = `Title`
                                    enablescrolling = abap_true
                                    class           = `sapUiResponsivePadding--header sapUiResponsivePadding--footer`
                      )->content(
@@ -150,7 +152,8 @@ CLASS z2ui5_cl_demo_app_285 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -172,7 +175,7 @@ CLASS z2ui5_cl_demo_app_285 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 

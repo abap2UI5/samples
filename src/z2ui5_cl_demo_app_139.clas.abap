@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       search = client->get( )-s_config-search && `my_search_string`.
       display_view( ).
 
@@ -43,9 +43,11 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(tmp) = view->_z2ui5( )->history( client->_bind_edit( search )
+    DATA tmp TYPE REF TO z2ui5_cl_xml_view.
+    tmp = view->_z2ui5( )->history( client->_bind_edit( search )
          )->shell(
          )->page(
                  title          = 'abap2UI5 - Change URL History'

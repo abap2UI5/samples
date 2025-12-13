@@ -66,8 +66,12 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
   METHOD ui5_callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(lv_text) = CAST z2ui5_cl_pop_pdf( lo_prev )->result( )-text.
+        DATA lo_prev TYPE REF TO z2ui5_if_app.
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA temp1 TYPE REF TO z2ui5_cl_pop_pdf.
+        temp1 ?= lo_prev.
+        DATA lv_text TYPE z2ui5_cl_pop_pdf=>ty_s_result-text.
+        lv_text = temp1->result( )-text.
         client->message_box_display( `pdf viewer closed` ).
       CATCH cx_root.
     ENDTRY.
@@ -77,7 +81,8 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
 
   METHOD ui5_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Popup Display PDF'
@@ -97,8 +102,10 @@ CLASS Z2UI5_CL_DEMO_APP_159 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN 'POPUP'.
-        DATA(lv_pdf) = get_example_pdf( ).
-        DATA(lo_app) = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
+        DATA lv_pdf TYPE string.
+        lv_pdf = get_example_pdf( ).
+        DATA lo_app TYPE REF TO z2ui5_cl_pop_pdf.
+        lo_app = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
         client->nav_app_call( lo_app ).
 
       WHEN 'BACK'.

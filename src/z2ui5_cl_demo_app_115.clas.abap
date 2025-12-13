@@ -18,7 +18,8 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
 
-    DATA(lv_style) = `<html:style type="text/css">body {` && |\n| &&
+    DATA lv_style TYPE string.
+    lv_style = `<html:style type="text/css">body {` && |\n| &&
                                       `     font-family: Arial;` && |\n| &&
                                       `     font-size: 90%;` && |\n| &&
                                       `}` && |\n| &&
@@ -83,7 +84,8 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
 
 
 
-    DATA(lv_html) = `` && |\n| &&
+    DATA lv_html TYPE string.
+    lv_html = `` && |\n| &&
                     |\n| &&
                     `<h2 title="I'm a header">The title Attribute</h2>` && |\n| &&
                     |\n| &&
@@ -96,7 +98,8 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
 *
 *    DATA(lv_html) = cl_demo_output=>get( carriers ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
            )->page(
            )->button( text = `test`

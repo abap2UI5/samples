@@ -19,12 +19,13 @@ CLASS Z2UI5_CL_DEMO_APP_093 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       product  = 'tomato'.
       quantity = '500'.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
 
       view->_generic( ns   = `html`
                       name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();` ).

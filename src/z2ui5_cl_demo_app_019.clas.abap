@@ -12,8 +12,8 @@ CLASS z2ui5_cl_demo_app_019 DEFINITION PUBLIC.
         descr TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA t_tab_sel TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
+    DATA t_tab_sel TYPE STANDARD TABLE OF ty_row WITH DEFAULT KEY.
     DATA mv_sel_mode TYPE string.
 
 
@@ -28,15 +28,29 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       mv_sel_mode = 'None'.
-      t_tab = VALUE #( descr = 'this is a description'
-              (  title = 'title_01'  value = 'value_01' )
-              (  title = 'title_02'  value = 'value_02' )
-              (  title = 'title_03'  value = 'value_03' )
-              (  title = 'title_04'  value = 'value_04' )
-              (  title = 'title_05'  value = 'value_05' ) ).
+      DATA temp1 LIKE t_tab.
+      CLEAR temp1.
+      DATA temp2 LIKE LINE OF temp1.
+      temp2-descr = 'this is a description'.
+      temp2-title = 'title_01'.
+      temp2-value = 'value_01'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'title_02'.
+      temp2-value = 'value_02'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'title_03'.
+      temp2-value = 'value_03'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'title_04'.
+      temp2-value = 'value_04'.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = 'title_05'.
+      temp2-value = 'value_05'.
+      INSERT temp2 INTO TABLE temp1.
+      t_tab = temp1.
 
     ENDIF.
 
@@ -53,8 +67,10 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
 
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
             )->page(
                 title          = 'abap2UI5 - Table with different Selection Modes'
                 navbuttonpress = client->_event( 'BACK' )

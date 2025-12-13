@@ -20,11 +20,13 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      view = z2ui5_cl_xml_view=>factory( ).
 
-      DATA(lo_p) = view->shell(
+      DATA lo_p TYPE REF TO z2ui5_cl_xml_view.
+      lo_p = view->shell(
                   )->page(
                           title          = 'abap2UI5 - Rich Text Editor'
                           navbuttonpress = client->_event( 'BACK' )

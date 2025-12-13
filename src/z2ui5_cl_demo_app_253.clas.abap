@@ -31,7 +31,8 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(css) = `.equalColumns .columns {`               &&
+    DATA css TYPE string.
+    css = `.equalColumns .columns {`               &&
                 `    min-height: 200px;`                 &&
                 `}`                                      &&
                 ``                                       &&
@@ -39,11 +40,13 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
                 `    padding: 0.5rem;`                   &&
                 `}`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`
                     ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
 
-    DATA(page) = view->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Flex Box - Equal Height Cols`
             navbuttonpress = client->_event( 'BACK' )
@@ -61,7 +64,8 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxCols' ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding equalColumns`
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    layout = page->vertical_layout( class = `sapUiContentPadding equalColumns`
                                           width = `100%`
                           )->flex_box( class = `columns`
                               )->text( text = `Although they have different amounts of text, both columns are of equal height.` )->get(
@@ -102,7 +106,8 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
   METHOD z2ui5_display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -120,7 +125,7 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       display_view( client ).
     ENDIF.
 
