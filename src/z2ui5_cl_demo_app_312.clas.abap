@@ -65,8 +65,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                cost    = '221000.00' )
                              ( week    = 'Week 13 - 16'
                                revenue = '536000.34'
-                               cost    = '280000.00' )
-                           ).
+                               cost    = '280000.00' ) ).
     " ---------- Set vizframe properties (optional) ---------------------------------------------------
     mv_prop = |\{| && |\n| &&
       |"plotArea": \{| && |\n| &&
@@ -184,8 +183,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                            ( n = 'area'
                              v = 'area' )
                            ( n = 'radar'
-                             v = 'radar' )
-      ).
+                             v = 'radar' ) ).
 
   ENDMETHOD.
 

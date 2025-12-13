@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_348 DEFINITION PUBLIC.
   PRIVATE SECTION.
     METHODS xml_form
       IMPORTING
-        i_data   type ref to data
+        i_data   TYPE REF TO data
         i_page   TYPE REF TO z2ui5_cl_xml_view
         i_client TYPE REF TO z2ui5_if_client.
 
@@ -46,8 +46,8 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
         client->nav_app_call( app ).
     ENDCASE.
 
-    IF     client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+    IF client->get( )-check_on_navigated = abap_true
+        AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
@@ -79,11 +79,11 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-    xml_form( i_data = ref #( ms_struc )
+    xml_form( i_data   = REF #( ms_struc )
               i_page   = page
               i_client = client ).
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
       ENDIF.
 
       DATA(line) = form->label( wrapping = abap_false
-                                text     = layout->name  ).
+                                text     = layout->name ).
 
       line->input( value   = i_client->_bind( <value> )
                    visible = i_client->_bind( val       = layout->visible

@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       storage_types = VALUE #( ( type = `local` )
-                               ( type =  `session` ) ).
+                               ( type = `session` ) ).
       storage = VALUE #( type   = `local`
                          prefix = `prefix1`
                          key    = 'key1'
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
         )->_z2ui5( )->storage(
             finished = client->_event(
                 val   = `LOCAL_STORAGE_LOADED`
-                t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` )  ) )
+                t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` ) ) )
             type     = client->_bind_edit( storage-type )
             prefix   = client->_bind_edit( storage-prefix )
             key      = client->_bind_edit( storage-key )

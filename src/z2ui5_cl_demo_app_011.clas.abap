@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
                 title           = 'abap2UI5 - Tables and editable'
                 navbuttonpress  = client->_event( 'BACK' )
                   shownavbutton = abap_true
-                  id = `test2` ).
+                  id            = `test2` ).
 
     DATA(tab) = page->table(
             items = `{path: '` && client->_bind_edit( val = t_tab path = abap_true ) && `' , templateShareable: false }`
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
       )->cells(
           )->input( value   = '{TITLE}'
                     enabled = `{EDITABLE}`
-                    id = `test`
+                    id      = `test`
           )->input( value   = '{VALUE}'
                     enabled = `{EDITABLE}`
           )->input( value   = '{INFO}'

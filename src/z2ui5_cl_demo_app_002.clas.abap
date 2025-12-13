@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
 
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA mt_combo type ty_T_combo.
+    DATA mt_combo TYPE ty_t_combo.
 
   PROTECTED SECTION.
 

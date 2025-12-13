@@ -76,13 +76,11 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                                                                                        ( text = `Prague` key = `PR` )
                                                                                                        ( text = `Paris`  key = `PS` )
                                                                                                        ( text = `Sofia`  key = `SF` )
-                                                                                                       ( text = `Vienna` key = `VN` )
-                                                                                                      ).
+                                                                                                       ( text = `Vienna` key = `VN` ) ).
 
     mt_products = VALUE #( ( title = `Notebook HT` subtitle = `ID23452256-D44` revenue = `27.25K EUR` status = `success` status_schema = `Success` )
                                                                                                  ( title = `Notebook XT` subtitle = `ID27852256-D47` revenue = `7.35K EUR` status = `exceeded` status_schema = `Error` )
-                                                                                                 ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` )
-      ).
+                                                                                                 ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` ) ).
 
     DATA(card_1) = page->card( width = `300px`
                                class = `sapUiMediumMargin`

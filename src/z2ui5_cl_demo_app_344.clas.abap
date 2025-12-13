@@ -43,9 +43,9 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       get_data( 'Z2UI5_T_01' ).
       get_data2( 'Z2UI5_T_01' ).
 
-      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   =  mt_data
+      mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data
                                                       vis_cols = 5 ).
-      mo_layout_obj2 = z2ui5_cl_demo_app_333=>factory( i_data   =  mt_data2
+      mo_layout_obj2 = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data2
                                                        vis_cols = 3 ).
 
       ui5_view_display( client ).
@@ -70,8 +70,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 ***    ENDIF.
 
 
-    IF     client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+    IF client->get( )-check_on_navigated = abap_true
+        AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
                i_data   = mt_data2
                i_layout = mo_layout_obj2 ).
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
@@ -137,13 +137,13 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
                                                   tab_index = lv_index )
-       )->text( layout->name ).
+        )->text( layout->name ).
 
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
                                        )->column_list_item( valign = 'Middle'
-                                                            type   = `Inactive`   ).
+                                                            type   = `Inactive` ).
 
     DATA(cells) = column_list_item->cells( ).
 
@@ -223,7 +223,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = iv_tabname
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 

@@ -7,13 +7,13 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
         text   TYPE string,
         author TYPE string,
       END OF t_news,
-      tt_News TYPE STANDARD TABLE OF t_news
+      tt_news TYPE STANDARD TABLE OF t_news
                    WITH NON-UNIQUE DEFAULT KEY.
 
     INTERFACES z2ui5_if_app.
     DATA news_input TYPE string.
     DATA author_input TYPE string.
-    DATA news_list TYPE tt_News.
+    DATA news_list TYPE tt_news.
     DATA connections TYPE int8.
 
   PROTECTED SECTION.
@@ -118,15 +118,15 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
               headertext = `News`
               items      = client->_bind_edit( news_list )
          )->feed_list_item(
-              sender     = `{AUTHOR}`
-              text       = `{TEXT}`
-              showicon   = abap_false ).
+              sender   = `{AUTHOR}`
+              text     = `{TEXT}`
+              showicon = abap_false ).
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
     footer->info_label(
-        text          = client->_bind_edit( connections )
-        colorscheme   = `7`
-        icon          = `sap-icon://connected` ).
+        text        = client->_bind_edit( connections )
+        colorscheme = `7`
+        icon        = `sap-icon://connected` ).
 
     footer->toolbar_spacer( )->button(
         text  = `Clear`

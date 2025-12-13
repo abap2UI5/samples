@@ -19,14 +19,14 @@
   },
   "homepage": "https://github.com/abap2UI5/samples#readme",
   "devDependencies": {
-    "@abaplint/cli": "^2.113.166",
-    "@abaplint/database-sqlite": "^2.11.0",
-    "@abaplint/runtime": "^2.11.21",
-    "@abaplint/transpiler-cli": "^2.11.21",
-    "@types/node": "^24.2.1",
+    "@abaplint/cli": "^2.115.1",
+    "@abaplint/database-sqlite": "^2.11.78",
+    "@abaplint/runtime": "^2.12.22",
+    "@abaplint/transpiler-cli": "^2.12.22",
+    "@types/node": "^25.0.1",
     "buffer": "^6.0.3"
   },
   "dependencies": {
-    "npm-check-updates": "^18.0.2"
+    "npm-check-updates": "^18.3.1"
   }
 }

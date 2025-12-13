@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
     DATA mv_layout TYPE string.
     DATA mv_check_sort TYPE abap_bool.
 
-    DATA mt_combo type ty_T_combo.
+    DATA mt_combo TYPE ty_t_combo.
 
   PROTECTED SECTION.
 
@@ -252,7 +252,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
-mt_combo = VALUE ty_t_combo(
+    mt_combo = VALUE ty_t_combo(
                        ( key = 'None'  text = 'None' )
                        ( key = 'SingleSelect' text = 'SingleSelect' )
                        ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )

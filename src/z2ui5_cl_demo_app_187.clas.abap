@@ -38,8 +38,8 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
       WHEN 'SY'.
         DATA(ls_msg2) = z2ui5_cl_util=>msg_get_by_msg(
-                  id     = 'NET'
-                  no     = `001` ).
+                  id = 'NET'
+                  no = `001` ).
         client->message_box_display( ls_msg2 ).
 
       WHEN 'BAPIRET'.

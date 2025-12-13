@@ -33,15 +33,13 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         )->column( )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
         )->column( )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
         )->column( )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
-        )->column( )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent(
-        ).
+        )->column( )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
         )->text( '{TRAVEL>Currency}'
         )->text( '{TRAVEL>Currency_Text}'
         )->text( '{TRAVEL>Decimals}'
-        )->text( '{TRAVEL>CurrencyISOCode}'
-        ).
+        )->text( '{TRAVEL>CurrencyISOCode}' ).
 
       tab = page->table(
         items   = `{FLIGHT>/Airport}`

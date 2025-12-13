@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
       END OF ty_row.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA focusColumn TYPE string.
-    DATA focusRow TYPE string.
+    DATA focuscolumn TYPE string.
+    DATA focusrow TYPE string.
     DATA focusid TYPE string READ-ONLY.
 
   PROTECTED SECTION.
@@ -51,53 +51,60 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `window.addEventListener('focus', function(e) {`
-                                                &&  `  try {`
-                                                &&  `    const focusCtrlId = sap.ui.getCore().getCurrentFocusedControlId(); `
-                                                &&  `    if (!focusCtrlId) {`
-                                                &&  `      return;`
-                                                &&  `    }`
-                                                &&  `    const customData = sap.ui.core.Element.getElementById(focusCtrlId).getCustomData()[0];`
-                                                &&  `    if (!customData) {`
-                                                &&  `      return;`
-                                                &&  `    }`
-                                                &&  `    const column = customData.getProperty("value");`
-                                                &&  `    if (!column) {`
-                                                &&  `      return;`
-                                                &&  `    }`
-                                                &&  `    const m = focusCtrlId.match(/(\d+$)/);`
-                                                &&  `    const model = z2ui5.oView.getModel() ;`
-                                                &&  `    model.setProperty("/FOCUSID",focusCtrlId);`
-                                                &&  `    model.setProperty("/XX/FOCUSCOLUMN",column);`
-                                                &&  `    model.setProperty("/XX/FOCUSROW",m[1]);`
-                                                &&  `  } catch(e){}`
-                                                &&  `}, true);`
-                                                &&  ``
-                                                &&  `z2ui5.determineFocusId = (column, row) => { `
-                                                &&  `  try {`
-                                                &&  `    const selector = "td:has([data-columnid='" + column + "']) > div";`
-                                                &&  `    const id = document.querySelectorAll(selector)[row].id;`
-                                                &&  `    z2ui5.oView.getModel().setProperty("/FOCUSID",id);`
-                                                &&  `    const element = sap.ui.core.Element.getElementById(id);`
-                                                &&  `    if (!element) {`
-                                                &&  `      return;`
-                                                &&  `    }`
-                                                &&  `    const focus = element.getFocusInfo();`
-                                                &&  `    element.applyFocusInfo(focus);`
-                                                &&  `  } catch(e){}`
-                                                &&  `}` ).
+                                                && `  try {`
+                                                && `    const focusCtrlId = sap.ui.getCore().getCurrentFocusedControlId(); `
+                                                && `    if (!focusCtrlId) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const customData = sap.ui.core.Element.getElementById(focusCtrlId).getCustomData()[0];`
+                                                && `    if (!customData) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const column = customData.getProperty("value");`
+                                                && `    if (!column) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const m = focusCtrlId.match(/(\d+$)/);`
+                                                && `    const model = z2ui5.oView.getModel() ;`
+                                                && `    model.setProperty("/FOCUSID",focusCtrlId);`
+                                                && `    model.setProperty("/XX/FOCUSCOLUMN",column);`
+                                                && `    model.setProperty("/XX/FOCUSROW",m[1]);`
+                                                && `  } catch(e){}`
+                                                && `}, true);`
+                                                && ``
+                                                && `z2ui5.determineFocusId = (column, row) => { `
+                                                && `  try {`
+                                                && `    const selector = "td:has([data-columnid='" + column + "']) > div";`
+                                                && `    const id = document.querySelectorAll(selector)[row].id;`
+                                                && `    z2ui5.oView.getModel().setProperty("/FOCUSID",id);`
+                                                && `    const element = sap.ui.core.Element.getElementById(id);`
+                                                && `    if (!element) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const focus = element.getFocusInfo();`
+                                                && `    element.applyFocusInfo(focus);`
+                                                && `  } catch(e){}`
+                                                && `}` ).
 
     DATA(page) = view->shell(
         )->page(
-            title           = 'abap2UI5 - Tables and focus'
-            navbuttonpress  = client->_event( 'BACK' )
-            shownavbutton   = abap_true ).
+            title          = 'abap2UI5 - Tables and focus'
+            navbuttonpress = client->_event( 'BACK' )
+            shownavbutton  = abap_true ).
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
-                )->label( `Column Id` )->input( submit = client->_event( 'FOCUS' ) value = client->_bind_edit( focusColumn ) placeholder = `Focus Column` width = `10%`
-                )->label( `Row Index` )->input( submit = client->_event( 'FOCUS' ) value = client->_bind_edit( focusRow ) placeholder = `Focus Row` width = `10%` type = 'Number'
+                )->label( `Column Id` )->input( submit      = client->_event( 'FOCUS' )
+                                                value       = client->_bind_edit( focuscolumn )
+                                                placeholder = `Focus Column`
+                                                width       = `10%`
+                )->label( `Row Index` )->input( submit      = client->_event( 'FOCUS' )
+                                                value       = client->_bind_edit( focusrow )
+                                                placeholder = `Focus Row`
+                                                width       = `10%`
+                                                type        = 'Number'
                 )->button(
                     text  = 'Set Focus'
                     press = client->_event( 'FOCUS' )
@@ -128,22 +135,22 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->text( text = '{INDEX}'
-          )->input( value   = '{TITLE}'
-                    submit  = client->_event( 'ENTER' )
+          )->input( value  = '{TITLE}'
+                    submit = client->_event( 'ENTER' )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value   = '{VALUE}'
-                    submit  = client->_event( 'ENTER' )
+          )->input( value  = '{VALUE}'
+                    submit = client->_event( 'ENTER' )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value   = '{INFO}'
-                    submit  = client->_event( 'ENTER' )
+          )->input( value  = '{INFO}'
+                    submit = client->_event( 'ENTER' )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-info
@@ -155,8 +162,8 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      value      = c_id-checkbox
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value   = '{DESCRIPTION}'
-                    submit  = client->_event( 'ENTER' )
+          )->input( value  = '{DESCRIPTION}'
+                    submit = client->_event( 'ENTER' )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-description
@@ -211,9 +218,9 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     focuscolumn = SWITCH #(
                     focuscolumn
-                      WHEN c_id-Title THEN c_id-Color
-                      WHEN c_id-Color THEN c_id-Info
-                      WHEN c_id-Info  THEN c_id-Checkbox
+                      WHEN c_id-title THEN c_id-color
+                      WHEN c_id-color THEN c_id-info
+                      WHEN c_id-info  THEN c_id-checkbox
                       WHEN c_id-checkbox THEN c_id-description
                       ELSE c_id-title ).
 

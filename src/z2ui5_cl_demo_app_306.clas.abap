@@ -55,28 +55,33 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
-                   navbuttonpress = client->_event( 'BACK' )
-                   shownavbutton  = client->check_app_prev_stack( ) ).
+                   navbuttonpress  = client->_event( 'BACK' )
+                   shownavbutton   = client->check_app_prev_stack( ) ).
 
     page->vbox( class = `sapUiSmallMargin`
-       )->label( text = `facingMode: ` labelfor = `ComboFacingMode`
-       )->combobox( id = `ComboFacingMode` selectedkey = client->_bind_edit( facing_mode )
-                    items = `{path:'` && client->_bind_edit( val = facing_modes  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-       )->get( )->item( key = `{KEY}` text = `{TEXT}` ).
+       )->label( text     = `facingMode: `
+                 labelfor = `ComboFacingMode`
+       )->combobox( id          = `ComboFacingMode`
+                    selectedkey = client->_bind_edit( facing_mode )
+                    items       = `{path:'` && client->_bind_edit( val = facing_modes  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+       )->get( )->item( key  = `{KEY}`
+                        text = `{TEXT}` ).
 
     page->vbox( class = `sapUiSmallMargin`
-       )->label( text = `device: ` labelfor = `ComboDevice`
+       )->label( text     = `device: `
+                 labelfor = `ComboDevice`
        )->_z2ui5( )->camera_selector(
-                    id = `ComboDevice`
+                    id          = `ComboDevice`
                     selectedkey = client->_bind_edit( device )
-                    items = `{path:'` && client->_bind_edit( val = devices  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
-       )->get( )->item( key = `{KEY}` text = `{TEXT}` ).
+                    items       = `{path:'` && client->_bind_edit( val = devices  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+       )->get( )->item( key  = `{KEY}`
+                        text = `{TEXT}` ).
 
     page->_z2ui5( )->camera_picture(
                       value      = client->_bind_edit( mv_picture_base )
                       onphoto    = client->_event( 'CAPTURE' )
-                      height = `10`
-                      width = `1000`
+                      height     = `10`
+                      width      = `1000`
                       facingmode = client->_bind_edit( facing_mode )
                       deviceid   = client->_bind_edit( device ) ).
 
@@ -101,7 +106,9 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                         ( n = 'src'  v = mv_pic_display )
          ) ).
 
-      page->button( text = 'Edit' icon = 'sap-icon://edit' press = client->_event( 'EDIT' ) ).
+      page->button( text  = 'Edit'
+                    icon  = 'sap-icon://edit'
+                    press = client->_event( 'EDIT' ) ).
     ENDIF.
 
     client->view_display( view->stringify( ) ).

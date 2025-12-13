@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
             type  = 'Active'
             title = '{TEXT}'
             press = client->_event( val = `EVENT_ITEM`
-                t_arg = VALUE #( ( `${TEXT}` ) )
+                t_arg                   = VALUE #( ( `${TEXT}` ) )
                  ) ).
 
     client->view_display( page->stringify( ) ).

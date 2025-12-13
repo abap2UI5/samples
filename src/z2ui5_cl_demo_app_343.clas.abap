@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
         CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
-        SELECT * FROM Z2ui5_t_01
+        SELECT * FROM z2ui5_t_01
           INTO TABLE @<table1>
           UP TO 5 ROWS.
 
@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
     TRY.
 
-        DATA(table) = page->table( width = 'auto'
+        DATA(table) = page->table( width   = 'auto'
                                      items = client->_bind( mt_data1 ) ).
 
         client->message_box_display( `error - reference processed in binding without error` ).
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     ENDTRY.
 
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     ENDCASE.
 
     IF client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+        AND client->check_on_init( )          = abap_false.
       render_main( client ).
     ENDIF.
 

@@ -76,8 +76,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 *       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
        switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
 *       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
-       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value`
-      ).
+       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value` ).
 
   ENDMETHOD.
 

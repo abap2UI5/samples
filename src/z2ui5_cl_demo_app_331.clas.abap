@@ -65,11 +65,11 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     ENDIF.
 
     DATA(line) = form->label( wrapping = abap_false
-                              text     = 'ID'  ).
+                              text     = 'ID' ).
 
     line->input( value = client->_bind( <value> ) ).
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 

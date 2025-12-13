@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                                 io_table  = mt_data
-                                io_layout = mo_lay  ) ).
+                                io_layout = mo_lay ) ).
 
       WHEN 'BACK'.
 
@@ -112,15 +112,15 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     ENDIF.
 
-    mo_lay = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data
+    mo_lay = z2ui5_cl_demo_app_333=>factory( i_data          = mt_data
                                                     vis_cols = 5 ).
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width = 'auto'
-                               mode  = 'SingleSelectLeft'
-                               selectionchange  = client->_event( 'SELECTION_CHANGE' )
-                               items = client->_bind_edit( val = <table> ) ).
+    DATA(table) = page->table( width           = 'auto'
+                               mode            = 'SingleSelectLeft'
+                               selectionchange = client->_event( 'SELECTION_CHANGE' )
+                               items           = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -130,7 +130,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
       columns->column( visible = client->_bind( val       = layout->visible
                                                 tab       = mo_lay->ms_data-t_layout
                                                 tab_index = lv_index )
-       )->text( layout->name ).
+        )->text( layout->name ).
 
     ENDLOOP.
 
@@ -181,7 +181,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
+      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*' ).
     ENDIF.
 
     on_event( client ).

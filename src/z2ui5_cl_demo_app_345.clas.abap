@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
-                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
+                                                 RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -115,19 +115,19 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                   type  = 'Success' ).
 
 
-    xml_table( i_page   = page
-      i_client = client
-      i_data   = mt_data1
-      i_layout = mo_layout_obj1 ).
+    xml_table( i_page = page
+      i_client        = client
+      i_data          = mt_data1
+      i_layout        = mo_layout_obj1 ).
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD xml_table.
 
-ASSIGN i_data->* to FIELD-SYMBOL(<data>).
+    ASSIGN i_data->* TO FIELD-SYMBOL(<data>).
 
     DATA(table) = i_page->table( width = 'auto'
                                  items = i_client->_bind( <data> ) ).
@@ -140,12 +140,12 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
       columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
                                                   tab_index = lv_index )
-       )->text( layout->name ).
+        )->text( layout->name ).
 
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item(    ).
+                                       )->column_list_item( ).
 
     DATA(cells) = column_list_item->cells( ).
 
@@ -177,7 +177,7 @@ ASSIGN i_data->* to FIELD-SYMBOL(<data>).
 
 
     IF client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+        AND client->check_on_init( )          = abap_false.
       render_main( client ).
     ENDIF.
 

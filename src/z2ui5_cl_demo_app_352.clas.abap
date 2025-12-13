@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                         `input.setAttribute("inputmode" , mode);` &&
                         ` alert("inputmode changed to" + mode); }` ).
 
-    DATA(page) =   view->shell(
+    DATA(page) = view->shell(
              )->page( title          = 'abap2UI5 - Softkeyboard on/off'
                       navbuttonpress = client->_event( 'BACK' )
                       shownavbutton  = client->check_app_prev_stack( )

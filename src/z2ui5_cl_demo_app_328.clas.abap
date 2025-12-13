@@ -74,13 +74,13 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
           ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
 
           IF <table> <> <val>.
-            client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA'  ).
+            client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA' ).
           ELSE.
-            client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA'  ).
+            client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA' ).
           ENDIF.
 
         ELSE.
-          client->message_toast_display( 'Plases select a Line'  ).
+          client->message_toast_display( 'Plases select a Line' ).
         ENDIF.
 
     ENDCASE.

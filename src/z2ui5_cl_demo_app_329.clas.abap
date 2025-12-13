@@ -2,13 +2,13 @@ CLASS z2ui5_cl_demo_app_329 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-  INTERFACES if_serializable_object.
+    INTERFACES if_serializable_object.
 
-  DATA mr_data type ref to data.
+    DATA mr_data TYPE REF TO data.
 
     CLASS-METHODS factory
       IMPORTING
-        i_data        TYPE ref to data
+        i_data        TYPE REF TO data
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_329.
 

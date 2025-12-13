@@ -54,8 +54,8 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
     ENDCASE.
 
-    IF     client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+    IF client->get( )-check_on_navigated = abap_true
+        AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
       ENDIF.
 
       DATA(line) = form->label( wrapping = abap_false
-                                text     = layout->name  ).
+                                text     = layout->name ).
 
       line->input( value   = client->_bind( <value> )
                    visible = client->_bind( val       = layout->visible
@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
                    enabled = abap_false ).
     ENDLOOP.
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 

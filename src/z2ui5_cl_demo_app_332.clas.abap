@@ -26,7 +26,8 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
       get_data( ).
 
-      mo_table_obj = z2ui5_cl_demo_app_333=>factory( i_data = REF #( ms_struc ) vis_cols = 3 ).
+      mo_table_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
+                                                     vis_cols = 3 ).
 
       ui5_view_display( client ).
 
@@ -77,7 +78,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
       ENDIF.
 
       DATA(line) = form->label( wrapping = abap_false
-                                text     = layout->name  ).
+                                text     = layout->name ).
 
       line->input( value   = client->_bind( <value> )
                    visible = client->_bind( val       = layout->visible
@@ -86,7 +87,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
                    enabled = abap_false ).
     ENDLOOP.
 
-    client->view_display( page->stringify( )  ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 

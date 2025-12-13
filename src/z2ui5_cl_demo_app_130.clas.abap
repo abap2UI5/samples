@@ -393,7 +393,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     IF mt_fields IS NOT INITIAL.
 
       LOOP AT mt_fields REFERENCE INTO DATA(lr_tab).
-        data(lv_tabix) = sy-tabix.
+        DATA(lv_tabix) = sy-tabix.
 
         DATA(scrtext) = get_txt( CONV #( lr_tab->field_doma ) ).
 

@@ -65,8 +65,7 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
           header                  = 'Test'
           showrowcount            = abap_true
           enableexport            = abap_false
-          enableautobinding       = abap_true
-        ).
+          enableautobinding       = abap_true ).
 
       client->view_display( val                       = view->stringify( )
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).

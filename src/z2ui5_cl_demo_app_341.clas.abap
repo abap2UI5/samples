@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 *
 *        client->nav_app_call( z2ui5_cl_layo_pop=>factory( layout = mo_layout ) ).
 
-        mo_layout1 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_table )
+        mo_layout1 = z2ui5_cl_demo_app_333=>factory( i_data  = REF #( mt_table )
                                                     vis_cols = 5 ).
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory( io_table  = REF #( mt_table )

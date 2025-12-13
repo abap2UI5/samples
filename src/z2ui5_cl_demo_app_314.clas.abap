@@ -77,8 +77,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
 
       tab = page->table(
          items   = `{/BookingSupplement}`
-         growing = abap_true
-          ).
+         growing = abap_true ).
 
       tab->header_toolbar(
         )->toolbar(
@@ -91,8 +90,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
           )->column( )->text( 'SupplementID' )->get_parent(
           )->column( )->text( 'SupplementText' )->get_parent(
           )->column( )->text( 'Price' )->get_parent(
-          )->column( )->text( 'CurrencyCode' )->get_parent(
-          ).
+          )->column( )->text( 'CurrencyCode' )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
          )->text( '{TravelID}'
@@ -101,8 +99,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( '{SupplementID}'
          )->text( '{SupplementText}'
          )->text( '{Price}'
-         )->text( '{CurrencyCode}'
-         ).
+         )->text( '{CurrencyCode}' ).
 
       client->view_display( val                       = view->stringify( )
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).

@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
           )->simple_form( title    = ''
                           layout   = 'ResponsiveGridLayout'
                           editable = abap_true
-          )->content( ns = 'form' )->label( text = 'Test'    )->input( value = 'TEST' ).
+          )->content( ns = 'form' )->label( text = 'Test' )->input( value = 'TEST' ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout->mr_data IS INITIAL.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is initial'  ).
+      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is initial' ).
       RETURN.
     ENDIF.
 
@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*'  ).
+      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*' ).
     ENDIF.
     on_event( client ).
 

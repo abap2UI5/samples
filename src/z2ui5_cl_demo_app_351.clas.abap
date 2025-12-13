@@ -12,8 +12,8 @@ ENDCLASS.
 
 CLASS Z2UI5_CL_DEMO_APP_351 IMPLEMENTATION.
 
-    METHOD z2ui5_if_app~main.
-        client->nav_app_call( NEW zcl_2ui5_start( ) ).
-    ENDMETHOD.
+  METHOD z2ui5_if_app~main.
+    client->nav_app_call( NEW zcl_2ui5_start( ) ).
+  ENDMETHOD.
 
 ENDCLASS.

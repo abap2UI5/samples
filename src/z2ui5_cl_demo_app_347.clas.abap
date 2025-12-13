@@ -31,14 +31,13 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-        get_data( ).
+      get_data( ).
 
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_data )
                                                       vis_cols = 5 ).
 
       ui5_view_display( client ).
     ENDIF.
-
 
 
 
@@ -50,8 +49,8 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
         client->nav_app_call( app ).
     ENDCASE.
 
-    IF     client->get( )-check_on_navigated = abap_true
-       AND client->check_on_init( )          = abap_false.
+    IF client->get( )-check_on_navigated = abap_true
+        AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
@@ -105,13 +104,13 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
       columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = mo_layout_obj->ms_data-t_layout
                                                   tab_index = lv_index )
-       )->text( layout->name ).
+        )->text( layout->name ).
 
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
                                        )->column_list_item( valign = 'Middle'
-                                                            type   = `Inactive`   ).
+                                                            type   = `Inactive` ).
 
     DATA(cells) = column_list_item->cells( ).
 
@@ -133,7 +132,7 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
            id_prev_app_stack,
            timestampl
       FROM z2ui5_t_01
-      INTO CORRESPONDING FIELDS OF TABLE  @mt_data
+      INTO CORRESPONDING FIELDS OF TABLE @mt_data
       UP TO 10 ROWS.
 
 

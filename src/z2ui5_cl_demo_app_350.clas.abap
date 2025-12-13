@@ -27,17 +27,17 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     IF view_id IS INITIAL OR view_id = 1.
       view_id = 1.
       TRY.
-          IF client->check_on_init( ) OR  client->check_on_navigated( ).
+          IF client->check_on_init( ) OR client->check_on_navigated( ).
             DATA(view) = z2ui5_cl_xml_view=>factory( ).
             DATA(page) = view->shell( )->page(
-              title          = `Startview` ).
+              title = `Startview` ).
             page->simple_form(
                   )->content( 'form'
                                )->button(
                                    text  = client->_bind_edit( text )
                                    width = '20%'
                                    press = client->_event( 'CALL_BOOKING_MASK' ) ).
-            client->view_display( view->stringify( )  ).
+            client->view_display( view->stringify( ) ).
             "client->set_app_state_active( ).
             RETURN.
           ENDIF.
@@ -126,12 +126,12 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
     hbox->title(
-      text  = 'Current Lock Value in Table ZTEST' ).
+      text = 'Current Lock Value in Table ZTEST' ).
     hbox->input(
       editable = abap_false
-      value  = client->_bind_edit( varkey ) ).
+      value    = client->_bind_edit( varkey ) ).
     hbox->button(
-      text = 'Next Lock View'
+      text  = 'Next Lock View'
       press = client->_event( 'NEXT_LOCK' ) ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

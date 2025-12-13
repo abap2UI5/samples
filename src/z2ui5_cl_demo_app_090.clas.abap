@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     IF client->check_on_init( ).
       init_data_set( ).
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
-    ELSEIF  check_view_loaded = abap_false.
+    ELSEIF check_view_loaded = abap_false.
       check_view_loaded = abap_true.
       init_data_set( ).
       z2ui5_view_display( ).

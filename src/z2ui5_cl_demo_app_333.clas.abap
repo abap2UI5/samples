@@ -26,14 +26,14 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
       END OF ty_s_layout.
     TYPES ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
-    TYPES: BEGIN OF ty_s_DATA,
+    TYPES: BEGIN OF ty_s_data,
              guid     TYPE sysuuid_c32,
              t_layout TYPE ty_t_layout,
              s_test   TYPE ty_s_test,
-           END OF ty_s_DATA.
-    TYPES ty_t_DATA TYPE STANDARD TABLE OF ty_s_DATA WITH EMPTY KEY.
+           END OF ty_s_data.
+    TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
-    DATA ms_DATA TYPE ty_s_data.
+    DATA ms_data TYPE ty_s_data.
     DATA mr_data TYPE REF TO data.
 
     CLASS-METHODS factory
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
 
     result = NEW #( ).
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data  ).
+    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data ).
 
     DATA(index) = 0.
 

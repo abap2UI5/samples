@@ -28,10 +28,10 @@ ENDCLASS.
 CLASS zcl_2ui5_start IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     TRY.
-        IF client->check_on_init( ) or  client->check_on_navigated( )..
+        IF client->check_on_init( ) OR client->check_on_navigated( )..
           DATA(view) = z2ui5_cl_xml_view=>factory( ).
           DATA(page) = view->shell( )->page(
-            title          = `Startview` ).
+            title = `Startview` ).
           page->simple_form(
                 )->content( 'form'
                              )->button(
@@ -73,12 +73,12 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
     hbox->title(
-      text  = 'Current Lock Value in Table ZTEST' ).
+      text = 'Current Lock Value in Table ZTEST' ).
     hbox->input(
       editable = abap_false
-      value  = client->_bind_edit( varkey ) ).
+      value    = client->_bind_edit( varkey ) ).
     hbox->button(
-      text = 'Next Lock View'
+      text  = 'Next Lock View'
       press = client->_event( 'NEXT_LOCK' ) ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -93,7 +93,8 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     TRY.
         IF check_initialized = abap_false.
           check_initialized = abap_true.
-          set_session_stateful( client = client stateful = abap_true ).
+          set_session_stateful( client   = client
+                                stateful = abap_true ).
           DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
           CALL FUNCTION lv_fm
             EXPORTING
@@ -105,7 +106,8 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
               OTHERS         = 3.
           IF sy-subrc <> 0.
             DATA(lo_prev_stack_app) = client->get_app( client->get( )-s_draft-id_prev_app_stack ).
-            set_session_stateful( client = client stateful = abap_false ).
+            set_session_stateful( client   = client
+                                  stateful = abap_false ).
             client->nav_app_leave( lo_prev_stack_app ).
           ELSE.
             initialize_view( client ).
@@ -113,7 +115,8 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
           RETURN.
         ENDIF.
         IF client->check_on_navigated( ).
-          set_session_stateful( client = client stateful = abap_false ).
+          set_session_stateful( client   = client
+                                stateful = abap_false ).
           TRY.
               DATA(lo_prev_z2ui5_start) = CAST zcl_2ui5_start( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
               client->nav_app_leave( lo_prev_z2ui5_start ).
@@ -129,7 +132,8 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
         ENDIF.
         CASE client->get( )-event.
           WHEN `NEXT_LOCK`.
-            set_session_stateful( client = client stateful = abap_false ).
+            set_session_stateful( client   = client
+                                  stateful = abap_false ).
             DATA(lo_2ui5_lock) = NEW zcl_2ui5_lock( ).
             DATA: lf_new_varkey TYPE n LENGTH 4.
             lf_new_varkey = varkey+0(4).
@@ -138,7 +142,8 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
             client->nav_app_call( lo_2ui5_lock ).
           WHEN `BACK`.
             lo_prev_stack_app = client->get_app( client->get( )-s_draft-id_prev_app_stack ).
-            set_session_stateful( client = client stateful = abap_false ).
+            set_session_stateful( client   = client
+                                  stateful = abap_false ).
             client->nav_app_leave( lo_prev_stack_app ).
         ENDCASE.
         client->view_model_update( ).

@@ -137,8 +137,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     page->_generic( name = `script`
                     ns   = `html`
         )->_cc_plain_xml(
-          |function myFunction() \{ z2ui5.oView.byId('tree').expandToLevel(5); \}|
-        ).
+          |function myFunction() \{ z2ui5.oView.byId('tree').expandToLevel(5); \}| ).
 
     DATA(tree) = page->tree( items = client->_bind( mt_tree )
                              id    = `tree` ).
