@@ -38,10 +38,9 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->get( )-event = OTHERS.
+    IF client->get( )-event IS NOT INITIAL.
       mv_page = client->get( )-event.
       z2ui5_view_display( ).
-
     ENDIF.
 
   ENDMETHOD.

@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     ELSE.
 
-      IF client->get( )-event = OTHERS.
+      IF client->get( )-event IS NOT INITIAL.
         mv_display = client->get( )-event.
       ENDIF.
 

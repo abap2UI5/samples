@@ -67,9 +67,10 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     ENDIF.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
-    IF client->get( )-event = `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR 'SOURCE_PROPERTY_TEXT' OR 'EVENT_PROPERTY_VALUE' OR 'PARENT_PROPERTY_ID'.
-      client->message_box_display( `backend event :` && lt_arg[ 1 ] ).
-    ENDIF.
+    CASE client->get( )-event.
+      WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR 'SOURCE_PROPERTY_TEXT' OR 'EVENT_PROPERTY_VALUE' OR 'PARENT_PROPERTY_ID'.
+        client->message_box_display( `backend event :` && lt_arg[ 1 ] ).
+    ENDCASE.
 
     client->view_model_update( ).
 
