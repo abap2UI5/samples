@@ -35,11 +35,11 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
 
   METHOD view_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id    = `page_main`
@@ -106,7 +106,5 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
       view_display( ).
     ENDIF.
-
-
   ENDMETHOD.
 ENDCLASS.

@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
 
@@ -78,11 +77,11 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     DATA lt_range TYPE RANGE OF string.
 
     me->client = client.
@@ -98,7 +97,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         mt_table = mt_table_full.
         client->view_model_update( ).
       WHEN 'FILTER'.
-
 
 
         DATA(lt_arg) = client->get( )-t_event_arg.
@@ -128,7 +126,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -190,6 +187,5 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     mt_table_products = mt_table.
 
     DELETE ADJACENT DUPLICATES FROM mt_table_products COMPARING product.
-
   ENDMETHOD.
 ENDCLASS.

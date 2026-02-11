@@ -28,14 +28,12 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
 
   METHOD ui5_event.
 
     CASE client->get( )-event.
-
       WHEN 'POPUP'.
 
         mt_tab = VALUE #( descr = 'this is a description'
@@ -53,8 +51,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                                              THEN `Multi select`
                                              ELSE `Single select` ) ).
         client->nav_app_call( lo_app ).
-
-
       WHEN 'MULTISELECT_TOGGLE'.
 
         mv_preselect = COND #( WHEN mv_multiselect = abap_false
@@ -63,7 +59,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -92,7 +87,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -111,10 +105,11 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
 
+
   METHOD ui5_callback.
+
     FIELD-SYMBOLS <row> TYPE ty_row.
 
     TRY.
@@ -143,7 +138,5 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

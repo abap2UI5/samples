@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
 
@@ -52,7 +51,6 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
                 shownavbutton  = i_client->check_app_prev_stack( ) ).
 
     i_client->view_display( lo_view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -87,15 +85,12 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     i_client->nest_view_display( val           = lo_view_nested->stringify( )
                                  id            = `test`
                                  method_insert = 'addContent' ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
 
-
     main_view( client ).
     nest_view( client ).
-
   ENDMETHOD.
 ENDCLASS.

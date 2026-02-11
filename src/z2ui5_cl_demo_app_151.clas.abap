@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_151 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
 
 
@@ -25,7 +24,6 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
       DATA(lo_app) = z2ui5_cl_pop_to_inform=>factory( `this is a question` ).
       client->nav_app_call( lo_app ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -42,7 +40,6 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -57,8 +54,8 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_callback.
 
@@ -68,7 +65,5 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
         client->message_box_display( `callback after popup to inform` ).
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

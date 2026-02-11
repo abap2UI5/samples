@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_256 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
 
 
@@ -92,7 +91,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
                                              text  = `This container is flexible and it will adapt its size to fill the remaining size in the FixFlex control` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -101,7 +99,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
     IF client->get( )-event = 'POPOVER'.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -117,7 +114,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -130,6 +126,5 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

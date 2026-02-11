@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
 
@@ -59,7 +58,6 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
                       )->button( text  = 'focus here'
                                  press = client->_event( 'BUTTON02' )
            )->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -70,7 +68,6 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     selstart = `3`.
     selend = `7`.
     display_view( client ).
-
   ENDMETHOD.
 
 
@@ -84,13 +81,11 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
       WHEN 'BUTTON01' OR 'BUTTON02'.
         update_focus = abap_true.
         focus_id = client->get( )-event.
         client->view_model_update( ).
         client->message_toast_display( |focus changed| ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

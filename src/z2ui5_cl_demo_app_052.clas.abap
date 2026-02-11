@@ -33,7 +33,6 @@ CLASS z2ui5_cl_demo_app_052 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
 
@@ -63,7 +62,6 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
                 type  = 'Emphasized' ).
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
-
   ENDMETHOD.
 
 
@@ -100,7 +98,6 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -115,16 +112,13 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN `BUTTON_DETAILS`.
         client->popover_destroy( ).
-
       WHEN `POPOVER_DETAIL`.
         mv_check_popover = abap_true.
         mv_product = client->get_event_arg( 2 ).
         z2ui5_display_popover( client->get_event_arg( 1 ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -179,6 +173,5 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
   ENDMETHOD.
 ENDCLASS.

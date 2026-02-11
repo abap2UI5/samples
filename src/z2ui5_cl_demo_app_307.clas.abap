@@ -37,6 +37,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -47,7 +48,9 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
     on_event( client ).
   ENDMETHOD.
 
+
   METHOD initialization.
+
     items = VALUE #(
         ( title     = `Box title 1`
           subtitle  = `Subtitle 1`
@@ -179,7 +182,9 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
           type      = `Navigation` ) ).
   ENDMETHOD.
 
+
   METHOD display_view.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
@@ -228,7 +233,9 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD on_event.
+
     IF client->get( )-event = 'onDrop'.
       DATA(ondropparameters) = client->get( )-t_event_arg.
       TRY.

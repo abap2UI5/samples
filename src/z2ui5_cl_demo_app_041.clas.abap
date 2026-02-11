@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
       END OF screen.
 
 
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +23,6 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
@@ -56,7 +54,6 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
                    press = client->_event( `POST` ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -65,7 +62,6 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
     IF client->get( )-event = 'POST'.
       client->message_box_display( 'success - values send to the server' ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -76,6 +72,5 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

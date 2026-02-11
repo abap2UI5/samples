@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
 
@@ -64,32 +63,25 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     z2ui5_on_render( ).
 
     CLEAR app-get.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
       WHEN 'BUTTON_START'.
         z2ui5_set_data( ).
-
       WHEN `BUTTON_DOWNLOAD`.
         mv_check_download = abap_true.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_init.
 
     app-view_main = `MAIN`.
-
   ENDMETHOD.
 
 
@@ -99,7 +91,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
       WHEN 'MAIN'.
         z2ui5_on_render_main( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -169,7 +160,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -182,6 +172,5 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
   ENDMETHOD.
 ENDCLASS.

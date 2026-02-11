@@ -54,11 +54,11 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD add_node.
+
     LOOP AT prodh_nodes ASSIGNING FIELD-SYMBOL(<fs1>).
       IF <fs1>-prodh = p_prodh.
         <fs1>-counter = <fs1>-counter + 1.
@@ -84,6 +84,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD ui5_display_popover.
+
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
                          title     = 'SS' "text-028 "`Stock - Details:`
@@ -105,9 +106,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   METHOD ui5_display_view.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
 
 
     DATA(page) = view->object_page_layout(
@@ -148,7 +147,6 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     DATA(sections) = page->sections( ).
 
 
-
     DATA(cont) = sections->object_page_section( titleuppercase = abap_false
                                                 id             = 'Sets'
                                                 title          = 'Sets'
@@ -187,6 +185,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'
@@ -217,6 +216,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     DATA lt_event_arg TYPE string_table.
 
     me->client = client.
@@ -253,19 +253,16 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     lt_event_arg = client->get( )-t_event_arg.
     CASE client->get( )-event.
-
       WHEN 'START'.
         ui5_display_view( ).
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
-
       WHEN 'CANCEL'.
         client->popup_destroy( ).
       WHEN 'POPOVER'.
         lt_event_arg = client->get( )-t_event_arg.
         DATA(lv_open_by_id) = lt_event_arg[ 1 ].
         ui5_display_popover( lv_open_by_id ).
-
       WHEN 'ROW_ADD'.
         add_node( lt_event_arg[ 1 ] ).
 
@@ -274,8 +271,6 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         client->view_model_update( ).
 
         client->follow_up_action( val = `setState();` ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

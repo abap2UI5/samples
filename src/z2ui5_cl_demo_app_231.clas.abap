@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
 
@@ -117,7 +116,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
                 text = client->_bind_edit( text ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -137,7 +135,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
     drs5-start = '20150101'.
     drs5-end   = '20191001'.
-
   ENDMETHOD.
 
 
@@ -157,7 +154,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
           && |To: { drs-end }|.
 
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -171,7 +167,5 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
-
 ENDCLASS.

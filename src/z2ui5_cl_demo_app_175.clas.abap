@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     display_view( client ).
   ENDMETHOD.
 
+
   METHOD display_view.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
@@ -46,7 +47,5 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     lr_wiz_step4->message_strip( text = 'STEP4' ).
 
     client->view_display( lr_view->stringify( ) ).
-
   ENDMETHOD.
-
 ENDCLASS.

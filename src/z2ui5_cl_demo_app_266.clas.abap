@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_266 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_266 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
@@ -121,7 +119,6 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                    )->get_parent(
                               )->get_parent( ).
     client->view_display( page_02->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -137,8 +134,6 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
           client->message_toast_display( client->get_event_arg( 2 ) && ` Unpressed` ).
         ENDIF.
     ENDCASE.
-
-
   ENDMETHOD.
 
 
@@ -154,7 +149,6 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -167,6 +161,5 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_218 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
 
 
@@ -39,7 +38,6 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
                                          type = `Reject` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -54,6 +52,5 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

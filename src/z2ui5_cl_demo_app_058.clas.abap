@@ -85,7 +85,6 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
 
@@ -106,7 +105,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     z2ui5_on_render( ).
     CLEAR app-get.
-
   ENDMETHOD.
 
 
@@ -119,7 +117,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         app-view_popup = `POPUP`.
       WHEN `BUTTON_SAVE`.
         app-view_popup = `POPUP_SAVE`.
-
       WHEN `POPUP_LAYOUT_LOAD`.
         DATA(ls_layout2) = mt_db_layout[ selkz = abap_true ].
         z2ui5_cl_util=>xml_parse(
@@ -128,18 +125,15 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           IMPORTING
              any = ms_layout ).
         app-view_popup = `POPUP_SAVE`.
-
       WHEN `BUTTON_SAVE_LAYOUT`.
         DATA(ls_layout) = VALUE ty_s_db_layout(
           data = z2ui5_cl_util=>xml_stringify( ms_layout )
           name = mv_layout ).
         INSERT ls_layout INTO TABLE mt_db_layout.
         app-view_popup = `POPUP_SAVE`.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -155,7 +149,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( name = `CREATE_BY`  title = `CREATE_BY` visible = abap_true )
         ( name = `STORAGE_LOCATION` title = `STORAGE_LOCATION`  visible = abap_true )
         ( name = `QUANTITY`   title = `QUANTITY` visible = abap_true ) ).
-
   ENDMETHOD.
 
 
@@ -172,7 +165,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       WHEN 'MAIN'.
         z2ui5_on_render_main( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -183,7 +175,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
              title                  = 'abap2UI5 - Table Layout Sample'
              navbuttonpress         = client->_event( 'BACK' )
              shownavbutton          = client->check_app_prev_stack( ) ).
-
 
 
     DATA(tab) = view->table(
@@ -231,7 +222,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -303,15 +293,12 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                     selected = client->_bind( mv_check_sort ) ).
 
 
-
     ro_popup->end_button( )->button(
               text  = 'continue'
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
               type  = 'Emphasized' ).
 
     client->popup_display( ro_popup->stringify( ) ).
-
-
   ENDMETHOD.
 
 
@@ -352,7 +339,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                 type  = 'Emphasized' ).
 
     client->popup_display( lo_popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -365,6 +351,5 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
-
   ENDMETHOD.
 ENDCLASS.

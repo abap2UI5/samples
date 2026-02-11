@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_277 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -23,11 +22,11 @@ CLASS z2ui5_cl_demo_app_277 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
 
 
   METHOD display_view.
+
     " Define the base URL for the server
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
 
@@ -229,7 +228,6 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
              )->image_content( src = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -241,7 +239,6 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       WHEN 'onPress'.
         client->message_toast_display( `The tile is pressed.` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -257,7 +254,6 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -270,6 +266,5 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

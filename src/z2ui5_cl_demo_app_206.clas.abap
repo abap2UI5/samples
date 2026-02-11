@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_206 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_206 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_206 IMPLEMENTATION.
                                   `For such browsers this will be shown as ellipsis, for the other browsers the overflow will just be hidden.` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -83,6 +81,5 @@ CLASS z2ui5_cl_demo_app_206 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

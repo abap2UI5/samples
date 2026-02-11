@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_343 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
 
@@ -54,7 +53,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -78,7 +76,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -101,7 +98,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -115,6 +111,5 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
         AND client->check_on_init( )          = abap_false.
       render_main( client ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

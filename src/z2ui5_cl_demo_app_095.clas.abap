@@ -40,7 +40,6 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
 
@@ -49,7 +48,6 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     IF client->get( )-event = 'BUTTON_SAVE'.
       client->message_box_display( `event main app` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -57,7 +55,6 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
     mo_app_sub->mo_view_parent = mo_grid_sub.
     mo_app_sub->z2ui5_if_app~main( client = client ).
-
   ENDMETHOD.
 
 
@@ -65,7 +62,6 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
     ms_screen-input = `app main`.
     view_build( ).
-
   ENDMETHOD.
 
 
@@ -76,7 +72,6 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     mo_app_sub->z2ui5_if_app~main( client = client ).
 
     client->view_display( page->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -118,7 +113,6 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
                        text  = 'Save'
                        press = client->_event( 'BUTTON_SAVE' )
                        type  = 'Success' ).
-
   ENDMETHOD.
 
 
@@ -136,6 +130,5 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
     on_event( ).
     on_event_sub( ).
-
   ENDMETHOD.
 ENDCLASS.

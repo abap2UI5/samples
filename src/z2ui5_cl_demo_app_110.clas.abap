@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
 
@@ -91,7 +90,6 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                   ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -106,7 +104,6 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -115,7 +112,5 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-
-
   ENDMETHOD.
 ENDCLASS.

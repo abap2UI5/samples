@@ -54,7 +54,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
@@ -69,7 +68,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( client ).
-
   ENDMETHOD.
 
 
@@ -81,7 +79,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
         client->view_model_update( ).
-
       WHEN 'BUTTON_SEND'.
 
         z2ui5_on_rendering_popup( client ).
@@ -89,7 +86,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
         z2ui5_on_rendering_popover( client = client
                                     id     = 'ppvr' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -112,7 +108,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
         ( descr = 'Grey'   value = 'GREY' )
         ( descr = 'Blue2'  value = 'BLUE2' )
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
-
   ENDMETHOD.
 
 
@@ -123,7 +118,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     view->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
-
 
 
     DATA(page) = view->shell(
@@ -151,11 +145,11 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
              type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_rendering_popover.
+
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
     popover->text( text = 'this is popover in middle with timer auto refresh' ).
@@ -172,6 +166,5 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     dialog->button( text  = 'close'
                     press = client->_event_client( client->cs_event-popup_close ) ).
     client->popup_display( dialog->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

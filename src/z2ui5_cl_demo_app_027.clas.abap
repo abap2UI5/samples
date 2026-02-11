@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
 
@@ -54,19 +53,15 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     z2ui5_on_render( ).
 
     CLEAR app-s_get.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE app-s_get-event.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-s_get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -76,7 +71,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     quantity = '500'.
     app-view_main = 'VIEW_MAIN'.
     input41 = 'faasdfdfsaVIp'.
-
   ENDMETHOD.
 
 
@@ -136,6 +130,5 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
 
     client->view_display( lv_xml ).
-
   ENDMETHOD.
 ENDCLASS.

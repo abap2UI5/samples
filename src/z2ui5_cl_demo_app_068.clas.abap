@@ -39,7 +39,6 @@ CLASS z2ui5_cl_demo_app_068 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                press    = client->_event( 'CANCEL' ) ).
 
     client->popup_display( dialog->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -89,11 +87,11 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
     client->view_display( page->button( text  = 'Open Popup here...'
                                         press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'
@@ -117,8 +115,6 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                                           )
                        ) )
              ) ).
-
-
   ENDMETHOD.
 
 
@@ -135,15 +131,11 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POPUP_TREE'.
         ui5_display_popup_tree_select( ).
-
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
         client->message_box_display( `Selected entry is set in the backend` ).
-
       WHEN 'CANCEL'.
         client->popup_destroy( ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

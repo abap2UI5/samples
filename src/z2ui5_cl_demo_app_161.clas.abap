@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_161 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
 
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -58,7 +56,6 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -75,7 +72,6 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -84,18 +80,14 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'GOTO_2ND'.
         simple_popup2( ).
-
       WHEN 'BTN_OK_2ND'.
         client->popup_destroy( ).
         simple_popup1( ).
-
       WHEN 'BTN_OK_1ND'.
         client->popup_destroy( ).
-
       WHEN 'POPUP'.
         simple_popup1( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -109,6 +101,5 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_298 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
 
@@ -125,7 +124,6 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
               )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -134,7 +132,6 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -150,7 +147,6 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -164,11 +160,11 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
+
     CLEAR selectedproducterrorcollection.
     CLEAR selectedproductwrnngcollection.
     CLEAR selectedproductsccsscollection.
@@ -199,6 +195,5 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
       ( product_id = 'HT-1022' name = 'Comfort Easy' )
       ( product_id = 'HT-1023' name = 'Comfort Senior' ) ).
     SORT lt_a_products BY name.
-
   ENDMETHOD.
 ENDCLASS.

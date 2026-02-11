@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
 
@@ -63,7 +62,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
         client->message_toast_display( 'Fixed Button 3 pressed' ).
         selected_menu_entry = 'Fix3'.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -151,14 +149,12 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     render_site_content( EXPORTING client = client CHANGING site_content = site_content ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD render_site_content.
 
     CASE selected_menu_entry.
-
       WHEN 'Home'.
         site_content->text( 'Welcome to the Home Page' ).
       WHEN 'Home1'.
@@ -178,7 +174,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
       WHEN 'Fix3'.
         site_content->text( 'Welcome to the third fixed Page' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -192,6 +187,5 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     on_event( client ).
     render_main_view( client ).
-
   ENDMETHOD.
 ENDCLASS.

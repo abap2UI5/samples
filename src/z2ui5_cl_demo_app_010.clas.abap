@@ -8,11 +8,11 @@ CLASS z2ui5_cl_demo_app_010 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
@@ -83,6 +83,5 @@ CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
                        type = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

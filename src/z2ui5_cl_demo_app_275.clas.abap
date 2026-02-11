@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_275 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_275 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
@@ -61,8 +59,6 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
            press       = client->_event( `press` ) ).
 
     client->view_display( view->stringify( ) ).
-
-
   ENDMETHOD.
 
 
@@ -74,7 +70,6 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
       WHEN 'press'.
         client->message_toast_display( `The feed content is pressed.` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -90,7 +85,6 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -103,6 +97,5 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

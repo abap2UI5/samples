@@ -35,15 +35,12 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN `BUTTON_START`.
         set_data( ).
         client->view_model_update( ).
-
       WHEN `PREVIEW_FILTER`.
         client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_filter ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -62,7 +59,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         filter = mt_filter
       CHANGING
         val    = mt_table ).
-
   ENDMETHOD.
 
 
@@ -105,7 +101,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -137,6 +132,5 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     IF client->get( )-event IS NOT INITIAL.
       on_event( ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

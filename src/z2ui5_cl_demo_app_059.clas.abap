@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
 
@@ -47,7 +46,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -65,7 +63,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -78,7 +75,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
   ENDMETHOD.
 
 
@@ -114,6 +110,5 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

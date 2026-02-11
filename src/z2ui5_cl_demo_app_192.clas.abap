@@ -48,6 +48,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   METHOD ui5_event.
   ENDMETHOD.
 
+
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -57,8 +58,8 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
                  shownavbutton  = client->check_app_prev_stack( )
             )->header_content( ).
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -67,10 +68,11 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     get_data( ).
     ui5_display( ).
     xml_stringify( ).
-
   ENDMETHOD.
 
+
   METHOD get_data.
+
     DATA lr_structdescr TYPE REF TO cl_abap_structdescr.
     DATA lr_tabdescr TYPE REF TO cl_abap_tabledescr.
     FIELD-SYMBOLS <fs_s_head> TYPE any.
@@ -99,7 +101,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
       <fs_s_head_new> = <fs_s_head>.
 
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -108,7 +109,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     LOOP AT mt_new_data2 INTO DATA(lo_data).
       lo_data->xml_parse( ).
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -117,7 +117,5 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     LOOP AT mt_new_data2 INTO DATA(lo_data).
       lo_data->xml_stringify( ).
     ENDLOOP.
-
   ENDMETHOD.
-
 ENDCLASS.

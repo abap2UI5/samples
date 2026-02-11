@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_012 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
 
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
                     type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -55,7 +53,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
                     type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -98,7 +95,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
             press = client->_event( val = 'BUTTON_POPUP_06' ) ).
 
     client->view_display( lo_main->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -117,31 +113,24 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POPUP_01'.
         ui5_popup_decide( ).
         client->view_destroy( ).
-
       WHEN 'POPUP_DECIDE_CONTINUE'.
         client->popup_destroy( ).
         ui5_view_display( ).
         client->message_toast_display( 'continue pressed' ).
-
       WHEN 'POPUP_DECIDE_CANCEL'.
         client->popup_destroy( ).
         ui5_view_display( ).
         client->message_toast_display( 'cancel pressed' ).
-
       WHEN 'BUTTON_POPUP_02'.
         ui5_view_display( ).
         ui5_popup_decide( ).
-
       WHEN 'BUTTON_POPUP_03'.
         ui5_popup_info_frontend_close( ).
-
       WHEN 'BUTTON_POPUP_04'.
         ui5_popup_decide( ).
-
       WHEN 'BUTTON_POPUP_05'.
         mv_check_popup = abap_true.
         client->view_destroy( ).
@@ -152,7 +141,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
           i_confirm_text  = 'Continue'
           i_confirm_event = 'POPUP_DECIDE_CONTINUE'
           ) ).
-
       WHEN 'BUTTON_POPUP_06'.
         mv_check_popup = abap_true.
         client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
@@ -162,6 +150,5 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
           i_confirm_text  = 'Continue'
           i_confirm_event = 'POPUP_DECIDE_CONTINUE' ) ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

@@ -51,7 +51,6 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -100,7 +98,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           client->view_model_update( ).
 
         ENDIF.
-
       WHEN 'CONFIRM_FILTER'.
         CLEAR mv_filter.
         lt_arg = client->get( )-t_event_arg.
@@ -127,7 +124,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           z2ui5_view_display( ).
 
         ENDIF.
-
       WHEN 'CONFIRM_GROUP'.
         lt_arg = client->get( )-t_event_arg.
 
@@ -160,10 +156,8 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           z2ui5_view_display( ).
 
         ENDIF.
-
       WHEN 'RESET_GROUP'.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -191,8 +185,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       ( text = `Title`  key = `Title` )
       ( text = `Descr`  key = `Descr` )
       ( text = `Info`   key = `Info` ) ).
-
-
   ENDMETHOD.
 
 
@@ -248,7 +240,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
             )->avatar( src = `{ICON}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -271,7 +262,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
         ).
 
     client->popup_display( filter_view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -289,11 +279,11 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
                                                  selected = `{SELECTED}` ).
 
     client->popup_display( group_view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_view_settings_popup.
+
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(
@@ -318,7 +308,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
                                                      key  = `{KEY}` ).
 
     client->popup_display( popup_settings->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -336,6 +325,5 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
                                                  selected = `{SELECTED}` ).
 
     client->popup_display( sort_view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

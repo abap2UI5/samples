@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_223 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_223 IMPLEMENTATION.
 
 
@@ -53,7 +52,6 @@ CLASS z2ui5_cl_demo_app_223 IMPLEMENTATION.
                                                   )->text( text = `People content goes here ...` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -68,6 +66,5 @@ CLASS z2ui5_cl_demo_app_223 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

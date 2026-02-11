@@ -33,16 +33,11 @@ CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN `BUTTON_POST`.
         client->follow_up_action( client->_event_client( z2ui5_if_client=>cs_event-clipboard_app_state ) ).
         client->message_toast_display( `clipboard copied` ).
-
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
-
-
-
 ENDCLASS.

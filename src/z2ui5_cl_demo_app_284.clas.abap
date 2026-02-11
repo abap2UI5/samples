@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_284 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_284 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
@@ -117,7 +115,6 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
                                           )->button( text = `Classical Table` ).
 
     client->view_display( page_02->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -126,7 +123,6 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -145,7 +141,6 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -158,6 +153,5 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

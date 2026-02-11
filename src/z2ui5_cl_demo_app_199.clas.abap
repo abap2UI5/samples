@@ -28,18 +28,19 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       WHEN 'CLEAR'.
         refresh_data( ).
         client->view_model_update( ).
-
       WHEN 'ADD'.
         add_data( ).
         client->view_model_update( ).
-
     ENDCASE.
   ENDMETHOD.
 
+
   METHOD on_init.
+
     refresh_data( ).
     render_main( ).
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -78,10 +79,11 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
                              press = client->_event( 'ADD' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     me->client = client.
 
@@ -97,11 +99,11 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
-
   ENDMETHOD.
 
+
   METHOD refresh_data.
+
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
     TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
@@ -119,8 +121,8 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
+
 
   METHOD add_data.
 
@@ -129,7 +131,5 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     APPEND LINES OF <tab> TO <tab>.
 
     mv_counter = lines( <tab> ).
-
   ENDMETHOD.
-
 ENDCLASS.

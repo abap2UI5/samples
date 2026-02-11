@@ -35,12 +35,10 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
 
   METHOD set_mock_data.
-
 
     DATA(lv_mock) = `[` && |\n| &&
                     `   {` && |\n| &&
@@ -139,12 +137,10 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         val  = lv_mock
       CHANGING
         data = mt_data ).
-
   ENDMETHOD.
 
 
   METHOD set_view.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -207,7 +203,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
          `}` ).
 
 
-
     DATA(row_settings) = table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
 *                                  shapes1 = `{path: 'TASK', templateShareable:false}`
 *                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
@@ -257,7 +252,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                            endtime   = `20181131000000` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -272,7 +266,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 

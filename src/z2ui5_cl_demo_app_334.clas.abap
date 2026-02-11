@@ -52,8 +52,8 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -96,14 +96,12 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
-
   ENDMETHOD.
-
 ENDCLASS.

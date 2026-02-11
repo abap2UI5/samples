@@ -24,6 +24,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF mv_init = abap_false.
@@ -33,15 +34,15 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
+
 
   METHOD on_init.
 
     mv_descr = `data sub app`.
     display_view( ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
 
@@ -49,8 +50,8 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
       client->message_box_display( `event sub app` ).
 
     ENDIF.
-
   ENDMETHOD.
+
 
   METHOD display_view.
 
@@ -73,6 +74,5 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     mo_view_parent->input( value = client->_bind_edit( mv_descr ) ).
     mo_view_parent->button( text  = `event sub app`
                             press = client->_event( `MESSAGE_SUB` ) ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -32,8 +32,8 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -63,8 +63,8 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     line->input( value = client->_bind( <value> ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -90,7 +90,5 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 *      CATCH cx_root.
 
 *    ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

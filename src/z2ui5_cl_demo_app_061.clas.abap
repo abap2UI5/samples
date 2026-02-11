@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
 
@@ -59,11 +58,11 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
           )->input( value = '{ID_PREV}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     FIELD-SYMBOLS <tab> TYPE table.
 
     me->client = client.
@@ -85,6 +84,5 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     ENDIF.
     set_view( ).
-
   ENDMETHOD.
 ENDCLASS.

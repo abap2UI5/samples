@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
       END OF screen.
 
 
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +23,6 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
@@ -59,7 +57,6 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
                    value = client->_bind_edit( screen-input3 ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -74,6 +71,5 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

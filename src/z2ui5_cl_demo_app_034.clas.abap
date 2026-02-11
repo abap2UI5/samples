@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
 
@@ -44,7 +43,6 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
             press = client->_event( 'POPUP_BAL' ) ).
 
     mv_main_xml = view->stringify( ).
-
   ENDMETHOD.
 
 
@@ -79,7 +77,6 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
                     type  = 'Emphasized' ).
 
     mv_popup_xml = popup->stringify( ).
-
   ENDMETHOD.
 
 

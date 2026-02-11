@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
@@ -99,11 +98,11 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
                                                                       type      = '{TYPE}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client     = client.
 
     IF client->check_on_init( ).
@@ -116,11 +115,11 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
     IF client->get( )-event = 'AppSelected'.
       DATA(ls_client) = client->get( ).
       client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
@@ -129,6 +128,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
+
     mt_people = VALUE #(
       ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(

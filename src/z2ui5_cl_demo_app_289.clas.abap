@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
 
@@ -80,7 +79,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                    press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -92,7 +90,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
       WHEN 'onPress'.
         client->message_toast_display( client->get_event_arg( 1 ) && ` marker pressed!` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -108,7 +105,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -134,6 +130,5 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

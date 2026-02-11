@@ -51,7 +51,6 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
 
@@ -73,7 +72,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -87,7 +85,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       ENDIF.
       client->message_toast_display( `everything works as expected` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -115,7 +112,5 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
-
 ENDCLASS.

@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
 
 
@@ -53,7 +52,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
 
     client->popover_display( xml   = popup->stringify( )
                              by_id = id ).
-
   ENDMETHOD.
 
 
@@ -88,7 +86,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
           press = client->_event_client( client->cs_event-popup_close ) ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -125,7 +122,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
              type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -155,6 +151,5 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
       WHEN 'POPOVER'.
         z2ui5_display_popover( `test` ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

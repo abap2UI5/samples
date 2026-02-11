@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_065 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
 
 
@@ -55,28 +54,21 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN `TEST`.
         client->message_box_display( `input ` && mv_input_nest ).
-
       WHEN 'ALL'.
         client->view_display( lo_view->stringify( ) ).
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
                                    method_insert = 'addContent' ).
-
       WHEN 'MAIN'.
         client->view_display( lo_view->stringify( ) ).
-
       WHEN 'NEST'.
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
                                    method_insert = 'addContent' ).
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

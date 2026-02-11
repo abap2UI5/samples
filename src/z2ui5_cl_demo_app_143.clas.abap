@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
 
@@ -40,8 +39,8 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
         client->message_box_display( text = x->get_text( )
                                      type = `error` ).
     ENDTRY.
-
   ENDMETHOD.
+
 
   METHOD ui5_on_init.
 
@@ -51,10 +50,11 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
       ( field1 = '23' field2 = 'T2' field3 = 'TEXT1' )
       ( field1 = '24' field2 = 'T2' field3 = 'TEXT2' )
       ( field1 = '25' field2 = 'T3' field3 = 'TEXT2' ) ).
-
   ENDMETHOD.
 
+
   METHOD ui5_view_main_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
@@ -111,7 +111,9 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -122,4 +124,3 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     ui5_on_event( ).
   ENDMETHOD.
 ENDCLASS.
-

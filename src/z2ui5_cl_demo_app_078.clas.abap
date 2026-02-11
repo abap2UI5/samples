@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
 
@@ -89,6 +88,5 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       CLEAR mt_tokens_added.
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

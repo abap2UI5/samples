@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_156 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
 
 
@@ -27,7 +26,6 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
         client->message_box_display( `the input is ` && lv_text ).
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -44,7 +42,6 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -54,7 +51,6 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
       DATA(lo_app) = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
       client->nav_app_call( lo_app ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -69,6 +65,5 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
 ENDCLASS.

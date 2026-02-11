@@ -73,7 +73,9 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -83,7 +85,6 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'DB_LOAD'.
 
         mv_editor = COND #(
@@ -96,14 +97,12 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
         client->message_toast_display( 'Download successfull' ).
 
         client->view_model_update( ).
-
       WHEN 'DB_SAVE'.
         client->message_box_display( text = 'Upload successfull. File saved!'
                                      type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).
-
       WHEN 'CLEAR'.
         mv_editor = ``.
     ENDCASE.

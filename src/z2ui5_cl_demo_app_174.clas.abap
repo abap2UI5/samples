@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_174 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
 
 
@@ -57,7 +56,6 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'POPUP'.
         mt_tab = VALUE #( descr = 'this is a description'
              ( zzselkz = mv_preselect title = 'title_01'  value = 'value_01' )
@@ -72,10 +70,8 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
                            i_event_confirmed = 'POPUP_CONFIRMED'
                            i_event_canceled  = 'POPUP_CANCEL'
           ) ).
-
       WHEN 'POPUP_CANCELED'.
         client->message_box_display( `Popup was cancelled` ).
-
       WHEN 'POPUP_CONFIRMED'.
         DATA(lr) = client->get( )-r_event_data.
         ASSIGN lr->* TO FIELD-SYMBOL(<t>).
@@ -86,13 +82,11 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
           client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab   = lt3
                                                              i_title = 'Selected rows' ) ).
         ENDIF.
-
       WHEN 'MULTISELECT_TOGGLE'.
         mv_preselect = COND #( WHEN mv_multiselect = abap_false
                                THEN abap_false
                                ELSE mv_preselect ).
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

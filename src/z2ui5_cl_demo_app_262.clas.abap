@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_262 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
 
 
@@ -83,7 +82,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
                                      withmargin = abap_false ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -95,7 +93,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
       WHEN 'POPOVER'.
         z2ui5_display_popover( `hint_icon` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -112,7 +109,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -125,6 +121,5 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

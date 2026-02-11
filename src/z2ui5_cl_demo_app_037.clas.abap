@@ -26,7 +26,6 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
 
@@ -67,7 +66,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                              `            }` && |\n| &&
                              `    });` && |\n| &&
                              `}); jQuery.sap.require("z2ui5.MyCC"); </html:script>`.
-
   ENDMETHOD.
 
 
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -93,34 +90,27 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                 finished = client->_event( 'DISPLAY_VIEW' )
                 delayms  = `0`
          )->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN `DISPLAY_VIEW`.
         z2ui5_on_render( ).
-
       WHEN 'POST'.
         client->message_toast_display( client->get_event_arg( 1 ) ).
-
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.
         z2ui5_load_cc( ).
         client->message_box_display( 'Custom Control loaded ' ).
-
       WHEN 'DISPLAY_CC'.
         mv_display_cc = abap_true.
         z2ui5_on_render( ).
         client->message_box_display( 'Custom Control displayed ' ).
-
       WHEN 'MYCC'.
         client->message_toast_display( `Custom Control input: ` && mv_value ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -149,6 +139,5 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         `</mvc:View>`.
 
     client->view_display( lv_xml ).
-
   ENDMETHOD.
 ENDCLASS.

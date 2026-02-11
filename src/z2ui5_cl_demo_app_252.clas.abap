@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_252 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
 
 
@@ -81,8 +80,6 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
                                           )->flex_item_data( growfactor = `1` )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
-
-
   ENDMETHOD.
 
 
@@ -91,7 +88,6 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
     IF client->get( )-event = 'POPOVER'.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -108,7 +104,6 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -121,6 +116,5 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

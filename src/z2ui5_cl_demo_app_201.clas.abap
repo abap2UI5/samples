@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
   METHOD set_data.
@@ -252,8 +251,8 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
       ( language = 'E' currency = 'ZWL' currencyname = 'Zimbabwean Dollar (New)' currencyshortname = 'Zimbabwe Dollar' )
       ( language = 'E' currency = 'ZWN' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar' )
       ( language = 'E' currency = 'ZWR' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar' ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -283,11 +282,11 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
     IF client->get( )-event IS NOT INITIAL.
       z2ui5_on_event( ).
     ENDIF.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
     DATA lt_range TYPE RANGE OF string.
 
     CASE client->get( )-event.
@@ -305,11 +304,10 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
         ENDLOOP.
 
 
-
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
+
 
   METHOD z2ui5_view_display.
 
@@ -350,6 +348,5 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

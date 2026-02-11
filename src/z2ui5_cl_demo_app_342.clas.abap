@@ -74,10 +74,11 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
+
   METHOD on_event.
+
     IF client->get( )-event = 'SELECTION_CHANGE'.
 
       client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
@@ -86,9 +87,10 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-  METHOD on_init.
 
+  METHOD on_init.
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -150,11 +152,12 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD set_app_data.
 
     mv_table = table.
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -175,8 +178,8 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -207,7 +210,5 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDTRY.
 
     mt_data_tmp = mt_data.
-
   ENDMETHOD.
-
 ENDCLASS.

@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
 
 
@@ -59,7 +58,6 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
                  ` }` && |\n| &&
                  `  reader.readAsDataURL(oFile);` && |\n| &&
                  `};`.
-
   ENDMETHOD.
 
 
@@ -78,7 +76,6 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -124,6 +121,5 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
 *                                                    uploadState = `{UPLOADSTATE}`
                                                     ).
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

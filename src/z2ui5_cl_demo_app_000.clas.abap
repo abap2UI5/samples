@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
 
@@ -322,7 +321,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_185' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
-
 
 
     panel = page->panel( expandable = abap_false
@@ -1747,7 +1745,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
 
-
     panel->generic_tile( header    = 'Date Format Error in internal table'
                          subheader = ''
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_118' )
@@ -1846,7 +1843,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -1859,6 +1855,5 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
       ENDIF.
       <check> = abap_true.
     ENDDO.
-
   ENDMETHOD.
 ENDCLASS.

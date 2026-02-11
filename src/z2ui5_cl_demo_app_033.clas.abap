@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
 
@@ -55,11 +54,11 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                 press = client->_event( 'BUTTON_MESSAGE_BOX' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
@@ -77,14 +76,11 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BUTTON_MESSAGE_BOX'.
         client->message_box_display( 'Action of illustrated message' ).
-
       WHEN OTHERS.
         mv_type = client->get( )-event.
-
     ENDCASE.
 
 
     display_view( ).
-
   ENDMETHOD.
 ENDCLASS.

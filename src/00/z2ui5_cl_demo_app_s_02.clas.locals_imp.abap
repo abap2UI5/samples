@@ -10,6 +10,7 @@ ENDCLASS.
 
 CLASS lcl_static_container IMPLEMENTATION.
   METHOD increment.
+
     counter = counter + 1.
     result = counter.
   ENDMETHOD.

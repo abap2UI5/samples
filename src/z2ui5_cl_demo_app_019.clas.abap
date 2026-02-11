@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_019 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
 
 
@@ -43,7 +42,6 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BUTTON_SEGMENT_CHANGE'.
         client->message_toast_display( `Selection Mode changed` ).
-
       WHEN 'BUTTON_READ_SEL'.
         t_tab_sel = t_tab.
         DELETE t_tab_sel WHERE selkz <> abap_true.
@@ -112,6 +110,5 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
                 )->text( '{DESCR}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

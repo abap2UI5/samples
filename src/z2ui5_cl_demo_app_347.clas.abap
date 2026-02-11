@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_347 DEFINITION PUBLIC.
         i_client TYPE REF TO z2ui5_if_client.
 
 
-
 ENDCLASS.
 
 
@@ -38,7 +37,6 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
 
       ui5_view_display( client ).
     ENDIF.
-
 
 
     IF client->get( )-event = 'GO'.
@@ -66,8 +64,8 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -84,10 +82,9 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
                i_client = client ).
 
 
-
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD xml_table.
 
@@ -119,8 +116,8 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
       cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -132,10 +129,5 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
       FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF TABLE @mt_data
       UP TO 10 ROWS.
-
-
   ENDMETHOD.
-
-
-
 ENDCLASS.

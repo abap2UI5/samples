@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_350 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -114,7 +113,9 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD initialize_view2.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
@@ -132,6 +133,4 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       press = client->_event( 'NEXT_LOCK' ) ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
-
 ENDCLASS.

@@ -73,7 +73,6 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
 
@@ -91,7 +90,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     ELSE.
       z2ui5_on_event( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -100,19 +98,15 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'P13N_OPEN'.
         z2ui5_view_p13n( ).
-
       WHEN 'P13N_POPUP'.
         z2ui5_view_p13n_popup( ).
-
       WHEN 'OK' OR 'CANCEL'.
         client->popup_destroy( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_view_display.
-
 
     client->_bind_edit( val           = mt_columns_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
@@ -175,7 +169,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                  press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -221,7 +214,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                               ( n = `showIfGrouped` v = `{showifgrouped}` ) ) ).
 
     client->popup_display( p13n->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -260,8 +252,8 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                                           )->get_parent( )->get_parent( )->get_parent( ).
 
     client->view_display( p13n_popup->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD init_data_set.
 
@@ -294,7 +286,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                           ( grouped = `true` name = `key1` label = `City` )
                           ( grouped = `false` name = `key2` label = `Country` )
                           ( grouped = `false` name = `key2` label = `Region` ) ).
-
   ENDMETHOD.
 
 
@@ -322,7 +313,5 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                     `    oView.getModel().oData.XX.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
                     `  };` && |\n| &&
                     `};`.
-
   ENDMETHOD.
-
 ENDCLASS.

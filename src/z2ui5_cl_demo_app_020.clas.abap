@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
 
-
     DATA mv_text TYPE string.
     DATA mv_cancel_text TYPE string.
     DATA mv_cancel_event TYPE string.
@@ -26,7 +25,6 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
@@ -41,7 +39,6 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
     result->mv_cancel_event = i_cancel_event.
     result->mv_confirm_text = i_confirm_text.
     result->mv_confirm_event = i_confirm_event.
-
   ENDMETHOD.
 
 
@@ -71,6 +68,5 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
                             press = client->_event( mv_confirm_event )
                             type  = 'Emphasized'
                         )->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

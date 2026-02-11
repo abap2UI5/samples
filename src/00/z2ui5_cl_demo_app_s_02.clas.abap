@@ -27,6 +27,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     TRY.
 
         IF check_initialized = abap_false.
@@ -41,7 +42,9 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
   METHOD initialize_view.
+
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
@@ -75,7 +78,9 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'BACK'.
         set_session_stateful( client   = client
@@ -93,7 +98,9 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
+
   METHOD set_session_stateful.
+
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.

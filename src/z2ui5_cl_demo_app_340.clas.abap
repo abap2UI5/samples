@@ -29,6 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD on_event.
+
     IF client->get( )-event = 'POPUP_CLOSE'.
 
       client->popup_destroy( ).
@@ -37,9 +38,10 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-  METHOD on_init.
 
+  METHOD on_init.
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -55,8 +57,8 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
           )->content( ns = 'form' )->label( text = 'Test' )->input( value = 'TEST' ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -79,8 +81,8 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*' ).
     ENDIF.
     on_event( client ).
-
   ENDMETHOD.
+
 
   METHOD factory.
 
@@ -115,7 +117,5 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
     ASSIGN result->mt_data_tmp->* TO <data>.
     <data> = <table>.
-
   ENDMETHOD.
-
 ENDCLASS.

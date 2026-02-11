@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
     ENDIF.
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -52,15 +52,11 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
                   type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
-
 
 
   METHOD factory.
 
     result = NEW #( ).
-
   ENDMETHOD.
-
 ENDCLASS.

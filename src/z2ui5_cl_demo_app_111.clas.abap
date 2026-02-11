@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
 
@@ -61,18 +60,15 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -85,7 +81,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
   ENDMETHOD.
 
 
@@ -110,7 +105,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         ENDIF.
       ENDLOOP.
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -123,7 +117,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
       )->_generic( ns   = `html`
                    name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).
-
 
 
     DATA(page1) = view->page( id = `page_main`
@@ -211,8 +204,8 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_custom_js.
 
@@ -290,7 +283,5 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                  ` oSmartVariantManagement.currentVariantSetModified(true);` && |\n| &&
                  ` oFilterBar.fireFilterChange(oEvent);` && |\n| &&
                  `}`.
-
   ENDMETHOD.
-
 ENDCLASS.

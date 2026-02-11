@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_180 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
 
@@ -29,7 +28,6 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
       client->view_model_update( ).
       client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -48,7 +46,6 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
     page->label( text = client->_bind_edit( mv_url ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -62,6 +59,5 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

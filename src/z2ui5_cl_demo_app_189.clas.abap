@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
         focus_field = 'IdThree'.
     ENDCASE.
     client->view_model_update( ).
-
   ENDMETHOD.
 
 
@@ -57,7 +56,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     page->_z2ui5( )->focus( focusid = client->_bind( focus_field ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -72,7 +70,5 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     ENDIF.
 
     dispatch( ).
-
   ENDMETHOD.
 ENDCLASS.
-

@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 
 
@@ -45,7 +44,6 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
       ls_row-valuecolor = `Good`.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
-
   ENDMETHOD.
 
 
@@ -56,20 +54,15 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'GET_OPENED_COL'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         RETURN.
-
       WHEN 'ONSORT'.
         lt_arg = client->get( )-t_event_arg.
-
       WHEN 'ONGROUP'.
-
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( 'sort ascending' ).
-
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( 'sort descending' ).
@@ -174,6 +167,5 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
        )->text( '{COUNT}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

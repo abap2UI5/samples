@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
 
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -42,7 +40,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
       mv_page = client->get( )-event.
       z2ui5_view_display( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -84,6 +81,5 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

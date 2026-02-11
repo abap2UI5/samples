@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_118 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
 
@@ -104,6 +103,5 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->text( '{ATIME}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

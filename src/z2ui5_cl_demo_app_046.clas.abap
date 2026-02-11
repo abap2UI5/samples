@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
 
@@ -65,7 +64,6 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
       )->get_parent( ).
 
     CASE mv_display.
-
       WHEN 'LIST'.
         page->list(
             headertext = 'List Control'
@@ -75,7 +73,6 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
                 description = '{DESCR}'
                 icon        = '{ICON}'
                 info        = '{INFO}' ).
-
       WHEN 'TABLE'.
 
         DATA(tab) = page->table(
@@ -97,10 +94,8 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
            )->text( '{DESCR}'
            )->text( '{ICON}'
            )->text( '{INFO}' ).
-
     ENDCASE.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

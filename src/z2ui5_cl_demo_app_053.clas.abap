@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
 
@@ -49,20 +48,17 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 
 
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
         set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -105,7 +101,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -118,7 +113,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
   ENDMETHOD.
 
 
@@ -133,6 +127,5 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
           tab = mt_table ).
 
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

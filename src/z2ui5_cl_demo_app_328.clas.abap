@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 *       ELSE.
 *          client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA'  ).
 *        ENDIF.
-
       WHEN 'GO'.
 
         ASSIGN mt_table->* TO <tab>.
@@ -78,10 +77,9 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
         ELSE.
           client->message_toast_display( 'Plases select a Line' ).
         ENDIF.
-
     ENDCASE.
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -109,8 +107,8 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                           )->text( '{ID}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -142,7 +140,5 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
       CATCH cx_root.
 
     ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

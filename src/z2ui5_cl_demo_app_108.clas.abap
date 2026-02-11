@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
 
 
@@ -37,26 +36,22 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( client ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
         CLEAR screen.
         client->message_toast_display( 'View initialized' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_init.
-
   ENDMETHOD.
 
 
@@ -110,6 +105,5 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
                               text = `Fly abroad` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

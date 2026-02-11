@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -118,8 +118,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
                i_layout = mo_layout_obj2 ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD xml_table.
 
@@ -152,8 +152,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -181,8 +181,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       CATCH cx_root.
 
     ENDTRY.
-
   ENDMETHOD.
+
 
   METHOD get_data2.
 
@@ -210,8 +210,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       CATCH cx_root.
 
     ENDTRY.
-
   ENDMETHOD.
+
 
   METHOD get_comp.
 
@@ -251,7 +251,5 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

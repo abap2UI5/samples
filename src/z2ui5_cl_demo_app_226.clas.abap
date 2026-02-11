@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_226 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
 
 
@@ -100,7 +99,6 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
                               )->text( text = `Note two content goes here...` )->get_parent( )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -115,6 +113,5 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

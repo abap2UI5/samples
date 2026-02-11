@@ -63,8 +63,8 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -82,8 +82,8 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
               i_client = client ).
 
     client->view_display( page->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -94,8 +94,8 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
                   timestampl
       FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
-
   ENDMETHOD.
+
 
   METHOD xml_form.
 
@@ -127,7 +127,5 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
                                               tab_index = index )
                    enabled = abap_false ).
     ENDLOOP.
-
   ENDMETHOD.
-
 ENDCLASS.

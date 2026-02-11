@@ -49,7 +49,6 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
 
@@ -70,7 +69,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
       APPEND ls_output TO mt_output.
 
     ENDDO.
-
   ENDMETHOD.
 
 
@@ -92,7 +90,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
 
 
@@ -231,8 +228,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
                         filterproperty = 'per_cent_q04' )->text( text = 'Column 27' )->ui_template( )->text( text = `{per_cent_q04} %` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -246,6 +243,5 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

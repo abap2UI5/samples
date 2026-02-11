@@ -80,8 +80,8 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -101,8 +101,8 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
               i_client = client ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD xml_table.
 
@@ -134,8 +134,8 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
       cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -149,8 +149,8 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
       UP TO 10 ROWS.
 
     ms_data = VALUE #( mt_data[ 1 ] OPTIONAL ).
-
   ENDMETHOD.
+
 
   METHOD xml_form.
 
@@ -180,7 +180,5 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
                                               tab_index = index )
                    enabled = abap_false ).
     ENDLOOP.
-
   ENDMETHOD.
-
 ENDCLASS.

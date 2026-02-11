@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_158 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
 
 
@@ -59,8 +58,8 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
       `NCi9Sb290IDEgMCBSDQovSW5mbyAxMCAwIFINCj4+DQoNCnN0YXJ0eHJlZg0KMjcxNA0KJSVFT0YNCg==`.
 
     result = `data:application/pdf;base64,` && result.
-
   ENDMETHOD.
+
 
   METHOD ui5_callback.
 
@@ -70,7 +69,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
         client->message_box_display( `pdf viewer closed` ).
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -87,7 +85,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
                 press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -98,7 +95,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
       DATA(lo_app) = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
       client->nav_app_call( lo_app ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -113,6 +109,5 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
 ENDCLASS.

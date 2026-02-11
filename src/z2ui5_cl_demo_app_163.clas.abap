@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_163 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
 
@@ -25,7 +24,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     IF client->get( )-event = 'OPEN_ACTION_SHEET'.
       view_action_sheet( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -58,7 +56,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
     client->popover_display( xml   = action_sheet_view->stringify( )
                              by_id = `actionSheet` ).
-
   ENDMETHOD.
 
 
@@ -79,7 +76,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
                   class = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -94,6 +90,5 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

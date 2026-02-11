@@ -38,7 +38,6 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
 
@@ -47,7 +46,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
     IF client->get( )-event = 'BOOK'.
       client->message_toast_display( 'BOOKED !!! ENJOY' ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -130,7 +128,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                                             state = `{STATUS_SCHEMA}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -146,6 +143,5 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -33,18 +33,15 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
 
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN `BUTTON_START`.
         set_data( ).
         client->view_model_update( ).
-
       WHEN `UPDATE_TOKENS`.
         LOOP AT mt_tokens_removed INTO DATA(ls_token).
           DELETE mt_token WHERE key = ls_token-key.
@@ -60,11 +57,9 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         mt_range = z2ui5_cl_util=>filter_get_range_t_by_token_t( mt_token ).
         set_data( ).
         client->view_model_update( ).
-
       WHEN `FILTER_VALUE_HELP`.
         client->nav_app_call( z2ui5_cl_pop_get_range=>factory( mt_range ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -79,7 +74,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
     DELETE mt_table WHERE product NOT IN mt_range.
-
   ENDMETHOD.
 
 
@@ -144,7 +138,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -178,6 +171,5 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     IF client->get( )-event IS NOT INITIAL.
       on_event( ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

@@ -50,11 +50,11 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -65,7 +65,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -85,7 +83,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
-
 
 
     DATA(gantt) = page->gantt_chart_container(
@@ -119,12 +116,10 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
-
 
     mt_table = VALUE #( children = VALUE #( ( id = `line`
       text                                       = `Level 1`
@@ -134,6 +129,5 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
                          subtask = VALUE #( ( id = `chevron1` starttime = `2018-11-01T09:00:00` endtime = `2018-11-13T09:00:00` )
                                             ( id = `chevron2` starttime = `2018-11-15T09:00:00` endtime = `2018-11-27T09:00:00` ) )
       ) ) ) ) ).
-
   ENDMETHOD.
 ENDCLASS.

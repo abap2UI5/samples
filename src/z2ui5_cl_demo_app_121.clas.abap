@@ -16,12 +16,10 @@ CLASS z2ui5_cl_demo_app_121 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-
 
     "on init
     IF client->check_on_init( ).
@@ -37,15 +35,12 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
     "user command
     CASE client->get( )-event.
-
       WHEN 'TIMER_FINISHED'.
         client->message_box_display( `Timer finished!` ).
         RETURN.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
-
     ENDCASE.
 
 
@@ -64,6 +59,5 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
                               editable = abap_true
                   )->content( 'form'
            )->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

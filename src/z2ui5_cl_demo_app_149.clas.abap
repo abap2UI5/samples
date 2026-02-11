@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_149 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
 
 
@@ -27,7 +26,6 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
         client->message_box_display( `callback after popup to inform` ).
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -44,7 +42,6 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
             press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -57,7 +54,6 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
                                                    `<a href="https://www.w3schools.com" target="_blank">This is a link</a>` ).
       client->nav_app_call( lo_app ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -72,6 +68,5 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
 ENDCLASS.

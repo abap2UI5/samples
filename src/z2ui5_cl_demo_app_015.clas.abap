@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_015 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
 
 
@@ -46,6 +45,5 @@ CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
                 )->formatted_text( mv_html_text ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

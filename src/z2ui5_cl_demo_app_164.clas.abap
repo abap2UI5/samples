@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
 
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     IF client->get( )-event = `BUTTON_START`.
       client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -51,7 +49,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
         ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
-
   ENDMETHOD.
 
 
@@ -92,7 +89,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     lo_cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -120,6 +116,5 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     IF client->get( )-event IS NOT INITIAL.
       on_event( ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

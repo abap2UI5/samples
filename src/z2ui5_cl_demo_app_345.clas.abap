@@ -40,7 +40,6 @@ CLASS z2ui5_cl_demo_app_345 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
 
@@ -73,7 +72,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -100,7 +98,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     mo_layout_obj1 = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data1
                                                      vis_cols = 2 ).
-
   ENDMETHOD.
 
 
@@ -122,7 +119,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       i_layout        = mo_layout_obj1 ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -157,7 +153,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -189,7 +184,5 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
-
-
   ENDMETHOD.
 ENDCLASS.

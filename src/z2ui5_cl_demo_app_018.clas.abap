@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_018 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
 
@@ -57,7 +56,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 *                          type  = 'Emphasized' ).
 
     client->popup_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -95,7 +93,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
                   press = client->_event( 'SHOW_VIEW_SECOND' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -122,7 +119,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
                     press = client->_event( 'SHOW_VIEW_MAIN' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -136,33 +132,26 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'SHOW_POPUP'.
         z2ui5_display_popup_input( ).
-
       WHEN 'POPUP_CONFIRM'.
         client->message_toast_display( |confirm| ).
         client->popup_destroy( ).
-
       WHEN 'POPUP_CANCEL'.
         CLEAR mv_textarea.
         client->message_toast_display( |cancel| ).
         client->popup_destroy( ).
-
       WHEN 'SHOW_VIEW_MAIN'.
         z2ui5_display_view_main( ).
-
       WHEN 'SHOW_VIEW_SECOND'.
         z2ui5_display_view_second( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -170,6 +159,5 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
     quantity = '500'.
     z2ui5_display_view_main( ).
-
   ENDMETHOD.
 ENDCLASS.

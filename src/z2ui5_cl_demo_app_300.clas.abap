@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_300 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_300 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
@@ -376,7 +374,6 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                   )->get_parent(
               )->get_parent( ).
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -391,7 +388,6 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                                      text    = `Product was damaged along transportation.`
                                      actions = VALUE string_table( ( `OK ` ) ) ). "Add space after 'OK' to prevent the button type from being 'Emphasized'
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -407,7 +403,6 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -420,6 +415,5 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -81,7 +81,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
 
@@ -95,26 +94,23 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
     DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POST'.
         CREATE DATA mt_table TYPE (mv_name).
         z2ui5_on_render_main( ).
-
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
 
           ls_range = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
-
       WHEN `FILTER_VALUE_HELP_OK`.
         CLEAR ms_filter-product.
         LOOP AT mt_filter REFERENCE INTO DATA(lr_filter).
@@ -127,20 +123,16 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         ENDLOOP.
 
         client->popup_destroy( ).
-
       WHEN `POPUP_ADD`.
         INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
         client->popup_model_update( ).
-
       WHEN `POPUP_DELETE`.
         DATA(lt_item) = client->get( )-t_event_arg.
         DELETE mt_filter WHERE key = lt_item[ 1 ].
         client->popup_model_update( ).
-
       WHEN `POPUP_DELETE_ALL`.
         mt_filter = VALUE #( ).
         client->popup_model_update( ).
-
       WHEN `FILTER_VALUE_HELP`.
         z2ui5_on_render_pop_filter( ).
 
@@ -155,7 +147,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
         ENDLOOP.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -182,8 +173,8 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       (   n = `NE`     v = `!(={LOW})` )
       (   n = `NE`     v = `!(<leer>)` )
       (   n = `<leer>` v = `<leer>` ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_on_render_main.
 
@@ -265,7 +256,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     ENDIF.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -326,13 +316,9 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             press = client->_event( 'FILTER_VALUE_HELP_CANCEL' ) ).
 
     client->popup_display( lo_popup->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
-
-
-
   ENDMETHOD.
 ENDCLASS.

@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -70,12 +69,10 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                )->stringify( ) ).
 
 
-
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'MAP_CONTAINER_DISPLAY'.
 
         IF longitude IS NOT INITIAL.
@@ -133,12 +130,9 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                       scale         = `{SCALE}`
                                       tooltip       = `{TOOLTIP}`
                )->stringify( ) ).
-
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

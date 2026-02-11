@@ -51,7 +51,6 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -136,6 +134,5 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
           position = `{POSITION}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

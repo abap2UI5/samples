@@ -42,11 +42,9 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
         DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
         client->nav_app_call( app ).
-
       WHEN 'CHANGE'.
 
         get_data_2( ).
-
     ENDCASE.
 
     IF client->get( )-check_on_navigated = abap_true
@@ -67,8 +65,8 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     ENDIF.
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -114,22 +112,20 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
-
   ENDMETHOD.
+
 
   METHOD get_data_2.
 
     SELECT SINGLE * FROM z2ui5_t_01
       WHERE id <> @ms_struc-id
       INTO CORRESPONDING FIELDS OF @ms_struc.
-
   ENDMETHOD.
-
 ENDCLASS.

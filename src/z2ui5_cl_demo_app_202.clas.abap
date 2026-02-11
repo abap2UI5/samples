@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
 
@@ -80,7 +79,6 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
 *
     client->view_display( lr_view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -97,11 +95,9 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
       WHEN 'STEP22'.
 
         client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
-
       WHEN 'STEP23'.
 
         client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
-
     ENDCASE.
     client->view_model_update( ).
   ENDMETHOD.

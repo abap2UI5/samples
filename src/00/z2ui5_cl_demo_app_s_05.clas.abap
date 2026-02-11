@@ -45,28 +45,24 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_render( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
     DATA: news TYPE t_news.
 
     CASE client->get( )-event.
       WHEN `CLEAR`.
 
         CLEAR: news_list.
-
       WHEN 'BACK'.
 
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
       WHEN 'CLICK_HINT_ICON'.
 
         z2ui5_display_popover( ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -178,7 +174,6 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     ENDIF.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -194,7 +189,5 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = `button_hint_id` ).
-
   ENDMETHOD.
-
 ENDCLASS.

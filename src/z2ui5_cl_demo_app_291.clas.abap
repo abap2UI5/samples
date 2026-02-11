@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
 
 
@@ -85,7 +84,6 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
                   class               = `sapUiMediumMarginBottom` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -94,7 +92,6 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -110,7 +107,6 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -129,6 +125,5 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

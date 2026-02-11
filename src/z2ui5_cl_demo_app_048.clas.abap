@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_048 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
 
 
@@ -96,6 +95,5 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
       ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

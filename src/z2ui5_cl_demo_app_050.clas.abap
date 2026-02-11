@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_050 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -91,6 +90,5 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                         text  = 'post'
                         press = client->_event( 'BUTTON_POST' )
          )->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -42,7 +42,6 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
 
@@ -109,7 +108,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDIF.
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -135,39 +133,33 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-
       WHEN 'CAPTURE'.
         INSERT VALUE #( data = mv_picture_base time = sy-uzeit ) INTO TABLE mt_picture.
         CLEAR mv_picture_base.
         client->view_model_update( ).
-
       WHEN 'DISPLAY'.
 
         selected_picture = mt_picture_out[ selected = abap_true ].
         mv_pic_display = mt_picture[ selected_picture-id ]-data.
         view_display( ).
-
       WHEN 'EDIT'.
 
         edit_image( ).
-
       WHEN 'BACK'.
 
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
     mt_picture_out = VALUE #( ).
     LOOP AT mt_picture INTO DATA(ls_pic).
       INSERT VALUE #( name = `picture ` && sy-tabix id = sy-tabix ) INTO TABLE mt_picture_out.
     ENDLOOP.
-
   ENDMETHOD.
+
 
   METHOD edit_image.
 
     client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
-
   ENDMETHOD.
 
 
@@ -188,5 +180,4 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
-
 ENDCLASS.

@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_283 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -23,11 +22,11 @@ CLASS z2ui5_cl_demo_app_283 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
 
 
   METHOD display_view.
+
     " Define the base URL for the server
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
 
@@ -97,7 +96,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
            growing = abap_true ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -109,7 +107,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
       WHEN 'onPost'.
         client->message_toast_display( `Posted new feed entry: ` && client->get_event_arg( 1 ) ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -125,7 +122,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -138,6 +134,5 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

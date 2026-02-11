@@ -45,8 +45,8 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
                        press = client->_event( 'BUTTON_POPUP_02' ) ).
 
     client->view_display( lo_main->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -63,14 +63,12 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POPUP_01'.
 
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory( i_tab             = mt_table
                                                                i_multiselect     = abap_false
                                                                i_event_confirmed = 'POPUP_CONFIRMED'
                                                                i_event_canceled  = 'POPUP_CANCEL' ) ).
-
       WHEN 'BUTTON_POPUP_02'.
 
 *        mo_layout = z2ui5_cl_layo_manager=>factory( control = z2ui5_cl_layo_manager=>m_table
@@ -84,7 +82,5 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory( io_table  = REF #( mt_table )
                                                               io_layout = mo_layout1 ) ).
     ENDCASE.
-
   ENDMETHOD.
-
 ENDCLASS.

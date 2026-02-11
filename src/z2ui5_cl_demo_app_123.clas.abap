@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
     DATA mt_spot TYPE TABLE OF ty_spot.
 
 
-
     TYPES:
       BEGIN OF ty_route,
         position    TYPE string,
@@ -41,11 +40,9 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-
 
     IF client->check_on_init( ).
 
@@ -89,7 +86,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                        initialzoom     = `6` ).
 
 
-
     map->vos(
       )->spots( client->_bind( mt_spot )
       )->spot(
@@ -126,7 +122,5 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *        result =
       ).
     client->view_display( view->stringify( ) ).
-
-
   ENDMETHOD.
 ENDCLASS.

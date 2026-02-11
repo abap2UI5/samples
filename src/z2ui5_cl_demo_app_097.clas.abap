@@ -33,7 +33,6 @@ CLASS z2ui5_cl_demo_app_097 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
 
 
@@ -71,7 +70,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
       id             = `test`
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
-
   ENDMETHOD.
 
 
@@ -109,7 +107,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
               selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -135,7 +132,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'ROW_DELETE'.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
@@ -144,7 +140,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
         ENDIF.
 
         client->nest_view_model_update( ).
-
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
@@ -157,6 +152,5 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
         client->nest_view_model_update( ).
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

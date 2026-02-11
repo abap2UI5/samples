@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_040 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
 
 
@@ -42,23 +41,18 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
     z2ui5_on_render( ).
 
     CLEAR app-get.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
       WHEN 'LOAD_BC'.
         client->message_box_display( 'JSBarcode Library loaded' ).
         mv_load_lib = abap_true.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -98,6 +92,5 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
              `</mvc:View>`.
 
     client->view_display( lv_xml ).
-
   ENDMETHOD.
 ENDCLASS.

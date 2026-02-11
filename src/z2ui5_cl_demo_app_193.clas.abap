@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_193 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
 
 
@@ -42,7 +41,6 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
       mt_pos = z2ui5_cl_util=>xml_srtti_parse( mt_pos_xml ).
       CLEAR mt_pos_xml.
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -59,6 +57,5 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
       mt_pos_xml = z2ui5_cl_util=>xml_srtti_stringify( <pos> ).
       CLEAR mt_pos.
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

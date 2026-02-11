@@ -44,7 +44,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     ASSIGN mo_app_sub->('MO_VIEW_PARENT') TO FIELD-SYMBOL(<fs>).
     <fs> = mo_grid_sub.
     CALL METHOD mo_app_sub->('Z2UI5_IF_APP~MAIN') EXPORTING client = client.
-
   ENDMETHOD.
 
 
@@ -78,7 +76,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     DATA(page) = lo_view_nested->page( title = `Nested View` ).
     mo_grid_sub = page->grid( 'L12 M12 S12'
         )->content( 'layout' ).
-
   ENDMETHOD.
 
 
@@ -116,7 +113,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
               selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -162,6 +158,5 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     ENDIF.
 
     on_event_sub( ).
-
   ENDMETHOD.
 ENDCLASS.

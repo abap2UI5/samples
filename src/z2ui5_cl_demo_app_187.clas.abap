@@ -10,6 +10,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     DATA ls_msg TYPE bapiret2.
 
 
@@ -35,20 +36,16 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'SY'.
         DATA(ls_msg2) = z2ui5_cl_util=>msg_get_by_msg(
                   id = 'NET'
                   no = `001` ).
         client->message_box_display( ls_msg2 ).
-
       WHEN 'BAPIRET'.
-
 
 
         ls_msg = VALUE #( id = 'NET' number = '001' ).
         client->message_box_display( ls_msg ).
-
       WHEN 'CX_ROOT'.
         TRY.
             DATA(lv_val) = 1 / 0.
@@ -56,6 +53,5 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
             client->message_box_display( lx ).
         ENDTRY.
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

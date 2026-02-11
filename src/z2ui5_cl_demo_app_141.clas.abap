@@ -44,7 +44,6 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
 
@@ -54,7 +53,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       ms_popup_input-value1 = 'value1'.
       ui5_popup_input( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -67,7 +65,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
       ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
       ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
-
   ENDMETHOD.
 
 
@@ -110,7 +107,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                                                                   ) )->get_parent( ).
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -149,7 +145,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -165,6 +160,5 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     ENDIF.
 
     ui5_handle_event( ).
-
   ENDMETHOD.
 ENDCLASS.

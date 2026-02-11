@@ -38,7 +38,6 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
 
@@ -87,7 +86,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
                     press = client->_event( 'BUTTON_SCROLL_BOTTOM' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -100,7 +98,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     INSERT VALUE #( n = 'id_page' ) INTO TABLE mt_scroll.
     display_view( client ).
-
   ENDMETHOD.
 
 
@@ -115,13 +112,11 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.
         INSERT VALUE #( n = 'id_page' v = '0' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
-
       WHEN 'BUTTON_SCROLL_UP'.
 
         DATA(lv_pos) = CONV i( mt_scroll[ n = 'id_page' ]-v ).
@@ -132,7 +127,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         mt_scroll[ n = 'id_page' ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
-
       WHEN 'BUTTON_SCROLL_DOWN'.
 
         lv_pos = mt_scroll[ n = 'id_page' ]-v.
@@ -143,14 +137,11 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         mt_scroll[ n = 'id_page' ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
-
       WHEN 'BUTTON_SCROLL_BOTTOM'.
         CLEAR mt_scroll.
         INSERT VALUE #( n = 'id_page' v = '99999' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

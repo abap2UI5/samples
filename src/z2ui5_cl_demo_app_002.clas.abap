@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
 
@@ -63,14 +62,12 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_MCONFIRM'.
         client->message_box_display( type = 'confirm'
                                      text = 'Confirm MessageBox' ).
@@ -96,7 +93,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         CLEAR screen.
         client->message_toast_display( 'View initialized' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -119,7 +115,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         ( descr = 'Gray'   value = 'GRAY' )
         ( descr = 'Blue2'  value = 'BLUE2' )
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
-
   ENDMETHOD.
 
 
@@ -245,6 +240,5 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
              type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

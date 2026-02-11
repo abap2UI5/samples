@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_168 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
 
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
         ENDIF.
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -49,7 +47,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
                 press = client->_event( 'POPUP' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -59,7 +56,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
       DATA(lo_app) = z2ui5_cl_pop_file_dl=>factory( get_file( ) ).
       client->nav_app_call( lo_app ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -74,13 +70,11 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
+
 
   METHOD get_file.
 
     result = `test`.
-
   ENDMETHOD.
-
 ENDCLASS.

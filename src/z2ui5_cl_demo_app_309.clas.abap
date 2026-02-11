@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
 
 
@@ -29,7 +28,6 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
 *        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
       client->follow_up_action( `alert("afterBE triggered !!");` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -50,7 +48,6 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
                   press = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -66,6 +63,5 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

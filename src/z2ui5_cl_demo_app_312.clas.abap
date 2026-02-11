@@ -44,10 +44,11 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
         ms_screen-viztype = ms_screen-viztypesel.
         on_rendering( ).
     ENDCASE.
-
   ENDMETHOD.
 
+
   METHOD on_init.
+
     " ---------- Set vizframe chart data --------------------------------------------------------------
     mt_data_chart = VALUE #( ( week    = 'Week 1 - 4'
                                revenue = '431000.22'
@@ -179,8 +180,8 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                              v = 'area' )
                            ( n = 'radar'
                              v = 'radar' ) ).
-
   ENDMETHOD.
+
 
   METHOD on_rendering.
 
@@ -301,8 +302,8 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                                       values = 'Week' ).
 
     client->view_display( lr_view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -314,7 +315,5 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     ELSE.
       on_event( ).
     ENDIF.
-
   ENDMETHOD.
-
 ENDCLASS.

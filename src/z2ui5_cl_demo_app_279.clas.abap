@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
 
@@ -62,7 +61,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -82,7 +80,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
           dirty,
           text_input.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -94,7 +91,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
                               i_icon                = `sap-icon://status-critical`
                               i_button_text_confirm = `Leave Page`
                               i_button_text_cancel  = `Cancel` ) ).
-
   ENDMETHOD.
 
 
@@ -114,7 +110,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     ELSE.
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -131,7 +126,5 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       CLEAR dirty.
       client->nav_app_leave( ).
     ENDIF.
-
   ENDMETHOD.
-
 ENDCLASS.

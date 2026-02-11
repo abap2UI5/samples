@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
 
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
         descr = 'this is a description' checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
-
   ENDMETHOD.
 
 
@@ -47,13 +45,11 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'FLTER_INFO'.
         refresh_data( ).
         IF mv_info_filter <> ''.
           DELETE t_tab WHERE info <> mv_info_filter.
         ENDIF.
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( 'button post was pressed' ).
     ENDCASE.
@@ -113,6 +109,5 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
        )->text( '{COUNT}' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

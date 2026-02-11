@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
 
@@ -60,7 +59,6 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     page->input( value = client->_bind_edit( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -78,6 +76,5 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
       set_view( ).
     ENDIF.
     client->view_model_update( ).
-
   ENDMETHOD.
 ENDCLASS.

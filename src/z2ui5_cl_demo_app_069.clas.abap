@@ -37,7 +37,6 @@ CLASS z2ui5_cl_demo_app_069 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
 
@@ -54,7 +53,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
       id             = `test`
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
-
   ENDMETHOD.
 
 
@@ -87,7 +85,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
       id             = `test`
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
-
   ENDMETHOD.
 
 
@@ -112,7 +109,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
                  ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -142,10 +138,8 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN `UPDATE_DETAIL`.
         view_display_app_01( ).
-
       WHEN `EVENT_ITEM`.
         CASE client->get_event_arg( 1 ).
           WHEN 'App_001'.
@@ -153,13 +147,11 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
           WHEN 'App_002'.
             view_display_app_02( ).
         ENDCASE.
-
       WHEN `NEST_TEST`.
         mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
         mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
 
         client->nest_view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

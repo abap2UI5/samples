@@ -33,14 +33,13 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD get_comp.
+
     DATA index TYPE int4.
     TRY.
-
 
 
         TRY.
@@ -80,6 +79,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD get_data.
+
     FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
 
@@ -117,12 +117,14 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD on_init.
+
     get_data( ).
     render_main( ).
   ENDMETHOD.
 
 
   METHOD render_main.
+
     IF mo_parent_view IS INITIAL.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -154,11 +156,13 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD set_app_data.
+
     mv_perc = data.
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).

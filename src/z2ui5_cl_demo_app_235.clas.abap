@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_235 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
 
 
@@ -100,7 +99,6 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
                              )->toolbar( ).
 
     client->view_display( page_02->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -115,6 +113,5 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

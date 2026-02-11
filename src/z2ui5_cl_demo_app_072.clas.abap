@@ -45,11 +45,11 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client     = client.
 
     IF client->check_on_init( ).
@@ -59,7 +59,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -70,12 +69,10 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
       set_filter( ).
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_init.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -152,11 +149,11 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
+
     mt_table = VALUE #(
         ( productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning` )
         ( productid = '2' productname = 'chair' suppliername = 'Company 2'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning` )
@@ -173,11 +170,11 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
     lv_cnt_heavy = REDUCE i( INIT j = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT j = j + 1 ).
     lv_cnt_neg = REDUCE i( INIT k = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT k = k + 1 ).
-
   ENDMETHOD.
 
 
   METHOD set_filter.
+
     z2ui5_set_data( ).
     CASE lv_selectedkey.
       WHEN 'ALL'.

@@ -52,7 +52,6 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
 
@@ -63,7 +62,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     LOOP AT mt_table ASSIGNING <ls_table>.
       <ls_table>-selkz = iv_selkz.
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -77,7 +75,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -121,7 +118,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
           client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
         ENDIF.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -232,7 +228,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -245,7 +240,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' process = '40' process_state = 'Information' )
         ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR' process = '70' process_state = 'Warning' )
         ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' ) ).
-
   ENDMETHOD.
 
 
@@ -270,6 +264,5 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         ENDIF.
       ENDLOOP.
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

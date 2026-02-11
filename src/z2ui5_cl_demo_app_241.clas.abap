@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_241 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
                                                subheader   = `SAP News` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -83,7 +81,6 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
     IF client->get( )-event = 'POPOVER'.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -99,7 +96,6 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -112,6 +108,5 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

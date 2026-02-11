@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_039 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
 
 
@@ -46,28 +45,23 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
     z2ui5_on_render_popup( ).
 
     CLEAR app-get.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN 'POPUP'.
         client->message_box_display( 'Event raised value:' && mv_value ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_init.
 
     mv_value  = '200'.
-
   ENDMETHOD.
 
 
@@ -154,7 +148,6 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
                         `</mvc:View>`.
 
     client->view_display( lv_xml ).
-
   ENDMETHOD.
 
 
@@ -200,6 +193,5 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
                          `      </filterItems>` && |\n| &&
                          `  </ViewSettingsDialog>` && |\n| &&
                          `</core:FragmentDefinition>` ).
-
   ENDMETHOD.
 ENDCLASS.

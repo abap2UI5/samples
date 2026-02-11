@@ -36,11 +36,11 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
 
   METHOD on_init.
+
     FIELD-SYMBOLS <input> TYPE any.
     FIELD-SYMBOLS <screen> TYPE ty_s_01.
 
@@ -65,7 +65,6 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     mo_app = NEW #( ).
     mo_app->mv_val = `instance attribute val - working`.
     mo_app->ms_screen-input = `instance attribute struc - working`.
-
   ENDMETHOD.
 
 
@@ -121,7 +120,6 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
                        type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -137,6 +135,5 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     view_build( ).
     client->message_toast_display( `server roundtrip` ).
-
   ENDMETHOD.
 ENDCLASS.

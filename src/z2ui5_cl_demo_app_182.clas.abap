@@ -49,7 +49,6 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
 
@@ -84,7 +83,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -93,7 +91,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'LINE_PRESS'.
         client->message_toast_display( 'LINE_PRESSED' ).
-
       WHEN 'DETAIL_POPOVER'.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
@@ -102,7 +99,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
         detail_popover( id   = lt_arg[ 1 ]
                         node = ls_node ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -184,7 +180,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                                      press            = client->_event( `LINE_PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -257,6 +252,5 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

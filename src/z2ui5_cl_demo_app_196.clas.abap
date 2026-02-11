@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
 
@@ -98,7 +97,6 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
                         ( id = `vehicle_truck_2` )
                         ( id = `vehicle_truck_3` )
                         ( id = `warehouse` ) ).
-
   ENDMETHOD.
 
 
@@ -160,7 +158,6 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -177,6 +174,5 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

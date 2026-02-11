@@ -5,11 +5,9 @@ CLASS z2ui5_cl_demo_app_042 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
@@ -22,10 +20,8 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_ROUNDTRIP'.
         DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
-
       WHEN 'BUTTON_MSG_BOX'.
         client->message_box_display(
               text = 'this is a message box with a custom text'
@@ -192,6 +188,5 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( text = 'details' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

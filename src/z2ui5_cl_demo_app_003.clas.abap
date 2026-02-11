@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
 
@@ -66,6 +65,5 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
     IF client->get( )-event = 'SELCHANGE'.
       client->message_box_display( `go to details for item ` && t_tab[ selected = abap_true ]-title ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

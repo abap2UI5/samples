@@ -47,6 +47,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -84,7 +85,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
+
   METHOD display_avatar_group_view.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_z2ui5( )->title( `Avatar Group Sample` ).
     view->page( title          = 'abap2UI5 - Sample: Avatar Group'
@@ -137,7 +140,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD display_individual_popover.
+
     DATA(individual_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     individual_popover->popover( id             = `individualPopover`
                                  class          = `sapFAvatarGroupPopover`
@@ -171,7 +176,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                              by_id = id ).
   ENDMETHOD.
 
+
   METHOD display_group_popover.
+
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(nav_container) = view->popover( id            = `groupPopover`
@@ -235,7 +242,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                              by_id = id ).
   ENDMETHOD.
 
+
   METHOD on_event.
+
     DATA(lt_arg) = client->get( )-t_event_arg.
     CASE client->get( )-event.
       WHEN `onGroupPress`.
@@ -246,7 +255,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
         display_group_popover( id = group_id ).
         client->popover_destroy( ).
-
       WHEN `onIndividualPress`.
         DATA(overflow_button_pressed) = lt_arg[ 3 ].
         DATA(items_displayed) = lt_arg[ 4 ].
@@ -265,7 +273,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
           display_individual_popover( id = item_id ).
         ENDIF.
         client->popover_destroy( ).
-
       WHEN `onAvatarPress`.
         DATA(id) = lt_arg[ 1 ].
         item = VALUE #( items[ id = id ] OPTIONAL ).
@@ -285,7 +292,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
+
   METHOD calculate_content_height.
+
     DATA(lv_floor) = floor( ( lines / 2 ) ) * 68 + 48.
     DATA(lv_string) = CONV string( lv_floor ).
     result = |{ condense( lv_string ) }px|.

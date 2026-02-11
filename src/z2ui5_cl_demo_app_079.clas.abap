@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
 
@@ -55,7 +54,6 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
       `NCi9Sb290IDEgMCBSDQovSW5mbyAxMCAwIFINCj4+DQoNCnN0YXJ0eHJlZg0KMjcxNA0KJSVFT0YNCg==`.
 
     result = `data:application/pdf;base64,` && result.
-
   ENDMETHOD.
 
 
@@ -82,6 +80,5 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
     IF client->get( )-event = 'BACK'.
       client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

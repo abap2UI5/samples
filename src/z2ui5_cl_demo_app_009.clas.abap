@@ -44,7 +44,6 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
     DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
 
 
-
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
@@ -66,7 +65,6 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
@@ -98,7 +96,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                 press = client->_event( 'POPUP_TABLE_F4_CONTINUE' )
                 type  = 'Emphasized' ).
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -151,7 +148,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                     press = client->_event( 'POPUP_TABLE_F4_CUSTOM_CONTINUE' )
                     type  = 'Emphasized' ).
     client->popup_display( popup2->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -165,30 +161,25 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     z2ui5_on_event( client ).
 
     z2ui5_on_rendering( client ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'POPUP_TABLE_F4'.
         mt_suggestion_sel = mt_suggestion.
         popup_f4_table( client ).
-
       WHEN 'POPUP_TABLE_F4_CUSTOM'.
         mt_employees_sel = VALUE #( ).
         mt_employees_sel = VALUE #( ).
         popup_f4_table_custom( client ).
-
       WHEN 'SEARCH'.
         mt_employees_sel = mt_employees.
         IF screen-city IS NOT INITIAL.
           DELETE mt_employees_sel WHERE city <> screen-city.
         ENDIF.
         popup_f4_table_custom( client ).
-
       WHEN 'POPUP_TABLE_F4_CUSTOM_CONTINUE'.
         DELETE mt_employees_sel WHERE selkz = abap_false.
         IF lines( mt_employees_sel ) = 1.
@@ -197,7 +188,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           client->message_toast_display( 'f4 value selected' ).
           client->popup_destroy( ).
         ENDIF.
-
       WHEN 'POPUP_TABLE_F4_CONTINUE'.
         DELETE mt_suggestion_sel WHERE selkz = abap_false.
         IF lines( mt_suggestion_sel ) = 1.
@@ -205,14 +195,12 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           client->message_toast_display( 'f4 value selected' ).
           client->popup_destroy( ).
         ENDIF.
-
       WHEN 'BUTTON_SEND'.
         client->message_box_display( 'success - values send to the server' ).
       WHEN 'BUTTON_CLEAR'.
         CLEAR screen.
         client->message_box_display( 'View initialized' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -285,7 +273,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
         ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' )
         ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' ) ).
-
   ENDMETHOD.
 
 
@@ -355,21 +342,15 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                 type    = 'Success' ).
 
 
-
     CASE mv_view_popup.
-
       WHEN 'POPUP_TABLE_F4'.
 
         popup_f4_table( client ).
-
       WHEN 'POPUP_TABLE_F4_CUSTOM'.
 
         popup_f4_table_custom( client ).
-
     ENDCASE.
 
     client->view_display( view->stringify( ) ).
-
-
   ENDMETHOD.
 ENDCLASS.

@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
       ls_row-valuecolor = `Good`.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
-
   ENDMETHOD.
 
 
@@ -54,24 +53,18 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( 'sort ascending' ).
-
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( 'sort descending' ).
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( 'button post was pressed' ).
-
       WHEN 'MENU_DEFAULT'.
         client->message_box_display( 'menu default pressed' ).
-
       WHEN 'MENU_01'.
         client->message_box_display( 'menu 01 pressed' ).
-
       WHEN 'MENU_02'.
         client->message_box_display( 'menu 02 pressed' ).
     ENDCASE.
@@ -175,6 +168,5 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
                               valuecolor = `{VALUECOLOR}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

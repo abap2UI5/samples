@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
     METHODS render_main.
 
 
-
     METHODS render_sub_app.
 
   PRIVATE SECTION.
@@ -42,21 +41,18 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'ONSELECTICONTABBAR'.
 
         CASE mv_selectedkey.
-
           WHEN space.
-
           WHEN OTHERS.
-
         ENDCASE.
-
       WHEN 'BACK'.
-
     ENDCASE.
   ENDMETHOD.
+
 
   METHOD on_init.
 
@@ -66,10 +62,11 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
                        ( id = '3' count = '15' table = 'Z2UI5_T004'  descr = 'Table 02' icon = 'sap-icon://accept' ) ).
 
     mv_selectedkey = '1'.
-
   ENDMETHOD.
 
+
   METHOD render_main.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id             = `page_main`
@@ -102,7 +99,9 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     mo_main_page = lo_items.
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -118,6 +117,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     render_sub_app( ).
   ENDMETHOD.
 
+
   METHOD render_sub_app.
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
@@ -128,7 +128,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     ENDIF.
 
     CASE mv_selectedkey.
-
       WHEN OTHERS.
 
         IF mv_selectedkey <> mv_selectedkey_tmp.
@@ -153,7 +152,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
           CATCH cx_root.
             RETURN.
         ENDTRY.
-
     ENDCASE.
 
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO FIELD-SYMBOL(<view_display>).
@@ -178,5 +176,4 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
-
 ENDCLASS.

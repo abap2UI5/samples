@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_125 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
 
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
                      )->input( client->_bind_edit( title ) ).
 
     client->view_display( tmp->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -53,15 +51,11 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'SET_VIEW'.
         display_view( ).
         client->message_toast_display( |{ title } - title changed| ).
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

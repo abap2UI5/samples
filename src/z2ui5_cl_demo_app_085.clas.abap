@@ -66,11 +66,11 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 
   METHOD sort.
+
     IF lv_sort_desc = abap_true.
       SORT mt_table BY productid ASCENDING.
       lv_sort_desc = abap_false.
@@ -267,7 +267,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       )->label( text = 'details' ).
 
 
-
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'OtherSuppliers'
                                    title          = 'Other Supplier'
@@ -310,11 +309,11 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       id             = `Detail`
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
-
   ENDMETHOD.
 
 
   METHOD view_display_master.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
@@ -389,7 +388,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
               ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -415,6 +413,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
       WHEN 'ONGOTOSUPPLIER'.
@@ -480,12 +479,13 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-    view_display_master( ).
 
+    view_display_master( ).
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
+
     mt_table = VALUE #(
         ( key = '1' productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30'
           dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
@@ -560,6 +560,5 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         ENDIF.
       ENDLOOP.
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

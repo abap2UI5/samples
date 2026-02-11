@@ -83,7 +83,6 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
                   enabled = abap_true ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 

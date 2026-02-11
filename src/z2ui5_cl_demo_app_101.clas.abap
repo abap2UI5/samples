@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_101 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
 
@@ -43,11 +42,11 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
     IF client->get( )-event = 'POST'.
       IF mv_value IS INITIAL.
         RETURN.
@@ -75,11 +74,11 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
                       ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_view_display.
+
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
@@ -109,6 +108,5 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
             convertlinkstoanchortags = `All` ).
 
     client->view_display( lo_view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

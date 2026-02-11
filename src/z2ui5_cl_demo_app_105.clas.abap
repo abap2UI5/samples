@@ -21,15 +21,14 @@ CLASS z2ui5_cl_demo_app_105 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
   METHOD display_view.
 
     mo_view_parent->input( value       = client->_bind_edit( mv_class_1 )
                            placeholder = `Input From Class 1` ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
 
@@ -37,14 +36,12 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
       client->message_box_display( `event sub app` ).
 
     ENDIF.
-
   ENDMETHOD.
 
 
   METHOD on_init.
 
     display_view( ).
-
   ENDMETHOD.
 
 
@@ -59,6 +56,5 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -14,6 +14,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -22,6 +23,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
+
 
   METHOD display_view.
 
@@ -53,8 +55,8 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
     DATA(xml) = view->stringify( ).
 
     client->view_display( xml ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
   ENDMETHOD.

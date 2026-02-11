@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-
     DATA(lv_style) = `<html:style type="text/css">body {` && |\n| &&
                                       `     font-family: Arial;` && |\n| &&
                                       `     font-size: 90%;` && |\n| &&
@@ -78,7 +77,6 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
                                       `</html:style>`.
 
 
-
     DATA(lv_html) = `` && |\n| &&
                     |\n| &&
                     `<h2 title="I'm a header">The title Attribute</h2>` && |\n| &&
@@ -100,7 +98,5 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
           )->html( lv_html ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
-
 ENDCLASS.

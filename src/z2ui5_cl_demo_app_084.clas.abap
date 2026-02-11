@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
 
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
@@ -46,7 +45,6 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
@@ -86,7 +84,6 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -130,7 +127,6 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         CLEAR screen.
         client->message_toast_display( 'View initialized' ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -153,7 +149,6 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         ( descr = 'Gray'   value = 'GRAY' )
         ( descr = 'Blue2'  value = 'BLUE2' )
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
-
   ENDMETHOD.
 
 
@@ -226,6 +221,5 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

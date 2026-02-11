@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_205 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
 
 
@@ -141,7 +140,6 @@ CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
                                          type = `Accept` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -156,6 +154,5 @@ CLASS z2ui5_cl_demo_app_205 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

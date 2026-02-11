@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
       ls_row-valuecolor = `Good`.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
-
   ENDMETHOD.
 
 
@@ -54,11 +53,9 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( 'sort ascending' ).
-
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( 'sort descending' ).
@@ -128,6 +125,5 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 *      RECEIVING
 *        result =
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

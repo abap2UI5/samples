@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_005 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
 
 
@@ -57,6 +56,5 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
             value2        = client->_bind_edit( value2 )
             change        = client->_event( 'SLIDER_CHANGE' ) ).
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

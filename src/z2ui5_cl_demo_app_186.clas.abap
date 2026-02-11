@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
 
@@ -38,7 +37,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
       `JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3` &&
       `/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQj` &&
       `LYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=`.
-
   ENDMETHOD.
 
 
@@ -47,10 +45,8 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
     IF client->get( )-event = 'BUTTON_DOWNLOAD'.
 
 
-
       client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -89,7 +85,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
                  press = client->_event( 'BUTTON_DOWNLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -106,6 +101,5 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_049 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
 
@@ -50,7 +49,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     IF mv_key = `VIEW_REFRESH`.
       z2ui5_view_display( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -68,7 +66,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -78,7 +75,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     mv_key = 'VIEW_REFRESH'.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
-
   ENDMETHOD.
 
 
@@ -115,6 +111,5 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
              info        = '{INFO}' ).
 
     client->view_display( lo_view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

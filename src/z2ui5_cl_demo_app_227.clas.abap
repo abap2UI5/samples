@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_227 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
 
@@ -59,7 +58,6 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
                                                      type = `Delete` ).
 
     client->view_display( page_02->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -74,6 +72,5 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -62,7 +62,6 @@ CLASS lcl_file_api IMPLEMENTATION.
            `    ENDIF.` && |\n| &&
            |\n| &&
            `  ENDMETHOD.   `.
-
   ENDMETHOD.
 
 
@@ -107,7 +106,6 @@ CLASS lcl_file_api IMPLEMENTATION.
                `        }` && |\n| &&
                `    }` && |\n| &&
                `}`.
-
   ENDMETHOD.
 
 
@@ -120,7 +118,6 @@ CLASS lcl_file_api IMPLEMENTATION.
                `function updateHeading() {` && |\n| &&
                `    document.getElementById('heading').innerHTML = 'Heading changed with JS';` && |\n| &&
                `}`.
-
   ENDMETHOD.
 
 
@@ -141,11 +138,11 @@ CLASS lcl_file_api IMPLEMENTATION.
                `      - lisp` && |\n| &&
                `      - fortran` && |\n| &&
                `      - erlang`.
-
   ENDMETHOD.
 
 
   METHOD read_text.
+
     r_result = `TXT test file` && |\n| &&
                `Purpose: Provide example of this file type` && |\n| &&
                `Document file type: TXT` && |\n| &&
@@ -167,5 +164,4 @@ CLASS lcl_file_api IMPLEMENTATION.
                `. The name is also used frequently in popular culture, for example in the Frank Capra film Meet John Doe. John Doe was ` &&
                `also the name of a 2002 American television series.`.
   ENDMETHOD.
-
 ENDCLASS.

@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
 
@@ -93,7 +92,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
                        enabled  = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -119,7 +117,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_EDIT'.
         check_editable_active = xsdbool( check_editable_active = abap_false ).
         LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
@@ -133,6 +130,5 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         INSERT VALUE #( ) INTO TABLE t_tab.
         client->view_model_update( ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

@@ -18,13 +18,11 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION PUBLIC.
     DATA device_width   TYPE string.
 
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS display_view.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                       )->label( `device_width`
                       )->input( client->_bind_edit( device_width )
       )->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -95,6 +92,5 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     IF client->get( )-event = 'BACK'.
       client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

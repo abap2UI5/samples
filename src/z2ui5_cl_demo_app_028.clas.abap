@@ -46,7 +46,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     IF client->get( )-event IS NOT INITIAL.
       z2ui5_on_event( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -64,7 +63,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -75,7 +73,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
-
   ENDMETHOD.
 
 
@@ -103,6 +100,5 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
              info        = '{INFO}' ).
 
     client->view_display( lo_view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

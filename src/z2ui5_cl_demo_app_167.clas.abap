@@ -53,7 +53,6 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
         ( `$event.oSource.oParent.sId` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -73,6 +72,5 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     ENDCASE.
 
     client->view_model_update( ).
-
   ENDMETHOD.
 ENDCLASS.

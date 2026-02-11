@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
     DATA mv_sel4 TYPE abap_bool.
     DATA mv_sel5 TYPE abap_bool.
     DATA mv_sel6 TYPE abap_bool.
@@ -27,7 +26,6 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
@@ -160,7 +158,6 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
               displayedvalue = `{PERCENT}` ).
 
     client->view_display( container->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -179,7 +176,6 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
       total_count = lines( counts ).
 
 
-
       render_tab_donut( ).
     ENDIF.
 
@@ -195,6 +191,5 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
 
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
 ENDCLASS.

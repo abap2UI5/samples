@@ -37,7 +37,6 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
 
@@ -75,7 +74,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
       id             = `test`
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
-
   ENDMETHOD.
 
 
@@ -96,7 +94,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
       id             = `test`
       method_insert  = 'addEndColumnPage'
       method_destroy = 'removeAllEndColumnPages' ).
-
   ENDMETHOD.
 
 
@@ -135,7 +132,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
               selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -162,7 +158,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'ROW_NAVIGATE'.
 
         IF client->get_event_arg( 1 ) IS NOT INITIAL.
@@ -173,7 +168,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
         client->nest_view_model_update( ).
         client->view_model_update( ).
         view_display_detail_detail( ).
-
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
@@ -188,6 +182,5 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
         view_display_detail( ).
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

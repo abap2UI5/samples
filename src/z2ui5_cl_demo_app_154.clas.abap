@@ -13,11 +13,11 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
   METHOD ui5_event.
+
     TYPES BEGIN OF ty_log_entry.
     TYPES msgnumber TYPE n LENGTH 6.
     TYPES msgty     TYPE c LENGTH 1.
@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
 
     CASE client->get( )-event.
-
       WHEN 'POPUP_BAPIRET'.
 
         DATA(lt_msg) = VALUE bapirettab(
@@ -51,7 +50,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
             ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' ) ).
 
         client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
-
       WHEN 'POPUP_BALLOG'.
 
         lt_bal = VALUE #(
@@ -59,8 +57,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
           ( msgid = 'MSG2' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '02' ) ).
 
         client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
-
-
       WHEN 'POPUP_EXCEPTION'.
         TRY.
             DATA(lv_dummy) = 1 / 0.
@@ -69,7 +65,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
         DATA(lo_app) = z2ui5_cl_pop_error=>factory( lx ).
         client->nav_app_call( lo_app ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -92,7 +87,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
             press = client->_event( 'POPUP_EXCEPTION' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -106,7 +100,5 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     ENDIF.
 
     ui5_event( ).
-
   ENDMETHOD.
-
 ENDCLASS.

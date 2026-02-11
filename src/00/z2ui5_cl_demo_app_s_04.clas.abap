@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
+
 
   METHOD display_view.
 
@@ -59,11 +59,12 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
                        )->input( value   = client->_bind_edit( unit )
                                  enabled = abap_false
                        )->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
   ENDMETHOD.
+
 
   METHOD z2ui5_set_data.
 
@@ -90,7 +91,5 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-
   ENDMETHOD.
-
 ENDCLASS.

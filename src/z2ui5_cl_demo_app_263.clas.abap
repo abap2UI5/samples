@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_263 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
 
 
@@ -63,7 +62,6 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
                              press      = client->_event( 'press' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -75,7 +73,6 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
       WHEN 'POPOVER'.
         z2ui5_display_popover( `hint_icon` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -91,7 +88,6 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -104,6 +100,5 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

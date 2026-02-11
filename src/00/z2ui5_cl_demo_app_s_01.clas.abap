@@ -35,10 +35,10 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
   METHOD initialize_view.
+
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
@@ -93,6 +93,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'BACK'.
         set_session_stateful( client   = client
@@ -119,6 +120,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
 
   METHOD set_session_stateful.
+
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
@@ -131,6 +133,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     TRY.
 
         CLEAR error.
@@ -159,8 +162,5 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     lock_counter = lcl_locking=>get_lock_counter( ).
     lock_text = |There are { lock_counter } SM12 locks|.
-
   ENDMETHOD.
-
 ENDCLASS.
-

@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_230 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_230 IMPLEMENTATION.
 
 
@@ -41,7 +40,6 @@ CLASS z2ui5_cl_demo_app_230 IMPLEMENTATION.
                                       )->segmented_button_item( text = `Off` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -56,6 +54,5 @@ CLASS z2ui5_cl_demo_app_230 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

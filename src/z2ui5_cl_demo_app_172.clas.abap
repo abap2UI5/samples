@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
   METHOD load_output_table.
@@ -61,7 +60,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     ENDDO.
 
     "Calculate percentages of the total line from user input
-
   ENDMETHOD.
 
 
@@ -74,16 +72,12 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     lt_event_arguments = client->get( )-t_event_arg.
 
     CASE client->get( )-event.
-
       WHEN 'LINK_CLICK'.
 
         lv_tab_index = lt_event_arguments[ 1 ].
 
         CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
-
-
-
       WHEN 'INPUT_CHANGE'.
 
 
@@ -98,8 +92,8 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD render_main_screen.
 
@@ -188,8 +182,8 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       type            = 'Number' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -203,8 +197,8 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
+
 
   METHOD calculate_sum.
 
@@ -223,7 +217,5 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     READ TABLE output INDEX 1 ASSIGNING <f_output>.
     ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO <f_input>.
     <f_input> = lv_sum.
-
-
   ENDMETHOD.
 ENDCLASS.

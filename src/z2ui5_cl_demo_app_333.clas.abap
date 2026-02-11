@@ -80,7 +80,5 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
     ENDTRY.
 
     result->mr_data = i_data.
-
   ENDMETHOD.
-
 ENDCLASS.

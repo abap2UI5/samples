@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
 
@@ -44,7 +43,6 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -74,7 +72,6 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
                           `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
       ( title = `first entry` author = `Developer` datetime = `01.01.2023`  authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is the beginning of a timeline` ) ).
-
   ENDMETHOD.
 
 
@@ -97,6 +94,5 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
         username    = `{AUTHOR}` ).
 
     client->view_display( lo_view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

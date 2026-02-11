@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_209 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
 
 
@@ -126,7 +125,6 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
                                   displayonly = abap_true ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -141,6 +139,5 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_055 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_055 IMPLEMENTATION.
 
 
@@ -36,13 +35,9 @@ CLASS z2ui5_cl_demo_app_055 IMPLEMENTATION.
         descr = 'this is a description' checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
-
-
-
   ENDMETHOD.
 ENDCLASS.

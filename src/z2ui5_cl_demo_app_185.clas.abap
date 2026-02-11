@@ -32,28 +32,20 @@ CLASS z2ui5_cl_demo_app_185 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
 
 
   METHOD on_event.
 
     CASE client->get( )-event.
-
       WHEN 'ONSELECTICONTABBAR'.
 
         CASE mv_selectedkey.
-
           WHEN space.
-
           WHEN OTHERS.
-
         ENDCASE.
-
       WHEN 'BACK'.
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -63,7 +55,6 @@ CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
                        ( id = '2' class = 'Z2UI5_CL_DEMO_APP_184'  count = '12' table = 'Z2UI5_T_01') ).
 
     mv_selectedkey = '1'.
-
   ENDMETHOD.
 
 
@@ -89,11 +80,11 @@ CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
     ENDLOOP.
 
     mo_main_page = lo_items.
-
   ENDMETHOD.
 
 
   METHOD render_sub_app.
+
     FIELD-SYMBOLS <view_display> TYPE any.
 
 
@@ -105,7 +96,6 @@ CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
     ENDIF.
 
     CASE mv_selectedkey.
-
       WHEN OTHERS.
 
         IF mv_selectedkey <> mv_selectedkey_tmp.
@@ -132,7 +122,6 @@ CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
           CATCH cx_root.
             RETURN.
         ENDTRY.
-
     ENDCASE.
 
     client->view_model_update( ).
@@ -166,6 +155,5 @@ CLASS z2ui5_cl_demo_app_185 IMPLEMENTATION.
 
     on_event( ).
     render_sub_app( ).
-
   ENDMETHOD.
 ENDCLASS.

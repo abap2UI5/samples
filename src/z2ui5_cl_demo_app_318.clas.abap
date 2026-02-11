@@ -73,7 +73,9 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -83,7 +85,6 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'PDF'.
 
 *        TRY.
@@ -197,15 +198,12 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 *  CATCH cx_root INTO DATA(e_txt).
 *    WRITE: / e_txt->get_text( ).
 *ENDTRY.
-
-
       WHEN 'DB_SAVE'.
         client->message_box_display( text = 'Upload successfull. File saved!'
                                      type = 'success' ).
       WHEN 'EDIT'.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).
-
       WHEN 'CLEAR'.
         mv_editor = ``.
     ENDCASE.

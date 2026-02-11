@@ -47,7 +47,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
     ENDIF.
 
 
-
     IF client->get( )-event = 'GO'.
       DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
       client->nav_app_call( app ).
@@ -64,12 +63,10 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 *    ENDIF.
 
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
 
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -90,8 +87,8 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
 
     client->view_model_update( ).
-
   ENDMETHOD.
+
 
   METHOD ui5_view_display.
 
@@ -111,8 +108,8 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
               i_client = client ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD xml_table.
 
@@ -144,8 +141,8 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
       cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -159,8 +156,8 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
       UP TO 10 ROWS.
 
     ms_data = VALUE #( mt_data[ 1 ] OPTIONAL ).
-
   ENDMETHOD.
+
 
   METHOD xml_form.
 
@@ -190,7 +187,5 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
                                               tab_index = index )
                    enabled = abap_false ).
     ENDLOOP.
-
   ENDMETHOD.
-
 ENDCLASS.

@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_032 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
 
 
@@ -47,25 +46,19 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
     z2ui5_on_render( ).
 
     CLEAR app-get.
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
       WHEN 'POST'.
         client->message_toast_display( app-get-t_event_arg[ 1 ] ).
-
       WHEN 'MYCC'.
         client->message_toast_display( 'MYCC event ' && mv_value ).
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -73,7 +66,6 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
 
     app-view_main = 'VIEW_MAIN'.
     mv_value = 'test'.
-
   ENDMETHOD.
 
 
@@ -106,6 +98,5 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
                             `</mvc:View>`.
 
     client->view_display( lv_xml ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_014 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
     DATA mv_sel7 TYPE abap_bool.
     DATA mv_sel8 TYPE abap_bool.
     DATA mv_sel9 TYPE abap_bool.
@@ -20,7 +19,6 @@ CLASS z2ui5_cl_demo_app_014 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_014 IMPLEMENTATION.
@@ -157,7 +155,6 @@ CLASS z2ui5_cl_demo_app_014 IMPLEMENTATION.
                                       displayedvalue = '9.9%' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -166,7 +163,6 @@ CLASS z2ui5_cl_demo_app_014 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-
 
 
       render_tab_line( ).

@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_293 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_293 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
@@ -87,7 +85,6 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
            )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -99,7 +96,6 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
       WHEN 'handleLinkPress'.
         client->message_box_display( `Link was clicked!` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -115,7 +111,6 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -129,6 +124,5 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

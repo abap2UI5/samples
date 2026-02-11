@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 
   METHOD ui5_on_event.
@@ -40,8 +39,8 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
         client->message_box_display( text = x->get_text( )
                                      type = `error` ).
     ENDTRY.
-
   ENDMETHOD.
+
 
   METHOD ui5_on_init.
 
@@ -53,7 +52,6 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
       ( key = 'A05' text = 'T5' ) ).
 
     gt_sel_multi2 = VALUE #( ( `A01` ) ).
-
   ENDMETHOD.
 
 
@@ -84,10 +82,11 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                             press = client->_event( 'BUTTON_POST' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -98,4 +97,3 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     ui5_on_event( ).
   ENDMETHOD.
 ENDCLASS.
-

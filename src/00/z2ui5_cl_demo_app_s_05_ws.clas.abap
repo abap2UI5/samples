@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
 
     producer ?= cl_amc_channel_manager=>create_message_producer( i_application_id = c_amc_application_id
                                                                  i_channel_id     = c_channel_id ).
-
   ENDMETHOD.
 
 
@@ -54,7 +53,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
       CATCH cx_root INTO DATA(error).
         RAISE SHORTDUMP error.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -71,7 +69,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
       CATCH cx_root INTO DATA(error).
         RAISE SHORTDUMP error.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -83,7 +80,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
       CATCH cx_root INTO DATA(error).
         RAISE SHORTDUMP error.
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -94,14 +90,11 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
       FIELDS COUNT( * )
       WHERE channel_id = @( to_lower( |{ c_amc_application_id }{ c_channel_id }| ) )
       INTO @result.
-
   ENDMETHOD.
 
 
   METHOD send.
 
     get_producer( )->send( i_message ).
-
   ENDMETHOD.
-
 ENDCLASS.

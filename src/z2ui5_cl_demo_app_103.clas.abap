@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_103 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
 
@@ -28,15 +27,14 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
 
+  METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
@@ -67,6 +65,5 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

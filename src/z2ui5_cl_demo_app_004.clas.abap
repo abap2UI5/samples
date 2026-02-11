@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
 
@@ -31,13 +30,10 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_ROUNDTRIP'.
         client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
-
       WHEN 'BUTTON_RESTART'.
         client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
-
       WHEN 'BUTTON_CHANGE_VIEW'.
         CASE mv_view_main.
           WHEN 'MAIN'.
@@ -45,11 +41,9 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
           WHEN 'SECOND'.
             z2ui5_view_main_display( ).
         ENDCASE.
-
       WHEN 'BUTTON_ERROR'.
         DATA(lv_dummy) = 1 / 0.
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -85,7 +79,6 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
                 press = client->_event( 'BUTTON_ERROR' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -107,6 +100,5 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
                 press = client->_event( 'BUTTON_CHANGE_VIEW' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

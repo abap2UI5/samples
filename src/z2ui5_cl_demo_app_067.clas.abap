@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
     DATA numeric           TYPE n LENGTH 12.
 
 
-
   PROTECTED SECTION.
 
   PRIVATE SECTION.
@@ -113,7 +112,5 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                             path = abap_true ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
-
 ENDCLASS.

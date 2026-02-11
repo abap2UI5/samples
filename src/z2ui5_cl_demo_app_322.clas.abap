@@ -44,8 +44,5 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
       client->set_push_state( `/head/pos/` && client->get( )-s_draft-id ).
     ENDIF.
     client->message_toast_display( `data updated` ).
-
-
   ENDMETHOD.
-
 ENDCLASS.

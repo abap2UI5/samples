@@ -25,8 +25,8 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
       display_view( client ).
     ENDIF.
     on_event( client ).
-
   ENDMETHOD.
+
 
   METHOD display_view.
 
@@ -56,15 +56,13 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                                valuehelpiconsrc = 'sap-icon://keyboard-and-mouse' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
 
     IF client->get( )-event = 'CALL_KEYBOARD'.
       client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
     ENDIF.
-
   ENDMETHOD.
-
 ENDCLASS.

@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_268 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
 
 
@@ -117,7 +116,6 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
                    )->flex_item_data( growfactor = `1` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -129,7 +127,6 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
       WHEN 'handleStethoscopePress'.
         client->message_toast_display( `Over budget!` ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -146,7 +143,6 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -159,6 +155,5 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.

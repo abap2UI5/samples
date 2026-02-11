@@ -12,55 +12,43 @@ CLASS z2ui5_cl_demo_app_310 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_MESSAGE_BOX_CONFIRM'.
         client->message_box_display( text = 'Approve purchase order 12345?'
                                      type = 'confirm' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_ALERT'.
         client->message_box_display( text = 'The quantity you have reported exceeds the quantity planned.'
                                      type = 'alert' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_ERROR'.
         client->message_box_display( text                                                   = 'Select a team in the "Development" area.' && cl_abap_char_utilities=>cr_lf &&
                                             '"Marketing" isn’t assigned to this area.' type = 'error' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_INFO'.
         client->message_box_display( 'Your booking will be reserved for 24 hours.' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_WARNING'.
         client->message_box_display( text = 'The project schedule was last updated over a year ago.'
                                      type = 'warning' ).
-
       WHEN 'BUTTON_MESSAGE_BOX_SUCCESS'.
         client->message_box_display( text = 'Project 1234567 was created and assigned to team "ABC".'
                                      type = 'success' ).
-
       WHEN 'BUTTON_MESSAGE_TOAST'.
         client->message_toast_display( 'this is a message toast' ).
-
       WHEN 'BUTTON_MESSAGE_TOAST2'.
         client->message_toast_display( text                    = 'this is a message toast'
                                        at                      = 'left bottom'
             offset                                             = '0 -15'
                                        animationtimingfunction = `ease-in`
                                        class                   = 'my-style' ).
-
       WHEN 'BUTTON_MESSAGE_STRIP_INFO'.
         check_strip_active = abap_true.
         strip_type = 'Information'.
-
       WHEN 'BUTTON_MESSAGE_STRIP_ERROR'.
         check_strip_active = abap_true.
         strip_type = 'Error'.
-
       WHEN 'BUTTON_MESSAGE_STRIP_SUCCESS'.
         check_strip_active = abap_true.
         strip_type = 'Success'.

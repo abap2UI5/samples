@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -39,7 +38,6 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 
 
@@ -62,7 +60,6 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
                            text  = 'post'
                            press = client->_event( 'BUTTON_POST' )
             )->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -71,7 +68,6 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     IF client->get( )-event = 'BUTTON_POST'.
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -79,6 +75,5 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     product  = 'products'.
     quantity = '500'.
-
   ENDMETHOD.
 ENDCLASS.

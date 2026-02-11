@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
   ENDMETHOD.
 
 
@@ -92,7 +91,5 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
       CLEAR magic_key.
       client->view_model_update( ).
     ENDIF.
-
   ENDMETHOD.
-
 ENDCLASS.

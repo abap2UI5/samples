@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
@@ -74,11 +73,11 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
     client->popup_display( dialog->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD ui5_display_view.
+
     DATA(lv_save_state_js) = `function saveState() {` && |\n| &&
                              `  var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
                              `  sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
@@ -106,11 +105,11 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     client->view_display( page->button( text  = 'Open Popup here...'
                                         press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
-
   ENDMETHOD.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'
@@ -150,14 +149,10 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POPUP_TREE'.
         ui5_display_popup_tree_select( ).
-
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
-
       WHEN 'CANCEL'.
         client->popup_destroy( ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

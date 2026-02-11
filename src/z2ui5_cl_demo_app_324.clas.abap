@@ -33,7 +33,6 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
       CATCH cx_root INTO DATA(x).
         client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).
     ENDTRY.
-
   ENDMETHOD.
 
 
@@ -48,7 +47,5 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
       EXCEPTIONS
         text_not_found = 1
         OTHERS         = 2.
-
   ENDMETHOD.
-
 ENDCLASS.

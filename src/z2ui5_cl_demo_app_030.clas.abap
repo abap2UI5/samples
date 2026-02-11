@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
 
@@ -55,10 +54,8 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_ROUNDTRIP'.
         DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
-
       WHEN 'BUTTON_MSG_BOX'.
         client->message_box_display(
           text = 'this is a message box with a custom text'
@@ -165,6 +162,5 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
                  tooltip = 'pull-down' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

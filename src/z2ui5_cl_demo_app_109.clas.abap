@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_109 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
 
@@ -65,7 +64,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -108,7 +106,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                         width = `10rem` ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -123,7 +120,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
@@ -134,16 +130,13 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
         client->popover_destroy( ).
       WHEN 'POPOVER'.
         z2ui5_display_popover( `TEST` ).
-
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).
         client->popover_destroy( ).
-
       WHEN 'BUTTON_CANCEL'.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -152,6 +145,5 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     mv_placement = 'Left'.
     product  = 'tomato'.
     quantity = '500'.
-
   ENDMETHOD.
 ENDCLASS.

@@ -58,13 +58,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       WHEN 'ROW_SELECT'.
 
         row_select( ).
-
       WHEN OTHERS.
-
-
-
     ENDCASE.
   ENDMETHOD.
+
 
   METHOD row_select.
 
@@ -79,6 +76,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     render_popup( ).
   ENDMETHOD.
+
 
   METHOD prefill_popup_values.
 
@@ -106,11 +104,12 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+
   METHOD get_dfies.
 
     mt_dfies = z2ui5_cl_util_ext=>rtti_get_t_dfies_by_table_name( mv_table ).
-
   ENDMETHOD.
+
 
   METHOD render_popup.
 
@@ -133,7 +132,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       ENDIF.
 
 
-
       content->label( text = `text` ).
 
       content->input( value       = client->_bind_edit( <val> )
@@ -143,10 +141,11 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDLOOP.
 
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
+
   METHOD on_init.
+
     get_data( ).
 
     get_dfies( ).
@@ -156,11 +155,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     render_main( ).
   ENDMETHOD.
 
+
   METHOD init_layout.
-
-
-
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -184,7 +182,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                  )->toolbar_spacer( ).
 
 
-
     IF mo_parent_view IS INITIAL.
 
       client->view_display( page->stringify( ) ).
@@ -194,10 +191,11 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
-
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -209,14 +207,14 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     on_event( ).
 
     on_after_navigation( ).
-
   ENDMETHOD.
+
 
   METHOD set_app_data.
 
     mv_table = table.
-
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -250,8 +248,8 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
     <table_tmp> = <table>.
-
   ENDMETHOD.
+
 
   METHOD get_comp.
 
@@ -288,10 +286,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
   METHOD on_after_navigation.
-
-
-
   ENDMETHOD.
-
 ENDCLASS.

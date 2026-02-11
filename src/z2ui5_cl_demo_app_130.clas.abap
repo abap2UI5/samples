@@ -143,7 +143,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
 
@@ -171,21 +170,18 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       field->* = CORRESPONDING #( lr_fields->* ).
 
     ENDLOOP.
-
   ENDMETHOD.
 
 
   METHOD get_txt.
 
     result = 'Text'.
-
   ENDMETHOD.
 
 
   METHOD get_txt_l.
 
     result = 'Text'.
-
   ENDMETHOD.
 
 
@@ -219,7 +215,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' ) ).
 
 
-
     LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
         AND var         = mv_variant.
 
@@ -245,7 +240,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       ENDLOOP.
     ENDLOOP.
-
   ENDMETHOD.
 
 
@@ -255,13 +249,12 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123' )
       ( screen_name = 'TO'          var = 'E001'       descr = '123' )
       ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
-
   ENDMETHOD.
+
 
   METHOD on_event.
 
     varaint_page( ).
-
   ENDMETHOD.
 
 
@@ -286,9 +279,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       (   n = `BT`     v = `{LOW}...{HIGH}` )
       (   n = `NE`     v = `!(={LOW})` )
       (   n = `<leer>` v = `<leer>` ) ).
-
-
-
   ENDMETHOD.
 
 
@@ -296,9 +286,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     mv_variant     = mv_variant_copy.
     mv_description = mv_description_copy.
-
-
-
   ENDMETHOD.
 
 
@@ -322,12 +309,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       render_main( ).
 
     ENDIF.
-
   ENDMETHOD.
 
 
   METHOD render_main.
-
 
     IF mo_parent_view IS INITIAL.
 
@@ -344,7 +329,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
 
     ENDIF.
-
 
 
     page->header_content(
@@ -439,7 +423,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
   ENDMETHOD.
 
 
@@ -493,7 +476,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             type  = 'Emphasized' ).
 
     client->popup_display( lo_popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -526,7 +508,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                 press = client->_event( 'POPUP_VARIANT_CLOSE' )
                 type  = 'Emphasized' ).
     client->popup_display( popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -564,7 +545,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
        ).
 
     client->popup_display( lo_popup->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -579,15 +559,12 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       INSERT VALUE #( key = lv_value text = lv_value visible = abap_true editable = abap_false ) INTO TABLE field->t_token.
 
     ENDLOOP.
-
   ENDMETHOD.
 
 
   METHOD varaint_page.
 
-
     CASE client->get( )-event.
-
       WHEN `INPUT_SCREEN_CHANGE`.
 
         mv_screen_descr = VALUE #( mt_screens[ screen_name = mv_screen ]-descr OPTIONAL ).
@@ -600,23 +577,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         get_variants( ).
 
         render_main( ).
-
       WHEN `INPUT_VARIANT_CHANGE`.
 
         get_values( ).
 
         render_main( ).
-
       WHEN `POPUP_FILTER_OK`.
 
         popup_filter_ok( ).
-
       WHEN `POPUP_FILTER_ADD`.
 
         INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
 
         client->popup_model_update( ).
-
       WHEN `POPUP_FILTER_DELETE`.
 
         DATA(lt_item) = client->get( )-t_event_arg.
@@ -624,13 +597,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         DELETE mt_filter WHERE key = lt_item[ 1 ].
 
         client->popup_model_update( ).
-
       WHEN `POPUP_FILTER_DELETE_ALL`.
 
         mt_filter = VALUE #( ).
 
         client->popup_model_update( ).
-
       WHEN `CALL_POPUP_FILTER`.
 
         DATA(arg) = client->get( )-t_event_arg.
@@ -643,7 +614,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         mt_filter = lr_field->t_filter.
 
         render_popup_filter( ).
-
       WHEN 'CALL_POPUP_VARIANT'.
 
         LOOP AT mt_variants REFERENCE INTO DATA(lr_fields).
@@ -652,7 +622,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         ENDLOOP.
 
         render_popup_varaint( client ).
-
       WHEN 'POPUP_VARIANT_CLOSE'.
 
         mv_variant = VALUE #( mt_variants_pop[ selkz = abap_true ]-var OPTIONAL ).
@@ -663,30 +632,23 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         render_main( ).
       WHEN 'BUTTON_SAVE'.
-
-
       WHEN 'BUTTON_DELETE'.
 
         render_main( ).
-
       WHEN 'BUTTON_COPY'.
 
         render_pop_copy( ).
 
         render_main( ).
-
       WHEN 'POPUP_COPY_EXIT'.
 
         client->popup_destroy( ).
-
       WHEN 'POPUP_COPY_SAVE'.
 
         popup_copy_save( ).
 
         client->popup_destroy( ).
-
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -707,6 +669,5 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     mv_button_active = xsdbool( mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL ).
 
     client->view_model_update( ).
-
   ENDMETHOD.
 ENDCLASS.

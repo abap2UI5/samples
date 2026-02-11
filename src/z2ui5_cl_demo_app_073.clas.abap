@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
 
@@ -41,7 +40,6 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                           text  = 'open new tab'
                           press = client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
            )->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -55,16 +53,12 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
       WHEN 'BUTTON_OPEN_NEW_TAB'.
         mv_check_timer_active = abap_true.
         mv_url = `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123`.
         client->view_model_update( ).
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

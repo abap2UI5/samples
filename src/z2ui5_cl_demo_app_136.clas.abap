@@ -25,18 +25,16 @@ CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
 
   METHOD ui5_on_event.
+
     TRY.
 
         CASE client->get( )-event.
-
           WHEN 'START' OR 'CHANGE'.
             ui5_view_main_display( ).
-
           WHEN 'UPLOAD'.
 
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
@@ -58,15 +56,12 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
         client->message_box_display( text = x->get_text( )
                                      type = `error` ).
     ENDTRY.
-
   ENDMETHOD.
 
 
   METHOD ui5_view_init_display.
 
     ui5_view_main_display( ).
-
-
   ENDMETHOD.
 
 
@@ -113,7 +108,6 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
       upload      = client->_event( 'UPLOAD' ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -131,6 +125,5 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     ENDIF.
 
     ui5_on_event( ).
-
   ENDMETHOD.
 ENDCLASS.

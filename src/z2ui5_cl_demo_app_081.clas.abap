@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
 
@@ -62,8 +61,8 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_display_popover_list.
 
@@ -85,7 +84,6 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
-
   ENDMETHOD.
 
 
@@ -130,8 +128,8 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                       id    = 'TEST' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -144,33 +142,26 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
-
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
       WHEN 'SEL_CHANGE'.
         DATA(lt_sel) = mt_tab.
         DELETE lt_sel WHERE selected IS INITIAL.
-
       WHEN 'POPOVER_LIST'.
         z2ui5_display_popover_list( `TEST` ).
-
       WHEN 'POPOVER'.
         z2ui5_display_popover( `TEST` ).
-
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).
         client->popover_destroy( ).
-
       WHEN 'BUTTON_CANCEL'.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
     ENDCASE.
-
   ENDMETHOD.
 
 
@@ -185,6 +176,5 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                       ( id = `2` name = `name2` )
                       ( id = `3` name = `name3` )
                       ( id = `4` name = `name4` ) ).
-
   ENDMETHOD.
 ENDCLASS.

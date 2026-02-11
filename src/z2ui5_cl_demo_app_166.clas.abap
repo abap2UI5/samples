@@ -33,7 +33,6 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
 
@@ -59,7 +58,6 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
     page->input( client->_bind_edit( val = ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -84,6 +82,5 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
       set_view( ).
     ENDIF.
     client->view_model_update( ).
-
   ENDMETHOD.
 ENDCLASS.

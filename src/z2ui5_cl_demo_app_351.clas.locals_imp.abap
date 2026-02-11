@@ -27,6 +27,7 @@ ENDCLASS.
 
 CLASS zcl_2ui5_start IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     TRY.
         IF client->check_on_init( ) OR client->check_on_navigated( )..
           DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -65,6 +66,7 @@ ENDCLASS.
 CLASS zcl_2ui5_lock IMPLEMENTATION.
 
   METHOD initialize_view.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
@@ -83,13 +85,16 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD set_session_stateful.
+
     client->set_session_stateful( stateful ).
     client->view_model_update( ).
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     TRY.
         IF check_initialized = abap_false.
           check_initialized = abap_true.

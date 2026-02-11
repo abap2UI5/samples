@@ -10,14 +10,12 @@ CLASS z2ui5_cl_demo_app_124 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
-
       WHEN 'ON_SCAN_SUCCESS'.
         client->message_box_display( `Scan finished!`).
         DATA(lt_arg) = client->get( )-t_event_arg.
@@ -27,11 +25,9 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
         "...
         client->view_model_update( ).
         RETURN.
-
       WHEN 'BACK'.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
-
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
@@ -52,6 +48,5 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                         scansuccess = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
                         dialogtitle = `Barcode Scanner`
            )->stringify( ) ).
-
   ENDMETHOD.
 ENDCLASS.

@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
       END OF screen.
 
 
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -23,7 +22,6 @@ CLASS z2ui5_cl_demo_app_022 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
@@ -48,7 +46,6 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
             state        = 'Success' ).
 
     client->view_display( view->stringify( ) ).
-
   ENDMETHOD.
 
 
@@ -63,6 +60,5 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
     ENDIF.
 
     on_event( client ).
-
   ENDMETHOD.
 ENDCLASS.
