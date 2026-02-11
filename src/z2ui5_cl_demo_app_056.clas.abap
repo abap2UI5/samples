@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     view = view->shell( )->page( id = `page_main`
              title                  = 'abap2UI5 - Select-Options'
              navbuttonpress         = client->_event( 'BACK' )
-             shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+             shownavbutton          = client->check_app_prev_stack( )
         )->get_parent( ).
 
     DATA(vbox) = view->vbox( ).

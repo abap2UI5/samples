@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
                                  class = `sapUiContentPadding`
              title                     = 'abap2UI5 - Sample Templating I'
              navbuttonpress            = client->_event( 'BACK' )
-             shownavbutton             = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton             = client->check_app_prev_stack( ) ).
 
     view->table( items = client->_bind( mt_data )
       )->columns(

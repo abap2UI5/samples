@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     DATA(page1) = view->page( id = `page_main`
             title                = 'abap2UI5 - sap.ui.table.Table Features'
             navbuttonpress       = client->_event( 'BACK' )
-            shownavbutton        = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            shownavbutton        = client->check_app_prev_stack( )
             class                = 'sapUiContentPadding' ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true

@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
            showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title                         = 'abap2UI5 - IconTabBar'
             navbuttonpress                = client->_event( 'BACK' )
-            shownavbutton                 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+            shownavbutton                 = client->check_app_prev_stack( )
             class                         = 'sapUiContentPadding' ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'

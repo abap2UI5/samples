@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
     lr_view = lr_view->shell( )->page( id = `page_main`
              title                        = 'abap2UI5 - Demo Wizard Control'
              navbuttonpress               = client->_event( 'BACK' )
-             shownavbutton                = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton                = client->check_app_prev_stack( ) ).
 
     DATA(lr_wizard) = lr_view->wizard( ).
     DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'Step1'

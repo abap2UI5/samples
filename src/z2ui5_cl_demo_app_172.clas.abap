@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         id              = `page`
         title           = 'abap2UI5 - Demo ui.table'
         navbuttonpress  = client->_event( 'BACK' )
-          shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
+          shownavbutton = client->check_app_prev_stack( )
         )->header_content(
         )->link(
         )->get_parent( ).

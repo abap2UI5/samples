@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     DATA(page1) = view->page( id = `page_main`
             title                = 'abap2UI5 - List Report Features'
             navbuttonpress       = client->_event( 'BACK' )
-            shownavbutton        = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+            shownavbutton        = client->check_app_prev_stack( ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
