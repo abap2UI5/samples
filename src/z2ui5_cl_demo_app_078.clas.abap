@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION PUBLIC FINAL CREATE PUBLIC.
         editable TYPE abap_bool,
       END OF ty_s_token.
 
-    DATA mv_value          TYPE string.
     DATA mt_token          TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA mt_tokens_added TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     DATA mt_tokens_removed TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.

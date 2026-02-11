@@ -22,10 +22,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     DATA
       t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
     DATA mv_layout TYPE string .
-    DATA mv_title TYPE string .
-    DATA check_initialized TYPE abap_bool .
-    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
-    DATA mv_check_enabled_02 TYPE abap_bool .
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view .
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
 

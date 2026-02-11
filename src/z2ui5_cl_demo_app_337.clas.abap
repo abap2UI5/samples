@@ -49,16 +49,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
       client->nav_app_call( app ).
     ENDIF.
 
-*    " Kommen wir aus einer anderen APP
-*    IF client->get( )-check_on_navigated = abap_true.
-*      TRY.
-*          " Kommen wir aus einer anderen APP
-*          DATA(obj) = CAST z2ui5_cl_demo_app_336( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-*          get_data( ).
-*        CATCH cx_root.
-*      ENDTRY.
-*    ENDIF.
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).

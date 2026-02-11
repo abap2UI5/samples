@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     DATA mv_filter TYPE string .
     DATA mv_sort_descending TYPE abap_bool .
     DATA mv_group_descending TYPE abap_bool .
-    DATA mv_group_desc_str TYPE string VALUE `false` ##NO_TEXT.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

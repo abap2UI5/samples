@@ -46,8 +46,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD render_screen.
 
-    DATA lv_script TYPE string.
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell(

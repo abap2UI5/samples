@@ -2,8 +2,6 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_value          TYPE string.
-
     METHODS get_example_pdf
       RETURNING
         VALUE(result) TYPE string.

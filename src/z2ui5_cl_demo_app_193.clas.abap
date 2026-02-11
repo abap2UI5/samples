@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_193 DEFINITION PUBLIC.
 
     DATA mt_kopf  TYPE REF TO data.
     DATA mt_pos   TYPE REF TO data.
-    DATA mt_keyva TYPE ty_t_key_values.
 
     DATA mt_kopf_xml  TYPE string.
     DATA mt_pos_xml   TYPE string.

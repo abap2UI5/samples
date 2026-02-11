@@ -17,10 +17,8 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 
     DATA field_01  TYPE string.
     DATA field_02 TYPE string.
-    DATA focus_id TYPE string.
     DATA selstart TYPE string.
     DATA selend TYPE string.
-    DATA update_focus TYPE abap_bool.
 
     DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
 

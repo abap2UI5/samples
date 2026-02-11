@@ -41,16 +41,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
                           text  = 'Confirm'
                           press = client->_event( 'POPUP_CONFIRM' )
                           type  = 'Emphasized' ).
-*                  )->get_parent(
-*                  )->footer( )->overflow_toolbar(
-*                      )->toolbar_spacer(
-*                      )->button(
-*                          text  = 'Cancel'
-*                          press = client->_event( 'POPUP_CANCEL' )
-*                      )->button(
-*                          text  = 'Confirm'
-*                          press = client->_event( 'POPUP_CONFIRM' )
-*                          type  = 'Emphasized' ).
 
     client->popup_display( view->stringify( ) ).
   ENDMETHOD.

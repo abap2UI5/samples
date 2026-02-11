@@ -24,9 +24,6 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
     DATA mv_init     TYPE abap_bool.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
 
-    DATA mr_input  TYPE REF TO data.
-    DATA mr_screen TYPE REF TO data.
-
     METHODS on_init.
     METHODS on_event.
     METHODS view_build.

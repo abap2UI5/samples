@@ -22,10 +22,7 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
         key    TYPE string,
       END OF ty_s_filter_pop .
 
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
     DATA mv_check_active TYPE abap_bool.
     DATA:
       BEGIN OF screen,
@@ -72,9 +69,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_on_event.
-
-    DATA lt_arg TYPE string_table.
-    DATA ls_arg TYPE string.
 
     IF client->get( )-event = `LOAD`.
 

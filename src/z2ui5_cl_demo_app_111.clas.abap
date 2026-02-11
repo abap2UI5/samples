@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
     DATA mv_search_value TYPE string .
     DATA mt_table TYPE ty_t_table .
-    DATA mv_key TYPE string .
     DATA mv_product TYPE string .
     DATA mv_create_date TYPE string .
     DATA mv_create_by TYPE string .

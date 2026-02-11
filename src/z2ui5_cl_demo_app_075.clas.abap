@@ -6,9 +6,6 @@ CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
     DATA mv_path TYPE string.
     DATA mv_value TYPE string.
-    DATA mr_table TYPE REF TO data.
-    DATA mv_check_edit TYPE abap_bool.
-    DATA mv_check_download TYPE abap_bool.
 
     DATA mv_file TYPE string.
 

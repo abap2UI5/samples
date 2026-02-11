@@ -98,8 +98,6 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
   METHOD render_screen.
 
-    DATA lv_script TYPE string.
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( ns   = `html`
                     name = `style` )->_cc_plain_xml( `.SICursorStyle:hover {` &&

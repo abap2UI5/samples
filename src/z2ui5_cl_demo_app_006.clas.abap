@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
-    DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
     METHODS refresh_data.
 

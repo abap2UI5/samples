@@ -3,14 +3,6 @@ CLASS z2ui5_cl_demo_app_121 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA longitude TYPE string.
-    DATA latitude TYPE string.
-    DATA altitude TYPE string.
-    DATA speed TYPE string.
-    DATA altitudeaccuracy TYPE string.
-    DATA accuracy TYPE string.
-    DATA check_initialized TYPE abap_bool .
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

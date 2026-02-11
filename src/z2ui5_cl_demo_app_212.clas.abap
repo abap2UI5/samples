@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display      TYPE abap_bool.
-    DATA mv_view_model_update TYPE abap_bool.
     DATA mo_parent_view       TYPE REF TO z2ui5_cl_xml_view.
     DATA mt_table             TYPE REF TO data.
     DATA mt_table_tmp         TYPE REF TO data.

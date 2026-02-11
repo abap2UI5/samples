@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
       END OF ty_feed.
 
     DATA mt_feed TYPE TABLE OF ty_feed.
-    DATA ms_feed TYPE ty_feed.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

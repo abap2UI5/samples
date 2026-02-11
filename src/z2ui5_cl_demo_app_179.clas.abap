@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client .
-    DATA check_initialized TYPE abap_bool .
 
     METHODS set_view .
     METHODS set_mock_data .

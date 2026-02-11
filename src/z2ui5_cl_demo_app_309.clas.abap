@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_initialized TYPE abap_bool.
-    DATA mv_url TYPE string.
 
     METHODS on_event.
     METHODS view_display.

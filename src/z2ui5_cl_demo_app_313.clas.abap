@@ -16,11 +16,6 @@ CLASS z2ui5_cl_demo_app_313 DEFINITION PUBLIC.
         valuecolor TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-
-    DATA check_ui5 TYPE abap_bool.
-    DATA mv_key TYPE string.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

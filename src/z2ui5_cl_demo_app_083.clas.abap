@@ -47,7 +47,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
       END OF ty_s_token.
 
     DATA mv_value       TYPE string.
-    DATA mv_value2      TYPE string.
     DATA mt_token       TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
 
     DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
