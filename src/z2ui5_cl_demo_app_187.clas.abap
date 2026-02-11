@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
     DATA ls_msg TYPE bapiret2.
 
-
     IF client->check_on_init( ).
 
       client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
@@ -42,7 +41,6 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
                   no = `001` ).
         client->message_box_display( ls_msg2 ).
       WHEN 'BAPIRET'.
-
 
         ls_msg = VALUE #( id = 'NET' number = '001' ).
         client->message_box_display( ls_msg ).

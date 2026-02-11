@@ -14,14 +14,11 @@ CLASS z2ui5_cl_demo_app_118 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     DATA problematic_rows TYPE t_rows.
     DATA these_are_fine_rows TYPE t_rows.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -42,7 +39,6 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
         ( id = 5 descr = 'Fifth row' adate = sy-datum atime = sy-uzeit ) ).
 
     ENDIF.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -78,7 +74,6 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->text( '{DESCR}'
                  )->text( '{ADATE}'
                  )->text( '{ATIME}' ).
-
 
     DATA(tab_ok) = page->table(
                         mode  = 'MultiSelect'

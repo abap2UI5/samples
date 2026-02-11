@@ -5,14 +5,11 @@ CLASS z2ui5_cl_demo_app_270 DEFINITION PUBLIC.
     DATA name TYPE string.
     DATA color TYPE string.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 

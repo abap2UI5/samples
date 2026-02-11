@@ -56,7 +56,6 @@ CLASS lcl_locking IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD get_lock_counter.
 
     DATA enqueue_table TYPE STANDARD TABLE OF ty_seqg3.

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -139,12 +138,9 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
 
-
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
-
 
   METHOD get_fields.
 
@@ -172,18 +168,15 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_txt.
 
     result = 'Text'.
   ENDMETHOD.
 
-
   METHOD get_txt_l.
 
     result = 'Text'.
   ENDMETHOD.
-
 
   METHOD get_values.
 
@@ -214,7 +207,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = 'TO'           var = 'E001      ' field = 'PROCTY'     guid = '663192E9D70C1EEE8E87DD8D1EB8C7F5' sign = 'I'   opt = 'EQ' )
       ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' ) ).
 
-
     LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
         AND var         = mv_variant.
 
@@ -242,7 +234,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_variants.
 
     mt_variants = VALUE #(
@@ -251,12 +242,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     varaint_page( ).
   ENDMETHOD.
-
 
   METHOD on_init.
 
@@ -281,13 +270,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       (   n = `<leer>` v = `<leer>` ) ).
   ENDMETHOD.
 
-
   METHOD popup_copy_save.
 
     mv_variant     = mv_variant_copy.
     mv_description = mv_description_copy.
   ENDMETHOD.
-
 
   METHOD popup_filter_ok.
 
@@ -311,7 +298,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD render_main.
 
     IF mo_parent_view IS INITIAL.
@@ -329,7 +315,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
 
     ENDIF.
-
 
     page->header_content(
        )->get_parent( ).
@@ -353,7 +338,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             showvaluehelp = abap_false
 *            editable         = abap_false
             enabled       = abap_false ).
-
 
     grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
             )->content( 'form'
@@ -425,7 +409,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD render_popup_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -478,7 +461,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD render_popup_varaint.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -510,7 +492,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD render_pop_copy.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -541,12 +522,10 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
             press   = client->_event( 'POPUP_COPY_SAVE' )
             type    = 'Emphasized'
-            enabled = `{= ${MV_VARIANT_COPY} !== "" }`
-       ).
+            enabled = `{= ${MV_VARIANT_COPY} !== "" }` ).
 
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD set_token.
 
@@ -560,7 +539,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     ENDLOOP.
   ENDMETHOD.
-
 
   METHOD varaint_page.
 
@@ -650,7 +628,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

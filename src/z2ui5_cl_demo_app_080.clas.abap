@@ -39,7 +39,6 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_display_view.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
@@ -47,9 +46,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_view.
 
@@ -71,7 +68,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
                                                           rows              = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers   = abap_true ).
-
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
@@ -100,7 +96,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client     = client.
@@ -117,7 +112,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     IF client->get( )-event = 'AppSelected'.
@@ -125,7 +119,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
       client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

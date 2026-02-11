@@ -31,9 +31,7 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -70,14 +68,12 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'POPOVER'.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -92,7 +88,6 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -113,7 +108,6 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
         ( value_state = 'Error' ) ).
 
       " Use field symbols to concatenate the string and store it in the label column
-
 
       LOOP AT lt_a_data ASSIGNING <fs_a_data>.
         <fs_a_data>-label = s_text && ` ` && <fs_a_data>-value_state.

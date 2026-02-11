@@ -20,9 +20,7 @@ CLASS z2ui5_cl_demo_app_261 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -55,7 +53,6 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -65,7 +62,6 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
         client->message_toast_display( `The news content is pressed.` ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -80,7 +76,6 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

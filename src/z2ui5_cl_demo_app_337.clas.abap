@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_337 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -38,14 +37,12 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
       get_data( ).
 
-
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_data )
                                                       vis_cols = 5 ).
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_data )
                                                         vis_cols = 3 ).
       ui5_view_display( client ).
     ENDIF.
-
 
     IF client->get( )-event = 'GO'.
       DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
@@ -62,12 +59,10 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 *      ENDTRY.
 *    ENDIF.
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
@@ -85,10 +80,8 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
 
-
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD ui5_view_display.
 
@@ -109,7 +102,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD xml_table.
 
@@ -143,7 +135,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     SELECT id,
@@ -157,7 +148,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
     ms_data = VALUE #( mt_data[ 1 ] OPTIONAL ).
   ENDMETHOD.
-
 
   METHOD xml_form.
 

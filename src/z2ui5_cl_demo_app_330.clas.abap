@@ -22,9 +22,7 @@ CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -320,14 +318,12 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -342,7 +338,6 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

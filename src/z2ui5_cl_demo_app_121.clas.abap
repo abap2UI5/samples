@@ -15,9 +15,7 @@ CLASS z2ui5_cl_demo_app_121 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -28,10 +26,8 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 
-
       RETURN.
     ENDIF.
-
 
     "user command
     CASE client->get( )-event.
@@ -42,7 +38,6 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
         RETURN.
     ENDCASE.
-
 
     "render view
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

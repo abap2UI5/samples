@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_324 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     METHODS call_dynpro.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -34,7 +33,6 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD call_dynpro.
 

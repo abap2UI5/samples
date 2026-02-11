@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
 
     DATA lt_o_model TYPE TABLE OF ty_name.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -33,9 +32,7 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -79,14 +76,12 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -102,7 +97,6 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -122,8 +116,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
                  `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`
           icon      = `sap-icon://favorite`
           highlight = `Success`
-          info      = `Completed`
-         )
+          info      = `Completed` )
         ( title         = `wrapCharLimit is set to 100. Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                   `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
                   `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.`
@@ -131,8 +124,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
           icon          = `sap-icon://employee`
           highlight     = `Error`
           info          = `Incomplete`
-          wrapcharlimit = 100
-         )
+          wrapcharlimit = 100 )
         ( title         = `Title text`
           desc          = `Description text`
           icon          = `sap-icon://accept`

@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_299 DEFINITION PUBLIC.
         name       TYPE string,
       END OF ty_product_collection.
 
-
     DATA lt_product_collection  TYPE TABLE OF ty_product_collection.
     DATA lt_product_collection2 TYPE TABLE OF ty_product_collection.
 
@@ -31,9 +30,7 @@ CLASS z2ui5_cl_demo_app_299 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -76,14 +73,12 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -99,7 +94,6 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
       by_id = id ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -111,7 +105,6 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
   METHOD ui5_event.
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -60,7 +59,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     xml_parse( ).
@@ -69,7 +67,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     ui5_display( ).
     xml_stringify( ).
   ENDMETHOD.
-
 
   METHOD get_data.
 
@@ -83,7 +80,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
                       ( aa = 'a1' bb = 'b1' cc = 'c1' ) ).
 
     DATA(kopf) = REF #( mt_out ).
-
 
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 
@@ -103,14 +99,12 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD xml_parse.
 
     LOOP AT mt_new_data2 INTO DATA(lo_data).
       lo_data->xml_parse( ).
     ENDLOOP.
   ENDMETHOD.
-
 
   METHOD xml_stringify.
 

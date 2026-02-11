@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_331 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -33,7 +32,6 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD ui5_view_display.
 
@@ -64,7 +62,6 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD get_data.
 

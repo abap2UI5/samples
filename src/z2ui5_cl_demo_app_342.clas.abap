@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
         VALUE(result) TYPE abap_component_tab.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
   METHOD get_comp.
@@ -76,7 +75,6 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'SELECTION_CHANGE'.
@@ -87,10 +85,8 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD on_init.
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -152,12 +148,10 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     mv_table = table.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -179,7 +173,6 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD get_data.
 

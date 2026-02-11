@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_018 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
 
@@ -22,9 +21,7 @@ CLASS z2ui5_cl_demo_app_018 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_popup_input.
 
@@ -57,7 +54,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
     client->popup_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_display_view_main.
 
@@ -95,7 +91,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_display_view_second.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -121,7 +116,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -133,7 +127,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -153,7 +146,6 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
         z2ui5_display_view_second( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_attributes3,
@@ -48,9 +47,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
-
 
   METHOD detail_popover.
 
@@ -85,7 +82,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
       by_id = id ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -100,7 +96,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                         node = ls_node ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -182,7 +177,6 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -198,8 +192,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                             location       = `Walldorf`
                                             position       = `lobal Solutions Manager`
                                             email          = `sophie.dinter@example.com`
-                                            phone          = `+000 423 230 000`
-                                          )
+                                            phone          = `+000 423 230 000` )
                                           ( id         = `Ninsei`
                                             title      = `Yamasaki Ninsei`
                                             src        = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_GordonR.jpg`
@@ -209,8 +202,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                             location   = `Walldorf`
                                             position   = `Lead Markets Manage`
                                             email      = `yamasaki.ninsei@example.com`
-                                            phone      = `+000 423 230 002`
-                                         )
+                                            phone      = `+000 423 230 002` )
                                          ( id         = `Mills`
                                            title      = `Henry Mills`
                                            src        = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_MillerM.jpg`
@@ -220,8 +212,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                            location   = `Praha`
                                            position   = `Sales Manager`
                                            email      = `henry.mills@example.com`
-                                           phone      = `+000 423 232 003`
-                                        )
+                                           phone      = `+000 423 232 003` )
                                         ( id         = `Polak`
                                           title      = `Adam Polak`
                                           src        = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/male_PlatteR.jpg`
@@ -229,8 +220,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                           location   = `Praha`
                                           position   = `Marketing Specialist`
                                           email      = `adam.polak@example.com`
-                                          phone      = `+000 423 232 004`
-                                       )
+                                          phone      = `+000 423 232 004` )
                                        ( id          = `Sykorova`
                                           title      = `Vlasta Sykorova`
                                           src        = `https://ui5.sap.com/test-resources/sap/suite/ui/commons/demokit/images/people/female_SpringS.jpg`
@@ -238,9 +228,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                           location   = `Praha`
                                           position   = `Human Assurance Officer`
                                           email      = `vlasta.sykorova@example.com`
-                                          phone      = `+000 423 232 005`
-                                       )
-                                     )
+                                          phone      = `+000 423 232 005` ) )
                                      lines = VALUE #( ( from = `Dinter` to = `Ninsei` )
                                                       ( from = `Ninsei` to = `Mills` )
                                                       ( from = `Mills` to = `Polak` )

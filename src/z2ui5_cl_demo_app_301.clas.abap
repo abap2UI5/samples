@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_301 DEFINITION PUBLIC.
         overflow_mode TYPE string,
       END OF ty_product.
 
-
     DATA lt_o_data TYPE TABLE OF ty_product.
   PROTECTED SECTION.
 
@@ -32,9 +31,7 @@ CLASS z2ui5_cl_demo_app_301 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -90,14 +87,12 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -113,7 +108,6 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
       by_id = id ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -125,7 +119,6 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

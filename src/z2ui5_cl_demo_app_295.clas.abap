@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_295 DEFINITION PUBLIC.
     DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
     DATA s_text TYPE string.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,9 +31,7 @@ CLASS z2ui5_cl_demo_app_295 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -70,14 +67,12 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -93,7 +88,6 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
       by_id = id ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -105,7 +99,6 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

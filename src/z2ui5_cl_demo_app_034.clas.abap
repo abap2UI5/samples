@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
-
 
   METHOD view_main.
 
@@ -44,7 +42,6 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     mv_main_xml = view->stringify( ).
   ENDMETHOD.
-
 
   METHOD view_popup_bal.
 
@@ -78,7 +75,6 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     mv_popup_xml = popup->stringify( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

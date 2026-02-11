@@ -20,9 +20,7 @@ CLASS z2ui5_cl_demo_app_343 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
-
 
   METHOD get_comp.
 
@@ -55,7 +53,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     FIELD-SYMBOLS <table1> TYPE STANDARD TABLE.
@@ -78,7 +75,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -96,10 +92,8 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
         client->message_box_display( `success - reference not allowed for binding throwed` ).
     ENDTRY.
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

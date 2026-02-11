@@ -27,9 +27,7 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -37,7 +35,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
       client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD set_data.
 
@@ -50,7 +47,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
         ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -90,7 +86,6 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

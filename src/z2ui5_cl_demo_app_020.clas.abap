@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
-
     DATA mv_text TYPE string.
     DATA mv_cancel_text TYPE string.
     DATA mv_cancel_event TYPE string.
@@ -26,9 +25,7 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
-
 
   METHOD factory.
 
@@ -41,11 +38,7 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
     result->mv_confirm_event = i_confirm_event.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
-
-    IF client->check_on_init( ).
-    ENDIF.
 
     CASE client->get( )-event.
       WHEN mv_cancel_event OR mv_confirm_event.

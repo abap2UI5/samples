@@ -14,9 +14,7 @@ CLASS z2ui5_cl_demo_app_170 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
-
 
   METHOD simple_popup1.
 
@@ -74,7 +72,6 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD simple_popup2.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -95,7 +92,6 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -111,7 +107,6 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_event.
 
     CASE client->get( )-event.
@@ -126,7 +121,6 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
         simple_popup1( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

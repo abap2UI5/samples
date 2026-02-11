@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_242 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -46,7 +44,6 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.HTML/sample/sap.ui.core.sample.Html' ).
 
-
     DATA(layout) = page->vertical_layout(
                           class = `sapUiContentPadding`
                           width = `100%`
@@ -56,11 +53,9 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
                                                  `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
                                                  `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                                                  `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</div><a ` &&
-                                                 `target="_blank" href="http://en.wikipedia.org/wiki/Lorem_ipsum">Learn more about Lorem Ipsum ...</a></div>`
-                   ).
+                                                 `target="_blank" href="http://en.wikipedia.org/wiki/Lorem_ipsum">Learn more about Lorem Ipsum ...</a></div>` ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -68,7 +63,6 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -83,7 +77,6 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
         step_val_02 TYPE string VALUE '10',
       END OF screen.
 
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,9 +23,7 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -56,14 +53,12 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'POST'.
       client->message_box_display( 'success - values send to the server' ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

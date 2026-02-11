@@ -34,9 +34,7 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
-
 
   METHOD view_display.
 
@@ -62,7 +60,6 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
                                   var  = `L1`
                 )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
-
     view->label( text = `IF Template (with re-rendering)` ).
     view->switch( state  = client->_bind_edit( mv_flag )
                   change = client->_event( `CHANGE_FLAG` ) ).
@@ -76,10 +73,8 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
         )->icon( src   = `sap-icon://decline`
                  color = `red` ).
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -96,7 +91,6 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
       mt_layout = VALUE #( ( fname = 'NAME' merge = 'false' visible = 'true' )
                            ( fname = 'DATE' merge = 'false' visible = 'true' )
                            ( fname = 'AGE'  merge = 'false' visible = 'false' ) ).
-
 
       view_display( ).
 

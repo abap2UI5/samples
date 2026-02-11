@@ -37,7 +37,6 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_search.
@@ -51,9 +50,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
-
 
   METHOD set_selkz.
 
@@ -63,7 +60,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       <ls_table>-selkz = iv_selkz.
     ENDLOOP.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -76,7 +72,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -119,7 +114,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         ENDIF.
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -226,10 +220,8 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
                                                                 text  = 'Edit'
                                                                 press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -241,7 +233,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR' process = '70' process_state = 'Warning' )
         ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_search.
 

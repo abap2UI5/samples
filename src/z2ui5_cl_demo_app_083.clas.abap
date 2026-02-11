@@ -68,7 +68,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render_main.
@@ -80,9 +79,7 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -95,7 +92,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -149,7 +145,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
@@ -174,7 +169,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       (   n = `NE`     v = `!(<leer>)` )
       (   n = `<leer>` v = `<leer>` ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_main.
 
@@ -258,7 +252,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_render_pop_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -317,7 +310,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
   ENDMETHOD.

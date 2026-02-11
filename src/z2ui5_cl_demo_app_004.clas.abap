@@ -15,9 +15,7 @@ CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -45,7 +43,6 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
         DATA(lv_dummy) = 1 / 0.
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_view_main_display.
 
@@ -80,7 +77,6 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_second_display.
 

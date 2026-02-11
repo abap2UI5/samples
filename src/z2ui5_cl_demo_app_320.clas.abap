@@ -44,7 +44,6 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
@@ -84,7 +83,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
-
 
   METHOD display_avatar_group_view.
 
@@ -140,7 +138,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD display_individual_popover.
 
     DATA(individual_popover) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -175,7 +172,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     client->popover_display( xml   = individual_popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
-
 
   METHOD display_group_popover.
 
@@ -242,7 +238,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                              by_id = id ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
@@ -291,7 +286,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                                          t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ) ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD calculate_content_height.
 

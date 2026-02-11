@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
 
     DATA t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY.
 
-
     METHODS z2ui5_display_view.
     METHODS z2ui5_display_popup.
     METHODS z2ui5_display_popover
@@ -29,9 +28,7 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_popover.
 
@@ -54,7 +51,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
                              by_id = id ).
   ENDMETHOD.
 
-
   METHOD z2ui5_display_popup.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -65,8 +61,7 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
           contentwidth  = '50%' ).
 
     popup->message_view(
-            items      = client->_bind( t_msg
-             )
+            items      = client->_bind( t_msg )
             groupitems = abap_true
         )->message_item(
             type        = `{TYPE}`
@@ -87,7 +82,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
 
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_display_view.
 
@@ -123,7 +117,6 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

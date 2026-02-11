@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
         name       TYPE string,
       END OF ty_product_collection .
 
-
     DATA editable TYPE abap_bool.
     DATA enabled TYPE abap_bool.
     DATA lt_product_collection  TYPE TABLE OF ty_product_collection.
@@ -36,9 +35,7 @@ CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -118,14 +115,12 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
     client->view_display( page_02->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -140,7 +135,6 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

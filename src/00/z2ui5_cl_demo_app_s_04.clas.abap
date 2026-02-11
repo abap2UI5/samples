@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_s_04 DEFINITION PUBLIC.
     DATA numc              TYPE z2ui5_numc12.
     DATA numc_out          TYPE c LENGTH 12.
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -24,7 +23,6 @@ CLASS z2ui5_cl_demo_app_s_04 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -38,7 +36,6 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD display_view.
 
@@ -61,10 +58,8 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
                        )->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

@@ -15,9 +15,7 @@ CLASS z2ui5_cl_demo_app_012 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
-
 
   METHOD ui5_popup_decide.
 
@@ -38,7 +36,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_popup_info_frontend_close.
 
     DATA(popup)  = z2ui5_cl_xml_view=>factory_popup( ).
@@ -54,7 +51,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD ui5_view_display.
 
@@ -96,7 +92,6 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
     client->view_display( lo_main->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

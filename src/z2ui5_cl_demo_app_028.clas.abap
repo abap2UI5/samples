@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
@@ -30,9 +29,7 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -47,7 +44,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
       z2ui5_on_event( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -65,7 +61,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     mv_counter = 1.
@@ -74,7 +69,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

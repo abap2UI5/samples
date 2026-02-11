@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
   METHOD dispatch.
@@ -31,7 +30,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     ENDCASE.
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD render.
 
@@ -57,7 +55,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

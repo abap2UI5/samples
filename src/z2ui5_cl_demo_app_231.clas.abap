@@ -34,9 +34,7 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -118,7 +116,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD initialize.
 
     drs1-start = '20140202'.
@@ -137,7 +134,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     drs5-end   = '20191001'.
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'handleChange'.
@@ -155,7 +151,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

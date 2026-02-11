@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
     METHODS render_main.
@@ -34,13 +33,11 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD on_init.
 
     refresh_data( ).
     render_main( ).
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -81,7 +78,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
@@ -91,7 +87,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       on_init( ).
     ENDIF.
 
-
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = 'Frontend Lines <> Backend!'
@@ -100,7 +95,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
-
 
   METHOD refresh_data.
 
@@ -122,7 +116,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD add_data.
 

@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
   METHOD load_output_table.
@@ -62,7 +61,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     "Calculate percentages of the total line from user input
   ENDMETHOD.
 
-
   METHOD on_event.
 
     DATA: lt_event_arguments TYPE string_table,
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         client->message_toast_display( lv_message ).
       WHEN 'INPUT_CHANGE'.
 
-
         DATA(lv_id_event) = lt_event_arguments[ 1 ].
         lv_tab_index = lt_event_arguments[ 2 ].
         DATA(ls_row_submit) = output[ lv_tab_index ].
@@ -93,7 +90,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD render_main_screen.
 
@@ -184,7 +180,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -198,7 +193,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
-
 
   METHOD calculate_sum.
 

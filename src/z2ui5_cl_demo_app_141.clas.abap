@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 
     DATA t_bapiret TYPE bapirettab.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS ui5_view_display.
@@ -38,14 +37,11 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
     METHODS ui5_handle_event.
     METHODS ui5_init.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
-
 
   METHOD ui5_handle_event.
 
@@ -54,7 +50,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       ui5_popup_input( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD ui5_init.
 
@@ -66,7 +61,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
       ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
   ENDMETHOD.
-
 
   METHOD ui5_popup_input.
 
@@ -109,7 +103,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_view_display.
 
     DATA(css) = `` &&
@@ -121,7 +114,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                    `  lbl.setText('changed from js');` && |\n| &&
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&
                    `};`.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`
@@ -136,24 +128,18 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
 
-
     grid->simple_form( 'Inputs' )->content( 'form'
         )->label( '01'
         )->button(
             text  = 'Popup Get Input Values'
             press = client->_event( 'POPUP_TO_INPUT' ) ).
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->check_on_init( ).
-    ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
       ui5_view_display( ).

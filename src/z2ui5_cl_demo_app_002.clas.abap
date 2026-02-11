@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mt_combo TYPE ty_t_combo.
 
@@ -47,9 +46,7 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -63,7 +60,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -95,7 +91,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     screen = VALUE #(
@@ -116,7 +111,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         ( descr = 'Blue2'  value = 'BLUE2' )
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_rendering.
 
@@ -156,7 +150,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
             )->label( 'Time Begin/End'
             )->time_picker( client->_bind_edit( screen-time_start )
             )->time_picker( client->_bind_edit( screen-time_end ) ).
-
 
     DATA(form) = grid->get_parent( )->get_parent( )->grid( 'L12 M12 S12'
         )->content( 'layout'

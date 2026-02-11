@@ -17,9 +17,7 @@ CLASS z2ui5_cl_demo_app_158 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
-
 
   METHOD get_example_pdf.
 
@@ -60,7 +58,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
     result = `data:application/pdf;base64,` && result.
   ENDMETHOD.
 
-
   METHOD ui5_callback.
 
     TRY.
@@ -70,7 +67,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD ui5_display.
 
@@ -87,7 +83,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_event.
 
     IF client->get( )-event = 'POPUP'.
@@ -96,7 +91,6 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
       client->nav_app_call( lo_app ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA mv_initialized TYPE abap_bool .
@@ -37,9 +36,7 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -47,7 +44,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
       client->message_toast_display( 'BOOKED !!! ENJOY' ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -58,7 +54,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     mt_cities = VALUE #( ( text = `Berlin` key = `BR` )
                                                                                                        ( text = `London` key = `LN` )
@@ -104,7 +99,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
-
     DATA(card_2) = page->card( width = `300px`
                                class = `sapUiMediumMargin`
                      )->header( ns = `f`
@@ -129,7 +123,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

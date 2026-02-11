@@ -31,9 +31,7 @@ CLASS z2ui5_cl_demo_app_191 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -48,7 +46,6 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD on_init.
 
     mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_190'  count = '10' table = 'Z2UI5_T_11' )
@@ -58,7 +55,6 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
     mv_selectedkey = '1'.
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -84,11 +80,9 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
     mo_main_page = lo_items.
   ENDMETHOD.
 
-
   METHOD render_sub_app.
 
     FIELD-SYMBOLS <view_display> TYPE any.
-
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
@@ -128,7 +122,6 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
     IF <view_display> = abap_true.
@@ -143,7 +136,6 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

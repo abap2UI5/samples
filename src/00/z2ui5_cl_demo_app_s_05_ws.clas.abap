@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
 
   METHOD get_producer.
@@ -44,7 +43,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
     producer ?= cl_amc_channel_manager=>create_message_producer( i_application_id = c_amc_application_id
                                                                  i_channel_id     = c_channel_id ).
   ENDMETHOD.
-
 
   METHOD if_apc_wsp_extension~on_message.
 
@@ -54,7 +52,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
         RAISE SHORTDUMP error.
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD if_apc_wsp_extension~on_start.
 
@@ -71,7 +68,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD if_apc_wsp_extension~on_close.
 
     TRY.
@@ -82,7 +78,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_active_connections.
 
     SELECT
@@ -91,7 +86,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws IMPLEMENTATION.
       WHERE channel_id = @( to_lower( |{ c_amc_application_id }{ c_channel_id }| ) )
       INTO @result.
   ENDMETHOD.
-
 
   METHOD send.
 

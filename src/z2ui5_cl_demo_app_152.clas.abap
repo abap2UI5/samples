@@ -27,9 +27,7 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
-
 
   METHOD ui5_event.
 
@@ -61,7 +59,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -89,7 +86,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -107,7 +103,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     ui5_event( ).
   ENDMETHOD.
 
-
   METHOD ui5_callback.
 
     FIELD-SYMBOLS <row> TYPE ty_row.
@@ -122,7 +117,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         ENDIF.
 
         IF mv_multiselect = abap_false.
-
 
           ASSIGN ls_result-row->* TO <row>.
           client->message_box_display( `callback after popup to select: ` && <row>-title ).

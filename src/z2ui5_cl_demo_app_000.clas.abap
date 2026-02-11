@@ -26,9 +26,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -232,7 +230,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
-
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `Messages` ).
@@ -321,7 +318,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_185' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
-
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
@@ -435,7 +431,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_330' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
-
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
@@ -1430,7 +1425,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode   = 'LineMode'
                          class  = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
-
     panel->generic_tile( header    = 'Messages with Styles III'
                          subheader = 'More...'
                          press     = client->_event( 'z2ui5_cl_demo_app_084' )
@@ -1720,7 +1714,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
-
     panel->generic_tile( header    = 'Model XIV'
                          subheader = 'Check Error if Binding with Ref'
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_345' )
@@ -1743,7 +1736,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          press     = client->_event( 'z2ui5_cl_demo_app_349' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
-
 
     panel->generic_tile( header    = 'Date Format Error in internal table'
                          subheader = ''
@@ -1774,13 +1766,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
-
     panel->generic_tile( header    = 'Table with different OData Models'
                          subheader = ``
                          press     = client->_event( 'Z2UI5_CL_DEMO_APP_315' )
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
-
 
     panel->generic_tile( header    = 'Smart Multi Input'
                          subheader = ``
@@ -1844,7 +1834,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD expand_all.
 

@@ -17,9 +17,7 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -56,13 +54,10 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     page->_z2ui5( )->focus( focusid = `input` ).
 
-
     page->_z2ui5( )->dirty( client->_bind( dirty ) ).
-
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -82,7 +77,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD security_check_popup.
 
     client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
@@ -92,7 +86,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
                               i_button_text_confirm = `Leave Page`
                               i_button_text_cancel  = `Cancel` ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -111,7 +104,6 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD ui5_callback.
 

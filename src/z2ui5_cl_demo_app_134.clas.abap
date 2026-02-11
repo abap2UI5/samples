@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 
     DATA mv_scrollupdate TYPE abap_bool.
 
-
     DATA field_01  TYPE string.
     DATA field_02 TYPE string.
     DATA focus_id TYPE string.
@@ -37,9 +36,7 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -88,7 +85,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD init.
 
     field_01 = `this is a text`.
@@ -99,7 +95,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     INSERT VALUE #( n = 'id_page' ) INTO TABLE mt_scroll.
     display_view( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -13,9 +13,7 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -32,7 +30,6 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                     target = '_blank'
                     href   = `https://twitter.com/abap2UI5/status/1647175810917318657`
                 )->link(
-
 
             )->get_parent( ).
     page->link( text   = 'Documentation'
@@ -56,7 +53,6 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -79,7 +75,6 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
       WHEN OTHERS.
         mv_type = client->get( )-event.
     ENDCASE.
-
 
     display_view( ).
   ENDMETHOD.

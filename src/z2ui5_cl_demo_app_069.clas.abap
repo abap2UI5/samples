@@ -36,9 +36,7 @@ CLASS z2ui5_cl_demo_app_069 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
-
 
   METHOD view_display_app_01.
 
@@ -54,7 +52,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
   ENDMETHOD.
-
 
   METHOD view_display_app_02.
 
@@ -87,7 +84,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
       method_destroy = 'removeAllMidColumnPages' ).
   ENDMETHOD.
 
-
   METHOD view_display_master.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -110,7 +106,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

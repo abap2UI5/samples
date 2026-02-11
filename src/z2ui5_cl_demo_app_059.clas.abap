@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
@@ -31,9 +30,7 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -47,7 +44,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -65,7 +61,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
@@ -76,7 +71,6 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

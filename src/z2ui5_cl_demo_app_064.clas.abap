@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -40,7 +39,6 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
   PRIVATE SECTION.
@@ -50,9 +48,7 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
         iv_selkz TYPE abap_bool.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
-
 
   METHOD set_selkz.
 
@@ -62,7 +58,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       <ls_table>-selkz = iv_selkz.
     ENDLOOP.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -75,7 +70,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -100,7 +94,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
@@ -123,7 +116,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       navbuttonpress                 = client->_event_nav_app_leave( )
       shownavbutton                  = temp5
       class                          = 'sapUiContentPadding' ).
-
 
     layout = page1->vertical_layout( class = 'sapuicontentpadding'
                                      width = '100%' ).

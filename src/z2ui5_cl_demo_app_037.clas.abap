@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     DATA mv_load_cc    TYPE abap_bool.
     DATA mv_display_cc TYPE abap_bool.
 
@@ -25,9 +24,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
-
 
   METHOD get_js_custom_control.
 
@@ -68,7 +65,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                              `}); jQuery.sap.require("z2ui5.MyCC"); </html:script>`.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -80,7 +76,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_load_cc.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
@@ -91,7 +86,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                 delayms  = `0`
          )->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -112,7 +106,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         client->message_toast_display( `Custom Control input: ` && mv_value ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 

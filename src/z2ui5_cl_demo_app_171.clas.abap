@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
           RETURN.
         ENDIF.
 
-
         "callback after previous app.
         IF client->check_on_navigated( ).
 
@@ -25,7 +24,6 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
           "read attributes of previous app here...
           RETURN.
         ENDIF.
-
 
         "handle events..
         CASE client->get( )-event.

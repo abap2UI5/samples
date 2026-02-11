@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
     DATA mt_dfies             TYPE z2ui5_cl_util_ext=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
 
     METHODS on_event.
@@ -49,7 +48,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD on_event.
@@ -61,7 +59,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       WHEN OTHERS.
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD row_select.
 
@@ -76,7 +73,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     render_popup( ).
   ENDMETHOD.
-
 
   METHOD prefill_popup_values.
 
@@ -104,12 +100,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_dfies.
 
     mt_dfies = z2ui5_cl_util_ext=>rtti_get_t_dfies_by_table_name( mv_table ).
   ENDMETHOD.
-
 
   METHOD render_popup.
 
@@ -131,7 +125,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-
       content->label( text = `text` ).
 
       content->input( value       = client->_bind_edit( <val> )
@@ -142,7 +135,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_init.
 
@@ -155,10 +147,8 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     render_main( ).
   ENDMETHOD.
 
-
   METHOD init_layout.
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -181,7 +171,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                )->overflow_toolbar(
                  )->toolbar_spacer( ).
 
-
     IF mo_parent_view IS INITIAL.
 
       client->view_display( page->stringify( ) ).
@@ -192,7 +181,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -209,12 +197,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     on_after_navigation( ).
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     mv_table = table.
   ENDMETHOD.
-
 
   METHOD get_data.
 
@@ -250,7 +236,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     <table_tmp> = <table>.
   ENDMETHOD.
 
-
   METHOD get_comp.
 
     DATA index TYPE int4.
@@ -285,7 +270,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD on_after_navigation.
   ENDMETHOD.

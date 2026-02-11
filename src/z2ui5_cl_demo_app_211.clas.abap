@@ -24,11 +24,9 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
 
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
     METHODS render_main.
-
 
     METHODS render_sub_app.
 
@@ -36,9 +34,7 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -53,7 +49,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD on_init.
 
     mt_t002 = VALUE #( class = 'Z2UI5_CL_DEMO_APP_212'
@@ -63,7 +58,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     mv_selectedkey = '1'.
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -99,7 +93,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     mo_main_page = lo_items.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -116,7 +109,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     render_sub_app( ).
   ENDMETHOD.
-
 
   METHOD render_sub_app.
 

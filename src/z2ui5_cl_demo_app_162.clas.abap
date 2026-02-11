@@ -28,9 +28,7 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -42,7 +40,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_filter ) ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD set_data.
 
@@ -60,7 +57,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
       CHANGING
         val    = mt_table ).
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -102,7 +98,6 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -5,14 +5,12 @@ CLASS z2ui5_cl_demo_app_167 DEFINITION PUBLIC.
 
     DATA mv_value TYPE string.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
 
@@ -38,7 +36,6 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
                   press = client->_event( val = `EVENT_MODEL_VALUE` t_arg = VALUE #(
         ( `$` && client->_bind_edit( mv_value ) ) ) ) ).
 
-
     page->button( text  = `SOURCE_PROPERTY_TEXT`
                   press = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = VALUE #(
         ( `${$source>/text}` ) ) ) ).
@@ -54,7 +51,6 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -30,7 +29,6 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -74,7 +72,6 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     view->_z2ui5( )->focus( focusid = `inputApp` ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_event.
 

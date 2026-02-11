@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -67,7 +66,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                           )->button( text  = `Display`
                                      press = client->_event( `MAP_CONTAINER_DISPLAY` )
                )->stringify( ) ).
-
 
       RETURN.
     ENDIF.

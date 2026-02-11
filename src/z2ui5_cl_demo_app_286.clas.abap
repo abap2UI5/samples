@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_286 DEFINITION PUBLIC.
 
     DATA lt_o_model TYPE TABLE OF ty_name.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,9 +31,7 @@ CLASS z2ui5_cl_demo_app_286 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -76,14 +73,12 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'CLICK_HINT_ICON'.
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -98,7 +93,6 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

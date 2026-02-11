@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_349 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -78,10 +77,8 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
 
-
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD ui5_view_display.
 
@@ -102,7 +99,6 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD xml_table.
 
@@ -136,7 +132,6 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     SELECT id,
@@ -150,7 +145,6 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
     ms_data = VALUE #( mt_data[ 1 ] OPTIONAL ).
   ENDMETHOD.
-
 
   METHOD xml_form.
 

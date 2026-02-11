@@ -20,14 +20,12 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
     METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
@@ -253,7 +251,6 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
       ( language = 'E' currency = 'ZWR' currencyname = 'Zimbabwean Dollar (Old)' currencyshortname = 'Zimbabwe Dollar' ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -284,7 +281,6 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     DATA lt_range TYPE RANGE OF string.
@@ -294,7 +290,6 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
         z2ui5_view_display( ).
       WHEN 'ON_SUGGEST'.
 
-
         lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
 
         CLEAR mt_suggestion_out.
@@ -303,11 +298,9 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
 
-
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 
@@ -316,7 +309,6 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
        title          = 'abap2UI5 - Live Suggestion Event'
        navbuttonpress = client->_event_nav_app_leave( )
        shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).

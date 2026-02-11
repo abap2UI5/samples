@@ -32,9 +32,7 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -62,7 +60,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD set_data.
 
     mt_table = VALUE #(
@@ -75,7 +72,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
     DELETE mt_table WHERE product NOT IN mt_range.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -139,7 +135,6 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -65,9 +64,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     METHODS sort .
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
-
 
   METHOD sort.
 
@@ -79,7 +76,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       lv_sort_desc = abap_true.
     ENDIF.
   ENDMETHOD.
-
 
   METHOD view_display_detail.
 
@@ -129,8 +125,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              tooltip = 'Close Fullscreen Mode'
              enabled = SWITCH string( lv_layout
                                         WHEN 'TwoColumnsMidExpanded' THEN 'false'
-                                        WHEN 'MidColumnFullScreen'   THEN 'true'
-                                         )
+                                        WHEN 'MidColumnFullScreen'   THEN 'true' )
              press   = client->_event( 'ONEXITFULLSCREENMODE' )
           )->overflow_toolbar_button(
              icon    = `sap-icon://full-screen`
@@ -138,8 +133,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              type    = 'Transparent'
              enabled = SWITCH string( lv_layout
                                         WHEN 'TwoColumnsMidExpanded' THEN 'true'
-                                        WHEN 'MidColumnFullScreen' THEN 'false'
-                                         )
+                                        WHEN 'MidColumnFullScreen' THEN 'false' )
              tooltip = 'Fullscreen Mode'
              press   = client->_event( 'ONFULLSCREENMODE' )
           )->overflow_toolbar_button(
@@ -266,7 +260,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                           )->label( text = 'details'
       )->label( text = 'details' ).
 
-
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'OtherSuppliers'
                                    title          = 'Other Supplier'
@@ -302,7 +295,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              )->text( text = '{COUNTRY}'
              )->text( text = '{CITY}' ).
 
-
     check_detail_active = abap_true.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -310,7 +302,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       method_insert  = 'addMidColumnPage'
       method_destroy = 'removeAllMidColumnPages' ).
   ENDMETHOD.
-
 
   METHOD view_display_master.
 
@@ -341,7 +332,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 *            growingscrolltoload = abap_true
        items          = client->_bind( mt_table )
        sticky         = 'ColumnHeaders,HeaderToolbar' ).
-
 
     tab->header_toolbar( )->overflow_toolbar(
           )->search_field( id     = `SEARCH`
@@ -390,7 +380,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -410,7 +399,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -477,12 +465,10 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     view_display_master( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -537,7 +523,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     ls_detail = mt_table[ 1 ].
   ENDMETHOD.
-
 
   METHOD z2ui5_set_search.
 

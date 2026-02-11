@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client .
@@ -20,16 +19,13 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
-
 
   METHOD display_view.
 
     mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
                            placeholder = `Input From Class 2` ).
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -39,12 +35,10 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD on_init.
 
     display_view( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

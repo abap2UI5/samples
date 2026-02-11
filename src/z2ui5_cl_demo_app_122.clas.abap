@@ -17,16 +17,13 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION PUBLIC.
     DATA device_height  TYPE string.
     DATA device_width   TYPE string.
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS display_view.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -79,7 +76,6 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                       )->input( client->_bind_edit( device_width )
       )->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

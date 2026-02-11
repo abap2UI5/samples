@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -53,9 +52,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -70,13 +67,11 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     z2ui5_on_event( client ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
       WHEN 'REFRESH'.
         lv_text = lv_text + 10.
-
 
         client->view_model_update( ).
       WHEN 'BUTTON_SEND'.
@@ -87,7 +82,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
                                     id     = 'ppvr' ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -110,7 +104,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
         ( descr = 'Blue3'  value = 'BLUE3' ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -118,7 +111,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     view->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
-
 
     DATA(page) = view->shell(
          )->page(
@@ -147,7 +139,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_rendering_popover.
 
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
@@ -156,7 +147,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     client->popover_display( xml   = popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_rendering_popup.
 

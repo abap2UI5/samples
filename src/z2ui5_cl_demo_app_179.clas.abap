@@ -34,9 +34,7 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
-
 
   METHOD set_mock_data.
 
@@ -139,7 +137,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         data = mt_data ).
   ENDMETHOD.
 
-
   METHOD set_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -176,7 +173,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 *    result                    =
       ).
 
-
     DATA(gantt_container) = cont->gantt_chart_container( ).
 
 *    gantt_charts
@@ -202,7 +198,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
          `     }` && |\r\n| &&
          `}` ).
 
-
     DATA(row_settings) = table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
 *                                  shapes1 = `{path: 'TASK', templateShareable:false}`
 *                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
@@ -225,7 +220,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         successor   = `{SUCCTASKID}`
         predecessor = `{PREDECTASKID}` ).
 
-
     DATA(columns) = table->ui_columns( ).
     DATA(column) = columns->ui_column(
          id = 'OBJECTNAME' ).
@@ -236,8 +230,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                  '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
                  '    "dataType": "string",' && |\r\n| &&
                  '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n| &&
-                 '    "wrap": true}'
-      ).
+                 '    "wrap": true}' ).
 
     column->text( text = `Object Name` ).
     column->tree_template( )->label( text = `{OBJECTNAME}` ).
@@ -254,7 +247,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -267,7 +259,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
   ENDMETHOD.

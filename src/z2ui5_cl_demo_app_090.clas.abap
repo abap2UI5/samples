@@ -66,15 +66,12 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-
   PRIVATE SECTION.
     DATA mv_page TYPE string.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -92,7 +89,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
@@ -104,7 +100,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
         client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 
@@ -145,20 +140,17 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                           )->_generic( name   = `SortPanel`
                                        ns     = `p13n`
                                        t_prop = VALUE #( ( n = `id`  v = `sortPanel` )
-                                                         ( n = `title` v = `Sort` )
-                                                        )
+                                                         ( n = `title` v = `Sort` ) )
                                                     )->get_parent(
                           )->_generic( name   = `P13nFilterPanel`
                                        ns     = ``
                                        t_prop = VALUE #( ( n = `id`  v = `filterPanel` )
-                                                         ( n = `title` v = `Filter` )
-                                                        )
+                                                         ( n = `title` v = `Filter` ) )
                                                     )->get_parent(
                          )->_generic( name   = `GroupPanel`
                                       ns     = `p13n`
                                       t_prop = VALUE #( ( n = `id`  v = `groupPanel` )
-                                                        ( n = `title`  v = `Group` )
-                                                       )
+                                                        ( n = `title`  v = `Group` ) )
                                       )->get_parent( )->get_parent( )->get_parent(
       )->get_parent( )->get_parent( ).
 
@@ -171,7 +163,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_p13n.
 
     DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -182,8 +173,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       ( n = `cancel`                  v = client->_event( `CANCEL` ) )
       ( n = `reset`                   v = client->_event( `RESET` ) )
       ( n = `showReset`               v = `true` )
-      ( n = `initialVisiblePanelType` v = `sort` )
-      )
+      ( n = `initialVisiblePanelType` v = `sort` ) )
       )->_generic( name = `panels`
       )->_generic( name = `P13nColumnsPanel`
       t_prop            = VALUE #(
@@ -216,7 +206,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     client->popup_display( p13n->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_p13n_popup.
 
     DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
@@ -241,19 +230,16 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                               )->_generic( name   = `SortPanel`
                                            ns     = `p13n`
                                            t_prop = VALUE #( ( n = `id`  v = `sortPanel` )
-                                                             ( n = `title` v = `Sort` )
-                                                            )
+                                                             ( n = `title` v = `Sort` ) )
                                                         )->get_parent(
                              )->_generic( name   = `GroupPanel`
                                           ns     = `p13n`
                                           t_prop = VALUE #( ( n = `id`  v = `groupPanel` )
-                                                            ( n = `title`  v = `Group` )
-                                                           )
+                                                            ( n = `title`  v = `Group` ) )
                                           )->get_parent( )->get_parent( )->get_parent( ).
 
     client->view_display( p13n_popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD init_data_set.
 
@@ -287,7 +273,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                           ( grouped = `false` name = `key2` label = `Country` )
                           ( grouped = `false` name = `key2` label = `Region` ) ).
   ENDMETHOD.
-
 
   METHOD get_custom_js.
 

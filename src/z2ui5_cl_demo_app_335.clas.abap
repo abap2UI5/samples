@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_335 DEFINITION PUBLIC.
     METHODS get_data_2.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -67,7 +66,6 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -114,13 +112,11 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
   ENDMETHOD.
-
 
   METHOD get_data_2.
 

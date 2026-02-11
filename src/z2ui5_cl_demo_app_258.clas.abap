@@ -23,9 +23,7 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -63,7 +61,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
         selected_menu_entry = 'Fix3'.
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD render_main_view.
 
@@ -151,7 +148,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD render_site_content.
 
     CASE selected_menu_entry.
@@ -175,7 +171,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
         site_content->text( 'Welcome to the third fixed Page' ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

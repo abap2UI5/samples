@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     DATA mv_value          TYPE string.
 
-
     METHODS get_example_pdf
       RETURNING
         VALUE(result) TYPE string.
@@ -13,9 +12,7 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
-
 
   METHOD get_example_pdf.
 
@@ -55,7 +52,6 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
     result = `data:application/pdf;base64,` && result.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

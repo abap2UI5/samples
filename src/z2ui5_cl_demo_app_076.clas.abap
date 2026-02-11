@@ -49,9 +49,7 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -67,10 +65,8 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -83,7 +79,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
-
 
     DATA(gantt) = page->gantt_chart_container(
       )->gantt_chart_with_table( id                 = `gantt`
@@ -114,10 +109,8 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
                 )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
                 endtime       = `{= Helper.DateCreateObject(${ENDTIME} ) }` ).
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

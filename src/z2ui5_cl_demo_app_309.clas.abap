@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA mv_initialized TYPE abap_bool.
@@ -17,9 +16,7 @@ CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -29,7 +26,6 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
       client->follow_up_action( `alert("afterBE triggered !!");` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -49,7 +45,6 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

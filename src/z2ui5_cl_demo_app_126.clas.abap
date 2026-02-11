@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
 
@@ -32,15 +31,12 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
-
 
   METHOD get_comp.
 
     DATA index TYPE int4.
     TRY.
-
 
         TRY.
 
@@ -77,7 +73,6 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
@@ -111,17 +106,14 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     <table_tmp> = <table>.
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD on_init.
 
     get_data( ).
     render_main( ).
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -154,12 +146,10 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     mv_perc = data.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

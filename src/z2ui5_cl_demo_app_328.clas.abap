@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_328 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -80,7 +79,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -91,7 +89,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     page->button( text  = 'GO'
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
-
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->table( headertext      = 'Table'
@@ -108,7 +105,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD get_data.
 

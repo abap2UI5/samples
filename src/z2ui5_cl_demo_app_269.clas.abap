@@ -4,13 +4,11 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
   PROTECTED SECTION.
 
-
     METHODS display_view.
     METHODS on_event.
 
     DATA client TYPE REF TO z2ui5_if_client.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
@@ -23,7 +21,6 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
     on_event( ).
   ENDMETHOD.
-
 
   METHOD display_view.
 
@@ -56,7 +53,6 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
     client->view_display( xml ).
   ENDMETHOD.
-
 
   METHOD on_event.
   ENDMETHOD.

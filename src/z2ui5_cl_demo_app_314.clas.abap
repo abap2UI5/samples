@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_314 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -73,7 +71,6 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( '{http>VALUE}'
          )->text( '{http>INFO}'
          )->text( '{http>DESCR}').
-
 
       tab = page->table(
          items   = `{/BookingSupplement}`

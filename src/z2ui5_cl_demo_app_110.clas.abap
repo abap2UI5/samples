@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA product TYPE string .
@@ -10,18 +9,14 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_display_view.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_view.
 
@@ -92,7 +87,6 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -106,10 +100,8 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
   ENDMETHOD.

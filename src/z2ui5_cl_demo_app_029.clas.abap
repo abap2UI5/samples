@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA mv_tab_radial_active TYPE abap_bool.
 
     METHODS render_tab_radial.
@@ -15,9 +14,7 @@ CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
-
 
   METHOD render_tab_radial.
 
@@ -90,13 +87,11 @@ CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-
 
       render_tab_radial( ).
     ENDIF.

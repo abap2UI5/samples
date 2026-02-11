@@ -7,9 +7,7 @@ CLASS z2ui5_cl_demo_app_115 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -75,7 +73,6 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
                                       `    background-color:#EFEFEF;` && |\n| &&
                                       `}` && |\n| &&
                                       `</html:style>`.
-
 
     DATA(lv_html) = `` && |\n| &&
                     |\n| &&

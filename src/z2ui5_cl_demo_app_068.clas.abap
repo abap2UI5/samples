@@ -38,9 +38,7 @@ CLASS z2ui5_cl_demo_app_068 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
-
 
   METHOD ui5_display_popup_tree_select.
 
@@ -69,7 +67,6 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
     client->popup_display( dialog->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_display_view.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
@@ -89,7 +86,6 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                                         press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_initialize.
 
     prodh_nodes =
@@ -100,10 +96,8 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                                   nodes = VALUE #( ( text  = 'Pump 001'
                                                      prodh = '001000010000000100' )
                                                    ( text  = 'Pump 002'
-                                                     prodh = '001000010000000105' )
-                                          )
-                       ) )
-             )
+                                                     prodh = '001000010000000105' ) )
+                       ) ) )
              ( text  = 'Paints'
                prodh = '00110'
                nodes = VALUE #( ( text  = 'Gloss paints'
@@ -111,12 +105,10 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                                   nodes = VALUE #( ( text  = 'Paint 001'
                                                      prodh = '001100010500000100' )
                                                    ( text  = 'Paint 002'
-                                                     prodh = '001100010500000105' )
-                                          )
+                                                     prodh = '001100010500000105' ) )
                        ) )
              ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

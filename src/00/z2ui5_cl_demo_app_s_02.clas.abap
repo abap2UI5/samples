@@ -42,7 +42,6 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD initialize_view.
 
     set_session_stateful( client   = client
@@ -78,7 +77,6 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -97,7 +95,6 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
                               stateful = abap_true ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD set_session_stateful.
 

@@ -19,11 +19,9 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
 
     METHODS view_display.
     METHODS on_event.
@@ -33,9 +31,7 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -50,7 +46,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -60,7 +55,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -103,7 +97,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD set_data.
 
     mt_table = VALUE #(
@@ -114,7 +107,6 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_search.
 

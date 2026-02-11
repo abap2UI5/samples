@@ -35,9 +35,7 @@ CLASS z2ui5_cl_demo_app_176 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
-
 
   METHOD main_view.
 
@@ -52,7 +50,6 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
     i_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD nest_view.
 
@@ -86,7 +83,6 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
                                  id            = `test`
                                  method_insert = 'addContent' ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

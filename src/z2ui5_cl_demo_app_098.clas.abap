@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -36,9 +35,7 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
-
 
   METHOD view_display_detail.
 
@@ -76,7 +73,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
       method_destroy = 'removeAllMidColumnPages' ).
   ENDMETHOD.
 
-
   METHOD view_display_detail_detail.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
@@ -88,14 +84,12 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
            text  = `frontend event`
            press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) ) ).
 
-
     client->nest2_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = 'addEndColumnPage'
       method_destroy = 'removeAllEndColumnPages' ).
   ENDMETHOD.
-
 
   METHOD view_display_master.
 
@@ -134,7 +128,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
     client->view_display( lr_list->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -153,7 +146,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
       view_display_master( ).
       view_display_detail( ).
-
 
     ENDIF.
 

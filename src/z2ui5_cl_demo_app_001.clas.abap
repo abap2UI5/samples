@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
     DATA product  TYPE string.
     DATA quantity TYPE string.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -24,13 +23,11 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
 
     IF client->check_on_init( ).
       display_view( client ).
@@ -39,7 +36,6 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD display_view.
 
@@ -62,14 +58,12 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
             )->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'BUTTON_POST'.
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

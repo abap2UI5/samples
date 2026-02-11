@@ -14,9 +14,7 @@ CLASS z2ui5_cl_demo_app_155 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
-
 
   METHOD ui5_event.
 
@@ -25,7 +23,6 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
       client->nav_app_call( lo_app ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD ui5_display.
 
@@ -42,7 +39,6 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -55,7 +51,6 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
     ui5_event( ).
   ENDMETHOD.
-
 
   METHOD ui5_callback.
 

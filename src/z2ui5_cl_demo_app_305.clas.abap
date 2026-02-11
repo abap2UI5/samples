@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
   METHOD set_view.
@@ -84,7 +83,6 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

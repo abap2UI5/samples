@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA check_editable_active TYPE abap_bool.
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -27,9 +26,7 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
-
 
   METHOD set_view.
 
@@ -94,7 +91,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -114,7 +110,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
       RETURN.
 
     ENDIF.
-
 
     CASE client->get( )-event.
       WHEN 'BUTTON_EDIT'.

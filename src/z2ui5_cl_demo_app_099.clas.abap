@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
     METHODS z2ui5_view_sort_popup.
@@ -46,13 +44,10 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     METHODS z2ui5_view_settings_popup.
     METHODS z2ui5_on_event.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -68,7 +63,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -120,7 +114,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           DATA(mv_filter_len) = strlen( mv_filter ) - 1.
           mv_filter = mv_filter+0(mv_filter_len).
 
-
           z2ui5_view_display( ).
 
         ENDIF.
@@ -160,7 +153,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
     t_tab = VALUE #(
@@ -187,7 +179,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       ( text = `Info`   key = `Info` ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -199,7 +190,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
             )->header_content(
                 )->link(
       )->get_parent( ).
-
 
     page->table(
         headertext = 'Table Output'
@@ -242,7 +232,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_filter_popup.
 
     DATA(popup_filter) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -264,7 +253,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     client->popup_display( filter_view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_group_popup.
 
     DATA(popup_group) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -280,7 +268,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
     client->popup_display( group_view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_settings_popup.
 
@@ -309,7 +296,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
     client->popup_display( popup_settings->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_sort_popup.
 

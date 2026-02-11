@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_262 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -84,7 +82,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -94,7 +91,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
         z2ui5_display_popover( `hint_icon` ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -110,7 +106,6 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

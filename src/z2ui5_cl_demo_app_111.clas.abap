@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -28,7 +27,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
@@ -40,9 +38,7 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -62,7 +58,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
@@ -70,7 +65,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -82,7 +76,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
         ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_search.
 
@@ -107,7 +100,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -117,7 +109,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
       )->_generic( ns   = `html`
                    name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).
-
 
     DATA(page1) = view->page( id = `page_main`
             title                = 'abap2UI5 - List Report Features'
@@ -205,7 +196,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD get_custom_js.
 

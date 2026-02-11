@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
     METHODS z2ui5_view_vm_popup.
@@ -37,9 +36,7 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -56,10 +53,8 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -72,7 +67,6 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
         ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -84,7 +78,6 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
             )->header_content(
                 )->link(
       )->get_parent( ).
-
 
     DATA(tab) = page->ui_table( rows                   = client->_bind( val = mt_table )
                                     id                 = `persoTable`
@@ -151,7 +144,6 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_vm_popup.
 

@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA mv_sel4 TYPE abap_bool.
     DATA mv_sel5 TYPE abap_bool.
     DATA mv_sel6 TYPE abap_bool.
@@ -27,9 +26,7 @@ CLASS z2ui5_cl_demo_app_013 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
-
 
   METHOD render_tab_donut.
 
@@ -55,7 +52,6 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
                 class = 'sapUiSmallMargin'
             )->get( )->layout_data(
                 )->grid_data( 'XL12 L12 M12 S12' ).
-
 
     DATA(seg) = grid->flex_box(
             width          = '22rem'
@@ -151,7 +147,6 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
                 )->interact_donut_chart( displayedsegments = client->_bind_edit( total_count )
                                          segments          = client->_bind_edit( counts ) ).
 
-
     donut_chart->interact_donut_chart_segment(
               label          = `{TEXT}`
               value          = `{PERCENT}`
@@ -160,13 +155,11 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
     client->view_display( container->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-
 
       counts = VALUE #(
                         ( text = '1st' percent = '10.0' )
@@ -174,7 +167,6 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
                         ( text = '3rd' percent = '30.0' ) ).
 
       total_count = lines( counts ).
-
 
       render_tab_donut( ).
     ENDIF.

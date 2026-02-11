@@ -41,9 +41,7 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
-
 
   METHOD set_view.
 
@@ -173,7 +171,6 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     focus( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -211,7 +208,6 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-
   METHOD next_focus.
 
     focuscolumn = SWITCH #(
@@ -231,12 +227,10 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD focus.
 
     client->follow_up_action( `z2ui5.determineFocusId("` && focuscolumn && `", "` && focusrow && `")` ).
   ENDMETHOD.
-
 
   METHOD default_focus.
 

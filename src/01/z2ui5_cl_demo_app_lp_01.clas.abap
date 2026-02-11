@@ -3,11 +3,9 @@ CLASS z2ui5_cl_demo_app_lp_01 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.

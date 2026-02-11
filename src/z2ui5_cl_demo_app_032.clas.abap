@@ -24,9 +24,7 @@ CLASS z2ui5_cl_demo_app_032 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -48,7 +46,6 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
     CLEAR app-get.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -61,13 +58,11 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     app-view_main = 'VIEW_MAIN'.
     mv_value = 'test'.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 

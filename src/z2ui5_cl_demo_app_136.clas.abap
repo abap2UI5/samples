@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS ui5_on_event.
 
     METHODS ui5_view_main_display.
@@ -24,9 +23,7 @@ CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
-
 
   METHOD ui5_on_event.
 
@@ -58,12 +55,10 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD ui5_view_init_display.
 
     ui5_view_main_display( ).
   ENDMETHOD.
-
 
   METHOD ui5_view_main_display.
 
@@ -76,7 +71,6 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
     IF mr_table IS NOT INITIAL.
 
-
       ASSIGN mr_table->* TO <tab>.
 
       DATA(tab) = page->table(
@@ -86,7 +80,6 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
                   )->title( 'CSV Content'
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
-
 
       DATA(lr_fields) = z2ui5_cl_util=>rtti_get_t_attri_by_any( <tab> ).
       DATA(lo_cols) = tab->columns( ).
@@ -109,7 +102,6 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

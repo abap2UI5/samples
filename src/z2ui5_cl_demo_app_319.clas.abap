@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
-
   METHOD on_init.
 
     DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
@@ -78,7 +77,6 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 *       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
        switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value` ).
   ENDMETHOD.
-
 
   METHOD on_event.
 

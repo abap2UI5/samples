@@ -31,9 +31,7 @@ CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -55,7 +53,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     CLEAR app-s_get.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE app-s_get-event.
@@ -64,7 +61,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     product  = 'tomato'.
@@ -72,7 +68,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     app-view_main = 'VIEW_MAIN'.
     input41 = 'faasdfdfsaVIp'.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 
@@ -127,7 +122,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
                               '               ]  }'
                     enabled = abap_false
       )->stringify( ).
-
 
     client->view_display( lv_xml ).
   ENDMETHOD.

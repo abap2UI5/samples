@@ -16,9 +16,7 @@ CLASS z2ui5_cl_demo_app_208 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_208 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -87,10 +85,8 @@ CLASS z2ui5_cl_demo_app_208 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

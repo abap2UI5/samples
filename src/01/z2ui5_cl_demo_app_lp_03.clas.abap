@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_lp_03 DEFINITION PUBLIC.
 *    DATA product  TYPE string.
 *    DATA quantity TYPE string.
 
-
     DATA:
       BEGIN OF nav_params,
         product  TYPE string,
@@ -18,9 +17,7 @@ CLASS z2ui5_cl_demo_app_lp_03 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -61,9 +58,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
             t_arg = VALUE #(
                 ( `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }` )
 *                ( `{ "Product" : "102343333" }` )
-                ( `$` && client->_bind_edit( nav_params ) )
-                 )
-        )
+                ( `$` && client->_bind_edit( nav_params ) ) ) )
              )->stringify( ) ).
 
     ENDIF.

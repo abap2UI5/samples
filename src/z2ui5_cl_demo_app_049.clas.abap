@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_049 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
@@ -29,9 +28,7 @@ CLASS z2ui5_cl_demo_app_049 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -51,7 +48,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     IF client->get( )-event = 'TIMER_FINISHED'.
@@ -61,13 +57,11 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
         INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
           INTO TABLE t_tab.
 
-
       ENDDO.
 
       client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -76,7 +70,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 
@@ -88,7 +81,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     page->segmented_button( selected_key = client->_bind_edit( mv_key )
         )->items(

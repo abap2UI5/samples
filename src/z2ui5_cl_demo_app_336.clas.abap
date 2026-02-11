@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
-
     DATA ms_struc        TYPE z2ui5_t_01.
     DATA mo_layout_obj   TYPE REF TO z2ui5_cl_demo_app_333.
     DATA mo_layout_obj_2 TYPE REF TO z2ui5_cl_demo_app_333.
@@ -20,7 +19,6 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
@@ -39,7 +37,6 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -53,7 +50,6 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD factory.
 

@@ -27,9 +27,7 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
-
 
   METHOD refresh_data.
 
@@ -45,7 +43,6 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

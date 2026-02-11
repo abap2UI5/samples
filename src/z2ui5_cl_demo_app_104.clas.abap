@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA mo_app_sub TYPE REF TO object .
@@ -43,9 +42,7 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
-
 
   METHOD on_event_sub.
 
@@ -58,7 +55,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD on_init_sub.
 
     classname = to_upper( classname ).
@@ -69,7 +65,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     CALL METHOD mo_app_sub->('Z2UI5_IF_APP~MAIN') EXPORTING client = client.
   ENDMETHOD.
 
-
   METHOD view_display_detail.
 
     lo_view_nested = z2ui5_cl_xml_view=>factory( ).
@@ -77,7 +72,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     mo_grid_sub = page->grid( 'L12 M12 S12'
         )->content( 'layout' ).
   ENDMETHOD.
-
 
   METHOD view_display_master.
 
@@ -114,7 +108,6 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     client->view_display( lr_list->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

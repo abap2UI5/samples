@@ -23,9 +23,7 @@ CLASS z2ui5_cl_demo_app_039 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -47,7 +45,6 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
     CLEAR app-get.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -58,12 +55,10 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     mv_value  = '200'.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_main.
 
@@ -149,7 +144,6 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
 
     client->view_display( lv_xml ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_popup.
 

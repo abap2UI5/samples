@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     TYPES:
       BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
@@ -42,9 +41,7 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -65,7 +62,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     CLEAR app-get.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
@@ -78,12 +74,10 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     app-view_main = `MAIN`.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 
@@ -92,7 +86,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
         z2ui5_on_render_main( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_main.
 
@@ -128,7 +121,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
-
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text  = `Go`
         press = client->_event( `BUTTON_START` )
@@ -161,7 +153,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

@@ -14,15 +14,12 @@ CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -52,7 +49,6 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
     ENDIF.
 
-
     CASE client->get( )-event.
       WHEN 'BUTTON_ROUNDTRIP'.
         DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
@@ -64,13 +60,11 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-
     DATA(page) = view->dynamic_page(
         showfooter = abap_true
        "  headerExpanded = abap_true
       "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
       ).
-
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
 
@@ -136,7 +130,6 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
                    )->object_attribute( title = 'Rack'
                                         text  = '34' ).
 
-
     DATA(cont) = page->content( ns = 'f' ).
 
     cont->list(
@@ -147,7 +140,6 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
              description = '{DESCR}'
              icon        = '{ICON}'
              info        = '{INFO}' ).
-
 
     page->footer( ns = `f` )->overflow_toolbar(
              )->overflow_toolbar_button(

@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
   METHOD initialize_view.
@@ -91,7 +90,6 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -118,7 +116,6 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD set_session_stateful.
 
     client->set_session_stateful( stateful ).
@@ -130,7 +127,6 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -156,7 +152,6 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD update_lock_counter.
 

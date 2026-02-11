@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
   METHOD ui5_view_display.
@@ -46,7 +45,6 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
     client->view_display( lo_main->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

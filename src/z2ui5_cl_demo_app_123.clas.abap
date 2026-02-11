@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
       END OF ty_spot.
     DATA mt_spot TYPE TABLE OF ty_spot.
 
-
     TYPES:
       BEGIN OF ty_route,
         position    TYPE string,
@@ -39,7 +38,6 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -54,19 +52,16 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
       mt_route = VALUE #(
         (  position = '2.3522219;48.856614;0; -74.0059731;40.7143528;0'   routetype = 'Geodesic' linedash = '10;5' color = '92,186,230' colorborder = 'rgb(255,255,255)' linewidth = '25' ) ).
 
-
       mt_legend = VALUE #(
         (   text = 'Dashed flight route' color = 'rgb(92,186,230)' )
         (   text = 'Flight route' color = 'rgb(92,186,35)' ) ).
     ENDIF.
-
 
     IF client->get( )-event = 'BACK'.
       client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
       RETURN.
 
     ENDIF.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
@@ -85,7 +80,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                        initialposition = `9.933573;50;0`
                        initialzoom     = `6` ).
 
-
     map->vos(
       )->spots( client->_bind( mt_spot )
       )->spot(
@@ -94,7 +88,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
         type          = `{TYPE}`
         scale         = `{SCALE}`
         tooltip       = `{TOOLTIP}` ).
-
 
     map->routes( client->_bind( mt_route ) )->route(
       position      = `{POSITION}`
@@ -106,7 +99,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *      RECEIVING
 *        result    =
       ).
-
 
     map->legend_area( )->legend(
 *      EXPORTING

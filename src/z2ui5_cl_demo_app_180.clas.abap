@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_180 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA mv_initialized TYPE abap_bool.
@@ -17,9 +16,7 @@ CLASS z2ui5_cl_demo_app_180 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -29,7 +26,6 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
       client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -47,7 +43,6 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

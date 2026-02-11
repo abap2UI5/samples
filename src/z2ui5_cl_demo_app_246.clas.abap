@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_246 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -65,12 +63,10 @@ CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
                                            `ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ` &&
                                            `ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam.` )->get_parent(
                  )->item( key  = `3`
-                          text = `Portable DVD Player with 9" LCD Monitor`
-            ).
+                          text = `Portable DVD Player with 9" LCD Monitor` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -78,7 +74,6 @@ CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -93,7 +88,6 @@ CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

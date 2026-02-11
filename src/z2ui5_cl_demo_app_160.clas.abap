@@ -48,9 +48,7 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
-
 
   METHOD load_output_table.
 
@@ -65,12 +63,10 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
       ls_output-pl_01 = 0.
       ls_output-pl_02 = 0.
 
-
       APPEND ls_output TO mt_output.
 
     ENDDO.
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -92,7 +88,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-
   METHOD render_main_screen.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -105,7 +100,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         )->header_content(
             )->link(
       )->get_parent( ).
-
 
     DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors  = 'true'
                                                                visiblerowcountmode = 'Auto'
@@ -229,7 +223,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

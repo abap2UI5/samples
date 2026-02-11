@@ -12,9 +12,7 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
-
 
   METHOD ui5_event.
 
@@ -67,7 +65,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD ui5_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -88,7 +85,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

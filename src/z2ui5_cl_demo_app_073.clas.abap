@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA mv_url TYPE string.
     DATA mv_check_timer_active TYPE abap_bool.
 
@@ -16,9 +15,7 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -41,7 +38,6 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                           press = client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
            )->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

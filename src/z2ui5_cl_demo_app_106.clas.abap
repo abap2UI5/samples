@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_106 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool .
@@ -10,9 +9,7 @@ CLASS z2ui5_cl_demo_app_106 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -25,7 +22,6 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
                           title          = 'abap2UI5 - Rich Text Editor'
                           navbuttonpress = client->_event( 'BACK' )
                           shownavbutton  = client->check_app_prev_stack( ) ).
-
 
       lo_p->rich_text_editor( width            = `100%`
                                height          = `400px`

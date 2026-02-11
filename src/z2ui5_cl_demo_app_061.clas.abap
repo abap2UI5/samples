@@ -6,7 +6,6 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
     DATA t_tab TYPE REF TO data.
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
@@ -14,9 +13,7 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
-
 
   METHOD set_view.
 
@@ -26,7 +23,6 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
                 title          = 'abap2UI5 - RTTI created Table'
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     FIELD-SYMBOLS <tab> TYPE table.
     ASSIGN t_tab->* TO <tab>.
@@ -60,7 +56,6 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE table.
@@ -80,7 +75,6 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
           INTO TABLE <tab>.
       INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
           INTO TABLE <tab>.
-
 
     ENDIF.
     set_view( ).

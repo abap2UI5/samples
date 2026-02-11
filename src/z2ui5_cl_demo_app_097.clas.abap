@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_097 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -32,9 +31,7 @@ CLASS z2ui5_cl_demo_app_097 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
-
 
   METHOD view_display_detail.
 
@@ -72,7 +69,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
       method_destroy = 'removeAllMidColumnPages' ).
   ENDMETHOD.
 
-
   METHOD view_display_master.
 
     DATA(page) = z2ui5_cl_xml_view=>factory(
@@ -108,7 +104,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
 
     client->view_display( lr_list->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

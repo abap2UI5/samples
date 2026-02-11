@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_283 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -21,9 +20,7 @@ CLASS z2ui5_cl_demo_app_283 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -98,7 +95,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -108,7 +104,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
         client->message_toast_display( `Posted new feed entry: ` && client->get_event_arg( 1 ) ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -123,7 +118,6 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

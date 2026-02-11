@@ -35,9 +35,7 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
-
 
   METHOD on_init.
 
@@ -46,12 +44,10 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     ms_screen-input = `structure level 01 - working`.
 
-
     CREATE DATA mr_input TYPE string.
     ASSIGN mr_input->* TO <input>.
 
     <input> = `ref data - working`.
-
 
     CREATE DATA mr_screen TYPE ty_s_01.
     ASSIGN mr_screen->* TO <screen>.
@@ -67,13 +63,11 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     mo_app->ms_screen-input = `instance attribute struc - working`.
   ENDMETHOD.
 
-
   METHOD view_build.
 
     FIELD-SYMBOLS <input> TYPE any.
     FIELD-SYMBOLS <screen> TYPE ty_s_01.
     ASSIGN mr_input->* TO <input>.
-
 
     ASSIGN mr_screen->* TO <screen>.
 
@@ -121,7 +115,6 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

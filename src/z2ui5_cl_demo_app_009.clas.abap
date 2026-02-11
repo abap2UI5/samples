@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
     DATA mt_employees_sel TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
     DATA mt_employees TYPE STANDARD TABLE OF s_employee WITH EMPTY KEY.
 
-
     DATA mv_view_popup TYPE string.
     METHODS popup_f4_table
       IMPORTING
@@ -62,13 +61,10 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
         client TYPE REF TO z2ui5_if_client.
     METHODS z2ui5_on_init.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
-
 
   METHOD popup_f4_table.
 
@@ -97,7 +93,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                 type  = 'Emphasized' ).
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD popup_f4_table_custom.
 
@@ -150,7 +145,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     client->popup_display( popup2->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     CLEAR mv_view_popup.
@@ -162,7 +156,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
     z2ui5_on_rendering( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -202,7 +195,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         client->message_box_display( 'View initialized' ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -275,7 +267,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         ( city = 'Paris'  name = 'Hermine3'  lastname = 'lastname11' nr = '00011' ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -340,7 +331,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                 press   = client->_event( 'BUTTON_SEND' )
                 enabled = abap_false
                 type    = 'Success' ).
-
 
     CASE mv_view_popup.
       WHEN 'POPUP_TABLE_F4'.

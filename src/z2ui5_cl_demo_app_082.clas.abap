@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_082 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
@@ -28,9 +27,7 @@ CLASS z2ui5_cl_demo_app_082 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -46,7 +43,6 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     IF client->get( )-event = 'TIMER_FINISHED'.
@@ -54,11 +50,9 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
       INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
           INTO TABLE t_tab.
 
-
       client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -67,7 +61,6 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
     t_tab = VALUE #(
             ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

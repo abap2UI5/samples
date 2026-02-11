@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -47,7 +46,6 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     z2ui5_on_render( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     DATA: news TYPE t_news.
@@ -64,7 +62,6 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
         z2ui5_display_popover( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 
@@ -175,7 +172,6 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 

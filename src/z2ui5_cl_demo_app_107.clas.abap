@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -27,15 +26,12 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-
   PRIVATE SECTION.
     DATA mv_page TYPE string.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
-
 
   METHOD get_custom_js.
 
@@ -60,7 +56,6 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
                  `};`.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -78,10 +73,8 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

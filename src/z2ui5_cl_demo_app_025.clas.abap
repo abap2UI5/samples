@@ -14,9 +14,7 @@ CLASS z2ui5_cl_demo_app_025 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -44,7 +42,6 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
             client->message_box_display( 'new app called and event NEW_APP_EVENT raised' ).
         ENDCASE.
     ENDCASE.
-
 
     CASE mv_show_view.
       WHEN 'MAIN' OR ''.

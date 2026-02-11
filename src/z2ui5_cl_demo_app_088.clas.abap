@@ -16,9 +16,7 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -33,7 +31,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     IF client->get( )-event IS NOT INITIAL.
@@ -41,7 +38,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
       z2ui5_view_display( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 
@@ -78,7 +74,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                                      )->page(
                                        title = 'third page'
                                        id    = `page3` ).
-
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

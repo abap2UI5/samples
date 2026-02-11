@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA is_initialized TYPE abap_bool .
@@ -18,9 +17,7 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     METHODS render_screen .
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
-
 
   METHOD initialize.
 
@@ -39,21 +36,17 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
       `LYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=`.
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'BUTTON_DOWNLOAD'.
-
 
       client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.
   ENDMETHOD.
 
-
   METHOD render_screen.
 
     DATA lv_script TYPE string.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -86,7 +79,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -33,7 +33,6 @@ ENDCLASS.
 
 CLASS lcl_file_api IMPLEMENTATION.
 
-
   METHOD read_abap.
 
     r_result = `METHOD SELECT_FILES.` && |\n| &&
@@ -63,7 +62,6 @@ CLASS lcl_file_api IMPLEMENTATION.
            |\n| &&
            `  ENDMETHOD.   `.
   ENDMETHOD.
-
 
   METHOD read_json.
 
@@ -108,7 +106,6 @@ CLASS lcl_file_api IMPLEMENTATION.
                `}`.
   ENDMETHOD.
 
-
   METHOD read_js.
 
     r_result = `function showAlert() {` && |\n| &&
@@ -119,7 +116,6 @@ CLASS lcl_file_api IMPLEMENTATION.
                `    document.getElementById('heading').innerHTML = 'Heading changed with JS';` && |\n| &&
                `}`.
   ENDMETHOD.
-
 
   METHOD read_yaml.
 
@@ -139,7 +135,6 @@ CLASS lcl_file_api IMPLEMENTATION.
                `      - fortran` && |\n| &&
                `      - erlang`.
   ENDMETHOD.
-
 
   METHOD read_text.
 

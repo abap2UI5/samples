@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_109 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_display_view.
@@ -22,9 +21,7 @@ CLASS z2ui5_cl_demo_app_109 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_popover.
 
@@ -60,12 +57,10 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                                                            value = `Here"`
                                                          )->get_parent( ).
 
-
     client->popover_display(
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_display_view.
 
@@ -108,7 +103,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -121,7 +115,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -138,7 +131,6 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
         client->popover_destroy( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 

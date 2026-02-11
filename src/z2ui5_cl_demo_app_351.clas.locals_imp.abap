@@ -85,13 +85,11 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD set_session_stateful.
 
     client->set_session_stateful( stateful ).
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

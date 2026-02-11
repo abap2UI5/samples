@@ -50,9 +50,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
-
 
   METHOD ui5_display.
 
@@ -74,7 +72,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_event.
 
     IF client->get( )-event = 'POPUP'.
@@ -86,7 +83,6 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       client->message_toast_display( `everything works as expected` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

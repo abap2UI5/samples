@@ -26,7 +26,6 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
         VALUE(result) TYPE abap_component_tab.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD get_comp.
@@ -70,16 +69,13 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD on_init.
 
     render_main( ).
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -112,14 +108,12 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     " TODO: parameter TABLE is never used (ABAP cleaner)
 
     mv_perc = count.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

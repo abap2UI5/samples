@@ -84,9 +84,7 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -106,7 +104,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     z2ui5_on_render( ).
     CLEAR app-get.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -136,7 +133,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_init.
 
     z2ui5_set_data( ).
@@ -150,7 +146,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( name = `STORAGE_LOCATION` title = `STORAGE_LOCATION`  visible = abap_true )
         ( name = `QUANTITY`   title = `QUANTITY` visible = abap_true ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render.
 
@@ -167,7 +162,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD z2ui5_on_render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -175,7 +169,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
              title                  = 'abap2UI5 - Table Layout Sample'
              navbuttonpress         = client->_event( 'BACK' )
              shownavbutton          = client->check_app_prev_stack( ) ).
-
 
     DATA(tab) = view->table(
         headertext         = ms_layout-title
@@ -223,7 +216,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_popup.
 
@@ -292,7 +284,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                     text     = 'Sort'
                     selected = client->_bind( mv_check_sort ) ).
 
-
     ro_popup->end_button( )->button(
               text  = 'continue'
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
@@ -300,7 +291,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     client->popup_display( ro_popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_render_popup_save.
 
@@ -340,7 +330,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

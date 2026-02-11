@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_163 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
@@ -15,9 +14,7 @@ CLASS z2ui5_cl_demo_app_163 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -25,7 +22,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
       view_action_sheet( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD view_action_sheet.
 
@@ -58,7 +54,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
                              by_id = `actionSheet` ).
   ENDMETHOD.
 
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -77,7 +72,6 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

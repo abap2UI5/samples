@@ -18,9 +18,7 @@ CLASS z2ui5_cl_demo_app_168 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
-
 
   METHOD ui5_callback.
 
@@ -32,7 +30,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD ui5_display.
 
@@ -49,7 +46,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD ui5_event.
 
     IF client->get( )-event = 'POPUP'.
@@ -57,7 +53,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
       client->nav_app_call( lo_app ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -71,7 +66,6 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
     ui5_event( ).
   ENDMETHOD.
-
 
   METHOD get_file.
 

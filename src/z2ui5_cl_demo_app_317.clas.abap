@@ -73,7 +73,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-
   METHOD build_tree.
 
     CLEAR mt_tree.
@@ -84,7 +83,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
     ENDLOOP.
 
-
     LOOP AT mt_tree REFERENCE INTO DATA(lr_node).
 
       LOOP AT mt_node INTO ls_node WHERE id_parent = lr_node->id.
@@ -93,7 +91,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       ENDLOOP.
 
     ENDLOOP.
-
 
     LOOP AT mt_tree REFERENCE INTO lr_node.
       LOOP AT lr_node->nodes REFERENCE INTO DATA(lr_node2).
@@ -105,7 +102,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
       ENDLOOP.
     ENDLOOP.
-
 
     LOOP AT mt_tree REFERENCE INTO lr_node.
       LOOP AT lr_node->nodes REFERENCE INTO lr_node2.
@@ -120,7 +116,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       ENDLOOP.
     ENDLOOP.
   ENDMETHOD.
-
 
   METHOD display_view.
 

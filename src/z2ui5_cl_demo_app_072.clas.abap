@@ -44,9 +44,7 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     METHODS set_filter .
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -61,7 +59,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
 
     IF client->get( )-event = 'OnSelectIconTabBar'.
@@ -70,7 +67,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
       client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_on_init.
 
@@ -151,7 +147,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
@@ -171,7 +166,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     lv_cnt_heavy = REDUCE i( INIT j = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT j = j + 1 ).
     lv_cnt_neg = REDUCE i( INIT k = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT k = k + 1 ).
   ENDMETHOD.
-
 
   METHOD set_filter.
 

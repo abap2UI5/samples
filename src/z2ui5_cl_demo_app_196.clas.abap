@@ -22,9 +22,7 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     METHODS render_screen .
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
-
 
   METHOD initialize.
 
@@ -99,15 +97,12 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
                         ( id = `warehouse` ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD render_screen.
 
     DATA lv_script TYPE string.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( ns   = `html`
@@ -156,10 +151,8 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
              )->shape_group(
               )->library_shape( shapeid = `{ID}` ).
 
-
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

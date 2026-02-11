@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
@@ -36,13 +35,11 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
-
   METHOD on_init.
 
     mv_descr = `data sub app`.
     display_view( ).
   ENDMETHOD.
-
 
   METHOD on_event.
 
@@ -51,7 +48,6 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
     ENDIF.
   ENDMETHOD.
-
 
   METHOD display_view.
 

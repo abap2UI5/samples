@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_016 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA mv_sel1 TYPE abap_bool.
     DATA mv_sel2 TYPE abap_bool.
     DATA mv_sel3 TYPE abap_bool.
@@ -19,9 +18,7 @@ CLASS z2ui5_cl_demo_app_016 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
-
 
   METHOD render_tab_bar.
 
@@ -116,13 +113,11 @@ CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-
 
       render_tab_bar( ).
     ENDIF.

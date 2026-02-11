@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA field_01  TYPE string.
     DATA field_02 TYPE string.
     DATA focus_id TYPE string.
@@ -22,9 +21,7 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -60,7 +57,6 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
            )->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD init.
 
     field_01 = `this is a text`.
@@ -69,7 +65,6 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     selend = `7`.
     display_view( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

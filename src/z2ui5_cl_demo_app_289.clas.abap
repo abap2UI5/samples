@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
         additionalinfo TYPE string,
       END OF ty_product.
 
-
     DATA lt_a_data TYPE TABLE OF ty_product.
 
   PROTECTED SECTION.
@@ -30,9 +29,7 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -81,7 +78,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -91,7 +87,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
         client->message_toast_display( client->get_event_arg( 1 ) && ` marker pressed!` ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -106,7 +101,6 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

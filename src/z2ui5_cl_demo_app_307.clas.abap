@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
@@ -47,7 +46,6 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD initialization.
 
@@ -182,7 +180,6 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
           type      = `Navigation` ) ).
   ENDMETHOD.
 
-
   METHOD display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -232,7 +229,6 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD on_event.
 

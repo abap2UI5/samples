@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_325 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -64,7 +63,6 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
 
     CASE client->get( )-event.
       WHEN 'COPY_INPUT'.

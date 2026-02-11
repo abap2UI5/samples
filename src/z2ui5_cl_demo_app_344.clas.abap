@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_344 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -66,12 +65,10 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 ***      ENDTRY.
 ***    ENDIF.
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
@@ -94,7 +91,6 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     client->view_model_update( ).
   ENDMETHOD.
-
 
   METHOD ui5_view_display.
 
@@ -119,7 +115,6 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD xml_table.
 
@@ -154,7 +149,6 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
@@ -183,7 +177,6 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_data2.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
@@ -211,7 +204,6 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     ENDTRY.
   ENDMETHOD.
-
 
   METHOD get_comp.
 

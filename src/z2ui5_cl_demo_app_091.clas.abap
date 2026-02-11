@@ -40,19 +40,15 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
     METHODS z2ui5_on_event.
-
 
   PRIVATE SECTION.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -69,10 +65,8 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -93,7 +87,6 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
                         ( id = `1` icon = `sap-icon://monitor-payments` label = `Delivery Processing` position = 1 )
                         ( id = `2` icon = `sap-icon://payment-approval` label = `Invoicing` position = 2 ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

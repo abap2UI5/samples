@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_256 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -36,7 +34,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
       `.fixFlexFixedSize .sapMText {`                 &&
                 `    margin-bottom: 1rem;`                      &&
                 `}`.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`
@@ -93,14 +90,12 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'POPOVER'.
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_display_popover.
 
@@ -115,7 +110,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
       xml   = view->stringify( )
       by_id = id ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

@@ -20,9 +20,7 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -72,7 +70,6 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
 
     IF client->get( )-event = 'UPDATE_BACKEND'.
 

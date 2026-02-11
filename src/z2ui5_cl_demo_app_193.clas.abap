@@ -26,9 +26,7 @@ CLASS z2ui5_cl_demo_app_193 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
-
 
   METHOD xml_parse.
 
@@ -42,7 +40,6 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
       CLEAR mt_pos_xml.
     ENDIF.
   ENDMETHOD.
-
 
   METHOD xml_stringify.
 

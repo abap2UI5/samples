@@ -22,14 +22,11 @@ CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 

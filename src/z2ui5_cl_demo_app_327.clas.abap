@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 

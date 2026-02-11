@@ -16,9 +16,7 @@ CLASS z2ui5_cl_demo_app_232 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_232 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -49,16 +47,13 @@ CLASS z2ui5_cl_demo_app_232 IMPLEMENTATION.
                                            `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. ` &&
                                            `Tortor pretium viverra suspendisse potenti nullam.`
                  )->item( key  = `3`
-                          text = `Portable DVD Player with 9" LCD Monitor`
-            ).
+                          text = `Portable DVD Player with 9" LCD Monitor` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

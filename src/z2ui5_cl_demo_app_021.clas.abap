@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC.
 
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_set_data.
     METHODS display_view
       IMPORTING
@@ -22,9 +21,7 @@ CLASS z2ui5_cl_demo_app_021 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -50,14 +47,12 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
 
     IF client->get( )-event = 'POST'.
       client->message_box_display( 'success - values send to the server' ).
     ENDIF.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -70,7 +65,6 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
 
     on_event( client ).
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

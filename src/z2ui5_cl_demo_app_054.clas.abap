@@ -16,17 +16,13 @@ CLASS z2ui5_cl_demo_app_054 DEFINITION PUBLIC.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
-
     METHODS refresh_data.
-
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_054 IMPLEMENTATION.
-
 
   METHOD refresh_data.
 
@@ -37,7 +33,6 @@ CLASS z2ui5_cl_demo_app_054 IMPLEMENTATION.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
   ENDMETHOD.

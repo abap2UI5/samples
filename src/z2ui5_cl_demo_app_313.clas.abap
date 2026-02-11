@@ -25,9 +25,7 @@ CLASS z2ui5_cl_demo_app_313 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -40,7 +38,6 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
               title          = 'abap2UI5 - Smart Controls with Variants'
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
-
 
       page->smart_filter_bar(
           id             = 'smartFilterBar'

@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_063 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -18,9 +17,7 @@ CLASS z2ui5_cl_demo_app_063 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
-
 
   METHOD display_view.
 
@@ -47,10 +44,8 @@ CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

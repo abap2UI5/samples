@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
       END OF t_combo,
       tt_combo TYPE STANDARD TABLE OF t_combo WITH EMPTY KEY.
 
-
     DATA:
       mt_picture      TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
       mt_picture_out  TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY,
@@ -41,9 +40,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
-
 
   METHOD view_display.
 
@@ -110,7 +107,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -130,7 +126,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       view_display( ).
       RETURN.
     ENDIF.
-
 
     CASE client->get( )-event.
       WHEN 'CAPTURE'.
@@ -156,12 +151,10 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD edit_image.
 
     client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
   ENDMETHOD.
-
 
   METHOD ui5_callback.
 

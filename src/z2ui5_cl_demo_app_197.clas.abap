@@ -30,9 +30,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
-
 
   METHOD z2ui5_display_view.
 
@@ -79,7 +77,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     DATA lt_range TYPE RANGE OF string.
@@ -97,7 +94,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         mt_table = mt_table_full.
         client->view_model_update( ).
       WHEN 'FILTER'.
-
 
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].
@@ -127,7 +123,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 

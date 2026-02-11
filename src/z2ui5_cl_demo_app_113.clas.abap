@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
@@ -28,9 +27,7 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -45,10 +42,8 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     z2ui5_on_event( ).
   ENDMETHOD.
 
-
   METHOD z2ui5_on_event.
   ENDMETHOD.
-
 
   METHOD z2ui5_set_data.
 
@@ -73,7 +68,6 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
       ( title = `first entry` author = `Developer` datetime = `01.01.2023`  authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is the beginning of a timeline` ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

@@ -39,9 +39,7 @@ CLASS z2ui5_cl_demo_app_345 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
-
 
   METHOD get_comp.
 
@@ -74,7 +72,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD get_data.
 
     FIELD-SYMBOLS <table1> TYPE STANDARD TABLE.
@@ -100,7 +97,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                                                      vis_cols = 2 ).
   ENDMETHOD.
 
-
   METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -112,7 +108,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-
     xml_table( i_page = page
       i_client        = client
       i_data          = mt_data1
@@ -120,7 +115,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD xml_table.
 
@@ -155,7 +149,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
@@ -168,12 +161,10 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       client->nav_app_call( app ).
     ENDIF.
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       render_main( client ).
     ENDIF.
-
 
     IF mo_layout_obj1->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).

@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     DATA mv_editor         TYPE string.
     DATA mv_check_editable TYPE abap_bool.
 
-
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA: lt_types TYPE z2ui5_if_types=>ty_t_name_value.
     METHODS view_display.
@@ -18,7 +17,6 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
   PRIVATE SECTION.
 
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
   METHOD view_display.
@@ -41,7 +39,6 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
          )->label( 'Option' ).
-
 
     lt_types2 = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
             n = shift_right( shift_left( row ) )
@@ -72,7 +69,6 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

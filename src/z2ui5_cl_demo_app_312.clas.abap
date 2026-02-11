@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 
   METHOD on_event.
@@ -45,7 +44,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
         on_rendering( ).
     ENDCASE.
   ENDMETHOD.
-
 
   METHOD on_init.
 
@@ -182,7 +180,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                              v = 'radar' ) ).
   ENDMETHOD.
 
-
   METHOD on_rendering.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( )->shell( ).
@@ -303,7 +300,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 
     client->view_display( lr_view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

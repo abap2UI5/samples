@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION PUBLIC.
         INCLUDE TYPE ty_struc_incl.
     DATA END OF ms_struc2.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
@@ -32,9 +31,7 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
-
 
   METHOD set_view.
 
@@ -60,7 +57,6 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -70,7 +66,6 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
       ms_struc-title  = `title`.
       ms_struc-value  = `val01`.
       ms_struc-value2 = `val02`.
-
 
       ms_struc2-title  = `title`.
       ms_struc2-value  = `val01`.

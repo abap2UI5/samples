@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION PUBLIC.
     METHODS get_fixval.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
   METHOD on_event.
@@ -61,13 +60,11 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD on_init.
 
     get_data( ).
     render_main( ).
   ENDMETHOD.
-
 
   METHOD render_main.
 
@@ -121,7 +118,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -136,14 +132,12 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     " TODO: parameter COUNT is never used (ABAP cleaner)
 
     mv_table = table.
   ENDMETHOD.
-
 
   METHOD get_data.
 
@@ -181,7 +175,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     get_fixval( ).
   ENDMETHOD.
 
-
   METHOD get_fixval.
 
     TYPES:
@@ -210,7 +203,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     CREATE DATA ms_fixval TYPE HANDLE structdescr.
   ENDMETHOD.
-
 
   METHOD get_comp.
 

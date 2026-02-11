@@ -22,9 +22,7 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
-
 
   METHOD ui5_on_event.
 
@@ -41,7 +39,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-
   METHOD ui5_on_init.
 
     gt_data = VALUE ty_t_data(
@@ -51,7 +48,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
       ( field1 = '24' field2 = 'T2' field3 = 'TEXT2' )
       ( field1 = '25' field2 = 'T3' field3 = 'TEXT2' ) ).
   ENDMETHOD.
-
 
   METHOD ui5_view_main_display.
 
@@ -71,7 +67,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     header_title->snapped_content( ns = 'f' ).
 
     DATA(cont) = page->content( ns = 'f' ).
-
 
     DATA(tab) = cont->vbox(
                   )->ui_table( rows                = client->_bind( val = gt_data )
@@ -110,7 +105,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 

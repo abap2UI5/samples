@@ -23,9 +23,7 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
-
 
   METHOD refresh_data.
 
@@ -36,7 +34,6 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
   ENDMETHOD.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -53,7 +50,6 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
         client->message_box_display( 'button post was pressed' ).
     ENDCASE.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(

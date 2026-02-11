@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_114 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
@@ -27,9 +26,7 @@ CLASS z2ui5_cl_demo_app_114 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -43,7 +40,6 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
     z2ui5_on_event( ).
   ENDMETHOD.
-
 
   METHOD z2ui5_on_event.
 
@@ -62,7 +58,6 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-
   METHOD z2ui5_set_data.
 
     mt_feed = VALUE #(
@@ -76,7 +71,6 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
                           `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
       ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
   ENDMETHOD.
-
 
   METHOD z2ui5_view_display.
 

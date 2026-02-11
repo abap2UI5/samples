@@ -19,5 +19,4 @@ CLASS lcl_merged_data DEFINITION.
              t_keyva TYPE ty_t_key_values,
            END OF ty_s_merged_data.
 
-
 ENDCLASS.
