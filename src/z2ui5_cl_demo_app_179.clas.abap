@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool .
 
     METHODS set_view .
-    METHODS z2ui5_on_event .
     METHODS set_mock_data .
 
   PRIVATE SECTION.
@@ -257,9 +256,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
-  ENDMETHOD.
 ENDCLASS.

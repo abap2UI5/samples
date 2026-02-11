@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
     DATA client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
 
     METHODS render_main.
 
@@ -106,9 +105,6 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     <table_tmp> = <table>.
   ENDMETHOD.
 
-  METHOD on_event.
-  ENDMETHOD.
-
   METHOD on_init.
 
     get_data( ).
@@ -161,6 +157,5 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     ENDIF.
 
-    on_event( ).
   ENDMETHOD.
 ENDCLASS.

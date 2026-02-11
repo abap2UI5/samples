@@ -31,10 +31,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE abap_component_tab.
 
-    METHODS init_layout.
-
-    METHODS on_after_navigation.
-
     METHODS row_select.
 
     METHODS prefill_popup_values
@@ -142,12 +138,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     get_dfies( ).
 
-    init_layout( ).
-
     render_main( ).
-  ENDMETHOD.
-
-  METHOD init_layout.
   ENDMETHOD.
 
   METHOD render_main.
@@ -194,7 +185,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     on_event( ).
 
-    on_after_navigation( ).
   ENDMETHOD.
 
   METHOD set_app_data.
@@ -271,6 +261,4 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-  METHOD on_after_navigation.
-  ENDMETHOD.
 ENDCLASS.

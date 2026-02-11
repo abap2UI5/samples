@@ -72,7 +72,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
-    METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
     DATA mt_cols TYPE string_table.
@@ -311,6 +310,4 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
-  ENDMETHOD.
 ENDCLASS.

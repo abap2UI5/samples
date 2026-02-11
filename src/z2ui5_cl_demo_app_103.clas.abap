@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_103 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
 
   PROTECTED SECTION.
@@ -23,10 +22,6 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
-  ENDMETHOD.
-
-  METHOD z2ui5_on_event.
   ENDMETHOD.
 
   METHOD z2ui5_view_display.

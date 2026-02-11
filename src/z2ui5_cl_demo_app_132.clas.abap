@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
 
     METHODS render_main.
 
@@ -67,9 +66,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
-  ENDMETHOD.
-
-  METHOD on_event.
   ENDMETHOD.
 
   METHOD on_init.
@@ -126,6 +122,5 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
     ENDIF.
 
-    on_event( ).
   ENDMETHOD.
 ENDCLASS.

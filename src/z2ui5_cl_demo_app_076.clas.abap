@@ -43,7 +43,6 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
     DATA check_initialized TYPE abap_bool .
 
     METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
     METHODS z2ui5_set_data .
 
   PRIVATE SECTION.
@@ -62,10 +61,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
-  ENDMETHOD.
-
-  METHOD z2ui5_on_event.
   ENDMETHOD.
 
   METHOD z2ui5_on_init.

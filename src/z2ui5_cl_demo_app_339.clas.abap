@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_339 DEFINITION PUBLIC.
         !table TYPE string.
 
   PROTECTED SECTION.
-    METHODS on_init.
     METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
 
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
@@ -83,9 +82,6 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
                               io_table  = mt_table
                               io_layout = mo_layout ) ).
     ENDIF.
-  ENDMETHOD.
-
-  METHOD on_init.
   ENDMETHOD.
 
   METHOD render_main.

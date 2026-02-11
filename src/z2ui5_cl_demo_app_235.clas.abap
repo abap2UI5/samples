@@ -9,9 +9,6 @@ CLASS z2ui5_cl_demo_app_235 DEFINITION PUBLIC.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -99,15 +96,11 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
     client->view_display( page_02->stringify( ) ).
   ENDMETHOD.
 
-  METHOD on_event.
-  ENDMETHOD.
-
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
       display_view( client ).
     ENDIF.
 
-    on_event( client ).
   ENDMETHOD.
 ENDCLASS.
