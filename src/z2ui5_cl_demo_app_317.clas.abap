@@ -128,7 +128,8 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->page( ).
 
     page->_generic( name = `script`
                     ns   = `html`

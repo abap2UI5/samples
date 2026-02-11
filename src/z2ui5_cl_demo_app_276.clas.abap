@@ -32,7 +32,8 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
                 `    float: left;` &&
                 `}`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Monitor Tile'
             navbuttonpress = client->_event( 'BACK' )

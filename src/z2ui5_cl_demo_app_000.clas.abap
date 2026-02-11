@@ -62,8 +62,8 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         ENDTRY.
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
-        )->shell( )->page( id             = `page`
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell( )->page( id             = `page`
                            title          = c_title
                            navbuttonpress = client->_event( 'BACK' )
                            shownavbutton  = client->check_app_prev_stack( )

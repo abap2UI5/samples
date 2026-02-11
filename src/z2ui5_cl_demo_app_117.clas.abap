@@ -148,12 +148,12 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
-      client->view_display( mo_main_view->stringify( ) ).
+      client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
     IF mv_selectedkey <> mv_selectedkey_tmp.
 
-      client->view_display( mo_main_view->stringify( ) ).
+      client->view_display( mo_main_page->stringify( ) ).
       mv_selectedkey_tmp = mv_selectedkey.
 
     ENDIF.

@@ -28,7 +28,8 @@ CLASS z2ui5_cl_demo_app_240 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Switch`
             navbuttonpress = client->_event( 'BACK' )

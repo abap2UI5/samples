@@ -125,9 +125,9 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     client->_bind_edit( val           = mt_groups_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    page = page->shell( )->page(
+    DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
         navbuttonpress = client->_event( 'BACK' )
         shownavbutton  = client->check_app_prev_stack( )

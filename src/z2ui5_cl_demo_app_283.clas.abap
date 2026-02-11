@@ -31,7 +31,8 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
     " Define the base URL for the server
     DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Feed Input'
             navbuttonpress = client->_event( 'BACK' )

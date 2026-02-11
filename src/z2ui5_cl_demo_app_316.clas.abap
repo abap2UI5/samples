@@ -43,8 +43,8 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      body       = `body`
                      new_window = `true` ).
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->title( `URL Helper Sample`
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->_z2ui5( )->title( `URL Helper Sample`
         )->shell(
             )->page( title          = 'abap2UI5 - Sample: URL Helper'
                      navbuttonpress = client->_event( 'BACK' )

@@ -122,15 +122,15 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
   METHOD z2ui5_on_rendering.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    page->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
+    view->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
 
 
 
-    page = page->shell(
+    DATA(page) = view->shell(
          )->page(
             title           = 'abap2UI5 - Selection-Screen Example'
             navbuttonpress  = client->_event( 'BACK' )
