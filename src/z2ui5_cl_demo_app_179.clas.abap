@@ -152,7 +152,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
     DATA(page) = view->page( id = `page_main`
             title               = 'abap2UI5 - Gantt'
-            navbuttonpress      = client->_event( 'BACK' )
+            navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
 
@@ -277,11 +277,5 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

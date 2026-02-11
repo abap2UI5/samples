@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = 'abap2UI5 - Popup To Select'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->hbox(
         )->text( text  = 'Multiselect: '
@@ -92,10 +92,6 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
                                THEN abap_false
                                ELSE mv_preselect ).
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

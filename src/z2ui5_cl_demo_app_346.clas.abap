@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Tables and focus'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = abap_true ).
 
     DATA(tab) = page->table(

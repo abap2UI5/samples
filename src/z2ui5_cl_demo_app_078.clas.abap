@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       view = view->shell( )->page( id = `page_main`
                title                  = 'abap2UI5 - Select-Options'
-               navbuttonpress         = client->_event( 'BACK' )
+               navbuttonpress         = client->_event_nav_app_leave( )
                shownavbutton          = client->check_app_prev_stack( ) ).
 
       view->_z2ui5( )->multiinput_ext(
@@ -75,26 +75,20 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
     ENDIF.
 
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'UPDATE_BACKEND'.
 
-      WHEN 'UPDATE_BACKEND'.
+      LOOP AT mt_tokens_removed INTO DATA(ls_token).
+        DELETE mt_token WHERE key = ls_token-key.
+      ENDLOOP.
 
-        LOOP AT mt_tokens_removed INTO DATA(ls_token).
-          DELETE mt_token WHERE key = ls_token-key.
-        ENDLOOP.
+      LOOP AT mt_tokens_added INTO ls_token.
+        INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
+      ENDLOOP.
 
-        LOOP AT mt_tokens_added INTO ls_token.
-          INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
-        ENDLOOP.
-
-        CLEAR mt_tokens_removed.
-        CLEAR mt_tokens_added.
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      CLEAR mt_tokens_removed.
+      CLEAR mt_tokens_added.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

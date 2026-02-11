@@ -92,10 +92,9 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
       display_view( ).
     ENDIF.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-    ENDCASE.
+    IF client->get( )-event = 'BACK'.
+      client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

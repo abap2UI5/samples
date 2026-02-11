@@ -319,7 +319,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
           title           = 'abap2UI5 - Master Detail'
-          navbuttonpress  = client->_event( 'BACK' )
+          navbuttonpress  = client->_event_nav_app_leave( )
             shownavbutton = abap_true
           )->header_content(
              )->link( text   = 'Demo'
@@ -475,8 +475,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         z2ui5_set_search( ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 

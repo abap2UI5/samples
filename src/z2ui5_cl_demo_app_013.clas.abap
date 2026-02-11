@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
         )->shell(
         )->page(
             title          = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
@@ -183,22 +183,18 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
       render_tab_donut( ).
     ENDIF.
 
-    CASE client->get( )-event.
-      WHEN 'UPDATE_CHART_DATA'.
-        CLEAR counts.
-        counts = VALUE #(
-                          ( text = '1st' percent = '60.0' )
-                          ( text = '2nd' percent = '10.0' )
-                          ( text = '3rd' percent = '15.0' )
-                          ( text = '4th' percent = '15.0' ) ).
+    IF client->get( )-event = 'UPDATE_CHART_DATA'.
+      CLEAR counts.
+      counts = VALUE #(
+                        ( text = '1st' percent = '60.0' )
+                        ( text = '2nd' percent = '10.0' )
+                        ( text = '3rd' percent = '15.0' )
+                        ( text = '4th' percent = '15.0' ) ).
 
-        total_count = lines( counts ).
+      total_count = lines( counts ).
 
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

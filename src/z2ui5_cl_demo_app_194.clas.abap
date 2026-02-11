@@ -42,29 +42,23 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'BUTTON'.
 
-      WHEN 'BACK'.
+      LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
-        client->nav_app_leave( ).
+        ASSIGN ms_table_row->* TO <row>.
+        ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+        IF <val> IS NOT ASSIGNED.
+          CONTINUE.
+        ELSE.
 
-      WHEN 'BUTTON'.
+          client->_bind( val = <val> ).
 
-        LOOP AT mt_comp REFERENCE INTO DATA(comp).
+        ENDIF.
 
-          ASSIGN ms_table_row->* TO <row>.
-          ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
-          IF <val> IS NOT ASSIGNED.
-            CONTINUE.
-          ELSE.
+      ENDLOOP.
 
-            client->_bind( val = <val> ).
-
-          ENDIF.
-
-        ENDLOOP.
-
-    ENDCASE.
+    ENDIF.
   ENDMETHOD.
 
   METHOD on_init.

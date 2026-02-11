@@ -20,18 +20,15 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
         IF client->check_on_init( ).
           client->view_display( z2ui5_cl_xml_view=>factory(
                                     )->page( shownavbutton  = client->check_app_prev_stack( )
-                                             navbuttonpress = client->_event( 'BACK' )
+                                             navbuttonpress = client->_event_nav_app_leave( )
                                     )->button( text  = 'Call dynpro'
                                                press = client->_event( 'PRESS' )
                                     )->stringify( ) ).
         ENDIF.
 
-        CASE client->get( )-event.
-          WHEN 'BACK'.
-            client->nav_app_leave( ).
-          WHEN 'PRESS'.
-            call_dynpro( ).
-        ENDCASE.
+        IF client->get( )-event = 'PRESS'.
+          call_dynpro( ).
+        ENDIF.
 
       CATCH cx_root INTO DATA(x).
         client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).

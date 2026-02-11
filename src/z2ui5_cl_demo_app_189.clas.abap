@@ -28,9 +28,6 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
         focus_field = 'IdTwo'.
       WHEN 'two_enter'.
         focus_field = 'IdThree'.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
     client->view_model_update( ).
 
@@ -43,7 +40,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     DATA(page) = view->shell(
           )->page(
               title          = 'abap2UI5 - Focus II'
-              navbuttonpress = client->_event( 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->simple_form(

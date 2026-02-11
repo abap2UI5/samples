@@ -36,15 +36,6 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
       ui5_view_display( client ).
 
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
     client->view_model_update( ).
 
   ENDMETHOD.
@@ -53,11 +44,11 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page( title          = 'RTTI IV'
-                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'BACK'
-                  press = client->_event( 'BACK' )
+                  press = client->_event_nav_app_leave( )
                   type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).

@@ -38,11 +38,6 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
       WHEN 'GO'.
 
         DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
@@ -79,7 +74,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page( title          = 'RTTI IV'
-                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'CALL Next App'

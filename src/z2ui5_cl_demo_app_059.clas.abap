@@ -55,22 +55,16 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     me->client = client.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'BUTTON_SEARCH'.
+      z2ui5_set_data( ).
+      z2ui5_cl_util=>itab_filter_by_val(
+          EXPORTING
+              val = client->get_event_arg( 1 )
+          CHANGING
+              tab = mt_table ).
 
-      WHEN 'BUTTON_SEARCH'.
-        z2ui5_set_data( ).
-        z2ui5_cl_util=>itab_filter_by_val(
-            EXPORTING
-                val = client->get_event_arg( 1 )
-            CHANGING
-                tab = mt_table ).
-
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -94,7 +88,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     DATA(page1) = view->shell( )->page( id = `page_main`
             title                          = 'abap2UI5 - Search Field with Backend Live Change'
-            navbuttonpress                 = client->_event( 'BACK' )
+            navbuttonpress                 = client->_event_nav_app_leave( )
             shownavbutton                  = client->check_app_prev_stack( ) ).
 
     DATA(lo_box) = page1->vbox( )->text( `Search`

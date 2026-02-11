@@ -46,15 +46,9 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'BUTTON_SAVE'.
-        client->message_box_display( `event main app` ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+    IF client->get( )-event = 'BUTTON_SAVE'.
+      client->message_box_display( `event main app` ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -92,7 +86,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     page = view->shell(
          )->page(
             title           = 'abap2UI5 - Main App with Sub App'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'

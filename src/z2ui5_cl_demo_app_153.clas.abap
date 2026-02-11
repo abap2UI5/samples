@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Binding'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Rountrip...'
@@ -79,20 +79,14 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
   METHOD ui5_event.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'POPUP'.
 
-      WHEN 'POPUP'.
-
-        IF ms_struc <> ms_struc2.
-          client->message_box_display( `structure changed error` ).
-          RETURN.
-        ENDIF.
-        client->message_toast_display( `everything works as expected` ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      IF ms_struc <> ms_struc2.
+        client->message_box_display( `structure changed error` ).
+        RETURN.
+      ENDIF.
+      client->message_toast_display( `everything works as expected` ).
+    ENDIF.
 
   ENDMETHOD.
 

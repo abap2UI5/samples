@@ -26,20 +26,14 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    CASE client->get( )-event.
-      WHEN `UPDATE`.
-        client->follow_up_action( client->_event_client(
-                                    val   = `SET_SIZE_LIMIT`
-                                    t_arg = VALUE #( ( CONV #( mv_set_size_limit ) ) ( client->cs_view-main ) )
-                        ) ).
-        client->view_model_update( ).
-        client->message_toast_display( `SizeLimitUpdated` ).
-
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-    ENDCASE.
+    IF client->get( )-event = `UPDATE`.
+      client->follow_up_action( client->_event_client(
+                                  val   = `SET_SIZE_LIMIT`
+                                  t_arg = VALUE #( ( CONV #( mv_set_size_limit ) ) ( client->cs_view-main ) )
+                      ) ).
+      client->view_model_update( ).
+      client->message_toast_display( `SizeLimitUpdated` ).
+    ENDIF.
 
 
     DO mv_combo_number TIMES.
@@ -50,7 +44,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     client->view_display( val = view->shell(
          )->page(
                  title          = 'abap2UI5 - First Example'
-                 navbuttonpress = client->_event( 'BACK' )
+                 navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
              )->simple_form( title = 'Form Title' editable = abap_true
                  )->content( 'form'

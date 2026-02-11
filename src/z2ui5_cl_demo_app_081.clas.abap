@@ -169,10 +169,6 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
       WHEN 'BUTTON_CANCEL'.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

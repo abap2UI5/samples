@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Step Input - Value States'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
@@ -75,12 +75,9 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-      WHEN 'POPOVER'.
-        z2ui5_display_popover( `hint_icon` ).
-    ENDCASE.
+    IF client->get( )-event = 'POPOVER'.
+      z2ui5_display_popover( `hint_icon` ).
+    ENDIF.
 
   ENDMETHOD.
 

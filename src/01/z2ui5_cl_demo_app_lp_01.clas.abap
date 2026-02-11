@@ -28,23 +28,18 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
                                     press = client->_event( 'READ_PARAMS' )
                          )->label( ``
                          )->button( text  = 'Go Back'
-                                    press = client->_event( 'BACK' ) )->stringify( ) ).
+                                    press = client->_event_nav_app_leave( ) )->stringify( ) ).
 
     ENDIF.
 
-    CASE client->get( )-event.
-
-      WHEN 'READ_PARAMS'.
-        DATA(lv_text) = `Start Parameter: `.
-        DATA(lt_params) = client->get( )-t_comp_params.
-        LOOP AT lt_params INTO DATA(ls_param).
-          lv_text = |{ lv_text } / { ls_param-n } = { ls_param-v }|.
-        ENDLOOP.
-        client->message_box_display( lv_text ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+    IF client->get( )-event = 'READ_PARAMS'.
+      DATA(lv_text) = `Start Parameter: `.
+      DATA(lt_params) = client->get( )-t_comp_params.
+      LOOP AT lt_params INTO DATA(ls_param).
+        lv_text = |{ lv_text } / { ls_param-n } = { ls_param-v }|.
+      ENDLOOP.
+      client->message_box_display( lv_text ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

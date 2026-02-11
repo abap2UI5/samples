@@ -49,15 +49,13 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
         client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - List'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
                   )->link(

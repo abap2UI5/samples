@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
         showsearch          = abap_true
         shownotifications   = abap_true
         notificationsnumber = `2`
-        navbuttonpressed    = client->_event( 'BACK' )
+        navbuttonpressed    = client->_event_nav_app_leave( )
         )->_generic( name = `menu`
                      ns   = `f`
             )->_generic( name = `Menu`
@@ -57,9 +57,5 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
   ENDMETHOD.
 ENDCLASS.

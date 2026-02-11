@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
     client->view_display( val = view->shell(
            )->page( title          = 'abap2UI5 - Conversion Exit'
-                    navbuttonpress = client->_event( 'BACK' )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( )
         )->simple_form( title    = 'Form Title'
                         editable = abap_true
@@ -63,12 +63,6 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 
   METHOD z2ui5_set_data.

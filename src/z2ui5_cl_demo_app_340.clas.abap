@@ -29,19 +29,12 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD on_event.
-    CASE client->get( )-event.
+    IF client->get( )-event = 'POPUP_CLOSE'.
 
-      WHEN 'POPUP_CLOSE'.
+      client->popup_destroy( ).
 
-        client->popup_destroy( ).
-
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    ENDIF.
   ENDMETHOD.
 
   METHOD on_init.

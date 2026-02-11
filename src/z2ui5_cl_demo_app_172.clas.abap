@@ -94,11 +94,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         DATA(lv_column) = lt_event_arguments[ 4 ].
 
         calculate_sum( lv_column ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
@@ -114,7 +109,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       )->page(
         id              = `page`
         title           = 'abap2UI5 - Demo ui.table'
-        navbuttonpress  = client->_event( 'BACK' )
+        navbuttonpress  = client->_event_nav_app_leave( )
           shownavbutton = client->check_app_prev_stack( )
         )->header_content(
         )->link(

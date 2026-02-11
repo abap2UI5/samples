@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title           = 'abap2UI5 - Tables and editable'
-                navbuttonpress  = client->_event( 'BACK' )
+                navbuttonpress  = client->_event_nav_app_leave( )
                   shownavbutton = abap_true
                   id            = `test2` ).
 
@@ -132,9 +132,6 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
       WHEN 'BUTTON_ADD'.
         INSERT VALUE #( ) INTO TABLE t_tab.
         client->view_model_update( ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

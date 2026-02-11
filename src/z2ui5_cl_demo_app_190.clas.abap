@@ -38,14 +38,6 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
   METHOD on_event.
 
     FIELD-SYMBOLS <row> TYPE any.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
-    ENDCASE.
   ENDMETHOD.
 
   METHOD on_init.

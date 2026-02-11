@@ -85,26 +85,22 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     DATA lt_arg TYPE string_table.
     DATA ls_arg TYPE string.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
+    IF client->get( )-event = `LOAD`.
 
-      WHEN `LOAD`.
+      mv_percent = mv_percent + 25.
+      mv_check_active = abap_true.
+      mv_check_enabled = abap_false.
+      IF mv_percent > 100.
+        mv_percent = 0.
+        mv_check_active = abap_false.
+        mv_check_enabled = abap_true.
+      ENDIF.
 
-        mv_percent = mv_percent + 25.
-        mv_check_active = abap_true.
-        mv_check_enabled = abap_false.
-        IF mv_percent > 100.
-          mv_percent = 0.
-          mv_check_active = abap_false.
-          mv_check_enabled = abap_true.
-        ENDIF.
+      client->message_toast_display( `loaded` ).
+      WAIT UP TO 2 SECONDS.
+      client->view_model_update( ).
 
-        client->message_toast_display( `loaded` ).
-        WAIT UP TO 2 SECONDS.
-        client->view_model_update( ).
-
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -128,7 +124,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     temp5 = client->check_app_prev_stack( ).
     page1 = view->shell( )->page( id = 'page_main'
       title                          = 'abap2UI5 - Progress Bar while Server Request'
-      navbuttonpress                 = client->_event( 'BACK' )
+      navbuttonpress                 = client->_event_nav_app_leave( )
       shownavbutton                  = temp5
       class                          = 'sapUiContentPadding' ).
 

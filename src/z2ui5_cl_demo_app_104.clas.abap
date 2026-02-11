@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
           title           = 'abap2UI5 - Master Detail Page with Nested View'
-          navbuttonpress  = client->_event( 'BACK' )
+          navbuttonpress  = client->_event_nav_app_leave( )
             shownavbutton = abap_true ).
 
     page->header_content(
@@ -136,36 +136,30 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = `SELCHANGE`.
 
-      WHEN `SELCHANGE`.
+      DATA(lt_sel) = t_tab.
+      DELETE lt_sel WHERE selected = abap_false.
 
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
+      READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
+      APPEND ls_sel TO t_tab2.
 
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        APPEND ls_sel TO t_tab2.
+      IF classname IS NOT INITIAL.
+        view_display_master( ).
+      ENDIF.
+      classname = ls_sel-info.
 
-        IF classname IS NOT INITIAL.
-          view_display_master( ).
-        ENDIF.
-        classname = ls_sel-info.
+      mv_layout = `TwoColumnsMidExpanded`.
+      client->view_model_update( ).
+      view_display_detail( ).
+      on_init_sub( ).
 
-        mv_layout = `TwoColumnsMidExpanded`.
-        client->view_model_update( ).
-        view_display_detail( ).
-        on_init_sub( ).
-
-        client->nest_view_display(
-          val            = lo_view_nested->stringify( )
-          id             = `test`
-          method_insert  = 'addMidColumnPage'
-          method_destroy = 'removeAllMidColumnPages' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->nest_view_display(
+        val            = lo_view_nested->stringify( )
+        id             = `test`
+        method_insert  = 'addMidColumnPage'
+        method_destroy = 'removeAllMidColumnPages' ).
+    ENDIF.
 
     on_event_sub( ).
 

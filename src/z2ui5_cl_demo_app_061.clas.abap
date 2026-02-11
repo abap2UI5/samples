@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - RTTI created Table'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
 
@@ -84,13 +84,6 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
 
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
     set_view( ).
 
   ENDMETHOD.

@@ -52,21 +52,15 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'TIMER_FINISHED'.
-        mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-            INTO TABLE t_tab.
+    IF client->get( )-event = 'TIMER_FINISHED'.
+      mv_counter = mv_counter + 1.
+      INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+          INTO TABLE t_tab.
 
 
 
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -93,7 +87,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - Roundtrip Speed Test'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(

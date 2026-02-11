@@ -24,18 +24,11 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'CALL_EF'.
-        mv_url = `https://www.google.com`.
-        client->view_model_update( ).
-        client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-
-    ENDCASE.
+    IF client->get( )-event = 'CALL_EF'.
+      mv_url = `https://www.google.com`.
+      client->view_model_update( ).
+      client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -46,7 +39,7 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = `Client->FOLLOW_UP_ACTION use cases`
         class          = `sapUiContentPadding`
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
     page = page->vbox( ).
     page->button( text  = `call frontend event from backend event`

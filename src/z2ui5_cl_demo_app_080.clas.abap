@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
     DATA(page) = view->page( id = `page_main`
             title               = 'abap2UI5 - Planning Calendar'
-            navbuttonpress      = client->_event( 'BACK' )
+            navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
 
@@ -121,13 +121,10 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-    CASE client->get( )-event.
-      WHEN 'AppSelected'.
-        DATA(ls_client) = client->get( ).
-        client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+    IF client->get( )-event = 'AppSelected'.
+      DATA(ls_client) = client->get( ).
+      client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
+    ENDIF.
   ENDMETHOD.
 
 

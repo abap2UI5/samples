@@ -75,8 +75,6 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'ALL'.
         z2ui5_view_settings_popup( ).
       WHEN 'SORT'.
@@ -204,7 +202,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - List'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
                 )->link(

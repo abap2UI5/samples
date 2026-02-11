@@ -102,8 +102,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       WHEN 'CUSTOMFILTER'.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( 'Event CUSTOMFILTER' ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'ROWEDIT'.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
@@ -145,7 +143,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     DATA(page1) = view->page( id = `page_main`
             title                = 'abap2UI5 - sap.ui.table.Table Features'
-            navbuttonpress       = client->_event( 'BACK' )
+            navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( )
             class                = 'sapUiContentPadding' ).
 

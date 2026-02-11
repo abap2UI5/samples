@@ -56,24 +56,18 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'TIMER_FINISHED'.
 
-      WHEN 'TIMER_FINISHED'.
-
-        DO 5 TIMES.
-          mv_counter = mv_counter + 1.
-          INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-            INTO TABLE t_tab.
+      DO 5 TIMES.
+        mv_counter = mv_counter + 1.
+        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+          INTO TABLE t_tab.
 
 
-        ENDDO.
+      ENDDO.
 
-        client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -96,7 +90,7 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
                                checkrepeat = abap_true ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
 

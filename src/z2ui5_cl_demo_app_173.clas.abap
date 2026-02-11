@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
     view = view->shell( )->page( id    = `page_main`
                                  class = `sapUiContentPadding`
              title                     = 'abap2UI5 - Sample Templating I'
-             navbuttonpress            = client->_event( 'BACK' )
+             navbuttonpress            = client->_event_nav_app_leave( )
              shownavbutton             = client->check_app_prev_stack( ) ).
 
     view->table( items = client->_bind( mt_data )
@@ -102,15 +102,10 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
-      WHEN 'CHANGE_FLAG'.
+    IF client->get( )-event = 'CHANGE_FLAG'.
 
-        view_display( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-    ENDCASE.
+      view_display( ).
+    ENDIF.
 
 
   ENDMETHOD.

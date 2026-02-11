@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
       client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = 'abap2UI5 - Popup To Confirm'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->button(
             text  = 'SY'
@@ -55,10 +55,6 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
           CATCH cx_root INTO DATA(lx).
             client->message_box_display( lx ).
         ENDTRY.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

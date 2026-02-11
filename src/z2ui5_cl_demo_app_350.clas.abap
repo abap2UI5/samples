@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).

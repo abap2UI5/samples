@@ -50,16 +50,10 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
   METHOD ui5_handle_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'POPUP_TO_INPUT'.
-        ms_popup_input-value1 = 'value1'.
-        ui5_popup_input( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+    IF client->get( )-event = 'POPUP_TO_INPUT'.
+      ms_popup_input-value1 = 'value1'.
+      ui5_popup_input( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -141,7 +135,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).

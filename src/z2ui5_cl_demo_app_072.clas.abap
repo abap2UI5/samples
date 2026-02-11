@@ -65,14 +65,11 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
-      WHEN 'OnSelectIconTabBar'.
-        client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
-        set_filter( ).
-        client->view_model_update( ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+    IF client->get( )-event = 'OnSelectIconTabBar'.
+      client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
+      set_filter( ).
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -85,7 +82,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     DATA(page) = view->shell( )->page( id = `page_main`
            showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title                         = 'abap2UI5 - IconTabBar'
-            navbuttonpress                = client->_event( 'BACK' )
+            navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( )
             class                         = 'sapUiContentPadding' ).
 

@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
       title          = `abap2UI5 - Sample: Sticky Session`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = page->vbox( ).

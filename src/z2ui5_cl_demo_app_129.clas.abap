@@ -88,10 +88,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
       WHEN 'BUTTON_POPOVER'.
         z2ui5_on_rendering_popover( client = client
                                     id     = 'ppvr' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -133,7 +129,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
             title           = 'abap2UI5 - Selection-Screen Example'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'

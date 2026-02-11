@@ -52,10 +52,6 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
             CLEAR mv_value.
             CLEAR mv_path.
-
-          WHEN 'BACK'.
-            client->nav_app_leave( ).
-
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
@@ -80,7 +76,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - CSV to ABAP internal Table'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
     FIELD-SYMBOLS <tab> TYPE table.
 

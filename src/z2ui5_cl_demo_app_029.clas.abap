@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
     DATA(container) = view->shell(
         )->page(
             title          = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
@@ -104,12 +104,5 @@ CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
 
       render_tab_radial( ).
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

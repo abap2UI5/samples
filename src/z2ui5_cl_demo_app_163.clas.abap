@@ -22,13 +22,9 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'OPEN_ACTION_SHEET'.
-        view_action_sheet( ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+    IF client->get( )-event = 'OPEN_ACTION_SHEET'.
+      view_action_sheet( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -72,7 +68,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
     view = view->shell( )->page( id = `page_main`
              title                  = 'abap2UI5 - Action Sheet'
-             navbuttonpress         = client->_event( 'BACK' )
+             navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = view->vbox( ).

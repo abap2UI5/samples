@@ -35,8 +35,6 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     "but we need it earlier
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'MENU_HOME'.
         client->message_toast_display( 'Home Button pressed' ).
         selected_menu_entry = 'Home'.
@@ -80,7 +78,7 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     DATA(page) = view->page(
             title           = 'abap2UI5 - Sample: Side Navigation'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
             enablescrolling = abap_false
             class           = 'sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer'
             shownavbutton   = client->check_app_prev_stack( ) ).

@@ -44,19 +44,12 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'BUTTON_DOWNLOAD'.
+    IF client->get( )-event = 'BUTTON_DOWNLOAD'.
 
 
 
-        client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
-
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -72,7 +65,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
          )->page(
             showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - Download Base64 File'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->flex_box( width          = `100%`

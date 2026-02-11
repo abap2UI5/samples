@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
     DATA(page) = view->page( id = `page_main`
             title               = 'abap2UI5 - List Report Features'
-            navbuttonpress      = client->_event( 'BACK' )
+            navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
     DATA(facet) = page->facet_filter( id                  = `idFacetFilter`
@@ -127,10 +127,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         ENDLOOP.
 
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

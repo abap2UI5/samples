@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(l_page) = l_view->shell( )->page( title      = 'SearchPage'
-                                       navbuttonpress = m_client->_event( 'BACK' )
+                                       navbuttonpress = m_client->_event_nav_app_leave( )
                                        shownavbutton  = m_client->check_app_prev_stack( ) ).
 
     l_page->_z2ui5( )->smartmultiinput_ext(

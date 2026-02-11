@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     DATA(page) = view->shell(
                    )->page(
                       title          = 'abap2UI5 - data loss protection'
-                      navbuttonpress = client->_event( 'BACK' )
+                      navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(box) = page->flex_box( direction  = `Row`

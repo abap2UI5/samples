@@ -51,13 +51,10 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       ui5_view_display( client ).
     ENDIF.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-      WHEN 'GO'.
-        DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
-        client->nav_app_call( app ).
-    ENDCASE.
+    IF client->get( )-event = 'GO'.
+      DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
+      client->nav_app_call( app ).
+    ENDIF.
 
 ***    " Kommen wir aus einer anderen APP
 ***    IF client->get( )-check_on_navigated = abap_true.
@@ -103,7 +100,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page( title          = 'RTTI IV'
-                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'CALL Next App'

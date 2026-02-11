@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     DATA(page) = view->shell(
                     )->page(
                         title          = 'abap2UI5 - Sample: Date Range Selection'
-                        navbuttonpress = client->_event( 'BACK' )
+                        navbuttonpress = client->_event_nav_app_leave( )
                         shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
@@ -143,23 +143,20 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-      WHEN 'handleChange'.
+    IF client->get( )-event = 'handleChange'.
 
-        DATA(args) = client->get( )-t_event_arg.
-        DATA(source) = args[ 1 ].
+      DATA(args) = client->get( )-t_event_arg.
+      DATA(source) = args[ 1 ].
 
-        ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
+      ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
 
-        DATA(drs) = CORRESPONDING t_drs( <drs> ).
+      DATA(drs) = CORRESPONDING t_drs( <drs> ).
 
-        text = |Id: { source }\n|
-            && |From: { drs-start }\n|
-            && |To: { drs-end }|.
+      text = |Id: { source }\n|
+          && |From: { drs-start }\n|
+          && |To: { drs-end }|.
 
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 

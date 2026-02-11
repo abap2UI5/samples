@@ -35,23 +35,16 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'ONSELECTICONTABBAR'.
 
-      WHEN 'ONSELECTICONTABBAR'.
+      CASE mv_selectedkey.
 
-        CASE mv_selectedkey.
+        WHEN space.
 
-          WHEN space.
+        WHEN OTHERS.
 
-          WHEN OTHERS.
-
-        ENDCASE.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -70,7 +63,7 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Main App calling Subapps'
-                             navbuttonpress = client->_event( 'BACK' )
+                             navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
                              class          = 'sapUiContentPadding' ).
 

@@ -25,22 +25,17 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
       value2 = 90.
     ENDIF.
 
-    CASE client->get( )-event.
+    IF client->get( )-event = 'SLIDER_CHANGE'.
 
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
+      client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
 
-      WHEN 'SLIDER_CHANGE'.
-
-        client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
-
-    ENDCASE.
+    ENDIF.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Range Slider Example'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L12 M12 S12' )->content( 'layout' ).

@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
     DATA(page) = view->shell(
              )->page( title          = 'abap2UI5 - Softkeyboard on/off'
-                      navbuttonpress = client->_event( 'BACK' )
+                      navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
                       )->_z2ui5( )->focus( focusid = `ZINPUT`
       )->simple_form( editable = abap_true
@@ -61,12 +61,9 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'CALL_KEYBOARD'.
-        client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
+    IF client->get( )-event = 'CALL_KEYBOARD'.
+      client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
+    ENDIF.
 
   ENDMETHOD.
 

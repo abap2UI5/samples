@@ -48,10 +48,6 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
       WHEN 'BUTTON_ERROR'.
         DATA(lv_dummy) = 1 / 0.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -65,7 +61,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title            = 'abap2UI5 - Controller'
-            navbuttonpress   = client->_event( 'BACK' )
+            navbuttonpress   = client->_event_nav_app_leave( )
                shownavbutton = client->check_app_prev_stack( ) ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'
@@ -100,7 +96,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = 'abap2UI5 - Controller'
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->grid( 'L12 M12 S12' )->content( 'layout'

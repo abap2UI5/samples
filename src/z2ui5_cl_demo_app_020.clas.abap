@@ -50,14 +50,12 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
     IF client->check_on_init( ).
     ENDIF.
 
-    CASE client->get( )-event.
-
-      WHEN mv_cancel_event OR mv_confirm_event.
-        mv_event = client->get( )-event.
-        client->popup_destroy( ).
-        client->nav_app_leave( ).
-        RETURN.
-    ENDCASE.
+    IF client->get( )-event = mv_cancel_event OR mv_confirm_event.
+      mv_event = client->get( )-event.
+      client->popup_destroy( ).
+      client->nav_app_leave( ).
+      RETURN.
+    ENDIF.
 
     client->popup_display( z2ui5_cl_xml_view=>factory_popup(
          )->dialog( 'abap2UI5 - Popup to decide'
