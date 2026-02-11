@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'BUTTON_DOWNLOAD'.
+    IF client->check_on_event( 'BUTTON_DOWNLOAD' ).
 
       client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.

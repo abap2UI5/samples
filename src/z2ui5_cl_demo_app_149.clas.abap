@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
 
   METHOD ui5_event.
 
-    IF client->get( )-event = 'POPUP'.
+    IF client->check_on_event( 'POPUP' ).
       DATA(lo_app) = z2ui5_cl_pop_html=>factory( `<h2>HTML Links</h2>` && |\n| &&
                                                    `<p>HTML links are defined with the a tag:</p>` && |\n| &&
                                                    |\n| &&

@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     client->message_toast_display( 'server roundtrip' ).
     CASE client->get( )-event.
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.
         INSERT VALUE #( n = 'id_page' v = '0' ) INTO TABLE mt_scroll.

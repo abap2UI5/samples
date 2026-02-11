@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'CLICK_HINT_ICON'.
+    IF client->check_on_event( 'CLICK_HINT_ICON' ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.

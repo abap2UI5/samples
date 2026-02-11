@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->get( )-event = 'TIMER_FINISHED'.
+    IF client->check_on_event( 'TIMER_FINISHED' ).
       mv_counter = mv_counter + 1.
       INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
           INTO TABLE t_tab.

@@ -171,7 +171,7 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
       render_tab_donut( ).
     ENDIF.
 
-    IF client->get( )-event = 'UPDATE_CHART_DATA'.
+    IF client->check_on_event( 'UPDATE_CHART_DATA' ).
       CLEAR counts.
       counts = VALUE #(
                         ( text = '1st' percent = '60.0' )

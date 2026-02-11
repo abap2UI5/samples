@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
       ui5_view_display( client ).
     ENDIF.
 
-    IF client->get( )-event = 'GO'.
+    IF client->check_on_event( 'GO' ).
       DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
       client->nav_app_call( app ).
     ENDIF.

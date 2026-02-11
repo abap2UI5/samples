@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->get( )-event = `UPDATE`.
+    IF client->check_on_event( `UPDATE` ).
       client->follow_up_action( client->_event_client(
                                   val   = `SET_SIZE_LIMIT`
                                   t_arg = VALUE #( ( CONV #( mv_set_size_limit ) ) ( client->cs_view-main ) )

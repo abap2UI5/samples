@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
                                     )->stringify( ) ).
         ENDIF.
 
-        IF client->get( )-event = 'PRESS'.
+        IF client->check_on_event( 'PRESS' ).
           call_dynpro( ).
         ENDIF.
 

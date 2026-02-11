@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_159 IMPLEMENTATION.
 
   METHOD ui5_event.
 
-    IF client->get( )-event = 'POPUP'.
+    IF client->check_on_event( 'POPUP' ).
       DATA(lv_pdf) = get_example_pdf( ).
       DATA(lo_app) = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
       client->nav_app_call( lo_app ).

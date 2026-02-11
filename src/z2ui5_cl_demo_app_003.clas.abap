@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->get( )-event = 'SELCHANGE'.
+    IF client->check_on_event( 'SELCHANGE' ).
       client->message_box_display( `go to details for item ` && t_tab[ selected = abap_true ]-title ).
     ENDIF.
   ENDMETHOD.

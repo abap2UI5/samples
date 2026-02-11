@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     mv_popup_name = ''.
 
-    IF client->get( )-event = 'POPUP_BAL'.
+    IF client->check_on_event( 'POPUP_BAL' ).
       mv_popup_name = 'POPUP_BAL'.
     ENDIF.
 

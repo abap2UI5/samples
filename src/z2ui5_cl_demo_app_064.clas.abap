@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->get( )-event = `LOAD`.
+    IF client->check_on_event( `LOAD` ).
 
       mv_percent = mv_percent + 25.
       mv_check_active = abap_true.

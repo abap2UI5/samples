@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
         client->message_toast_display( |{ quantity } - send to the server| ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

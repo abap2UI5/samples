@@ -57,8 +57,8 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
         (   text = 'Flight route' color = 'rgb(92,186,35)' ) ).
     ENDIF.
 
-    IF client->get( )-event = 'BACK'.
-      client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    IF client->check_on_event( 'BACK' ).
+      client->nav_app_leave( ).
       RETURN.
 
     ENDIF.

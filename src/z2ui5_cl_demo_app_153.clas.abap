@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
   METHOD ui5_event.
 
-    IF client->get( )-event = 'POPUP'.
+    IF client->check_on_event( 'POPUP' ).
 
       IF ms_struc <> ms_struc2.
         client->message_box_display( `structure changed error` ).

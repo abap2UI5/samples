@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->get( )-event = `SELCHANGE`.
+    IF client->check_on_event( `SELCHANGE` ).
 
       DATA(lt_sel) = t_tab.
       DELETE lt_sel WHERE selected = abap_false.

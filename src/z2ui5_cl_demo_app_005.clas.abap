@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
       value2 = 90.
     ENDIF.
 
-    IF client->get( )-event = 'SLIDER_CHANGE'.
+    IF client->check_on_event( 'SLIDER_CHANGE' ).
 
       client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
 

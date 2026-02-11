@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'BUTTON_POST'.
+    IF client->check_on_event( 'BUTTON_POST' ).
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
   ENDMETHOD.

@@ -232,7 +232,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'ON_DROP'.
+    IF client->check_on_event( 'ON_DROP' ).
       DATA(ondropparameters) = client->get( )-t_event_arg.
       TRY.
           DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.

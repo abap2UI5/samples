@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'BUTTON_SAVE'.
+    IF client->check_on_event( 'BUTTON_SAVE' ).
       client->message_box_display( `event main app` ).
     ENDIF.
   ENDMETHOD.

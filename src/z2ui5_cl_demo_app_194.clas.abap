@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    IF client->get( )-event = 'BUTTON'.
+    IF client->check_on_event( 'BUTTON' ).
 
       LOOP AT mt_comp REFERENCE INTO DATA(comp).
 

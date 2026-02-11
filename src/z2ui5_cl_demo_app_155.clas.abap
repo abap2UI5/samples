@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
   METHOD ui5_event.
 
-    IF client->get( )-event = 'POPUP'.
+    IF client->check_on_event( 'POPUP' ).
       DATA(lo_app) = z2ui5_cl_pop_textedit=>factory( `this is a text` ).
       client->nav_app_call( lo_app ).
     ENDIF.

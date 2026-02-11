@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'ENTER'.
+    IF client->check_on_event( 'ENTER' ).
       IF magic_key = `abap2UI5`.
         client->follow_up_action( val = `playSuccess()` ).
         message-type = 'Success'.

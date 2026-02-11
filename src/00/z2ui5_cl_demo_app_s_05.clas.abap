@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
         CLEAR: news_list.
       WHEN 'BACK'.
 
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
       WHEN 'CLICK_HINT_ICON'.
 
         z2ui5_display_popover( ).

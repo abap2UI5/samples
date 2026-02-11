@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->get( )-event = 'READ_PARAMS'.
+    IF client->check_on_event( 'READ_PARAMS' ).
       DATA(lv_text) = `Start Parameter: `.
       DATA(lt_params) = client->get( )-t_comp_params.
       LOOP AT lt_params INTO DATA(ls_param).

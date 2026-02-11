@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'POST'.
+    IF client->check_on_event( 'POST' ).
       client->message_box_display( 'success - values send to the server' ).
     ENDIF.
   ENDMETHOD.

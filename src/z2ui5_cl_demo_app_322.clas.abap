@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    IF client->get( )-event = 'BUTTON_POST'.
+    IF client->check_on_event( 'BUTTON_POST' ).
       client->set_push_state( `/head/pos/` && client->get( )-s_draft-id ).
     ENDIF.
     client->message_toast_display( `data updated` ).

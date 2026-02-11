@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->get( )-event = 'POST'.
+    IF client->check_on_event( 'POST' ).
 
       IF mv_value IS NOT INITIAL.
         CLEAR ms_feed.

@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->get( )-event = 'CHANGE_FLAG'.
+    IF client->check_on_event( 'CHANGE_FLAG' ).
 
       view_display( ).
     ENDIF.

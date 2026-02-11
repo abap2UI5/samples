@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'ON_SELECT_ICON_TAB_BAR'.
+    IF client->check_on_event( 'ON_SELECT_ICON_TAB_BAR' ).
 
       CASE mv_selectedkey.
         WHEN space.

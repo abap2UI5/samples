@@ -85,8 +85,8 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
       display_view( ).
     ENDIF.
 
-    IF client->get( )-event = 'BACK'.
-      client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+    IF client->check_on_event( 'BACK' ).
+      client->nav_app_leave( ).
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->get( )-event = 'TIMER_FINISHED'.
+    IF client->check_on_event( 'TIMER_FINISHED' ).
 
       DO 5 TIMES.
         mv_counter = mv_counter + 1.

@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'SELECTION_CHANGE'.
+    IF client->check_on_event( 'SELECTION_CHANGE' ).
 
       client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                               io_table  = mt_table

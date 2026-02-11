@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
         mv_url = `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123`.
         client->view_model_update( ).
       WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.
