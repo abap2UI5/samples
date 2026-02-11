@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_076 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_subtask5,
              id        TYPE string,
@@ -54,7 +51,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_076 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.

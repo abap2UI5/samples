@@ -1,11 +1,7 @@
-CLASS z2ui5_cl_demo_app_258 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool .
     DATA selected_menu_entry TYPE string .
@@ -29,7 +25,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
 
   METHOD on_event.

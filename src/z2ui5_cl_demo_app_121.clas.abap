@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_121 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_121 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA longitude TYPE string.
     DATA latitude TYPE string.
@@ -20,7 +17,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.

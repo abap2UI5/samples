@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_091 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES children_array TYPE STANDARD TABLE OF int4 WITH NON-UNIQUE KEY table_line.
     TYPES texts_array TYPE STANDARD TABLE OF string WITH NON-UNIQUE KEY table_line.
@@ -55,7 +52,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.

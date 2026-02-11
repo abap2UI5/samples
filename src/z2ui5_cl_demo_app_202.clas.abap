@@ -1,11 +1,7 @@
-CLASS z2ui5_cl_demo_app_202 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA av_next TYPE string VALUE 'Step22' ##NO_TEXT.
     DATA av_init TYPE abap_bool .
@@ -18,7 +14,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
 
   METHOD display_view.

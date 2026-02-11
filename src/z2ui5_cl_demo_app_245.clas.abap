@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_245 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_245 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.

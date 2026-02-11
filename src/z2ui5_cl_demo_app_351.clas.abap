@@ -1,7 +1,4 @@
-CLASS z2ui5_cl_demo_app_351 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_351 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
   PROTECTED SECTION.
@@ -10,7 +7,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_351 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_351 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
     client->nav_app_call( NEW zcl_2ui5_start( ) ).

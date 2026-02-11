@@ -1,12 +1,8 @@
-CLASS z2ui5_cl_demo_app_324 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_324 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
     INTERFACES if_serializable_object .
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

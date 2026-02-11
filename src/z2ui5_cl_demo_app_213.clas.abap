@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_213 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_213 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
@@ -21,7 +18,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_213 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_213 IMPLEMENTATION.
 
 
   METHOD display_view.

@@ -1,7 +1,4 @@
-CLASS z2ui5_cl_demo_app_211 DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
-
+CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.

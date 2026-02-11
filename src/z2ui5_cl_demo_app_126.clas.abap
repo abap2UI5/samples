@@ -1,7 +1,4 @@
-CLASS z2ui5_cl_demo_app_126 DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
-
+CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
@@ -37,7 +34,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_126 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD get_comp.

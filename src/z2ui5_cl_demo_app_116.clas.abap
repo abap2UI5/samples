@@ -1,11 +1,7 @@
-CLASS z2ui5_cl_demo_app_116 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
@@ -59,7 +55,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD add_node.

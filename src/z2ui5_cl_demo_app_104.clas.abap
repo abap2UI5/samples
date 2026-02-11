@@ -1,12 +1,8 @@
-CLASS z2ui5_cl_demo_app_104 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA mo_app_sub TYPE REF TO object .
     DATA classname TYPE string.

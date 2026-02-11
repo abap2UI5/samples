@@ -1,11 +1,8 @@
-CLASS z2ui5_cl_demo_app_161 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_161 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client .
 

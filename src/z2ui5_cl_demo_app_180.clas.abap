@@ -1,11 +1,8 @@
-CLASS z2ui5_cl_demo_app_180 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_180 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA mv_initialized TYPE abap_bool.
     DATA mv_url TYPE string.
@@ -22,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
 
   METHOD on_event.

@@ -1,11 +1,7 @@
-CLASS z2ui5_cl_demo_app_196 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA is_initialized TYPE abap_bool .
     DATA mv_slider_value TYPE i .
@@ -28,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_196 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
 
   METHOD initialize.

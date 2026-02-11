@@ -1,10 +1,7 @@
-CLASS z2ui5_cl_demo_app_124 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_124 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
     DATA mv_scan_input TYPE string.
     DATA mv_scan_type TYPE string.
 

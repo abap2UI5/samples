@@ -1,11 +1,8 @@
-CLASS z2ui5_cl_demo_app_163 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_163 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -20,7 +17,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_163 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
 
   METHOD on_event.

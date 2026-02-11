@@ -24,7 +24,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
 
   METHOD z2ui5_display_popup_input.

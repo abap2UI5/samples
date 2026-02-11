@@ -1,7 +1,4 @@
-CLASS z2ui5_cl_demo_app_179 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 *https://github.com/abap2UI5/abap2UI5/issues/988#issuecomment-1978738754
@@ -39,7 +36,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
 
   METHOD set_mock_data.

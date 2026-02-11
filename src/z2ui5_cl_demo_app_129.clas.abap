@@ -1,11 +1,8 @@
-CLASS z2ui5_cl_demo_app_129 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF s_suggestion_items,
@@ -58,7 +55,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_129 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.

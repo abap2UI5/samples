@@ -1,11 +1,8 @@
-CLASS z2ui5_cl_demo_app_064 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -56,7 +53,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
 
   METHOD set_selkz.

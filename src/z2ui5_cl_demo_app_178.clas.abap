@@ -1,12 +1,8 @@
-CLASS z2ui5_cl_demo_app_178 DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
-
+CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
