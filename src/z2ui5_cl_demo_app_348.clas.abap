@@ -112,8 +112,8 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
       index = index + 1.
 
-      ASSIGN COMPONENT layout->name OF STRUCTURE i_data->* TO FIELD-SYMBOL(<value>).
-      " assign component layout->name of structure ms_struc to field-symbol(<value>).
+      FIELD-SYMBOL <value> TYPE any.
+      ASSIGN COMPONENT layout->name OF STRUCTURE i_data->* TO <value>.
       IF <value> IS NOT ASSIGNED.
         RETURN.
       ENDIF.
