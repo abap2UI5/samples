@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                )->object_marker(
                    type           = '{TYPE}'
                    additionalinfo = '{ADDITIONALINFO}'
-                   press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
+                   press          = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN 'ON_PRESS'.
         client->message_toast_display( client->get_event_arg( 1 ) && ` marker pressed!` ).
     ENDCASE.
   ENDMETHOD.

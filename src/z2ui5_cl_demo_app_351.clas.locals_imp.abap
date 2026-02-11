@@ -43,10 +43,6 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
           client->set_app_state_active( ).
           RETURN.
         ENDIF.
-      "  IF client->check_on_navigated( ).
-      "    client->view_model_update( ).
-     "     RETURN.
-      "  ENDIF.
         CASE client->get( )-event.
           WHEN `CALL_BOOKING_MASK`.
             DATA: lf_key TYPE n LENGTH 4.

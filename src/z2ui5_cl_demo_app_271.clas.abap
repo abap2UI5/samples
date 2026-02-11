@@ -50,15 +50,15 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
            class       = `sapUiLargeMarginTop sapUiLargeMarginBottom`
            src         = `sap-icon://area-chart`
            description = `Icon`
-           press       = client->_event( 'press' ) )->get_parent(
+           press       = client->_event( 'PRESS' ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/ProfileImage_LargeGenTile.png`
               description         = `Profile image`
-              press               = client->_event( 'press' ) )->get_parent(
+              press               = client->_event( 'PRESS' ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/SAPLogoLargeTile_28px_height.png`
               description         = `Logo`
-              press               = client->_event( 'press' ) ).
+              press               = client->_event( 'PRESS' ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The ImageContent is pressed.` ).
     ENDCASE.
   ENDMETHOD.

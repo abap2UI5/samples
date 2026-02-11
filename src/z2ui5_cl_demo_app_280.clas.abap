@@ -51,42 +51,42 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
                              value      = `1.75`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.57`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.04`
                              valuecolor = `Neutral`
                              indicator  = `Up`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `3.65`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.73`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.01`
                              valuecolor = `Critical`
                              indicator  = `Down`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.42`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `press` ) )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.21`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `press` ) )->get_parent( )->get_parent(
+                             press      = client->_event( `PRESS` ) )->get_parent( )->get_parent(
        )->header_container( scrollstep  = `200`
                             orientation = `Vertical`
                             height      = `400px`
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
              )->numeric_content( value      = `1.96`
                                  valuecolor = `Error`
                                  indicator  = `Down`
-                                 press      = client->_event( `press` ) )->get_parent( )->get_parent( )->get_parent(
+                                 press      = client->_event( `PRESS` ) )->get_parent( )->get_parent( )->get_parent(
          )->tile_content( footer = `Leave Requests`
            )->content(
              )->numeric_content( value = `35`
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `Fire press` ).
     ENDCASE.
   ENDMETHOD.

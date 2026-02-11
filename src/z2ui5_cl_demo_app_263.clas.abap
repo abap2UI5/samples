@@ -50,14 +50,14 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
                            indicator    = `Down`
                            icon         = `sap-icon://travel-expense`
                              class      = `sapUiSmallMargin`
-                           press        = client->_event( 'press' ) ).
+                           press        = client->_event( 'PRESS' ) ).
     page->numeric_content( value        = `11`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                              icon       = `test-resources/sap/m/demokit/sample/NumericContentIcon/images/grass.jpg`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( 'PRESS' ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The numeric content is pressed.` ).
       WHEN 'POPOVER'.
         z2ui5_display_popover( `hint_icon` ).

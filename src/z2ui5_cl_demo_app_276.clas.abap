@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
     page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header    = `Cumulative Totals`
                         subheader = `Expenses`
-                        press     = client->_event( `press` )
+                        press     = client->_event( `PRESS` )
            )->tile_content( unit   = `Unit`
                             footer = `Footer Text`
                )->numeric_content( value      = `1762`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Cumulative Totals`
                        subheader = `Expenses`
-                       press     = client->_event( `press` )
+                       press     = client->_event( `PRESS` )
            )->tile_content( unit   = `Unit`
                             footer = `Footer Text`
                )->numeric_content( value      = `12`
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The GenericTile is pressed.` ).
     ENDCASE.
   ENDMETHOD.

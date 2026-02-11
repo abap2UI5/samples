@@ -2,15 +2,10 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-
-    DATA product TYPE string .
-    DATA quantity TYPE string .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
     METHODS z2ui5_display_view.
 
   PRIVATE SECTION.
@@ -29,7 +24,6 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
           )->simple_form( title    = 'Generic Mask Input'
                           layout   = 'ColumnLayout'
                           editable = abap_true
-*              )->content( 'form'
                   )->label( text = 'Unique ID'
                   )->mask_input( mask              = `~~~~~~~~~~`
                                  placeholdersymbol = `_`
@@ -78,11 +72,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                  )->mask_input( mask              = `999-99-999-9999-9`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter thirteen-digit number`
-                                showclearicon     = abap_true )->get(
-*                  )->rules(
-*                    )->mask_input_rule(
-*                  )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                  ).
+                                showclearicon     = abap_true ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -92,17 +82,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
       z2ui5_display_view( ).
-      RETURN.
     ENDIF.
-
-    z2ui5_on_event( ).
-  ENDMETHOD.
-
-  METHOD z2ui5_on_event.
-  ENDMETHOD.
-
-  METHOD z2ui5_on_init.
   ENDMETHOD.
 ENDCLASS.

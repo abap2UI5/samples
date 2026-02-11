@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
        )->date_range_selection(
             id              = 'DRS1'
             displayformat   = 'yyyy/MM/dd'
-            change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS2` ) ) )
+            change          = client->_event( val = 'HANDLE_CHANGE' t_arg = VALUE #( ( `DRS2` ) ) )
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs1-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs1-end ) && ') }' ).
 
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             id              = 'DRS2'
             mindate         = `{= Helper.DateCreateObject($` && client->_bind( mindate ) && ') }'
             maxdate         = `{= Helper.DateCreateObject($` && client->_bind( maxdate ) && ') }'
-            change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS2` ) ) )
+            change          = client->_event( val = 'HANDLE_CHANGE' t_arg = VALUE #( ( `DRS2` ) ) )
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs2-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs2-end ) && ') }' ).
 
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             id                    = 'DRS3'
             showcurrentdatebutton = abap_true
             showfooter            = abap_true
-            change                = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS3` ) ) )
+            change                = client->_event( val = 'HANDLE_CHANGE' t_arg = VALUE #( ( `DRS3` ) ) )
             datevalue             = `{= Helper.DateCreateObject($` && client->_bind( drs3-start ) && ') }'
             seconddatevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs3-end ) && ') }' ).
 
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
                  labelfor = `DRS3`
        )->date_range_selection(
             id              = 'DRS4'
-            change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS4` ) ) )
+            change          = client->_event( val = 'HANDLE_CHANGE' t_arg = VALUE #( ( `DRS4` ) ) )
             displayformat   = 'MM/yyyy'
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs4-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs4-end ) && ') }' ).
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
                  labelfor = `DRS3`
        )->date_range_selection(
             id              = 'DRS5'
-            change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS5` ) ) )
+            change          = client->_event( val = 'HANDLE_CHANGE' t_arg = VALUE #( ( `DRS5` ) ) )
             displayformat   = 'yyyy'
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs5-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs5-end ) && ') }' ).
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'handleChange'.
+    IF client->get( )-event = 'HANDLE_CHANGE'.
 
       DATA(args) = client->get( )-t_event_arg.
       DATA(source) = args[ 1 ].

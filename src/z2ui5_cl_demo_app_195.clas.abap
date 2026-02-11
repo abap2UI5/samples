@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_195 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'ONSELECTICONTABBAR'.
+      WHEN 'ON_SELECT_ICON_TAB_BAR'.
 
         CASE mv_selectedkey.
           WHEN space.
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_195 IMPLEMENTATION.
 
     DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
                                          selectedkey = client->_bind_edit( mv_selectedkey )
-                                         select      = client->_event( 'ONSELECTICONTABBAR' )
+                                         select      = client->_event( 'ON_SELECT_ICON_TAB_BAR' )
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).

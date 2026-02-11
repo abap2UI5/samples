@@ -23,9 +23,9 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
   METHOD dispatch.
 
     CASE client->get( )-event.
-      WHEN 'one_enter'.
+      WHEN 'ONE_ENTER'.
         focus_field = 'IdTwo'.
-      WHEN 'two_enter'.
+      WHEN 'TWO_ENTER'.
         focus_field = 'IdThree'.
     ENDCASE.
     client->view_model_update( ).
@@ -44,10 +44,10 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
        )->content( ns = 'form'
        )->label( 'One (Press Enter)' )->input( id     = 'IdOne'
                                                value  = client->_bind_edit( one )
-                                               submit = client->_event( 'one_enter' )
+                                               submit = client->_event( 'ONE_ENTER' )
        )->label( 'Two' )->input( id     = 'IdTwo'
                                  value  = client->_bind_edit( two )
-                                 submit = client->_event( 'two_enter' )
+                                 submit = client->_event( 'TWO_ENTER' )
        )->label( 'Three' )->input( id    = 'IdThree'
                                    value = client->_bind_edit( three ) ).
 

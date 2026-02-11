@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'expand'.
         client->follow_up_action( `debugger; z2ui5.oView.byId( 'tree' ).expandToLevel(10);`).
-      WHEN 'onDrop'.
+      WHEN 'ON_DROP'.
         mt_node[ id = client->get_event_arg( 1 ) ]-id_parent = client->get_event_arg( 2 ).
         build_tree( ).
         display_view( client ).
@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       targetaggregation = `items`
       dragstart         = `Horizontal`
       drop              = client->_event(
-                              val   = 'onDrop'
+                              val   = 'ON_DROP'
                               t_arg = VALUE #(
                            ( `${$parameters>/draggedControl/mAggregations/customData/0/mProperties/value}` )
                            ( `${$parameters>/droppedControl/mAggregations/customData/0/mProperties/value}` )

@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
     page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Feed Tile that shows updates of the last feeds given to a specific topic:`
            frametype           = `TwoByOne`
-                        press  = client->_event( `press` )
+                        press  = client->_event( `PRESS` )
                )->tile_content( footer = `New Notifications`
                  )->feed_content( contenttext = `@@notify Great outcome of the Presentation today. New functionality well received.`
                      subheader                = `About 1 minute ago in Computer Market`
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
            )->generic_tile(
                backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage1.png`
                frametype       = `TwoByOne`
-               press           = client->_event( `press` )
+               press           = client->_event( `PRESS` )
              )->tile_content( footer = `August 21, 2016`
                )->news_content(
                   contenttext = `Wind Map: Monitoring Real-Time and Fore-casted Wind Conditions across the Globe`
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
            )->generic_tile(
                backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
                frametype       = `TwoByOne`
-               press           = client->_event( `press` )
+               press           = client->_event( `PRESS` )
              )->tile_content( footer = `August 21, 2016`
                )->news_content(
                    contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The GenericTile is pressed.` ).
     ENDCASE.
   ENDMETHOD.

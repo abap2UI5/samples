@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
                         header    = `Country-Specific Profit Margin`
                 frametype         = `OneByHalf`
                         subheader = `Expenses`
-                        press     = client->_event( `onPress` )
+                        press     = client->_event( `ON_PRESS` )
             )->tile_content( unit   = `EUR`
                              footer = `Current Quarter`
                 )->numeric_content( scale      = `M`
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
                                     withmargin = abap_false )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `US Profit Margin`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
                        frametype = `OneByHalf`
          )->tile_content( unit = `Unit`
          )->numeric_content( scale      = `%`
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Sales Fulfillment Application Title`
                 subheader        = `Subtitle`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
                        frametype = `TwoByHalf`
          )->tile_content( unit   = `EUR`
                           footer = `Current Quarter`
@@ -86,26 +86,26 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Manage Activity Master Data Type`
                 subheader     = `Subtitle`
-                       press  = client->_event( `onPress` ) "frameType = `OneByHalf`
+                       press  = client->_event( `ON_PRESS` ) "frameType = `OneByHalf`
          )->tile_content(
            )->image_content( src = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png` )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Manage Activity Master Data Type With a Long Title Without an Icon`
                 subheader     = `Subtitle Launch Tile`
                        mode   = `HeaderMode`
-                       press  = client->_event( `onPress` )
+                       press  = client->_event( `ON_PRESS` )
          )->tile_content( unit   = `EUR`
                           footer = `Current Quarter` )->get_parent( )->get_parent(
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Jessica D. Prince Senior Consultant`
                 subheader     = `Department`
-                       press  = client->_event( `onPress` )
+                       press  = client->_event( `ON_PRESS` )
          )->tile_content(
            )->image_content( src = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/ProfileImage_LargeGenTile.png` )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class            = `sapUiTinyMarginBegin sapUiTinyMarginTop`
                         backgroundimage = base_url && `test-resources/sap/m/images/NewsImage1.png`
                         frametype       = `OneByOne`
-                       press            = client->_event( `onPress` )
+                       press            = client->_event( `ON_PRESS` )
          )->tile_content( footer    = `Report Available`
                           frametype = `OneByOne`
            )->news_content(
@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop`
              backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
              frametype       = `TwoByOne`
-                       press = client->_event( `onPress` )
+                       press = client->_event( `ON_PRESS` )
          )->tile_content( footer = `August 21, 2016`
            )->news_content(
                  contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -122,7 +122,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class       = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header      = `Country-Specific Profit Margin`
                 subheader          = `Expenses`
-                       press       = client->_event( `onPress` )
+                       press       = client->_event( `ON_PRESS` )
                        systeminfo  = `system info`
                        appshortcut = `app shortcut`
          )->tile_content( unit   = `EUR`
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
          )->generic_tile(
              backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
              frametype       = `TwoByOne`
-             press           = client->_event( `onPress` )
+             press           = client->_event( `ON_PRESS` )
          )->tile_content( footer = `August 21, 2016`
            )->news_content(
                  contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -154,14 +154,14 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Feed Tile that shows updates of the last feeds given to a specific topic:`
                   frametype   = `TwoByOne`
-                       press  = client->_event( `onPress` )
+                       press  = client->_event( `ON_PRESS` )
            )->tile_content( footer = `New Notifications`
              )->feed_content( contenttext = `@@notify Great outcome of the Presentation today. New functionality well received.`
                        subheader          = `About 1 minute ago in Computer Market`
                               value       = `352` )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Country-Specific Profit Margin`
-                       press  = client->_event( `onPress` )
+                       press  = client->_event( `ON_PRESS` )
                   frametype   = `TwoByHalf`
            )->tile_content( unit   = `EUR`
                             footer = `Current Quarter`
@@ -173,7 +173,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Cumulative Totals`
                        subheader = `Expenses`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
                        frametype = `OneByHalf`
            )->tile_content( unit   = `Unit`
                             footer = `Footer Text`
@@ -183,14 +183,14 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Right click to open in new tab`
               subheader          = `Link tile`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
                        url       = `https://www.sap.com/`
                        frametype = `TwoByHalf`
            )->tile_content(
              )->image_content( src = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png` )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `US Profit Margin`
-                       press  = client->_event( `onPress` )
+                       press  = client->_event( `ON_PRESS` )
            )->tile_content( unit = `Unit`
              )->numeric_content( scale      = `%`
                                  value      = `12`
@@ -200,7 +200,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class       = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header      = `Sales Fulfillment Application Title`
               subheader            = `Subtitle`
-                       press       = client->_event( `onPress` )
+                       press       = client->_event( `ON_PRESS` )
                        systeminfo  = `system`
                        appshortcut = `shortcut`
            )->tile_content( unit   = `EUR`
@@ -209,7 +209,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Cumulative Totals`
                        subheader = `Expenses`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
            )->tile_content( unit   = `Unit`
                             footer = `Footer Text`
              )->numeric_content( value      = `1762`
@@ -218,7 +218,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
       )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header    = `Right click to open in new tab`
               subheader          = `Link tile`
-                       press     = client->_event( `onPress` )
+                       press     = client->_event( `ON_PRESS` )
                        url       = `https://www.sap.com/`
                        frametype = `TwoByOne`
            )->tile_content(
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN 'ON_PRESS'.
         client->message_toast_display( `The tile is pressed.` ).
     ENDCASE.
   ENDMETHOD.

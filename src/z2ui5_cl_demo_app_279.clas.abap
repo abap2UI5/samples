@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     box->input(
       id          = `input`
       value       = client->_bind_edit( text_input )
-      submit      = client->_event( 'submit' )
+      submit      = client->_event( 'SUBMIT' )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     box->button(
       text    = 'Reset'
-      press   = client->_event( 'reset' )
+      press   = client->_event( 'RESET' )
       class   = `sapUiSmallMarginBegin`
       visible = client->_bind( dirty ) ).
 
@@ -68,9 +68,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
         ELSE.
           client->nav_app_leave( ).
         ENDIF.
-      WHEN 'submit'.
+      WHEN 'SUBMIT'.
         dirty = xsdbool( text_input IS NOT INITIAL ).
-      WHEN 'reset'.
+      WHEN 'RESET'.
         CLEAR:
           dirty,
           text_input.

@@ -48,12 +48,12 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                               )->custom_header(
                                   )->toolbar(
                                       )->button( type  = `Back`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->toolbar_spacer(
                                       )->title( text = `Title`
                                       )->toolbar_spacer(
                                       )->button( icon           = `sap-icon://edit`
-                                                 press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press          = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  arialabelledby = `editButtonLabel`
                                   )->get_parent(
       )->get_parent(
@@ -61,12 +61,12 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                                   )->toolbar(
                                       )->toolbar_spacer(
                                       )->button( text  = `Default`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( type  = `Reject`
                                                  text  = `Reject`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( icon           = `sap-icon://action`
-                                                 press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press          = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  arialabelledby = `actionButtonLabel`
                                       )->toolbar_spacer(
                                   )->get_parent(
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                               )->content(
                                   )->hbox(
                                       )->button( text            = `Default`
-                                                 press           = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `defaultButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                                       )->get_parent(
                                       )->button( type            = `Accept`
                                                  text            = `Accept`
-                                                 press           = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `acceptButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
@@ -90,14 +90,14 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                                       )->get_parent(
                                       )->button( type            = `Reject`
                                                  text            = `Reject`
-                                                 press           = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `rejectButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
                                       )->button( text            = `Coming Soon`
-                                                 press           = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `comingSoonButtonDescription genericButtonDescription`
                                                  enabled         = abap_false )->get(
                                           )->layout_data(
@@ -133,11 +133,11 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                       )->button( type  = `Emphasized`
                                                  text  = `Emphasized`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( text  = `Default`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( icon  = `sap-icon://action`
-                                                 press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                   )->get_parent(
                               )->get_parent( ).
 
@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN 'ON_PRESS'.
         client->message_toast_display( client->get_event_arg( 1 ) && ` Pressed` ).
     ENDCASE.
   ENDMETHOD.

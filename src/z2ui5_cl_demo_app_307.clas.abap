@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC FINAL CREATE PUBLIC.
              selected           TYPE abap_bool,
              type               TYPE string,
              unread             TYPE abap_bool,
-             visiple            TYPE abap_bool,
+             visible            TYPE abap_bool,
              title              TYPE string,
              subtitle           TYPE string,
            END OF ty_item.
@@ -203,7 +203,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                     dropposition      = `Between`
                     droplayout        = `Horizontal`
                     drop              = client->_event(
-                        val   = 'onDrop'
+                        val   = 'ON_DROP'
                         t_arg = VALUE #(
                             ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
                             ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'onDrop'.
+    IF client->get( )-event = 'ON_DROP'.
       DATA(ondropparameters) = client->get( )-t_event_arg.
       TRY.
           DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.

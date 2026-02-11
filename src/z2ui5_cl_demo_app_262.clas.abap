@@ -47,30 +47,30 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     page->numeric_content( value           = `888.8`
                            scale           = `MM`
                            class           = `sapUiSmallMargin`
-                             press         = client->_event( 'press' )
+                             press         = client->_event( 'PRESS' )
                            truncatevalueto = `4` ).
     page->numeric_content( value        = `65.5`
                            scale        = `MM`
                              valuecolor = `Good`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( 'PRESS' ) ).
     page->numeric_content( value        = `6666`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( 'PRESS' ) ).
     page->numeric_content( value        = `65.5`
                            scale        = `MMill`
                              valuecolor = `Error`
                            indicator    = `Down`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( 'PRESS' ) ).
     page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header    = `Country-Specific Profit Margin`
                         subheader = `Expenses`
-                        press     = client->_event( 'press' )
+                        press     = client->_event( 'PRESS' )
              )->tile_content( unit   = `EUR`
                               footer = `Current Quarter`
                  )->numeric_content( scale      = `M`
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The numeric content is pressed.` ).
       WHEN 'POPOVER'.
         z2ui5_display_popover( `hint_icon` ).

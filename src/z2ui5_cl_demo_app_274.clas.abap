@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'pressOnTileOne' )
+                   press           = client->_event( 'PRESS_ON_TILE_ONE' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'pressOnTileTwo' )
+                   press           = client->_event( 'PRESS_ON_TILE_TWO' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'pressOnTileOne' )
+                   press           = client->_event( 'PRESS_ON_TILE_ONE' )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`

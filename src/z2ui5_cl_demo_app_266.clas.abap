@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                       )->get_parent(
                                       )->content_right(
                                           )->toggle_button( icon  = `sap-icon://edit`
-                                                            press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
@@ -63,25 +63,25 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                           )->toggle_button( text    = `Pressed`
                                                             enabled = abap_true
                                                             pressed = abap_true
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                           )->toggle_button( text    = `Pressed & Disabled`
                                                             enabled = abap_false
                                                             pressed = abap_true
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                       )->get_parent(
                                       )->content_right(
                                           )->toggle_button( icon  = `sap-icon://action`
-                                                            press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                           )->toggle_button( icon    = `sap-icon://home`
                                                             enabled = abap_false
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
                               )->hbox(
                                   )->toggle_button( text    = `Disabled`
                                                     enabled = `false`
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                   )->toggle_button( text    = `Pressed`
                                                     enabled = abap_true
                                                     pressed = abap_true
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                   )->toggle_button( icon    = `sap-icon://action`
                                                     enabled = abap_true
                                                     pressed = abap_true
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -109,9 +109,9 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                            )->toggle_button( text    = `Pressed & Disabled`
                                                              enabled = abap_false
                                                              pressed = abap_true
-                                                             press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                             press   = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                            )->toggle_button( icon  = `sap-icon://action`
-                                                             press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                             press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
                                        )->get_parent(
                                    )->get_parent(
                               )->get_parent( ).
@@ -123,7 +123,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN 'ON_PRESS'.
         IF client->get_event_arg( 1 ) = 'X'.
           client->message_toast_display( client->get_event_arg( 2 ) && ` Pressed` ).
         ELSE.

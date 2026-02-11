@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'expand-all'.
+      WHEN 'EXPAND_ALL'.
         expand_all( ).
-      WHEN 'collapse-all'.
+      WHEN 'COLLAPSE_ALL'.
         CLEAR ms_check_expanded.
       WHEN OTHERS.
         TRY.
@@ -87,9 +87,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           `<p>Always press CTRL+F12 to see code samples and classname of the app.</p>` ).
 
     page->hbox(
-       )->button( press = client->_event( 'expand-all' )
+       )->button( press = client->_event( 'EXPAND_ALL' )
                   icon  = 'sap-icon://expand-all'
-       )->button( press = client->_event( 'collapse-all' )
+       )->button( press = client->_event( 'COLLAPSE_ALL' )
                   icon  = 'sap-icon://collapse-all' ).
 
     DATA(page2) = page.

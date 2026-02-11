@@ -47,13 +47,13 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
            contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`
            subheader   = `about 1 minute ago in Computer Market`
            class       = `sapUiSmallMargin`
-           press       = client->_event( `press` ) )->get_parent(
+           press       = client->_event( `PRESS` ) )->get_parent(
        )->feed_content(
            contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`
            subheader   = `about 1 minute ago in Computer Market`
            value       = `999`
            class       = `sapUiSmallMargin`
-           press       = client->_event( `press` ) ).
+           press       = client->_event( `PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The feed content is pressed.` ).
     ENDCASE.
   ENDMETHOD.

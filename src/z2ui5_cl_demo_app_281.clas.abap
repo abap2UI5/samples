@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
        )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Status Loaded - with press event`
            subheader           = `Subheader`
-                        press  = client->_event( `press` )
+                        press  = client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->image_content( src = `sap-icon://home-share` )->get_parent( )->get_parent( )->get_parent(
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                         header = `Status Loading - with press event`
            subheader           = `Subheader`
                         state  = `Loading`
-                        press  = client->_event( `press` )
+                        press  = client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->numeric_content( scale      = `M`
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
            subheader              = `Subheader`
                         frametype = `TwoByOne`
                         state     = `Failed`
-                        press     = client->_event( `press` )
+                        press     = client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->feed_content(
@@ -123,7 +123,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
              backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
              frametype       = `TwoByOne`
              state           = `Loaded`
-             press           = client->_event( `press` )
+             press           = client->_event( `PRESS` )
            )->tile_content( unit   = `Unit`
                             footer = `Footer`
              )->news_content(
@@ -142,7 +142,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                         header = `Status Disabled - with press event`
            subheader           = `Subheader`
                         state  = `Disabled`
-                        press  = client->_event( `press` )
+                        press  = client->_event( `PRESS` )
          )->tile_content( footer = `Footer`
                           unit   = `Unit`
            )->numeric_content( value      = `3`
@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'press'.
+      WHEN 'PRESS'.
         client->message_toast_display( `The GenericTile is pressed.` ).
     ENDCASE.
   ENDMETHOD.
