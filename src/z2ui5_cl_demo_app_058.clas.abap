@@ -309,7 +309,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
               type  = 'Emphasized' ).
 
-    client->popup_display( ro_popup->get_root( )->xml_get( ) ).
+    client->popup_display( ro_popup->stringify( ) ).
 
 
   ENDMETHOD.
@@ -351,7 +351,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                 press = client->_event( 'POPUP_LAYOUT_CONTINUE' )
                 type  = 'Emphasized' ).
 
-    client->popup_display( lo_popup->get_root( )->xml_get( ) ).
+    client->popup_display( lo_popup->stringify( ) ).
 
   ENDMETHOD.
 

@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
           `}`
           height   = `300px` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

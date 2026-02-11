@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
                               )->news_content( contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                                                subheader   = `SAP News` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

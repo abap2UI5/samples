@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                                valuehelprequest = client->_event( 'CALL_KEYBOARD' )
                                valuehelpiconsrc = 'sap-icon://keyboard-and-mouse' ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

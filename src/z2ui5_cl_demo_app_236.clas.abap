@@ -24,7 +24,8 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Sample: TextArea - Growing'
             navbuttonpress = client->_event( 'BACK' )
@@ -104,7 +105,7 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
                                                     `nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`  growing = abap_true
                                             width                                                                                     = `100%` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

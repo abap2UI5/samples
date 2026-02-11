@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
            post    = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
            growing = abap_true ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

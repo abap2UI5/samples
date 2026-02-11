@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
             text  = 'Show bapiret tab'
             press = client->_event( 'POPUP_BAL' ) ).
 
-    mv_main_xml = page->get_root( )->xml_get( ).
+    mv_main_xml = view->stringify( ).
 
   ENDMETHOD.
 
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
                     press = client->_event( 'POPUP_BAL_CLOSE' )
                     type  = 'Emphasized' ).
 
-    mv_popup_xml = popup->get_root( )->xml_get( ).
+    mv_popup_xml = popup->stringify( ).
 
   ENDMETHOD.
 

@@ -331,7 +331,8 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
   METHOD z2ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell( )->page(
        title          = 'abap2UI5 - Live Suggestion Event'
        navbuttonpress = client->_event( 'BACK' )
        shownavbutton  = client->check_app_prev_stack( ) ).
@@ -365,7 +366,7 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
     page->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

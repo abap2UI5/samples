@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                            contenttext = `AP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
                            subheader   = `Today, SAP News` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

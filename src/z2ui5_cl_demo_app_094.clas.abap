@@ -78,7 +78,8 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     ASSIGN mr_screen->* TO <screen>.
 
-    page = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    page = view->shell(
           )->page( title = `test` ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'
@@ -119,7 +120,7 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
                        press = client->_event( 'BUTTON_SAVE' )
                        type  = 'Success' ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

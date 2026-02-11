@@ -81,7 +81,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
                   )->button( text  = 'Add'
                              press = client->_event( 'ADD' ) ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

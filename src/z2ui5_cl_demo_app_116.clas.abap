@@ -182,7 +182,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                                  press     = client->_event( val = 'ROW_ADD' t_arg = VALUE #( ( `${PRODH}` ) ) )
                                  tooltip   = 'ADD'
                           )->get_parent( )->get_parent( ).
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
 

@@ -132,7 +132,7 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
                               '                "' && client->_bind( val = input52 path = abap_true ) && '"' && |\n| &&
                               '               ]  }'
                     enabled = abap_false
-      )->get_root( )->xml_get( ).
+      )->stringify( ).
 
 
     client->view_display( lv_xml ).

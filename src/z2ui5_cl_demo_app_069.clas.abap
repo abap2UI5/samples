@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
                 t_arg                   = VALUE #( ( `${TEXT}` ) )
                  ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

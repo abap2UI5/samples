@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
                    type    = 'Emphasized'
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

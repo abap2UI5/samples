@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_237 IMPLEMENTATION.
                                          width           = `100%` )->get(
                                   )->responsive_scale( tickmarksbetweenlabels = `3` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

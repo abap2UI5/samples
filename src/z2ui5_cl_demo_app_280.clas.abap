@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
              )->numeric_content( value = `1522`
                                  icon  = `sap-icon://bubble-chart` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

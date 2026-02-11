@@ -53,7 +53,8 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - List'
             navbuttonpress  = client->_event( 'BACK' )
@@ -96,7 +97,7 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
                                                                                         ) ) )
       ) ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

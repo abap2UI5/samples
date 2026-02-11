@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
                                   )->splitter_layout_data( size    = `30%`
                                                            minsize = `200px` )->get_parent( )->get_parent( )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

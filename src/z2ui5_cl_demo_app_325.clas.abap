@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
                       rows            = '15'
                       id              = 'text_id' ).
 
-      client->view_display( page->stringify( ) ).
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 

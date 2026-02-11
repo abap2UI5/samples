@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
                         )->item( key  = `DoubleGreaterThan`
                                  text = `DoubleGreaterThan` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

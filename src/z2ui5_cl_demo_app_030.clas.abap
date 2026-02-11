@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
                  type    = 'Emphasized'
                  tooltip = 'pull-down' ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

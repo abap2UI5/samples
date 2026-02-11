@@ -19,7 +19,8 @@ CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Demo Layout'
             navbuttonpress = client->_event( 'BACK' )
@@ -87,7 +88,7 @@ CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
             )->button( text = 'accept'
                        type = 'Success' ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

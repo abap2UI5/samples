@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
                                     )->text( class = `column1`
                                              text  = `This container is flexible and it will adapt its size to fill the remaining size in the FixFlex control` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

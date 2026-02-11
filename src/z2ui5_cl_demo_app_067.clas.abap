@@ -32,7 +32,8 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page( title          = 'abap2UI5 - Currency Format'
                   navbuttonpress = client->_event( 'BACK' )
                   shownavbutton  = client->check_app_prev_stack( ) ).
@@ -112,7 +113,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                             val  = numeric
                             path = abap_true ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

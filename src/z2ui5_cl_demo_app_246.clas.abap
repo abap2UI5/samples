@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
                           text = `Portable DVD Player with 9" LCD Monitor`
             ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

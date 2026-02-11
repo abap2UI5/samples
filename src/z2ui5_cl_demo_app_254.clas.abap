@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
                                   )->flex_item_data( growfactor = `5`
                                                      styleclass = `item6` )->get_parent( )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

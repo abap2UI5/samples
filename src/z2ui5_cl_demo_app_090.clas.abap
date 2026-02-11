@@ -178,7 +178,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       )->button( text  = `Open P13N.POPUP`
                  press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

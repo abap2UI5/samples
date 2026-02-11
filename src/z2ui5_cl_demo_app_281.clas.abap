@@ -152,7 +152,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                                icon       = `sap-icon://travel-expense`
                                withmargin = abap_false ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

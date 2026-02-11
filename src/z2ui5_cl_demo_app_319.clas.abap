@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       supportranges     = 'true'
       enableodataselect = 'true' ).
 
-    m_client->view_display( val      = l_page->stringify( )
+    m_client->view_display( val      = l_view->stringify( )
 *       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
        switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
 *       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`

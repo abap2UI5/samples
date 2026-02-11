@@ -152,7 +152,7 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     "Render content depending on the current site
     render_site_content( EXPORTING client = client CHANGING site_content = site_content ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

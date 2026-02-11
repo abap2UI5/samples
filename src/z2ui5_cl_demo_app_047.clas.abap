@@ -54,7 +54,8 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Integer and Decimals'
                 navbuttonpress = client->_event( 'BACK' )
@@ -101,7 +102,7 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
        )->text( '{DATE}'
        )->text( '{TIME}' ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

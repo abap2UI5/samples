@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
                      valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
              )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

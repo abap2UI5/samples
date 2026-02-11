@@ -197,7 +197,7 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                               )->title( text = `Unavailable image`
                                   )->text( text = `Shows an error when an image could not be loaded, or when it takes too much time to load it.` )->get_parent( )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

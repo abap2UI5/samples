@@ -24,7 +24,8 @@ CLASS z2ui5_cl_demo_app_206 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Text - Max Lines'
             navbuttonpress = client->_event( 'BACK' )
@@ -66,7 +67,7 @@ CLASS z2ui5_cl_demo_app_206 IMPLEMENTATION.
                            text = `Note: The multi line overflow indicator depends on the browser line clamping support. ` &&
                                   `For such browsers this will be shown as ellipsis, for the other browsers the overflow will just be hidden.` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

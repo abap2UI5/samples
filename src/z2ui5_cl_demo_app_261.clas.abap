@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
                        subheader   = `August 21, 2013`
                        press       = client->_event( 'NEWS_CONTENT_PRESS' ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
 

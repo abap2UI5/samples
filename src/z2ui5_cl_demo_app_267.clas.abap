@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_267 IMPLEMENTATION.
                            showvaluehelp  = abap_false
                            width          = `70%` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

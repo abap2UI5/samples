@@ -23,7 +23,8 @@ CLASS z2ui5_cl_demo_app_233 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = 'Sample: MultiComboBox - Suggestions wrapping'
             navbuttonpress = client->_event( 'BACK' )
@@ -51,7 +52,7 @@ CLASS z2ui5_cl_demo_app_233 IMPLEMENTATION.
                       text = `Portable DVD Player with 9" LCD Monitor`
             ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

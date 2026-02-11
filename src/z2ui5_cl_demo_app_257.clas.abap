@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_257 IMPLEMENTATION.
                                                     number     = `3.5M`
                                                     unit       = `EUR` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

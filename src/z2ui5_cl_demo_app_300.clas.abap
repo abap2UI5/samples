@@ -29,7 +29,8 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page_01) = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object Status`
             navbuttonpress = client->_event( 'BACK' )
@@ -374,7 +375,7 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                       )->get_parent(
                   )->get_parent(
               )->get_parent( ).
-    client->view_display( page_01->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

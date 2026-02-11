@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                                        id    = `page3` ).
 
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

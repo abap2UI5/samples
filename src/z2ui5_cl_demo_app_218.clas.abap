@@ -23,7 +23,8 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Flex Box - Opposing Alignment`
             navbuttonpress = client->_event( 'BACK' )
@@ -37,7 +38,7 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
                               )->button( text = `2`
                                          type = `Reject` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

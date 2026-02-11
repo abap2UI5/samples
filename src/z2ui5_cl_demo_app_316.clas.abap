@@ -136,7 +136,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                                      t_arg = VALUE #( ( `REDIRECT` )
                                                                       ( |${ client->_bind_edit( url ) }| ) ) ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.

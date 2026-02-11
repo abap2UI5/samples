@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                    additionalinfo = '{ADDITIONALINFO}'
                    press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

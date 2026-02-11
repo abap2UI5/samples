@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
            class       = `sapUiSmallMargin`
            press       = client->_event( `press` ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
 
   ENDMETHOD.

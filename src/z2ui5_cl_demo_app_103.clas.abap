@@ -44,7 +44,8 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
            )->page(
               title           = 'abap2UI5 - Side Panel Example'
               navbuttonpress  = client->_event( 'BACK' )
@@ -71,7 +72,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
              )->panel( headertext = `second pane` ).
 
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

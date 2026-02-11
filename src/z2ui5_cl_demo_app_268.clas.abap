@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
                )->layout_data( ns = `core`
                    )->flex_item_data( growfactor = `1` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

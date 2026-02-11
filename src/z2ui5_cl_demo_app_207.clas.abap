@@ -23,7 +23,8 @@ CLASS z2ui5_cl_demo_app_207 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Radio Button`
             navbuttonpress = client->_event( 'BACK' )
@@ -75,7 +76,7 @@ CLASS z2ui5_cl_demo_app_207 IMPLEMENTATION.
                                                        selected = abap_true )->get_parent(
                                       )->radio_button( text = `Option 2` )->get_parent( ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

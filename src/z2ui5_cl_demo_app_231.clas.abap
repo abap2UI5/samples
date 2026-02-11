@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->text( id   = 'TextEvent'
                 text = client->_bind_edit( text ) ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

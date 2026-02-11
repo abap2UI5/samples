@@ -160,7 +160,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
-      client->view_display( mo_main_page->stringify( ) ).
+      client->view_display( mo_main_view->stringify( ) ).
     ENDIF.
 
     ASSIGN mo_app->('MV_VIEW_MODEL_UPDATE') TO FIELD-SYMBOL(<view_update>).
@@ -172,7 +172,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     IF mv_selectedkey <> mv_selectedkey_tmp.
 
-      client->view_display( mo_main_page->stringify( ) ).
+      client->view_display( mo_main_view->stringify( ) ).
 
       mv_selectedkey_tmp = mv_selectedkey.
 
