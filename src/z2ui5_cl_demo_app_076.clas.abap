@@ -57,7 +57,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
       z2ui5_set_data( ).
       z2ui5_on_init( ).
-      RETURN.
     ENDIF.
 
   ENDMETHOD.

@@ -252,7 +252,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     IF client->check_on_init( ).
       set_mock_data( ).
       set_view( ).
-      RETURN.
     ENDIF.
 
   ENDMETHOD.

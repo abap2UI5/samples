@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       z2ui5_view_display( ).
-      RETURN.
     ENDIF.
 
   ENDMETHOD.

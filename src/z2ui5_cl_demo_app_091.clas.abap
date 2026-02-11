@@ -58,7 +58,6 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
       z2ui5_set_data( ).
 
       z2ui5_view_display( ).
-      RETURN.
     ENDIF.
 
   ENDMETHOD.
