@@ -35,8 +35,8 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
               )->page(
-                      title          = 'abap2UI5 - Device Capabilities'
-                      navbuttonpress = client->_event( 'BACK' )
+                      title          = `abap2UI5 - Device Capabilities`
+                      navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
@@ -46,10 +46,10 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = 'Geolocation'
+                  )->simple_form( title    = `Geolocation`
                                   editable = abap_true
-                      )->content( 'form'
-                          )->label( 'Longitude'
+                      )->content( `form`
+                          )->label( `Longitude`
                           )->input( client->_bind_edit( longitude )
                           )->label( `Latitude`
                           )->input( client->_bind_edit( latitude )
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'MAP_CONTAINER_DISPLAY'.
+      WHEN `MAP_CONTAINER_DISPLAY`.
 
         IF longitude IS NOT INITIAL.
           mt_spot = VALUE #( ( pos = longitude && `;` && latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).
@@ -79,8 +79,8 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         view = z2ui5_cl_xml_view=>factory( ).
         client->view_display( view->shell(
               )->page(
-                      title          = 'abap2UI5 - Device Capabilities'
-                      navbuttonpress = client->_event( val = 'BACK' )
+                      title          = `abap2UI5 - Device Capabilities`
+                      navbuttonpress = client->_event( val = `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( )
@@ -90,10 +90,10 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = 'Geolocation'
+                  )->simple_form( title    = `Geolocation`
                                   editable = abap_true
-                      )->content( 'form'
-                          )->label( 'Longitude'
+                      )->content( `form`
+                          )->label( `Longitude`
                           )->input( client->_bind_edit( longitude )
                           )->label( `Latitude`
                           )->input( client->_bind_edit( latitude )
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                       scale         = `{SCALE}`
                                       tooltip       = `{TOOLTIP}`
                )->stringify( ) ).
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
         RETURN.
     ENDCASE.

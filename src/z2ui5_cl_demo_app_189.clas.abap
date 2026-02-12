@@ -23,10 +23,10 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
   METHOD dispatch.
 
     CASE client->get( )-event.
-      WHEN 'ONE_ENTER'.
-        focus_field = 'IdTwo'.
-      WHEN 'TWO_ENTER'.
-        focus_field = 'IdThree'.
+      WHEN `ONE_ENTER`.
+        focus_field = `IdTwo`.
+      WHEN `TWO_ENTER`.
+        focus_field = `IdThree`.
     ENDCASE.
     client->view_model_update( ).
   ENDMETHOD.
@@ -36,19 +36,19 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Focus II'
+              title          = `abap2UI5 - Focus II`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->simple_form(
-       )->content( ns = 'form'
-       )->label( 'One (Press Enter)' )->input( id     = 'IdOne'
+       )->content( ns = `form`
+       )->label( `One (Press Enter)` )->input( id     = `IdOne`
                                                value  = client->_bind_edit( one )
-                                               submit = client->_event( 'ONE_ENTER' )
-       )->label( 'Two' )->input( id     = 'IdTwo'
+                                               submit = client->_event( `ONE_ENTER` )
+       )->label( `Two` )->input( id     = `IdTwo`
                                  value  = client->_bind_edit( two )
-                                 submit = client->_event( 'TWO_ENTER' )
-       )->label( 'Three' )->input( id    = 'IdThree'
+                                 submit = client->_event( `TWO_ENTER` )
+       )->label( `Three` )->input( id    = `IdThree`
                                    value = client->_bind_edit( three ) ).
 
     page->_z2ui5( )->focus( focusid = client->_bind( focus_field ) ).
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     IF initialized = abap_false.
       initialized = abap_true.
-      focus_field = 'IdOne'.
+      focus_field = `IdOne`.
       render( ).
     ENDIF.
 

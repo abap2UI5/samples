@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Numeric Content with Icon'
+            title          = `abap2UI5 - Sample: Numeric Content with Icon`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -35,13 +35,13 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentIcon' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentIcon` ).
 
     page->numeric_content( value        = `65`
                            scale        = `MM`
@@ -49,14 +49,14 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
                            indicator    = `Down`
                            icon         = `sap-icon://travel-expense`
                              class      = `sapUiSmallMargin`
-                           press        = client->_event( 'PRESS' ) ).
+                           press        = client->_event( `PRESS` ) ).
     page->numeric_content( value        = `11`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                              icon       = `test-resources/sap/m/demokit/sample/NumericContentIcon/images/grass.jpg`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'PRESS' ) ).
+                             press      = client->_event( `PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -64,9 +64,9 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'PRESS'.
+      WHEN `PRESS`.
         client->message_toast_display( `The numeric content is pressed.` ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         z2ui5_display_popover( `hint_icon` ).
     ENDCASE.
   ENDMETHOD.

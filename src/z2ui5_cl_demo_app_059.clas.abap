@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_event( 'BUTTON_SEARCH' ).
+    IF client->check_on_event( `BUTTON_SEARCH` ).
       z2ui5_set_data( ).
       z2ui5_cl_util=>itab_filter_by_val(
           EXPORTING
@@ -64,12 +64,12 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
   METHOD z2ui5_view_display.
@@ -77,14 +77,14 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->shell( )->page( id = `page_main`
-            title                          = 'abap2UI5 - Search Field with Backend Live Change'
+            title                          = `abap2UI5 - Search Field with Backend Live Change`
             navbuttonpress                 = client->_event_nav_app_leave( )
             shownavbutton                  = client->check_app_prev_stack( ) ).
 
     DATA(lo_box) = page1->vbox( )->text( `Search`
         )->search_field( width      = `17.5rem`
                          livechange = client->_event(
-            val    = 'BUTTON_SEARCH'
+            val    = `BUTTON_SEARCH`
             t_arg  = VALUE #( ( `${$source>/value}` ) )
             s_ctrl = VALUE #( check_allow_multi_req = abap_true ) ) ).
 

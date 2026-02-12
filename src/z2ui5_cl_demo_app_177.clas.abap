@@ -32,9 +32,9 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
     DO 50 TIMES.
       DATA ls_row TYPE ty_row.
       ls_row-count = sy-index.
-      ls_row-value = 'red'.
+      ls_row-value = `red`.
 *        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-      ls_row-descr = 'this is a description'.
+      ls_row-descr = `this is a description`.
       ls_row-checkbox = abap_true.
 *        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
@@ -49,115 +49,115 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'SORT_ASCENDING'.
+      WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
-        client->message_toast_display( 'sort ascending' ).
-      WHEN 'SORT_DESCENDING'.
+        client->message_toast_display( `sort ascending` ).
+      WHEN `SORT_DESCENDING`.
         SORT t_tab BY count DESCENDING.
-        client->message_toast_display( 'sort descending' ).
-      WHEN 'BUTTON_POST'.
-        client->message_box_display( 'button post was pressed' ).
-      WHEN 'MENU_DEFAULT'.
-        client->message_box_display( 'menu default pressed' ).
-      WHEN 'MENU_01'.
-        client->message_box_display( 'menu 01 pressed' ).
-      WHEN 'MENU_02'.
-        client->message_box_display( 'menu 02 pressed' ).
+        client->message_toast_display( `sort descending` ).
+      WHEN `BUTTON_POST`.
+        client->message_box_display( `button post was pressed` ).
+      WHEN `MENU_DEFAULT`.
+        client->message_box_display( `menu default pressed` ).
+      WHEN `MENU_01`.
+        client->message_box_display( `menu 01 pressed` ).
+      WHEN `MENU_02`.
+        client->message_box_display( `menu 02 pressed` ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
+            title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->scroll_container( height   = '70%'
+    DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
-            growingthreshold    = '20'
+            growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind_edit( t_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
 
     tab->header_toolbar(
         )->overflow_toolbar(
-            )->title( 'title of the table'
+            )->title( `title of the table`
             )->button(
-                text  = 'letf side button'
-                icon  = 'sap-icon://account'
-                press = client->_event( 'BUTTON_SORT' )
+                text  = `letf side button`
+                icon  = `sap-icon://account`
+                press = client->_event( `BUTTON_SORT` )
             )->segmented_button( selected_key = mv_key
                 )->items(
                     )->segmented_button_item(
-                        key  = 'BLUE'
-                        icon = 'sap-icon://accept'
-                        text = 'blue'
+                        key  = `BLUE`
+                        icon = `sap-icon://accept`
+                        text = `blue`
                     )->segmented_button_item(
-                        key  = 'GREEN'
-                        icon = 'sap-icon://add-favorite'
-                        text = 'green'
+                        key  = `GREEN`
+                        icon = `sap-icon://add-favorite`
+                        text = `green`
             )->get_parent( )->get_parent(
             )->toolbar_spacer(
             )->generic_tag(
-                    arialabelledby = 'genericTagLabel'
-                    text           = 'Project Cost'
-                    design         = 'StatusIconHidden'
-                    status         = 'Error'
-                    class          = 'sapUiSmallMarginBottom'
+                    arialabelledby = `genericTagLabel`
+                    text           = `Project Cost`
+                    design         = `StatusIconHidden`
+                    status         = `Error`
+                    class          = `sapUiSmallMarginBottom`
                 )->object_number(
-                    state      = 'Error'
-                    emphasized = 'false'
-                    number     = '3.5M'
-                    unit       = 'EUR'
+                    state      = `Error`
+                    emphasized = `false`
+                    number     = `3.5M`
+                    unit       = `EUR`
             )->get_parent(
             )->toolbar_spacer(
             )->overflow_toolbar_toggle_button(
-                icon  = 'sap-icon://sort-descending'
-                press = client->_event( 'SORT_DESCENDING' )
+                icon  = `sap-icon://sort-descending`
+                press = client->_event( `SORT_DESCENDING` )
             )->overflow_toolbar_toggle_button(
-                icon  = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' )
+                icon  = `sap-icon://sort-ascending`
+                press = client->_event( `SORT_ASCENDING` )
 
             )->overflow_toolbar_menu_button(
         text          = `Export`
         type          = `Transparent`
         tooltip       = `Export`
-        defaultaction = client->_event( 'MENU_DEFAULT' )
+        defaultaction = client->_event( `MENU_DEFAULT` )
         icon          = `sap-icon://share`
          buttonmode   = `Split`
       )->_generic( `menu` )->_generic( `Menu`
         )->menu_item(
-            press = client->_event( 'MENU_01' )
+            press = client->_event( `MENU_01` )
             text  = `Export as PDF`
             icon  = `sap-icon://pdf-attachment`
       )->menu_item(
-            press = client->_event( 'MENU_02' )
+            press = client->_event( `MENU_02` )
             text  = `Export to Excel`
             icon  = `sap-icon://excel-attachment` ).
 
     tab->columns(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column(
-            )->text( 'Description' )->get_parent(
+            )->text( `Description` )->get_parent(
         )->column(
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
         )->column(
-            )->text( 'Counter' )->get_parent(
+            )->text( `Counter` )->get_parent(
         )->column(
-            )->text( 'Radial Micro Chart' ).
+            )->text( `Radial Micro Chart` ).
 
     tab->items( )->column_list_item( )->cells(
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
-       )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}'
+       )->text( `{VALUE}`
+       )->text( `{INFO}`
+       )->text( `{DESCR}`
+       )->checkbox( selected = `{CHECKBOX}`
                     enabled  = abap_false
-       )->text( '{COUNT}'
+       )->text( `{COUNT}`
        )->radial_micro_chart( size       = `Responsive`
                               height     = `35px`
                               percentage = `{PERCENTAGE}`

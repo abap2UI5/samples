@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_UTIL_01'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = `Z2UI5_T_UTIL_01`
                                                  RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'ROW_ID'
+                                    ( name = `ROW_ID`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
 
         APPEND LINES OF component TO result.
@@ -125,11 +125,11 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 *    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
 *                                          width = `100%` ).
-    page->label( 'ProgressIndicator'
+    page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
-                               displayvalue = '0,44GB of 32GB used'
+                               displayvalue = `0,44GB of 32GB used`
                                showvalue    = abap_true
-                               state        = 'Success' ).
+                               state        = `Success` ).
 
     IF mo_parent_view IS INITIAL.
 

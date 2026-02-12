@@ -26,19 +26,19 @@ CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
-            title          = 'abap2UI5 - Formatted Text'
+            title          = `abap2UI5 - Formatted Text`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->toolbar_spacer(
                 )->link(
             )->get_parent(
-            )->vbox( 'sapUiSmallMargin'
+            )->vbox( `sapUiSmallMargin`
                 )->link(
-                    text = 'Control Documentation - SAP UI5 Formatted Text'
-                    href = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.FormattedText/sample/sap.m.sample.FormattedText'
+                    text = `Control Documentation - SAP UI5 Formatted Text`
+                    href = `https://sapui5.hana.ondemand.com/#/entity/sap.m.FormattedText/sample/sap.m.sample.FormattedText`
                 )->get_parent(
-            )->vbox( 'sapUiSmallMargin'
+            )->vbox( `sapUiSmallMargin`
                 )->formatted_text( mv_html_text ).
 
     client->view_display( view->stringify( ) ).

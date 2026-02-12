@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
             showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title          = 'abap2UI5 - Status Indicators Library'
+            title          = `abap2UI5 - Status Indicators Library`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

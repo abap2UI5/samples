@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
+      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page( id = `page_main`
-            title                         = 'abap2UI5 - Search with Enter'
+            title                         = `abap2UI5 - Search with Enter`
             navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( ) ).
 
@@ -69,8 +69,8 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
     vbox->hbox( )->search_field(
          value  = client->_bind_edit( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
+         search = client->_event( `BUTTON_SEARCH` )
+         change = client->_event( `BUTTON_SEARCH` )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` )->button(
@@ -100,12 +100,12 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
   METHOD set_data.
 
     mt_table = VALUE #(
-        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
   METHOD z2ui5_set_search.

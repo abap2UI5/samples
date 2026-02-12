@@ -70,16 +70,16 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'REFRESH'.
+      WHEN `REFRESH`.
         lv_text = lv_text + 10.
 
         client->view_model_update( ).
-      WHEN 'BUTTON_SEND'.
+      WHEN `BUTTON_SEND`.
 
         z2ui5_on_rendering_popup( client ).
-      WHEN 'BUTTON_POPOVER'.
+      WHEN `BUTTON_POPOVER`.
         z2ui5_on_rendering_popover( client = client
-                                    id     = 'ppvr' ).
+                                    id     = `ppvr` ).
     ENDCASE.
   ENDMETHOD.
 
@@ -87,39 +87,39 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     screen = VALUE #(
         check_is_active = abap_true
-        colour          = 'BLUE'
-        combo_key       = 'GRAY'
-        segment_key     = 'GREEN'
-        date            = '07.12.22'
-        date_time       = '23.12.2022, 19:27:20'
-        time_start      = '05:24:00'
-        time_end        = '17:23:57').
+        colour          = `BLUE`
+        combo_key       = `GRAY`
+        segment_key     = `GREEN`
+        date            = `07.12.22`
+        date_time       = `23.12.2022, 19:27:20`
+        time_start      = `05:24:00`
+        time_end        = `17:23:57`).
 
     mt_suggestion = VALUE #(
-        ( descr = 'Green'  value = 'GREEN' )
-        ( descr = 'Blue'   value = 'BLUE' )
-        ( descr = 'Black'  value = 'BLACK' )
-        ( descr = 'Grey'   value = 'GREY' )
-        ( descr = 'Blue2'  value = 'BLUE2' )
-        ( descr = 'Blue3'  value = 'BLUE3' ) ).
+        ( descr = `Green`  value = `GREEN` )
+        ( descr = `Blue`   value = `BLUE` )
+        ( descr = `Black`  value = `BLACK` )
+        ( descr = `Grey`   value = `GREY` )
+        ( descr = `Blue2`  value = `BLUE2` )
+        ( descr = `Blue3`  value = `BLUE3` ) ).
   ENDMETHOD.
 
   METHOD z2ui5_on_rendering.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
+    view->_z2ui5( )->timer( finished    = client->_event( `REFRESH` )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
 
     DATA(page) = view->shell(
          )->page(
-            title           = 'abap2UI5 - Selection-Screen Example'
+            title           = `abap2UI5 - Selection-Screen Example`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+    DATA(grid) = page->grid( `L6 M12 S12`
+        )->content( `layout` ).
 
     grid = grid->text( text = client->_bind_edit( val = lv_text view = client->cs_view-main
       ) ).
@@ -128,13 +128,13 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
          )->toolbar_spacer(
          )->button(
              id    = `ppvr`
-             text  = 'Open Popover'
-             press = client->_event( val = 'BUTTON_POPOVER' t_arg = VALUE #( ( `${$source>/sId}` ) ) )
-             type  = 'Ghost'
+             text  = `Open Popover`
+             press = client->_event( val = `BUTTON_POPOVER` t_arg = VALUE #( ( `${$source>/sId}` ) ) )
+             type  = `Ghost`
          )->button(
-             text  = 'Open Popup'
-             press = client->_event( 'BUTTON_SEND' )
-             type  = 'Success' ).
+             text  = `Open Popup`
+             press = client->_event( `BUTTON_SEND` )
+             type  = `Success` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
-    popover->text( text = 'this is popover in middle with timer auto refresh' ).
+    popover->text( text = `this is popover in middle with timer auto refresh` ).
     client->popover_display( xml   = popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
@@ -152,8 +152,8 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( )->dialog( ).
 
-    dialog->text( text = 'this is popup in middle with timer auto refresh' ).
-    dialog->button( text  = 'close'
+    dialog->text( text = `this is popup in middle with timer auto refresh` ).
+    dialog->button( text  = `close`
                     press = client->_event_client( client->cs_event-popup_close ) ).
     client->popup_display( dialog->stringify( ) ).
   ENDMETHOD.

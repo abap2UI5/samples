@@ -62,19 +62,19 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Binding'
+                title          = `abap2UI5 - Binding`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Rountrip...'
-            press = client->_event( 'POPUP' ) ).
+            text  = `Rountrip...`
+            press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD ui5_event.
 
-    IF client->check_on_event( 'POPUP' ).
+    IF client->check_on_event( `POPUP` ).
 
       IF ms_struc <> ms_struc2.
         client->message_box_display( `structure changed error` ).
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
       DATA ls_dataset TYPE ty_dataset.
       CLEAR ls_dataset.
-      ls_dataset-label = 'Fully Rounded'.
+      ls_dataset-label = `Fully Rounded`.
       ls_dataset-border_width = 2.
       ls_dataset-border_radius = 200.
 

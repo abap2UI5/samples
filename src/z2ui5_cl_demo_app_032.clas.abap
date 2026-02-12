@@ -49,19 +49,19 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-      WHEN 'POST'.
+      WHEN `POST`.
         client->message_toast_display( app-get-t_event_arg[ 1 ] ).
-      WHEN 'MYCC'.
-        client->message_toast_display( 'MYCC event ' && mv_value ).
-      WHEN 'BACK'.
+      WHEN `MYCC`.
+        client->message_toast_display( `MYCC event ` && mv_value ).
+      WHEN `BACK`.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD z2ui5_on_init.
 
-    app-view_main = 'VIEW_MAIN'.
-    mv_value = 'test'.
+    app-view_main = `VIEW_MAIN`.
+    mv_value = `test`.
   ENDMETHOD.
 
   METHOD z2ui5_on_render.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event( 'BACK' ) && `" ` && |\n| &&
+                          `  press="` && client->_event( `BACK` ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
                           `<html><head><style>` && |\n| &&
                           `body {background-color: powderblue;}` && |\n| &&

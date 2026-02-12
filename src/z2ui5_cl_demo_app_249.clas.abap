@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Splitter Layout - 3 areas'
+            title          = `abap2UI5 - Sample: Splitter Layout - 3 areas`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -35,13 +35,13 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4` ).
 
     DATA(layout) = page->splitter( height = `500px`
                                    width  = `100%`
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'POPOVER' ).
+    IF client->check_on_event( `POPOVER` ).
       z2ui5_display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.

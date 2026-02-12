@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'ROW_SELECT'.
+      WHEN `ROW_SELECT`.
 
         row_select( ).
       WHEN OTHERS.
@@ -106,10 +106,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(content) = popup->dialog( contentwidth = '60%'
-          )->simple_form( layout   = 'ResponsiveGridLayout'
+    DATA(content) = popup->dialog( contentwidth = `60%`
+          )->simple_form( layout   = `ResponsiveGridLayout`
                           editable = abap_true
-          )->content( ns = 'form' ).
+          )->content( ns = `form` ).
 
     " Gehe über alle Comps wenn wir im Edit sind dann sind keyfelder nicht eingabebereit.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
@@ -152,8 +152,8 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = 'true'
-                               width   = 'auto'
+    DATA(table) = page->table( growing = `true`
+                               width   = `auto`
                                items   = client->_bind_edit( val = <tab> ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
@@ -251,7 +251,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'ROW_ID'
+                                    ( name = `ROW_ID`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
 
         APPEND LINES OF component TO result.

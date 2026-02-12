@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CALL_EF' ).
+    IF client->check_on_event( `CALL_EF` ).
       mv_url = `https://www.google.com`.
       client->view_model_update( ).
       client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).

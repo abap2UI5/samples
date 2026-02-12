@@ -50,14 +50,14 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
         ( pos = `8.683340000;50.112000000;0` contentoffset = `0;-6` scale = `1;1;1` key = `Frankfurt`   tooltip = `Frankfurt`   type = `Default` icon = `factory` ) ).
 
       mt_route = VALUE #(
-        (  position = '2.3522219;48.856614;0; -74.0059731;40.7143528;0'   routetype = 'Geodesic' linedash = '10;5' color = '92,186,230' colorborder = 'rgb(255,255,255)' linewidth = '25' ) ).
+        (  position = `2.3522219;48.856614;0; -74.0059731;40.7143528;0`   routetype = `Geodesic` linedash = `10;5` color = `92,186,230` colorborder = `rgb(255,255,255)` linewidth = `25` ) ).
 
       mt_legend = VALUE #(
-        (   text = 'Dashed flight route' color = 'rgb(92,186,230)' )
-        (   text = 'Flight route' color = 'rgb(92,186,35)' ) ).
+        (   text = `Dashed flight route` color = `rgb(92,186,230)` )
+        (   text = `Flight route` color = `rgb(92,186,35)` ) ).
     ENDIF.
 
-    IF client->check_on_event( 'BACK' ).
+    IF client->check_on_event( `BACK` ).
       client->nav_app_leave( ).
       RETURN.
 
@@ -66,8 +66,8 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
             )->page(
-                    title          = 'abap2UI5 - Map Container'
-                    navbuttonpress = client->_event( val = 'BACK' )
+                    title          = `abap2UI5 - Map Container`
+                    navbuttonpress = client->_event( val = `BACK` )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(map) = page->map_container( autoadjustheight = abap_true
@@ -92,10 +92,10 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     map->routes( client->_bind( mt_route ) )->route(
       position      = `{POSITION}`
         routetype   = `{ROUTETYPE}`
-        linedash    = '{LINEDASH}'
-        color       = '{COLOR}'
-        colorborder = '{COLORBORDER}'
-      linewidth     = '{LINEWIDTH}'
+        linedash    = `{LINEDASH}`
+        color       = `{COLOR}`
+        colorborder = `{COLORBORDER}`
+      linewidth     = `{LINEWIDTH}`
 *      RECEIVING
 *        result    =
       ).
@@ -104,12 +104,12 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *      EXPORTING
 *        id      =
         items   = client->_bind( mt_legend )
-        caption = 'Legend'
+        caption = `Legend`
 *      RECEIVING
 *        result  =
       )->legenditem(
-      text    = '{TEXT}'
-        color = '{COLOR}'
+      text    = `{TEXT}`
+        color = `{COLOR}`
 *      RECEIVING
 *        result =
       ).

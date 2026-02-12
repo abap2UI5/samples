@@ -3,7 +3,7 @@ CLASS zcl_2ui5_lock DEFINITION DEFERRED.
 
 CLASS zcl_2ui5_start DEFINITION INHERITING FROM z2ui5_cl_demo_app_351.
   PUBLIC SECTION.
-    DATA text TYPE string VALUE 'call booking mask'.
+    DATA text TYPE string VALUE `call booking mask`.
     METHODS z2ui5_if_app~main                       REDEFINITION.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -34,11 +34,11 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
           DATA(page) = view->shell( )->page(
             title = `Startview` ).
           page->simple_form(
-                )->content( 'form'
+                )->content( `form`
                              )->button(
                                  text  = client->_bind_edit( text )
-                                 width = '20%'
-                                 press = client->_event( 'CALL_BOOKING_MASK' ) ).
+                                 width = `20%`
+                                 press = client->_event( `CALL_BOOKING_MASK` ) ).
           client->view_display( view->stringify( ) ).
           client->set_app_state_active( ).
           RETURN.
@@ -47,7 +47,7 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
           WHEN `CALL_BOOKING_MASK`.
             DATA: lf_key TYPE n LENGTH 4.
             DATA(lr_2ui5_lock) = NEW zcl_2ui5_lock( ).
-            lr_2ui5_lock->varkey = '0001'.
+            lr_2ui5_lock->varkey = `0001`.
             client->nav_app_call( lr_2ui5_lock ).
           WHEN `BACK`.
             client->nav_app_leave( ).
@@ -66,18 +66,18 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = page->vbox( ).
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->title(
-      text = 'Current Lock Value in Table ZTEST' ).
+      text = `Current Lock Value in Table ZTEST` ).
     hbox->input(
       editable = abap_false
       value    = client->_bind_edit( varkey ) ).
     hbox->button(
-      text  = 'Next Lock View'
-      press = client->_event( 'NEXT_LOCK' ) ).
+      text  = `Next Lock View`
+      press = client->_event( `NEXT_LOCK` ) ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
@@ -94,10 +94,10 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
           check_initialized = abap_true.
           set_session_stateful( client   = client
                                 stateful = abap_true ).
-          DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+          DATA(lv_fm) = `ENQUEUE_E_TABLE`.
           CALL FUNCTION lv_fm
             EXPORTING
-              tabname        = 'ZTEST'
+              tabname        = `ZTEST`
               varkey         = varkey
             EXCEPTIONS
               foreign_lock   = 1

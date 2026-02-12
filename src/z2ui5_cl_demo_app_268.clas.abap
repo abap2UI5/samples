@@ -71,13 +71,13 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.Icon/sample/sap.ui.core.sample.Icon' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.Icon/sample/sap.ui.core.sample.Icon` ).
 
     page->hbox( class = `sapUiSmallMargin`
            )->icon(
@@ -118,9 +118,9 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'handleStethoscopePress'.
+      WHEN `handleStethoscopePress`.
         client->message_toast_display( `Over budget!` ).
     ENDCASE.
   ENDMETHOD.

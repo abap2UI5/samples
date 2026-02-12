@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - RTTI created Table'
+                title          = `abap2UI5 - RTTI created Table`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -29,29 +29,29 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( <tab> )
-            mode  = 'MultiSelect'
+            mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'Dynamic typed table'
+                )->title( `Dynamic typed table`
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( 'SEND' )
+                    press = client->_event( `SEND` )
         )->get_parent( )->get_parent( ).
 
     tab->columns(
         )->column(
-            )->text( 'uuid' )->get_parent(
+            )->text( `uuid` )->get_parent(
         )->column(
-            )->text( 'time' )->get_parent(
+            )->text( `time` )->get_parent(
         )->column(
-            )->text( 'previous' )->get_parent( ).
+            )->text( `previous` )->get_parent( ).
 
-    tab->items( )->column_list_item( selected = '{SELKZ}'
+    tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->input( value = '{ID}'
-          )->input( value = '{TIMESTAMPL}'
-          )->input( value = '{ID_PREV}' ).
+          )->input( value = `{ID}`
+          )->input( value = `{TIMESTAMPL}`
+          )->input( value = `{ID_PREV}` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -64,16 +64,16 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
 
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = 'this is an uuid'  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
           INTO TABLE <tab>.
 
     ENDIF.

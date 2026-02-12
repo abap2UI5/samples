@@ -84,42 +84,42 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'START'.
+      WHEN `START`.
         z2ui5_on_rendering( ).
-      WHEN 'BUTTON_MCUSTOM'.
+      WHEN `BUTTON_MCUSTOM`.
 *        send type = '' is mandatory in order to not break current implementation
-        client->message_box_display( type             = ''
-                                     text             = 'Custom MessageBox'
+        client->message_box_display( type             = ``
+                                     text             = `Custom MessageBox`
                                      icon             = `SUCCESS`
-                                     title            = 'Custom MessageBox'
+                                     title            = `Custom MessageBox`
                                      actions          = VALUE #( ( `First Button` ) ( `Second Button` ) )
                                      emphasizedaction = `First Button`
                                      onclose          = `callMessageToast()`
                                      details          = `<h3>these are details</h3>` ).
-      WHEN 'BUTTON_MCONFIRM'.
-        client->message_box_display( type = 'confirm'
-                                     text = 'Confirm MessageBox' ).
-      WHEN 'BUTTON_MALERT'.
-        client->message_box_display( type = 'alert'
-                                     text = 'Alert MessageBox' ).
-      WHEN 'BUTTON_MERROR'.
-        client->message_box_display( type = 'error'
-                                     text = 'Error MessageBox' ).
-      WHEN 'BUTTON_MINFO'.
-        client->message_box_display( type = 'information'
-                                     text = 'Information MessageBox' ).
-      WHEN 'BUTTON_MWARNING'.
-        client->message_box_display( type = 'warning'
-                                     text = 'Warning MessageBox' ).
-      WHEN 'BUTTON_MSUCCESS'.
-        client->message_box_display( type = 'success'
-                                     text = 'Success MessageBox'
+      WHEN `BUTTON_MCONFIRM`.
+        client->message_box_display( type = `confirm`
+                                     text = `Confirm MessageBox` ).
+      WHEN `BUTTON_MALERT`.
+        client->message_box_display( type = `alert`
+                                     text = `Alert MessageBox` ).
+      WHEN `BUTTON_MERROR`.
+        client->message_box_display( type = `error`
+                                     text = `Error MessageBox` ).
+      WHEN `BUTTON_MINFO`.
+        client->message_box_display( type = `information`
+                                     text = `Information MessageBox` ).
+      WHEN `BUTTON_MWARNING`.
+        client->message_box_display( type = `warning`
+                                     text = `Warning MessageBox` ).
+      WHEN `BUTTON_MSUCCESS`.
+        client->message_box_display( type = `success`
+                                     text = `Success MessageBox`
                                      icon = `sap-icon://accept` ).
-      WHEN 'BUTTON_SEND'.
-        client->message_box_display( 'success - values send to the server' ).
-      WHEN 'BUTTON_CLEAR'.
+      WHEN `BUTTON_SEND`.
+        client->message_box_display( `success - values send to the server` ).
+      WHEN `BUTTON_CLEAR`.
         CLEAR screen.
-        client->message_toast_display( 'View initialized' ).
+        client->message_toast_display( `View initialized` ).
     ENDCASE.
   ENDMETHOD.
 
@@ -127,21 +127,21 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
     screen = VALUE #(
         check_is_active = abap_true
-        colour          = 'BLUE'
-        combo_key       = 'GRAY'
-        segment_key     = 'GREEN'
-        date            = '07.12.22'
-        date_time       = '23.12.2022, 19:27:20'
-        time_start      = '05:24:00'
-        time_end        = '17:23:57' ).
+        colour          = `BLUE`
+        combo_key       = `GRAY`
+        segment_key     = `GREEN`
+        date            = `07.12.22`
+        date_time       = `23.12.2022, 19:27:20`
+        time_start      = `05:24:00`
+        time_end        = `17:23:57` ).
 
     mt_suggestion = VALUE #(
-        ( descr = 'Green'  value = 'GREEN' )
-        ( descr = 'Blue'   value = 'BLUE' )
-        ( descr = 'Black'  value = 'BLACK' )
-        ( descr = 'Gray'   value = 'GRAY' )
-        ( descr = 'Blue2'  value = 'BLUE2' )
-        ( descr = 'Blue3'  value = 'BLUE3' ) ).
+        ( descr = `Green`  value = `GREEN` )
+        ( descr = `Blue`   value = `BLUE` )
+        ( descr = `Black`  value = `BLACK` )
+        ( descr = `Gray`   value = `GRAY` )
+        ( descr = `Blue2`  value = `BLUE2` )
+        ( descr = `Blue3`  value = `BLUE3` ) ).
   ENDMETHOD.
 
   METHOD z2ui5_on_rendering.
@@ -152,61 +152,61 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title          = 'abap2UI5 - Selection-Screen Example'
+            title          = `abap2UI5 - Selection-Screen Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+    DATA(grid) = page->grid( `L6 M12 S12`
+        )->content( `layout` ).
 
-    grid->simple_form( title    = 'Input'
+    grid->simple_form( title    = `Input`
                        editable = abap_true
-        )->content( 'form'
-            )->label( 'Input with suggestion items'
+        )->content( `form`
+            )->label( `Input with suggestion items`
             )->input(
                     id              = `suggInput`
                     value           = client->_bind_edit( screen-colour )
-                    placeholder     = 'Fill in your favorite color'
+                    placeholder     = `Fill in your favorite color`
                     suggestionitems = client->_bind( mt_suggestion )
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
                     )->list_item(
-                        text           = '{VALUE}'
-                        additionaltext = '{DESCR}' ).
+                        text           = `{VALUE}`
+                        additionaltext = `{DESCR}` ).
 
     page->footer( )->overflow_toolbar(
          )->text( text = `MessageBox Types`
          )->button(
-             text  = 'Confirm'
-             press = client->_event( 'BUTTON_MCONFIRM' )
+             text  = `Confirm`
+             press = client->_event( `BUTTON_MCONFIRM` )
          )->button(
-             text  = 'Alert'
-             press = client->_event( 'BUTTON_MALERT' )
+             text  = `Alert`
+             press = client->_event( `BUTTON_MALERT` )
          )->button(
-             text  = 'Error'
-             press = client->_event( 'BUTTON_MERROR' )
+             text  = `Error`
+             press = client->_event( `BUTTON_MERROR` )
          )->button(
-             text  = 'Information'
-             press = client->_event( 'BUTTON_MINFO' )
+             text  = `Information`
+             press = client->_event( `BUTTON_MINFO` )
          )->button(
-             text  = 'Warning'
-             press = client->_event( 'BUTTON_MWARNING' )
+             text  = `Warning`
+             press = client->_event( `BUTTON_MWARNING` )
          )->button(
-             text  = 'Success'
-             press = client->_event( 'BUTTON_MSUCCESS' )
+             text  = `Success`
+             press = client->_event( `BUTTON_MSUCCESS` )
          )->button(
-             text  = 'Custom'
-             press = client->_event( 'BUTTON_MCUSTOM' )
+             text  = `Custom`
+             press = client->_event( `BUTTON_MCUSTOM` )
          )->toolbar_spacer(
          )->button(
-             text  = 'Clear'
-             press = client->_event( 'BUTTON_CLEAR' )
-             type  = 'Reject'
-             icon  = 'sap-icon://delete'
+             text  = `Clear`
+             press = client->_event( `BUTTON_CLEAR` )
+             type  = `Reject`
+             icon  = `sap-icon://delete`
          )->button(
-             text  = 'Send to Server'
-             press = client->_event( 'BUTTON_SEND' )
-             type  = 'Success' ).
+             text  = `Send to Server`
+             press = client->_event( `BUTTON_SEND` )
+             type  = `Success` ).
 
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).

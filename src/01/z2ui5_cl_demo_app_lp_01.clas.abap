@@ -18,19 +18,19 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell( )->page( showheader = abap_false ).
-      client->view_display( page->simple_form( title    = 'Laucnhpad I - Read Startup Parameters'
+      client->view_display( page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
                                                editable = abap_true
-                     )->content( 'form'
+                     )->content( `form`
                          )->label( ``
-                         )->button( text  = 'Read Parameters'
-                                    press = client->_event( 'READ_PARAMS' )
+                         )->button( text  = `Read Parameters`
+                                    press = client->_event( `READ_PARAMS` )
                          )->label( ``
-                         )->button( text  = 'Go Back'
+                         )->button( text  = `Go Back`
                                     press = client->_event_nav_app_leave( ) )->stringify( ) ).
 
     ENDIF.
 
-    IF client->check_on_event( 'READ_PARAMS' ).
+    IF client->check_on_event( `READ_PARAMS` ).
       DATA(lv_text) = `Start Parameter: `.
       DATA(lt_params) = client->get( )-t_comp_params.
       LOOP AT lt_params INTO DATA(ls_param).

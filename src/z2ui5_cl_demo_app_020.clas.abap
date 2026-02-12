@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
     ENDCASE.
 
     client->popup_display( z2ui5_cl_xml_view=>factory_popup(
-         )->dialog( 'abap2UI5 - Popup to decide'
+         )->dialog( `abap2UI5 - Popup to decide`
                 )->vbox(
                     )->text( mv_text )->get_parent(
                 )->buttons(
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
                         )->button(
                             text  = mv_confirm_text
                             press = client->_event( mv_confirm_event )
-                            type  = 'Emphasized'
+                            type  = `Emphasized`
                         )->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

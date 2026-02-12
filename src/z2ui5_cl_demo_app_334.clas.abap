@@ -35,19 +35,19 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
     ENDIF.
     IF ms_struc IS INITIAL.
-      client->message_toast_display( 'ERROR - MS_STRUC is initial!' ).
+      client->message_toast_display( `ERROR - MS_STRUC is initial!` ).
     ENDIF.
 
     IF mo_layout_obj->mr_data  IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
 
     IF mo_layout_obj_2->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
 
     IF mo_layout_obj_2->ms_data-guid EQ mo_layout_obj->ms_data-guid.
-      client->message_toast_display( 'ERROR - GUIDS!' ).
+      client->message_toast_display( `ERROR - GUIDS!` ).
     ENDIF.
 
     client->view_model_update( ).
@@ -56,13 +56,13 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'GO'
-                  press = client->_event( 'GO' )
-                  type  = 'Success' ).
+    page->button( text  = `GO`
+                  press = client->_event( `GO` )
+                  type  = `Success` ).
 
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`

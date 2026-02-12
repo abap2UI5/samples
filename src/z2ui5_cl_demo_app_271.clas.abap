@@ -25,12 +25,12 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com'.
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: ImageContent'
+            title          = `abap2UI5 - Sample: ImageContent`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -38,27 +38,27 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = base_url && '/sdk/#/entity/sap.m.ImageContent/sample/sap.m.sample.ImageContent' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = base_url && `/sdk/#/entity/sap.m.ImageContent/sample/sap.m.sample.ImageContent` ).
 
     page->image_content(
            class       = `sapUiLargeMarginTop sapUiLargeMarginBottom`
            src         = `sap-icon://area-chart`
            description = `Icon`
-           press       = client->_event( 'PRESS' ) )->get_parent(
+           press       = client->_event( `PRESS` ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/ProfileImage_LargeGenTile.png`
               description         = `Profile image`
-              press               = client->_event( 'PRESS' ) )->get_parent(
+              press               = client->_event( `PRESS` ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/SAPLogoLargeTile_28px_height.png`
               description         = `Logo`
-              press               = client->_event( 'PRESS' ) ).
+              press               = client->_event( `PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -66,9 +66,9 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'PRESS'.
+      WHEN `PRESS`.
         client->message_toast_display( `The ImageContent is pressed.` ).
     ENDCASE.
   ENDMETHOD.

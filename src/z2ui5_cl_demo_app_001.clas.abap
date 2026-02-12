@@ -25,11 +25,11 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      display_view( ).
       set_data( ).
     ENDIF.
 
-    on_event( client ).
+    on_event( ).
   ENDMETHOD.
 
   METHOD display_view.
@@ -37,32 +37,32 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
            )->page(
-                   title          = 'abap2UI5 - First Example'
+                   title          = `abap2UI5 - First Example`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form( title = 'Form Title' editable = abap_true
-                   )->content( 'form'
-                       )->title( 'Input'
-                       )->label( 'quantity'
+        )->simple_form( title = `Form Title` editable = abap_true
+                   )->content( `form`
+                       )->title( `Input`
+                       )->label( `quantity`
                        )->input( client->_bind_edit( quantity )
                        )->label( `product`
                        )->input( value = product enabled = abap_false
                        )->button(
-                           text  = 'post'
-                           press = client->_event( 'BUTTON_POST' )
+                           text  = `post`
+                           press = client->_event( `BUTTON_POST` )
             )->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'BUTTON_POST' ).
+    IF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
   ENDMETHOD.
 
   METHOD set_data.
 
-    product  = 'products'.
-    quantity = '500'.
+    product  = `products`.
+    quantity = `500`.
   ENDMETHOD.
 ENDCLASS.

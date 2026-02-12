@@ -34,13 +34,13 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.InvisibleText/sample/sap.ui.core.sample.InvisibleText' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.InvisibleText/sample/sap.ui.core.sample.InvisibleText` ).
 
     DATA(page_02) = page_01->page(
                               title = `Page`
@@ -147,9 +147,9 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'ON_PRESS'.
+      WHEN `ON_PRESS`.
         client->message_toast_display( client->get_event_arg( 1 ) && ` Pressed` ).
     ENDCASE.
   ENDMETHOD.

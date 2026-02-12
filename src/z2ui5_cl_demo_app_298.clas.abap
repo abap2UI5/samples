@@ -48,13 +48,13 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectValueState' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectValueState` ).
 
     page_01->page( showheader = abap_false
               )->content(
@@ -69,8 +69,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Error`
                           valuestatetext = `error value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
-                                   text = '{NAME}'
+                          )->item( key  = `{PRODUCT_ID}`
+                                   text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
@@ -84,8 +84,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Warning`
                           valuestatetext = `This is a Level 1 explanation. The items Lorem and Ipsum are not recommended from the system.`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
-                                   text = '{NAME}'
+                          )->item( key  = `{PRODUCT_ID}`
+                                   text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
@@ -99,8 +99,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Success`
                           valuestatetext = `success value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
-                                   text = '{NAME}'
+                          )->item( key  = `{PRODUCT_ID}`
+                                   text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
                   )->hbox( class = `sapUiMediumMarginBottom`
@@ -114,8 +114,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Information`
                           valuestatetext = `information value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
-                                   text = '{NAME}'
+                          )->item( key  = `{PRODUCT_ID}`
+                                   text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
               )->get_parent( ).
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
@@ -171,22 +171,22 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     " Populate the internal table
     lt_a_products = VALUE #(
-      ( product_id = 'HT-998'  name = 'Notebook Basic 11' )
-      ( product_id = 'HT-999'  name = 'Notebook Basic 13' )
-      ( product_id = 'HT-1000' name = 'Notebook Basic 15' )
-      ( product_id = 'HT-1001' name = 'Notebook Basic 17' )
-      ( product_id = 'HT-1002' name = 'Notebook Basic 18' )
-      ( product_id = 'HT-1003' name = 'Notebook Basic 19' )
-      ( product_id = 'HT-1007' name = 'ITelO Vault' )
-      ( product_id = 'HT-1008' name = 'Notebook Professional 11' )
-      ( product_id = 'HT-1009' name = 'Notebook Professional 13' )
-      ( product_id = 'HT-1010' name = 'Notebook Professional 15' )
-      ( product_id = 'HT-1011' name = 'Notebook Professional 17' )
-      ( product_id = 'HT-1012' name = 'Notebook Professional 19' )
-      ( product_id = 'HT-1020' name = 'ITelO Vault Net' )
-      ( product_id = 'HT-1021' name = 'ITelO Vault SAT' )
-      ( product_id = 'HT-1022' name = 'Comfort Easy' )
-      ( product_id = 'HT-1023' name = 'Comfort Senior' ) ).
+      ( product_id = `HT-998`  name = `Notebook Basic 11` )
+      ( product_id = `HT-999`  name = `Notebook Basic 13` )
+      ( product_id = `HT-1000` name = `Notebook Basic 15` )
+      ( product_id = `HT-1001` name = `Notebook Basic 17` )
+      ( product_id = `HT-1002` name = `Notebook Basic 18` )
+      ( product_id = `HT-1003` name = `Notebook Basic 19` )
+      ( product_id = `HT-1007` name = `ITelO Vault` )
+      ( product_id = `HT-1008` name = `Notebook Professional 11` )
+      ( product_id = `HT-1009` name = `Notebook Professional 13` )
+      ( product_id = `HT-1010` name = `Notebook Professional 15` )
+      ( product_id = `HT-1011` name = `Notebook Professional 17` )
+      ( product_id = `HT-1012` name = `Notebook Professional 19` )
+      ( product_id = `HT-1020` name = `ITelO Vault Net` )
+      ( product_id = `HT-1021` name = `ITelO Vault SAT` )
+      ( product_id = `HT-1022` name = `Comfort Easy` )
+      ( product_id = `HT-1023` name = `Comfort Senior` ) ).
     SORT lt_a_products BY name.
   ENDMETHOD.
 ENDCLASS.

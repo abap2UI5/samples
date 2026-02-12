@@ -27,12 +27,12 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
   PRIVATE SECTION.
     CONSTANTS:
       BEGIN OF c_id,
-        index       TYPE string VALUE 'Index',
-        title       TYPE string VALUE 'Title',
-        color       TYPE string VALUE 'Color',
-        info        TYPE string VALUE 'Info',
-        checkbox    TYPE string VALUE 'Checkbox',
-        description TYPE string VALUE 'Description',
+        index       TYPE string VALUE `Index`,
+        title       TYPE string VALUE `Title`,
+        color       TYPE string VALUE `Color`,
+        info        TYPE string VALUE `Info`,
+        checkbox    TYPE string VALUE `Checkbox`,
+        description TYPE string VALUE `Description`,
       END OF c_id.
 
     METHODS next_focus.
@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Tables and focus'
+            title          = `abap2UI5 - Tables and focus`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = abap_true ).
 
@@ -94,76 +94,76 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
             items = client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
-                )->label( `Column Id` )->input( submit      = client->_event( 'FOCUS' )
+                )->label( `Column Id` )->input( submit      = client->_event( `FOCUS` )
                                                 value       = client->_bind_edit( focuscolumn )
                                                 placeholder = `Focus Column`
                                                 width       = `10%`
-                )->label( `Row Index` )->input( submit      = client->_event( 'FOCUS' )
+                )->label( `Row Index` )->input( submit      = client->_event( `FOCUS` )
                                                 value       = client->_bind_edit( focusrow )
                                                 placeholder = `Focus Row`
                                                 width       = `10%`
-                                                type        = 'Number'
+                                                type        = `Number`
                 )->button(
-                    text  = 'Set Focus'
-                    press = client->_event( 'FOCUS' )
+                    text  = `Set Focus`
+                    press = client->_event( `FOCUS` )
                 )->button(
-                    text  = 'Next Focus'
-                    press = client->_event( 'ENTER' )
+                    text  = `Next Focus`
+                    press = client->_event( `ENTER` )
                 )->button(
-                    text  = 'Reset Focus'
-                    press = client->_event( 'RESET' )
+                    text  = `Reset Focus`
+                    press = client->_event( `RESET` )
                 )->title( text = client->_bind( focusid )
                 )->toolbar_spacer(
         )->get_parent( )->get_parent( ).
 
     tab->columns(
         )->column(
-            )->text( 'Index' )->get_parent(
+            )->text( `Index` )->get_parent(
         )->column(
-            )->text( 'Title' )->get_parent(
+            )->text( `Title` )->get_parent(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column(
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
         )->column(
-            )->text( 'Description' ).
+            )->text( `Description` ).
 
-    tab->items( )->column_list_item( selected = '{SELKZ}'
+    tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->text( text = '{INDEX}'
-          )->input( value  = '{TITLE}'
-                    submit = client->_event( 'ENTER' )
+          )->text( text = `{INDEX}`
+          )->input( value  = `{TITLE}`
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{VALUE}'
-                    submit = client->_event( 'ENTER' )
+          )->input( value  = `{VALUE}`
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{INFO}'
-                    submit = client->_event( 'ENTER' )
+          )->input( value  = `{INFO}`
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-info
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->checkbox( selected = '{CHECKBOX}'
+          )->checkbox( selected = `{CHECKBOX}`
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-checkbox
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{DESCRIPTION}'
-                    submit = client->_event( 'ENTER' )
+          )->input( value  = `{DESCRIPTION}`
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-description
                      writetodom = abap_true ).
 
@@ -178,11 +178,11 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-          ( index = 0 title = 'entry 01'  value = 'red'    info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 1 title = 'entry 02'  value = 'blue'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 2 title = 'entry 03'  value = 'green'  info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 3 title = 'entry 04'  value = 'orange' info = 'completed'  description = '' checkbox = abap_true )
-          ( index = 4 title = 'entry 05'  value = 'grey'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
+          ( index = 0 title = `entry 01`  value = `red`    info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 1 title = `entry 02`  value = `blue`   info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 2 title = `entry 03`  value = `green`  info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 3 title = `entry 04`  value = `orange` info = `completed`  description = `` checkbox = abap_true )
+          ( index = 4 title = `entry 05`  value = `grey`   info = `completed`  description = `this is a description` checkbox = abap_true )
           ( index = 5 ) ).
 
       default_focus( ).
@@ -192,15 +192,15 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->view_destroy( ).
         client->nav_app_leave( ).
-      WHEN 'FOCUS'.
+      WHEN `FOCUS`.
         focus( ).
-      WHEN 'RESET'.
+      WHEN `RESET`.
         default_focus( ).
         focus( ).
-      WHEN 'ENTER'.
+      WHEN `ENTER`.
         next_focus( ).
         focus( ).
     ENDCASE.
@@ -222,7 +222,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
       IF line_exists( t_tab[ focusrow + 2 ] ).
         focusrow = condense( CONV i( focusrow + 1 ) ).
       ELSE.
-        focusrow = '0'.
+        focusrow = `0`.
       ENDIF.
     ENDIF.
   ENDMETHOD.
@@ -234,7 +234,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD default_focus.
 
-    focuscolumn = 'Title'.
-    focusrow = '0'.
+    focuscolumn = `Title`.
+    focusrow = `0`.
   ENDMETHOD.
 ENDCLASS.

@@ -13,8 +13,8 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
       if_apc_wsp_extension~on_close REDEFINITION.
 
     CONSTANTS:
-      c_amc_application_id TYPE amc_application_id VALUE 'Z2UI5_SAMPLE' ##NO_TEXT,
-      c_channel_id         TYPE amc_channel_id VALUE '/news_feed' ##NO_TEXT,
+      c_amc_application_id TYPE amc_application_id VALUE `Z2UI5_SAMPLE` ##NO_TEXT,
+      c_channel_id         TYPE amc_channel_id VALUE `/news_feed` ##NO_TEXT,
       BEGIN OF c_msg,
         __new_connection__ TYPE string VALUE `__NEW_CONNECTION__` ##NO_TEXT,
         __closed__         TYPE string VALUE `__CLOSED__` ##NO_TEXT,

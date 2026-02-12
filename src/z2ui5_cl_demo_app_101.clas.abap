@@ -43,13 +43,13 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'POST' ).
+    IF client->check_on_event( `POST` ).
       IF mv_value IS INITIAL.
         RETURN.
       ENDIF.
       CLEAR ms_feed.
       ms_feed-author = sy-uname.
-      ms_feed-type = 'Respond'.
+      ms_feed-type = `Respond`.
       ms_feed-text = mv_value.
       mv_value = ``.
       INSERT ms_feed INTO mt_feed INDEX 1.
@@ -76,12 +76,12 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'Feed Input'
+             title          = `Feed Input`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(fi) = page->vbox(
-      )->feed_input( post                     = client->_event( 'POST' )
+      )->feed_input( post                     = client->_event( `POST` )
                              growing          = abap_true
                              rows             = `4`
                              icondensityaware = abap_false
@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
         showseparators = `Inner`
           )->feed_list_item(
             sender                   = `{AUTHOR}`
-            senderpress              = client->_event( 'SENDER_PRESS' )
-            iconpress                = client->_event( 'ICON_PRESS' )
+            senderpress              = client->_event( `SENDER_PRESS` )
+            iconpress                = client->_event( `ICON_PRESS` )
             icondensityaware         = abap_false
             showicon                 = abap_false
             info                     = `Reply`

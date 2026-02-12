@@ -66,15 +66,15 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'ALL'.
+      WHEN `ALL`.
         z2ui5_view_settings_popup( ).
-      WHEN 'SORT'.
+      WHEN `SORT`.
         z2ui5_view_sort_popup( ).
-      WHEN 'FILTER'.
+      WHEN `FILTER`.
         z2ui5_view_filter_popup( ).
-      WHEN 'GROUP'.
+      WHEN `GROUP`.
         z2ui5_view_group_popup( ).
-      WHEN 'CONFIRM_SORT'.
+      WHEN `CONFIRM_SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
@@ -91,20 +91,20 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           client->view_model_update( ).
 
         ENDIF.
-      WHEN 'CONFIRM_FILTER'.
+      WHEN `CONFIRM_FILTER`.
         CLEAR mv_filter.
         lt_arg = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
 
           DATA(filter_string) = lt_arg[ 1 ].
-          SPLIT filter_string AT ':' INTO DATA(lv_dummy) filter_string.
+          SPLIT filter_string AT `:` INTO DATA(lv_dummy) filter_string.
           CONDENSE filter_string NO-GAPS.
           SPLIT filter_string AT `(` INTO DATA(lv_field) DATA(lv_values).
           TRANSLATE lv_field TO UPPER CASE.
           DATA(lv_values_len) = strlen( lv_values ) - 1.
           lv_values = lv_values+0(lv_values_len).
-          SPLIT lv_values AT ',' INTO TABLE DATA(lt_values) IN CHARACTER MODE.
+          SPLIT lv_values AT `,` INTO TABLE DATA(lt_values) IN CHARACTER MODE.
           IF sy-subrc = 0.
             LOOP AT lt_values INTO DATA(lv_val).
               mv_filter = mv_filter && `{path:'` && lv_field && `',operator: 'EQ',value1:'` && lv_val && `'},`.
@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           z2ui5_view_display( ).
 
         ENDIF.
-      WHEN 'CONFIRM_GROUP'.
+      WHEN `CONFIRM_GROUP`.
         lt_arg = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
@@ -148,19 +148,19 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           z2ui5_view_display( ).
 
         ENDIF.
-      WHEN 'RESET_GROUP'.
+      WHEN `RESET_GROUP`.
     ENDCASE.
   ENDMETHOD.
 
   METHOD z2ui5_set_data.
 
     t_tab = VALUE #(
-      ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_02'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_03'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_04'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+      ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
     t_tab_group = VALUE #(
        ( text = `Title`       key = `title` )
@@ -183,7 +183,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title           = 'abap2UI5 - List'
+            title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
@@ -191,7 +191,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       )->get_parent( ).
 
     page->table(
-        headertext = 'Table Output'
+        headertext = `Table Output`
         items      = `{path:'` && client->_bind_edit( val = t_tab path = abap_true )
                             && `',sorter:{path:'` && mv_sorter_group
                             && `',group:` && `true` && `}`
@@ -273,7 +273,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(
-                                    confirm     = client->_event( 'ALL_EVENT' )
+                                    confirm     = client->_event( `ALL_EVENT` )
                                     sortitems   = client->_bind_edit( t_tab_sort )
                                     groupitems  = client->_bind_edit( t_tab_group )
                                     filteritems = client->_bind_edit( t_tab_filter )

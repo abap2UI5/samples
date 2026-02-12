@@ -28,18 +28,18 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
         page = shell->page( title = client->_bind_edit( mv_title ) ).
       ENDIF.
 
-      client->view_display( page->simple_form( title    = 'Set Launchpad Title Dynamically'
+      client->view_display( page->simple_form( title    = `Set Launchpad Title Dynamically`
                                                editable = abap_true
-                     )->content( 'form'
+                     )->content( `form`
                          )->label( ``
                          )->input( client->_bind_edit( mv_title )
                          )->label( ``
-                         )->button( text  = 'Go Back'
+                         )->button( text  = `Go Back`
                                     press = client->_event_nav_app_leave( ) )->stringify( ) ).
 
     ENDIF.
 
-    IF client->check_on_event( 'READ_PARAMS' ).
+    IF client->check_on_event( `READ_PARAMS` ).
       DATA(lv_text) = `Start Parameter: `.
       DATA(lt_params) = client->get( )-t_comp_params.
       LOOP AT lt_params INTO DATA(ls_param).

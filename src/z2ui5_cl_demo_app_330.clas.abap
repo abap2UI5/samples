@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
     header_title->snapped_title_on_mobile(
                   )->title( text = `Robot Arm Series 9` ).
 
-    header_title->actions( 'uxap'
+    header_title->actions( `uxap`
                   )->button( text = `Edit`
                              type = `Emphasized`
                   )->button( text = `Delete`
@@ -320,7 +320,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.

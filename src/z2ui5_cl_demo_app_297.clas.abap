@@ -46,13 +46,13 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithIcons' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithIcons` ).
 
     page_01->page(
                 showheader = abap_false
@@ -63,9 +63,9 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
                           selectedkey    = client->_bind( selected_product )
                           items          = client->_bind( lt_product_collection )
                           )->item(
-                          )->list_item( key  = '{PRODUCT_ID}'
-                                        text = '{NAME}'
-                                        icon = '{ICON}'
+                          )->list_item( key  = `{PRODUCT_ID}`
+                                        text = `{NAME}`
+                                        icon = `{ICON}`
                         )->get_parent(
                     )->get_parent(
                 )->get_parent( ).
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
@@ -115,16 +115,16 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     " Populate the internal table
     lt_product_collection = VALUE #(
-      ( product_id = 'HT-1001' name = 'Notebook Basic 17'        icon = 'sap-icon://paper-plane' )
-      ( product_id = 'HT-1002' name = 'Notebook Basic 18'        icon = 'sap-icon://add-document' )
-      ( product_id = 'HT-1003' name = 'Notebook Basic 19'        icon = 'sap-icon://doctor' )
-      ( product_id = 'HT-1007' name = 'ITelO Vault'              icon = 'sap-icon://sys-find-next' )
-      ( product_id = 'HT-1010' name = 'Notebook Professional 15' icon = 'sap-icon://add-product' )
-      ( product_id = 'HT-1011' name = 'Notebook Professional 17' icon = 'sap-icon://add-product' )
-      ( product_id = 'HT-1020' name = 'ITelO Vault Net'          icon = 'sap-icon://add-product' )
-      ( product_id = 'HT-1021' name = 'ITelO Vault SAT'          icon = 'sap-icon://add-product' )
-      ( product_id = 'HT-1022' name = 'Comfort Easy'             icon = 'sap-icon://add-product' )
-      ( product_id = 'HT-1023' name = 'Comfort Senior'           icon = 'sap-icon://add-product' ) ).
+      ( product_id = `HT-1001` name = `Notebook Basic 17`        icon = `sap-icon://paper-plane` )
+      ( product_id = `HT-1002` name = `Notebook Basic 18`        icon = `sap-icon://add-document` )
+      ( product_id = `HT-1003` name = `Notebook Basic 19`        icon = `sap-icon://doctor` )
+      ( product_id = `HT-1007` name = `ITelO Vault`              icon = `sap-icon://sys-find-next` )
+      ( product_id = `HT-1010` name = `Notebook Professional 15` icon = `sap-icon://add-product` )
+      ( product_id = `HT-1011` name = `Notebook Professional 17` icon = `sap-icon://add-product` )
+      ( product_id = `HT-1020` name = `ITelO Vault Net`          icon = `sap-icon://add-product` )
+      ( product_id = `HT-1021` name = `ITelO Vault SAT`          icon = `sap-icon://add-product` )
+      ( product_id = `HT-1022` name = `Comfort Easy`             icon = `sap-icon://add-product` )
+      ( product_id = `HT-1023` name = `Comfort Senior`           icon = `sap-icon://add-product` ) ).
     SORT lt_product_collection BY name.
   ENDMETHOD.
 ENDCLASS.

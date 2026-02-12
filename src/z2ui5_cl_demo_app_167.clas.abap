@@ -19,12 +19,12 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - Event with add Information and t_arg'
+                title          = `abap2UI5 - Event with add Information and t_arg`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->link( text   = 'More Infos..'
-                target = '_blank'
+    page->link( text   = `More Infos..`
+                target = `_blank`
                 href   = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
 
     page->button( text  = `EVENT_FIX_VAL`
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
     CASE client->get( )-event.
-      WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR 'SOURCE_PROPERTY_TEXT' OR 'EVENT_PROPERTY_VALUE' OR 'PARENT_PROPERTY_ID'.
+      WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR `SOURCE_PROPERTY_TEXT` OR `EVENT_PROPERTY_VALUE` OR `PARENT_PROPERTY_ID`.
         client->message_box_display( `backend event :` && lt_arg[ 1 ] ).
     ENDCASE.
 

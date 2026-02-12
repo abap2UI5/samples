@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
 
     DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Flexible sizing - Toolbar'
+            title          = `abap2UI5 - Sample: Flexible sizing - Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -34,13 +34,13 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Page/sample/sap.m.sample.PageListReportToolbar' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Page/sample/sap.m.sample.PageListReportToolbar` ).
 
     DATA(page_02) = page_01->page( enablescrolling = abap_true
                                    title           = `Title`
@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.

@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_z2ui5( )->title( `Avatar Group Sample` ).
-    view->page( title          = 'abap2UI5 - Sample: Avatar Group'
+    view->page( title          = `abap2UI5 - Sample: Avatar Group`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
         )->slider( value = client->_bind_edit( viewportpercentwidth )
@@ -246,7 +246,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         DATA(group_id) = lt_arg[ 1 ].
         group_items = items.
         content_height = calculate_content_height( lines( group_items ) ).
-        content_width = '450px'.
+        content_width = `450px`.
 
         display_group_popover( id = group_id ).
         client->popover_destroy( ).
@@ -259,7 +259,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         group_items = VALUE ty_items( FOR itm IN items FROM items_displayed + 1
                                       ( itm ) ).
         content_height = calculate_content_height( lines( group_items ) ).
-        content_width = '450px'.
+        content_width = `450px`.
 
         IF overflow_button_pressed = abap_true.
           display_group_popover( id = item_id ).

@@ -142,10 +142,10 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
-            title               = 'abap2UI5 - Gantt'
+            title               = `abap2UI5 - Gantt`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
-            class               = 'sapUiContentPadding' ).
+            class               = `sapUiContentPadding` ).
 
     DATA(cont) = page->scroll_container(
 *               height     =
@@ -220,15 +220,15 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
     DATA(columns) = table->ui_columns( ).
     DATA(column) = columns->ui_column(
-         id = 'OBJECTNAME' ).
+         id = `OBJECTNAME` ).
 
     column->ui_custom_data( )->core_custom_data(
-       key    = 'exportTableColumnConfig'
-        value = '{"columnKey": "OBJECTNAME",' && |\r\n| &&
-                 '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
-                 '    "dataType": "string",' && |\r\n| &&
-                 '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n| &&
-                 '    "wrap": true}' ).
+       key    = `exportTableColumnConfig`
+        value = `{"columnKey": "OBJECTNAME",` && |\r\n| &&
+                 `    "leadingProperty":"OBJECTNAME",` && |\r\n| &&
+                 `    "dataType": "string",` && |\r\n| &&
+                 `    "hierarchyNodeLevel": "HierarchyNodeLevel",` && |\r\n| &&
+                 `    "wrap": true}` ).
 
     column->text( text = `Object Name` ).
     column->tree_template( )->label( text = `{OBJECTNAME}` ).

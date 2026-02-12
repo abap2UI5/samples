@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view->shell( )->page(
-             title          = 'Timeline'
+             title          = `Timeline`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 

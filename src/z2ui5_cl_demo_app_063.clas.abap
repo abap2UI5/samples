@@ -20,21 +20,21 @@ CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Badge Example'
+            title          = `abap2UI5 - Badge Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
     layout->button(
-                text  = 'Emphasized Button with Badge'
-                type  = 'Emphasized'
-                class = 'sapUiTinyMarginBeginEnd'
-                icon  = 'sap-icon://cart' )->get(
+                text  = `Emphasized Button with Badge`
+                type  = `Emphasized`
+                class = `sapUiTinyMarginBeginEnd`
+                icon  = `sap-icon://cart` )->get(
                 )->custom_data(
                     )->badge_custom_data(
-                        key     = 'badge'
-                        value   = '23'
+                        key     = `badge`
+                        value   = `23`
                         visible = abap_true ).
 
     client->view_display( view->stringify( ) ).

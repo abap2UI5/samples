@@ -19,69 +19,69 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_ROUNDTRIP'.
-        client->message_box_display( 'server-client roundtrip, method on_event of the abap controller was called' ).
-      WHEN 'BUTTON_RESTART'.
+      WHEN `BUTTON_ROUNDTRIP`.
+        client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
+      WHEN `BUTTON_RESTART`.
         client->nav_app_call( NEW z2ui5_cl_demo_app_025( ) ).
-      WHEN 'BUTTON_CHANGE_APP'.
+      WHEN `BUTTON_CHANGE_APP`.
         client->nav_app_call( NEW z2ui5_cl_demo_app_001( ) ).
-      WHEN 'BUTTON_READ_PREVIOUS'.
+      WHEN `BUTTON_READ_PREVIOUS`.
         DATA(lo_previous_app) = CAST z2ui5_cl_demo_app_024( client->get_app( client->get( )-s_draft-id_prev_app ) ).
         mv_input_previous = lo_previous_app->mv_input2.
         client->message_toast_display( `data of previous app read` ).
-      WHEN 'SHOW_VIEW_MAIN'.
-        mv_show_view = 'MAIN'.
-      WHEN 'BACK_WITH_EVENT'.
+      WHEN `SHOW_VIEW_MAIN`.
+        mv_show_view = `MAIN`.
+      WHEN `BACK_WITH_EVENT`.
         lo_previous_app = CAST z2ui5_cl_demo_app_024( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-        lo_previous_app->mv_backend_event = 'CALL_PREVIOUS_APP_INPUT_RETURN'.
+        lo_previous_app->mv_backend_event = `CALL_PREVIOUS_APP_INPUT_RETURN`.
         client->nav_app_leave( lo_previous_app ).
       WHEN OTHERS.
 
         CASE mv_event_backend.
-          WHEN 'NEW_APP_EVENT'.
-            client->message_box_display( 'new app called and event NEW_APP_EVENT raised' ).
+          WHEN `NEW_APP_EVENT`.
+            client->message_box_display( `new app called and event NEW_APP_EVENT raised` ).
         ENDCASE.
     ENDCASE.
 
     CASE mv_show_view.
-      WHEN 'MAIN' OR ''.
+      WHEN `MAIN` OR ``.
 
         DATA(view) = z2ui5_cl_xml_view=>factory( ).
         DATA(page) = view->shell(
             )->page(
-                   title          = 'abap2UI5 - flow logic - APP 02'
+                   title          = `abap2UI5 - flow logic - APP 02`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
-        page->grid( 'L6 M12 S12' )->content( 'layout'
-          )->simple_form( 'View: FIRST' )->content( 'form'
-          )->label( 'Input set by previous app'
+        page->grid( `L6 M12 S12` )->content( `layout`
+          )->simple_form( `View: FIRST` )->content( `form`
+          )->label( `Input set by previous app`
                )->input( mv_input_previous_set
-          )->label( 'Data of previous app'
+          )->label( `Data of previous app`
                )->input( mv_input_previous
-               )->button( text  = 'read'
-                          press = client->_event( 'BUTTON_READ_PREVIOUS' )
-          )->label( 'Call previous app and show data of this app'
+               )->button( text  = `read`
+                          press = client->_event( `BUTTON_READ_PREVIOUS` )
+          )->label( `Call previous app and show data of this app`
                )->input( client->_bind_edit( mv_input )
-               )->button( text  = 'back'
-                          press = client->_event( 'BACK_WITH_EVENT' ) ).
-      WHEN 'SECOND'.
+               )->button( text  = `back`
+                          press = client->_event( `BACK_WITH_EVENT` ) ).
+      WHEN `SECOND`.
 
         view = z2ui5_cl_xml_view=>factory( ).
         page = view->shell(
             )->page(
-                    title          = 'abap2UI5 - flow logic - APP 02'
-                    navbuttonpress = client->_event( val = 'BACK' )
+                    title          = `abap2UI5 - flow logic - APP 02`
+                    navbuttonpress = client->_event( val = `BACK` )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
-        page->grid( 'L6 M12 S12' )->content( 'layout'
-            )->simple_form( 'View: SECOND' )->content( 'form'
-              )->label( 'Demo'
-              )->button( text  = 'leave to previous app'
+        page->grid( `L6 M12 S12` )->content( `layout`
+            )->simple_form( `View: SECOND` )->content( `form`
+              )->label( `Demo`
+              )->button( text  = `leave to previous app`
                          press = client->_event_nav_app_leave( )
-              )->label( 'Demo'
-              )->button( text  = 'show view main'
-                         press = client->_event( 'SHOW_VIEW_MAIN' ) ).
+              )->label( `Demo`
+              )->button( text  = `show view main`
+                         press = client->_event( `SHOW_VIEW_MAIN` ) ).
     ENDCASE.
 
     client->view_display( view->stringify( ) ).

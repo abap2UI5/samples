@@ -25,12 +25,12 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: LightBox'
+            title          = `abap2UI5 - Sample: LightBox`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -38,13 +38,13 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = base_url && 'sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = base_url && `sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox` ).
 
     page->message_strip( text                                                                                                             = `Clicking on each of the images will open a LightBox, showing the real size of the image. ` &&
                                 `Images will be scaled down if their size is bigger than the window size." class="sapUiSmallMargin` class = `sapUiSmallMargin`
@@ -198,7 +198,7 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.

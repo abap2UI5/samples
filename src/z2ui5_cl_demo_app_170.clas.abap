@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog( stretch = abap_true
-            afterclose                    = client->_event( 'BTN_OK_1ND' )
+            afterclose                    = client->_event( `BTN_OK_1ND` )
          )->content( ).
 
     DATA(content) = dialog->icon_tab_bar( selectedkey        = client->_bind_edit( mv_selected_key )
@@ -48,26 +48,26 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
                                          )->nav_container( id                    = `NavCon`
                                                            initialpage           = `page1`
                                                            defaulttransitionname = `flip`
-                                                           height                = '400px'
+                                                           height                = `400px`
                                            )->pages(
                                             )->page(
-                                              title = 'first page'
+                                              title = `first page`
                                               id    = `page1`
                                            )->get_parent(
                                             )->page(
-                                              title = 'second page'
+                                              title = `second page`
                                               id    = `page2`
                                            )->get_parent(
                                             )->page(
-                                              title = 'third page'
+                                              title = `third page`
                                               id    = `page3` ).
 
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
-                      text  = 'OK'
-                      press = client->_event( 'BTN_OK_1ND' )
-                      type  = 'Emphasized' ).
+                      text  = `OK`
+                      press = client->_event( `BTN_OK_1ND` )
+                      type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
@@ -77,17 +77,17 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
-        afterclose = client->_event( 'BTN_OK_2ND' )
+        afterclose = client->_event( `BTN_OK_2ND` )
          )->content( ).
 
-    DATA(content) = dialog->label( text = 'this is a second popup' ).
+    DATA(content) = dialog->label( text = `this is a second popup` ).
 
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
-                      text  = 'GOTO 1ST POPUP'
-                      press = client->_event( 'BTN_OK_2ND' )
-                      type  = 'Emphasized' ).
+                      text  = `GOTO 1ST POPUP`
+                      press = client->_event( `BTN_OK_2ND` )
+                      type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
@@ -97,12 +97,12 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Popup'
+                title          = `abap2UI5 - Popup To Popup`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+            text  = `Open Popup...`
+            press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -110,14 +110,14 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
   METHOD ui5_event.
 
     CASE client->get( )-event.
-      WHEN 'GOTO_2ND'.
+      WHEN `GOTO_2ND`.
         simple_popup2( ).
-      WHEN 'BTN_OK_2ND'.
+      WHEN `BTN_OK_2ND`.
         client->popup_destroy( ).
         simple_popup1( ).
-      WHEN 'BTN_OK_1ND'.
+      WHEN `BTN_OK_1ND`.
         client->popup_destroy( ).
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
         simple_popup1( ).
     ENDCASE.
   ENDMETHOD.

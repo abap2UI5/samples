@@ -31,17 +31,17 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'SELECTION_CHANGE'.
+      WHEN `SELECTION_CHANGE`.
 
         client->view_model_update( ).
 
-      WHEN 'GO'.
+      WHEN `GO`.
 
         ASSIGN mt_table->* TO <tab>.
 
         LOOP AT <tab> ASSIGNING <line>.
 
-          ASSIGN COMPONENT 'SELKZ' OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
+          ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
           IF <selkz> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
@@ -63,13 +63,13 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
           ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
 
           IF <table> <> <val>.
-            client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA' ).
+            client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA` ).
           ELSE.
-            client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA' ).
+            client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA` ).
           ENDIF.
 
         ELSE.
-          client->message_toast_display( 'Plases select a Line' ).
+          client->message_toast_display( `Plases select a Line` ).
         ENDIF.
     ENDCASE.
   ENDMETHOD.
@@ -77,26 +77,26 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'GO'
-                  press = client->_event( 'GO' )
-                  type  = 'Success' ).
+    page->button( text  = `GO`
+                  press = client->_event( `GO` )
+                  type  = `Success` ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
-    page->table( headertext      = 'Table'
-                 mode            = 'MultiSelect'
+    page->table( headertext      = `Table`
+                 mode            = `MultiSelect`
                  items           = client->_bind_edit( <table> )
-                 selectionchange = client->_event( 'SELECTION_CHANGE' )
+                 selectionchange = client->_event( `SELECTION_CHANGE` )
               )->columns(
-                  )->column( )->text( 'id '
+                  )->column( )->text( `id `
               )->get_parent( )->get_parent(
               )->items(
-                  )->column_list_item( selected = '{SELKZ}'
+                  )->column_list_item( selected = `{SELKZ}`
                       )->cells(
-                          )->text( '{ID}' ).
+                          )->text( `{ID}` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -107,10 +107,10 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
+    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
 
     APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
-                              ( name = 'SELKZ'
+                              ( name = `SELKZ`
                                 type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
 
     TRY.

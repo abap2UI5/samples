@@ -32,14 +32,14 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
   METHOD ui5_event.
 
     CASE client->get( )-event.
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
 
-        mt_tab = VALUE #( descr = 'this is a description'
-             ( zzselkz = mv_preselect title = 'title_01'  value = 'value_01' )
-             ( zzselkz = mv_preselect title = 'title_02'  value = 'value_02' )
-             ( zzselkz = mv_preselect title = 'title_03'  value = 'value_03' )
-             ( zzselkz = mv_preselect title = 'title_04'  value = 'value_04' )
-             ( zzselkz = mv_preselect title = 'title_05'  value = 'value_05' ) ).
+        mt_tab = VALUE #( descr = `this is a description`
+             ( zzselkz = mv_preselect title = `title_01`  value = `value_01` )
+             ( zzselkz = mv_preselect title = `title_02`  value = `value_02` )
+             ( zzselkz = mv_preselect title = `title_03`  value = `value_03` )
+             ( zzselkz = mv_preselect title = `title_04`  value = `value_04` )
+             ( zzselkz = mv_preselect title = `title_05`  value = `value_05` ) ).
 
         DATA(lo_app) = z2ui5_cl_pop_to_select=>factory(
                            i_tab         = mt_tab
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                                              THEN `Multi select`
                                              ELSE `Single select` ) ).
         client->nav_app_call( lo_app ).
-      WHEN 'MULTISELECT_TOGGLE'.
+      WHEN `MULTISELECT_TOGGLE`.
 
         mv_preselect = COND #( WHEN mv_multiselect = abap_false
                                THEN abap_false
@@ -64,24 +64,24 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Select'
+                title          = `abap2UI5 - Popup To Select`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->hbox(
-           )->text( text  = 'Multiselect: '
-                    class = 'sapUiTinyMargin'
+           )->text( text  = `Multiselect: `
+                    class = `sapUiTinyMargin`
            )->switch( state  = client->_bind_edit( mv_multiselect )
                       change = client->_event( `MULTISELECT_TOGGLE` )
            )->get_parent(
            )->hbox(
-           )->text( text  = 'Preselect all entries: '
-                    class = 'sapUiTinyMargin'
+           )->text( text  = `Preselect all entries: `
+                    class = `sapUiTinyMargin`
            )->switch( state   = client->_bind_edit( mv_preselect )
                       enabled = client->_bind_edit( mv_multiselect )
            )->get_parent(
            )->button(
-            text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+            text  = `Open Popup...`
+            press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
           ASSIGN ls_result-table->* TO FIELD-SYMBOL(<table>).
           client->nav_app_call( z2ui5_cl_pop_table=>factory(
                                     i_tab   = <table>
-                                    i_title = 'Selected rows' ) ).
+                                    i_title = `Selected rows` ) ).
 
         ENDIF.
 

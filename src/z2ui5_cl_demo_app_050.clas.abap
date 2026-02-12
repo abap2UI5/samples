@@ -16,22 +16,22 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      product  = 'tomato'.
-      quantity = '500'.
+      product  = `tomato`.
+      quantity = `500`.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(
         )->page(
-                title          = 'abap2UI5 - Changed CSS'
-                navbuttonpress = client->_event( 'BACK' )
+                title          = `abap2UI5 - Changed CSS`
+                navbuttonpress = client->_event( `BACK` )
                 shownavbutton  = client->check_app_prev_stack( )
             )->_generic( ns   = `html`
                          name = `style` )->_cc_plain_xml(
@@ -70,23 +70,23 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                          `}`
             )->get_parent(
             )->button(
-                        text  = 'post'
-                        press = client->_event( 'BUTTON_POST' )
+                        text  = `post`
+                        press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
             )->input( value = client->_bind( quantity )
-            )->simple_form( title    = 'Form Title'
+            )->simple_form( title    = `Form Title`
                             editable = abap_true
-                )->content( 'form'
-                    )->title( 'Input'
-                    )->label( 'quantity'
+                )->content( `form`
+                    )->title( `Input`
+                    )->label( `quantity`
                     )->input( value = client->_bind( quantity )
-                    )->label( 'product'
+                    )->label( `product`
                     )->input(
                         value   = product
                         enabled = abap_false
                     )->button(
-                        text  = 'post'
-                        press = client->_event( 'BUTTON_POST' )
+                        text  = `post`
+                        press = client->_event( `BUTTON_POST` )
          )->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

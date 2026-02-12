@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Table with odata source'
+              title          = `abap2UI5 - Table with odata source`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -25,38 +25,38 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         growing = abap_true ).
 
       tab->header_toolbar( )->toolbar(
-        )->title( 'table with OData model TRAVEL' ).
+        )->title( `table with OData model TRAVEL` ).
 
       tab->columns(
-        )->column( )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
-        )->column( )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
-        )->column( )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
-        )->column( )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent( ).
+        )->column( )->text( `{TRAVEL>/#Currency/Currency/@sap:label}` )->get_parent(
+        )->column( )->text( `{TRAVEL>/#Currency/Currency_Text/@sap:label}` )->get_parent(
+        )->column( )->text( `{TRAVEL>/#Currency/Decimals/@sap:label}` )->get_parent(
+        )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-        )->text( '{TRAVEL>Currency}'
-        )->text( '{TRAVEL>Currency_Text}'
-        )->text( '{TRAVEL>Decimals}'
-        )->text( '{TRAVEL>CurrencyISOCode}' ).
+        )->text( `{TRAVEL>Currency}`
+        )->text( `{TRAVEL>Currency_Text}`
+        )->text( `{TRAVEL>Decimals}`
+        )->text( `{TRAVEL>CurrencyISOCode}` ).
 
       tab = page->table(
         items   = `{FLIGHT>/Airport}`
         growing = abap_true ).
 
       tab->header_toolbar( )->toolbar(
-        )->title( 'table with odata model FLIGHT' ).
+        )->title( `table with odata model FLIGHT` ).
 
       tab->columns(
-        )->column( )->text( 'AirportID' )->get_parent(
-        )->column( )->text( 'Name' )->get_parent(
-        )->column( )->text( 'City' )->get_parent(
-        )->column( )->text( 'CountryCode' )->get_parent( ).
+        )->column( )->text( `AirportID` )->get_parent(
+        )->column( )->text( `Name` )->get_parent(
+        )->column( )->text( `City` )->get_parent(
+        )->column( )->text( `CountryCode` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-        )->text( '{FLIGHT>AirportID}'
-        )->text( '{FLIGHT>Name}'
-        )->text( '{FLIGHT>City}'
-        )->text( '{FLIGHT>CountryCode}' ).
+        )->text( `{FLIGHT>AirportID}`
+        )->text( `{FLIGHT>Name}`
+        )->text( `{FLIGHT>City}`
+        )->text( `{FLIGHT>CountryCode}` ).
 
       client->view_display( val                       = view->stringify( )
                             switch_default_model_path = `` ).

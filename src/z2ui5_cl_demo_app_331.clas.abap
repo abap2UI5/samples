@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
       ui5_view_display( client ).
     ENDIF.
     IF ms_struc IS INITIAL.
-      client->message_toast_display( 'ERROR - MS_STRUC is initial!' ).
+      client->message_toast_display( `ERROR - MS_STRUC is initial!` ).
     ENDIF.
 
     client->view_model_update( ).
@@ -36,13 +36,13 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'GO'
-                  press = client->_event( 'GO' )
-                  type  = 'Success' ).
+    page->button( text  = `GO`
+                  press = client->_event( `GO` )
+                  type  = `Success` ).
 
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
@@ -50,13 +50,13 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
                               )->content( ns = `form` ).
 
     ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-    ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
+    ASSIGN COMPONENT `ID` OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
     IF <value> IS NOT ASSIGNED.
       RETURN.
     ENDIF.
 
     DATA(line) = form->label( wrapping = abap_false
-                              text     = 'ID' ).
+                              text     = `ID` ).
 
     line->input( value = client->_bind( <value> ) ).
 

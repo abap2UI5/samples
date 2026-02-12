@@ -49,14 +49,14 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       mt_node = VALUE #(
-          ( id   = '01' id_parent = ''   text = 'Machines' )
-          ( id   = '03' id_parent = '01' text = 'Pumps' )
-          ( id   = '04' id_parent = '03' text = 'Pump 001' )
-          ( id   = '05' id_parent = '03' text = 'Pump 002' )
-          ( id   = '02' id_parent = ''   text = 'Paints' )
-          ( id   = '06' id_parent = '02' text = 'Gloss paints' )
-          ( id   = '07' id_parent = '06' text = 'Paint 001' )
-          ( id   = '08' id_parent = '06' text = 'Paint 002' ) ).
+          ( id   = `01` id_parent = ``   text = `Machines` )
+          ( id   = `03` id_parent = `01` text = `Pumps` )
+          ( id   = `04` id_parent = `03` text = `Pump 001` )
+          ( id   = `05` id_parent = `03` text = `Pump 002` )
+          ( id   = `02` id_parent = ``   text = `Paints` )
+          ( id   = `06` id_parent = `02` text = `Gloss paints` )
+          ( id   = `07` id_parent = `06` text = `Paint 001` )
+          ( id   = `08` id_parent = `06` text = `Paint 002` ) ).
 
       build_tree( ).
       display_view( client ).
@@ -64,9 +64,9 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'expand'.
+      WHEN `expand`.
         client->follow_up_action( `debugger; z2ui5.oView.byId( 'tree' ).expandToLevel(10);`).
-      WHEN 'ON_DROP'.
+      WHEN `ON_DROP`.
         mt_node[ id = client->get_event_arg( 1 ) ]-id_parent = client->get_event_arg( 2 ).
         build_tree( ).
         display_view( client ).
@@ -125,23 +125,23 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     page->_generic( name = `script`
                     ns   = `html`
         )->_cc_plain_xml(
-          |function myFunction() \{ z2ui5.oView.byId('tree').expandToLevel(5); \}| ).
+          |function myFunction() \{ z2ui5.oView.byId(`tree`).expandToLevel(5); \}| ).
 
     DATA(tree) = page->tree( items = client->_bind( mt_tree )
                              id    = `tree` ).
     tree->items(
-        )->standard_tree_item( title = '{TEXT}'
+        )->standard_tree_item( title = `{TEXT}`
         )->get(
           )->custom_data(
-              )->core_custom_data( key   = 'ID'
-                                   value = '{ID}').
+              )->core_custom_data( key   = `ID`
+                                   value = `{ID}`).
 
     tree->drag_drop_config( ns = `` )->drag_drop_info(
       sourceaggregation = `items`
       targetaggregation = `items`
       dragstart         = `Horizontal`
       drop              = client->_event(
-                              val   = 'ON_DROP'
+                              val   = `ON_DROP`
                               t_arg = VALUE #(
                            ( `${$parameters>/draggedControl/mAggregations/customData/0/mProperties/value}` )
                            ( `${$parameters>/droppedControl/mAggregations/customData/0/mProperties/value}` )

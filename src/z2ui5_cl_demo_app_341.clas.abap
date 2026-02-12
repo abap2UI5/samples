@@ -29,19 +29,19 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = lo_main->page( title          = 'abap2UI5 - Popups'
+    DATA(page) = lo_main->page( title          = `abap2UI5 - Popups`
                                 navbuttonpress = client->_event_nav_app_leave( )
                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'
-        )->simple_form( 'Popups' )->content( 'form'
-            )->label( 'Demo'
-            )->button( text  = 'Popup to Select'
-                       press = client->_event( 'BUTTON_POPUP_01' )
-            )->label( 'Demo'
-            )->button( text  = 'other Popup'
-                       press = client->_event( 'BUTTON_POPUP_02' ) ).
+    DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
+        )->simple_form( `Popups` )->content( `form`
+            )->label( `Demo`
+            )->button( text  = `Popup to Select`
+                       press = client->_event( `BUTTON_POPUP_01` )
+            )->label( `Demo`
+            )->button( text  = `other Popup`
+                       press = client->_event( `BUTTON_POPUP_02` ) ).
 
     client->view_display( lo_main->stringify( ) ).
   ENDMETHOD.
@@ -61,13 +61,13 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_POPUP_01'.
+      WHEN `BUTTON_POPUP_01`.
 
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory( i_tab             = mt_table
                                                                i_multiselect     = abap_false
-                                                               i_event_confirmed = 'POPUP_CONFIRMED'
-                                                               i_event_canceled  = 'POPUP_CANCEL' ) ).
-      WHEN 'BUTTON_POPUP_02'.
+                                                               i_event_confirmed = `POPUP_CONFIRMED`
+                                                               i_event_canceled  = `POPUP_CANCEL` ) ).
+      WHEN `BUTTON_POPUP_02`.
 
 *        mo_layout = z2ui5_cl_layo_manager=>factory( control = z2ui5_cl_layo_manager=>m_table
 *                                                    data    = REF #( mt_table )  ).

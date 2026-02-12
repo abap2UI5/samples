@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
+      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
@@ -68,12 +68,12 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
   METHOD z2ui5_set_search.
@@ -110,18 +110,18 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
       )->stringify( ) ).
 
     DATA(page1) = view->page( id = `page_main`
-            title                = 'abap2UI5 - List Report Features'
+            title                = `abap2UI5 - List Report Features`
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->smart_variant_management( id                     = `svm`
+    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
+    header_title->heading( ns = `f` )->smart_variant_management( id                     = `svm`
                                                                  showexecuteonselection = abap_true ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->expanded_content( `f` ).
+    header_title->snapped_content( ns = `f` ).
 
     DATA(lo_fb) = page->header( )->dynamic_page_header( pinnable = abap_true ).
 
@@ -174,7 +174,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 
-    DATA(cont) = page->content( ns = 'f' ).
+    DATA(cont) = page->content( ns = `f` ).
 
     DATA(tab) = cont->table( id    = `table1`
                              items = client->_bind_edit( val = mt_table ) ).

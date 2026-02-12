@@ -27,20 +27,20 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->dialog(
-             title = 'Title'
-             icon  = 'sap-icon://edit'
+             title = `Title`
+             icon  = `sap-icon://edit`
                   )->content(
                       )->text_area(
-                          height = '100%'
-                          width  = '100%'
+                          height = `100%`
+                          width  = `100%`
                           value  = client->_bind_edit( mv_textarea )
                         )->button(
-                          text  = 'Cancel'
-                          press = client->_event( 'POPUP_CANCEL' )
+                          text  = `Cancel`
+                          press = client->_event( `POPUP_CANCEL` )
                       )->button(
-                          text  = 'Confirm'
-                          press = client->_event( 'POPUP_CONFIRM' )
-                          type  = 'Emphasized' ).
+                          text  = `Confirm`
+                          press = client->_event( `POPUP_CONFIRM` )
+                          type  = `Emphasized` ).
 
     client->popup_display( view->stringify( ) ).
   ENDMETHOD.
@@ -50,33 +50,33 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Template'
+                title          = `abap2UI5 - Template`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
-            )->simple_form( title    = 'VIEW_MAIN'
+            )->simple_form( title    = `VIEW_MAIN`
                             editable = abap_true
-                )->content( 'form'
-                    )->title( 'Input'
-                    )->label( 'quantity'
+                )->content( `form`
+                    )->title( `Input`
+                    )->label( `quantity`
                     )->input( client->_bind_edit( quantity )
-                    )->label( 'text'
+                    )->label( `text`
                     )->input(
                         value   = client->_bind_edit( mv_textarea )
                         enabled = abap_false
                     )->button(
-                        text  = 'show popup input'
-                        press = client->_event( 'SHOW_POPUP' )
+                        text  = `show popup input`
+                        press = client->_event( `SHOW_POPUP` )
                         )->get_parent( )->get_parent( )->footer(
                       )->overflow_toolbar(
               )->toolbar_spacer(
               )->overflow_toolbar_button(
-                  text  = 'Clear'
-                  press = client->_event( 'BUTTON_CLEAR' )
-                  type  = 'Reject'
-                  icon  = 'sap-icon://delete'
+                  text  = `Clear`
+                  press = client->_event( `BUTTON_CLEAR` )
+                  type  = `Reject`
+                  icon  = `sap-icon://delete`
               )->button(
-                  text  = 'Go to View Second'
-                  press = client->_event( 'SHOW_VIEW_SECOND' ) ).
+                  text  = `Go to View Second`
+                  press = client->_event( `SHOW_VIEW_SECOND` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -86,22 +86,22 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
-                  title          = 'abap2UI5 - Template'
+                  title          = `abap2UI5 - Template`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form( 'VIEW_SECOND'
-                  )->content( 'form'
+              )->simple_form( `VIEW_SECOND`
+                  )->content( `form`
       )->get_parent( )->get_parent( )->footer(
             )->overflow_toolbar(
                 )->toolbar_spacer(
                 )->overflow_toolbar_button(
-                    text  = 'Clear'
-                    press = client->_event( 'BUTTON_CLEAR' )
-                    type  = 'Reject'
-                    icon  = 'sap-icon://delete'
+                    text  = `Clear`
+                    press = client->_event( `BUTTON_CLEAR` )
+                    type  = `Reject`
+                    icon  = `sap-icon://delete`
                 )->button(
-                    text  = 'Go to View Main'
-                    press = client->_event( 'SHOW_VIEW_MAIN' ) ).
+                    text  = `Go to View Main`
+                    press = client->_event( `SHOW_VIEW_MAIN` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -121,25 +121,25 @@ CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'SHOW_POPUP'.
+      WHEN `SHOW_POPUP`.
         z2ui5_display_popup_input( ).
-      WHEN 'POPUP_CONFIRM'.
+      WHEN `POPUP_CONFIRM`.
         client->message_toast_display( |confirm| ).
         client->popup_destroy( ).
-      WHEN 'POPUP_CANCEL'.
+      WHEN `POPUP_CANCEL`.
         CLEAR mv_textarea.
         client->message_toast_display( |cancel| ).
         client->popup_destroy( ).
-      WHEN 'SHOW_VIEW_MAIN'.
+      WHEN `SHOW_VIEW_MAIN`.
         z2ui5_display_view_main( ).
-      WHEN 'SHOW_VIEW_SECOND'.
+      WHEN `SHOW_VIEW_SECOND`.
         z2ui5_display_view_second( ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD z2ui5_on_init.
 
-    quantity = '500'.
+    quantity = `500`.
     z2ui5_display_view_main( ).
   ENDMETHOD.
 ENDCLASS.

@@ -29,8 +29,8 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     DATA lv_cnt_heavy TYPE i .
     DATA lv_cnt_neg TYPE i .
     DATA lv_selectedkey TYPE string .
-    CONSTANTS c_lcb TYPE string VALUE '{' ##NO_TEXT.
-    CONSTANTS c_rcb TYPE string VALUE '}' ##NO_TEXT.
+    CONSTANTS c_lcb TYPE string VALUE `{` ##NO_TEXT.
+    CONSTANTS c_rcb TYPE string VALUE `}` ##NO_TEXT.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client .
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'OnSelectIconTabBar' ).
+    IF client->check_on_event( `OnSelectIconTabBar` ).
       client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
       set_filter( ).
       client->view_model_update( ).
@@ -73,74 +73,74 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page( id = `page_main`
            showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title                         = 'abap2UI5 - IconTabBar'
+            title                         = `abap2UI5 - IconTabBar`
             navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( )
-            class                         = 'sapUiContentPadding' ).
+            class                         = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
+    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( lv_selectedkey )
-                                         select      = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
+                                         select      = client->_event( val = `OnSelectIconTabBar` t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count   = client->_bind_edit( lv_cnt_total )
-                               text    = 'Products'
-                               key     = 'ALL'
+                               text    = `Products`
+                               key     = `ALL`
                                showall = abap_true ).
     lo_items->icon_tab_separator( ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://begin'
-                               iconcolor = 'Positive'
+    lo_items->icon_tab_filter( icon      = `sap-icon://begin`
+                               iconcolor = `Positive`
                                count     = client->_bind_edit( lv_cnt_pos )
-                               text      = 'OK'
-                               key       = 'OK' ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://compare'
-                               iconcolor = 'Critical'
+                               text      = `OK`
+                               key       = `OK` ).
+    lo_items->icon_tab_filter( icon      = `sap-icon://compare`
+                               iconcolor = `Critical`
                                count     = client->_bind_edit( lv_cnt_heavy )
-                               text      = 'Heavy'
-                               key       = 'HEAVY' ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://inventory'
-                               iconcolor = 'Negative'
+                               text      = `Heavy`
+                               key       = `HEAVY` ).
+    lo_items->icon_tab_filter( icon      = `sap-icon://inventory`
+                               iconcolor = `Negative`
                                count     = client->_bind_edit( lv_cnt_neg )
-                               text      = 'Overweight'
-                               key       = 'OVERWEIGHT' ).
+                               text      = `Overweight`
+                               key       = `OVERWEIGHT` ).
 
-    DATA(tab) = page->scroll_container( height   = '70%'
+    DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true
        )->table(
            inset          = abap_false
-           showseparators = 'Inner'
-           headertext     = 'Products'
+           showseparators = `Inner`
+           headertext     = `Products`
            items          = client->_bind( mt_table ) ).
 
     tab->columns(
-        )->column( width = '12em'
-            )->text( 'Product' )->get_parent(
-        )->column( minscreenwidth = 'Tablet'
+        )->column( width = `12em`
+            )->text( `Product` )->get_parent(
+        )->column( minscreenwidth = `Tablet`
                    demandpopin    = abap_true
-            )->text( 'Supplier' )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+            )->text( `Supplier` )->get_parent(
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'End'
-            )->text( 'Dimensions' )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+                   halign         = `End`
+            )->text( `Dimensions` )->get_parent(
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'Center'
-            )->text( 'Weight' )->get_parent(
-         )->column( halign = 'End'
-            )->text( 'Price' )->get_parent(
-         )->column( halign = 'End'
-             )->text( 'Rating' ).
+                   halign         = `Center`
+            )->text( `Weight` )->get_parent(
+         )->column( halign = `End`
+            )->text( `Price` )->get_parent(
+         )->column( halign = `End`
+             )->text( `Rating` ).
 
     tab->items(
         )->column_list_item(
            )->cells(
-             )->object_identifier( text  = '{PRODUCTNAME}'
-                                   title = '{PRODUCTID}' )->get_parent(
-             )->text( text = '{SUPPLIERNAME}' )->get_parent(
-             )->text( text = '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
-             )->object_number( number = '{MEASURE}'
-                               unit   = '{UNIT}'
-                               state  = '{STATE_MEASURE}'
+             )->object_identifier( text  = `{PRODUCTNAME}`
+                                   title = `{PRODUCTID}` )->get_parent(
+             )->text( text = `{SUPPLIERNAME}` )->get_parent(
+             )->text( text = `{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}`
+             )->object_number( number = `{MEASURE}`
+                               unit   = `{UNIT}`
+                               state  = `{STATE_MEASURE}`
              )->object_number(
-                   state  = '{STATE_PRICE}'
+                   state  = `{STATE_PRICE}`
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ).
 
     client->view_display( view->stringify( ) ).
@@ -149,15 +149,15 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning` )
-        ( productid = '2' productname = 'chair' suppliername = 'Company 2'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning` )
-        ( productid = '3' productname = 'sofa'  suppliername = 'Company 3'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` rating = '2'  state_measure =
+        ( productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30` dimunit = `CM` measure = 100  unit = `ST` price = `1000.50` waers = `EUR`  state_price = `Success` rating = `0` state_measure = `Warning` )
+        ( productid = `2` productname = `chair` suppliername = `Company 2`  width = `10` depth = `20` height = `30` dimunit = `CM` measure = 123   unit = `ST` price = `2000.55` waers = `USD` state_price = `Error` rating = `1`  state_measure = `Warning` )
+        ( productid = `3` productname = `sofa`  suppliername = `Company 3`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 700   unit = `ST` price = `3000.11` waers = `CNY` state_price = `Success` rating = `2`  state_measure =
       `Warning` )
-        ( productid = '4' productname = 'computer' suppliername = 'Company 4'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` rating = '3'  state_measure =
+        ( productid = `4` productname = `computer` suppliername = `Company 4`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 200  unit = `ST` price = `4000.88` waers = `USD` state_price = `Success` rating = `3`  state_measure =
       `Success` )
-        ( productid = '5' productname = 'printer' suppliername = 'Company 5'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` rating = '4'  state_measure =
+        ( productid = `5` productname = `printer` suppliername = `Company 5`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 90   unit = `ST` price = `5000.47` waers = `EUR` state_price = `Error` rating = `4`  state_measure =
       `Warning` )
-        ( productid = '6' productname = 'table2'  suppliername = 'Company 6'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` rating = '5' state_measure =
+        ( productid = `6` productname = `table2`  suppliername = `Company 6`  width = `10` depth = `20` height = `30` dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Success` rating = `5` state_measure =
       `Information` ) ).
 
     lv_cnt_total = lines( mt_table ).
@@ -170,12 +170,12 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     z2ui5_set_data( ).
     CASE lv_selectedkey.
-      WHEN 'ALL'.
-      WHEN 'OK'.
+      WHEN `ALL`.
+      WHEN `OK`.
         DELETE mt_table WHERE NOT measure BETWEEN 0 AND 100.
-      WHEN 'HEAVY'.
+      WHEN `HEAVY`.
         DELETE mt_table WHERE NOT measure BETWEEN 101 AND 500.
-      WHEN 'OVERWEIGHT'.
+      WHEN `OVERWEIGHT`.
         DELETE mt_table WHERE NOT measure > 500.
     ENDCASE.
   ENDMETHOD.

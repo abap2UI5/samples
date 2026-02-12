@@ -30,9 +30,9 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
     TRY.
 
         CASE client->get( )-event.
-          WHEN 'START' OR 'CHANGE'.
+          WHEN `START` OR `CHANGE`.
             ui5_view_main_display( ).
-          WHEN 'UPLOAD'.
+          WHEN `UPLOAD`.
 
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = 'abap2UI5 - Upload Files'
+            title          = `abap2UI5 - Upload Files`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -85,9 +85,9 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
     footer->_z2ui5( )->file_uploader(
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
-      placeholder = 'filepath here...'
+      placeholder = `filepath here...`
 *      enabled     = abap_false
-      upload      = client->_event( 'UPLOAD' ) ).
+      upload      = client->_event( `UPLOAD` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

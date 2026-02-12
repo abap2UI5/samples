@@ -23,15 +23,15 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - File Editor`
                                        navbuttonpress = client->_event_nav_app_leave( )
                                        shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(temp) = page->simple_form( title    = 'File'
+    DATA(temp) = page->simple_form( title    = `File`
                                     editable = abap_true )->content( `form`
-         )->label( 'path'
+         )->label( `path`
          )->input( client->_bind_edit( mv_path )
-         )->label( 'Option' ).
+         )->label( `Option` ).
 
     lt_types = VALUE z2ui5_if_types=>ty_t_name_value( ).
     lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
@@ -43,29 +43,29 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                     )->get( ).
 
     temp3->suggestion_items(
-                )->list_item( text           = '{N}'
-                              additionaltext = '{V}' ).
+                )->list_item( text           = `{N}`
+                              additionaltext = `{V}` ).
 
-    temp->label( '' )->button( text = 'Download'
-                    press           = client->_event( 'DB_LOAD' )
-                    icon            = 'sap-icon://download-from-cloud' ).
+    temp->label( `` )->button( text = `Download`
+                    press           = client->_event( `DB_LOAD` )
+                    icon            = `sap-icon://download-from-cloud` ).
 
     page->code_editor( type     = client->_bind_edit( mv_type )
                        editable = client->_bind( mv_check_editable )
                        value    = client->_bind( mv_editor ) ).
 
     page->footer( )->overflow_toolbar(
-        )->button( text  = 'Clear'
-                   press = client->_event( 'CLEAR' )
-                   icon  = 'sap-icon://delete'
+        )->button( text  = `Clear`
+                   press = client->_event( `CLEAR` )
+                   icon  = `sap-icon://delete`
         )->toolbar_spacer(
-        )->button( text  = 'Edit'
-                   press = client->_event( 'EDIT' )
-                   icon  = 'sap-icon://edit'
-        )->button( text    = 'Upload'
-                   press   = client->_event( 'DB_SAVE' )
-                   type    = 'Emphasized'
-                   icon    = 'sap-icon://upload-to-cloud'
+        )->button( text  = `Edit`
+                   press = client->_event( `EDIT` )
+                   icon  = `sap-icon://edit`
+        )->button( text    = `Upload`
+                   press   = client->_event( `DB_SAVE` )
+                   type    = `Emphasized`
+                   icon    = `sap-icon://upload-to-cloud`
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
     client->view_display( view->stringify( ) ).
@@ -76,31 +76,31 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      mv_path = '../../demo/text'.
-      mv_type = 'plain_text'.
+      mv_path = `../../demo/text`.
+      mv_type = `plain_text`.
       view_display( ).
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'DB_LOAD'.
+      WHEN `DB_LOAD`.
 
         mv_editor = COND #(
-            WHEN mv_path CS 'abap' THEN lcl_file_api=>read_abap( )
-            WHEN mv_path CS 'json' THEN lcl_file_api=>read_json( )
-            WHEN mv_path CS 'yaml' THEN lcl_file_api=>read_yaml( )
-            WHEN mv_path CS 'text' THEN lcl_file_api=>read_text( )
-            WHEN mv_path CS 'js'   THEN lcl_file_api=>read_js( ) ).
+            WHEN mv_path CS `abap` THEN lcl_file_api=>read_abap( )
+            WHEN mv_path CS `json` THEN lcl_file_api=>read_json( )
+            WHEN mv_path CS `yaml` THEN lcl_file_api=>read_yaml( )
+            WHEN mv_path CS `text` THEN lcl_file_api=>read_text( )
+            WHEN mv_path CS `js`   THEN lcl_file_api=>read_js( ) ).
 
-        client->message_toast_display( 'Download successfull' ).
+        client->message_toast_display( `Download successfull` ).
 
         client->view_model_update( ).
-      WHEN 'DB_SAVE'.
-        client->message_box_display( text = 'Upload successfull. File saved!'
-                                     type = 'success' ).
-      WHEN 'EDIT'.
+      WHEN `DB_SAVE`.
+        client->message_box_display( text = `Upload successfull. File saved!`
+                                     type = `success` ).
+      WHEN `EDIT`.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).
-      WHEN 'CLEAR'.
+      WHEN `CLEAR`.
         mv_editor = ``.
     ENDCASE.
   ENDMETHOD.

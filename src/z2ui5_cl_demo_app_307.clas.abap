@@ -203,28 +203,28 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                     dropposition      = `Between`
                     droplayout        = `Horizontal`
                     drop              = client->_event(
-                        val   = 'ON_DROP'
+                        val   = `ON_DROP`
                         t_arg = VALUE #(
                             ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
                             ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
                             ( `${$parameters>/dropPosition}` ) ) )
             )->get_parent(
-            )->custom_layout( ns = 'f'
+            )->custom_layout( ns = `f`
                 )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
-            )->grid_list_item( counter   = '{COUNTER}'
-                               highlight = '{HIGHLIGHT}'
-                               type      = '{TYPE}'
-                               unread    = '{UNREAD}'
+            )->grid_list_item( counter   = `{COUNTER}`
+                               highlight = `{HIGHLIGHT}`
+                               type      = `{TYPE}`
+                               unread    = `{UNREAD}`
                 )->vbox( height = `100%`
                     )->vbox( class = `sapUiSmallMargin`
                         )->layout_data(
                             )->flex_item_data( growfactor   = `1`
                                                shrinkfactor = `0`
                         )->get_parent(
-                        )->title( text     = '{TITLE}'
+                        )->title( text     = `{TITLE}`
                                   wrapping = abap_true
-                        )->label( text     = '{SUBTITLE}'
+                        )->label( text     = `{SUBTITLE}`
                                   wrapping = abap_true ).
 
     client->view_display( view->stringify( ) ).
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'ON_DROP' ).
+    IF client->check_on_event( `ON_DROP` ).
       DATA(ondropparameters) = client->get( )-t_event_arg.
       TRY.
           DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.

@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
-        )->page( title          = 'xxx'
+        )->page( title          = `xxx`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
             )->header_content( ).
@@ -72,8 +72,8 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     FIELD-SYMBOLS <fs_t_head_new> TYPE STANDARD TABLE.
     FIELD-SYMBOLS <fs_s_head_new> TYPE any.
 
-    mt_out = VALUE #( ( aa = 'aa' bb = 'bb' cc = 'cc' )
-                      ( aa = 'a1' bb = 'b1' cc = 'c1' ) ).
+    mt_out = VALUE #( ( aa = `aa` bb = `bb` cc = `cc` )
+                      ( aa = `a1` bb = `b1` cc = `c1` ) ).
 
     DATA(kopf) = REF #( mt_out ).
 

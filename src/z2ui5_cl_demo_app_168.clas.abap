@@ -36,19 +36,19 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup File Download'
+                title          = `abap2UI5 - Popup File Download`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-                text  = 'Open Popup...'
-                press = client->_event( 'POPUP' ) ).
+                text  = `Open Popup...`
+                press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD ui5_event.
 
-    IF client->check_on_event( 'POPUP' ).
+    IF client->check_on_event( `POPUP` ).
       DATA(lo_app) = z2ui5_cl_pop_file_dl=>factory( get_file( ) ).
       client->nav_app_call( lo_app ).
     ENDIF.

@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      get_data( 'Z2UI5_T_01' ).
-      get_data2( 'Z2UI5_T_01' ).
+      get_data( `Z2UI5_T_01` ).
+      get_data2( `Z2UI5_T_01` ).
 
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data
                                                       vis_cols = 5 ).
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       ui5_view_display( client ).
     ENDIF.
 
-    IF client->check_on_event( 'GO' ).
+    IF client->check_on_event( `GO` ).
       DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
       client->nav_app_call( app ).
     ENDIF.
@@ -71,22 +71,22 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
     IF mo_layout_obj2->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
     IF <val> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
 
     ASSIGN mt_data2->* TO FIELD-SYMBOL(<table2>).
     ASSIGN mo_layout_obj2->mr_data->* TO FIELD-SYMBOL(<val2>).
     IF <table2> <> <val2>.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> ms_data!` ).
     ENDIF.
 
     client->view_model_update( ).
@@ -95,13 +95,13 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'CALL Next App'
-                  press = client->_event( 'GO' )
-                  type  = 'Success' ).
+    page->button( text  = `CALL Next App`
+                  press = client->_event( `GO` )
+                  type  = `Success` ).
 
     xml_table( i_page   = page
                i_client = client
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
   METHOD xml_table.
 
     ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
-    DATA(table) = i_page->table( width = 'auto'
+    DATA(table) = i_page->table( width = `auto`
                                  items = i_client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
+                                       )->column_list_item( valign = `Middle`
                                                             type   = `Inactive` ).
 
     DATA(cells) = column_list_item->cells( ).
@@ -236,7 +236,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'SELKZ'
+                                    ( name = `SELKZ`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
 
         APPEND LINES OF component TO result.

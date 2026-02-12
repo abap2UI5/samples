@@ -28,32 +28,32 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
       )->page(
-                  title          = 'abap2UI5 - Focus'
-                  navbuttonpress = client->_event( 'BACK' )
+                  title          = `abap2UI5 - Focus`
+                  navbuttonpress = client->_event( `BACK` )
                   shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
                               focusid          = client->_bind_edit( focus_id )
                                 selectionstart = client->_bind_edit( selstart )
                                 selectionend   = client->_bind_edit( selend )
                                 setupdate      = client->_bind_edit( update_focus )
-              )->simple_form( title    = 'Focus & Cursor'
+              )->simple_form( title    = `Focus & Cursor`
                               editable = abap_true
-                  )->content( 'form'
-                      )->title( 'Input'
-                      )->label( 'Sel_Start'
+                  )->content( `form`
+                      )->title( `Input`
+                      )->label( `Sel_Start`
                       )->input( value = client->_bind_edit( selstart )
-                      )->label( 'Sel_End'
+                      )->label( `Sel_End`
                       )->input( value = client->_bind_edit( selend )
-                      )->label( 'field_01'
+                      )->label( `field_01`
                       )->input( value = client->_bind_edit( field_01 )
-                                id    = 'BUTTON01'
-                      )->button( text  = 'focus here'
-                                 press = client->_event( 'BUTTON01' )
+                                id    = `BUTTON01`
+                      )->button( text  = `focus here`
+                                 press = client->_event( `BUTTON01` )
                       )->label( `field_02`
                       )->input( value = client->_bind_edit( field_02 )
-                                id    = 'BUTTON02'
-                      )->button( text  = 'focus here'
-                                 press = client->_event( 'BUTTON02' )
+                                id    = `BUTTON02`
+                      )->button( text  = `focus here`
+                                 press = client->_event( `BUTTON02` )
            )->stringify( ) ).
   ENDMETHOD.
 
@@ -74,9 +74,9 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
-      WHEN 'BUTTON01' OR 'BUTTON02'.
+      WHEN `BUTTON01` OR `BUTTON02`.
         update_focus = abap_true.
         focus_id = client->get( )-event.
         client->view_model_update( ).

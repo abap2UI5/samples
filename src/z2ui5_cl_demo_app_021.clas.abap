@@ -28,19 +28,19 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Text Area Example'
+            title          = `abap2UI5 - Text Area Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( 'text area'
+    layout->label( `text area`
         )->text_area(
             valueliveupdate = abap_true
             value           = client->_bind_edit( mv_textarea )
             growing         = abap_true
-            growingmaxlines = '7'
-            width           = '100%'
+            growingmaxlines = `7`
+            width           = `100%`
         )->button( text  = `OK`
                    press = client->_event( `POST` ) ).
 
@@ -49,8 +49,8 @@ CLASS z2ui5_cl_demo_app_021 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'POST' ).
-      client->message_box_display( 'success - values send to the server' ).
+    IF client->check_on_event( `POST` ).
+      client->message_box_display( `success - values send to the server` ).
     ENDIF.
   ENDMETHOD.
 

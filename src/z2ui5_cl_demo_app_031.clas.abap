@@ -50,18 +50,18 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-      WHEN 'POPUP'.
-        app-popup = 'TEST'.
-      WHEN 'DATA'.
-        client->message_box_display( 'Event raised value:' && mv_value ).
+      WHEN `POPUP`.
+        app-popup = `TEST`.
+      WHEN `DATA`.
+        client->message_box_display( `Event raised value:` && mv_value ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD z2ui5_on_init.
 
-    mv_value  = '200'.
+    mv_value  = `200`.
   ENDMETHOD.
 
   METHOD z2ui5_on_render_main.
@@ -74,17 +74,17 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n| &&
-                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( 'BACK') && `"/>` && |\n| &&
+                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( `BACK`) && `"/>` && |\n| &&
                         `       <Link target="_blank" text="Demo" href="https://twitter.com/abap2UI5/status/1645104539387691008"/>` && |\n| &&
                         `   </form:SimpleForm>  ` && |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( 'POPUP' ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( `POPUP` ) && `"` && |\n| &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n| &&
                         `       <TileContent>` && |\n| &&
                         `           <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png" />` && |\n| &&
                         `       </TileContent>` && |\n| &&
                         `   </GenericTile>` && |\n| &&
                         |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && client->_event( 'DATA' ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && client->_event( `DATA` ) && `"` && |\n| &&
                         `       subheader="Subtitle" frameType= "TwoByHalf">` && |\n| &&
                         `       <TileContent />` && |\n| &&
                         `   </GenericTile>` && |\n| &&

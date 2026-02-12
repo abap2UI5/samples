@@ -41,21 +41,21 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
 
     CASE client->get( )-event.
-      WHEN 'POPUP_BAPIRET'.
+      WHEN `POPUP_BAPIRET`.
 
         DATA(lt_msg) = VALUE bapirettab(
-            ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
-            ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' ) ).
+            ( type = `E` id = `MSG1` number = `001` message = `An empty Report field causes an empty XML Message to be sent` )
+            ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
 
         client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
-      WHEN 'POPUP_BALLOG'.
+      WHEN `POPUP_BALLOG`.
 
         lt_bal = VALUE #(
-          ( msgid = 'MSG1' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
-          ( msgid = 'MSG2' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '02' ) ).
+          ( msgid = `MSG1` msgno = `001` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `01` )
+          ( msgid = `MSG2` msgno = `002` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `02` ) ).
 
         client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
-      WHEN 'POPUP_EXCEPTION'.
+      WHEN `POPUP_EXCEPTION`.
         TRY.
             DATA(lv_dummy) = 1 / 0.
           CATCH cx_root INTO DATA(lx).
@@ -70,18 +70,18 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup Messages'
+                title          = `abap2UI5 - Popup Messages`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Open Popup BAPIRET'
-            press = client->_event( 'POPUP_BAPIRET' )
+            text  = `Open Popup BAPIRET`
+            press = client->_event( `POPUP_BAPIRET` )
                   )->button(
-            text  = 'Open Popup BALLOG'
-            press = client->_event( 'POPUP_BALLOG' )
+            text  = `Open Popup BALLOG`
+            press = client->_event( `POPUP_BALLOG` )
                              )->button(
-            text  = 'Open Popup Exception'
-            press = client->_event( 'POPUP_EXCEPTION' ) ).
+            text  = `Open Popup Exception`
+            press = client->_event( `POPUP_EXCEPTION` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

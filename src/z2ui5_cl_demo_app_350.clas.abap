@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_350 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA check_initialized TYPE abap_bool.
     DATA: view_id TYPE i.
-    DATA text TYPE string VALUE 'call booking mask'.
+    DATA text TYPE string VALUE `call booking mask`.
     DATA varkey TYPE char120.
 
     METHODS initialize_view2
@@ -27,11 +27,11 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
             DATA(page) = view->shell( )->page(
               title = `Startview` ).
             page->simple_form(
-                  )->content( 'form'
+                  )->content( `form`
                                )->button(
                                    text  = client->_bind_edit( text )
-                                   width = '20%'
-                                   press = client->_event( 'CALL_BOOKING_MASK' ) ).
+                                   width = `20%`
+                                   press = client->_event( `CALL_BOOKING_MASK` ) ).
             client->view_display( view->stringify( ) ).
             RETURN.
           ENDIF.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               DATA: lf_key TYPE n LENGTH 4.
               DATA(lr_view2) = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
-              lr_view2->varkey = '001'.
+              lr_view2->varkey = `001`.
               client->nav_app_call( lr_view2 ).
               RETURN.
             WHEN `BACK`.
@@ -59,10 +59,10 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           IF check_initialized = abap_false.
             check_initialized = abap_true.
 
-            DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+            DATA(lv_fm) = `ENQUEUE_E_TABLE`.
             CALL FUNCTION lv_fm
               EXPORTING
-                tabname        = 'ZTEST'
+                tabname        = `ZTEST`
                 varkey         = varkey
               EXCEPTIONS
                 foreign_lock   = 1
@@ -119,15 +119,15 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = page->vbox( ).
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->title(
-      text = 'Current Lock Value in Table ZTEST' ).
+      text = `Current Lock Value in Table ZTEST` ).
     hbox->input(
       editable = abap_false
       value    = client->_bind_edit( varkey ) ).
     hbox->button(
-      text  = 'Next Lock View'
-      press = client->_event( 'NEXT_LOCK' ) ).
+      text  = `Next Lock View`
+      press = client->_event( `NEXT_LOCK` ) ).
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

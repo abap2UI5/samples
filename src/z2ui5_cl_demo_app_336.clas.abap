@@ -40,13 +40,13 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'BACK'
+    page->button( text  = `BACK`
                   press = client->_event_nav_app_leave( )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

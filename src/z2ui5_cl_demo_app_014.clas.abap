@@ -27,129 +27,129 @@ CLASS z2ui5_cl_demo_app_014 IMPLEMENTATION.
 
     DATA(container) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Visualization'
+            title          = `abap2UI5 - Visualization`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
-    DATA(tab) = container->tab( text     = 'Line Chart'
+    DATA(tab) = container->tab( text     = `Line Chart`
                                 selected = client->_bind( mv_tab_line_active ) ).
-    DATA(grid) = tab->grid( 'XL6 L6 M6 S12' ).
+    DATA(grid) = tab->grid( `XL6 L6 M6 S12` ).
 
     grid->link(
-      text   = 'Go to the SAP Demos for Interactive Line Charts here...'
-      target = '_blank'
-      href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.InteractiveLineChart/sample/sap.suite.ui.microchart.sample.InteractiveLineChart' ).
+      text   = `Go to the SAP Demos for Interactive Line Charts here...`
+      target = `_blank`
+      href   = `https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.InteractiveLineChart/sample/sap.suite.ui.microchart.sample.InteractiveLineChart` ).
 
     grid->text(
-            text  = 'Absolute and Percentage values'
-            class = 'sapUiSmallMargin'
+            text  = `Absolute and Percentage values`
+            class = `sapUiSmallMargin`
         )->get(
             )->layout_data(
-                )->grid_data( 'XL12 L12 M12 S12' ).
+                )->grid_data( `XL12 L12 M12 S12` ).
 
     DATA(point) = grid->flex_box(
-        width      = '22rem'
-        height     = '13rem'
-        alignitems = 'Center'
-        class      = 'sapUiSmallMargin'
+        width      = `22rem`
+        height     = `13rem`
+        alignitems = `Center`
+        class      = `sapUiSmallMargin`
       )->items( )->interact_line_chart(
-            selectionchanged = client->_event( 'LINE_CHANGED' )
-            precedingpoint   = '15'
-            succeddingpoint  = '89'
+            selectionchanged = client->_event( `LINE_CHANGED` )
+            precedingpoint   = `15`
+            succeddingpoint  = `89`
         )->points( ).
     point->interact_line_chart_point( selected       = client->_bind( mv_sel7 )
-                                      label          = 'May'
-                                      value          = '33.1'
-                                      secondarylabel = 'Q2' ).
+                                      label          = `May`
+                                      value          = `33.1`
+                                      secondarylabel = `Q2` ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel8 )
-                                      label    = 'June'
-                                      value    = '12' ).
+                                      label    = `June`
+                                      value    = `12` ).
     point->interact_line_chart_point( selected       = client->_bind( mv_sel9 )
-                                      label          = 'July'
-                                      value          = '51.4'
-                                      secondarylabel = 'Q3' ).
+                                      label          = `July`
+                                      value          = `51.4`
+                                      secondarylabel = `Q3` ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel10 )
-                                      label    = 'Aug'
-                                      value    = '52' ).
+                                      label    = `Aug`
+                                      value    = `52` ).
     point->interact_line_chart_point( selected = client->_bind( mv_sel11 )
-                                      label    = 'Sep'
-                                      value    = '69.9' ).
+                                      label    = `Sep`
+                                      value    = `69.9` ).
     point->interact_line_chart_point( selected       = client->_bind( mv_sel12 )
-                                      label          = 'Oct'
-                                      value          = '0.9'
-                                      secondarylabel = 'Q4' ).
+                                      label          = `Oct`
+                                      value          = `0.9`
+                                      secondarylabel = `Q4` ).
 
     point = grid->flex_box(
-            width      = '22rem'
-            height     = '13rem'
-            alignitems = 'Start'
-            class      = 'SpaceBetween'
+            width      = `22rem`
+            height     = `13rem`
+            alignitems = `Start`
+            class      = `SpaceBetween`
         )->items(
              )->interact_line_chart(
-                    selectionchanged = client->_event( 'LINE_CHANGED' )
-                    press            = client->_event( 'LINE_PRESS' )
-                    precedingpoint   = '-20'
+                    selectionchanged = client->_event( `LINE_CHANGED` )
+                    press            = client->_event( `LINE_PRESS` )
+                    precedingpoint   = `-20`
              )->points( ).
-    point->interact_line_chart_point( label          = 'May'
-                                      value          = '33.1'
-                                      displayedvalue = '33.1%'
-                                      secondarylabel = '2015' ).
-    point->interact_line_chart_point( label          = 'June'
-                                      value          = '2.2'
-                                      displayedvalue = '2.2%'
-                                      secondarylabel = '2015' ).
-    point->interact_line_chart_point( label          = 'July'
-                                      value          = '51.4'
-                                      displayedvalue = '51.4%'
-                                      secondarylabel = '2015' ).
-    point->interact_line_chart_point( label          = 'Aug'
-                                      value          = '19.9'
-                                      displayedvalue = '19.9%' ).
-    point->interact_line_chart_point( label          = 'Sep'
-                                      value          = '69.9'
-                                      displayedvalue = '69.9%' ).
-    point->interact_line_chart_point( label          = 'Oct'
-                                      value          = '0.9'
-                                      displayedvalue = '9.9%' ).
+    point->interact_line_chart_point( label          = `May`
+                                      value          = `33.1`
+                                      displayedvalue = `33.1%`
+                                      secondarylabel = `2015` ).
+    point->interact_line_chart_point( label          = `June`
+                                      value          = `2.2`
+                                      displayedvalue = `2.2%`
+                                      secondarylabel = `2015` ).
+    point->interact_line_chart_point( label          = `July`
+                                      value          = `51.4`
+                                      displayedvalue = `51.4%`
+                                      secondarylabel = `2015` ).
+    point->interact_line_chart_point( label          = `Aug`
+                                      value          = `19.9`
+                                      displayedvalue = `19.9%` ).
+    point->interact_line_chart_point( label          = `Sep`
+                                      value          = `69.9`
+                                      displayedvalue = `69.9%` ).
+    point->interact_line_chart_point( label          = `Oct`
+                                      value          = `0.9`
+                                      displayedvalue = `9.9%` ).
 
     point = grid->vertical_layout(
-        )->layout_data( ns = 'layout'
-            )->grid_data( 'XL12 L12 M12 S12'
+        )->layout_data( ns = `layout`
+            )->grid_data( `XL12 L12 M12 S12`
         )->get_parent(
         )->text(
-            text  = 'Preselected values'
-            class = 'sapUiSmallMargin'
+            text  = `Preselected values`
+            class = `sapUiSmallMargin`
         )->flex_box(
-            width      = '22rem'
-            height     = '13rem'
-            alignitems = 'Start'
-            class      = 'sapUiSmallMargin'
+            width      = `22rem`
+            height     = `13rem`
+            alignitems = `Start`
+            class      = `sapUiSmallMargin`
             )->items(
                 )->interact_line_chart(
-                    selectionchanged = client->_event( 'LINE_CHANGED' )
-                    press            = client->_event( 'LINE_PRESS' )
+                    selectionchanged = client->_event( `LINE_CHANGED` )
+                    press            = client->_event( `LINE_PRESS` )
                 )->points( ).
-    point->interact_line_chart_point( label          = 'May'
-                                      value          = '33.1'
-                                      displayedvalue = '33.1%'
+    point->interact_line_chart_point( label          = `May`
+                                      value          = `33.1`
+                                      displayedvalue = `33.1%`
                                       selected       = abap_true ).
-    point->interact_line_chart_point( label          = 'June'
-                                      value          = '2.2'
-                                      displayedvalue = '2.2%' ).
-    point->interact_line_chart_point( label          = 'July'
-                                      value          = '51.4'
-                                      displayedvalue = '51.4%' ).
-    point->interact_line_chart_point( label          = 'Aug'
-                                      value          = '19.9'
-                                      displayedvalue = '19.9%'
+    point->interact_line_chart_point( label          = `June`
+                                      value          = `2.2`
+                                      displayedvalue = `2.2%` ).
+    point->interact_line_chart_point( label          = `July`
+                                      value          = `51.4`
+                                      displayedvalue = `51.4%` ).
+    point->interact_line_chart_point( label          = `Aug`
+                                      value          = `19.9`
+                                      displayedvalue = `19.9%`
                                       selected       = abap_true ).
-    point->interact_line_chart_point( label          = 'Sep'
-                                      value          = '69.9'
-                                      displayedvalue = '69.9%' ).
-    point->interact_line_chart_point( label          = 'Oct'
-                                      value          = '0.9'
-                                      displayedvalue = '9.9%' ).
+    point->interact_line_chart_point( label          = `Sep`
+                                      value          = `69.9`
+                                      displayedvalue = `69.9%` ).
+    point->interact_line_chart_point( label          = `Oct`
+                                      value          = `0.9`
+                                      displayedvalue = `9.9%` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

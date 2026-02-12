@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      nav_params-product  = '102343333'.
+      nav_params-product  = `102343333`.
 
       IF client->get( )-check_launchpad_active = abap_false.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).
@@ -35,24 +35,24 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
       client->view_display( view->shell(
             )->page(
                     showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-                    title          = 'abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad'
-                    navbuttonpress = client->_event( 'BACK' )
+                    title          = `abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad`
+                    navbuttonpress = client->_event( `BACK` )
                     shownavbutton  = client->check_app_prev_stack( )
                 )->header_content(
                     )->link(
-                        text   = 'Source_Code'
+                        text   = `Source_Code`
 
-                        target = '_blank'
+                        target = `_blank`
                 )->get_parent(
-                )->simple_form( title    = 'App 127'
+                )->simple_form( title    = `App 127`
                                 editable = abap_true
-                    )->content( 'form'
+                    )->content( `form`
                         )->label( `Product`
                         )->input( client->_bind_edit( nav_params-product )
-                        )->button( text  = 'BACK'
+                        )->button( text  = `BACK`
                                    press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
                         )->button(
-                            text  = 'go to app 128'
+                            text  = `go to app 128`
                             press = client->_event_client(
             val   = client->cs_event-cross_app_nav_to_ext
             t_arg = VALUE #(
@@ -64,10 +64,10 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
 
 *        client->message_toast_display( |{ product } { quantity } - send to the server| ).
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.

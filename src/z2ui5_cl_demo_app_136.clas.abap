@@ -29,9 +29,9 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     TRY.
 
         CASE client->get( )-event.
-          WHEN 'START' OR 'CHANGE'.
+          WHEN `START` OR `CHANGE`.
             ui5_view_main_display( ).
-          WHEN 'UPLOAD'.
+          WHEN `UPLOAD`.
 
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = 'abap2UI5 - CSV to ABAP internal Table'
+            title          = `abap2UI5 - CSV to ABAP internal Table`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
     FIELD-SYMBOLS <tab> TYPE table.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
               items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
           )->header_toolbar(
               )->overflow_toolbar(
-                  )->title( 'CSV Content'
+                  )->title( `CSV Content`
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
 
@@ -96,8 +96,8 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     footer->_z2ui5( )->file_uploader(
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
-      placeholder = 'filepath here...'
-      upload      = client->_event( 'UPLOAD' ) ).
+      placeholder = `filepath here...`
+      upload      = client->_event( `UPLOAD` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

@@ -50,11 +50,11 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'TIMER_FINISHED' ).
+    IF client->check_on_event( `TIMER_FINISHED` ).
 
       DO 5 TIMES.
         mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+        INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
       ENDDO.
@@ -66,9 +66,9 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
   METHOD z2ui5_on_init.
 
     mv_counter = 1.
-    mv_key = 'VIEW_REFRESH'.
+    mv_key = `VIEW_REFRESH`.
     t_tab = VALUE #(
-            ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+            ( title = `entry` && mv_counter  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
   ENDMETHOD.
 
   METHOD z2ui5_view_display.
@@ -78,29 +78,29 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
                                delayms     = `2000`
                                checkrepeat = abap_true ).
     DATA(page) = lo_view->shell( )->page(
-             title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
+             title          = `abap2UI5 - CL_GUI_TIMER - Monitor`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->segmented_button( selected_key = client->_bind_edit( mv_key )
         )->items(
             )->segmented_button_item(
-                key  = 'VIEW_REFRESH'
+                key  = `VIEW_REFRESH`
 *                icon = 'sap-icon://accept'
-                text = 'Old (rerender View)'
+                text = `Old (rerender View)`
             )->segmented_button_item(
-                key  = 'MODEL_ONLY'
+                key  = `MODEL_ONLY`
 *                icon = 'sap-icon://add-favorite'
-                text = 'New (update only Model)' ).
+                text = `New (update only Model)` ).
 
     page->list(
-         headertext = 'Data auto refresh (2 sec)'
+         headertext = `Data auto refresh (2 sec)`
          items      = client->_bind( t_tab )
          )->standard_list_item(
-             title       = '{TITLE}'
-             description = '{DESCR}'
-             icon        = '{ICON}'
-             info        = '{INFO}' ).
+             title       = `{TITLE}`
+             description = `{DESCR}`
+             icon        = `{ICON}`
+             info        = `{INFO}` ).
 
     client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.

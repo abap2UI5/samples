@@ -23,10 +23,10 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
     "user command
     CASE client->get( )-event.
-      WHEN 'TIMER_FINISHED'.
+      WHEN `TIMER_FINISHED`.
         client->message_box_display( `Timer finished!` ).
         RETURN.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
         RETURN.
     ENDCASE.
@@ -36,15 +36,15 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' )
+                  title          = `abap2UI5`
+                  navbuttonpress = client->_event( val = `BACK` )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->timer(
                                         finished = client->_event( `TIMER_FINISHED` )
                                         delayms  = `2000`
-              )->simple_form( title    = 'Timer Interval 2000 ms'
+              )->simple_form( title    = `Timer Interval 2000 ms`
                               editable = abap_true
-                  )->content( 'form'
+                  )->content( `form`
            )->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -17,34 +17,34 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
       client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = 'abap2UI5 - Popup To Confirm'
+            title          = `abap2UI5 - Popup To Confirm`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->button(
-            text  = 'SY'
-            press = client->_event( 'SY' )
+            text  = `SY`
+            press = client->_event( `SY` )
                 )->button(
-            text  = 'BAPIRET'
-            press = client->_event( 'BAPIRET' )
+            text  = `BAPIRET`
+            press = client->_event( `BAPIRET` )
                 )->button(
-            text  = 'CX_ROOT'
-            press = client->_event( 'CX_ROOT' )
+            text  = `CX_ROOT`
+            press = client->_event( `CX_ROOT` )
         )->stringify( ) ).
 
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'SY'.
+      WHEN `SY`.
         DATA(ls_msg2) = z2ui5_cl_util=>msg_get_by_msg(
-                  id = 'NET'
+                  id = `NET`
                   no = `001` ).
         client->message_box_display( ls_msg2 ).
-      WHEN 'BAPIRET'.
+      WHEN `BAPIRET`.
 
-        ls_msg = VALUE #( id = 'NET' number = '001' ).
+        ls_msg = VALUE #( id = `NET` number = `001` ).
         client->message_box_display( ls_msg ).
-      WHEN 'CX_ROOT'.
+      WHEN `CX_ROOT`.
         TRY.
             DATA(lv_val) = 1 / 0.
           CATCH cx_root INTO DATA(lx).

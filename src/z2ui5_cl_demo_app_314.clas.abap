@@ -30,8 +30,8 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       DO 10 TIMES.
         DATA ls_row TYPE ty_row.
         ls_row-count = sy-index.
-        ls_row-value = 'red'.
-        ls_row-descr = 'this is a description'.
+        ls_row-value = `red`.
+        ls_row-descr = `this is a description`.
         ls_row-checkbox = abap_true.
         ls_row-valuecolor = `Good`.
         INSERT ls_row INTO TABLE t_tab.
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Device Model, HTTP Model, OData Model'
+              title          = `abap2UI5 - Device Model, HTTP Model, OData Model`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -57,20 +57,20 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
 
       tab->header_toolbar(
           )->toolbar(
-              )->title( 'table with http model (framework default)' ).
+              )->title( `table with http model (framework default)` ).
 
       tab->columns(
           )->column(
-              )->text( 'Value' )->get_parent(
+              )->text( `Value` )->get_parent(
           )->column(
-              )->text( 'Info' )->get_parent(
+              )->text( `Info` )->get_parent(
           )->column(
-              )->text( 'Description' )->get_parent( ).
+              )->text( `Description` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-         )->text( '{http>VALUE}'
-         )->text( '{http>INFO}'
-         )->text( '{http>DESCR}').
+         )->text( `{http>VALUE}`
+         )->text( `{http>INFO}`
+         )->text( `{http>DESCR}`).
 
       tab = page->table(
          items   = `{/BookingSupplement}`
@@ -78,25 +78,25 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
 
       tab->header_toolbar(
         )->toolbar(
-        )->title( 'table with odata model' ).
+        )->title( `table with odata model` ).
 
       tab->columns(
-          )->column( )->text( 'TravelID' )->get_parent(
-          )->column( )->text( 'BookingID' )->get_parent(
-          )->column( )->text( 'BookingSupplementID' )->get_parent(
-          )->column( )->text( 'SupplementID' )->get_parent(
-          )->column( )->text( 'SupplementText' )->get_parent(
-          )->column( )->text( 'Price' )->get_parent(
-          )->column( )->text( 'CurrencyCode' )->get_parent( ).
+          )->column( )->text( `TravelID` )->get_parent(
+          )->column( )->text( `BookingID` )->get_parent(
+          )->column( )->text( `BookingSupplementID` )->get_parent(
+          )->column( )->text( `SupplementID` )->get_parent(
+          )->column( )->text( `SupplementText` )->get_parent(
+          )->column( )->text( `Price` )->get_parent(
+          )->column( )->text( `CurrencyCode` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-         )->text( '{TravelID}'
-         )->text( '{BookingID}'
-         )->text( '{BookingSupplementID}'
-         )->text( '{SupplementID}'
-         )->text( '{SupplementText}'
-         )->text( '{Price}'
-         )->text( '{CurrencyCode}' ).
+         )->text( `{TravelID}`
+         )->text( `{BookingID}`
+         )->text( `{BookingSupplementID}`
+         )->text( `{SupplementID}`
+         )->text( `{SupplementText}`
+         )->text( `{Price}`
+         )->text( `{CurrencyCode}` ).
 
       client->view_display( val                       = view->stringify( )
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).

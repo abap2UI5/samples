@@ -41,11 +41,11 @@ CLASS lcl_locking IMPLEMENTATION.
 
   METHOD acquire_lock.
 
-    DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+    DATA(lv_fm) = `ENQUEUE_E_TABLE`.
     CALL FUNCTION lv_fm
       EXPORTING
-        tabname        = 'ZTEST'
-        varkey         = 'Z100'
+        tabname        = `ZTEST`
+        varkey         = `Z100`
       EXCEPTIONS
         foreign_lock   = 1
         system_failure = 2
@@ -63,7 +63,7 @@ CLASS lcl_locking IMPLEMENTATION.
     DATA argument TYPE c LENGTH 150.
     argument = |ZTEST                         Z100*|.
 
-    DATA(lv_fm) = 'ENQUEUE_READ'.
+    DATA(lv_fm) = `ENQUEUE_READ`.
     CALL FUNCTION lv_fm
       EXPORTING
         garg                  = argument

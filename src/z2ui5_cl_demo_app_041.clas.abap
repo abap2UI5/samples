@@ -6,8 +6,8 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
 
     DATA:
       BEGIN OF screen,
-        step_val_01 TYPE string VALUE '4',
-        step_val_02 TYPE string VALUE '10',
+        step_val_01 TYPE string VALUE `4`,
+        step_val_02 TYPE string VALUE `10`,
       END OF screen.
 
   PROTECTED SECTION.
@@ -30,23 +30,23 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Step Input Example'
+            title          = `abap2UI5 - Step Input Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( 'StepInput'
+    layout->label( `StepInput`
         )->step_input(
             value = client->_bind_edit( screen-step_val_01 )
-            step  = '2'
-            min   = '0'
-            max   = '20'
+            step  = `2`
+            min   = `0`
+            max   = `20`
         )->step_input(
             value = client->_bind_edit( screen-step_val_02 )
-            step  = '10'
-            min   = '0'
-            max   = '100'
+            step  = `10`
+            min   = `0`
+            max   = `100`
         )->button( text  = `OK`
                    press = client->_event( `POST` ) ).
 
@@ -55,8 +55,8 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'POST' ).
-      client->message_box_display( 'success - values send to the server' ).
+    IF client->check_on_event( `POST` ).
+      client->message_box_display( `success - values send to the server` ).
     ENDIF.
   ENDMETHOD.
 

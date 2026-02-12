@@ -47,9 +47,9 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'TIMER_FINISHED' ).
+    IF client->check_on_event( `TIMER_FINISHED` ).
       mv_counter = mv_counter + 1.
-      INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+      INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
       IF mv_counter = 3.
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     mv_check_active = abap_true.
 
     t_tab = VALUE #(
-            ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+            ( title = `entry` && mv_counter  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
   ENDMETHOD.
 
   METHOD z2ui5_view_display.
@@ -75,23 +75,23 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view->_z2ui5( )->timer(
-        finished    = client->_event( 'TIMER_FINISHED' )
+        finished    = client->_event( `TIMER_FINISHED` )
         delayms     = `2000`
         checkactive = client->_bind( mv_check_active ) ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
+             title          = `abap2UI5 - CL_GUI_TIMER - Monitor`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(
-         headertext = 'Data auto refresh (2 sec)'
+         headertext = `Data auto refresh (2 sec)`
          items      = client->_bind( t_tab )
          )->standard_list_item(
-             title       = '{TITLE}'
-             description = '{DESCR}'
-             icon        = '{ICON}'
-             info        = '{INFO}' ).
+             title       = `{TITLE}`
+             description = `{DESCR}`
+             icon        = `{ICON}`
+             info        = `{INFO}` ).
 
     client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.

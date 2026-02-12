@@ -37,14 +37,14 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     client->view_display( val = view->shell(
-           )->page( title          = 'abap2UI5 - Conversion Exit'
+           )->page( title          = `abap2UI5 - Conversion Exit`
                     navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form( title    = 'Form Title'
+        )->simple_form( title    = `Form Title`
                         editable = abap_true
-                   )->content( 'form'
-                       )->title( 'Conversion'
-                       )->label( 'Numeric'
+                   )->content( `form`
+                       )->title( `Conversion`
+                       )->label( `Numeric`
                        )->input( value   = client->_bind_edit( numc_out )
                                  enabled = abap_false
                        )->label( `Unit`
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    unit = 'ST'.   " internal ST -> external PC (if logged in in english)
+    unit = `ST`.   " internal ST -> external PC (if logged in in english)
     numc = 10.     " internal 0000000010 -> external 10
 
     TRY.

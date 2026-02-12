@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     DATA magic_key TYPE string.
     DATA: BEGIN OF message,
             text TYPE string VALUE IS INITIAL,
-            type TYPE string VALUE 'None',
+            type TYPE string VALUE `None`,
           END OF message.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     SELECT
       SINGLE FROM icfservloc
       FIELDS icfactive
-      WHERE icf_name = 'MIME_DEMO'
+      WHERE icf_name = `MIME_DEMO`
       INTO @DATA(icfactive).
 
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
@@ -64,10 +64,10 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     vbox->input( id          = `inputApp`
                  value       = client->_bind_edit( magic_key )
                  placeholder = `Enter magic key`
-                 submit      = client->_event( 'ENTER' ) ).
+                 submit      = client->_event( `ENTER` ) ).
     vbox->button( text  = `submit`
                   type  = `accept`
-                  press = client->_event( 'ENTER' ) ).
+                  press = client->_event( `ENTER` ) ).
 
     view->_z2ui5( )->focus( focusid = `inputApp` ).
     client->view_display( view->stringify( ) ).
@@ -75,14 +75,14 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'ENTER' ).
+    IF client->check_on_event( `ENTER` ).
       IF magic_key = `abap2UI5`.
         client->follow_up_action( val = `playSuccess()` ).
-        message-type = 'Success'.
-        message-text = 'Hooray!'.
+        message-type = `Success`.
+        message-text = `Hooray!`.
       ELSE.
         client->follow_up_action( val = `playError()` ).
-        message-type = 'Error'.
+        message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.
       CLEAR magic_key.

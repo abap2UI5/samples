@@ -55,8 +55,8 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'PDF Output'
-                                                                  navbuttonpress = client->_event( 'BACK' )
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `PDF Output`
+                                                                  navbuttonpress = client->_event( `BACK` )
                                                                   shownavbutton  = client->check_app_prev_stack( )
                       )->_generic(
                         ns     = `html`
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->check_on_event( 'BACK' ).
+    IF client->check_on_event( `BACK` ).
       client->nav_app_leave( ).
     ENDIF.
   ENDMETHOD.

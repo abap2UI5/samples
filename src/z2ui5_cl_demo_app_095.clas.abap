@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'BUTTON_SAVE' ).
+    IF client->check_on_event( `BUTTON_SAVE` ).
       client->message_box_display( `event main app` ).
     ENDIF.
   ENDMETHOD.
@@ -71,39 +71,39 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     page = view->shell(
          )->page(
-            title           = 'abap2UI5 - Main App with Sub App'
+            title           = `abap2UI5 - Main App with Sub App`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    DATA(o_grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+    DATA(o_grid) = page->grid( `L6 M12 S12`
+        )->content( `layout` ).
 
-    DATA(content) = o_grid->simple_form( title = 'Input'
-          )->content( 'form' ).
-    content->label( 'main app'
+    DATA(content) = o_grid->simple_form( title = `Input`
+          )->content( `form` ).
+    content->label( `main app`
       )->input(
           value  = client->_bind_edit( ms_screen-input )
-          submit = client->_event( 'INPUT' ) ).
+          submit = client->_event( `INPUT` ) ).
 
-    mo_grid_sub = page->grid( 'L12 M12 S12'
-        )->content( 'layout' ).
+    mo_grid_sub = page->grid( `L12 M12 S12`
+        )->content( `layout` ).
 
     page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(
                    )->button(
-                       text  = 'Delete'
-                       press = client->_event( 'BUTTON_DELETE' )
-                       type  = 'Reject'
-                       icon  = 'sap-icon://delete'
+                       text  = `Delete`
+                       press = client->_event( `BUTTON_DELETE` )
+                       type  = `Reject`
+                       icon  = `sap-icon://delete`
                    )->button(
-                       text  = 'Add'
-                       press = client->_event( 'BUTTON_ADD' )
-                       type  = 'Default'
-                       icon  = 'sap-icon://add'
+                       text  = `Add`
+                       press = client->_event( `BUTTON_ADD` )
+                       type  = `Default`
+                       icon  = `sap-icon://add`
                    )->button(
-                       text  = 'Save'
-                       press = client->_event( 'BUTTON_SAVE' )
-                       type  = 'Success' ).
+                       text  = `Save`
+                       press = client->_event( `BUTTON_SAVE` )
+                       type  = `Success` ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

@@ -39,24 +39,24 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( val = view->shell(
          )->page(
-                 title          = 'abap2UI5 - First Example'
+                 title          = `abap2UI5 - First Example`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( title = 'Form Title' editable = abap_true
-                 )->content( 'form'
-                     )->title( 'Input'
-                     )->label( 'Link'
-                     )->label( 'setSizeLimit'
+             )->simple_form( title = `Form Title` editable = abap_true
+                 )->content( `form`
+                     )->title( `Input`
+                     )->label( `Link`
+                     )->label( `setSizeLimit`
                      )->input( value = client->_bind_edit( mv_set_size_limit )
-                     )->label( 'Number of Entries'
+                     )->label( `Number of Entries`
                      )->input( value = client->_bind_edit( mv_combo_number )
-                     )->label( 'demo'
+                     )->label( `demo`
                      )->combobox( items = client->_bind( lt_combo )
-                        )->item( key = '{KEY}' text = '{TEXT}'
+                        )->item( key = `{KEY}` text = `{TEXT}`
                         )->get_parent( )->get_parent(
                      )->button(
-                         text  = 'Press 2x update'
-                         press = client->_event( val = 'UPDATE' )
+                         text  = `Press 2x update`
+                         press = client->_event( val = `UPDATE` )
         )->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

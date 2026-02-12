@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_333.
 
-    CLASS-DATA cv_value TYPE c LENGTH 10 VALUE 'STRUCT'.
+    CLASS-DATA cv_value TYPE c LENGTH 10 VALUE `STRUCT`.
 
   PROTECTED SECTION.
 

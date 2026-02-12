@@ -25,12 +25,12 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Slide Tile'
+            title          = `abap2UI5 - Sample: Slide Tile`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -38,20 +38,20 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = base_url && 'sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = base_url && `sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile` ).
 
     page->vertical_layout(
            )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop`
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'PRESS_ON_TILE_ONE' )
+                   press           = client->_event( `PRESS_ON_TILE_ONE` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'PRESS_ON_TILE_TWO' )
+                   press           = client->_event( `PRESS_ON_TILE_TWO` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( 'PRESS_ON_TILE_ONE' )
+                   press           = client->_event( `PRESS_ON_TILE_ONE` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.

@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - Binding Cell Level'
+                title          = `abap2UI5 - Binding Cell Level`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -37,18 +37,18 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
-            mode  = 'MultiSelect'
+            mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'title of the table'
+                )->title( `title of the table`
         )->get_parent( )->get_parent(
       )->columns(
-        )->column( )->text( 'Title' )->get_parent(
-        )->column( )->text( 'Value' )->get_parent( )->get_parent(
-      )->items( )->column_list_item( selected = '{SELKZ}'
+        )->column( )->text( `Title` )->get_parent(
+        )->column( )->text( `Value` )->get_parent( )->get_parent(
+      )->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->input( value = '{TITLE}'
-          )->input( value = '{VALUE}' ).
+          )->input( value = `{TITLE}`
+          )->input( value = `{VALUE}` ).
 
     page->input( value = client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
     page->input( value = client->_bind_edit( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
@@ -66,8 +66,8 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
       DO 1 TIMES.
         t_tab = VALUE #( BASE t_tab
-            ( title = 'entry 01'  value = 'red' )
-            ( title = 'entry 02'  value = 'blue' ) ).
+            ( title = `entry 01`  value = `red` )
+            ( title = `entry 02`  value = `blue` ) ).
       ENDDO.
       set_view( ).
     ENDIF.

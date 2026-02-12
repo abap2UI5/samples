@@ -40,17 +40,17 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     DO 11 TIMES.
 
       ls_output-index = sy-index.
-      ls_output-text = 'Text'.
-      ls_output-link = 'Link'.
-      ls_output-currency = '123.45'.
-      ls_output-waers = 'EUR'.
+      ls_output-text = `Text`.
+      ls_output-link = `Link`.
+      ls_output-currency = `123.45`.
+      ls_output-waers = `EUR`.
 
       IF sy-index = 1.
         ls_output-bool = abap_false.
-        ls_output-percent1 = '100.00'.
+        ls_output-percent1 = `100.00`.
       ELSE.
         ls_output-bool = abap_true.
-        ls_output-percent1 = '10.00'.
+        ls_output-percent1 = `10.00`.
       ENDIF.
 
       APPEND ls_output TO output.
@@ -69,13 +69,13 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     lt_event_arguments = client->get( )-t_event_arg.
 
     CASE client->get( )-event.
-      WHEN 'LINK_CLICK'.
+      WHEN `LINK_CLICK`.
 
         lv_tab_index = lt_event_arguments[ 1 ].
 
-        CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
+        CONCATENATE `Link in row` lv_tab_index `clicked` INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
-      WHEN 'INPUT_CHANGE'.
+      WHEN `INPUT_CHANGE`.
 
         DATA(lv_id_event) = lt_event_arguments[ 1 ].
         lv_tab_index = lt_event_arguments[ 2 ].
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     DATA(page) = view->shell(
       )->page(
         id              = `page`
-        title           = 'abap2UI5 - Demo ui.table'
+        title           = `abap2UI5 - Demo ui.table`
         navbuttonpress  = client->_event_nav_app_leave( )
           shownavbutton = client->check_app_prev_stack( )
         )->header_content(
@@ -108,73 +108,73 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
                     ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
     DATA(table) = page->ui_table( id                  = `tab`
-                                  alternaterowcolors  = 'true'
-                                  visiblerowcountmode = 'Auto'
-         fixedrowcount                                = '1'
-                                  selectionmode       = 'None'
+                                  alternaterowcolors  = `true`
+                                  visiblerowcountmode = `Auto`
+         fixedrowcount                                = `1`
+                                  selectionmode       = `None`
                                   rows                = client->_bind_edit( val = output ) ).
     DATA(columns) = table->ui_columns( ).
 
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'TEXT'
-                        filterproperty = 'TEXT' )->text( text = 'Text Column' )->ui_template( )->text( text = `{TEXT}` ).
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'LINK'
-                        filterproperty = 'LINK' )->text( text = 'Link Column' )->ui_template( )->link( text = `{LINK}`
-      press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = VALUE #( ( `${INDEX}`) ) ) ).
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'CURRENCY'
-                        filterproperty = 'CURRENCY' )->text( text = 'Currency Column' )->ui_template( )->text(
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `TEXT`
+                        filterproperty = `TEXT` )->text( text = `Text Column` )->ui_template( )->text( text = `{TEXT}` ).
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `LINK`
+                        filterproperty = `LINK` )->text( text = `Link Column` )->ui_template( )->link( text = `{LINK}`
+      press                                                                                                 = client->_event( val = `LINK_CLICK` t_arg = VALUE #( ( `${INDEX}`) ) ) ).
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `CURRENCY`
+                        filterproperty = `CURRENCY` )->text( text = `Currency Column` )->ui_template( )->text(
       text = `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'PERCENT1'
-                        filterproperty = 'PERCENT1' )->text( text = 'Percentage' )->ui_template( )->text( text = `{PERCENT1} %` ).
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `PERCENT1`
+                        filterproperty = `PERCENT1` )->text( text = `Percentage` )->ui_template( )->text( text = `{PERCENT1} %` ).
 
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'INPUT1'
-                        filterproperty = 'INPUT1' )->text( text = 'Input Column' )->ui_template( )->input(
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `INPUT1`
+                        filterproperty = `INPUT1` )->text( text = `Input Column` )->ui_template( )->input(
       value           = `{INPUT1}`
       enabled         = `{BOOL}`
-      change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
+      change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` ) "Access the id of the HTML element
         ( `${INDEX}` ) "Access the value of the index column of the row where the user made a change
         ( `$event.oSource.oParent.sId` ) "Access the id of the parent element
         ( `INPUT1` ) "Pass the column name as simple string to the event
          ) ) editable = abap_true
-      type            = 'Number' ).
+      type            = `Number` ).
 
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'INPUT2'
-                        filterproperty = 'INPUT2' )->text( text = 'Input Column'
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `INPUT2`
+                        filterproperty = `INPUT2` )->text( text = `Input Column`
       )->ui_template(
       )->input(
       value     = `{INPUT2}`
       enabled   = `{BOOL}`
-      change    = client->_event( val = 'INPUT_CHANGE'
+      change    = client->_event( val = `INPUT_CHANGE`
         t_arg                         = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
         ( `$event.oSource.oParent.sId` )
         ( `INPUT2` )
          ) )
-       submit   = client->_event( 'INPUT_SUBMIT' )
+       submit   = client->_event( `INPUT_SUBMIT` )
        editable = abap_true
-       type     = 'Number' ).
+       type     = `Number` ).
 
-    columns->ui_column( width          = '8rem'
-                        sortproperty   = 'INPUT3'
-                        filterproperty = 'INPUT3' )->text( text = 'Input Column' )->ui_template( )->input(
+    columns->ui_column( width          = `8rem`
+                        sortproperty   = `INPUT3`
+                        filterproperty = `INPUT3` )->text( text = `Input Column` )->ui_template( )->input(
       value           = `{INPUT3}`
       enabled         = `{BOOL}`
-      change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
+      change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
         ( `$event.oSource.oParent.sId` )
         ( `INPUT3` )
          ) ) editable = abap_true
-      type            = 'Number' ).
+      type            = `Number` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

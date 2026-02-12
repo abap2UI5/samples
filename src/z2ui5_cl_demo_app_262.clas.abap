@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Numeric Content of Different Colors'
+            title          = `abap2UI5 - Sample: Numeric Content of Different Colors`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -35,41 +35,41 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentDifColors' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentDifColors` ).
 
     page->numeric_content( value           = `888.8`
                            scale           = `MM`
                            class           = `sapUiSmallMargin`
-                             press         = client->_event( 'PRESS' )
+                             press         = client->_event( `PRESS` )
                            truncatevalueto = `4` ).
     page->numeric_content( value        = `65.5`
                            scale        = `MM`
                              valuecolor = `Good`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'PRESS' ) ).
+                             press      = client->_event( `PRESS` ) ).
     page->numeric_content( value        = `6666`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'PRESS' ) ).
+                             press      = client->_event( `PRESS` ) ).
     page->numeric_content( value        = `65.5`
                            scale        = `MMill`
                              valuecolor = `Error`
                            indicator    = `Down`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'PRESS' ) ).
+                             press      = client->_event( `PRESS` ) ).
     page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header    = `Country-Specific Profit Margin`
                         subheader = `Expenses`
-                        press     = client->_event( 'PRESS' )
+                        press     = client->_event( `PRESS` )
              )->tile_content( unit   = `EUR`
                               footer = `Current Quarter`
                  )->numeric_content( scale      = `M`
@@ -84,9 +84,9 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'PRESS'.
+      WHEN `PRESS`.
         client->message_toast_display( `The numeric content is pressed.` ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         z2ui5_display_popover( `hint_icon` ).
     ENDCASE.
   ENDMETHOD.

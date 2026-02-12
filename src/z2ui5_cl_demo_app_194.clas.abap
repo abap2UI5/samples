@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    IF client->check_on_event( 'BUTTON' ).
+    IF client->check_on_event( `BUTTON` ).
 
       LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
@@ -78,8 +78,8 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = 'true'
-                               width   = 'auto'
+    DATA(table) = page->table( growing = `true`
+                               width   = `auto`
                                items   = client->_bind( <tab> )
 *                               headertext = mv_table
                                ).
@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
-                                                            type   = 'Navigation'
+                                       )->column_list_item( valign = `Middle`
+                                                            type   = `Navigation`
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
@@ -103,9 +103,9 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
                          )->toolbar_spacer(
-                         )->button( text  = 'Save'
-                                    press = client->_event( 'BUTTON' )
-                                    type  = 'Success' ).
+                         )->button( text  = `Save`
+                                    press = client->_event( `BUTTON` )
+                                    type  = `Success` ).
 
     IF mo_parent_view IS INITIAL.
 
@@ -231,7 +231,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'ROW_ID'
+                                    ( name = `ROW_ID`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
 
         APPEND LINES OF component TO result.

@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
         )->_generic( name = `profile`
                      ns   = `f`
             )->avatar( ns       = `f`
-                       initials = 'UI' ).
+                       initials = `UI` ).
 
     DATA(xml) = view->stringify( ).
 

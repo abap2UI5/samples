@@ -67,37 +67,37 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Popover Quickview Examples'
+              title          = `abap2UI5 - Popover Quickview Examples`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( 'QuickView Popover'
-              )->content( 'form'
-                  )->title( 'QuickView Popover'
-                  )->label( 'placement'
+          )->simple_form( `QuickView Popover`
+              )->content( `form`
+                  )->title( `QuickView Popover`
+                  )->label( `placement`
                   )->segmented_button( selected_key = client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
-                                key  = 'Left'
-                                icon = 'sap-icon://add-favorite'
-                                text = 'Left'
+                                key  = `Left`
+                                icon = `sap-icon://add-favorite`
+                                text = `Left`
                         )->segmented_button_item(
-                                key  = 'Top'
-                                icon = 'sap-icon://accept'
-                                text = 'Top'
+                                key  = `Top`
+                                icon = `sap-icon://accept`
+                                text = `Top`
                         )->segmented_button_item(
-                                key  = 'Bottom'
-                                icon = 'sap-icon://accept'
-                                text = 'Bottom'
+                                key  = `Bottom`
+                                icon = `sap-icon://accept`
+                                text = `Bottom`
                         )->segmented_button_item(
-                                key  = 'Right'
-                                icon = 'sap-icon://attachment'
-                                text = 'Right'
+                                key  = `Right`
+                                icon = `sap-icon://attachment`
+                                text = `Right`
                   )->get_parent( )->get_parent(
-                    )->label( 'popover'
+                    )->label( `popover`
                     )->button(
-                        text  = 'show'
-                        press = client->_event( 'POPOVER' )
-                        id    = 'TEST'
+                        text  = `show`
+                        press = client->_event( `POPOVER` )
+                        id    = `TEST`
                         width = `10rem` ).
 
     client->view_display( view->stringify( ) ).
@@ -119,14 +119,14 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLOSE_POPOVER'.
+      WHEN `CLOSE_POPOVER`.
         client->popover_destroy( ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         z2ui5_display_popover( `TEST` ).
-      WHEN 'BUTTON_CONFIRM'.
+      WHEN `BUTTON_CONFIRM`.
         client->message_toast_display( |confirm| ).
         client->popover_destroy( ).
-      WHEN 'BUTTON_CANCEL'.
+      WHEN `BUTTON_CANCEL`.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
     ENDCASE.
@@ -134,8 +134,8 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    mv_placement = 'Left'.
-    product  = 'tomato'.
-    quantity = '500'.
+    mv_placement = `Left`.
+    product  = `tomato`.
+    quantity = `500`.
   ENDMETHOD.
 ENDCLASS.

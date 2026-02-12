@@ -44,29 +44,29 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
   METHOD ui5_display_popup_tree_select.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
-        )->dialog( title         = 'Choose Product here...'
-                   contentheight = '50%'
-                   contentwidth  = '50%'
+        )->dialog( title         = `Choose Product here...`
+                   contentheight = `50%`
+                   contentwidth  = `50%`
                    beforeopen    = `setState()`
                    beforeclose   = `saveState()` ).
 
     dialog->tree(
         id    = `tree`
-        mode  = 'SingleSelectMaster'
+        mode  = `SingleSelectMaster`
         items = client->_bind_edit( prodh_nodes )
         )->items(
-            )->standard_tree_item( selected = '{IS_SELECTED}'
-                                   title    = '{TEXT}' ).
+            )->standard_tree_item( selected = `{IS_SELECTED}`
+                                   title    = `{TEXT}` ).
 
     dialog->buttons(
-        )->button( text = 'Continue'
+        )->button( text = `Continue`
                icon     = `sap-icon://accept`
                type     = `Accept`
-               press    = client->_event( 'CONTINUE' )
-        )->button( text = 'Cancel'
+               press    = client->_event( `CONTINUE` )
+        )->button( text = `Cancel`
                icon     = `sap-icon://decline`
                type     = `Reject`
-               press    = client->_event( 'CANCEL' ) ).
+               press    = client->_event( `CANCEL` ) ).
 
     client->popup_display( dialog->stringify( ) ).
   ENDMETHOD.
@@ -94,34 +94,34 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
                     name = `script` )->_cc_plain_xml( lv_reset_state_js ).
     DATA(page) = view->shell(
          )->page(
-            title           = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
+            title           = `abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    client->view_display( page->button( text  = 'Open Popup here...'
-                                        press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
+    client->view_display( page->button( text  = `Open Popup here...`
+                                        press = client->_event( `POPUP_TREE` ) )->stringify( ) ).
   ENDMETHOD.
 
   METHOD ui5_initialize.
 
     prodh_nodes =
-      VALUE #( ( text = 'Machines'
-               prodh  = '00100'
-               nodes  = VALUE #( ( text = 'Pumps'
-                                  prodh = '0010000100'
-                                  nodes = VALUE #( ( text  = 'Pump 001'
-                                                     prodh = '001000010000000100' )
-                                                   ( text  = 'Pump 002'
-                                                     prodh = '001000010000000105' ) )
+      VALUE #( ( text = `Machines`
+               prodh  = `00100`
+               nodes  = VALUE #( ( text = `Pumps`
+                                  prodh = `0010000100`
+                                  nodes = VALUE #( ( text  = `Pump 001`
+                                                     prodh = `001000010000000100` )
+                                                   ( text  = `Pump 002`
+                                                     prodh = `001000010000000105` ) )
                        ) ) )
-             ( text  = 'Paints'
-               prodh = '00110'
-               nodes = VALUE #( ( text  = 'Gloss paints'
-                                  prodh = '0011000105'
-                                  nodes = VALUE #( ( text  = 'Paint 001'
-                                                     prodh = '001100010500000100' )
-                                                   ( text  = 'Paint 002'
-                                                     prodh = '001100010500000105' ) )
+             ( text  = `Paints`
+               prodh = `00110`
+               nodes = VALUE #( ( text  = `Gloss paints`
+                                  prodh = `0011000105`
+                                  nodes = VALUE #( ( text  = `Paint 001`
+                                                     prodh = `001100010500000100` )
+                                                   ( text  = `Paint 002`
+                                                     prodh = `001100010500000105` ) )
                        ) )
              ) ).
   ENDMETHOD.
@@ -137,11 +137,11 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'POPUP_TREE'.
+      WHEN `POPUP_TREE`.
         ui5_display_popup_tree_select( ).
-      WHEN 'CONTINUE'.
+      WHEN `CONTINUE`.
         client->popup_destroy( ).
-      WHEN 'CANCEL'.
+      WHEN `CANCEL`.
         client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.

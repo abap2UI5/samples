@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'ON_SELECT_ICON_TAB_BAR' ).
+    IF client->check_on_event( `ON_SELECT_ICON_TAB_BAR` ).
 
       CASE mv_selectedkey.
         WHEN space.
@@ -46,25 +46,25 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_339' table = 'Z2UI5_T_01' )
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_342' table = 'Z2UI5_T_01' )
-                       ( id = '3' class = 'Z2UI5_CL_DEMO_APP_339' table = 'Z2UI5_T_01' ) ).
+    mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_DEMO_APP_339` table = `Z2UI5_T_01` )
+                       ( id = `2` class = `Z2UI5_CL_DEMO_APP_342` table = `Z2UI5_T_01` )
+                       ( id = `3` class = `Z2UI5_CL_DEMO_APP_339` table = `Z2UI5_T_01` ) ).
 
-    mv_selectedkey = '1'.
+    mv_selectedkey = `1`.
   ENDMETHOD.
 
   METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page( id             = `page_main`
-                             title          = 'Main App calling Subapps'
+                             title          = `Main App calling Subapps`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
-                             class          = 'sapUiContentPadding' ).
+                             class          = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
+    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( mv_selectedkey )
-                                         select      = client->_event( 'ON_SELECT_ICON_TAB_BAR' )
+                                         select      = client->_event( `ON_SELECT_ICON_TAB_BAR` )
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
@@ -110,18 +110,18 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
         ENDIF.
         TRY.
 
-            CALL METHOD mo_app->('SET_APP_DATA')
+            CALL METHOD mo_app->(`SET_APP_DATA`)
               EXPORTING
                 table = t002->table.
 
             render_main( ).
 
-            ASSIGN mo_app->('MO_PARENT_VIEW') TO FIELD-SYMBOL(<view>).
+            ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
             IF <view> IS ASSIGNED.
               <view> = mo_main_page.
             ENDIF.
 
-            CALL METHOD mo_app->('Z2UI5_IF_APP~MAIN')
+            CALL METHOD mo_app->(`Z2UI5_IF_APP~MAIN`)
               EXPORTING
                 client = client.
 
@@ -132,7 +132,7 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
+    ASSIGN mo_app->(`MV_VIEW_DISPLAY`) TO <view_display>.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.

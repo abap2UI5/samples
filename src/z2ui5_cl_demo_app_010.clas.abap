@@ -14,71 +14,71 @@ CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Demo Layout'
+            title          = `abap2UI5 - Demo Layout`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
-      )->button( text = 'button' ).
+      )->button( text = `button` ).
 
     page->sub_header(
         )->overflow_toolbar(
-            )->button( text = 'button'
-            )->text( 'text'
-            )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
+            )->button( text = `button`
+            )->text( `text`
+            )->link( text = `link`
+                     href = `https://twitter.com/abap2UI5`
             )->toolbar_spacer(
-            )->text( 'subheader'
+            )->text( `subheader`
             )->toolbar_spacer(
-            )->button( text = 'button'
-            )->text( 'text'
-            )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5' ).
+            )->button( text = `button`
+            )->text( `text`
+            )->link( text = `link`
+                     href = `https://twitter.com/abap2UI5` ).
 
-    DATA(grid) = page->grid( 'L4 M4 S4' )->content( 'layout' ).
+    DATA(grid) = page->grid( `L4 M4 S4` )->content( `layout` ).
 
-    grid->simple_form( 'Grid width 33%' )->content( 'form'
-       )->button( text = 'button'
-       )->text( 'text'
-       )->link( text = 'link'
-                href = 'https://twitter.com/abap2UI5' ).
+    grid->simple_form( `Grid width 33%` )->content( `form`
+       )->button( text = `button`
+       )->text( `text`
+       )->link( text = `link`
+                href = `https://twitter.com/abap2UI5` ).
 
-    grid->simple_form( 'Grid width 33%' )->content( 'form'
-      )->button( text = 'button'
-      )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+    grid->simple_form( `Grid width 33%` )->content( `form`
+      )->button( text = `button`
+      )->text( `text`
+      )->link( text = `link`
+               href = `https://twitter.com/abap2UI5` ).
 
-    grid->simple_form( 'Grid width 33%' )->content( 'form'
-      )->button( text = 'button'
-      )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+    grid->simple_form( `Grid width 33%` )->content( `form`
+      )->button( text = `button`
+      )->text( `text`
+      )->link( text = `link`
+               href = `https://twitter.com/abap2UI5` ).
 
-    grid = page->grid( 'L12 M12 S12' )->content( 'layout' ).
+    grid = page->grid( `L12 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( 'grid width 100%' )->content( 'form'
-      )->button( text = 'button'
-      )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+    grid->simple_form( `grid width 100%` )->content( `form`
+      )->button( text = `button`
+      )->text( `text`
+      )->link( text = `link`
+               href = `https://twitter.com/abap2UI5` ).
 
     page->footer(
         )->overflow_toolbar(
-            )->button( text = 'button'
-            )->text( 'text'
-            )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
+            )->button( text = `button`
+            )->text( `text`
+            )->link( text = `link`
+                     href = `https://twitter.com/abap2UI5`
             )->toolbar_spacer(
-            )->text( 'footer'
+            )->text( `footer`
             )->toolbar_spacer(
-            )->text( 'text'
-            )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
-            )->button( text = 'reject'
-                       type = 'Reject'
-            )->button( text = 'accept'
-                       type = 'Success' ).
+            )->text( `text`
+            )->link( text = `link`
+                     href = `https://twitter.com/abap2UI5`
+            )->button( text = `reject`
+                       type = `Reject`
+            )->button( text = `accept`
+                       type = `Success` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

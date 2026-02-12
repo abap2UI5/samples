@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     TRY.
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = `Z2UI5_T_01`
                                                  RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
@@ -90,13 +90,13 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
   METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'CALL Next App'
-                  press = client->_event( 'GO' )
-                  type  = 'Success' ).
+    page->button( text  = `CALL Next App`
+                  press = client->_event( `GO` )
+                  type  = `Success` ).
 
     xml_table( i_page = page
       i_client        = client
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     ASSIGN i_data->* TO FIELD-SYMBOL(<data>).
 
-    DATA(table) = i_page->table( width = 'auto'
+    DATA(table) = i_page->table( width = `auto`
                                  items = i_client->_bind( <data> ) ).
 
     DATA(columns) = table->columns( ).
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       render_main( client ).
     ENDIF.
 
-    IF client->check_on_event( 'GO' ).
+    IF client->check_on_event( `GO` ).
       DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
       client->nav_app_call( app ).
     ENDIF.
@@ -157,13 +157,13 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout_obj1->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
 
     ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
     ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
     IF <val> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

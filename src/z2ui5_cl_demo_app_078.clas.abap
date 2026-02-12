@@ -28,14 +28,14 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view = view->shell( )->page( id = `page_main`
-               title                  = 'abap2UI5 - Select-Options'
+               title                  = `abap2UI5 - Select-Options`
                navbuttonpress         = client->_event_nav_app_leave( )
                shownavbutton          = client->check_app_prev_stack( ) ).
 
       view->_z2ui5( )->multiinput_ext(
                             addedtokens   = client->_bind_edit( mt_tokens_added )
                             removedtokens = client->_bind_edit( mt_tokens_removed )
-                            change        = client->_event( 'UPDATE_BACKEND' )
+                            change        = client->_event( `UPDATE_BACKEND` )
                             multiinputid  = `test` ).
 
       view->multi_input(
@@ -51,26 +51,26 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       DATA(tab) = view->table(
         items = client->_bind_edit( mt_token )
-        mode  = 'MultiSelect' ).
+        mode  = `MultiSelect` ).
 
       tab->columns(
         )->column(
-           )->text( 'KEY' )->get_parent(
+           )->text( `KEY` )->get_parent(
         )->column(
-           )->text( 'TEXT' ).
+           )->text( `TEXT` ).
 
-      tab->items( )->column_list_item( selected = '{SELKZ}'
+      tab->items( )->column_list_item( selected = `{SELKZ}`
         )->cells(
-            )->input( value   = '{KEY}'
+            )->input( value   = `{KEY}`
                       enabled = `{EDITABLE}`
-            )->input( value   = '{TEXT}'
+            )->input( value   = `{TEXT}`
                       enabled = `{EDITABLE}`).
 
       client->view_display( view->stringify( ) ).
 
     ENDIF.
 
-    IF client->check_on_event( 'UPDATE_BACKEND' ).
+    IF client->check_on_event( `UPDATE_BACKEND` ).
 
       LOOP AT mt_tokens_removed INTO DATA(ls_token).
         DELETE mt_token WHERE key = ls_token-key.

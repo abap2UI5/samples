@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
     TRY.
         TRY.
 
-            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = 'Z2UI5_T_01'
+            cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = `Z2UI5_T_01`
                                                  RECEIVING p_descr_ref     = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
@@ -78,13 +78,13 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
   METHOD render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     TRY.
 
-        DATA(table) = page->table( width   = 'auto'
+        DATA(table) = page->table( width   = `auto`
                                      items = client->_bind( mt_data1 ) ).
 
         client->message_box_display( `error - reference processed in binding without error` ).

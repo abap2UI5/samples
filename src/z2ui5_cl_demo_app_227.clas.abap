@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
     DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Page, Toolbar and Bar'
+            title          = `abap2UI5 - Sample: Page, Toolbar and Bar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

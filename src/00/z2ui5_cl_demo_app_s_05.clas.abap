@@ -54,10 +54,10 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
       WHEN `CLEAR`.
 
         CLEAR: news_list.
-      WHEN 'BACK'.
+      WHEN `BACK`.
 
         client->nav_app_leave( ).
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
 
         z2ui5_display_popover( ).
     ENDCASE.
@@ -68,21 +68,21 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     SELECT
       SINGLE FROM icfservloc
       FIELDS icfactive
-      WHERE icf_name = 'Z2UI5_SAMPLE'
+      WHERE icf_name = `Z2UI5_SAMPLE`
       INTO @DATA(icfactive).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
                     )->page(
-                       title          = 'abap2UI5 - Sample: News Feed over WebSocket'
-                       navbuttonpress = client->_event( 'BACK' )
+                       title          = `abap2UI5 - Sample: News Feed over WebSocket`
+                       navbuttonpress = client->_event( `BACK` )
                        shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     IF icfactive = abap_false.
       page->message_strip(

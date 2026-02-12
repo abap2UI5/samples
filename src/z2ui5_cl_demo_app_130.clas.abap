@@ -145,19 +145,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_fields.
 
     DATA(db_fields) = VALUE ty_t_fieldsdb(
-      ( screen_name = 'INV'        field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'LAGP'       field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'LAGP'       field = 'LGPLA'   field_doma = '/SCWM/DE_LGPLA' )
-      ( screen_name = 'LAGP'       field = 'LGTYP'   field_doma = '/SCWM/DE_LGTYP' )
-      ( screen_name = 'QUAN'       field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'QUAN'       field = 'LGPLA'   field_doma = '/SCWM/DE_LGPLA' )
-      ( screen_name = 'QUAN'       field = 'MATNR'   field_doma = '/SCWM/DE_MATNR' )
-      ( screen_name = 'QUAN'       field = 'OWNER'   field_doma = '/SCWM/DE_OWNER' )
-      ( screen_name = 'TO'         field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'TO'         field = 'MATNR'   field_doma = '/SCWM/DE_MATNR' )
-      ( screen_name = 'TO'         field = 'PROCTY'  field_doma = '/SCWM/DE_PROCTY' )
-      ( screen_name = 'TO'         field = 'TOSTAT'  field_doma = '/SCWM/DE_TOSTAT' )
-      ( screen_name = 'TO'         field = 'VLPLA'   field_doma = '/SCWM/LTAP_VLPLA' ) ).
+      ( screen_name = `INV`        field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `LAGP`       field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `LAGP`       field = `LGPLA`   field_doma = `/SCWM/DE_LGPLA` )
+      ( screen_name = `LAGP`       field = `LGTYP`   field_doma = `/SCWM/DE_LGTYP` )
+      ( screen_name = `QUAN`       field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `QUAN`       field = `LGPLA`   field_doma = `/SCWM/DE_LGPLA` )
+      ( screen_name = `QUAN`       field = `MATNR`   field_doma = `/SCWM/DE_MATNR` )
+      ( screen_name = `QUAN`       field = `OWNER`   field_doma = `/SCWM/DE_OWNER` )
+      ( screen_name = `TO`         field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `TO`         field = `MATNR`   field_doma = `/SCWM/DE_MATNR` )
+      ( screen_name = `TO`         field = `PROCTY`  field_doma = `/SCWM/DE_PROCTY` )
+      ( screen_name = `TO`         field = `TOSTAT`  field_doma = `/SCWM/DE_TOSTAT` )
+      ( screen_name = `TO`         field = `VLPLA`   field_doma = `/SCWM/LTAP_VLPLA` ) ).
 
     CLEAR mt_fields.
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
@@ -170,20 +170,20 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD get_txt.
 
-    result = 'Text'.
+    result = `Text`.
   ENDMETHOD.
 
   METHOD get_txt_l.
 
-    result = 'Text'.
+    result = `Text`.
   ENDMETHOD.
 
   METHOD get_values.
 
     DATA(l_variants) = VALUE ty_t_variants(
-      ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123' )
-      ( screen_name = 'TO'          var = 'E001'       descr = '123' )
-      ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
+      ( screen_name = `QUAN`        var = `E001 - ALL` descr = `123` )
+      ( screen_name = `TO`          var = `E001`       descr = `123` )
+      ( screen_name = `TO`          var = `E001 - All` descr = `123` ) ).
 
     DATA var TYPE ty_t_variants.
     DATA var_val TYPE ty_t_var_val.
@@ -195,17 +195,17 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(var_vall_all) = VALUE ty_t_var_val(
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
-      ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGNUM'      guid = '663192E9D70C1EEE90CEE2FA658C51EE' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGPLA'      guid = '663192E9D70C1EEE90CEEF4750FD91EE' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001      ' field = 'LGNUM'      guid = '663192E9D70C1EEE8E87DE5FF8CC512A' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001      ' field = 'PROCTY'     guid = '663192E9D70C1EEE8E87DD8D1EB8C7F5' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' ) ).
+      ( screen_name = `LTAP`         var = `E001 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8CC06B0F98CD81A3` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E001 - All` field = `MATNR`      guid = `663192E9D70C1EEE8CD4E9389CB11403` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E001 - All` field = `TOSTAT`     guid = `663192E9D70C1EEE8CC06BC66AD581A3` sign = `I`   opt = `NE` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8CC06B0F98CD81A3` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `MATNR`      guid = `663192E9D70C1EEE8CD4E9389CB11403` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `TOSTAT`     guid = `663192E9D70C1EEE8CC06BC66AD581A3` sign = `I`   opt = `NE` )
+      ( screen_name = `QUAN`         var = `E001 - ALL` field = `LGNUM`      guid = `663192E9D70C1EEE90CEE2FA658C51EE` sign = `I`   opt = `EQ` )
+      ( screen_name = `QUAN`         var = `E001 - ALL` field = `LGPLA`      guid = `663192E9D70C1EEE90CEEF4750FD91EE` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001      ` field = `LGNUM`      guid = `663192E9D70C1EEE8E87DE5FF8CC512A` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001      ` field = `PROCTY`     guid = `663192E9D70C1EEE8E87DD8D1EB8C7F5` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8E86552847635198` sign = `I`   opt = `EQ` ) ).
 
     LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
         AND var         = mv_variant.
@@ -237,9 +237,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_variants.
 
     mt_variants = VALUE #(
-      ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123' )
-      ( screen_name = 'TO'          var = 'E001'       descr = '123' )
-      ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
+      ( screen_name = `QUAN`        var = `E001 - ALL` descr = `123` )
+      ( screen_name = `TO`          var = `E001`       descr = `123` )
+      ( screen_name = `TO`          var = `E001 - All` descr = `123` ) ).
   ENDMETHOD.
 
   METHOD on_event.
@@ -250,11 +250,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD on_init.
 
     mt_screens = VALUE #(
-      ( screen_name = 'INV'      descr = '123' )
-      ( screen_name = 'LAGP'     descr = '123' )
-      ( screen_name = 'PO'       descr = '123' )
-      ( screen_name = 'QUAN'     descr = '123' )
-      ( screen_name = 'TO'       descr = '123' ) ).
+      ( screen_name = `INV`      descr = `123` )
+      ( screen_name = `LAGP`     descr = `123` )
+      ( screen_name = `PO`       descr = `123` )
+      ( screen_name = `QUAN`     descr = `123` )
+      ( screen_name = `TO`       descr = `123` ) ).
 
     render_main( ).
 
@@ -306,7 +306,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
                )->page(
-                  title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
+                  title          = get_txt( `/SCWM/DE_TW_COND_CHECK_SELECT` )
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -319,41 +319,41 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     page->header_content(
        )->get_parent( ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+    DATA(grid) = page->grid( `L6 M12 S12`
+        )->content( `layout` ).
 
-    grid->simple_form( get_txt( 'BU_DYNID' )
-        )->content( 'form'
-            )->label( text = get_txt( 'BU_DYNID' )
+    grid->simple_form( get_txt( `BU_DYNID` )
+        )->content( `form`
+            )->label( text = get_txt( `BU_DYNID` )
              )->combobox(
-             change      = client->_event( 'INPUT_SCREEN_CHANGE' )
+             change      = client->_event( `INPUT_SCREEN_CHANGE` )
              items       = client->_bind_edit( mt_screens )
              selectedkey = client->_bind_edit( mv_screen )
                  )->item(
-                     key  = '{SCREEN_NAME}'
-                     text = '{SCREEN_NAME} - {DESCR}'
-         )->get_parent( )->label( text = get_txt( 'DESCR_40' )
+                     key  = `{SCREEN_NAME}`
+                     text = `{SCREEN_NAME} - {DESCR}`
+         )->get_parent( )->label( text = get_txt( `DESCR_40` )
             )->input(
             value         = client->_bind_edit( mv_screen_descr )
             showvaluehelp = abap_false
 *            editable         = abap_false
             enabled       = abap_false ).
 
-    grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
-            )->content( 'form'
-                )->label( text = get_txt( '/SCWM/WB_VARIANT' )
+    grid->simple_form( get_txt( `/SCWM/WB_VARIANT` )
+            )->content( `form`
+                )->label( text = get_txt( `/SCWM/WB_VARIANT` )
             )->input(
             value            = client->_bind_edit( mv_variant )
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( 'CALL_POPUP_VARIANT' )
-            submit           = client->_event( 'INPUT_VARIANT_CHANGE' )
-            )->label( text = get_txt( 'DESCR_40' )
+            valuehelprequest = client->_event( `CALL_POPUP_VARIANT` )
+            submit           = client->_event( `INPUT_VARIANT_CHANGE` )
+            )->label( text = get_txt( `DESCR_40` )
             )->input(
             value         = client->_bind_edit( mv_description )
             showvaluehelp = abap_false ).
 
-    DATA(content) = grid->simple_form( get_txt( 'CLASSFEL' )
-         )->content( 'form' ).
+    DATA(content) = grid->simple_form( get_txt( `CLASSFEL` )
+         )->content( `form` ).
 
     IF mt_fields IS NOT INITIAL.
 
@@ -367,7 +367,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                    tokens           = client->_bind( val = lr_tab->t_token tab = mt_fields tab_index = lv_tabix )
                    showclearicon    = abap_true
                    id               = lr_tab->field
-                   valuehelprequest = client->_event( val = 'CALL_POPUP_FILTER' t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
+                   valuehelprequest = client->_event( val = `CALL_POPUP_FILTER` t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
                )->item(
                        key  = `{KEY}`
                        text = `{TEXT}`
@@ -386,20 +386,20 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button(
-                     text    = get_txt( '/SCWM/DE_HUDEL' )
-                     press   = client->_event( 'BUTTON_DELETE' )
-                     type    = 'Reject'
-                     icon    = 'sap-icon://delete'
+                     text    = get_txt( `/SCWM/DE_HUDEL` )
+                     press   = client->_event( `BUTTON_DELETE` )
+                     type    = `Reject`
+                     icon    = `sap-icon://delete`
                      enabled = mv_button_active
                  )->button(
-                     text    = get_txt( 'B_KOPIE' )
-                     press   = client->_event( 'BUTTON_COPY' )
-                     type    = 'Default'
+                     text    = get_txt( `B_KOPIE` )
+                     press   = client->_event( `BUTTON_COPY` )
+                     type    = `Default`
                      enabled = mv_button_active
                   )->button(
-                     text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
-                     press   = client->_event( 'BUTTON_SAVE' )
-                     type    = 'Success'
+                     text    = get_txt( `/SCWM/DE_LM_LOGSAVE` )
+                     press   = client->_event( `BUTTON_SAVE` )
+                     type    = `Success`
                      enabled = mv_button_active ).
 
     IF mo_parent_view IS INITIAL.
@@ -416,15 +416,15 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-      title         = get_txt_l( '/SCWM/DE_TW_COND_CHECK_COND' ) ).
+      title         = get_txt_l( `/SCWM/DE_TW_COND_CHECK_COND` ) ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
-                                 justifycontent = 'SpaceBetween' ).
+                                 justifycontent = `SpaceBetween` ).
 
     DATA(item) = vbox->list(
-      nodata          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
+      nodata          = get_txt( `/SCWM/DE_IND_BIN_EMPTY` )
       items           = client->_bind_edit( mt_filter )
-      selectionchange = client->_event( 'SELCHANGE' )
+      selectionchange = client->_event( `SELCHANGE` )
                         )->custom_list_item( ).
 
     DATA(grid) = item->grid( ).
@@ -433,30 +433,30 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key  = '{N}'
-                     text = '{N}'
+                     key  = `{N}`
+                     text = `{N}`
              )->get_parent(
              )->input( value = `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline'
+             )->button( icon = `sap-icon://decline`
              type            = `Transparent`
              press           = client->_event( val = `POPUP_FILTER_DELETE`
              t_arg                                 = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
-        )->button( text = get_txt( 'FC_DELALL' )
-                  icon  = 'sap-icon://delete'
+        )->button( text = get_txt( `FC_DELALL` )
+                  icon  = `sap-icon://delete`
                   type  = `Transparent`
                   press = client->_event( `POPUP_FILTER_DELETE_ALL` )
-        )->button( text  = get_txt( 'RSLPO_GUI_ADDPART' )
+        )->button( text  = get_txt( `RSLPO_GUI_ADDPART` )
                    icon  = `sap-icon://add`
                    press = client->_event( `POPUP_FILTER_ADD` )
         )->toolbar_spacer(
         )->button(
-            text  = get_txt( 'MSSRCF_ACTION' )
-            press = client->_event( 'POPUP_FILTER_OK' )
-            type  = 'Emphasized' ).
+            text  = get_txt( `MSSRCF_ACTION` )
+            press = client->_event( `POPUP_FILTER_OK` )
+            type  = `Emphasized` ).
 
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
@@ -465,30 +465,30 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup->dialog( title        = get_txt( '/SCWM/WB_VARIANT' )
-                   contentwidth = '30%'
+    popup->dialog( title        = get_txt( `/SCWM/WB_VARIANT` )
+                   contentwidth = `30%`
       )->table(
-            mode  = 'SingleSelectLeft'
+            mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_variants_pop )
         )->columns(
-            )->column( '20rem'
-                )->text( get_txt( '/SCWM/WB_VARIANT' ) )->get_parent(
+            )->column( `20rem`
+                )->text( get_txt( `/SCWM/WB_VARIANT` ) )->get_parent(
             )->column(
-                )->text( get_txt( 'DESCR_40' )
+                )->text( get_txt( `DESCR_40` )
         )->get_parent( )->get_parent(
         )->items(
-            )->column_list_item( selected = '{SELKZ}'
+            )->column_list_item( selected = `{SELKZ}`
                 )->cells(
-                    )->text( '{VAR}'
-                    )->text( '{DESCR}'
+                    )->text( `{VAR}`
+                    )->text( `{DESCR}`
       )->get_parent( )->get_parent( )->get_parent( )->get_parent(
       )->footer(
         )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
-                text  = get_txt( 'MSSRCF_ACTION' )
-                press = client->_event( 'POPUP_VARIANT_CLOSE' )
-                type  = 'Emphasized' ).
+                text  = get_txt( `MSSRCF_ACTION` )
+                press = client->_event( `POPUP_VARIANT_CLOSE` )
+                type  = `Emphasized` ).
     client->popup_display( popup->stringify( ) ).
   ENDMETHOD.
 
@@ -499,15 +499,15 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-      title         = get_txt( '/SCWM/DE_COPY_NUMBER' ) ).
+      title         = get_txt( `/SCWM/DE_COPY_NUMBER` ) ).
 
-    lo_popup->simple_form( get_txt( '/SCWM/WB_VARIANT' )
-               )->content( 'form'
-                   )->label( text = get_txt( '/SCWM/WB_VARIANT' )
+    lo_popup->simple_form( get_txt( `/SCWM/WB_VARIANT` )
+               )->content( `form`
+                   )->label( text = get_txt( `/SCWM/WB_VARIANT` )
                )->input(
                value         = client->_bind_edit( mv_variant_copy )
                showvaluehelp = abap_false
-               )->label( text = get_txt( 'DESCR_40' )
+               )->label( text = get_txt( `DESCR_40` )
                )->input(
                value         = client->_bind_edit( mv_description_copy )
                showvaluehelp = abap_false ).
@@ -515,13 +515,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup->footer( )->overflow_toolbar(
         )->toolbar_spacer(
         )->button(
-            text  = get_txt( 'XEXIT' )
-            press = client->_event( 'POPUP_COPY_EXIT' )
-            type  = 'Reject'
+            text  = get_txt( `XEXIT` )
+            press = client->_event( `POPUP_COPY_EXIT` )
+            type  = `Reject`
        )->button(
-            text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
-            press   = client->_event( 'POPUP_COPY_SAVE' )
-            type    = 'Emphasized'
+            text    = get_txt( `/SCWM/DE_LM_LOGSAVE` )
+            press   = client->_event( `POPUP_COPY_SAVE` )
+            type    = `Emphasized`
             enabled = `{= ${MV_VARIANT_COPY} !== "" }` ).
 
     client->popup_display( lo_popup->stringify( ) ).
@@ -592,7 +592,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         mt_filter = lr_field->t_filter.
 
         render_popup_filter( ).
-      WHEN 'CALL_POPUP_VARIANT'.
+      WHEN `CALL_POPUP_VARIANT`.
 
         LOOP AT mt_variants REFERENCE INTO DATA(lr_fields).
           APPEND INITIAL LINE TO mt_variants_pop REFERENCE INTO DATA(field).
@@ -600,7 +600,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         ENDLOOP.
 
         render_popup_varaint( client ).
-      WHEN 'POPUP_VARIANT_CLOSE'.
+      WHEN `POPUP_VARIANT_CLOSE`.
 
         mv_variant = VALUE #( mt_variants_pop[ selkz = abap_true ]-var OPTIONAL ).
 
@@ -609,19 +609,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         get_values( ).
 
         render_main( ).
-      WHEN 'BUTTON_SAVE'.
-      WHEN 'BUTTON_DELETE'.
+      WHEN `BUTTON_SAVE`.
+      WHEN `BUTTON_DELETE`.
 
         render_main( ).
-      WHEN 'BUTTON_COPY'.
+      WHEN `BUTTON_COPY`.
 
         render_pop_copy( ).
 
         render_main( ).
-      WHEN 'POPUP_COPY_EXIT'.
+      WHEN `POPUP_COPY_EXIT`.
 
         client->popup_destroy( ).
-      WHEN 'POPUP_COPY_SAVE'.
+      WHEN `POPUP_COPY_SAVE`.
 
         popup_copy_save( ).
 

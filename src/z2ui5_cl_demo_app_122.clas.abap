@@ -30,8 +30,8 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' )
+                  title          = `abap2UI5`
+                  navbuttonpress = client->_event( val = `BACK` )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->info_frontend(
                                         finished          = client->_event( `INFO_FINISHED` )
@@ -47,10 +47,10 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                                         device_combi      = client->_bind_edit( device_combi )
                                         device_height     = client->_bind_edit( device_height )
                                         device_width      = client->_bind_edit( device_width )
-              )->simple_form( title    = 'Information'
+              )->simple_form( title    = `Information`
                               editable = abap_true
-                  )->content( 'form'
-                      )->label( 'device_browser'
+                  )->content( `form`
+                      )->label( `device_browser`
                       )->input( client->_bind_edit( device_browser )
                       )->label( `device_os`
                       )->input( client->_bind_edit( device_os )
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
       display_view( ).
     ENDIF.
 
-    IF client->check_on_event( 'BACK' ).
+    IF client->check_on_event( `BACK` ).
       client->nav_app_leave( ).
     ENDIF.
   ENDMETHOD.

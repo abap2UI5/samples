@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     view = view->shell( )->page( id    = `page_main`
                                  class = `sapUiContentPadding`
-             title                     = 'abap2UI5 - Sample Templating I'
+             title                     = `abap2UI5 - Sample Templating I`
              navbuttonpress            = client->_event_nav_app_leave( )
              shownavbutton             = client->check_app_prev_stack( ) ).
 
@@ -85,18 +85,18 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
       client->_bind( mt_layout ).
 
-      mt_data = VALUE #( ( name = 'Theo' date = '01.01.2000' age = '5' )
-                         ( name = 'Lore' date = '01.01.2000' age = '1' ) ).
+      mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
+                         ( name = `Lore` date = `01.01.2000` age = `1` ) ).
 
-      mt_layout = VALUE #( ( fname = 'NAME' merge = 'false' visible = 'true' )
-                           ( fname = 'DATE' merge = 'false' visible = 'true' )
-                           ( fname = 'AGE'  merge = 'false' visible = 'false' ) ).
+      mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
+                           ( fname = `DATE` merge = `false` visible = `true` )
+                           ( fname = `AGE`  merge = `false` visible = `false` ) ).
 
       view_display( ).
 
     ENDIF.
 
-    IF client->check_on_event( 'CHANGE_FLAG' ).
+    IF client->check_on_event( `CHANGE_FLAG` ).
 
       view_display( ).
     ENDIF.

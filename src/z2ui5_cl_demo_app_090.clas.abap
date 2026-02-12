@@ -91,11 +91,11 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'P13N_OPEN'.
+      WHEN `P13N_OPEN`.
         z2ui5_view_p13n( ).
-      WHEN 'P13N_POPUP'.
+      WHEN `P13N_POPUP`.
         z2ui5_view_p13n_popup( ).
-      WHEN 'OK' OR 'CANCEL'.
+      WHEN `OK` OR `CANCEL`.
         client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.
@@ -112,10 +112,10 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-        title          = 'abap2UI5 - P13N Dialog'
+        title          = `abap2UI5 - P13N Dialog`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
-        class          = 'sapUiContentPadding' ).
+        class          = `sapUiContentPadding` ).
 
     page = page->vbox( ).
 
@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       )->get_parent( )->get_parent( ).
 
     page->button( text  = `Open P13N Dialog`
-                  press = client->_event( 'P13N_OPEN' )
+                  press = client->_event( `P13N_OPEN` )
                   class = `sapUiTinyMarginBeginEnd`
       )->button( text  = `Open P13N.POPUP`
                  press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).

@@ -30,15 +30,15 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - File Editor`
                                        navbuttonpress = client->_event_nav_app_leave( )
                                        shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(temp) = page->simple_form( title    = 'File'
+    DATA(temp) = page->simple_form( title    = `File`
                                     editable = abap_true )->content( `form`
-         )->label( 'path'
+         )->label( `path`
          )->input( client->_bind_edit( mv_path )
-         )->label( 'Option' ).
+         )->label( `Option` ).
 
     lt_types2 = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
             n = shift_right( shift_left( row ) )
@@ -49,12 +49,12 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
                     )->get( ).
 
     temp3->suggestion_items(
-                )->list_item( text           = '{N}'
-                              additionaltext = '{V}' ).
+                )->list_item( text           = `{N}`
+                              additionaltext = `{V}` ).
 
-    temp->label( '' )->button( text = 'Download'
-                    press           = client->_event( 'DB_LOAD' )
-                    icon            = 'sap-icon://download-from-cloud' ).
+    temp->label( `` )->button( text = `Download`
+                    press           = client->_event( `DB_LOAD` )
+                    icon            = `sap-icon://download-from-cloud` ).
 
     page->code_editor( type     = `html`
                        editable = abap_true
@@ -62,9 +62,9 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
         )->toolbar_spacer(
-        )->button( text    = 'PDF'
-                   press   = client->_event( 'PDF' )
-                   type    = 'Emphasized'
+        )->button( text    = `PDF`
+                   press   = client->_event( `PDF` )
+                   type    = `Emphasized`
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
     client->view_display( view->stringify( ) ).
@@ -75,21 +75,21 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      mv_path = '../../demo/text'.
-      mv_type = 'plain_text'.
+      mv_path = `../../demo/text`.
+      mv_type = `plain_text`.
       view_display( ).
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'PDF'.
+      WHEN `PDF`.
 
-      WHEN 'DB_SAVE'.
-        client->message_box_display( text = 'Upload successfull. File saved!'
-                                     type = 'success' ).
-      WHEN 'EDIT'.
+      WHEN `DB_SAVE`.
+        client->message_box_display( text = `Upload successfull. File saved!`
+                                     type = `success` ).
+      WHEN `EDIT`.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).
-      WHEN 'CLEAR'.
+      WHEN `CLEAR`.
         mv_editor = ``.
     ENDCASE.
   ENDMETHOD.

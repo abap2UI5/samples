@@ -85,9 +85,9 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'LINE_PRESS'.
-        client->message_toast_display( 'LINE_PRESSED' ).
-      WHEN 'DETAIL_POPOVER'.
+      WHEN `LINE_PRESS`.
+        client->message_toast_display( `LINE_PRESSED` ).
+      WHEN `DETAIL_POPOVER`.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
         READ TABLE mt_data-nodes INTO DATA(ls_node) WITH KEY id = lt_arg[ 2 ].
@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->page(
-                    title          = 'abap2UI5 - Network Graph - Org Tree'
+                    title          = `abap2UI5 - Network Graph - Org Tree`
                     navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 

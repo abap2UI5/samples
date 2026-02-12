@@ -27,27 +27,27 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                                                      `}` ).
 
     lr_view = lr_view->shell( )->page( id = `page_main`
-             title                        = 'abap2UI5 - Demo Wizard Control'
+             title                        = `abap2UI5 - Demo Wizard Control`
              navbuttonpress               = client->_event_nav_app_leave( )
              shownavbutton                = client->check_app_prev_stack( ) ).
 
     DATA(lr_wizard) = lr_view->wizard( id              = `wiz`
                                        enablebranching = abap_true ).
-    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'STEP1'
+    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = `STEP1`
                                                  validated = abap_true
-                                                 nextstep  = 'STEP2' ).
-    lr_wiz_step1->message_strip( text = 'STEP1' ).
+                                                 nextstep  = `STEP2` ).
+    lr_wiz_step1->message_strip( text = `STEP1` ).
 
-    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = 'STEP2'
+    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = `STEP2`
                                                  title           = `STEP2`
                                                  validated       = abap_true
-                                                 subsequentsteps = 'STEP22, STEP23' ).
+                                                 subsequentsteps = `STEP22, STEP23` ).
 
     lr_wiz_step2->message_strip( text = `STEP2` ).
     lr_wiz_step2->button(
 *      EXPORTING
         text  = `Press Step 2.2`
-        press = client->_event('STEP22' ) ).
+        press = client->_event(`STEP22` ) ).
     lr_wiz_step2->button(
 *      EXPORTING
         text  = `Press Step 2.3`
@@ -57,18 +57,18 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                                  title     = `STEP2.2`
                                                  validated = abap_true ).
 
-    lr_wiz_step22->message_strip( text = 'STEP22' ).
+    lr_wiz_step22->message_strip( text = `STEP22` ).
 
     DATA(lr_wiz_step23) = lr_wizard->wizard_step( id       = `STEP23`
                                                  title     = `STEP2.3`
                                                  validated = abap_true ).
 
-    lr_wiz_step23->message_strip( text = 'STEP23' ).
+    lr_wiz_step23->message_strip( text = `STEP23` ).
 
     DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = `STEP3`
                                                  validated = abap_true ).
 
-    lr_wiz_step3->message_strip( text = 'STEP3' ).
+    lr_wiz_step3->message_strip( text = `STEP3` ).
 
 *
     client->view_display( lr_view->stringify( ) ).
@@ -78,17 +78,17 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
     IF av_init = abap_false.
       display_view( client ).
-      av_init = 'X'.
+      av_init = `X`.
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'STEP22'.
+      WHEN `STEP22`.
 
-        client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
-      WHEN 'STEP23'.
+        client->follow_up_action( val = `sap.z2ui5.decideNextStep(``STEP2``,``STEP22``);` ).
+      WHEN `STEP23`.
 
-        client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
+        client->follow_up_action( val = `sap.z2ui5.decideNextStep(``STEP2``,``STEP23``);` ).
     ENDCASE.
     client->view_model_update( ).
   ENDMETHOD.

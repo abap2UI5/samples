@@ -31,19 +31,19 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup Input Value'
+                title          = `abap2UI5 - Popup Input Value`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+            text  = `Open Popup...`
+            press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
   METHOD ui5_event.
 
-    IF client->check_on_event( 'POPUP' ).
+    IF client->check_on_event( `POPUP` ).
       DATA(lo_app) = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
       client->nav_app_call( lo_app ).
     ENDIF.

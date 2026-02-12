@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: News Content'
+            title          = `abap2UI5 - Sample: News Content`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -34,20 +34,20 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
             )->button( id = `hint_icon`
                 icon      = `sap-icon://hint`
                 tooltip   = `Sample information`
-                press     = client->_event( 'POPOVER' ) ).
+                press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
             )->link(
-                text   = 'UI5 Demo Kit'
-                target = '_blank'
-                href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.NewsContent/sample/sap.m.sample.NewsContent' ).
+                text   = `UI5 Demo Kit`
+                target = `_blank`
+                href   = `https://sapui5.hana.ondemand.com/#/entity/sap.m.NewsContent/sample/sap.m.sample.NewsContent` ).
 
     page->tile_content( class = `sapUiSmallMargin`
                )->content(
                    )->news_content(
                        contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                        subheader   = `August 21, 2013`
-                       press       = client->_event( 'NEWS_CONTENT_PRESS' ) ).
+                       press       = client->_event( `NEWS_CONTENT_PRESS` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -55,9 +55,9 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         z2ui5_display_popover( `hint_icon` ).
-      WHEN 'NEWS_CONTENT_PRESS'.
+      WHEN `NEWS_CONTENT_PRESS`.
         client->message_toast_display( `The news content is pressed.` ).
     ENDCASE.
   ENDMETHOD.

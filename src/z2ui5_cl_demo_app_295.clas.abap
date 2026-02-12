@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Date Range Selection - Value States'
+            title          = `abap2UI5 - Date Range Selection - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -46,22 +46,22 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState` ).
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
              )->vbox( class = `sapUiTinyMargin`
-                 )->label( text = '{LABEL}'
+                 )->label( text = `{LABEL}`
                  )->date_range_selection(
                      width          = `100%`
-                     valuestate     = '{VALUE_STATE}'
-                     valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
+                     valuestate     = `{VALUE_STATE}`
+                     valuestatetext = `{VALUE_STATE_TEXT}` )->get_parent(
              )->get_parent( ).
 
     client->view_display( view->stringify( ) ).
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CLICK_HINT_ICON' ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
       z2ui5_display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
@@ -105,16 +105,16 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     CLEAR s_text.
     CLEAR lt_a_data.
 
-    s_text = 'DateRangeSelection with valueState '.
+    s_text = `DateRangeSelection with valueState `.
 
     " Append entries to the internal table
     lt_a_data = VALUE #(
-      ( label = s_text && 'None'        value_state = 'None' )
-      ( label = s_text && 'Information' value_state = 'Information' )
-      ( label = s_text && 'Success'     value_state = 'Success' )
-      ( label = s_text && 'Warning and long valueStateText' value_state = 'Warning'
-                value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
-                                   'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.' )
-      ( label = s_text && 'Error'    value_state = 'Error' ) ).
+      ( label = s_text && `None`        value_state = `None` )
+      ( label = s_text && `Information` value_state = `Information` )
+      ( label = s_text && `Success`     value_state = `Success` )
+      ( label = s_text && `Warning and long valueStateText` value_state = `Warning`
+                value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
+                                   `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` )
+      ( label = s_text && `Error`    value_state = `Error` ) ).
   ENDMETHOD.
 ENDCLASS.

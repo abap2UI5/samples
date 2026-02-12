@@ -57,22 +57,22 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     vbox->info_label( text = client->_bind( session_text ) ).
 
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text  = 'press button to increment counter in backend session'
-                 class = 'sapUiTinyMarginEnd' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
+    hbox->label( text  = `press button to increment counter in backend session`
+                 class = `sapUiTinyMarginEnd` ).
     hbox->button(
       text  = client->_bind( instance_counter )
-      press = client->_event( 'INCREMENT' )
-      type  = 'Emphasized' ).
+      press = client->_event( `INCREMENT` )
+      type  = `Emphasized` ).
 
     hbox = vbox->hbox( ).
     hbox->button(
-      text  = 'End session'
-      press = client->_event( 'END_SESSION' ) ).
+      text  = `End session`
+      press = client->_event( `END_SESSION` ) ).
 
     hbox->button(
-      text  = 'Start session again'
-      press = client->_event( 'START_SESSION' ) ).
+      text  = `Start session again`
+      press = client->_event( `START_SESSION` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
@@ -80,17 +80,17 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
         client->nav_app_leave( ).
-      WHEN 'INCREMENT'.
+      WHEN `INCREMENT`.
         instance_counter = lcl_static_container=>increment( ).
         client->view_model_update( ).
-      WHEN 'END_SESSION'.
+      WHEN `END_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
-      WHEN 'START_SESSION'.
+      WHEN `START_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_true ).
     ENDCASE.
@@ -101,9 +101,9 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
-      session_text = 'Session ON (stateful)'.
+      session_text = `Session ON (stateful)`.
     ELSE.
-      session_text = 'Session OFF (stateless)'.
+      session_text = `Session OFF (stateless)`.
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.

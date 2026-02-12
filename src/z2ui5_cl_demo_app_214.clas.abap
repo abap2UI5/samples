@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Standalone Icon Tab Header'
+            title          = `abap2UI5 - Sample: Standalone Icon Tab Header`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

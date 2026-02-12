@@ -20,45 +20,45 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
          )->page(
-            title          = 'abap2UI5 - Generic Tag Example'
+            title          = `abap2UI5 - Generic Tag Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
     layout->generic_tag(
-            arialabelledby = 'genericTagLabel'
-            text           = 'Project Cost'
-            design         = 'StatusIconHidden'
-            status         = 'Error'
-            class          = 'sapUiSmallMarginBottom'
+            arialabelledby = `genericTagLabel`
+            text           = `Project Cost`
+            design         = `StatusIconHidden`
+            status         = `Error`
+            class          = `sapUiSmallMarginBottom`
         )->object_number(
-            state      = 'Error'
-            emphasized = 'false'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            state      = `Error`
+            emphasized = `false`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     layout->generic_tag(
-        arialabelledby = 'genericTagLabel'
-        text           = 'Project Cost'
-        design         = 'StatusIconHidden'
-        status         = 'Success'
-        class          = 'sapUiSmallMarginBottom'
+        arialabelledby = `genericTagLabel`
+        text           = `Project Cost`
+        design         = `StatusIconHidden`
+        status         = `Success`
+        class          = `sapUiSmallMarginBottom`
         )->object_number(
-            state      = 'Success'
-            emphasized = 'false'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            state      = `Success`
+            emphasized = `false`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     layout->generic_tag(
-        arialabelledby = 'genericTagLabel'
-        text           = 'Input'
-        design         = 'StatusIconHidden'
-        class          = 'sapUiSmallMarginBottom'
+        arialabelledby = `genericTagLabel`
+        text           = `Input`
+        design         = `StatusIconHidden`
+        class          = `sapUiSmallMarginBottom`
         )->object_number(
-            emphasized = 'true'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            emphasized = `true`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

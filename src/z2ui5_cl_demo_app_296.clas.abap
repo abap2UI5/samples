@@ -35,13 +35,13 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SearchField/sample/sap.m.sample.SearchField' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SearchField/sample/sap.m.sample.SearchField` ).
 
     page_01->page( showheader = abap_false
               )->sub_header(
@@ -64,9 +64,9 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'onSearch'.
+      WHEN `onSearch`.
         client->message_toast_display( `'search' event fired with 'searchButtonPressed' parameter` ).
     ENDCASE.
   ENDMETHOD.

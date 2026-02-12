@@ -21,8 +21,8 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD initialize.
 
-    file_name = 'Default_File_Name.jpg'.
-    mime_type = 'text/plain'.
+    file_name = `Default_File_Name.jpg`.
+    mime_type = `text/plain`.
     file_content_64 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAA` &&
       `KYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIp` &&
       `QBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW` &&
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'BUTTON_DOWNLOAD' ).
+    IF client->check_on_event( `BUTTON_DOWNLOAD` ).
 
       client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
             showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title          = 'abap2UI5 - Download Base64 File'
+            title          = `abap2UI5 - Download Base64 File`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -71,9 +71,9 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
       )->input( value = client->_bind_edit( file_name )
                 class = `sapUiLargeMarginBottom`
                 width = `15rem`
-      )->button( type  = 'Emphasized'
-                 text  = 'Open Download Popup'
-                 press = client->_event( 'BUTTON_DOWNLOAD' ) ).
+      )->button( type  = `Emphasized`
+                 text  = `Open Download Popup`
+                 press = client->_event( `BUTTON_DOWNLOAD` ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

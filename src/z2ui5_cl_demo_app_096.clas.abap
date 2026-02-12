@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'MESSAGE_SUB' ).
+    IF client->check_on_event( `MESSAGE_SUB` ).
       client->message_box_display( `event sub app` ).
 
     ENDIF.
@@ -52,16 +52,16 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     IF mo_view_parent IS NOT BOUND.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( title = 'Main View' ).
+         )->page( title = `Main View` ).
 
-      mo_view_parent = page->grid( 'L6 M12 S12'
-          )->content( 'layout' ).
+      mo_view_parent = page->grid( `L6 M12 S12`
+          )->content( `layout` ).
 
       page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button( text  = `event sub app`
-                            press = client->_event( 'BUTTON_SAVE' )
-                            type  = 'Success' ).
+                            press = client->_event( `BUTTON_SAVE` )
+                            type  = `Success` ).
 
     ENDIF.
 

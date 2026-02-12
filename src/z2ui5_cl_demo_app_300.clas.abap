@@ -35,13 +35,13 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectStatus/sample/sap.m.sample.ObjectStatus' ).
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectStatus/sample/sap.m.sample.ObjectStatus` ).
 
     page_01->vertical_layout(
               width = `100%`
@@ -376,9 +376,9 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         z2ui5_display_popover( `button_hint_id` ).
-      WHEN 'handleStatusPressed'.
+      WHEN `handleStatusPressed`.
         client->message_box_display( title   = `Error description`
                                      type    = ``  "Keep this empty to use the custom title instead of the default message type as title
                                      text    = `Product was damaged along transportation.`

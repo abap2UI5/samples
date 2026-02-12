@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         CREATE DATA mt_table TYPE (mv_name).
         z2ui5_on_render_main( ).
       WHEN `FILTER_UPDATE`.
@@ -173,7 +173,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->page( id   = `page_main`
-             title          = 'abap2UI5 - Select-Options'
+             title          = `abap2UI5 - Select-Options`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -181,13 +181,13 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             headerexpanded = abap_true
             headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f'
+    DATA(header_title) = page->title( ns = `f`
             )->get( )->dynamic_page_title( ).
 
-    header_title->heading( ns = 'f' )->hbox(
+    header_title->heading( ns = `f` )->hbox(
         )->title( `Select-Option` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->expanded_content( `f` ).
+    header_title->snapped_content( ns = `f` ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems     = `Start`
@@ -196,14 +196,14 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(vbox) = lo_box->vbox( ).
     vbox->simple_form( editable = abap_true
             )->content( `form`
-                )->title( 'Table'
-                )->label( 'Name' ).
+                )->title( `Table`
+                )->label( `Name` ).
 
     vbox->input( client->_bind_edit( mv_name ) ).
 
     vbox->button(
-                text  = 'read'
-                press = client->_event( 'BUTTON_POST' ) ).
+                text  = `read`
+                press = client->_event( `BUTTON_POST` ) ).
 
     vbox = lo_box->vbox( ).
 
@@ -231,10 +231,10 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                 tokens           = client->_bind( mt_token )
                 showclearicon    = abap_true
                 value            = `{VALUE}`
-                tokenupdate      = client->_event( 'FILTER_UPDATE1' )
-                submit           = client->_event( 'FILTER_UPDATE' )
+                tokenupdate      = client->_event( `FILTER_UPDATE1` )
+                submit           = client->_event( `FILTER_UPDATE` )
                 id               = `FILTER`
-                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
+                valuehelprequest = client->_event( `FILTER_VALUE_HELP` )
             )->item(
                     key  = `{KEY}`
                     text = `{TEXT}`
@@ -257,10 +257,10 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-        title       = 'Define Conditons - Product' ).
+        title       = `Define Conditons - Product` ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
-                                 justifycontent = 'SpaceBetween' ).
+                                 justifycontent = `SpaceBetween` ).
 
     DATA(pan)  = vbox->panel(
          expandable = abap_false
@@ -270,7 +270,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
            "   headertext = `Product`
               nodata         = `no conditions defined`
              items           = client->_bind_edit( mt_filter )
-             selectionchange = client->_event( 'SELCHANGE' )
+             selectionchange = client->_event( `SELCHANGE` )
                 )->custom_list_item( ).
 
     DATA(grid) = item->grid( ).
@@ -279,19 +279,19 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key  = '{N}'
-                     text = '{N}'
+                     key  = `{N}`
+                     text = `{N}`
              )->get_parent(
              )->input( value = `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon  = 'sap-icon://decline'
+             )->button( icon  = `sap-icon://decline`
                         type  = `Transparent`
                         press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->button( text  = `Delete All`
-                   icon  = 'sap-icon://delete'
+                   icon  = `sap-icon://delete`
                    type  = `Transparent`
                    press = client->_event( `POPUP_DELETE_ALL` )
         )->button( text  = `Add Item`
@@ -299,12 +299,12 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                    press = client->_event( `POPUP_ADD` )
         )->toolbar_spacer(
         )->button(
-            text  = 'OK'
-            press = client->_event( 'FILTER_VALUE_HELP_OK' )
-            type  = 'Emphasized'
+            text  = `OK`
+            press = client->_event( `FILTER_VALUE_HELP_OK` )
+            type  = `Emphasized`
        )->button(
-            text  = 'Cancel'
-            press = client->_event( 'FILTER_VALUE_HELP_CANCEL' ) ).
+            text  = `Cancel`
+            press = client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
 
     client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.

@@ -25,10 +25,10 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'SET_VIEW'.
+      WHEN `SET_VIEW`.
         display_view( ).
         client->message_toast_display( |{ search } - title changed| ).
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
@@ -40,14 +40,14 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
     DATA(tmp) = view->_z2ui5( )->history( client->_bind_edit( search )
          )->shell(
          )->page(
-                 title          = 'abap2UI5 - Change URL History'
-                 navbuttonpress = client->_event( 'BACK' )
+                 title          = `abap2UI5 - Change URL History`
+                 navbuttonpress = client->_event( `BACK` )
                  shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( title    = 'Form Title'
+             )->simple_form( title    = `Form Title`
                              editable = abap_true
-                 )->content( 'form'
-                     )->title( 'Input'
-                     )->label( 'search'
+                 )->content( `form`
+                     )->title( `Input`
+                     )->label( `search`
                      )->input( client->_bind_edit( search ) ).
 
     client->view_display( tmp->stringify( ) ).

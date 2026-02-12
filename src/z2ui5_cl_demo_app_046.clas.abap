@@ -29,15 +29,15 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      mv_display = 'LIST'.
+      mv_display = `LIST`.
 
       t_tab = VALUE #(
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
     ELSE.
 
@@ -50,48 +50,48 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
+            title          = `abap2UI5 - Table output in two different Ways - Changing UI without Model`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
-                )->button( text  = 'Display List'
-                           press = client->_event( 'LIST' )
-                )->button( text  = 'Display Table'
-                           press = client->_event( 'TABLE' )
+                )->button( text  = `Display List`
+                           press = client->_event( `LIST` )
+                )->button( text  = `Display Table`
+                           press = client->_event( `TABLE` )
                 )->link(
       )->get_parent( ).
 
     CASE mv_display.
-      WHEN 'LIST'.
+      WHEN `LIST`.
         page->list(
-            headertext = 'List Control'
+            headertext = `List Control`
             items      = client->_bind( t_tab )
             )->standard_list_item(
-                title       = '{TITLE}'
-                description = '{DESCR}'
-                icon        = '{ICON}'
-                info        = '{INFO}' ).
-      WHEN 'TABLE'.
+                title       = `{TITLE}`
+                description = `{DESCR}`
+                icon        = `{ICON}`
+                info        = `{INFO}` ).
+      WHEN `TABLE`.
 
         DATA(tab) = page->table(
-          headertext = 'Table Control'
+          headertext = `Table Control`
           items      = client->_bind( t_tab ) ).
 
         tab->columns(
             )->column(
-                )->text( 'Title' )->get_parent(
+                )->text( `Title` )->get_parent(
             )->column(
-                )->text( 'Descr' )->get_parent(
+                )->text( `Descr` )->get_parent(
             )->column(
-                )->text( 'Icon' )->get_parent(
+                )->text( `Icon` )->get_parent(
              )->column(
-                )->text( 'Info' ).
+                )->text( `Info` ).
 
         tab->items( )->column_list_item( )->cells(
-           )->text( '{TITLE}'
-           )->text( '{DESCR}'
-           )->text( '{ICON}'
-           )->text( '{INFO}' ).
+           )->text( `{TITLE}`
+           )->text( `{DESCR}`
+           )->text( `{ICON}`
+           )->text( `{INFO}` ).
     ENDCASE.
 
     client->view_display( view->stringify( ) ).

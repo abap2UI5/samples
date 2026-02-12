@@ -44,10 +44,10 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-      WHEN 'LOAD_BC'.
-        client->message_box_display( 'JSBarcode Library loaded' ).
+      WHEN `LOAD_BC`.
+        client->message_box_display( `JSBarcode Library loaded` ).
         mv_load_lib = abap_true.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
   ENDMETHOD.
@@ -59,14 +59,14 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event( 'BACK' ) && `" ` && |\n| &&
+                          `  press="` && client->_event( `BACK` ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
       `<html><head>` && |\n| &&
                           `</head>` && |\n| &&
                           `<body>` && |\n| &&
-                          `<m:Button text="LoadJSBarcode" press="` && client->_event( 'LOAD_BC' ) && `" />` && |\n| &&
+                          `<m:Button text="LoadJSBarcode" press="` && client->_event( `LOAD_BC` ) && `" />` && |\n| &&
                           `<m:Input value="` && client->_bind_edit( mv_barcode ) && `" />` && |\n| &&
-                         `<m:Button text="Display Barcode" press="` && client->_event( 'DISPLAY_BC' ) && `" />` && |\n| &&
+                         `<m:Button text="Display Barcode" press="` && client->_event( `DISPLAY_BC` ) && `" />` && |\n| &&
                           `<h1>JSBarcode Library</h1>` && |\n| &&
                           `  <svg id="barcode">` && |\n| &&
 *                          `  jsbarcode-format="upc"` && |\n|  &&

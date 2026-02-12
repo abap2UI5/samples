@@ -24,31 +24,31 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
                    )->page(
-                      title          = 'abap2UI5 - data loss protection'
+                      title          = `abap2UI5 - data loss protection`
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(box) = page->flex_box( direction  = `Row`
                                 alignitems = `Start`
-                                class      = 'sapUiTinyMargin' ).
+                                class      = `sapUiTinyMargin` ).
 
     box->input(
       id          = `input`
       value       = client->_bind_edit( text_input )
-      submit      = client->_event( 'SUBMIT' )
+      submit      = client->_event( `SUBMIT` )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
     box->info_label(
-      text        = 'dirty'
-      colorscheme = '8'
-      icon        = 'sap-icon://message-success'
+      text        = `dirty`
+      colorscheme = `8`
+      icon        = `sap-icon://message-success`
       class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
       visible     = client->_bind( dirty ) ).
 
     box->button(
-      text    = 'Reset'
-      press   = client->_event( 'RESET' )
+      text    = `Reset`
+      press   = client->_event( `RESET` )
       class   = `sapUiSmallMarginBegin`
       visible = client->_bind( dirty ) ).
 
@@ -62,15 +62,15 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         IF dirty = abap_true.
           security_check_popup( ).
         ELSE.
           client->nav_app_leave( ).
         ENDIF.
-      WHEN 'SUBMIT'.
+      WHEN `SUBMIT`.
         dirty = xsdbool( text_input IS NOT INITIAL ).
-      WHEN 'RESET'.
+      WHEN `RESET`.
         CLEAR:
           dirty,
           text_input.

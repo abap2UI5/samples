@@ -30,31 +30,31 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
 
       DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Smart Controls with Variants'
+              title          = `abap2UI5 - Smart Controls with Variants`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->smart_filter_bar(
-          id             = 'smartFilterBar'
-          persistencykey = 'SmartFilterPKey'
-          entityset      = 'BookingSupplement'
+          id             = `smartFilterBar`
+          persistencykey = `SmartFilterPKey`
+          entityset      = `BookingSupplement`
         )->_control_configuration(
           )->control_configuration(
           previnitdatafetchinvalhelpdia = abap_false
           visibleinadvancedarea         = abap_true
-          key                           = 'TravelID'
+          key                           = `TravelID`
         )->get_parent(
         )->smart_table(
-          id                      = 'smartFiltertable'
-          smartfilterid           = 'smartFilterBar'
-          tabletype               = 'ResponsiveTable'
+          id                      = `smartFiltertable`
+          smartfilterid           = `smartFilterBar`
+          tabletype               = `ResponsiveTable`
           editable                = abap_false
-          initiallyvisiblefields  = 'TravelID,BookingID'
-          entityset               = 'BookingSupplement'
+          initiallyvisiblefields  = `TravelID,BookingID`
+          entityset               = `BookingSupplement`
           usevariantmanagement    = abap_true
           useexporttoexcel        = abap_true
           usetablepersonalisation = abap_true
-          header                  = 'Test'
+          header                  = `Test`
           showrowcount            = abap_true
           enableexport            = abap_false
           enableautobinding       = abap_true ).
