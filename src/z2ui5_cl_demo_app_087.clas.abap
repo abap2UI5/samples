@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_087 DEFINITION PUBLIC.
         valuecolor TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     METHODS refresh_data.
 
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
       ls_row-checkbox = abap_true.
 *        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
   ENDMETHOD.
 
@@ -49,28 +49,28 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `SORT_ASCENDING`.
-        SORT t_tab BY count ASCENDING.
+        SORT mt_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
       WHEN `SORT_DESCENDING`.
-        SORT t_tab BY count DESCENDING.
+        SORT mt_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Table with Cell Copy`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->table(
+    DATA(lo_tab) = lo_page->table(
             growing             = abap_true
             growingthreshold    = `20`
             growingscrolltoload = abap_true
-            items               = client->_bind_edit( t_tab )
+            items               = client->_bind_edit( mt_tab )
             sticky              = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
+    lo_tab->header_toolbar(
         )->toolbar(
             )->title( `title of the table`
             )->button(
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
                 icon  = `sap-icon://sort-ascending`
                 press = client->_event( `SORT_ASCENDING` ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Color` )->get_parent(
         )->column(
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
         )->column(
             )->text( `Radial Micro Chart` ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{VALUE}`
        )->text( `{INFO}`
        )->text( `{DESCR}`
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 
-    tab->dependents(
+    lo_tab->dependents(
 *        )->p_cell_selector( id     = `cellSelector`
 *        )->p_copy_provider(
 *      EXPORTING
@@ -119,6 +119,6 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 *
 *      RECEIVING
 *        result =
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

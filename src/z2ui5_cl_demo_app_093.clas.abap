@@ -4,8 +4,8 @@ CLASS z2ui5_cl_demo_app_093 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA mv_product  TYPE string.
+    DATA mv_quantity TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -17,15 +17,15 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      product  = `tomato`.
-      quantity = `500`.
+      mv_product  = `tomato`.
+      mv_quantity = `500`.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-      view->_generic( ns   = `html`
+      lo_view->_generic( ns   = `html`
                       name = `script`)->_cc_plain_xml( `sap.z2ui5.myFunction();` ).
 
-      client->view_display( view->shell(
+      client->view_display( lo_view->shell(
             )->page(
                     title          = `abap2UI5 - First Example`
                     navbuttonpress = client->_event( `BACK` )
@@ -35,9 +35,9 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
+                        )->input( client->_bind_edit( mv_quantity )
                         )->label( `product`
-                        )->input( value   = product
+                        )->input( value   = mv_product
                                   enabled = abap_false
                         )->button(
                             text  = `post`
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
-        client->message_toast_display( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ mv_product } { mv_quantity } - send to the server| ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.

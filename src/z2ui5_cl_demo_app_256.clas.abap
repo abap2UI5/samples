@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_256 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(css) = `.fixFlexFixedSize > .sapUiFixFlexFixed {`      &&
+    DATA(lv_css) = `.fixFlexFixedSize > .sapUiFixFlexFixed {`      &&
                 `    background: #D7E9FF;`                      &&
                 `}`                                             &&
       `.fixFlexFixedSize > .sapUiFixFlexFlexible {`   &&
@@ -34,29 +34,29 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
                 `    margin-bottom: 1rem;`                      &&
                 `}`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style`
-                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( lv_css )->get_parent( ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Fix Flex - Fix container size`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `POPOVER` ) ).
+           press     = mo_client->_event( `POPOVER` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.FixFlex/sample/sap.ui.layout.sample.FixFlexFixedSize` ).
 
-    DATA(layout) = page->fix_flex( ns             = `layout`
+    DATA(lo_layout) = lo_page->fix_flex( ns             = `layout`
                                    class          = `fixFlexFixedSize`
                                    fixcontentsize = `150px`
                          )->fix_content( ns = `layout`
@@ -86,38 +86,38 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
                                     )->text( class = `column1`
                                              text  = `This container is flexible and it will adapt its size to fill the remaining size in the FixFlex control` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
-      z2ui5_display_popover( `hint_icon` ).
+    IF mo_client->check_on_event( `POPOVER` ).
+      display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Shows a FixFlex control where fixContentSize is set to a specific value(150px) and sap.m.scrollContainer is enabling vertical scrolling.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

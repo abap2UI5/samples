@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_046 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_display TYPE string.
 
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
       mv_display = `LIST`.
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
         ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `Peter`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
         ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
@@ -47,8 +47,8 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Table output in two different Ways - Changing UI without Model`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -63,9 +63,9 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     CASE mv_display.
       WHEN `LIST`.
-        page->list(
+        lo_page->list(
             headertext = `List Control`
-            items      = client->_bind( t_tab )
+            items      = client->_bind( mt_tab )
             )->standard_list_item(
                 title       = `{TITLE}`
                 description = `{DESCR}`
@@ -73,11 +73,11 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
                 info        = `{INFO}` ).
       WHEN `TABLE`.
 
-        DATA(tab) = page->table(
+        DATA(lo_tab) = lo_page->table(
           headertext = `Table Control`
-          items      = client->_bind( t_tab ) ).
+          items      = client->_bind( mt_tab ) ).
 
-        tab->columns(
+        lo_tab->columns(
             )->column(
                 )->text( `Title` )->get_parent(
             )->column(
@@ -87,13 +87,13 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
              )->column(
                 )->text( `Info` ).
 
-        tab->items( )->column_list_item( )->cells(
+        lo_tab->items( )->column_list_item( )->cells(
            )->text( `{TITLE}`
            )->text( `{DESCR}`
            )->text( `{ICON}`
            )->text( `{INFO}` ).
     ENDCASE.
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -52,14 +52,14 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
         client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS on_rendering
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event
+    METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_init.
+    METHODS on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -68,9 +68,9 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
   METHOD popup_f4_table.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup->dialog( `abap2UI5 - F4 Value Help`
+    lo_popup->dialog( `abap2UI5 - F4 Value Help`
       )->table(
             mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_suggestion_sel )
@@ -91,16 +91,16 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                 text  = `continue`
                 press = client->_event( `POPUP_TABLE_F4_CONTINUE` )
                 type  = `Emphasized` ).
-    client->popup_display( popup->stringify( ) ).
+    client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
   METHOD popup_f4_table_custom.
 
-    DATA(popup2) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup2) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup2 = popup2->dialog( `abap2UI5 - F4 Value Help` ).
+    lo_popup2 = lo_popup2->dialog( `abap2UI5 - F4 Value Help` ).
 
-    popup2->simple_form(
+    lo_popup2->simple_form(
         )->label( `Location`
         )->input(
                 value           = client->_bind_edit( screen-city )
@@ -115,12 +115,12 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             text  = `search...`
             press = client->_event( `SEARCH` ) ).
 
-    DATA(tab) = popup2->table(
+    DATA(lo_tab) = lo_popup2->table(
         headertext = `Employees`
         mode       = `SingleSelectLeft`
         items      = client->_bind_edit( mt_employees_sel ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column( `10rem`
             )->text( `City` )->get_parent(
         )->column( `10rem`
@@ -130,19 +130,19 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         )->column( `30rem`
             )->text( `Lastname` )->get_parent( ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
+    lo_tab->items( )->column_list_item( selected = `{SELKZ}`
         )->cells(
             )->text( `{CITY}`
             )->text( `{NR}`
             )->text( `{NAME}`
             )->text( `{LASTNAME}` ).
 
-    popup2->buttons(
+    lo_popup2->buttons(
                 )->button(
                     text  = `continue`
                     press = client->_event( `POPUP_TABLE_F4_CUSTOM_CONTINUE` )
                     type  = `Emphasized` ).
-    client->popup_display( popup2->stringify( ) ).
+    client->popup_display( lo_popup2->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
@@ -150,14 +150,14 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     CLEAR mv_view_popup.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
-    z2ui5_on_event( client ).
+    on_event( client ).
 
-    z2ui5_on_rendering( client ).
+    on_rendering( client ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `POPUP_TABLE_F4`.
@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mt_suggestion = VALUE #(
         ( descr = `this is the color Green`  value = `GREEN` )
@@ -267,21 +267,21 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         ( city = `Paris`  name = `Hermine3`  lastname = `lastname11` nr = `00011` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_rendering.
+  METHOD on_rendering.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Value Help Examples`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(form) = page->grid( `L7 M7 S7`
+    DATA(lo_form) = lo_page->grid( `L7 M7 S7`
         )->content( `layout`
             )->simple_form( `Input with Value Help`
                 )->content( `form` ).
 
-    form->label( `Input with sugestion items`
+    lo_form->label( `Input with sugestion items`
         )->input(
             value           = client->_bind_edit( screen-color_01 )
             placeholder     = `fill in your favorite colour`
@@ -292,20 +292,20 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
                     text           = `{VALUE}`
                     additionaltext = `{DESCR}` ).
 
-    form->label( `Input only numbers allowed`
+    lo_form->label( `Input only numbers allowed`
         )->input(
             value       = client->_bind_edit( screen-quantity )
             type        = `Number`
             placeholder = `quantity` ).
 
-    form->label( `Input with F4`
+    lo_form->label( `Input with F4`
         )->input(
             value            = client->_bind_edit( screen-color_02 )
             placeholder      = `fill in your favorite colour`
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `POPUP_TABLE_F4` ) ).
 
-    form->label( `Custom F4 Popup`
+    lo_form->label( `Custom F4 Popup`
         )->input(
             value            = client->_bind_edit( screen-name )
             placeholder      = `name`
@@ -317,7 +317,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `POPUP_TABLE_F4_CUSTOM` ) ).
 
-    page->footer(
+    lo_page->footer(
         )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
@@ -341,6 +341,6 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         popup_f4_table_custom( client ).
     ENDCASE.
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -21,33 +21,33 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
               type = `success` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->object_page_layout(
+    DATA(lo_page) = lo_view->object_page_layout(
              showtitleinheadercontent = abap_true
              showeditheaderbutton     = abap_true
              editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
              uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
+    DATA(lo_header_title) = lo_page->header_title( )->object_page_dyn_header_title( ).
 
-    header_title->expanded_heading(
+    lo_header_title->expanded_heading(
                 )->hbox(
                     )->title( text     = `Oblomov Dev`
                               wrapping = abap_true ).
 
-    header_title->snapped_heading(
+    lo_header_title->snapped_heading(
                 )->flex_box( alignitems = `Center`
                   )->avatar( src   = lcl_help=>get_avatar( )
                              class = `sapUiTinyMarginEnd`
                     )->title( text     = `Oblomov Dev`
                               wrapping = abap_true ).
 
-    header_title->expanded_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
-    header_title->snapped_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
-    header_title->snapped_title_on_mobile( )->title( `abap2UI5 Developer` ).
+    lo_header_title->expanded_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
+    lo_header_title->snapped_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
+    lo_header_title->snapped_title_on_mobile( )->title( `abap2UI5 Developer` ).
 
-    header_title->actions( ns = `uxap` )->overflow_toolbar(
+    lo_header_title->actions( ns = `uxap` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = `edit header`
@@ -67,9 +67,9 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                  text  = `Go Back`
                  press = client->_event_nav_app_leave( ) ).
 
-    DATA(header_content) = page->header_content( ns = `uxap` ).
+    DATA(lo_header_content) = lo_page->header_content( ns = `uxap` ).
 
-    header_content->flex_box( wrap = `Wrap`
+    lo_header_content->flex_box( wrap = `Wrap`
            )->avatar( src         = lcl_help=>get_avatar( )
                       class       = `sapUiSmallMarginEnd`
                       displaysize = `layout`
@@ -92,9 +92,9 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->label( text = `San Jose, USA`
             )->get_parent( ).
 
-    DATA(sections) = page->sections( ).
+    DATA(lo_sections) = lo_page->sections( ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `goalsSectionSS1`
                                    title          = `2014 Goals Plan`
             )->heading( ns = `uxap`
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( text = `goals2`
                           )->label( text = `goals2`).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `PersonalSection`
                                    title          = `Personal`
             )->heading( ns = `uxap`
@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( text = `Hello! I an abap2UI5 developer`
                           )->label( text = `San Jose, USA` ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `employmentSection`
                                    title          = `Employment`
              )->heading( ns = `uxap`
@@ -177,6 +177,6 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( text = `details`
                           )->label( text = `details` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

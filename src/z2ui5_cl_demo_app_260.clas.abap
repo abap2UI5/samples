@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_260 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,26 +24,26 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Nested Splitter Layouts - 7 Areas`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `POPOVER` ) ).
+           press     = mo_client->_event( `POPOVER` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.SplitterNested1` ).
 
-    DATA(layout) = page->splitter( height      = `500px`
+    DATA(lo_layout) = lo_page->splitter( height      = `500px`
                                    orientation = `Vertical`
                           )->splitter( )->get(
                               )->layout_data( ns = `layout`
@@ -89,38 +89,38 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
                                        )->layout_data(
                                            )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent( )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
-      z2ui5_display_popover( `hint_icon` ).
+    IF mo_client->check_on_event( `POPOVER` ).
+      display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Nested Splitter example with 7 content areas` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

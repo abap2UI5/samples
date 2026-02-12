@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA zoomlevel TYPE i.
+    DATA mv_zoomlevel TYPE i.
 
     TYPES:
       BEGIN OF ty_s_data,
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
     METHODS set_view .
     METHODS set_mock_data .
@@ -137,17 +137,17 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
+    lo_view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(lo_page) = lo_view->page( id = `page_main`
             title               = `abap2UI5 - Gantt`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( )
+            navbuttonpress      = mo_client->_event_nav_app_leave( )
+            shownavbutton       = mo_client->check_app_prev_stack( )
             class               = `sapUiContentPadding` ).
 
-    DATA(cont) = page->scroll_container(
+    DATA(lo_cont) = lo_page->scroll_container(
 *               height     =
 *               width      =
 *               vertical   =
@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 *               visible    =
                  ).
 
-    DATA(tool) = cont->container_toolbar(
+    DATA(lo_tool) = lo_cont->container_toolbar(
       showsearchbutton        = abap_true
         showdisplaytypebutton = abap_true
         showlegendbutton      = abap_true
@@ -171,17 +171,17 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 *    result                    =
       ).
 
-    DATA(gantt_container) = cont->gantt_chart_container( ).
+    DATA(lo_gantt_container) = lo_cont->gantt_chart_container( ).
 
 *    gantt_charts
 
-    DATA(gantt) = gantt_container->gantt_chart_with_table(
+    DATA(lo_gantt) = lo_gantt_container->gantt_chart_with_table(
          id                        = `gantt`
          shapeselectionmode        = `Single`
          isconnectordetailsvisible = abap_true ).
 
-    DATA(table) = gantt->gantt_table( )->tree_table(
-        rows = `{path: '` && client->_bind( val = mt_data path = abap_true ) &&
+    DATA(lo_table) = lo_gantt->gantt_table( )->tree_table(
+        rows = `{path: '` && mo_client->_bind( val = mt_data path = abap_true ) &&
          `',     parameters: {` && |\r\n| &&
          `           operationMode: 'Server',` && |\r\n| &&
          `           numberOfExpandedLevels: 2,` && |\r\n| &&
@@ -196,13 +196,13 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
          `     }` && |\r\n| &&
          `}` ).
 
-    DATA(row_settings) = table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
+    DATA(lo_row_settings) = lo_table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
 *                                  shapes1 = `{path: 'TASK', templateShareable:false}`
 *                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
                                   relationships                                     = `{path:'Relationships', templateShareable: 'true'}` ).
 
-    DATA(shapes) = row_settings->shapes1( ).
-    shapes->base_rectangle(
+    DATA(lo_shapes) = lo_row_settings->shapes1( ).
+    lo_shapes->base_rectangle(
         shapeid                 = `{OBJECTID}`
         time                    = `{= Helper.DateCreateObject(${STARTTIME}) }`
         endtime                 = `{= Helper.DateCreateObject(${ENDTIME}) }`
@@ -211,18 +211,18 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         connectable             = abap_true
         horizontaltextalignment = `Start` ).
 
-    DATA(relas) = row_settings->relationships( ).
-    relas->relationship(
+    DATA(lo_relas) = lo_row_settings->relationships( ).
+    lo_relas->relationship(
         shapeid     = `{RELATIONID}`
         type        = `{RELATIONTYPE}`
         successor   = `{SUCCTASKID}`
         predecessor = `{PREDECTASKID}` ).
 
-    DATA(columns) = table->ui_columns( ).
-    DATA(column) = columns->ui_column(
+    DATA(lo_columns) = lo_table->ui_columns( ).
+    DATA(lo_column) = lo_columns->ui_column(
          id = `OBJECTNAME` ).
 
-    column->ui_custom_data( )->core_custom_data(
+    lo_column->ui_custom_data( )->core_custom_data(
        key    = `exportTableColumnConfig`
         value = `{"columnKey": "OBJECTNAME",` && |\r\n| &&
                  `    "leadingProperty":"OBJECTNAME",` && |\r\n| &&
@@ -230,10 +230,10 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                  `    "hierarchyNodeLevel": "HierarchyNodeLevel",` && |\r\n| &&
                  `    "wrap": true}` ).
 
-    column->text( text = `Object Name` ).
-    column->tree_template( )->label( text = `{OBJECTNAME}` ).
+    lo_column->text( text = `Object Name` ).
+    lo_column->tree_template( )->label( text = `{OBJECTNAME}` ).
 
-    gantt->axis_time_strategy(
+    lo_gantt->axis_time_strategy(
       )->proportion_zoom_strategy(
         )->total_horizon(
           )->time_horizon( starttime = `20181101000000`
@@ -242,14 +242,14 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
           )->time_horizon( starttime = `20181101000000`
                            endtime   = `20181131000000` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       set_mock_data( ).
       set_view( ).
     ENDIF.

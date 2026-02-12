@@ -11,17 +11,17 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
                    WITH NON-UNIQUE DEFAULT KEY.
 
     INTERFACES z2ui5_if_app.
-    DATA news_input TYPE string.
-    DATA author_input TYPE string.
-    DATA news_list TYPE tt_news.
-    DATA connections TYPE int8.
+    DATA mv_news_input TYPE string.
+    DATA mv_author_input TYPE string.
+    DATA mt_news_list TYPE tt_news.
+    DATA mv_connections TYPE int8.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_display_popover.
+    METHODS on_event.
+    METHODS on_render.
+    METHODS display_popover.
 
   PRIVATE SECTION.
 
@@ -31,39 +31,39 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF me->z2ui5_if_app~check_initialized = abap_false.
-      connections = z2ui5_cl_demo_app_s_05_ws=>get_active_connections( ).
+      mv_connections = z2ui5_cl_demo_app_s_05_ws=>get_active_connections( ).
     ENDIF.
 
-    IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
-      client->view_model_update( ).
+    IF mo_client->get( )-event IS NOT INITIAL.
+      on_event( ).
+      mo_client->view_model_update( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_render( ).
+    on_render( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA: news TYPE t_news.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLEAR`.
 
-        CLEAR: news_list.
+        CLEAR: mt_news_list.
       WHEN `BACK`.
 
-        client->nav_app_leave( ).
+        mo_client->nav_app_leave( ).
       WHEN `CLICK_HINT_ICON`.
 
-        z2ui5_display_popover( ).
+        display_popover( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render.
+  METHOD on_render.
 
     SELECT
       SINGLE FROM icfservloc
@@ -71,63 +71,63 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
       WHERE icf_name = `Z2UI5_SAMPLE`
       INTO @DATA(icfactive).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
                     )->page(
                        title          = `abap2UI5 - Sample: News Feed over WebSocket`
-                       navbuttonpress = client->_event( `BACK` )
-                       shownavbutton  = client->check_app_prev_stack( ) ).
+                       navbuttonpress = mo_client->_event( `BACK` )
+                       shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
     IF icfactive = abap_false.
-      page->message_strip(
+      lo_page->message_strip(
           text    = `ICF Service '/sap/bc/apc/sap/z2ui5_sample' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
           type    = `Warning`
           visible = abap_true ).
     ENDIF.
 
-    DATA(form) = page->simple_form( editable = abap_true
+    DATA(lo_form) = lo_page->simple_form( editable = abap_true
                                     title    = `Publish news`
                                     class    = `sapUiTinyMarginBottom`
                     )->content( `form` ).
 
-    form->feed_input(
-        value = client->_bind_edit( news_input )
-        post  = client->_event_client(
+    lo_form->feed_input(
+        value = mo_client->_bind_edit( mv_news_input )
+        post  = mo_client->_event_client(
                   val   = `Z2UI5`
                   t_arg = VALUE #( ( `feedInputPost` ) )
                 ) ).
 
-    form->label( text = `Author`
-       )->input( value       = client->_bind_edit( author_input )
+    lo_form->label( text = `Author`
+       )->input( value       = mo_client->_bind_edit( mv_author_input )
                  placeholder = `Anonymous` ).
 
-    page->list(
+    lo_page->list(
               headertext = `News`
-              items      = client->_bind_edit( news_list )
+              items      = mo_client->_bind_edit( mt_news_list )
          )->feed_list_item(
               sender   = `{AUTHOR}`
               text     = `{TEXT}`
               showicon = abap_false ).
 
-    DATA(footer) = page->footer( )->overflow_toolbar( ).
-    footer->info_label(
-        text        = client->_bind_edit( connections )
+    DATA(lo_footer) = lo_page->footer( )->overflow_toolbar( ).
+    lo_footer->info_label(
+        text        = mo_client->_bind_edit( mv_connections )
         colorscheme = `7`
         icon        = `sap-icon://connected` ).
 
-    footer->toolbar_spacer( )->button(
+    lo_footer->toolbar_spacer( )->button(
         text  = `Clear`
         icon  = `sap-icon://clear-all`
-        press = client->_event( `CLEAR` ) ).
+        press = mo_client->_event( `CLEAR` ) ).
 
     IF me->z2ui5_if_app~check_initialized = abap_false.
-      view->_generic( name = `script`
+      lo_view->_generic( name = `script`
                       ns   = `html`
          )->_cc_plain_xml(
             `(()=>{ ` &&
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
             `  ws.onclose = (msg)=>{};` &&
             `})()` ).
 
-      view->_generic( name = `script`
+      lo_view->_generic( name = `script`
                       ns   = `html`
           )->_cc_plain_xml(
              `z2ui5.feedInputPost = () => { ` &&
@@ -170,20 +170,20 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
              `}` ).
     ENDIF.
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `This sample show how to consume APC-Messages over websocket. Open the app mutliple times and post something.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = `button_hint_id` ).
   ENDMETHOD.
 ENDCLASS.

@@ -4,23 +4,23 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_display_view.
+    METHODS display_view.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
-  METHOD z2ui5_display_view.
+  METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
       )->page(
               title          = `abap2UI5 - Sample: MaskInput`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( )
+              navbuttonpress = mo_client->_event_nav_app_leave( )
+              shownavbutton  = mo_client->check_app_prev_stack( )
           )->simple_form( title    = `Generic Mask Input`
                           layout   = `ColumnLayout`
                           editable = abap_true
@@ -74,15 +74,15 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                                 placeholder       = `Enter thirteen-digit number`
                                 showclearicon     = abap_true ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_display_view( ).
+    IF mo_client->check_on_init( ).
+      display_view( ).
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

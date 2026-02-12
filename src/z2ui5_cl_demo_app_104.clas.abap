@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mo_app_sub TYPE REF TO object .
-    DATA classname TYPE string.
+    DATA mv_classname TYPE string.
 
     TYPES:
       BEGIN OF ty_row,
@@ -18,16 +18,16 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       END OF ty_row .
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+      mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
     DATA
-      t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+      mt_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
     DATA mv_layout TYPE string .
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view .
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
     METHODS view_display_detail.
@@ -46,72 +46,72 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
       ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
       <fs> = mo_grid_sub.
-      CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
+      CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING mo_client = mo_client.
 
     ENDIF.
   ENDMETHOD.
 
   METHOD on_init_sub.
 
-    classname = to_upper( classname ).
-    CREATE OBJECT mo_app_sub TYPE (classname).
+    mv_classname = to_upper( mv_classname ).
+    CREATE OBJECT mo_app_sub TYPE (mv_classname).
 
     ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
     <fs> = mo_grid_sub.
-    CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
+    CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING mo_client = mo_client.
   ENDMETHOD.
 
   METHOD view_display_detail.
 
     lo_view_nested = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( title = `Nested View` ).
-    mo_grid_sub = page->grid( `L12 M12 S12`
+    DATA(lo_page) = lo_view_nested->page( title = `Nested View` ).
+    mo_grid_sub = lo_page->grid( `L12 M12 S12`
         )->content( `layout` ).
   ENDMETHOD.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
+    DATA(lo_page) = z2ui5_cl_xml_view=>factory(
        )->page(
           title           = `abap2UI5 - Master Detail Page with Nested View`
-          navbuttonpress  = client->_event_nav_app_leave( )
+          navbuttonpress  = mo_client->_event_nav_app_leave( )
             shownavbutton = abap_true ).
 
-    page->header_content(
+    lo_page->header_content(
              )->link( text   = `Demo`
                       target = `_blank`
                       href   = `https://twitter.com/abap2UI5/status/1628701535222865922`
              )->link(
          )->get_parent( ).
 
-    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
+    DATA(lo_col_layout) = lo_page->flexible_column_layout( layout = mo_client->_bind_edit( mv_layout )
                                                      id     =`test` ).
 
-    DATA(lr_master) = col_layout->begin_column_pages( ).
+    DATA(lr_master) = lo_col_layout->begin_column_pages( ).
 
     DATA(lr_list) = lr_master->list(
           headertext      = `List Ouput`
-          items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
+          items           = mo_client->_bind_edit( val = mt_tab view = mo_client->cs_view-main )
           mode            = `SingleSelectMaster`
-          selectionchange = client->_event( `SELCHANGE` )
+          selectionchange = mo_client->_event( `SELCHANGE` )
           )->standard_list_item(
               title       = `{TITLE}`
               description = `{DESCR}`
               icon        = `{ICON}`
               info        = `{INFO}`
-              press       = client->_event( `TEST` )
+              press       = mo_client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
-    client->view_display( lr_list->stringify( ) ).
+    mo_client->view_display( lr_list->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
         ( title = `Class 1`  info = `z2ui5_cl_demo_app_105`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `Class 2`  info = `z2ui5_cl_demo_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
 
@@ -121,25 +121,25 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->check_on_event( `SELCHANGE` ).
+    IF mo_client->check_on_event( `SELCHANGE` ).
 
-      DATA(lt_sel) = t_tab.
+      DATA(lt_sel) = mt_tab.
       DELETE lt_sel WHERE selected = abap_false.
 
       READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-      APPEND ls_sel TO t_tab2.
+      APPEND ls_sel TO mt_tab2.
 
-      IF classname IS NOT INITIAL.
+      IF mv_classname IS NOT INITIAL.
         view_display_master( ).
       ENDIF.
-      classname = ls_sel-info.
+      mv_classname = ls_sel-info.
 
       mv_layout = `TwoColumnsMidExpanded`.
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
       view_display_detail( ).
       on_init_sub( ).
 
-      client->nest_view_display(
+      mo_client->nest_view_display(
         val            = lo_view_nested->stringify( )
         id             = `test`
         method_insert  = `addMidColumnPage`

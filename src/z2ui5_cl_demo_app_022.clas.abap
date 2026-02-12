@@ -22,23 +22,23 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Progress Indicator Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( `ProgressIndicator`
+    lo_layout->label( `ProgressIndicator`
         )->progress_indicator(
             percentvalue = screen-progress_value
             displayvalue = `0,44GB of 32GB used`
             showvalue    = abap_true
             state        = `Success` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

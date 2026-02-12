@@ -9,26 +9,26 @@ CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
         name       TYPE string,
       END OF ty_product_collection .
 
-    DATA editable TYPE abap_bool.
-    DATA enabled TYPE abap_bool.
+    DATA mv_editable TYPE abap_bool.
+    DATA mv_enabled TYPE abap_bool.
     DATA lt_product_collection  TYPE TABLE OF ty_product_collection.
     DATA lt_product_collection2 TYPE TABLE OF ty_product_collection.
     DATA lt_product_collection3 TYPE TABLE OF ty_product_collection.
-    DATA selected_product TYPE string.
-    DATA selected_product2 TYPE string.
-    DATA selected_product3 TYPE string.
+    DATA mv_selected_product TYPE string.
+    DATA mv_selected_product2 TYPE string.
+    DATA mv_selected_product3 TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -39,25 +39,25 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(lo_page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Select`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page_01->header_content(
+    lo_page_01->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page_01->header_content(
+    lo_page_01->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select` ).
 
-    DATA(page_02) = page_01->page(
+    DATA(lo_page_02) = lo_page_01->page(
                               showheader = abap_false
                               class      = `sapUiContentPadding`
                               )->sub_header(
@@ -65,8 +65,8 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                       )->select(
                                          forceselection = abap_false
-                                         selectedkey    = client->_bind( selected_product )
-                                         items          = client->_bind( lt_product_collection )
+                                         selectedkey    = mo_client->_bind( mv_selected_product )
+                                         items          = mo_client->_bind( lt_product_collection )
                                          )->item( key  = `{PRODUCT_ID}`
                                                   text = `{NAME}`
                                       )->get_parent(
@@ -75,11 +75,11 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                               )->content(
                                   )->hbox( justifycontent = `SpaceAround`
                                       )->select(
-                                            enabled        = client->_bind( enabled )
-                                            editable       = client->_bind( editable )
+                                            enabled        = mo_client->_bind( mv_enabled )
+                                            editable       = mo_client->_bind( mv_editable )
                                             forceselection = abap_false
-                                            selectedkey    = client->_bind( selected_product2 )
-                                            items          = client->_bind( lt_product_collection2 )
+                                            selectedkey    = mo_client->_bind( mv_selected_product2 )
+                                            items          = mo_client->_bind( lt_product_collection2 )
                                             )->item( key  = `{PRODUCT_ID}`
                                                      text = `{NAME}`
                                       )->get_parent(
@@ -88,13 +88,13 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                               )->label( text  = `Enabled:`
                                                         class = `sapUiTinyMarginEnd`
                                               )->switch( type  = `AcceptReject`
-                                                         state = client->_bind( enabled )
+                                                         state = mo_client->_bind( mv_enabled )
                                           )->get_parent(
                                           )->hbox( alignitems = `Center`
                                               )->label( text  = `Editable:`
                                                         class = `sapUiTinyMarginEnd`
                                               )->switch( type  = `AcceptReject`
-                                                         state = client->_bind( editable )
+                                                         state = mo_client->_bind( mv_editable )
                                           )->get_parent(
                                       )->get_parent(
                                   )->get_parent(
@@ -104,48 +104,48 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                           )->select(
                                               forceselection  = abap_false
-                                              selectedkey     = client->_bind( selected_product3 )
+                                              selectedkey     = mo_client->_bind( mv_selected_product3 )
                                               type            = `IconOnly`
                                               icon            = `sap-icon://filter`
                                               autoadjustwidth = abap_true
-                                              items           = client->_bind( lt_product_collection3 )
+                                              items           = mo_client->_bind( lt_product_collection3 )
                                               )->item( key  = `{PRODUCT_ID}`
                                                        text = `{NAME}` ).
 
-    client->view_display( page_02->stringify( ) ).
+    mo_client->view_display( lo_page_02->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Illustrates the usage of a Select in header, footer and content of a page. Note the different display options.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
 
-      selected_product  = `HT-1001`.
-      selected_product2 = `HT-1001`.
-      selected_product3 = `HT-1001`.
+      mv_selected_product  = `HT-1001`.
+      mv_selected_product2 = `HT-1001`.
+      mv_selected_product3 = `HT-1001`.
 
       " Populate the internal tables
       lt_product_collection = VALUE #( ( product_id = `HT-1000` name = `Notebook Basic 15` )
@@ -169,11 +169,11 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                         ( product_id = `HT-1007` name = `ITelO Vault` ) ).
       SORT lt_product_collection3 BY name.
 
-      editable = abap_true.
-      enabled = abap_true.
+      mv_editable = abap_true.
+      mv_enabled = abap_true.
 
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

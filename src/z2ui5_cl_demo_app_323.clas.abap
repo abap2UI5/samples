@@ -14,8 +14,8 @@ CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display( lo_view->shell(
              )->page(
                      title          = `abap2UI5 - Navigation with app state`
                      navbuttonpress = client->_event_nav_app_leave( )

@@ -6,18 +6,18 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->object_page_layout( showtitleinheadercontent = `Title`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_object_page_layout) = lo_view->object_page_layout( showtitleinheadercontent = `Title`
                                                          uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = object_page_layout->header_title(
+    DATA(lo_header_title) = lo_object_page_layout->header_title(
         )->object_page_dyn_header_title( ).
 
-    header_title->expanded_heading(
+    lo_header_title->expanded_heading(
         )->title( text     = `Object Page Header with Header Container`
                   wrapping = abap_true ).
 
-    header_title->snapped_heading(
+    lo_header_title->snapped_heading(
         )->hbox(
             )->vbox(
                 )->avatar( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
@@ -27,13 +27,13 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           wrapping = abap_true
                 )->label( text = `Example of an ObjectPage with header facet` ).
 
-    header_title->expanded_content( ns = `uxap`
+    lo_header_title->expanded_content( ns = `uxap`
         )->label( text = `Example of an ObjectPage with header facet` ).
 
-    header_title->snapped_title_on_mobile(
+    lo_header_title->snapped_title_on_mobile(
         )->title( text = `Object Page Header with Header Container` ).
 
-    header_title->actions( `uxap`
+    lo_header_title->actions( `uxap`
         )->button( text = `Edit`
                    type = `Emphasized`
         )->button( text = `Delete`
@@ -43,12 +43,12 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     text    = `Share`
                                     tooltip = `action` ).
 
-    DATA(header_content) = object_page_layout->header_content( ns = `uxap`
+    DATA(lo_header_content) = lo_object_page_layout->header_content( ns = `uxap`
         )->header_container_control( id           = `headerContainer`
                                      scrollstep   = `200`
                                      showdividers = abap_false ).
 
-    header_content->hbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+    lo_header_content->hbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->avatar( src         = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
                    class       = `sapUiMediumMarginEnd sapUiSmallMarginBottom`
                    displaysize = `L`
@@ -169,9 +169,9 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
         )->vbox( alignitems = `End`
             )->text( text = `4.1 out of 5` ).
 
-    DATA(section) = object_page_layout->sections( ).
+    DATA(lo_section) = lo_object_page_layout->sections( ).
 
-    section->object_page_section( titleuppercase = abap_false
+    lo_section->object_page_section( titleuppercase = abap_false
                                   id             = `goalsSection`
                                   title          = `2014 Goals Plan`
         )->sub_sections(
@@ -191,7 +191,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                         )->text( text = `Due Nov 21`
                         )->label( text = `Mentor junior developers`
                         )->text( text = `Due Dec 31 Cascaded` ).
-    section->object_page_section( titleuppercase = abap_false
+    lo_section->object_page_section( titleuppercase = abap_false
                                   id             = `personalSection`
                                   title          = `Personal`
                                   importance     = `Medium`
@@ -292,7 +292,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                         )->label( text = `Extra Travel Expenses`
                         )->text( text = `Cash 100 USD` ).
 
-    section->object_page_section( titleuppercase = abap_false
+    lo_section->object_page_section( titleuppercase = abap_false
                                   id             = `employmentSection`
                                   title          = `Employment`
         )->sub_sections(
@@ -407,6 +407,6 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                             )->label( text = `Eligible for Salary Contribution`
                             )->text( text = `No` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

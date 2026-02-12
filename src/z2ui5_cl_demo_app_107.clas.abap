@@ -16,11 +16,11 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
     DATA mv_file_raw TYPE string .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    DATA check_load_cc TYPE abap_bool.
+    DATA mv_check_load_cc TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
+    METHODS view_display.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -56,33 +56,33 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF check_load_cc = abap_false.
-      check_load_cc = abap_true.
-      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
+    IF mv_check_load_cc = abap_false.
+      mv_check_load_cc = abap_true.
+      mo_client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
 
-    ELSEIF client->check_on_init( ).
-      z2ui5_view_display( ).
+    ELSEIF mo_client->check_on_init( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    client->_bind_edit( mv_file_raw ).
+    mo_client->_bind_edit( mv_file_raw ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
         title          = `abap2UI5 - UploadSet Dialog`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
+        navbuttonpress = mo_client->_event_nav_app_leave( )
+        shownavbutton  = mo_client->check_app_prev_stack( )
         class          = `sapUiContentPadding` ).
 
-    page = page->upload_set( instantupload      = abap_true
+    lo_page = lo_page->upload_set( instantupload      = abap_true
                              showicons          = abap_true
                              uploadenabled      = abap_true
                              terminationenabled = abap_true
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
                              maxfilesize        = `200`
 *                             mediatypes = 'text/plain,application/msword,image/png'
                              mode               = `MultiSelect`
-                             items              = client->_bind_edit( mt_items )
+                             items              = mo_client->_bind_edit( mt_items )
 *                             afteritemadded = client->_event( val = 'AFTER' t_arg = VALUE #( ( `${$parameters>/}` ) ) )
                              afteritemadded     = `z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
                              uploadcompleted    = `z2ui5.fileGet($event,$controller)` "sap.z2ui5.updateData(${$parameters>/reason})
@@ -107,6 +107,6 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
                                                     mediatype = `{MEDIATYPE}`
 *                                                    uploadState = `{UPLOADSTATE}`
                                                     ).
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

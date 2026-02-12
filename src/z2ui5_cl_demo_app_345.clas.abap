@@ -41,11 +41,11 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
 
               IF com-as_include = abap_false.
 
@@ -66,14 +66,14 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table1> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    DATA(lt_comp) = get_comp( ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lt_comp ).
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_data1 TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data1 TYPE HANDLE lv_new_table_desc.
         ASSIGN mt_data1->* TO <table1>.
 
         SELECT * FROM z2ui5_t_01
@@ -89,52 +89,52 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `CALL Next App`
+    lo_page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
                   type  = `Success` ).
 
-    xml_table( i_page = page
+    xml_table( i_page = lo_page
       i_client        = client
       i_data          = mt_data1
       i_layout        = mo_layout_obj1 ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD xml_table.
 
     ASSIGN i_data->* TO FIELD-SYMBOL(<data>).
 
-    DATA(table) = i_page->table( width = `auto`
+    DATA(lo_table) = i_page->table( width = `auto`
                                  items = i_client->_bind( <data> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA(lo_columns) = lo_table->columns( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
-      columns->column( visible = i_client->_bind( val       = layout->visible
+      lo_columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
                                                   tab_index = lv_index )
         )->text( layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA(lo_column_list_item) = lo_columns->get_parent( )->items(
                                        )->column_list_item( ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA(lo_cells) = lo_column_list_item->cells( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
-      cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
+      lo_cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
   ENDMETHOD.
@@ -147,8 +147,8 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     ENDIF.
 
     IF client->check_on_event( `GO` ).
-      DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
-      client->nav_app_call( app ).
+      DATA(lo_app) = z2ui5_cl_demo_app_336=>factory( ).
+      client->nav_app_call( lo_app ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true
@@ -160,9 +160,9 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
       client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
 
-    ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
+    ASSIGN mt_data1->* TO FIELD-SYMBOL(<lo_table>).
     ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
-    IF <val> <> <table>.
+    IF <val> <> <lo_table>.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
   ENDMETHOD.

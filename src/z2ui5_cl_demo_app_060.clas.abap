@@ -14,14 +14,14 @@ CLASS z2ui5_cl_demo_app_060 DEFINITION PUBLIC.
 
     DATA mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency.
     DATA mt_suggestion TYPE STANDARD TABLE OF ty_s_currency.
-    DATA input TYPE string.
+    DATA mv_input TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_view_display.
+    METHODS on_event.
+    METHODS view_display.
     METHODS set_data.
 
   PRIVATE SECTION.
@@ -253,9 +253,9 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       DATA(lv_script) = `   debugger;` && |\n| &&
                   `function setInputFIlter(){` && |\n| &&
@@ -277,29 +277,29 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
       set_data( ).
 
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->timer( client->_event( `START` )
+      mo_client->view_display( z2ui5_cl_xml_view=>factory(
+        )->_z2ui5( )->timer( mo_client->_event( `START` )
          )->_generic( ns   = `html`
                       name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
     ENDIF.
 
-    IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+    IF mo_client->get( )-event IS NOT INITIAL.
+      on_event( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA lt_range TYPE RANGE OF string.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `START`.
-        z2ui5_view_display( ).
+        view_display( ).
       WHEN `ON_SUGGEST`.
 
-        lt_range = VALUE #( (  sign = `I` option = `CP` low = `*` && input && `*` ) ).
+        lt_range = VALUE #( (  sign = `I` option = `CP` low = `*` && mv_input && `*` ) ).
 
         CLEAR mt_suggestion_out.
         LOOP AT mt_suggestion INTO DATA(ls_sugg)
@@ -307,47 +307,47 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
 
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page(
        title          = `abap2UI5 - Live Suggestion Event`
-       navbuttonpress = client->_event_nav_app_leave( )
-       shownavbutton  = client->check_app_prev_stack( ) ).
+       navbuttonpress = mo_client->_event_nav_app_leave( )
+       shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L6 M12 S12`
+    DATA(lo_grid) = lo_page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(input) = grid->simple_form( `Input`
+    DATA(mv_input) = lo_grid->simple_form( `Input`
         )->content( `form`
             )->label( `Input with value help`
             )->input(
                     id                           = `suggInput`
-                    value                        = client->_bind_edit( input )
-                    suggest                      = client->_event( `ON_SUGGEST` )
+                    value                        = mo_client->_bind_edit( mv_input )
+                    suggest                      = mo_client->_event( `ON_SUGGEST` )
                     showtablesuggestionvaluehelp = abap_false
-                    suggestionrows               = client->_bind( mt_suggestion_out )
+                    suggestionrows               = mo_client->_bind( mt_suggestion_out )
                     showsuggestion               = abap_true
                     valueliveupdate              = abap_true
                     autocomplete                 = abap_false
                  )->get( ).
 
-    input->suggestion_columns(
+    mv_input->suggestion_columns(
         )->column( )->label( text = `Name` )->get_parent(
         )->column( )->label( text = `Currency` ).
 
-    input->suggestion_rows(
+    mv_input->suggestion_rows(
         )->column_list_item(
             )->label( text = `{CURRENCYNAME}`
             )->label( text = `{CURRENCY}` ).
 
-    page->_generic( name = `script`
+    lo_page->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

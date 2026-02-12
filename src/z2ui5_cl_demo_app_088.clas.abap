@@ -6,10 +6,10 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
+    METHODS view_display.
+    METHODS on_event.
 
   PRIVATE SECTION.
     DATA mv_page TYPE string.
@@ -20,36 +20,36 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       mv_page = `page1`.
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    IF client->get( )-event IS NOT INITIAL.
-      mv_page = client->get( )-event.
-      z2ui5_view_display( ).
+    IF mo_client->get( )-event IS NOT INITIAL.
+      mv_page = mo_client->get( )-event.
+      view_display( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+        navbuttonpress = mo_client->_event_nav_app_leave( )
+        shownavbutton  = mo_client->check_app_prev_stack( )
         title          = `abap2UI5 - Sample: Nav Container`
        )->content( ).
 
-    page->icon_tab_header( selectedkey                   = client->_bind_edit( mv_selected_key )
-                                                  select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+    lo_page->icon_tab_header( selectedkey                   = mo_client->_bind_edit( mv_selected_key )
+                                                  select = mo_client->_event_client( val = mo_client->cs_event-nav_container_to t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   mode   = `Inline`
                                   )->items(
                                     )->icon_tab_filter( key  = `page1`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                                     )->icon_tab_filter( key  = `page3`
                                                         text = `Users and Groups` ).
 
-    page->nav_container( id                    = `NavCon`
+    lo_page->nav_container( id                    = `NavCon`
                          initialpage           = `page1`
                          defaulttransitionname = `flip`
                                      )->pages(
@@ -75,6 +75,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                                        title = `third page`
                                        id    = `page3` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

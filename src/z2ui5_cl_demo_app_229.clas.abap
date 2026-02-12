@@ -16,18 +16,18 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: ComboBox - Suggestions wrapping`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( text     = `Product`
+    lo_layout->label( text     = `Product`
                    labelfor = `wrappingComboBox` ).
-    layout->combobox( id = `wrappingComboBox`
+    lo_layout->combobox( id = `wrappingComboBox`
              )->item( key  = `1`
                       text = `Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, ` &&
                                        `sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ` &&
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
              )->item( key  = `3`
                       text = `Portable DVD Player with 9" LCD Monitor` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

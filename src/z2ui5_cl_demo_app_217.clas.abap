@@ -16,24 +16,24 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Placing a Title in OverflowToolbar/Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->overflow_toolbar( design = `Transparent`
+    DATA(lo_layout) = lo_page->overflow_toolbar( design = `Transparent`
                                            height = `3rem`
                           )->title( text = `Title Only` ).
-    page->overflow_toolbar( design = `Transparent`
+    lo_page->overflow_toolbar( design = `Transparent`
                             height = `3rem`
                           )->title( text = `Title and Actions`
                           )->toolbar_spacer(
                           )->button( icon = `sap-icon://group-2`
                           )->button( icon = `sap-icon://action-settings` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

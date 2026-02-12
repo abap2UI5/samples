@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_324 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     INTERFACES z2ui5_if_app.
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS call_dynpro.
 ENDCLASS.
 
@@ -13,24 +13,24 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     TRY.
-        IF client->check_on_init( ).
-          client->view_display( z2ui5_cl_xml_view=>factory(
-                                    )->page( shownavbutton  = client->check_app_prev_stack( )
-                                             navbuttonpress = client->_event_nav_app_leave( )
+        IF mo_client->check_on_init( ).
+          mo_client->view_display( z2ui5_cl_xml_view=>factory(
+                                    )->page( shownavbutton  = mo_client->check_app_prev_stack( )
+                                             navbuttonpress = mo_client->_event_nav_app_leave( )
                                     )->button( text  = `Call dynpro`
-                                               press = client->_event( `PRESS` )
+                                               press = mo_client->_event( `PRESS` )
                                     )->stringify( ) ).
         ENDIF.
 
-        IF client->check_on_event( `PRESS` ).
+        IF mo_client->check_on_event( `PRESS` ).
           call_dynpro( ).
         ENDIF.
 
       CATCH cx_root INTO DATA(x).
-        client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).
+        mo_client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).
     ENDTRY.
   ENDMETHOD.
 

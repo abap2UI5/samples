@@ -16,18 +16,18 @@ CLASS z2ui5_cl_demo_app_232 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `Sample: MultiInput - Suggestions wrapping`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( text     = `Product`
+    lo_layout->label( text     = `Product`
                    labelfor = `wrappingMultiInput` ).
-    layout->multi_input(
+    lo_layout->multi_input(
              id             = `wrappingMultiInput`
              placeholder    = `Enter product`
              showsuggestion = abap_true
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_232 IMPLEMENTATION.
                  )->item( key  = `3`
                           text = `Portable DVD Player with 9" LCD Monitor` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

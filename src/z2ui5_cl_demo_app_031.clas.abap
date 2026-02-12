@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
@@ -16,10 +16,10 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
         popup             TYPE string,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS on_render_main.
+    METHODS on_render_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -28,63 +28,63 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    app-get = client->get( ).
-    me->client = client.
+    app-get = mo_client->get( ).
+    me->mo_client = mo_client.
     app-popup = ``.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
+    on_render_main( ).
+    on_render_popup( ).
 
     CLEAR app-get.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
       WHEN `BACK`.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
+        mo_client->nav_app_leave( mo_client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN `POPUP`.
         app-popup = `TEST`.
       WHEN `DATA`.
-        client->message_box_display( `Event raised value:` && mv_value ).
+        mo_client->message_box_display( `Event raised value:` && mv_value ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_value  = `200`.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_main.
+  METHOD on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(lv_xml) = `<mvc:View ` && |\n| &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n| &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
-                        `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n| &&
-                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( `BACK`) && `"/>` && |\n| &&
+                        `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && mo_client->_bind( mv_value ) && `"/>` && |\n| &&
+                        `       <Button text="BACK" type="Emphasized" press="` && mo_client->_event( `BACK`) && `"/>` && |\n| &&
                         `       <Link target="_blank" text="Demo" href="https://twitter.com/abap2UI5/status/1645104539387691008"/>` && |\n| &&
                         `   </form:SimpleForm>  ` && |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( `POPUP` ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && mo_client->_event( `POPUP` ) && `"` && |\n| &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n| &&
                         `       <TileContent>` && |\n| &&
                         `           <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png" />` && |\n| &&
                         `       </TileContent>` && |\n| &&
                         `   </GenericTile>` && |\n| &&
                         |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && client->_event( `DATA` ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && mo_client->_event( `DATA` ) && `"` && |\n| &&
                         `       subheader="Subtitle" frameType= "TwoByHalf">` && |\n| &&
                         `       <TileContent />` && |\n| &&
                         `   </GenericTile>` && |\n| &&
@@ -149,17 +149,17 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `   </GenericTile>` && |\n| &&
                         `</mvc:View>`.
 
-    client->view_display( lv_xml ).
+    mo_client->view_display( lv_xml ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_popup.
+  METHOD on_render_popup.
 
     IF app-popup = `TEST`.
       DATA(lv_xml) = `<core:FragmentDefinition` && |\n| &&
                            `  xmlns="sap.m"` && |\n| &&
                            `  xmlns:core="sap.ui.core">` && |\n| &&
                            `  <ViewSettingsDialog` && |\n| &&
-                           `      confirm="` && client->_event_client( client->cs_event-popup_close ) && `">` && |\n| &&
+                           `      confirm="` && mo_client->_event_client( mo_client->cs_event-popup_close ) && `">` && |\n| &&
                            `      <sortItems>` && |\n| &&
                            `          <ViewSettingsItem text="Field 1" key="1" selected="true" />` && |\n| &&
                            `          <ViewSettingsItem text="Field 2" key="2" />` && |\n| &&
@@ -196,7 +196,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                            `  </ViewSettingsDialog>` && |\n| &&
                            `</core:FragmentDefinition>`.
 
-      client->popup_display( lv_xml ).
+      mo_client->popup_display( lv_xml ).
 
     ENDIF.
   ENDMETHOD.

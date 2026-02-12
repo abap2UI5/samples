@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
     DATA mo_app    TYPE REF TO z2ui5_cl_demo_app_094.
     DATA mv_val    TYPE string.
 
-    DATA client      TYPE REF TO z2ui5_if_client.
+    DATA mo_client      TYPE REF TO z2ui5_if_client.
     DATA mv_init     TYPE abap_bool.
 
     METHODS on_init.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA mo_page TYPE REF TO z2ui5_cl_xml_view.
 
 ENDCLASS.
 
@@ -71,54 +71,54 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     ASSIGN mr_screen->* TO <screen>.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    page = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    mo_page = lo_view->shell(
           )->page( title = `test` ).
 
-    DATA(o_grid) = page->grid( `L6 M12 S12`
+    DATA(lo_o_grid) = mo_page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(content) = o_grid->simple_form( title = `Input`
+    DATA(lo_content) = lo_o_grid->simple_form( title = `Input`
           )->content( `form` ).
 
-    content->label( `structure level 01`
-      )->input( client->_bind_edit( ms_screen-input )
+    lo_content->label( `structure level 01`
+      )->input( mo_client->_bind_edit( ms_screen-input )
       )->label( `ref data`
-      )->input( client->_bind_edit( <input> )
+      )->input( mo_client->_bind_edit( <input> )
       )->label( `ref data struc field`
-      )->input( client->_bind_edit( <screen>-input )
+      )->input( mo_client->_bind_edit( <screen>-input )
       )->label( `struc deep dissolve`
-      )->input( client->_bind_edit( ms_screen-ty_s_02-input )
+      )->input( mo_client->_bind_edit( ms_screen-ty_s_02-input )
       )->label( `struc deep switch guid name`
-      )->input( client->_bind_edit( ms_screen-ty_s_02-ty_s_03-ty_s_04-input )
+      )->input( mo_client->_bind_edit( ms_screen-ty_s_02-ty_s_03-ty_s_04-input )
       )->label( `instance attribute val`
-      )->input( client->_bind_edit( mo_app->mv_val )
+      )->input( mo_client->_bind_edit( mo_app->mv_val )
       )->label( `instance attribute struc`
-      )->input( client->_bind_edit( mo_app->ms_screen-input ) ).
+      )->input( mo_client->_bind_edit( mo_app->ms_screen-input ) ).
 
-    page->footer( )->overflow_toolbar(
+    mo_page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(
                    )->button(
                        text  = `Delete`
-                       press = client->_event( `BUTTON_DELETE` )
+                       press = mo_client->_event( `BUTTON_DELETE` )
                        type  = `Reject`
                        icon  = `sap-icon://delete`
                    )->button(
                        text  = `Add`
-                       press = client->_event( `BUTTON_ADD` )
+                       press = mo_client->_event( `BUTTON_ADD` )
                        type  = `Default`
                        icon  = `sap-icon://add`
                    )->button(
                        text  = `Save`
-                       press = client->_event( `BUTTON_SAVE` )
+                       press = mo_client->_event( `BUTTON_SAVE` )
                        type  = `Success` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init = abap_false.
       mv_init = abap_true.
@@ -127,6 +127,6 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     ENDIF.
 
     view_build( ).
-    client->message_toast_display( `server roundtrip` ).
+    mo_client->message_toast_display( `server roundtrip` ).
   ENDMETHOD.
 ENDCLASS.

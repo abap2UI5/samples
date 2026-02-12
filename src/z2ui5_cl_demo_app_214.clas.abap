@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Standalone Icon Tab Header`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->icon_tab_header( mode = `Inline`
+    DATA(lo_layout) = lo_page->icon_tab_header( mode = `Inline`
                           )->items(
                               )->icon_tab_filter( key  = `info`
                                                   text = `Info` )->get_parent(
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_214 IMPLEMENTATION.
                               )->icon_tab_filter( key  = `people`
                                                   text = `People` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

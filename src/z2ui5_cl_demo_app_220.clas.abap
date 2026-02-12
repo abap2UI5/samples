@@ -16,61 +16,61 @@ CLASS z2ui5_cl_demo_app_220 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Rating Indicator`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding` ).
-    layout->label( text     = `Rating Indicator default size`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding` ).
+    lo_layout->label( text     = `Rating Indicator default size`
                    labelfor = `RI_default` ).
-    layout->rating_indicator( id       = `RI_default`
+    lo_layout->rating_indicator( id       = `RI_default`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator with size L`
+    lo_layout->label( text     = `Rating Indicator with size L`
                    labelfor = `RI_L` ).
-    layout->rating_indicator( id       = `RI_L`
+    lo_layout->rating_indicator( id       = `RI_L`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               iconsize = `32px`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator with size M`
+    lo_layout->label( text     = `Rating Indicator with size M`
                    labelfor = `RI_M` ).
-    layout->rating_indicator( id       = `RI_M`
+    lo_layout->rating_indicator( id       = `RI_M`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               iconsize = `22px`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator with size S`
+    lo_layout->label( text     = `Rating Indicator with size S`
                    labelfor = `RI_S` ).
-    layout->rating_indicator( id       = `RI_S`
+    lo_layout->rating_indicator( id       = `RI_S`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               iconsize = `16px`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator with size XS`
+    lo_layout->label( text     = `Rating Indicator with size XS`
                    labelfor = `RI_XS` ).
-    layout->rating_indicator( id       = `RI_XS`
+    lo_layout->rating_indicator( id       = `RI_XS`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               iconsize = `12px`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator with non active state`
+    lo_layout->label( text     = `Rating Indicator with non active state`
                    labelfor = `RI_EnabledFalse` ).
-    layout->rating_indicator( id       = `RI_EnabledFalse`
+    lo_layout->rating_indicator( id       = `RI_EnabledFalse`
                               maxvalue = `5`
                               enabled  = `false`
                               class    = `sapUiSmallMarginBottom`
@@ -78,47 +78,47 @@ CLASS z2ui5_cl_demo_app_220 IMPLEMENTATION.
                               iconsize = `12px`
                               tooltip  = `Rating Tooltip` ).
 
-    layout->label( text     = `Rating Indicator display only`
+    lo_layout->label( text     = `Rating Indicator display only`
                    labelfor = `RI_display_only` ).
-    layout->rating_indicator( id          = `RI_display_only`
+    lo_layout->rating_indicator( id          = `RI_display_only`
                               maxvalue    = `5`
                               class       = `sapUiSmallMarginBottom`
                               value       = `4`
                               tooltip     = `Rating Tooltip`
                               displayonly = abap_true ).
 
-    layout->label( text     = `Rating Indicator readonly mode`
+    lo_layout->label( text     = `Rating Indicator readonly mode`
                    labelfor = `RI_read_only` ).
-    layout->rating_indicator( id       = `RI_read_only`
+    lo_layout->rating_indicator( id       = `RI_read_only`
                               maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               tooltip  = `Rating Tooltip`
                               editable = `false` ).
 
-    layout->label( text     = `Rating Indicator with different maxValue`
+    lo_layout->label( text     = `Rating Indicator with different maxValue`
                    labelfor = `RI_maxValue` ).
-    layout->rating_indicator( id       = `RI_maxValue`
+    lo_layout->rating_indicator( id       = `RI_maxValue`
                               maxvalue = `8`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               tooltip  = `Rating Tooltip` ).
-    layout->rating_indicator( maxvalue = `7`
+    lo_layout->rating_indicator( maxvalue = `7`
                               class    = `sapUiSmallMarginBottom`
                               value    = `4`
                               tooltip  = `Rating Tooltip` ).
-    layout->rating_indicator( maxvalue = `6`
+    lo_layout->rating_indicator( maxvalue = `6`
                               class    = `sapUiSmallMarginBottom`
                               value    = `3`
                               tooltip  = `Rating Tooltip` ).
-    layout->rating_indicator( maxvalue = `5`
+    lo_layout->rating_indicator( maxvalue = `5`
                               class    = `sapUiSmallMarginBottom`
                               value    = `2` ).
-    layout->rating_indicator( maxvalue = `4`
+    lo_layout->rating_indicator( maxvalue = `4`
                               class    = `sapUiSmallMarginBottom`
                               value    = `2` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

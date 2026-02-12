@@ -38,10 +38,10 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(simple_form) = popup->dialog( title        = `Test`
+    DATA(lo_simple_form) = lo_popup->dialog( title        = `Test`
                                        contentwidth = `60%`
                                        afterclose   = client->_event( `POPUP_CLOSE` )
           )->simple_form( title    = ``
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
                           editable = abap_true
           )->content( ns = `form` )->label( text = `Test` )->input( value = `TEST` ).
 
-    client->popup_display( popup->stringify( ) ).
+    client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
@@ -84,19 +84,19 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     result->mo_layout = io_layout.
 
     TRY.
-        DATA(comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( io_table ).
+        DATA(lo_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( io_table ).
       CATCH cx_root.
     ENDTRY.
 
     TRY.
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lo_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA result->mt_data     TYPE HANDLE new_table_desc.
-        CREATE DATA result->mt_data_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA result->ms_data_row TYPE HANDLE new_struct_desc.
+        CREATE DATA result->mt_data     TYPE HANDLE lv_new_table_desc.
+        CREATE DATA result->mt_data_tmp TYPE HANDLE lv_new_table_desc.
+        CREATE DATA result->ms_data_row TYPE HANDLE lv_new_struct_desc.
 
       CATCH cx_root.
     ENDTRY.

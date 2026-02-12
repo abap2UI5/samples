@@ -38,10 +38,10 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 
@@ -51,18 +51,18 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
 
-      z2ui5_view_display( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_nodes = VALUE #( ( id = `1` lane = `0` title = `Sales Order 1` titleabbreviation = `SO 1` children = VALUE #( ( 10 ) ( 11 ) ( 12 ) ) state = `Positive` statetext = `OK status` focused = abap_true
                           highlighted = abap_false texts = VALUE #( ( `Sales Order Document Overdue long text for the wrap up all the aspects` ) ( `Not cleared` ) ) )
@@ -82,24 +82,24 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
                         ( id = `2` icon = `sap-icon://payment-approval` label = `Invoicing` position = 2 ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
         title          = `abap2UI5 - Process Flow`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
+        navbuttonpress = mo_client->_event_nav_app_leave( )
+        shownavbutton  = mo_client->check_app_prev_stack( )
         class          = `sapUiContentPadding` ).
 
-    DATA(process_flow) = page->process_flow(
+    DATA(lo_process_flow) = lo_page->process_flow(
         id            = `processflow1`
         scrollable    = abap_true
         wheelzoomable = abap_false
         foldedcorners = abap_true
-        nodepress     = client->_event( `NODE_PRESS` )
-        nodes         = client->_bind_edit( mt_nodes )
-        lanes         = client->_bind_edit( mt_lanes )
+        nodepress     = mo_client->_event( `NODE_PRESS` )
+        nodes         = mo_client->_bind_edit( mt_nodes )
+        lanes         = mo_client->_bind_edit( mt_lanes )
       )->nodes( ns = `commons`
         )->process_flow_node(
           laneid            = `{LANE}`
@@ -120,6 +120,6 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
           text     = `{LABEL}`
           position = `{POSITION}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

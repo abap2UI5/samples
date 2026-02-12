@@ -3,7 +3,7 @@ CLASS zcl_2ui5_lock DEFINITION DEFERRED.
 
 CLASS zcl_2ui5_start DEFINITION INHERITING FROM z2ui5_cl_demo_app_351.
   PUBLIC SECTION.
-    DATA text TYPE string VALUE `call booking mask`.
+    DATA mv_text TYPE string VALUE `call booking mask`.
     METHODS z2ui5_if_app~main                       REDEFINITION.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -30,16 +30,16 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
 
     TRY.
         IF client->check_on_init( ) OR client->check_on_navigated( )..
-          DATA(view) = z2ui5_cl_xml_view=>factory( ).
-          DATA(page) = view->shell( )->page(
+          DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+          DATA(lo_page) = lo_view->shell( )->page(
             title = `Startview` ).
-          page->simple_form(
+          lo_page->simple_form(
                 )->content( `form`
                              )->button(
-                                 text  = client->_bind_edit( text )
+                                 text  = client->_bind_edit( mv_text )
                                  width = `20%`
                                  press = client->_event( `CALL_BOOKING_MASK` ) ).
-          client->view_display( view->stringify( ) ).
+          client->view_display( lo_view->stringify( ) ).
           client->set_app_state_active( ).
           RETURN.
         ENDIF.
@@ -63,12 +63,12 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
 
   METHOD initialize_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page(
       title          = `Stateful Application with lock`
       navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
-    DATA(vbox) = page->vbox( ).
+    DATA(vbox) = lo_page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->title(
       text = `Current Lock Value in Table ZTEST` ).
@@ -78,7 +78,7 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     hbox->button(
       text  = `Next Lock View`
       press = client->_event( `NEXT_LOCK` ) ).
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD set_session_stateful.

@@ -22,73 +22,73 @@ CLASS z2ui5_cl_demo_app_068 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       END OF ty_prodh_node_level1,
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
 
-    DATA prodh_nodes    TYPE ty_prodh_nodes.
-    DATA is_initialized TYPE abap_bool.
+    DATA mv_prodh_nodes    TYPE ty_prodh_nodes.
+    DATA mv_initialized TYPE abap_bool.
 
-    METHODS ui5_display_view
+    METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS ui5_initialize.
-    METHODS ui5_display_popup_tree_select.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
+    METHODS initialize.
+    METHODS display_popup_tree_select.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
-  METHOD ui5_display_popup_tree_select.
+  METHOD display_popup_tree_select.
 
-    DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
+    DATA(lo_dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title         = `Choose Product here...`
                    contentheight = `50%`
                    contentwidth  = `50%` ).
 
-    dialog->tree(
+    lo_dialog->tree(
         mode  = `SingleSelectMaster`
-        items = client->_bind_edit( prodh_nodes )
+        items = mo_client->_bind_edit( mv_prodh_nodes )
         )->items(
             )->standard_tree_item( selected = `{IS_SELECTED}`
                                    title    = `{TEXT}` ).
 
-    dialog->buttons(
+    lo_dialog->buttons(
         )->button( text = `Continue`
                icon     = `sap-icon://accept`
                type     = `Accept`
-               press    = client->_event( `CONTINUE` )
+               press    = mo_client->_event( `CONTINUE` )
         )->button( text = `Cancel`
                icon     = `sap-icon://decline`
                type     = `Reject`
-               press    = client->_event( `CANCEL` ) ).
+               press    = mo_client->_event( `CANCEL` ) ).
 
-    client->popup_display( dialog->stringify( ) ).
+    mo_client->popup_display( lo_dialog->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_display_view.
+  METHOD display_view.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(lo_page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title           = `abap2UI5 - Popup Tree select Entry`
-            navbuttonpress  = client->_event_nav_app_leave( )
+            navbuttonpress  = mo_client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    page->header_content(
+    lo_page->header_content(
              )->link( text   = `Demo`
                       target = `_blank`
                       href   = `https://twitter.com/abap2UI5/status/1680261069535584259`
              )->link(
          )->get_parent( ).
 
-    client->view_display( page->button( text  = `Open Popup here...`
-                                        press = client->_event( `POPUP_TREE` ) )->stringify( ) ).
+    mo_client->view_display( lo_page->button( text  = `Open Popup here...`
+                                        press = mo_client->_event( `POPUP_TREE` ) )->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_initialize.
+  METHOD initialize.
 
-    prodh_nodes =
+    mv_prodh_nodes =
       VALUE #( ( text = `Machines`
                prodh  = `00100`
                nodes  = VALUE #( ( text = `Pumps`
@@ -112,22 +112,22 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF is_initialized = abap_false.
-      is_initialized = abap_true.
-      ui5_initialize( ).
-      ui5_display_view( client ).
+    IF mv_initialized = abap_false.
+      mv_initialized = abap_true.
+      initialize( ).
+      display_view( mo_client ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `POPUP_TREE`.
-        ui5_display_popup_tree_select( ).
+        display_popup_tree_select( ).
       WHEN `CONTINUE`.
-        client->popup_destroy( ).
-        client->message_box_display( `Selected entry is set in the backend` ).
+        mo_client->popup_destroy( ).
+        mo_client->message_box_display( `Selected entry is set in the backend` ).
       WHEN `CANCEL`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

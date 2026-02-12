@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA av_init TYPE abap_bool .
+    DATA mv_init TYPE abap_bool .
   PROTECTED SECTION.
     METHODS display_view
       IMPORTING
@@ -45,11 +45,9 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
     lr_wiz_step2->message_strip( text = `STEP2` ).
     lr_wiz_step2->button(
-*      EXPORTING
         text  = `Press Step 2.2`
         press = client->_event(`STEP22` ) ).
     lr_wiz_step2->button(
-*      EXPORTING
         text  = `Press Step 2.3`
         press = client->_event( `STEP23` ) ).
 
@@ -70,15 +68,14 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
     lr_wiz_step3->message_strip( text = `STEP3` ).
 
-*
     client->view_display( lr_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    IF av_init = abap_false.
+    IF mv_init = abap_false.
       display_view( client ).
-      av_init = `X`.
+      mv_init = abap_true.
       RETURN.
     ENDIF.
 

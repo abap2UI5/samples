@@ -11,14 +11,14 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
         descr TYPE string,
         info  TYPE string,
       END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_scrollupdate TYPE abap_bool.
 
-    DATA field_01  TYPE string.
-    DATA field_02 TYPE string.
-    DATA selstart TYPE string.
-    DATA selend TYPE string.
+    DATA mv_field_01  TYPE string.
+    DATA mv_field_02 TYPE string.
+    DATA mv_selstart TYPE string.
+    DATA mv_selend TYPE string.
 
     DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
 
@@ -40,37 +40,37 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = `this is a description` ).
     DO 100 TIMES.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = view->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( )->shell( ).
+    DATA(lo_page) = lo_view->page(
         id             = `id_page`
         title          = `abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)`
         navbuttonpress = client->_event( `BACK` )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->_z2ui5( )->scrolling(
+    lo_page->_z2ui5( )->scrolling(
           setupdate = client->_bind_edit( mv_scrollupdate )
           items     = client->_bind_edit( mt_scroll ) ).
 
-    DATA(tab) = page->table( sticky     = `ColumnHeaders,HeaderToolbar`
+    DATA(lo_tab) = lo_page->table( sticky     = `ColumnHeaders,HeaderToolbar`
                              headertext = `Table with some entries`
-                             items      = client->_bind( t_tab ) ).
+                             items      = client->_bind( mt_tab ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column( )->text( `Title` )->get_parent(
         )->column( )->text( `Color` )->get_parent(
         )->column( )->text( `Info` )->get_parent(
         )->column( )->text( `Description` ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{TITLE}`
        )->text( `{VALUE}`
        )->text( `{INFO}`
       )->text( `{DESCR}` ).
 
-    page->footer( )->overflow_toolbar(
+    lo_page->footer( )->overflow_toolbar(
          )->button( text  = `Scroll Top`
                     press = client->_event( `BUTTON_SCROLL_TOP` )
          )->button( text  = `Scroll 500 up`
@@ -80,15 +80,15 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
          )->button( text  = `Scroll Bottom`
                     press = client->_event( `BUTTON_SCROLL_BOTTOM` ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD init.
 
-    field_01 = `this is a text`.
-    field_02 = `this is another text`.
-    selstart = `3`.
-    selend = `7`.
+    mv_field_01 = `this is a text`.
+    mv_field_02 = `this is another text`.
+    mv_selstart = `3`.
+    mv_selend = `7`.
 
     INSERT VALUE #( n = `id_page` ) INTO TABLE mt_scroll.
     display_view( client ).

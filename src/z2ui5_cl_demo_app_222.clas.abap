@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_222 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Icon Tab Bar - Text and Count`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->icon_tab_bar( id       = `idIconTabBarFiori2`
+    DATA(lo_layout) = lo_page->icon_tab_bar( id       = `idIconTabBarFiori2`
                                        expanded = `{device>/isNoPhone}`
                                        class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_222 IMPLEMENTATION.
                                                   count = `34`
                                                   )->text( text = `People content goes here ...` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

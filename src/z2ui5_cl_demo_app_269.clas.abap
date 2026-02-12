@@ -6,15 +6,15 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     METHODS display_view.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       display_view( ).
     ENDIF.
 
@@ -22,17 +22,17 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->shell_bar(
+    lo_view->shell_bar(
         title               = `Shell Bar`
         secondtitle         = `with title mega menu`
         homeicon            = `https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/documentation/sdk/images/logo_sap.png`
-        shownavbutton       = client->check_app_prev_stack( )
+        shownavbutton       = mo_client->check_app_prev_stack( )
         showsearch          = abap_true
         shownotifications   = abap_true
         notificationsnumber = `2`
-        navbuttonpressed    = client->_event_nav_app_leave( )
+        navbuttonpressed    = mo_client->_event_nav_app_leave( )
         )->_generic( name = `menu`
                      ns   = `f`
             )->_generic( name = `Menu`
@@ -47,9 +47,9 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
             )->avatar( ns       = `f`
                        initials = `UI` ).
 
-    DATA(xml) = view->stringify( ).
+    DATA(lo_xml) = lo_view->stringify( ).
 
-    client->view_display( xml ).
+    mo_client->view_display( lo_xml ).
   ENDMETHOD.
 
 ENDCLASS.

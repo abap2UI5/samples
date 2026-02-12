@@ -16,11 +16,11 @@ CLASS z2ui5_cl_demo_app_011 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA check_editable_active TYPE abap_bool.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mv_check_editable_active TYPE abap_bool.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
   PRIVATE SECTION.
@@ -30,39 +30,39 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title           = `abap2UI5 - Tables and editable`
-                navbuttonpress  = client->_event_nav_app_leave( )
+                navbuttonpress  = mo_client->_event_nav_app_leave( )
                   shownavbutton = abap_true
                   id            = `test2` ).
 
-    DATA(tab) = page->table(
-            items = `{path: '` && client->_bind_edit( val = t_tab path = abap_true ) && `' , templateShareable: false }`
+    DATA(lo_tab) = lo_page->table(
+            items = `{path: '` && mo_client->_bind_edit( val = mt_tab path = abap_true ) && `' , templateShareable: false }`
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( `title of the table`
                 )->button(
                     text  = `test`
-                    press = client->_event( `BUTTON_TEST` )
+                    press = mo_client->_event( `BUTTON_TEST` )
                 )->toolbar_spacer(
                 )->button(
                     icon  = `sap-icon://delete`
                     text  = `delete selected row`
-                    press = client->_event( `BUTTON_DELETE` )
+                    press = mo_client->_event( `BUTTON_DELETE` )
                 )->button(
                     icon  = `sap-icon://add`
                     text  = `add`
-                    press = client->_event( `BUTTON_ADD` )
+                    press = mo_client->_event( `BUTTON_ADD` )
                 )->button(
                     icon  = `sap-icon://edit`
-                    text  = SWITCH #( check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
-                    press = client->_event( `BUTTON_EDIT` )
+                    text  = SWITCH #( mv_check_editable_active WHEN abap_true THEN |display| ELSE |edit| )
+                    press = mo_client->_event( `BUTTON_EDIT` )
         )->get_parent( )->get_parent( ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Title` )->get_parent(
         )->column(
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         )->column(
             )->text( `Checkbox` ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
+    lo_tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->input( value   = `{TITLE}`
                     enabled = `{EDITABLE}`
@@ -88,17 +88,17 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
           )->checkbox( selected = `{CHECKBOX}`
                        enabled  = `{EDITABLE}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      check_editable_active = abap_false.
-      t_tab = VALUE #(
+      mv_check_editable_active = abap_false.
+      mt_tab = VALUE #(
           ( title = `entry 01`  value = `red`    info = `completed`  descr = `this is a description` checkbox = abap_true )
           ( title = `entry 02`  value = `blue`   info = `completed`  descr = `this is a description` checkbox = abap_true )
           ( title = `entry 03`  value = `green`  info = `completed`  descr = `this is a description` checkbox = abap_true )
@@ -111,19 +111,19 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_EDIT`.
-        check_editable_active = xsdbool( check_editable_active = abap_false ).
-        LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
-          lr_tab->editable = check_editable_active.
+        mv_check_editable_active = xsdbool( mv_check_editable_active = abap_false ).
+        LOOP AT mt_tab REFERENCE INTO DATA(lr_tab).
+          lr_tab->editable = mv_check_editable_active.
         ENDLOOP.
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `BUTTON_DELETE`.
-        DELETE t_tab WHERE selkz = abap_true.
-        client->view_model_update( ).
+        DELETE mt_tab WHERE selkz = abap_true.
+        mo_client->view_model_update( ).
       WHEN `BUTTON_ADD`.
-        INSERT VALUE #( ) INTO TABLE t_tab.
-        client->view_model_update( ).
+        INSERT VALUE #( ) INTO TABLE mt_tab.
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

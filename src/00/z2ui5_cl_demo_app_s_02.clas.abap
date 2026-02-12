@@ -1,10 +1,10 @@
 CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA instance_counter TYPE i READ-ONLY.
-    DATA check_initialized TYPE abap_bool READ-ONLY.
-    DATA session_is_stateful TYPE abap_bool READ-ONLY.
-    DATA session_text TYPE string READ-ONLY.
+    DATA mv_instance_counter TYPE i READ-ONLY.
+    DATA mv_check_initialized TYPE abap_bool READ-ONLY.
+    DATA mv_session_is_stateful TYPE abap_bool READ-ONLY.
+    DATA mv_session_text TYPE string READ-ONLY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -30,8 +30,8 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
     TRY.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+        IF mv_check_initialized = abap_false.
+          mv_check_initialized = abap_true.
           initialize_view( client ).
         ENDIF.
 
@@ -47,34 +47,34 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
       title          = `abap2UI5 - Sample: Sticky Session`
       navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(vbox) = page->vbox( ).
-    vbox->info_label( text = client->_bind( session_text ) ).
+    DATA(lo_vbox) = lo_page->vbox( ).
+    lo_vbox->info_label( text = client->_bind( mv_session_text ) ).
 
-    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
-    hbox->label( text  = `press button to increment counter in backend session`
+    DATA(lo_hbox) = lo_vbox->hbox( alignitems = `Center` ).
+    lo_hbox->label( text  = `press button to increment counter in backend session`
                  class = `sapUiTinyMarginEnd` ).
-    hbox->button(
-      text  = client->_bind( instance_counter )
+    lo_hbox->button(
+      text  = client->_bind( mv_instance_counter )
       press = client->_event( `INCREMENT` )
       type  = `Emphasized` ).
 
-    hbox = vbox->hbox( ).
-    hbox->button(
+    lo_hbox = lo_vbox->hbox( ).
+    lo_hbox->button(
       text  = `End session`
       press = client->_event( `END_SESSION` ) ).
 
-    hbox->button(
+    lo_hbox->button(
       text  = `Start session again`
       press = client->_event( `START_SESSION` ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
                               stateful = abap_false ).
         client->nav_app_leave( ).
       WHEN `INCREMENT`.
-        instance_counter = lcl_static_container=>increment( ).
+        mv_instance_counter = lcl_static_container=>increment( ).
         client->view_model_update( ).
       WHEN `END_SESSION`.
         set_session_stateful( client   = client
@@ -99,11 +99,11 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
   METHOD set_session_stateful.
 
     client->set_session_stateful( stateful ).
-    session_is_stateful = stateful.
+    mv_session_is_stateful = stateful.
     IF stateful = abap_true.
-      session_text = `Session ON (stateful)`.
+      mv_session_text = `Session ON (stateful)`.
     ELSE.
-      session_text = `Session OFF (stateless)`.
+      mv_session_text = `Session OFF (stateless)`.
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.

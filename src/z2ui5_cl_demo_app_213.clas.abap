@@ -16,22 +16,22 @@ CLASS z2ui5_cl_demo_app_213 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Input - Password`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( text     = `Password`
+    lo_layout->label( text     = `Password`
                    labelfor = `passwordInput` ).
-    layout->input( id          = `passwordInput`
+    lo_layout->input( id          = `passwordInput`
                    type        = `Password`
                    placeholder = `Enter password` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

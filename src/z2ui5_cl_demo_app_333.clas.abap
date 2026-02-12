@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_333.
 
-    CLASS-DATA cv_value TYPE c LENGTH 10 VALUE `STRUCT`.
+    CLASS-DATA mv_value TYPE c LENGTH 10 VALUE `STRUCT`.
 
   PROTECTED SECTION.
 
@@ -56,18 +56,18 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
 
     result = NEW #( ).
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data ).
+    DATA(lt_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( i_data ).
 
-    DATA(index) = 0.
+    DATA(lv_index) = 0.
 
-    LOOP AT t_comp INTO DATA(comp).
+    LOOP AT lt_comp INTO DATA(comp).
 
-      index = index + 1.
+      lv_index = lv_index + 1.
 
       APPEND INITIAL LINE TO result->ms_data-t_layout REFERENCE INTO DATA(layout).
 
       layout->name = comp-name.
-      IF index <= vis_cols.
+      IF lv_index <= vis_cols.
         layout->visible = abap_true.
       ENDIF.
 

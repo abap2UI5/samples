@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_349 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -41,17 +41,17 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
                                                       vis_cols = 5 ).
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_data )
                                                         vis_cols = 3 ).
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF client->check_on_event( `GO` ).
-      DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
-      client->nav_app_call( app ).
+      DATA(lo_app) = z2ui5_cl_demo_app_336=>factory( ).
+      client->nav_app_call( lo_app ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -80,54 +80,54 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `CALL Next App`
+    lo_page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
                   type  = `Success` ).
 
-    xml_table( i_page   = page
+    xml_table( i_page   = lo_page
                i_client = client ).
 
-    xml_form( i_page   = page
+    xml_form( i_page   = lo_page
               i_client = client ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD xml_table.
 
-    DATA(table) = i_page->table( width = `auto`
+    DATA(lo_table) = i_page->table( width = `auto`
                                  items = i_client->_bind_edit( mt_data ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA(lo_columns) = lo_table->columns( ).
 
     LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
-      columns->column( visible = i_client->_bind( val       = layout->visible
+      lo_columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = mo_layout_obj->ms_data-t_layout
                                                   tab_index = lv_index )
         )->text( layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA(lo_column_list_item) = lo_columns->get_parent( )->items(
                                        )->column_list_item( valign = `Middle`
                                                             type   = `Inactive` ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA(lo_cells) = lo_column_list_item->cells( ).
 
     LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
-      cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
+      lo_cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
   ENDMETHOD.
@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
   METHOD xml_form.
 
-    DATA(form) = i_page->simple_form( editable        = abap_true
+    DATA(lo_form) = i_page->simple_form( editable        = abap_true
                                       layout          = `ResponsiveGridLayout`
                                       adjustlabelspan = abap_true
                                  )->content( ns = `form` ).
@@ -164,10 +164,10 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
         RETURN.
       ENDIF.
 
-      DATA(line) = form->label( wrapping = abap_false
+      DATA(lo_line) = lo_form->label( wrapping = abap_false
                                 text     = layout->name ).
 
-      line->input( value   = i_client->_bind( <value> )
+      lo_line->input( value   = i_client->_bind( <value> )
                    visible = i_client->_bind( val       = layout->visible
                                               tab       = mo_layout_obj->ms_data-t_layout
                                               tab_index = index )

@@ -11,14 +11,14 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
     CASE abap_true.
       WHEN client->check_on_init( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory( ).
-        view->shell(
+        DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+        lo_view->shell(
             )->page( title          = `abap2UI5 - Popup To Confirm`
                      navbuttonpress = client->_event_nav_app_leave( )
                      shownavbutton  = client->check_app_prev_stack( )
             )->button( text  = `Open Popup...`
                        press = client->_event( `POPUP` ) ).
-        client->view_display( view->stringify( ) ).
+        client->view_display( lo_view->stringify( ) ).
       WHEN client->check_on_event( `POPUP` ).
 
         DATA(lo_app) = z2ui5_cl_pop_to_confirm=>factory( i_question_text = `this is a question`

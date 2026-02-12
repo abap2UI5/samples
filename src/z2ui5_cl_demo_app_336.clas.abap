@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -31,24 +31,24 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
                                                         vis_cols = 3 ).
 
-      ui5_view_display( client ).
+      view_display( client ).
 
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `BACK`
+    lo_page->button( text  = `BACK`
                   press = client->_event_nav_app_leave( )
                   type  = `Success` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD factory.

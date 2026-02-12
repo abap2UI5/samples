@@ -11,8 +11,8 @@ CLASS z2ui5_cl_demo_app_118 DEFINITION PUBLIC FINAL CREATE PUBLIC.
            END OF s_row.
     TYPES t_rows TYPE STANDARD TABLE OF s_row WITH EMPTY KEY.
 
-    DATA problematic_rows TYPE t_rows.
-    DATA these_are_fine_rows TYPE t_rows.
+    DATA mv_problematic_rows TYPE t_rows.
+    DATA mv_these_are_fine_rows TYPE t_rows.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      problematic_rows = VALUE #(
+      mv_problematic_rows = VALUE #(
         ( id = 1 descr = `filled with the actual date and time in correct format` adate = sy-datum atime = sy-uzeit )
         ( id = 2 descr = `correct init values` adate = `00000000` atime = `000000` )
         ( id = 3 descr = `correct init values by ignoring` )
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
         ( id = 5 descr = `this raises an exception now` adate = ``  atime = `` )
         ( id = 6 descr = `Fifth row` adate = sy-datum atime = sy-uzeit ) ).
 
-      these_are_fine_rows = VALUE #(
+      mv_these_are_fine_rows = VALUE #(
         ( id = 1 descr = `First row` adate = sy-datum atime = sy-uzeit )
         ( id = 2 descr = `Second row` adate = 0 atime = 0 )
         ( id = 3 descr = `Third row` adate = 0 atime = 0 )
@@ -40,19 +40,19 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->_z2ui5( )->title( `ABAP2UI5 Weird behavior showcase` )->shell(
+    DATA(lo_page) = lo_view->_z2ui5( )->title( `ABAP2UI5 Weird behavior showcase` )->shell(
         )->page(
             title          = `ABAP2UI5 Weird behavior showcase`
             navbuttonpress = client->_event_nav_app_leave( )
             showheader     = abap_true ).
 
-    DATA(tab_ko) = page->table(
+    DATA(lo_tab_ko) = lo_page->table(
                         mode  = `MultiSelect`
-                        items = client->_bind_edit( problematic_rows ) ).
+                        items = client->_bind_edit( mv_problematic_rows ) ).
 
-    tab_ko->header_toolbar(
+    lo_tab_ko->header_toolbar(
             )->toolbar(
                 )->title( |This table has the weird behavior|
                 )->toolbar_spacer(
@@ -61,13 +61,13 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                     icon  = `sap-icon://blur`
                     press = client->_event( `ON_BTN_GO` ) ).
 
-    tab_ko->columns(
+    lo_tab_ko->columns(
             )->column( )->text( `ID` )->get_parent(
             )->column( )->text( `Description` )->get_parent(
             )->column( )->text( `Date ` )->get_parent(
             )->column( )->text( `Time` ).
 
-    tab_ko->items(
+    lo_tab_ko->items(
          )->column_list_item(
              )->cells(
                  )->object_identifier( title = `{ID}` )->get_parent(
@@ -75,21 +75,21 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->text( `{ADATE}`
                  )->text( `{ATIME}` ).
 
-    DATA(tab_ok) = page->table(
+    DATA(lo_tab_ok) = lo_page->table(
                         mode  = `MultiSelect`
-                        items = client->_bind_edit( these_are_fine_rows ) ).
+                        items = client->_bind_edit( mv_these_are_fine_rows ) ).
 
-    tab_ok->header_toolbar(
+    lo_tab_ok->header_toolbar(
             )->toolbar(
                 )->title( |This table is fine| ).
 
-    tab_ok->columns(
+    lo_tab_ok->columns(
             )->column( )->text( `ID` )->get_parent(
             )->column( )->text( `Description` )->get_parent(
             )->column( )->text( `Date ` )->get_parent(
             )->column( )->text( `Time` ).
 
-    tab_ok->items(
+    lo_tab_ok->items(
          )->column_list_item(
              )->cells(
                  )->object_identifier( title = `{ID}` )->get_parent(
@@ -97,6 +97,6 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->text( `{ADATE}`
                  )->text( `{ATIME}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

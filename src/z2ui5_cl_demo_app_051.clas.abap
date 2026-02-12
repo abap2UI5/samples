@@ -24,32 +24,32 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Label Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( text     = `Input mandatory`
+    lo_layout->label( text     = `Input mandatory`
                    labelfor = `input1` ).
-    layout->input( id       = `input1`
+    lo_layout->input( id       = `input1`
                    required = abap_true ).
 
-    layout->label( text     = `Input bold`
+    lo_layout->label( text     = `Input bold`
                    labelfor = `input2`
                    design   = `Bold` ).
-    layout->input( id    = `input2`
+    lo_layout->input( id    = `input2`
                    value = client->_bind_edit( screen-input2 ) ).
 
-    layout->label( text     = `Input normal`
+    lo_layout->label( text     = `Input normal`
                    labelfor = `input3` ).
-    layout->input( id    = `input3`
+    lo_layout->input( id    = `input3`
                    value = client->_bind_edit( screen-input3 ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

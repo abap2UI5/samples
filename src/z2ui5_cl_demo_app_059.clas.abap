@@ -21,11 +21,11 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS on_event.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -34,34 +34,34 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_event( `BUTTON_SEARCH` ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_event( `BUTTON_SEARCH` ).
+      set_data( ).
       z2ui5_cl_util=>itab_filter_by_val(
           EXPORTING
-              val = client->get_event_arg( 1 )
+              val = mo_client->get_event_arg( 1 )
           CHANGING
               tab = mt_table ).
 
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -72,37 +72,37 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
         ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page1) = view->shell( )->page( id = `page_main`
+    DATA(lo_page1) = lo_view->shell( )->page( id = `page_main`
             title                          = `abap2UI5 - Search Field with Backend Live Change`
-            navbuttonpress                 = client->_event_nav_app_leave( )
-            shownavbutton                  = client->check_app_prev_stack( ) ).
+            navbuttonpress                 = mo_client->_event_nav_app_leave( )
+            shownavbutton                  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(lo_box) = page1->vbox( )->text( `Search`
+    DATA(lo_box) = lo_page1->vbox( )->text( `Search`
         )->search_field( width      = `17.5rem`
-                         livechange = client->_event(
+                         livechange = mo_client->_event(
             val    = `BUTTON_SEARCH`
             t_arg  = VALUE #( ( `${$source>/value}` ) )
             s_ctrl = VALUE #( check_allow_multi_req = abap_true ) ) ).
 
-    DATA(tab) = lo_box->table( client->_bind( mt_table ) ).
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_tab) = lo_box->table( mo_client->_bind( mt_table ) ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

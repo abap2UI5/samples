@@ -33,11 +33,11 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     CONSTANTS c_rcb TYPE string VALUE `}` ##NO_TEXT.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    METHODS on_init .
+    METHODS on_event .
+    METHODS set_data .
   PRIVATE SECTION.
 
     METHODS set_filter .
@@ -47,70 +47,70 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    IF client->check_on_event( `OnSelectIconTabBar` ).
-      client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
+    IF mo_client->check_on_event( `OnSelectIconTabBar` ).
+      mo_client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
       set_filter( ).
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( id = `page_main`
-           showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
+    DATA(lo_page) = lo_view->shell( )->page( id = `page_main`
+           showheader                     = xsdbool( abap_false = mo_client->get( )-check_launchpad_active )
             title                         = `abap2UI5 - IconTabBar`
-            navbuttonpress                = client->_event_nav_app_leave( )
-            shownavbutton                 = client->check_app_prev_stack( )
+            navbuttonpress                = mo_client->_event_nav_app_leave( )
+            shownavbutton                 = mo_client->check_app_prev_stack( )
             class                         = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
-                                         selectedkey = client->_bind_edit( lv_selectedkey )
-                                         select      = client->_event( val = `OnSelectIconTabBar` t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
-    lo_items->icon_tab_filter( count   = client->_bind_edit( lv_cnt_total )
+    DATA(lo_items) = lo_page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
+                                         selectedkey = mo_client->_bind_edit( lv_selectedkey )
+                                         select      = mo_client->_event( val = `OnSelectIconTabBar` t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
+    lo_items->icon_tab_filter( count   = mo_client->_bind_edit( lv_cnt_total )
                                text    = `Products`
                                key     = `ALL`
                                showall = abap_true ).
     lo_items->icon_tab_separator( ).
     lo_items->icon_tab_filter( icon      = `sap-icon://begin`
                                iconcolor = `Positive`
-                               count     = client->_bind_edit( lv_cnt_pos )
+                               count     = mo_client->_bind_edit( lv_cnt_pos )
                                text      = `OK`
                                key       = `OK` ).
     lo_items->icon_tab_filter( icon      = `sap-icon://compare`
                                iconcolor = `Critical`
-                               count     = client->_bind_edit( lv_cnt_heavy )
+                               count     = mo_client->_bind_edit( lv_cnt_heavy )
                                text      = `Heavy`
                                key       = `HEAVY` ).
     lo_items->icon_tab_filter( icon      = `sap-icon://inventory`
                                iconcolor = `Negative`
-                               count     = client->_bind_edit( lv_cnt_neg )
+                               count     = mo_client->_bind_edit( lv_cnt_neg )
                                text      = `Overweight`
                                key       = `OVERWEIGHT` ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    DATA(lo_tab) = lo_page->scroll_container( height   = `70%`
                                         vertical = abap_true
        )->table(
            inset          = abap_false
            showseparators = `Inner`
            headertext     = `Products`
-           items          = client->_bind( mt_table ) ).
+           items          = mo_client->_bind( mt_table ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column( width = `12em`
             )->text( `Product` )->get_parent(
         )->column( minscreenwidth = `Tablet`
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
          )->column( halign = `End`
              )->text( `Rating` ).
 
-    tab->items(
+    lo_tab->items(
         )->column_list_item(
            )->cells(
              )->object_identifier( text  = `{PRODUCTNAME}`
@@ -143,10 +143,10 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
                    state  = `{STATE_PRICE}`
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30` dimunit = `CM` measure = 100  unit = `ST` price = `1000.50` waers = `EUR`  state_price = `Success` rating = `0` state_measure = `Warning` )
@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
   METHOD set_filter.
 
-    z2ui5_set_data( ).
+    set_data( ).
     CASE lv_selectedkey.
       WHEN `ALL`.
       WHEN `OK`.

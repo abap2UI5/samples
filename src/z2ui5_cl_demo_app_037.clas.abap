@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     DATA mv_load_cc    TYPE abap_bool.
     DATA mv_display_cc TYPE abap_bool.
@@ -17,9 +17,9 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-    METHODS z2ui5_load_cc.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
+    METHODS load_cc.
+    METHODS on_event.
+    METHODS on_render.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -67,70 +67,70 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_on_render( ).
+    IF mo_client->check_on_init( ).
+      on_render( ).
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_load_cc.
+  METHOD load_cc.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
+    mo_client->view_display( z2ui5_cl_xml_view=>factory(
          )->_generic( ns   = `html`
                       name = `script` )->_cc_plain_xml( get_js_custom_control( )
          )->_z2ui5( )->timer(
-                finished = client->_event( `DISPLAY_VIEW` )
+                finished = mo_client->_event( `DISPLAY_VIEW` )
                 delayms  = `0`
          )->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `DISPLAY_VIEW`.
-        z2ui5_on_render( ).
+        on_render( ).
       WHEN `POST`.
-        client->message_toast_display( client->get_event_arg( 1 ) ).
+        mo_client->message_toast_display( mo_client->get_event_arg( 1 ) ).
       WHEN `LOAD_CC`.
         mv_load_cc = abap_true.
-        z2ui5_load_cc( ).
-        client->message_box_display( `Custom Control loaded ` ).
+        load_cc( ).
+        mo_client->message_box_display( `Custom Control loaded ` ).
       WHEN `DISPLAY_CC`.
         mv_display_cc = abap_true.
-        z2ui5_on_render( ).
-        client->message_box_display( `Custom Control displayed ` ).
+        on_render( ).
+        mo_client->message_box_display( `Custom Control displayed ` ).
       WHEN `MYCC`.
-        client->message_toast_display( `Custom Control input: ` && mv_value ).
+        mo_client->message_toast_display( `Custom Control input: ` && mv_value ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render.
+  METHOD on_render.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lv_xml) = `<mvc:View` && |\n| &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n| &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event_nav_app_leave( ) && `" ` && |\n| &&
+                          `  press="` && mo_client->_event_nav_app_leave( ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
-                          `<m:Button text="Load Custom Control"    press="` && client->_event( `LOAD_CC` )    && `" />` && |\n| &&
-                          `<m:Button text="Display Custom Control" press="` && client->_event( `DISPLAY_CC` ) && `" />` && |\n| &&
+                          `<m:Button text="Load Custom Control"    press="` && mo_client->_event( `LOAD_CC` )    && `" />` && |\n| &&
+                          `<m:Button text="Display Custom Control" press="` && mo_client->_event( `DISPLAY_CC` ) && `" />` && |\n| &&
                           `<html><head> ` &&
                           `</head>` && |\n| &&
                           `<body>`.
 
     IF mv_display_cc = abap_true.
-      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind_edit( mv_value ) && `"/>`.
+      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && mo_client->_event( `MYCC` ) && `"  value="` && mo_client->_bind_edit( mv_value ) && `"/>`.
     ENDIF.
 
     lv_xml = lv_xml && `</body>` && |\n| &&
       `</html> ` && |\n| &&
         `</mvc:View>`.
 
-    client->view_display( lv_xml ).
+    mo_client->view_display( lv_xml ).
   ENDMETHOD.
 ENDCLASS.

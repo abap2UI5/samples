@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         END OF product_type,
       END OF m_selection.
   PROTECTED SECTION.
-    DATA m_client TYPE REF TO z2ui5_if_client.
+    DATA mo_m_client TYPE REF TO z2ui5_if_client.
     METHODS on_init.
     METHODS on_event.
 ENDCLASS.
@@ -38,9 +38,9 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    m_client = client.
+    mo_m_client = client.
 
-    IF m_client->check_on_init( ).
+    IF mo_m_client->check_on_init( ).
       on_init( ).
       RETURN.
     ENDIF.
@@ -50,20 +50,20 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
   METHOD on_init.
 
-    DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_l_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(l_page) = l_view->shell( )->page( title      = `SearchPage`
-                                       navbuttonpress = m_client->_event_nav_app_leave( )
-                                       shownavbutton  = m_client->check_app_prev_stack( ) ).
+    DATA(lo_l_page) = lo_l_view->shell( )->page( title      = `SearchPage`
+                                       navbuttonpress = mo_m_client->_event_nav_app_leave( )
+                                       shownavbutton  = mo_m_client->check_app_prev_stack( ) ).
 
-    l_page->_z2ui5( )->smartmultiinput_ext(
-                          addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
-                          removedtokens = m_client->_bind_edit( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
-                          rangedata     = m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
-                          change        = m_client->_event( `PRODTYPE_CHANGED` )
+    lo_l_page->_z2ui5( )->smartmultiinput_ext(
+                          addedtokens   = mo_m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
+                          removedtokens = mo_m_client->_bind_edit( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
+                          rangedata     = mo_m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
+                          change        = mo_m_client->_event( `PRODTYPE_CHANGED` )
                           multiinputid  = `ProductTypeMultiInput` ).
 
-    l_page->smart_multi_input(
+    lo_l_page->smart_multi_input(
       id                = `ProductTypeMultiInput`
 *     value             = '{ProductType}'
       value             = `{CurrencyCode}`
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       supportranges     = `true`
       enableodataselect = `true` ).
 
-    m_client->view_display( val      = l_view->stringify( )
+    mo_m_client->view_display( val      = lo_l_view->stringify( )
 *       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
        switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
 *       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
@@ -80,18 +80,18 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE m_client->get( )-event.
+    CASE mo_m_client->get( )-event.
       WHEN `BACK`.
-        m_client->nav_app_leave( ).
+        mo_m_client->nav_app_leave( ).
       WHEN `PRODTYPE_CHANGED`.
         INSERT VALUE #( operation = `EQ` value1 = `EUR` keyfield = `CurrencyCode` tokentext = `Euro (auto added line)` ) INTO TABLE m_selection-product_type-ranges.
-        m_client->view_model_update( ).
+        mo_m_client->view_model_update( ).
         TRY.
-            m_client->message_box_display(
+            mo_m_client->message_box_display(
               text  = z2ui5_cl_ajson=>new( )->set( iv_path = `/` iv_val = m_selection-product_type-ranges )->stringify( )
               title = `range content` ).
           CATCH z2ui5_cx_ajson_error INTO DATA(lx_ajson).
-            m_client->message_toast_display( lx_ajson->get_text( ) ).
+            mo_m_client->message_toast_display( lx_ajson->get_text( ) ).
         ENDTRY.
     ENDCASE.
   ENDMETHOD.

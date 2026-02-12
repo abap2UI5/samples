@@ -17,14 +17,14 @@ CLASS z2ui5_cl_demo_app_052 DEFINITION PUBLIC.
 
     DATA mt_table TYPE ty_t_table.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     DATA mv_check_popover TYPE abap_bool.
     DATA mv_product TYPE string.
 
-    METHODS  z2ui5_set_data.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS  set_data.
+    METHODS display_view.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -34,7 +34,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -56,68 +56,68 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
             )->toolbar_spacer(
             )->button(
                 text  = `details`
-                press = client->_event( `BUTTON_DETAILS` )
+                press = mo_client->_event( `BUTTON_DETAILS` )
                 type  = `Emphasized` ).
-    client->popover_display( xml   = lo_popover->stringify( )
+    mo_client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
 
-  METHOD z2ui5_display_view.
+  METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(lo_page) = lo_view->page( id = `page_main`
             title               = `abap2UI5 - List Report Features`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( ) ).
+            navbuttonpress      = mo_client->_event_nav_app_leave( )
+            shownavbutton       = mo_client->check_app_prev_stack( ) ).
 
-    page = page->dynamic_page( headerexpanded = abap_true
+    lo_page = lo_page->dynamic_page( headerexpanded = abap_true
                                headerpinned   = abap_true ).
 
-    DATA(cont) = page->content( ns = `f` ).
-    DATA(tab) = cont->table( id    = `tab`
-                             items = client->_bind_edit( mt_table ) ).
+    DATA(lo_cont) = lo_page->content( ns = `f` ).
+    DATA(lo_tab) = lo_cont->table( id    = `tab`
+                             items = mo_client->_bind_edit( mt_table ) ).
 
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->link( id    = `link`
                     text  = `{PRODUCT}`
-                    press = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) ) ).
+                    press = mo_client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_display_view( ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_init( ).
+      display_view( ).
+      set_data( ).
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_DETAILS`.
-        client->popover_destroy( ).
+        mo_client->popover_destroy( ).
       WHEN `POPOVER_DETAIL`.
         mv_check_popover = abap_true.
-        mv_product = client->get_event_arg( 2 ).
-        z2ui5_display_popover( client->get_event_arg( 1 ) ).
+        mv_product = mo_client->get_event_arg( 2 ).
+        display_popover( mo_client->get_event_arg( 1 ) ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

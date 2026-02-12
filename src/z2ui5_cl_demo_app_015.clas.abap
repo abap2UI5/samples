@@ -23,8 +23,8 @@ CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
             `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
     ENDIF.
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
           )->page(
             title          = `abap2UI5 - Formatted Text`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -41,6 +41,6 @@ CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
             )->vbox( `sapUiSmallMargin`
                 )->formatted_text( mv_html_text ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

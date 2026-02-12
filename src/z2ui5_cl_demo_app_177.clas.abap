@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_177 DEFINITION PUBLIC.
         valuecolor TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_key TYPE string.
     METHODS refresh_data.
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
       ls_row-checkbox = abap_true.
 *        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
   ENDMETHOD.
 
@@ -50,10 +50,10 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `SORT_ASCENDING`.
-        SORT t_tab BY count ASCENDING.
+        SORT mt_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
       WHEN `SORT_DESCENDING`.
-        SORT t_tab BY count DESCENDING.
+        SORT mt_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
       WHEN `BUTTON_POST`.
         client->message_box_display( `button post was pressed` ).
@@ -65,23 +65,23 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
         client->message_box_display( `menu 02 pressed` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    DATA(lo_tab) = lo_page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = `20`
             growingscrolltoload = abap_true
-            items               = client->_bind_edit( t_tab )
+            items               = client->_bind_edit( mt_tab )
             sticky              = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
+    lo_tab->header_toolbar(
         )->overflow_toolbar(
             )->title( `title of the table`
             )->button(
@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
             text  = `Export to Excel`
             icon  = `sap-icon://excel-attachment` ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Color` )->get_parent(
         )->column(
@@ -151,7 +151,7 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
         )->column(
             )->text( `Radial Micro Chart` ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{VALUE}`
        )->text( `{INFO}`
        )->text( `{DESCR}`
@@ -163,6 +163,6 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
                               percentage = `{PERCENTAGE}`
                               valuecolor = `{VALUECOLOR}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

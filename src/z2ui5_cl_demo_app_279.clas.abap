@@ -3,17 +3,17 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA text_input TYPE string .
-    DATA dirty TYPE abap_bool.
+    DATA mv_text_input TYPE string .
+    DATA mv_dirty TYPE abap_bool.
 
   PRIVATE SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
-    DATA initialized TYPE abap_bool.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
+    DATA mv_initialized TYPE abap_bool.
 
     METHODS display_view.
     METHODS on_event.
     METHODS security_check_popup.
-    METHODS ui5_callback.
+    METHODS callback.
 
 ENDCLASS.
 
@@ -21,65 +21,65 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
                    )->page(
                       title          = `abap2UI5 - data loss protection`
-                      navbuttonpress = client->_event_nav_app_leave( )
-                      shownavbutton  = client->check_app_prev_stack( ) ).
+                      navbuttonpress = mo_client->_event_nav_app_leave( )
+                      shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(box) = page->flex_box( direction  = `Row`
+    DATA(lo_box) = lo_page->flex_box( direction  = `Row`
                                 alignitems = `Start`
                                 class      = `sapUiTinyMargin` ).
 
-    box->input(
+    lo_box->input(
       id          = `input`
-      value       = client->_bind_edit( text_input )
-      submit      = client->_event( `SUBMIT` )
+      value       = mo_client->_bind_edit( mv_text_input )
+      submit      = mo_client->_event( `SUBMIT` )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
-    box->info_label(
+    lo_box->info_label(
       text        = `dirty`
       colorscheme = `8`
       icon        = `sap-icon://message-success`
       class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
-      visible     = client->_bind( dirty ) ).
+      visible     = mo_client->_bind( mv_dirty ) ).
 
-    box->button(
+    lo_box->button(
       text    = `Reset`
-      press   = client->_event( `RESET` )
+      press   = mo_client->_event( `RESET` )
       class   = `sapUiSmallMarginBegin`
-      visible = client->_bind( dirty ) ).
+      visible = mo_client->_bind( mv_dirty ) ).
 
-    page->_z2ui5( )->focus( focusid = `input` ).
+    lo_page->_z2ui5( )->focus( focusid = `input` ).
 
-    page->_z2ui5( )->dirty( client->_bind( dirty ) ).
+    lo_page->_z2ui5( )->dirty( mo_client->_bind( mv_dirty ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BACK`.
-        IF dirty = abap_true.
+        IF mv_dirty = abap_true.
           security_check_popup( ).
         ELSE.
-          client->nav_app_leave( ).
+          mo_client->nav_app_leave( ).
         ENDIF.
       WHEN `SUBMIT`.
-        dirty = xsdbool( text_input IS NOT INITIAL ).
+        mv_dirty = xsdbool( mv_text_input IS NOT INITIAL ).
       WHEN `RESET`.
         CLEAR:
-          dirty,
-          text_input.
+          mv_dirty,
+          mv_text_input.
     ENDCASE.
   ENDMETHOD.
 
   METHOD security_check_popup.
 
-    client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
+    mo_client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
                               i_question_text       = `Your entries will be lost when you leave this page.`
                               i_title               = `Warning`
                               i_icon                = `sap-icon://status-critical`
@@ -89,34 +89,34 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      ui5_callback( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      callback( ).
     ENDIF.
 
     on_event( ).
 
-    IF initialized = abap_false.
-      initialized = abap_true.
+    IF mv_initialized = abap_false.
+      mv_initialized = abap_true.
       display_view( ).
     ELSE.
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD ui5_callback.
+  METHOD callback.
 
     TRY.
-        DATA(prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(confirm_leave) = CAST z2ui5_cl_pop_to_confirm( prev )->result( ).
+        DATA(lo_prev) = mo_client->get_app( mo_client->get( )-s_draft-id_prev_app ).
+        DATA(lo_confirm_leave) = CAST z2ui5_cl_pop_to_confirm( lo_prev )->result( ).
 
       CATCH cx_root.
     ENDTRY.
 
-    IF confirm_leave = abap_true.
-      CLEAR dirty.
-      client->nav_app_leave( ).
+    IF lo_confirm_leave = abap_true.
+      CLEAR mv_dirty.
+      mo_client->nav_app_leave( ).
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

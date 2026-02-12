@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA is_initialized TYPE abap_bool .
+    DATA mv_initialized TYPE abap_bool .
     DATA mv_slider_value TYPE i .
 
     TYPES: BEGIN OF ty_shape,
@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
     METHODS initialize .
     METHODS render_screen .
@@ -98,8 +98,8 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
   METHOD render_screen.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( ns   = `html`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->_generic( ns   = `html`
                     name = `style` )->_cc_plain_xml( `.SICursorStyle:hover {` &&
                                                                  `  cursor: pointer;` &&
                                                                  `}` &&
@@ -109,28 +109,28 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
                                                                  `.SIPanelStyle .sapMPanelContent{` &&
                                                                  `  overflow: visible;` &&
                                                                  `}` ).
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
          )->page(
-            showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
+            showheader     = xsdbool( abap_false = mo_client->get( )-check_launchpad_active )
             title          = `abap2UI5 - Status Indicators Library`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(panel) = page->panel( class = `sapUiResponsiveMargin SIPanelStyle`
+    DATA(lo_panel) = lo_page->panel( class = `sapUiResponsiveMargin SIPanelStyle`
                                width = `95%` ).
-    panel->text( text = `Use the slider for adjusting the fill` ).
-    panel->slider( class           = `sapUiLargeMarginBottom`
+    lo_panel->text( text = `Use the slider for adjusting the fill` ).
+    lo_panel->slider( class           = `sapUiLargeMarginBottom`
                    enabletickmarks = abap_true
-               value               = client->_bind_edit( mv_slider_value ) )->get(
+               value               = mo_client->_bind_edit( mv_slider_value ) )->get(
        )->responsive_scale( tickmarksbetweenlabels = `10` ).
 
-    DATA(fb) = panel->flex_box( wrap  = `Wrap`
-                                items = client->_bind( mt_shapes ) ).
+    DATA(fb) = lo_panel->flex_box( wrap  = `Wrap`
+                                items = mo_client->_bind( mt_shapes ) ).
     fb->items(
       )->flex_box( direction = `Column`
                    class     = `sapUiTinyMargin SIBorderStyle`
         )->items(
-          )->status_indicator( value  = client->_bind_edit( mv_slider_value )
+          )->status_indicator( value  = mo_client->_bind_edit( mv_slider_value )
                                width  = `120px`
                                height = `120px`
                                class  = `sapUiTinyMargin SICursorStyle`
@@ -145,18 +145,18 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
              )->shape_group(
               )->library_shape( shapeid = `{ID}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF is_initialized = abap_false.
+    IF mv_initialized = abap_false.
 
       initialize( ).
       render_screen( ).
-      is_initialized = abap_true.
+      mv_initialized = abap_true.
 
     ENDIF.
 

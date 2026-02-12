@@ -53,14 +53,14 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    DATA check_view_loaded TYPE abap_bool.
+    DATA mv_check_view_loaded TYPE abap_bool.
 
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_p13n.
-    METHODS z2ui5_view_p13n_popup.
-    METHODS z2ui5_on_event.
+    METHODS view_display.
+    METHODS view_p13n.
+    METHODS view_p13n_popup.
+    METHODS on_event.
     METHODS init_data_set.
     METHODS get_custom_js
       RETURNING
@@ -74,52 +74,52 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       init_data_set( ).
-      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
-    ELSEIF check_view_loaded = abap_false.
-      check_view_loaded = abap_true.
+      mo_client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
+    ELSEIF mv_check_view_loaded = abap_false.
+      mv_check_view_loaded = abap_true.
       init_data_set( ).
-      z2ui5_view_display( ).
+      view_display( ).
     ELSE.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `P13N_OPEN`.
-        z2ui5_view_p13n( ).
+        view_p13n( ).
       WHEN `P13N_POPUP`.
-        z2ui5_view_p13n_popup( ).
+        view_p13n_popup( ).
       WHEN `OK` OR `CANCEL`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    client->_bind_edit( val           = mt_columns_p13n
+    mo_client->_bind_edit( val           = mt_columns_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind_edit( val           = mt_sort_p13n
+    mo_client->_bind_edit( val           = mt_sort_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind_edit( val           = mt_groups_p13n
+    mo_client->_bind_edit( val           = mt_groups_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
         title          = `abap2UI5 - P13N Dialog`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
+        navbuttonpress = mo_client->_event_nav_app_leave( )
+        shownavbutton  = mo_client->check_app_prev_stack( )
         class          = `sapUiContentPadding` ).
 
-    page = page->vbox( ).
+    lo_page = lo_page->vbox( ).
 
-    page->_generic( name         = `Popup`
+    lo_page->_generic( name         = `Popup`
                     ns           = `p13n`
                           t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
                                             ( n = `close` v = `z2ui5.updateData(${$parameters>/reason})` )
@@ -153,24 +153,24 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                                       )->get_parent( )->get_parent( )->get_parent(
       )->get_parent( )->get_parent( ).
 
-    page->button( text  = `Open P13N Dialog`
-                  press = client->_event( `P13N_OPEN` )
+    lo_page->button( text  = `Open P13N Dialog`
+                  press = mo_client->_event( `P13N_OPEN` )
                   class = `sapUiTinyMarginBeginEnd`
       )->button( text  = `Open P13N.POPUP`
                  press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_p13n.
+  METHOD view_p13n.
 
-    DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(p13n) = p13n_dialog->_generic( name = `P13nDialog`
+    DATA(lo_p13n) = lo_p13n_dialog->_generic( name = `P13nDialog`
       t_prop                                 = VALUE #(
-      ( n = `ok`                      v = client->_event( `OK` ) )
-      ( n = `cancel`                  v = client->_event( `CANCEL` ) )
-      ( n = `reset`                   v = client->_event( `RESET` ) )
+      ( n = `ok`                      v = mo_client->_event( `OK` ) )
+      ( n = `cancel`                  v = mo_client->_event( `CANCEL` ) )
+      ( n = `reset`                   v = mo_client->_event( `RESET` ) )
       ( n = `showReset`               v = `true` )
       ( n = `initialVisiblePanelType` v = `sort` ) )
       )->_generic( name = `panels`
@@ -179,8 +179,8 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 *     ( n = `title`   v = `Columns` )
 *     ( n = `visible` v = `true` )
 *     ( n = `type`    v = `Columns` )
-      ( n = `items`   v = `{path:'` && client->_bind_edit( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` )
-      ( n = `columnsItems`   v = `{path:'` && client->_bind_edit( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
+      ( n = `items`   v = `{path:'` && mo_client->_bind_edit( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` )
+      ( n = `columnsItems`   v = `{path:'` && mo_client->_bind_edit( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
       )->items(
          )->_generic( name = `P13nItem`
            t_prop          = VALUE #( ( n = `columnKey` v = `{columnkey}` )
@@ -191,7 +191,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                                   ( n = `visible`   v = `{visible}` )
                                    ( n = `index`    v = `{index}` ) ) )->get_parent( )->get_parent( )->get_parent(
       )->_generic( name = `P13nGroupPanel`
-           t_prop       = VALUE #( ( n = `groupItems` v = `{path:'` && client->_bind_edit( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
+           t_prop       = VALUE #( ( n = `groupItems` v = `{path:'` && mo_client->_bind_edit( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
       )->items(
       )->_generic( name = `P13nItem`
            t_prop       = VALUE #( ( n = `columnKey` v = `{columnkey}` )
@@ -202,14 +202,14 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                               ( n = `operation` v = `{operation}` )
                               ( n = `showIfGrouped` v = `{showifgrouped}` ) ) ).
 
-    client->popup_display( p13n->stringify( ) ).
+    mo_client->popup_display( lo_p13n->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_p13n_popup.
+  METHOD view_p13n_popup.
 
-    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_p13n_popup) = z2ui5_cl_xml_view=>factory( ).
 
-    p13n_popup->_generic( name       = `Popup`
+    lo_p13n_popup->_generic( name       = `Popup`
                           ns         = `p13n`
                               t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
 *                                                ( n = `close` v = client->_event( 'P13N_CLOSE' ) )
@@ -237,7 +237,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                                                             ( n = `title`  v = `Group` ) )
                                           )->get_parent( )->get_parent( )->get_parent( ).
 
-    client->view_display( p13n_popup->stringify( ) ).
+    mo_client->view_display( lo_p13n_popup->stringify( ) ).
   ENDMETHOD.
 
   METHOD init_data_set.

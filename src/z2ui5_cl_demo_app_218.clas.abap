@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Flex Box - Opposing Alignment`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->panel( headertext = `Horizontally opposing flex items`
+    DATA(lo_layout) = lo_page->panel( headertext = `Horizontally opposing flex items`
                    )->flex_box( alignitems     = `Start`
                                 justifycontent = `SpaceBetween`
                               )->button( text = `1`
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_218 IMPLEMENTATION.
                               )->button( text = `2`
                                          type = `Reject` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

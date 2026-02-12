@@ -32,9 +32,9 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     ENDCASE.
 
     "render view
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    client->view_display( view->shell(
+    client->view_display( lo_view->shell(
           )->page(
                   title          = `abap2UI5`
                   navbuttonpress = client->_event( `BACK` )

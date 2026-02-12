@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_243 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Negative Margins`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_243 IMPLEMENTATION.
                  )->icon( src = `sap-icon://begin`
                      )->text( text = `This sample demonstrates classes which let you to add negative margin at two opposite sides (begin/end).` )->get_parent( )->get_parent( ).
 
-    DATA(layout) = page->panel( class = `sapUiTinyNegativeMarginBeginEnd`
+    DATA(lo_layout) = lo_page->panel( class = `sapUiTinyNegativeMarginBeginEnd`
                           )->content(
                               )->text( text  = `This panel uses margin class 'sapUiTinyNegativeMarginBeginEnd' to add a -0.5rem space at the panel's left and right sides.`
                                        class = `sapMH4FontSize` )->get_parent( )->get_parent(
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_243 IMPLEMENTATION.
                               )->text( text  = `This panel uses margin class 'sapUiLargeNegativeMarginBeginEnd' to add a -3rem space at the panel's left and right sides.`
                                        class = `sapMH4FontSize` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

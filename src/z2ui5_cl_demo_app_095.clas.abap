@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
 
     DATA mo_app_sub TYPE REF TO z2ui5_cl_demo_app_096.
 
-    DATA client      TYPE REF TO z2ui5_if_client.
+    DATA mo_client      TYPE REF TO z2ui5_if_client.
     DATA mv_init     TYPE abap_bool.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
 
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA mo_page TYPE REF TO z2ui5_cl_xml_view.
 
 ENDCLASS.
 
@@ -40,15 +40,15 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `BUTTON_SAVE` ).
-      client->message_box_display( `event main app` ).
+    IF mo_client->check_on_event( `BUTTON_SAVE` ).
+      mo_client->message_box_display( `event main app` ).
     ENDIF.
   ENDMETHOD.
 
   METHOD on_event_sub.
 
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->z2ui5_if_app~main( client = mo_client ).
   ENDMETHOD.
 
   METHOD on_init.
@@ -61,60 +61,60 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
     mo_app_sub = NEW #( ).
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->z2ui5_if_app~main( client = mo_client ).
 
-    client->view_display( page->stringify( ) ).
+    mo_client->view_display( mo_page->stringify( ) ).
   ENDMETHOD.
 
   METHOD view_build.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    page = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    mo_page = lo_view->shell(
          )->page(
             title           = `abap2UI5 - Main App with Sub App`
-            navbuttonpress  = client->_event_nav_app_leave( )
+            navbuttonpress  = mo_client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    DATA(o_grid) = page->grid( `L6 M12 S12`
+    DATA(lo_o_grid) = mo_page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(content) = o_grid->simple_form( title = `Input`
+    DATA(lo_content) = lo_o_grid->simple_form( title = `Input`
           )->content( `form` ).
-    content->label( `main app`
+    lo_content->label( `main app`
       )->input(
-          value  = client->_bind_edit( ms_screen-input )
-          submit = client->_event( `INPUT` ) ).
+          value  = mo_client->_bind_edit( ms_screen-input )
+          submit = mo_client->_event( `INPUT` ) ).
 
-    mo_grid_sub = page->grid( `L12 M12 S12`
+    mo_grid_sub = mo_page->grid( `L12 M12 S12`
         )->content( `layout` ).
 
-    page->footer( )->overflow_toolbar(
+    mo_page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(
                    )->button(
                        text  = `Delete`
-                       press = client->_event( `BUTTON_DELETE` )
+                       press = mo_client->_event( `BUTTON_DELETE` )
                        type  = `Reject`
                        icon  = `sap-icon://delete`
                    )->button(
                        text  = `Add`
-                       press = client->_event( `BUTTON_ADD` )
+                       press = mo_client->_event( `BUTTON_ADD` )
                        type  = `Default`
                        icon  = `sap-icon://add`
                    )->button(
                        text  = `Save`
-                       press = client->_event( `BUTTON_SAVE` )
+                       press = mo_client->_event( `BUTTON_SAVE` )
                        type  = `Success` ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init = abap_false.
       mv_init = abap_true.
       on_init( ).
       on_init_sub( ).
-      client->view_display( page->stringify( ) ).
+      mo_client->view_display( mo_page->stringify( ) ).
       RETURN.
     ENDIF.
 

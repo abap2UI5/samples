@@ -4,8 +4,8 @@ CLASS z2ui5_cl_demo_app_050 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA mv_product  TYPE string.
+    DATA mv_quantity TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -16,13 +16,13 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      product  = `tomato`.
-      quantity = `500`.
+      mv_product  = `tomato`.
+      mv_quantity = `500`.
     ENDIF.
 
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
-        client->message_toast_display( |{ product } { quantity } - send to the server| ).
+        client->message_toast_display( |{ mv_product } { mv_quantity } - send to the server| ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
@@ -73,16 +73,16 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                         text  = `post`
                         press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
-            )->input( value = client->_bind( quantity )
+            )->input( value = client->_bind( mv_quantity )
             )->simple_form( title    = `Form Title`
                             editable = abap_true
                 )->content( `form`
                     )->title( `Input`
                     )->label( `quantity`
-                    )->input( value = client->_bind( quantity )
+                    )->input( value = client->_bind( mv_quantity )
                     )->label( `product`
                     )->input(
-                        value   = product
+                        value   = mv_product
                         enabled = abap_false
                     )->button(
                         text  = `post`

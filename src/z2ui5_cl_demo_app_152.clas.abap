@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     TYPES:
       BEGIN OF ty_row,
@@ -18,9 +18,9 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     DATA mv_check_initialized TYPE abap_bool.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
-    METHODS ui5_display.
-    METHODS ui5_event.
-    METHODS ui5_callback.
+    METHODS display.
+    METHODS event.
+    METHODS callback.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -29,9 +29,9 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
-  METHOD ui5_event.
+  METHOD event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `POPUP`.
 
         mt_tab = VALUE #( descr = `this is a description`
@@ -48,83 +48,83 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                                              WHEN mv_multiselect = abap_true
                                              THEN `Multi select`
                                              ELSE `Single select` ) ).
-        client->nav_app_call( lo_app ).
+        mo_client->nav_app_call( lo_app ).
       WHEN `MULTISELECT_TOGGLE`.
 
         mv_preselect = COND #( WHEN mv_multiselect = abap_false
                                THEN abap_false
                                ELSE mv_preselect ).
 
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD ui5_display.
+  METHOD display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Popup To Select`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( )
            )->hbox(
            )->text( text  = `Multiselect: `
                     class = `sapUiTinyMargin`
-           )->switch( state  = client->_bind_edit( mv_multiselect )
-                      change = client->_event( `MULTISELECT_TOGGLE` )
+           )->switch( state  = mo_client->_bind_edit( mv_multiselect )
+                      change = mo_client->_event( `MULTISELECT_TOGGLE` )
            )->get_parent(
            )->hbox(
            )->text( text  = `Preselect all entries: `
                     class = `sapUiTinyMargin`
-           )->switch( state   = client->_bind_edit( mv_preselect )
-                      enabled = client->_bind_edit( mv_multiselect )
+           )->switch( state   = mo_client->_bind_edit( mv_preselect )
+                      enabled = mo_client->_bind_edit( mv_multiselect )
            )->get_parent(
            )->button(
             text  = `Open Popup...`
-            press = client->_event( `POPUP` ) ).
+            press = mo_client->_event( `POPUP` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF mo_client->get( )-check_on_navigated = abap_true.
       IF mv_check_initialized = abap_false.
         mv_check_initialized = abap_true.
-        ui5_display( ).
+        display( ).
       ELSE.
-        ui5_callback( ).
+        callback( ).
       ENDIF.
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    event( ).
   ENDMETHOD.
 
-  METHOD ui5_callback.
+  METHOD callback.
 
     FIELD-SYMBOLS <row> TYPE ty_row.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA(lo_prev) = mo_client->get_app( mo_client->get( )-s_draft-id_prev_app ).
         DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
 
         IF ls_result-check_confirmed = abap_false.
-          client->message_box_display( `Popup was cancelled` ).
+          mo_client->message_box_display( `Popup was cancelled` ).
           RETURN.
         ENDIF.
 
         IF mv_multiselect = abap_false.
 
           ASSIGN ls_result-row->* TO <row>.
-          client->message_box_display( `callback after popup to select: ` && <row>-title ).
+          mo_client->message_box_display( `callback after popup to select: ` && <row>-title ).
 
         ELSE.
 
           ASSIGN ls_result-table->* TO FIELD-SYMBOL(<table>).
-          client->nav_app_call( z2ui5_cl_pop_table=>factory(
+          mo_client->nav_app_call( z2ui5_cl_pop_table=>factory(
                                     i_tab   = <table>
                                     i_title = `Selected rows` ) ).
 

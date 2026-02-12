@@ -12,8 +12,8 @@ CLASS z2ui5_cl_demo_app_019 DEFINITION PUBLIC.
         descr TYPE string,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA t_tab_sel TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab_sel TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA mv_sel_mode TYPE string.
 
   PROTECTED SECTION.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       mv_sel_mode = `None`.
-      t_tab = VALUE #( descr = `this is a description`
+      mt_tab = VALUE #( descr = `this is a description`
               (  title = `title_01`  value = `value_01` )
               (  title = `title_02`  value = `value_02` )
               (  title = `title_03`  value = `value_03` )
@@ -40,18 +40,18 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
       WHEN `BUTTON_SEGMENT_CHANGE`.
         client->message_toast_display( `Selection Mode changed` ).
       WHEN `BUTTON_READ_SEL`.
-        t_tab_sel = t_tab.
-        DELETE t_tab_sel WHERE selkz <> abap_true.
+        mt_tab_sel = mt_tab.
+        DELETE mt_tab_sel WHERE selkz <> abap_true.
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
             )->page(
                 title          = `abap2UI5 - Table with different Selection Modes`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->segmented_button(
+    lo_page->segmented_button(
             selected_key     = client->_bind_edit( mv_sel_mode )
             selection_change = client->_event( `BUTTON_SEGMENT_CHANGE` ) )->get(
                 )->items( )->get(
@@ -71,10 +71,10 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
                         key  = `MultiSelect`
                         text = `MultiSelect` ).
 
-    page->table(
+    lo_page->table(
             headertext = `Table`
             mode       = mv_sel_mode
-            items      = client->_bind_edit( t_tab )
+            items      = client->_bind_edit( mt_tab )
             )->columns(
                 )->column( )->text( `Title` )->get_parent(
                 )->column( )->text( `Value` )->get_parent(
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
                         )->text( `{VALUE}`
                         )->text( `{DESCR}` ).
 
-    page->table( client->_bind( t_tab_sel )
+    lo_page->table( client->_bind( mt_tab_sel )
             )->header_toolbar(
                 )->overflow_toolbar(
                     )->title( `Selected Entries`
@@ -106,6 +106,6 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
                 )->text( `{VALUE}`
                 )->text( `{DESCR}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

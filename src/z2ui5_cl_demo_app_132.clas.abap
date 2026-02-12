@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
         !table TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
 
@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD get_comp.
 
-    DATA index TYPE int4.
+    DATA lv_index TYPE int4.
 
     TRY.
 
@@ -40,11 +40,11 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
 
               IF com-as_include = abap_false.
 
@@ -58,11 +58,11 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
+        DATA(lv_component) = VALUE cl_abap_structdescr=>component_table(
                                     ( name = `ROW_ID`
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( lv_index ) ) ) ).
 
-        APPEND LINES OF component TO result.
+        APPEND LINES OF lv_component TO result.
 
       CATCH cx_root.
     ENDTRY.
@@ -77,17 +77,17 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = z2ui5_cl_xml_view=>factory( ).
 
     ELSE.
 
-      page = mo_parent_view->get( `Page` ).
+      lo_page = mo_parent_view->get( `Page` ).
 
     ENDIF.
 
 *    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
 *                                          width = `100%` ).
-    page->label( `ProgressIndicator`
+    lo_page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`
                                showvalue    = abap_true
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      client->view_display( page->stringify( ) ).
+      mo_client->view_display( lo_page->stringify( ) ).
 
     ELSE.
 
@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init IS INITIAL.
       mv_init = abap_true.

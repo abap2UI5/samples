@@ -16,51 +16,51 @@ CLASS z2ui5_cl_demo_app_210 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Input - Types`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
 
-    layout->label( text     = `Text`
+    lo_layout->label( text     = `Text`
                    labelfor = `inputText` ).
-    layout->input( id          = `inputText`
+    lo_layout->input( id          = `inputText`
                    placeholder = `Enter text`
                    class       = `sapUiSmallMarginBottom` ).
 
-    layout->label( text     = `Email`
+    lo_layout->label( text     = `Email`
                    labelfor = `inputEmail` ).
-    layout->input( id          = `inputEmail`
+    lo_layout->input( id          = `inputEmail`
                    type        = `Email`
                    placeholder = `Enter email`
                    class       = `sapUiSmallMarginBottom` ).
 
-    layout->label( text     = `Telephone`
+    lo_layout->label( text     = `Telephone`
                    labelfor = `inputTel` ).
-    layout->input( id          = `inputTel`
+    lo_layout->input( id          = `inputTel`
                    type        = `Tel`
                    placeholder = `Enter telephone number`
                    class       = `sapUiSmallMarginBottom` ).
 
-    layout->label( text     = `Number`
+    lo_layout->label( text     = `Number`
                    labelfor = `inputNumber` ).
-    layout->input( id          = `inputNumber`
+    lo_layout->input( id          = `inputNumber`
                    type        = `Number`
                    placeholder = `Enter a number`
                    class       = `sapUiSmallMarginBottom` ).
 
-    layout->label( text     = `URL`
+    lo_layout->label( text     = `URL`
                    labelfor = `inputUrl` ).
-    layout->input( id          = `inputUrl`
+    lo_layout->input( id          = `inputUrl`
                    type        = `Url`
                    placeholder = `Enter URL`
                    class       = `sapUiSmallMarginBottom` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

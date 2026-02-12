@@ -17,10 +17,10 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
     DATA mt_feed TYPE TABLE OF ty_feed.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -29,16 +29,16 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_feed = VALUE #(
               ( author = `Developer9` authorpic = `sap-icon://employee` type = `Reply`  datetime = `01.11.2023` text = `newest entry` )
@@ -62,24 +62,24 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
       ( title = `first entry` author = `Developer` datetime = `01.01.2023`  authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is the beginning of a timeline` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
              title          = `Timeline`
-             navbuttonpress = client->_event_nav_app_leave( )
-             shownavbutton  = client->check_app_prev_stack( ) ).
+             navbuttonpress = mo_client->_event_nav_app_leave( )
+             shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(timeline) = page->timeline(
-          content = client->_bind( mt_feed ) ).
+    DATA(lo_timeline) = lo_page->timeline(
+          content = mo_client->_bind( mt_feed ) ).
 
-    timeline->content( ns = `commons` )->timeline_item(
+    lo_timeline->content( ns = `commons` )->timeline_item(
         datetime    = `{DATETIME}`
         title       = `{TITLE}`
         userpicture = `{AUTHORPIC}`
         text        = `{TEXT}`
         username    = `{AUTHOR}` ).
 
-    client->view_display( lo_view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

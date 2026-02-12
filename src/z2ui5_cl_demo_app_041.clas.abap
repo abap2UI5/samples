@@ -27,16 +27,16 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Step Input Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( `StepInput`
+    lo_layout->label( `StepInput`
         )->step_input(
             value = client->_bind_edit( screen-step_val_01 )
             step  = `2`
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
         )->button( text  = `OK`
                    press = client->_event( `POST` ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.

@@ -19,9 +19,9 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC FINAL CREATE PUBLIC.
              type TYPE string,
            END OF ty_storage_type.
 
-    DATA storage       TYPE ty_storage.
-    DATA stored_value  TYPE string.
-    DATA storage_types TYPE STANDARD TABLE OF ty_storage_type.
+    DATA mv_storage       TYPE ty_storage.
+    DATA mv_stored_value  TYPE string.
+    DATA mt_storage_types TYPE STANDARD TABLE OF ty_storage_type.
 
 ENDCLASS.
 
@@ -30,18 +30,18 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      storage_types = VALUE #( ( type = `local` )
+      mt_storage_types = VALUE #( ( type = `local` )
                                ( type = `session` ) ).
-      storage = VALUE #( type   = `local`
+      mv_storage = VALUE #( type   = `local`
                          prefix = `prefix1`
                          key    = `key1`
 *                         value  = VALUE #( field1 = 1
 *                         field2 = 'textfld1' )
                                            ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-      view->shell(
+      lo_view->shell(
         )->page( title          = `abap2UI5 - Storage`
                  navbuttonpress = client->_event( `BACK` )
                  shownavbutton  = client->check_app_prev_stack( )
@@ -51,20 +51,20 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
             )->content( `form`
                 )->label( `Type`
                       )->select( forceselection = abap_true
-                                 selectedkey    = client->_bind_edit( storage-type )
-                                 items          = client->_bind( storage_types )
+                                 selectedkey    = client->_bind_edit( mv_storage-type )
+                                 items          = client->_bind( mt_storage_types )
                           )->item( key  = `{TYPE}`
                                    text = `{TYPE}`
                           )->get_parent(
                 )->label( `Prefix`
-                )->input( client->_bind_edit( storage-prefix )
+                )->input( client->_bind_edit( mv_storage-prefix )
                 )->label( `Key`
-                )->input( client->_bind_edit( storage-key )
+                )->input( client->_bind_edit( mv_storage-key )
                 )->label( `Value`
-                )->input( client->_bind_edit( storage-value )
+                )->input( client->_bind_edit( mv_storage-value )
                 )->button( text  = `store`
                            press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data
-                                                          t_arg = VALUE #( ( |${ client->_bind_edit( storage ) }| ) ) )
+                                                          t_arg = VALUE #( ( |${ client->_bind_edit( mv_storage ) }| ) ) )
 
                 )->button( text  = `get`
                            press = client->_event( `GET_STORED_VALUE` )
@@ -75,22 +75,22 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
             finished = client->_event(
                 val   = `LOCAL_STORAGE_LOADED`
                 t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` ) ) )
-            type     = client->_bind_edit( storage-type )
-            prefix   = client->_bind_edit( storage-prefix )
-            key      = client->_bind_edit( storage-key )
-            value    = client->_bind_edit( stored_value ) ).
-      client->view_display( view->stringify( ) ).
+            type     = client->_bind_edit( mv_storage-type )
+            prefix   = client->_bind_edit( mv_storage-prefix )
+            key      = client->_bind_edit( mv_storage-key )
+            value    = client->_bind_edit( mv_stored_value ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
       WHEN `LOCAL_STORAGE_LOADED`.
 *        z2ui5_cl_ajson=>parse( client->get_event_arg( 4 ) )->to_abap( IMPORTING ev_container = storage-value ).
-        storage-value = client->get_event_arg( 4 ).
+        mv_storage-value = client->get_event_arg( 4 ).
         client->view_model_update( ).
       WHEN `GET_STORED_VALUE`.
 *        z2ui5_cl_ajson=>parse( stored_value )->to_abap( IMPORTING ev_container = storage-value ).
-        storage-value = stored_value.
+        mv_storage-value = mv_stored_value.
         client->view_model_update( ).
       WHEN `BACK`.
         client->nav_app_leave( ).

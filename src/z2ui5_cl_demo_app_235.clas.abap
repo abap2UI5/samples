@@ -16,13 +16,13 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(lo_page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Toolbar vs Bar vs OverflowToolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(page_02) = page_01->page(
+    DATA(lo_page_02) = lo_page_01->page(
                          title         = `Bar can center a Title.`
                          titlelevel    = `H2`
                          class         = `sapUiContentPadding`
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
           )->footer(
                              )->toolbar( ).
 
-    client->view_display( page_02->stringify( ) ).
+    client->view_display( lo_page_02->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

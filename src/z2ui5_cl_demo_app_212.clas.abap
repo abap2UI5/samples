@@ -10,13 +10,13 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        !lo_table TYPE string.
 
   PROTECTED SECTION.
     DATA mv_table             TYPE string.
     DATA mt_comp              TYPE abap_component_tab.
     DATA mt_dfies             TYPE z2ui5_cl_util_ext=>ty_t_dfies.
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
 
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS prefill_popup_values
       IMPORTING
-        !index TYPE string.
+        !lv_index TYPE string.
 
     METHODS render_popup.
 
@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `ROW_SELECT`.
 
         row_select( ).
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD row_select.
 
-    DATA(lt_arg) = client->get( )-t_event_arg.
+    DATA(lt_arg) = mo_client->get( )-t_event_arg.
     READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
 
     IF sy-subrc <> 0.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
 
-    ASSIGN <tab>[ index ] TO FIELD-SYMBOL(<row>).
+    ASSIGN <tab>[ lv_index ] TO FIELD-SYMBOL(<row>).
 
     IF sy-subrc <> 0.
       RETURN.
@@ -104,9 +104,9 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(content) = popup->dialog( contentwidth = `60%`
+    DATA(lo_content) = lo_popup->dialog( contentwidth = `60%`
           )->simple_form( layout   = `ResponsiveGridLayout`
                           editable = abap_true
           )->content( ns = `form` ).
@@ -120,15 +120,15 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      content->label( text = `text` ).
+      lo_content->label( text = `text` ).
 
-      content->input( value       = client->_bind_edit( <val> )
+      lo_content->input( value       = mo_client->_bind_edit( <val> )
                     enabled       = abap_false
                     showvaluehelp = abap_false ).
 
     ENDLOOP.
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_init.
@@ -145,25 +145,25 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = z2ui5_cl_xml_view=>factory( ).
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      lo_page = mo_parent_view->get( `Page` ).
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = `true`
+    DATA(lo_table) = lo_page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind_edit( <tab> ) ).
+                               items   = mo_client->_bind_edit( <tab> ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(headder) = table->header_toolbar(
+    DATA(lo_headder) = lo_table->header_toolbar(
                )->overflow_toolbar(
                  )->toolbar_spacer( ).
 
     IF mo_parent_view IS INITIAL.
 
-      client->view_display( page->stringify( ) ).
+      mo_client->view_display( lo_page->stringify( ) ).
 
     ELSE.
 
@@ -174,9 +174,9 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       on_init( ).
 
@@ -188,32 +188,32 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD set_app_data.
 
-    mv_table = table.
+    mv_table = lo_table.
   ENDMETHOD.
 
   METHOD get_data.
 
-    FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <lo_table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
 
     mt_comp = get_comp( ).
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( mt_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( mt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA mt_table     TYPE HANDLE lv_new_table_desc.
+        CREATE DATA mt_table_tmp TYPE HANDLE lv_new_table_desc.
+        CREATE DATA ms_table_row TYPE HANDLE lv_new_struct_desc.
 
-        ASSIGN mt_table->* TO <table>.
+        ASSIGN mt_table->* TO <lo_table>.
 
         SELECT *
           FROM (mv_table)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE @<lo_table>
           UP TO 100 ROWS.
 
       CATCH cx_root.
@@ -222,12 +222,12 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
-    <table_tmp> = <table>.
+    <table_tmp> = <lo_table>.
   ENDMETHOD.
 
   METHOD get_comp.
 
-    DATA index TYPE int4.
+    DATA lv_index TYPE int4.
 
     TRY.
         TRY.
@@ -237,10 +237,10 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
               IF com-as_include = abap_false.
                 APPEND com TO result.
               ENDIF.
@@ -250,11 +250,11 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
+        DATA(lv_component) = VALUE cl_abap_structdescr=>component_table(
                                     ( name = `ROW_ID`
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( lv_index ) ) ) ).
 
-        APPEND LINES OF component TO result.
+        APPEND LINES OF lv_component TO result.
 
       CATCH cx_root.
     ENDTRY.

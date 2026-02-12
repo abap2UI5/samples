@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_352 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA input TYPE string.
+    DATA mv_input TYPE string.
 
     METHODS display_view
       IMPORTING
@@ -28,9 +28,9 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic( name = `script`
+    lo_view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = (id , mode) => { ` &&
                        `debugger;` &&
                         `var input = z2ui5.oView.byId(id).getDomRef();` &&
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                         `input.setAttribute("inputmode" , mode);` &&
                         ` alert("inputmode changed to" + mode); }` ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
              )->page( title          = `abap2UI5 - Softkeyboard on/off`
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
@@ -48,12 +48,12 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                      )->title( `Keyboard on/off`
                      )->label( `Input`
                      )->input( id               = `ZINPUT`
-                               value            = client->_bind_edit( input )
+                               value            = client->_bind_edit( mv_input )
                                showvaluehelp    = abap_true
                                valuehelprequest = client->_event( `CALL_KEYBOARD` )
                                valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.

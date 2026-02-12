@@ -16,24 +16,24 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Busy Indicator`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    DATA(lo_layout) = lo_page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->busy_indicator( text  = `... something is happening`
+    lo_layout->busy_indicator( text  = `... something is happening`
                             class = `sapUiTinyMarginBottom` ).
-    layout->hbox( justifycontent = `Start`
+    lo_layout->hbox( justifycontent = `Start`
                   alignitems     = `Center`
              )->busy_indicator( size = `3em` ).
-    layout->busy_indicator( size  = `1.6rem`
+    lo_layout->busy_indicator( size  = `1.6rem`
                             class = `sapUiMediumMarginBegin` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_048 DEFINITION PUBLIC FINAL CREATE PUBLIC.
         checkbox      TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
         ( title = `entry_01`   info = `Information`   descr = `this is a description1 1234567890 1234567890`  icon = `sap-icon://badge`      highlight = `Information` wrapcharlimit = `100` )
         ( title = `entry_02`  info = `Success`        descr = `this is a description2 1234567890 1234567890`  icon = `sap-icon://favorite`   highlight = `Success`  wrapcharlimit = `10`)
         ( title = `entry_03`  info = `Warning`        descr = `this is a description3 1234567890 1234567890`  icon = `sap-icon://employee`   highlight = `Warning`  wrapcharlimit = `100`)
@@ -42,13 +42,13 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
         DATA(lv_row_title) = client->get_event_arg( 1 ).
         client->message_box_display( `EDIT - ` && lv_row_title ).
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
+        DATA(lt_sel) = mt_tab.
         DELETE lt_sel WHERE selected = abap_false.
         client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
@@ -61,9 +61,9 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
                 )->link(
       )->get_parent( ).
 
-    page->list(
+    lo_page->list(
         headertext      = `List Ouput`
-        items           = client->_bind_edit( t_tab )
+        items           = client->_bind_edit( mt_tab )
         mode            = `SingleSelectMaster`
         selectionchange = client->_event( `SELCHANGE` )
       )->_generic(
@@ -91,6 +91,6 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
                                                                                         ) ) )
       ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

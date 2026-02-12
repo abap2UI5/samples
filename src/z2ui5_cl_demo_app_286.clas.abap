@@ -16,15 +16,15 @@ CLASS z2ui5_cl_demo_app_286 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -35,30 +35,30 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Standard List Item - Info State Inverted`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemInfoStateInverted` ).
 
-    page->list(
+    lo_page->list(
            id         = `myList`
            mode       = `MultiSelect`
            headertext = `Inverted Info State`
-           items      = client->_bind( lt_o_model )
+           items      = mo_client->_bind( lt_o_model )
            )->items(
                )->standard_list_item(
                    title             = `{TITLE}`
@@ -70,36 +70,36 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
                    infostate         = `{HIGHLIGHT}`
                    infostateinverted = abap_true ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `This sample demonstrates the inverted rendering behavior of the info text and the info state of the StandardListItem control.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
 
       lt_o_model = VALUE #(
         ( title = `Title text` desc = `Description text` icon = `sap-icon://favorite`  highlight = `Success`     info = `Completed` )
@@ -109,6 +109,6 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
         ( title = `Title text` desc = `Description text` icon = `sap-icon://badge`    highlight = `Warning`     info = `Warning` ) ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

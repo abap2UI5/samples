@@ -3,11 +3,11 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA lock_counter TYPE i READ-ONLY .
-    DATA check_initialized TYPE abap_bool READ-ONLY .
-    DATA session_is_stateful TYPE abap_bool READ-ONLY .
-    DATA session_text TYPE string READ-ONLY .
-    DATA lock_text TYPE string READ-ONLY .
+    DATA mv_lock_counter TYPE i READ-ONLY .
+    DATA mv_check_initialized TYPE abap_bool READ-ONLY .
+    DATA mv_session_is_stateful TYPE abap_bool READ-ONLY .
+    DATA mv_session_text TYPE string READ-ONLY .
+    DATA mv_lock_text TYPE string READ-ONLY .
     DATA:
       BEGIN OF error READ-ONLY,
         text TYPE string,
@@ -41,53 +41,53 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
       title          = `abap2UI5 - Sample: Sticky Session with locks - (ABAP Standard Only)`
       navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->message_strip(
+    lo_page->message_strip(
         text    = client->_bind( error-text )
         type    = `Error`
         visible = client->_bind( error-flag ) ).
 
-    DATA(vbox) = page->vbox( ).
+    DATA(lo_vbox) = lo_page->vbox( ).
 
-    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
+    DATA(lo_hbox) = lo_vbox->hbox( alignitems = `Center` ).
 
-    hbox->info_label( text = client->_bind( session_text ) ).
+    lo_hbox->info_label( text = client->_bind( mv_session_text ) ).
 
-    hbox->button(
+    lo_hbox->button(
       text  = `End session`
       press = client->_event( `END_SESSION` ) ).
 
-    hbox->button(
+    lo_hbox->button(
       text  = `Start session again`
       press = client->_event( `START_SESSION` ) ).
 
-    hbox = vbox->hbox( alignitems = `Center` ).
-    hbox->label( text  = `press button to create lock entry (SM12) in backend session`
+    lo_hbox = lo_vbox->hbox( alignitems = `Center` ).
+    lo_hbox->label( text  = `press button to create lock entry (SM12) in backend session`
                  class = `sapUiTinyMarginEnd` ).
-    hbox->button(
+    lo_hbox->button(
       text  = `Lock`
       press = client->_event( `LOCK` )
       type  = `Emphasized` ).
 
-    hbox = vbox->hbox( ).
+    lo_hbox = lo_vbox->hbox( ).
 
-    hbox->button(
+    lo_hbox->button(
       text  = `Refresh lock counter`
       press = client->_event( `REFRESH` ) ).
 
-    hbox->button(
+    lo_hbox->button(
       text  = `Rollback Work`
       press = client->_event( `ROLLBACK` ) ).
 
-    vbox->hbox( )->info_label( client->_bind( lock_text ) ).
+    lo_vbox->hbox( )->info_label( client->_bind( mv_lock_text ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
@@ -112,18 +112,18 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
         client->view_model_update( ).
       WHEN `ROLLBACK`.
         ROLLBACK WORK.
-        client->message_toast_display( |ROLLBACK WORK done, { lock_counter } locks released. Press `Refresh lock counter`| ).
+        client->message_toast_display( |ROLLBACK WORK done, { mv_lock_counter } locks released. Press `Refresh lock counter`| ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD set_session_stateful.
 
     client->set_session_stateful( stateful ).
-    session_is_stateful = stateful.
+    mv_session_is_stateful = stateful.
     IF stateful = abap_true.
-      session_text = `Session ON (stateful)`.
+      mv_session_text = `Session ON (stateful)`.
     ELSE.
-      session_text = `Session OFF (stateless)`.
+      mv_session_text = `Session OFF (stateless)`.
     ENDIF.
     client->view_model_update( ).
   ENDMETHOD.
@@ -134,8 +134,8 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
         CLEAR error.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+        IF mv_check_initialized = abap_false.
+          mv_check_initialized = abap_true.
           update_lock_counter( ).
           initialize_view( client ).
         ENDIF.
@@ -155,7 +155,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
   METHOD update_lock_counter.
 
-    lock_counter = lcl_locking=>get_lock_counter( ).
-    lock_text = |There are { lock_counter } SM12 locks|.
+    mv_lock_counter = lcl_locking=>get_lock_counter( ).
+    mv_lock_text = |There are { mv_lock_counter } SM12 locks|.
   ENDMETHOD.
 ENDCLASS.

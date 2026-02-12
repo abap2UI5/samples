@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_273 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -25,41 +25,41 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
+    DATA lv_base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: LightBox`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && `sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox` ).
+           href   = lv_base_url && `sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox` ).
 
-    page->message_strip( text                                                                                                             = `Clicking on each of the images will open a LightBox, showing the real size of the image. ` &&
+    lo_page->message_strip( text                                                                                                             = `Clicking on each of the images will open a LightBox, showing the real size of the image. ` &&
                                 `Images will be scaled down if their size is bigger than the window size." class="sapUiSmallMargin` class = `sapUiSmallMargin`
           )->list(
               )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6100.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6100.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6100-large.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6100-large.jpg`
                                      alt      = `Beamer`
                                      title    = `This is a beamer`
                                      subtitle = `This is beamer's description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -73,14 +73,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6120.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6120.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6120-large.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-6120-large.jpg`
                                      alt      = `USB`
                                      title    = `This is a USB`
                                      subtitle = `This is USB's description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -94,14 +94,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-7777.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-7777.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/HT-7777-large.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/HT-7777-large.jpg`
                                      alt      = `Speakers`
                                      title    = `These are speakers`
                                      subtitle = `This is speakers' description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -115,14 +115,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/ALotOfElephants_small.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/ALotOfElephants_small.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/ALotOfElephants.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/ALotOfElephants.jpg`
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -136,14 +136,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/flatFish.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/flatFish.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/flatFish.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/flatFish.jpg`
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -157,14 +157,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/horses.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/horses.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/horses.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/horses.jpg`
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -178,14 +178,14 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
       )->custom_list_item(
                   )->hbox( class = `sapUiSmallMargin`
                       )->image(
-                          src          = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/elephant.jpg`
+                          src          = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/elephant.jpg`
                           decorative   = abap_false
                           width        = `170px`
                           densityaware = abap_false )->get(
                           )->detail_box(
                              )->light_box(
                                  )->light_box_item(
-                                     imagesrc = base_url && `test-resources/sap/ui/documentation/sdk/images/nature/image_does_not_exist.jpg`
+                                     imagesrc = lv_base_url && `test-resources/sap/ui/documentation/sdk/images/nature/image_does_not_exist.jpg`
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -193,38 +193,38 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                               )->title( text = `Unavailable image`
                                   )->text( text = `Shows an error when an image could not be loaded, or when it takes too much time to load it.` )->get_parent( )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Displays several image thumbnails. Clicking on each of them will open a LightBox.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

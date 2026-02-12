@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_208 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Radio Button Group`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vbox( class = `sapUiSmallMargin`
+    DATA(lo_layout) = lo_page->vbox( class = `sapUiSmallMargin`
                           )->label( labelfor = `rbg1`
                                     text     = `An example with 'matrix' layout`
                           )->radio_button_group( id      = `rbg1`
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_208 IMPLEMENTATION.
                               )->radio_button( id   = `RB4-2`
                                                text = `Option 2` )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

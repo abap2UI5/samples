@@ -4,16 +4,16 @@ CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA int1    TYPE i.
-    DATA int2    TYPE i.
-    DATA int_sum TYPE i.
+    DATA mv_int1    TYPE i.
+    DATA mv_int2    TYPE i.
+    DATA mv_int_sum TYPE i.
 
-    DATA dec1    TYPE p LENGTH 10 DECIMALS 4.
-    DATA dec2    TYPE p LENGTH 10 DECIMALS 4.
-    DATA dec_sum TYPE p LENGTH 10 DECIMALS 4.
+    DATA mv_dec1    TYPE p LENGTH 10 DECIMALS 4.
+    DATA mv_dec2    TYPE p LENGTH 10 DECIMALS 4.
+    DATA mv_dec_sum TYPE p LENGTH 10 DECIMALS 4.
 
-    DATA date    TYPE d.
-    DATA time    TYPE t.
+    DATA mv_date    TYPE d.
+    DATA mv_time    TYPE t.
 
     TYPES:
       BEGIN OF ty_s_row,
@@ -31,10 +31,10 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      date = sy-datum.
-      time = sy-uzeit.
-      dec1 = - 1 / 3.
-      dec2 = 2 / 3.
+      mv_date = sy-datum.
+      mv_time = sy-uzeit.
+      mv_dec1 = - 1 / 3.
+      mv_dec2 = 2 / 3.
 
       mt_tab = VALUE #( ( date = sy-datum time = sy-uzeit ) ).
       client->_bind_edit( mt_tab ).
@@ -42,43 +42,43 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON_INT`.
-        int_sum = int1 + int2.
+        mv_int_sum = mv_int1 + mv_int2.
       WHEN `BUTTON_DEC`.
-        dec_sum = dec1 + dec2.
+        mv_dec_sum = mv_dec1 + mv_dec2.
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Integer and Decimals`
                 navbuttonpress = client->_event( `BACK` )
                 shownavbutton  = client->check_app_prev_stack( ) ).
-    page->simple_form( title    = `Integer and Decimals`
+    lo_page->simple_form( title    = `Integer and Decimals`
                        editable = abap_true
              )->content( `form`
                  )->title( `Input`
                  )->label( `integer`
-                 )->input( value = client->_bind_edit( int1 )
-                 )->input( value = client->_bind_edit( int2 )
+                 )->input( value = client->_bind_edit( mv_int1 )
+                 )->input( value = client->_bind_edit( mv_int2 )
                  )->input( enabled = abap_false
-                           value   = client->_bind_edit( int_sum )
+                           value   = client->_bind_edit( mv_int_sum )
                  )->button( text  = `calc sum`
                             press = client->_event( `BUTTON_INT` )
                  )->label( `decimals`
-                 )->input( client->_bind_edit( dec1 )
-                 )->input( client->_bind_edit( dec2 )
+                 )->input( client->_bind_edit( mv_dec1 )
+                 )->input( client->_bind_edit( mv_dec2 )
                  )->input( enabled = abap_false
-                           value   = client->_bind_edit( dec_sum )
+                           value   = client->_bind_edit( mv_dec_sum )
                  )->button( text  = `calc sum`
                             press = client->_event( `BUTTON_DEC` )
                  )->label( `date`
-                 )->input( client->_bind_edit( date )
+                 )->input( client->_bind_edit( mv_date )
                  )->label( `time`
-                 )->input( client->_bind_edit( time ) ).
+                 )->input( client->_bind_edit( mv_time ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    DATA(lo_tab) = lo_page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
@@ -87,16 +87,16 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
             items               = client->_bind_edit( mt_tab )
             sticky              = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Date` )->get_parent(
         )->column(
             )->text( `Time` )->get_parent( ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{DATE}`
        )->text( `{TIME}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

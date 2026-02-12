@@ -33,10 +33,10 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS edit_image.
-    METHODS ui5_callback.
+    METHODS callback.
 
-    DATA selected_picture TYPE ty_picture.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_selected_picture TYPE ty_picture.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
 ENDCLASS.
 
@@ -44,45 +44,45 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(cont) = view->shell( ).
-    DATA(page) = cont->page( title = `abap2UI5 - Device Camera Picture`
-                   navbuttonpress  = client->_event( `BACK` )
-                   shownavbutton   = client->check_app_prev_stack( ) ).
+    DATA(lo_cont) = lo_view->shell( ).
+    DATA(lo_page) = lo_cont->page( title = `abap2UI5 - Device Camera Picture`
+                   navbuttonpress  = mo_client->_event( `BACK` )
+                   shownavbutton   = mo_client->check_app_prev_stack( ) ).
 
-    page->vbox( class = `sapUiSmallMargin`
+    lo_page->vbox( class = `sapUiSmallMargin`
        )->label( text     = `facingMode: `
                  labelfor = `ComboFacingMode`
        )->combobox( id          = `ComboFacingMode`
-                    selectedkey = client->_bind_edit( facing_mode )
-                    items       = `{path:'` && client->_bind_edit( val = facing_modes  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                    selectedkey = mo_client->_bind_edit( facing_mode )
+                    items       = `{path:'` && mo_client->_bind_edit( val = facing_modes  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
-    page->vbox( class = `sapUiSmallMargin`
+    lo_page->vbox( class = `sapUiSmallMargin`
        )->label( text     = `device: `
                  labelfor = `ComboDevice`
        )->_z2ui5( )->camera_selector(
                     id          = `ComboDevice`
-                    selectedkey = client->_bind_edit( device )
-                    items       = `{path:'` && client->_bind_edit( val = devices  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                    selectedkey = mo_client->_bind_edit( device )
+                    items       = `{path:'` && mo_client->_bind_edit( val = devices  path = abap_true ) && `', sorter: { path: 'TEXT' } }`
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
-    page->_z2ui5( )->camera_picture(
-                      value      = client->_bind_edit( mv_picture_base )
-                      onphoto    = client->_event( `CAPTURE` )
+    lo_page->_z2ui5( )->camera_picture(
+                      value      = mo_client->_bind_edit( mv_picture_base )
+                      onphoto    = mo_client->_event( `CAPTURE` )
                       height     = `10`
                       width      = `1000`
-                      facingmode = client->_bind_edit( facing_mode )
-                      deviceid   = client->_bind_edit( device ) ).
+                      facingmode = mo_client->_bind_edit( facing_mode )
+                      deviceid   = mo_client->_bind_edit( device ) ).
 
-    page->list(
+    lo_page->list(
         headertext      = `List Ouput`
-        items           = client->_bind_edit( mt_picture_out )
+        items           = mo_client->_bind_edit( mt_picture_out )
         mode            = `SingleSelectMaster`
-        selectionchange = client->_event( `DISPLAY` )
+        selectionchange = mo_client->_event( `DISPLAY` )
         )->standard_list_item(
             title       = `{NAME}`
             description = `{NAME}`
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
             selected    = `{SELECTED}` ).
 
     IF mv_pic_display IS NOT INITIAL.
-      page->_generic( ns   = `html`
+      lo_page->_generic( ns   = `html`
                       name = `center`
          )->_generic( ns     = `html`
                       name   = `img`
@@ -99,17 +99,17 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                         ( n = `src`  v = mv_pic_display )
          ) ).
 
-      page->button( text  = `Edit`
+      lo_page->button( text  = `Edit`
                     icon  = `sap-icon://edit`
-                    press = client->_event( `EDIT` ) ).
+                    press = mo_client->_event( `EDIT` ) ).
     ENDIF.
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF me->z2ui5_if_app~check_initialized = abap_false.
       facing_modes = VALUE tt_combo( ( key = `` text = `` )
@@ -121,28 +121,28 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       view_display( ).
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      ui5_callback( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      callback( ).
       view_display( ).
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CAPTURE`.
         INSERT VALUE #( data = mv_picture_base time = sy-uzeit ) INTO TABLE mt_picture.
         CLEAR mv_picture_base.
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `DISPLAY`.
 
-        selected_picture = mt_picture_out[ selected = abap_true ].
-        mv_pic_display = mt_picture[ selected_picture-id ]-data.
+        mv_selected_picture = mt_picture_out[ selected = abap_true ].
+        mv_pic_display = mt_picture[ mv_selected_picture-id ]-data.
         view_display( ).
       WHEN `EDIT`.
 
         edit_image( ).
       WHEN `BACK`.
 
-        client->nav_app_leave( ).
+        mo_client->nav_app_leave( ).
     ENDCASE.
 
     mt_picture_out = VALUE #( ).
@@ -153,18 +153,18 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
   METHOD edit_image.
 
-    client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
+    mo_client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
   ENDMETHOD.
 
-  METHOD ui5_callback.
+  METHOD callback.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
+        DATA(lo_prev) = mo_client->get_app( mo_client->get( )-s_draft-id_prev_app ).
+        DATA(lo_result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
 
-        IF result-check_confirmed = abap_true.
-          mv_pic_display = result-image.
-          ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+        IF lo_result-check_confirmed = abap_true.
+          mv_pic_display = lo_result-image.
+          ASSIGN mt_picture[ mv_selected_picture-id ] TO FIELD-SYMBOL(<picture>).
           IF sy-subrc = 0.
             <picture>-data = mv_pic_display.
           ENDIF.

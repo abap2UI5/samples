@@ -15,10 +15,10 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        !lo_table TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -41,17 +41,17 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    IF client->check_on_event( `BUTTON` ).
+    IF mo_client->check_on_event( `BUTTON` ).
 
-      LOOP AT mt_comp REFERENCE INTO DATA(comp).
+      LOOP AT mt_comp REFERENCE INTO DATA(lo_comp).
 
         ASSIGN ms_table_row->* TO <row>.
-        ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+        ASSIGN COMPONENT lo_comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
         IF <val> IS NOT ASSIGNED.
           CONTINUE.
         ELSE.
 
-          client->_bind( <val> ).
+          mo_client->_bind( <val> ).
 
         ENDIF.
 
@@ -71,45 +71,45 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = z2ui5_cl_xml_view=>factory( ).
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      lo_page = mo_parent_view->get( `Page` ).
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = `true`
+    DATA(lo_table) = lo_page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind( <tab> )
+                               items   = mo_client->_bind( <tab> )
 *                               headertext = mv_table
                                ).
 
-    DATA(columns) = table->columns( ).
+    DATA(lo_columns) = lo_table->columns( ).
 
-    LOOP AT mt_comp INTO DATA(comp).
+    LOOP AT mt_comp INTO DATA(lo_comp).
 
-      columns->column( )->text( comp-name ).
+      lo_columns->column( )->text( lo_comp-name ).
 
     ENDLOOP.
 
-    DATA(cells) = columns->get_parent( )->items(
+    DATA(lo_cells) = lo_columns->get_parent( )->items(
                                        )->column_list_item( valign = `Middle`
                                                             type   = `Navigation`
                                        )->cells( ).
 
-    LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = |\{{ comp-name }\}| ).
+    LOOP AT mt_comp INTO lo_comp.
+      lo_cells->object_identifier( text = |\{{ lo_comp-name }\}| ).
     ENDLOOP.
 
-    page->footer( )->overflow_toolbar(
+    lo_page->footer( )->overflow_toolbar(
                          )->toolbar_spacer(
                          )->button( text  = `Save`
-                                    press = client->_event( `BUTTON` )
+                                    press = mo_client->_event( `BUTTON` )
                                     type  = `Success` ).
 
     IF mo_parent_view IS INITIAL.
 
-      client->view_display( page->stringify( ) ).
+      mo_client->view_display( lo_page->stringify( ) ).
 
     ELSE.
 
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init = abap_false.
       mv_init = abap_true.
@@ -136,33 +136,33 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     " TODO: parameter COUNT is never used (ABAP cleaner)
 
-    mv_table = table.
+    mv_table = lo_table.
   ENDMETHOD.
 
   METHOD get_data.
 
-    FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <lo_table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
 
     mt_comp = get_comp( ).
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( mt_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( mt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_table     TYPE HANDLE new_table_desc.
+        CREATE DATA mt_table     TYPE HANDLE lv_new_table_desc.
 
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA mt_table_tmp TYPE HANDLE lv_new_table_desc.
+        CREATE DATA ms_table_row TYPE HANDLE lv_new_struct_desc.
 
-        ASSIGN mt_table->* TO <table>.
+        ASSIGN mt_table->* TO <lo_table>.
 
         SELECT *
           FROM (mv_table)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE @<lo_table>
           UP TO 100 ROWS.
 
       CATCH cx_root.
@@ -171,7 +171,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
-    <table_tmp> = <table>.
+    <table_tmp> = <lo_table>.
     get_fixval( ).
   ENDMETHOD.
 
@@ -187,26 +187,26 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
       END OF fixvalue.
     TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
 
-    DATA comp        TYPE cl_abap_structdescr=>component_table.
+    DATA lo_comp        TYPE cl_abap_structdescr=>component_table.
     DATA lt_fixval   TYPE fixvalues.
-    DATA structdescr TYPE REF TO cl_abap_structdescr.
+    DATA lo_structdescr TYPE REF TO cl_abap_structdescr.
 
     LOOP AT mt_comp REFERENCE INTO DATA(dfies).
 
-      comp = VALUE cl_abap_structdescr=>component_table(
-                       BASE comp
+      lo_comp = VALUE cl_abap_structdescr=>component_table(
+                       BASE lo_comp
                        ( name = dfies->name
                          type = CAST #( cl_abap_datadescr=>describe_by_data( lt_fixval ) ) ) ).
     ENDLOOP.
 
-    structdescr = cl_abap_structdescr=>create( comp ).
+    lo_structdescr = cl_abap_structdescr=>create( lo_comp ).
 
-    CREATE DATA ms_fixval TYPE HANDLE structdescr.
+    CREATE DATA ms_fixval TYPE HANDLE lo_structdescr.
   ENDMETHOD.
 
   METHOD get_comp.
 
-    DATA index TYPE int4.
+    DATA lv_index TYPE int4.
 
     TRY.
 
@@ -217,10 +217,10 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
               IF com-as_include = abap_false.
                 APPEND com TO result.
               ENDIF.
@@ -230,11 +230,11 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
+        DATA(lv_component) = VALUE cl_abap_structdescr=>component_table(
                                     ( name = `ROW_ID`
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( lv_index ) ) ) ).
 
-        APPEND LINES OF component TO result.
+        APPEND LINES OF lv_component TO result.
 
       CATCH cx_root.
     ENDTRY.

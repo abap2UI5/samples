@@ -8,17 +8,17 @@ CLASS z2ui5_cl_demo_app_039 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
         get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS on_render_main.
+    METHODS on_render_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -27,40 +27,40 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    app-get = client->get( ).
-    me->client = client.
+    app-get = mo_client->get( ).
+    me->mo_client = mo_client.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
+    on_render_main( ).
+    on_render_popup( ).
 
     CLEAR app-get.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
       WHEN `BACK`.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
+        mo_client->nav_app_leave( mo_client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN `POPUP`.
-        client->message_box_display( `Event raised value:` && mv_value ).
+        mo_client->message_box_display( `Event raised value:` && mv_value ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_value  = `200`.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_main.
+  METHOD on_render_main.
 
     DATA(lv_xml) = `<mvc:View` && |\n| &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
@@ -142,12 +142,12 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
                         `   </GenericTile>` && |\n| &&
                         `</mvc:View>`.
 
-    client->view_display( lv_xml ).
+    mo_client->view_display( lv_xml ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_popup.
+  METHOD on_render_popup.
 
-    client->popup_display( `<core:FragmentDefinition` && |\n| &&
+    mo_client->popup_display( `<core:FragmentDefinition` && |\n| &&
                          `  xmlns="sap.m"` && |\n| &&
                          `  xmlns:core="sap.ui.core">` && |\n| &&
                          `  <ViewSettingsDialog` && |\n| &&

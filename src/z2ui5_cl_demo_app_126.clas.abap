@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
       IMPORTING !data TYPE string.
 
   PROTECTED SECTION.
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
 
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
   METHOD get_comp.
 
-    DATA index TYPE int4.
+    DATA lv_index TYPE int4.
     TRY.
 
         TRY.
@@ -44,11 +44,11 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
 
               IF com-as_include = abap_false.
 
@@ -62,11 +62,11 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
+        DATA(lv_component) = VALUE cl_abap_structdescr=>component_table(
                                     ( name = `ROW_ID`
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( lv_index ) ) ) ).
 
-        APPEND LINES OF component TO result.
+        APPEND LINES OF lv_component TO result.
 
       CATCH cx_root.
     ENDTRY.
@@ -77,19 +77,19 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     FIELD-SYMBOLS <table>     TYPE STANDARD TABLE.
     FIELD-SYMBOLS <table_tmp> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( ).
+    DATA(lt_comp) = get_comp( ).
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_table     TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_del TYPE HANDLE new_table_desc.
-        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
-        CREATE DATA ms_table_row TYPE HANDLE new_struct_desc.
+        CREATE DATA mt_table     TYPE HANDLE lv_new_table_desc.
+        CREATE DATA mt_table_del TYPE HANDLE lv_new_table_desc.
+        CREATE DATA mt_table_tmp TYPE HANDLE lv_new_table_desc.
+        CREATE DATA ms_table_row TYPE HANDLE lv_new_struct_desc.
 
         ASSIGN mt_table->* TO <table>.
 
@@ -115,17 +115,17 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = z2ui5_cl_xml_view=>factory( ).
 
     ELSE.
 
-      page = mo_parent_view->get( `Page` ).
+      lo_page = mo_parent_view->get( `Page` ).
 
     ENDIF.
 
 *    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
 *                                          width = `100%` ).
-    page->label( `ProgressIndicator`
+    lo_page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`
                                showvalue    = abap_true
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
 
-      client->view_display( page->stringify( ) ).
+      mo_client->view_display( lo_page->stringify( ) ).
 
     ELSE.
 
@@ -149,9 +149,9 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       on_init( ).
 

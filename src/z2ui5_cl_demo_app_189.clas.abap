@@ -10,8 +10,8 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       focus_field TYPE string.
 
   PRIVATE SECTION.
-    DATA initialized TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_initialized TYPE abap_bool.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS render.
     METHODS dispatch.
@@ -22,46 +22,46 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
   METHOD dispatch.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `ONE_ENTER`.
         focus_field = `IdTwo`.
       WHEN `TWO_ENTER`.
         focus_field = `IdThree`.
     ENDCASE.
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
   ENDMETHOD.
 
   METHOD render.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
           )->page(
               title          = `abap2UI5 - Focus II`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( ) ).
+              navbuttonpress = mo_client->_event_nav_app_leave( )
+              shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->simple_form(
+    lo_page->simple_form(
        )->content( ns = `form`
        )->label( `One (Press Enter)` )->input( id     = `IdOne`
-                                               value  = client->_bind_edit( one )
-                                               submit = client->_event( `ONE_ENTER` )
+                                               value  = mo_client->_bind_edit( one )
+                                               submit = mo_client->_event( `ONE_ENTER` )
        )->label( `Two` )->input( id     = `IdTwo`
-                                 value  = client->_bind_edit( two )
-                                 submit = client->_event( `TWO_ENTER` )
+                                 value  = mo_client->_bind_edit( two )
+                                 submit = mo_client->_event( `TWO_ENTER` )
        )->label( `Three` )->input( id    = `IdThree`
-                                   value = client->_bind_edit( three ) ).
+                                   value = mo_client->_bind_edit( three ) ).
 
-    page->_z2ui5( )->focus( focusid = client->_bind( focus_field ) ).
+    lo_page->_z2ui5( )->focus( focusid = mo_client->_bind( focus_field ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF initialized = abap_false.
-      initialized = abap_true.
+    IF mv_initialized = abap_false.
+      mv_initialized = abap_true.
       focus_field = `IdOne`.
       render( ).
     ENDIF.

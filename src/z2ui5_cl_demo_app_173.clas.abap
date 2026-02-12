@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,15 +38,15 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id    = `page_main`
+    lo_view = lo_view->shell( )->page( id    = `page_main`
                                  class = `sapUiContentPadding`
              title                     = `abap2UI5 - Sample Templating I`
-             navbuttonpress            = client->_event_nav_app_leave( )
-             shownavbutton             = client->check_app_prev_stack( ) ).
+             navbuttonpress            = mo_client->_event_nav_app_leave( )
+             shownavbutton             = mo_client->check_app_prev_stack( ) ).
 
-    view->table( items = client->_bind( mt_data )
+    lo_view->table( items = mo_client->_bind( mt_data )
       )->columns(
         )->template_repeat( list = `{template>/MT_LAYOUT}`
                             var  = `L0`
@@ -60,12 +60,12 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
                                   var  = `L1`
                 )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
-    view->label( text = `IF Template (with re-rendering)` ).
-    view->switch( state  = client->_bind_edit( mv_flag )
-                  change = client->_event( `CHANGE_FLAG` ) ).
-    view = view->vbox( ).
+    lo_view->label( text = `IF Template (with re-rendering)` ).
+    lo_view->switch( state  = mo_client->_bind_edit( mv_flag )
+                  change = mo_client->_event( `CHANGE_FLAG` ) ).
+    lo_view = lo_view->vbox( ).
 
-    view->template_if( test = `{template>/XX/MV_FLAG}`
+    lo_view->template_if( test = `{template>/XX/MV_FLAG}`
       )->template_then(
         )->icon( src   = `sap-icon://accept`
                  color = `green` )->get_parent(
@@ -73,17 +73,17 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
         )->icon( src   = `sap-icon://decline`
                  color = `red` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_initialized = abap_false.
       mv_initialized = abap_true.
 
-      client->_bind( mt_layout ).
+      mo_client->_bind( mt_layout ).
 
       mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
                          ( name = `Lore` date = `01.01.2000` age = `1` ) ).
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     ENDIF.
 
-    IF client->check_on_event( `CHANGE_FLAG` ).
+    IF mo_client->check_on_event( `CHANGE_FLAG` ).
 
       view_display( ).
     ENDIF.

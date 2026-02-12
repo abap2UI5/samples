@@ -23,14 +23,14 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
         combo_key       TYPE string,
       END OF ms_popup_input.
 
-    DATA t_bapiret TYPE bapirettab.
+    DATA mt_bapiret TYPE bapirettab.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_view_display.
-    METHODS ui5_popup_input.
-    METHODS ui5_handle_event.
-    METHODS ui5_init.
+    METHODS view_display.
+    METHODS popup_input.
+    METHODS handle_event.
+    METHODS init.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -38,17 +38,17 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
-  METHOD ui5_handle_event.
+  METHOD handle_event.
 
-    IF client->check_on_event( `POPUP_TO_INPUT` ).
+    IF mo_client->check_on_event( `POPUP_TO_INPUT` ).
       ms_popup_input-value1 = `value1`.
-      ui5_popup_input( ).
+      popup_input( ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD ui5_init.
+  METHOD init.
 
-    t_bapiret = VALUE #(
+    mt_bapiret = VALUE #(
       ( message = `An empty Report field causes an empty XML Message to be sent` type = `E` id = `MSG1` number = `001` )
       ( message = `Check was executed for wrong Scenario` type = `E` id = `MSG1` number = `002` )
       ( message = `Request was handled without errors` type = `S` id = `MSG1` number = `003` )
@@ -57,25 +57,25 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       ( message = `product already in use` type = `I` id = `MSG2` number = `375` ) ).
   ENDMETHOD.
 
-  METHOD ui5_popup_input.
+  METHOD popup_input.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
+    DATA(lo_dialog) = lo_popup->dialog(
        contentheight = `500px`
        contentwidth  = `500px`
        title         = `Title` ).
 
-    dialog->content(
+    lo_dialog->content(
            )->simple_form(
                )->label( text = `Input1`
                          id   = `lbl1`
-               )->input( client->_bind_edit( ms_popup_input-value1 )
+               )->input( mo_client->_bind_edit( ms_popup_input-value1 )
                )->label( `Input2`
-               )->input( client->_bind_edit( ms_popup_input-value2 )
+               )->input( mo_client->_bind_edit( ms_popup_input-value2 )
                )->label( `Checkbox`
                )->checkbox(
-                   selected = client->_bind_edit( ms_popup_input-check_is_active )
+                   selected = mo_client->_bind_edit( ms_popup_input-check_is_active )
                    text     = `this is a checkbox`
                    enabled  = abap_true
          )->get_parent( )->get_parent(
@@ -83,63 +83,63 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
            )->toolbar_spacer(
            )->button(
                text  = `Cancel`
-               press = client->_event( `BUTTON_TEXTAREA_CANCEL` )
+               press = mo_client->_event( `BUTTON_TEXTAREA_CANCEL` )
            )->button(
                text  = `Confirm`
-               press = client->_event_client( client->cs_event-popup_close )
+               press = mo_client->_event_client( mo_client->cs_event-popup_close )
                type  = `Emphasized` ).
 
-    dialog->_generic( name   = `HTML`
+    lo_dialog->_generic( name   = `HTML`
                       ns     = `core`
                       t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
                                                                    ( n = `preferDOM`  v = `true` )
                                                                   ) )->get_parent( ).
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(css) = `` &&
+    DATA(lv_css) = `` &&
                 `.lbl-color { color: red !important; font-size: 30px !important; }`.
 
-    DATA(script) = `` &&
+    DATA(lv_script) = `` &&
                    `sap.z2ui5.setBlackColor = function() {` && |\n| &&
                    `  var lbl = sap.ui.getCore().byId('popupId--lbl1');` && |\n| &&
                    `  lbl.setText('changed from js');` && |\n| &&
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&
                    `};`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style`
-                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
-    view->_generic( name = `script`
-                    ns   = `html` )->_cc_plain_xml( script )->get_parent( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->_generic( name = `style`
+                    ns   = `html` )->_cc_plain_xml( lv_css )->get_parent( ).
+    lo_view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( lv_script )->get_parent( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Popups`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
+    DATA(lo_grid) = lo_page->grid( `L8 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( `Inputs` )->content( `form`
+    lo_grid->simple_form( `Inputs` )->content( `form`
         )->label( `01`
         )->button(
             text  = `Popup Get Input Values`
-            press = client->_event( `POPUP_TO_INPUT` ) ).
+            press = mo_client->_event( `POPUP_TO_INPUT` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      ui5_view_display( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      view_display( ).
     ENDIF.
 
-    ui5_handle_event( ).
+    handle_event( ).
   ENDMETHOD.
 ENDCLASS.

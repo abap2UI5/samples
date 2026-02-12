@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_030 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
             ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
             ( title = `Peter`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
             ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
@@ -58,25 +58,25 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
           type = `success` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->dynamic_page(
+    DATA(lo_page) = lo_view->dynamic_page(
         showfooter = abap_true
        "  headerExpanded = abap_true
       "   toggleHeaderOnTitleClick = client->_event( 'ON_TITLE' )
       ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
+    DATA(lo_header_title) = lo_page->title( ns = `f` )->get( )->dynamic_page_title( ).
 
-    header_title->heading( ns = `f` )->title( `Header Title` ).
+    lo_header_title->heading( ns = `f` )->title( `Header Title` ).
 
-    header_title->expanded_content( `f`
+    lo_header_title->expanded_content( `f`
              )->label( text = `this is a subheading` ).
 
-    header_title->snapped_content( ns = `f`
+    lo_header_title->snapped_content( ns = `f`
              )->label( text = `this is a subheading` ).
 
-    header_title->actions( ns = `f` )->overflow_toolbar(
+    lo_header_title->actions( ns = `f` )->overflow_toolbar(
          )->overflow_toolbar_button(
              icon    = `sap-icon://edit`
              text    = `edit header`
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
              text  = `Go Back`
              press = client->_event_nav_app_leave( ) ).
 
-    header_title->navigation_actions(
+    lo_header_title->navigation_actions(
             )->button( icon = `sap-icon://full-screen`
                        type = `Transparent`
             )->button( icon = `sap-icon://exit-full-screen`
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
             )->button( icon = `sap-icon://decline`
                        type = `Transparent` ).
 
-    page->header( )->dynamic_page_header( pinnable = abap_true
+    lo_page->header( )->dynamic_page_header( pinnable = abap_true
         )->horizontal_layout(
             )->vertical_layout(
                    )->object_attribute( title = `Location`
@@ -130,18 +130,18 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
                    )->object_attribute( title = `Rack`
                                         text  = `34` ).
 
-    DATA(cont) = page->content( ns = `f` ).
+    DATA(lo_cont) = lo_page->content( ns = `f` ).
 
-    cont->list(
+    lo_cont->list(
          headertext = `List Ouput`
-         items      = client->_bind( t_tab )
+         items      = client->_bind( mt_tab )
          )->standard_list_item(
              title       = `{TITLE}`
              description = `{DESCR}`
              icon        = `{ICON}`
              info        = `{INFO}` ).
 
-    page->footer( ns = `f` )->overflow_toolbar(
+    lo_page->footer( ns = `f` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = `edit header`
@@ -153,6 +153,6 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
                  type    = `Emphasized`
                  tooltip = `pull-down` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

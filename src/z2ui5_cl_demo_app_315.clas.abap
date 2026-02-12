@@ -13,52 +13,52 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = lo_view->shell(
           )->page(
               title          = `abap2UI5 - Table with odata source`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
-      DATA(tab) = page->table(
+      DATA(lo_tab) = lo_page->table(
         items   = `{TRAVEL>/Currency}`
         growing = abap_true ).
 
-      tab->header_toolbar( )->toolbar(
+      lo_tab->header_toolbar( )->toolbar(
         )->title( `table with OData model TRAVEL` ).
 
-      tab->columns(
+      lo_tab->columns(
         )->column( )->text( `{TRAVEL>/#Currency/Currency/@sap:label}` )->get_parent(
         )->column( )->text( `{TRAVEL>/#Currency/Currency_Text/@sap:label}` )->get_parent(
         )->column( )->text( `{TRAVEL>/#Currency/Decimals/@sap:label}` )->get_parent(
         )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` )->get_parent( ).
 
-      tab->items( )->column_list_item( )->cells(
+      lo_tab->items( )->column_list_item( )->cells(
         )->text( `{TRAVEL>Currency}`
         )->text( `{TRAVEL>Currency_Text}`
         )->text( `{TRAVEL>Decimals}`
         )->text( `{TRAVEL>CurrencyISOCode}` ).
 
-      tab = page->table(
+      lo_tab = lo_page->table(
         items   = `{FLIGHT>/Airport}`
         growing = abap_true ).
 
-      tab->header_toolbar( )->toolbar(
+      lo_tab->header_toolbar( )->toolbar(
         )->title( `table with odata model FLIGHT` ).
 
-      tab->columns(
+      lo_tab->columns(
         )->column( )->text( `AirportID` )->get_parent(
         )->column( )->text( `Name` )->get_parent(
         )->column( )->text( `City` )->get_parent(
         )->column( )->text( `CountryCode` )->get_parent( ).
 
-      tab->items( )->column_list_item( )->cells(
+      lo_tab->items( )->column_list_item( )->cells(
         )->text( `{FLIGHT>AirportID}`
         )->text( `{FLIGHT>Name}`
         )->text( `{FLIGHT>City}`
         )->text( `{FLIGHT>CountryCode}` ).
 
-      client->view_display( val                       = view->stringify( )
+      client->view_display( val                       = lo_view->stringify( )
                             switch_default_model_path = `` ).
 
       client->follow_up_action( client->_event_client(

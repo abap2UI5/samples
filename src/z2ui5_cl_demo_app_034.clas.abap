@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA t_bapiret TYPE bapirettab.
+    DATA mt_bapiret TYPE bapirettab.
 
     DATA mv_popup_name TYPE string.
     DATA mv_main_xml TYPE string.
@@ -25,29 +25,29 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
   METHOD view_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Popups`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
+    DATA(lo_grid) = lo_page->grid( `L8 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( `Tables` )->content( `form`
+    lo_grid->simple_form( `Tables` )->content( `form`
         )->label( `01`
         )->button(
             text  = `Show bapiret tab`
             press = client->_event( `POPUP_BAL` ) ).
 
-    mv_main_xml = view->stringify( ).
+    mv_main_xml = lo_view->stringify( ).
   ENDMETHOD.
 
   METHOD view_popup_bal.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( `abap2ui5 - Popup Message Log`
-            )->table( client->_bind( t_bapiret )
+            )->table( client->_bind( mt_bapiret )
                 )->columns(
                     )->column( `5rem`
                         )->text( `Type` )->get_parent(
@@ -73,14 +73,14 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
                     press = client->_event( `POPUP_BAL_CLOSE` )
                     type  = `Emphasized` ).
 
-    mv_popup_xml = popup->stringify( ).
+    mv_popup_xml = lo_popup->stringify( ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
 
-      t_bapiret = VALUE #(
+      mt_bapiret = VALUE #(
         ( message = `An empty Report field causes an empty XML Message to be sent` type = `E` id = `MSG1` number = `001` )
         ( message = `Check was executed for wrong Scenario` type = `E` id = `MSG1` number = `002` )
         ( message = `Request was handled without errors` type = `S` id = `MSG1` number = `003` )

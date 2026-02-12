@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA mo_main_page      TYPE REF TO z2ui5_cl_xml_view.
 
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `ON_SELECT_ICON_TAB_BAR`.
 
         CASE mv_selectedkey.
@@ -53,7 +53,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     mt_t002 = VALUE #( class = `Z2UI5_CL_DEMO_APP_212`
                        ( id = `1` count = `5` table = `Z2UI5_T003` descr = `Table 01` icon = `sap-icon://add` )
-*                       ( id = '2' count = '10' table = 'Z2UI5_T003'  descr = 'Table 01' icon = 'sap-icon://add' )
                        ( id = `3` count = `15` table = `Z2UI5_T004`  descr = `Table 02` icon = `sap-icon://accept` ) ).
 
     mv_selectedkey = `1`.
@@ -61,30 +60,30 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
-    DATA(page) = view->page( id             = `page_main`
+    DATA(lo_page) = lo_view->page( id             = `page_main`
                              title          = `Customizing`
-                             navbuttonpress = client->_event_nav_app_leave( )
-                             shownavbutton  = client->check_app_prev_stack( )
+                             navbuttonpress = mo_client->_event_nav_app_leave( )
+                             shownavbutton  = mo_client->check_app_prev_stack( )
                              class          = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
-                                         selectedkey = client->_bind_edit( mv_selectedkey )
-                                         select      = client->_event( `ON_SELECT_ICON_TAB_BAR` )
+    DATA(lo_items) = lo_page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
+                                         selectedkey = mo_client->_bind_edit( mv_selectedkey )
+                                         select      = mo_client->_event( `ON_SELECT_ICON_TAB_BAR` )
                                                        )->items( ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
 
-      DATA(text) = line->descr.
-      DATA(with_icon) = line->icon.
+      DATA(lv_text) = line->descr.
+      DATA(lv_with_icon) = line->icon.
 
       lo_items->icon_tab_filter( icon      = line->icon
                                  iconcolor = `Positive`
                                  count     = line->count
-                                 text      = text
+                                 text      = lv_text
                                  key       = line->id
-                                 showall   = with_icon ).
+                                 showall   = lv_with_icon ).
 
       lo_items->icon_tab_separator( ).
 
@@ -95,9 +94,9 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       on_init( ).
 
@@ -133,13 +132,13 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
             render_main( ).
 
-            ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
-            IF <view> IS ASSIGNED.
-              <view> = mo_main_page.
+            ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<lo_view>).
+            IF <lo_view> IS ASSIGNED.
+              <lo_view> = mo_main_page.
             ENDIF.
 
             CALL METHOD mo_app->(`Z2UI5_IF_APP~MAIN`)
-              EXPORTING client = client.
+              EXPORTING mo_client = mo_client.
 
           CATCH cx_root.
             RETURN.
@@ -150,19 +149,19 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.
-      client->view_display( mo_main_page->stringify( ) ).
+      mo_client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
     ASSIGN mo_app->(`MV_VIEW_MODEL_UPDATE`) TO FIELD-SYMBOL(<view_update>).
 
     IF <view_update> = abap_true.
       <view_update> = abap_false.
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
     ENDIF.
 
     IF mv_selectedkey <> mv_selectedkey_tmp.
 
-      client->view_display( mo_main_page->stringify( ) ).
+      mo_client->view_display( mo_main_page->stringify( ) ).
 
       mv_selectedkey_tmp = mv_selectedkey.
 

@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view->shell(
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `Main View`
                 id             = `test`

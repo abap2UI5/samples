@@ -31,21 +31,21 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     TYPES
       ty_prin_nodes TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY.
 
-    DATA prodh_nodes TYPE ty_prodh_nodes .
-    DATA is_initialized TYPE abap_bool .
-    DATA gv_user TYPE c LENGTH 12.
-    DATA gv_date TYPE d.
+    DATA mv_prodh_nodes TYPE ty_prodh_nodes .
+    DATA mv_initialized TYPE abap_bool .
+    DATA mv_user TYPE c LENGTH 12.
+    DATA mv_date TYPE d.
 
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
-    METHODS ui5_display_view .
-    METHODS ui5_display_popover
+    METHODS display_view .
+    METHODS display_popover
       IMPORTING
         !id TYPE string .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS ui5_initialize.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
+    METHODS initialize.
     METHODS add_node
       IMPORTING p_prodh TYPE string.
 
@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   METHOD add_node.
 
-    LOOP AT prodh_nodes ASSIGNING FIELD-SYMBOL(<fs1>).
+    LOOP AT mv_prodh_nodes ASSIGNING FIELD-SYMBOL(<fs1>).
       IF <fs1>-prodh = p_prodh.
         <fs1>-counter = <fs1>-counter + 1.
         EXIT.
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
-  METHOD ui5_display_popover.
+  METHOD display_popover.
 
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
@@ -90,30 +90,30 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `OK`
-                    press = client->_event( `POPOVER_OK` )
+                    press = mo_client->_event( `POPOVER_OK` )
                     type  = `Emphasized`
            )->get_parent( )->get_parent(
            )->text( `TEST` ).
 
-    client->popover_display( xml   = lo_popover->stringify( )
+    mo_client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
 
-  METHOD ui5_display_view.
+  METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->object_page_layout(
+    DATA(lo_page) = lo_view->object_page_layout(
             showtitleinheadercontent = abap_true
             uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
-    header_title->expanded_heading(
+    DATA(lo_header_title) = lo_page->header_title( )->object_page_dyn_header_title( ).
+    lo_header_title->expanded_heading(
             )->hbox(
                 )->title( text = `PriceList` ).
 
-    DATA(header_content) = page->header_content( ns = `uxap`).
-    header_content->block_layout(
+    DATA(lo_header_content) = lo_page->header_content( ns = `uxap`).
+    lo_header_content->block_layout(
       )->block_layout_row(
       )->block_layout_cell( backgroundcolorset   = `ColorSet10`
                             backgroundcolorshade = `ShadeE`
@@ -134,12 +134,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                     text   = `Date:`
         )->get_parent(
       )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-        )->text( client->_bind( gv_user )
-        )->text( client->_bind( gv_date ) ).
+        )->text( mo_client->_bind( mv_user )
+        )->text( mo_client->_bind( mv_date ) ).
 
-    DATA(sections) = page->sections( ).
+    DATA(lo_sections) = lo_page->sections( ).
 
-    DATA(cont) = sections->object_page_section( titleuppercase = abap_false
+    DATA(lo_cont) = lo_sections->object_page_section( titleuppercase = abap_false
                                                 id             = `Sets`
                                                 title          = `Sets`
         )->heading( ns = `uxap`
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                 )->scroll_container( vertical = abap_true
                  )->vbox(
                       )->tree_table( id  = `treeTable`
-                         rows            = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
+                         rows            = `{path:'` && mo_client->_bind( val = mv_prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
                          toggleopenstate = `saveState()`
                          )->tree_columns(
                           )->tree_column( label = `Label`
@@ -164,20 +164,20 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                           )->tree_column( label = `Counter`
                           )->tree_template(
                            )->link( text    = `{COUNTER}`
-                                      press = client->_event( val = `POPOVER` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                      press = mo_client->_event( val = `POPOVER` t_arg = VALUE #( ( `${$source>/id}` ) ) )
       )->get_parent( )->get_parent(
                           )->tree_column( label = `ADD`
                           )->tree_template(
                            )->button( icon = `sap-icon://add`
-                                 press     = client->_event( val = `ROW_ADD` t_arg = VALUE #( ( `${PRODH}` ) ) )
+                                 press     = mo_client->_event( val = `ROW_ADD` t_arg = VALUE #( ( `${PRODH}` ) ) )
                                  tooltip   = `ADD`
                           )->get_parent( )->get_parent( ).
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_initialize.
+  METHOD initialize.
 
-    prodh_nodes =
+    mv_prodh_nodes =
       VALUE #( ( text = `Machines`
                prodh  = `00100`
                nodes  = VALUE #( ( text = `Pumps`
@@ -198,19 +198,19 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                        ) )
              ) ).
 
-    gv_user = sy-uname.
-    gv_date = sy-datum.
+    mv_user = sy-uname.
+    mv_date = sy-datum.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
     DATA lt_event_arg TYPE string_table.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF is_initialized = abap_false.
-      is_initialized = abap_true.
-      ui5_initialize( ).
+    IF mv_initialized = abap_false.
+      mv_initialized = abap_true.
+      initialize( ).
 
       DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&
                          `  var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
@@ -228,8 +228,8 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                                 ` };` && |\n| &&
                                 `};`.
 
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->timer( client->_event( `START` )
+      mo_client->view_display( z2ui5_cl_xml_view=>factory(
+        )->_z2ui5( )->timer( mo_client->_event( `START` )
           )->_generic( ns   = `html`
                        name = `script` )->_cc_plain_xml( lv_save_state_js )->get_parent(
           )->_generic( ns   = `html`
@@ -237,26 +237,26 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
           )->stringify( ) ).
     ENDIF.
 
-    lt_event_arg = client->get( )-t_event_arg.
-    CASE client->get( )-event.
+    lt_event_arg = mo_client->get( )-t_event_arg.
+    CASE mo_client->get( )-event.
       WHEN `START`.
-        ui5_display_view( ).
+        display_view( ).
       WHEN `CONTINUE`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
       WHEN `CANCEL`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
       WHEN `POPOVER`.
-        lt_event_arg = client->get( )-t_event_arg.
+        lt_event_arg = mo_client->get( )-t_event_arg.
         DATA(lv_open_by_id) = lt_event_arg[ 1 ].
-        ui5_display_popover( lv_open_by_id ).
+        display_popover( lv_open_by_id ).
       WHEN `ROW_ADD`.
         add_node( lt_event_arg[ 1 ] ).
 
         mv_run_js = abap_true.
 
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
 
-        client->follow_up_action( val = `setState();` ).
+        mo_client->follow_up_action( val = `setState();` ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_138 DEFINITION PUBLIC.
         val2 TYPE string,
       END OF ms_data.
 
-    DATA quantity TYPE string.
+    DATA mv_quantity TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -40,10 +40,10 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val  = `tomato`.
-      quantity = `500`.
+      mv_quantity = `500`.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display( lo_view->shell(
             )->page(
                     title          = `abap2UI5 - First Example`
                     navbuttonpress = client->_event( `BACK` )
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
+                        )->input( client->_bind_edit( mv_quantity )
                         )->label( `product`
                         )->input( client->_bind_edit( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val )
                         )->button(
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
-        client->message_toast_display( |{ quantity } - send to the server| ).
+        client->message_toast_display( |{ mv_quantity } - send to the server| ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.

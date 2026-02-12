@@ -65,12 +65,12 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_pop_filter.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS on_render_main.
+    METHODS on_render_pop_filter.
 
   PRIVATE SECTION.
     DATA mt_cols TYPE string_table.
@@ -81,24 +81,24 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_on_init( ).
+    IF mo_client->check_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_POST`.
         CREATE DATA mt_table TYPE (mv_name).
-        z2ui5_on_render_main( ).
+        on_render_main( ).
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
 
@@ -116,19 +116,19 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             ) INTO TABLE ms_filter-product.
         ENDLOOP.
 
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
       WHEN `POPUP_ADD`.
         INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
-        client->popup_model_update( ).
+        mo_client->popup_model_update( ).
       WHEN `POPUP_DELETE`.
-        DATA(lt_item) = client->get( )-t_event_arg.
+        DATA(lt_item) = mo_client->get( )-t_event_arg.
         DELETE mt_filter WHERE key = lt_item[ 1 ].
-        client->popup_model_update( ).
+        mo_client->popup_model_update( ).
       WHEN `POPUP_DELETE_ALL`.
         mt_filter = VALUE #( ).
-        client->popup_model_update( ).
+        mo_client->popup_model_update( ).
       WHEN `FILTER_VALUE_HELP`.
-        z2ui5_on_render_pop_filter( ).
+        on_render_pop_filter( ).
 
         CLEAR mt_filter.
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
 
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` ) ).
 
     mv_name = `screen_01`.
-    z2ui5_on_render_main( ).
+    on_render_main( ).
 
     mt_mapping = VALUE #(
       (   n = `EQ`     v = `={LOW}` )
@@ -168,44 +168,44 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       (   n = `<leer>` v = `<leer>` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_main.
+  METHOD on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->page( id   = `page_main`
+    lo_view = lo_view->page( id   = `page_main`
              title          = `abap2UI5 - Select-Options`
-             navbuttonpress = client->_event_nav_app_leave( )
-             shownavbutton  = client->check_app_prev_stack( ) ).
+             navbuttonpress = mo_client->_event_nav_app_leave( )
+             shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(page) = view->dynamic_page(
+    DATA(lo_page) = lo_view->dynamic_page(
             headerexpanded = abap_true
             headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = `f`
+    DATA(lo_header_title) = lo_page->title( ns = `f`
             )->get( )->dynamic_page_title( ).
 
-    header_title->heading( ns = `f` )->hbox(
+    lo_header_title->heading( ns = `f` )->hbox(
         )->title( `Select-Option` ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( ns = `f` ).
+    lo_header_title->expanded_content( `f` ).
+    lo_header_title->snapped_content( ns = `f` ).
 
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+    DATA(lo_box) = lo_page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
-    DATA(vbox) = lo_box->vbox( ).
-    vbox->simple_form( editable = abap_true
+    DATA(lo_vbox) = lo_box->vbox( ).
+    lo_vbox->simple_form( editable = abap_true
             )->content( `form`
                 )->title( `Table`
                 )->label( `Name` ).
 
-    vbox->input( client->_bind_edit( mv_name ) ).
+    lo_vbox->input( mo_client->_bind_edit( mv_name ) ).
 
-    vbox->button(
+    lo_vbox->button(
                 text  = `read`
-                press = client->_event( `BUTTON_POST` ) ).
+                press = mo_client->_event( `BUTTON_POST` ) ).
 
-    vbox = lo_box->vbox( ).
+    lo_vbox = lo_box->vbox( ).
 
     IF mt_02 IS NOT INITIAL.
 
@@ -221,20 +221,20 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                  ) INTO TABLE mt_tab_02_input.
       ENDLOOP.
 *
-      vbox->list(
-        items      = client->_bind( mt_tab_02_input )
+      lo_vbox->list(
+        items      = mo_client->_bind( mt_tab_02_input )
         headertext = `Filter`
         )->custom_list_item(
             )->hbox(
                 )->text( `{NAME}`
             )->multi_input(
-                tokens           = client->_bind( mt_token )
+                tokens           = mo_client->_bind( mt_token )
                 showclearicon    = abap_true
                 value            = `{VALUE}`
-                tokenupdate      = client->_event( `FILTER_UPDATE1` )
-                submit           = client->_event( `FILTER_UPDATE` )
+                tokenupdate      = mo_client->_event( `FILTER_UPDATE1` )
+                submit           = mo_client->_event( `FILTER_UPDATE` )
                 id               = `FILTER`
-                valuehelprequest = client->_event( `FILTER_VALUE_HELP` )
+                valuehelprequest = mo_client->_event( `FILTER_VALUE_HELP` )
             )->item(
                     key  = `{KEY}`
                     text = `{TEXT}`
@@ -247,10 +247,10 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                     editable = `{EDITABLE}` ).
     ENDIF.
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_pop_filter.
+  METHOD on_render_pop_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -259,25 +259,25 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       contentwidth  = `50%`
         title       = `Define Conditons - Product` ).
 
-    DATA(vbox) = lo_popup->vbox( height         = `100%`
+    DATA(lo_vbox) = lo_popup->vbox( height         = `100%`
                                  justifycontent = `SpaceBetween` ).
 
-    DATA(pan)  = vbox->panel(
+    DATA(lo_pan)  = lo_vbox->panel(
          expandable = abap_false
          expanded   = abap_true
          headertext = `Product` ).
-    DATA(item) = pan->list(
+    DATA(lo_item) = lo_pan->list(
            "   headertext = `Product`
               nodata         = `no conditions defined`
-             items           = client->_bind_edit( mt_filter )
-             selectionchange = client->_event( `SELCHANGE` )
+             items           = mo_client->_bind_edit( mt_filter )
+             selectionchange = mo_client->_event( `SELCHANGE` )
                 )->custom_list_item( ).
 
-    DATA(grid) = item->grid( ).
+    DATA(lo_grid) = lo_item->grid( ).
 
-    grid->combobox(
+    lo_grid->combobox(
                  selectedkey = `{OPTION}`
-                 items       = client->_bind_edit( mt_mapping )
+                 items       = mo_client->_bind_edit( mt_mapping )
              )->item(
                      key  = `{N}`
                      text = `{N}`
@@ -287,26 +287,26 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                        visible = `{= ${OPTION} === 'BT' }`
              )->button( icon  = `sap-icon://decline`
                         type  = `Transparent`
-                        press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) ) ).
+                        press = mo_client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->button( text  = `Delete All`
                    icon  = `sap-icon://delete`
                    type  = `Transparent`
-                   press = client->_event( `POPUP_DELETE_ALL` )
+                   press = mo_client->_event( `POPUP_DELETE_ALL` )
         )->button( text  = `Add Item`
                    icon  = `sap-icon://add`
-                   press = client->_event( `POPUP_ADD` )
+                   press = mo_client->_event( `POPUP_ADD` )
         )->toolbar_spacer(
         )->button(
             text  = `OK`
-            press = client->_event( `FILTER_VALUE_HELP_OK` )
+            press = mo_client->_event( `FILTER_VALUE_HELP_OK` )
             type  = `Emphasized`
        )->button(
             text  = `Cancel`
-            press = client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
+            press = mo_client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
 
-    client->popup_display( lo_popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
 ENDCLASS.

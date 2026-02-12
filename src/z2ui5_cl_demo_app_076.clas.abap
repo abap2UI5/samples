@@ -39,10 +39,10 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_set_data .
+    METHODS on_init .
+    METHODS set_data .
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,29 +51,29 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      z2ui5_set_data( ).
-      z2ui5_on_init( ).
+      set_data( ).
+      on_init( ).
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
+    lo_view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(lo_page) = lo_view->page( id = `page_main`
             title               = `abap2UI5 - Gantt`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( )
+            navbuttonpress      = mo_client->_event_nav_app_leave( )
+            shownavbutton       = mo_client->check_app_prev_stack( )
             class               = `sapUiContentPadding` ).
 
-    DATA(gantt) = page->gantt_chart_container(
+    DATA(lo_gantt) = lo_page->gantt_chart_container(
       )->gantt_chart_with_table( id                 = `gantt`
                                  shapeselectionmode = `Single`
         )->axis_time_strategy(
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
               )->time_horizon( starttime = `20181029000000`
                                endtime   = `20181129000000` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
       )->gantt_table(
-        )->tree_table( rows = `{path: '` && client->_bind( val = mt_table path = abap_true ) && `', parameters: {arrayNames: ['CHILDREN'],numberOfExpandedLevels: 1}}`
+        )->tree_table( rows = `{path: '` && mo_client->_bind( val = mt_table path = abap_true ) && `', parameters: {arrayNames: ['CHILDREN'],numberOfExpandedLevels: 1}}`
           )->tree_columns(
             )->tree_column( label = `Col 1` )->tree_template( )->text( text = `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
 *            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
@@ -102,10 +102,10 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
                 )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
                 endtime       = `{= Helper.DateCreateObject(${ENDTIME} ) }` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #( children = VALUE #( ( id = `line`
       text                                       = `Level 1`

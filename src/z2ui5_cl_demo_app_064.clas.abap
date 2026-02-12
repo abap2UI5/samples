@@ -34,10 +34,10 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
     DATA mv_check_enabled TYPE abap_bool.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
   PRIVATE SECTION.
 
     METHODS set_selkz
@@ -58,19 +58,19 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_on_init( ).
+    IF mo_client->check_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    IF client->check_on_event( `LOAD` ).
+    IF mo_client->check_on_event( `LOAD` ).
 
       mv_percent = mv_percent + 25.
       mv_check_active = abap_true.
@@ -81,49 +81,49 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
         mv_check_enabled = abap_true.
       ENDIF.
 
-      client->message_toast_display( `loaded` ).
+      mo_client->message_toast_display( `loaded` ).
       WAIT UP TO 2 SECONDS.
-      client->view_model_update( ).
+      mo_client->view_model_update( ).
 
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
-    DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA page1 TYPE REF TO z2ui5_cl_xml_view.
-    DATA temp5 TYPE abap_bool.
-    DATA layout TYPE REF TO z2ui5_cl_xml_view.
-    CLEAR temp1.
+    DATA lt_temp1 TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_page1 TYPE REF TO z2ui5_cl_xml_view.
+    DATA lv_temp5 TYPE abap_bool.
+    DATA lo_layout TYPE REF TO z2ui5_cl_xml_view.
+    CLEAR lt_temp1.
 
     mv_check_enabled = abap_true.
-    view = z2ui5_cl_xml_view=>factory( ).
+    lo_view = z2ui5_cl_xml_view=>factory( ).
 
-    view->_z2ui5( )->timer(
-        finished    = client->_event( `LOAD` )
-        checkactive = client->_bind( mv_check_active ) ).
+    lo_view->_z2ui5( )->timer(
+        finished    = mo_client->_event( `LOAD` )
+        checkactive = mo_client->_bind( mv_check_active ) ).
 
-    temp5 = client->check_app_prev_stack( ).
-    page1 = view->shell( )->page( id = `page_main`
+    lv_temp5 = mo_client->check_app_prev_stack( ).
+    lo_page1 = lo_view->shell( )->page( id = `page_main`
       title                          = `abap2UI5 - Progress Bar while Server Request`
-      navbuttonpress                 = client->_event_nav_app_leave( )
-      shownavbutton                  = temp5
+      navbuttonpress                 = mo_client->_event_nav_app_leave( )
+      shownavbutton                  = lv_temp5
       class                          = `sapUiContentPadding` ).
 
-    layout = page1->vertical_layout( class = `sapuicontentpadding`
+    lo_layout = lo_page1->vertical_layout( class = `sapuicontentpadding`
                                      width = `100%` ).
-    layout->vbox( )->progress_indicator(
-      percentvalue = client->_bind_edit( mv_percent )
-      displayvalue = client->_bind_edit( screen-display_value )
+    lo_layout->vbox( )->progress_indicator(
+      percentvalue = mo_client->_bind_edit( mv_percent )
+      displayvalue = mo_client->_bind_edit( screen-display_value )
       showvalue    = abap_true
            state   = `Success` ).
 
-    layout->button(
+    lo_layout->button(
         text    = `Load`
-        press   = client->_event( `LOAD` )
-        enabled = client->_bind( mv_check_enabled ) ).
+        press   = mo_client->_event( `LOAD` )
+        enabled = mo_client->_bind( mv_check_enabled ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

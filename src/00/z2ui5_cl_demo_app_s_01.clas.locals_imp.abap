@@ -58,18 +58,18 @@ CLASS lcl_locking IMPLEMENTATION.
 
   METHOD get_lock_counter.
 
-    DATA enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
+    DATA lt_enqueue_table TYPE STANDARD TABLE OF ty_seqg3.
 
-    DATA argument TYPE c LENGTH 150.
-    argument = |ZTEST                         Z100*|.
+    DATA lv_argument TYPE c LENGTH 150.
+    lv_argument = |ZTEST                         Z100*|.
 
     DATA(lv_fm) = `ENQUEUE_READ`.
     CALL FUNCTION lv_fm
       EXPORTING
-        garg                  = argument
+        garg                  = lv_argument
         guname                = sy-uname
       TABLES
-        enq                   = enqueue_table
+        enq                   = lt_enqueue_table
       EXCEPTIONS
         communication_failure = 1
         system_failure        = 2
@@ -79,6 +79,6 @@ CLASS lcl_locking IMPLEMENTATION.
       RAISE EXCEPTION TYPE z2ui5_cx_util_error EXPORTING val = error_text.
     ENDIF.
 
-    result = VALUE #( enqueue_table[ 1 ]-gusevb OPTIONAL ).
+    result = VALUE #( lt_enqueue_table[ 1 ]-gusevb OPTIONAL ).
   ENDMETHOD.
 ENDCLASS.

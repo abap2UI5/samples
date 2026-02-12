@@ -63,14 +63,14 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
             )->page(
                     title          = `abap2UI5 - Map Container`
                     navbuttonpress = client->_event( `BACK` )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(map) = page->map_container( autoadjustheight = abap_true
+    DATA(lo_map) = lo_page->map_container( autoadjustheight = abap_true
          )->content( ns = `vk`
              )->container_content(
                title = `Analytic Map`
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                        initialposition = `9.933573;50;0`
                        initialzoom     = `6` ).
 
-    map->vos(
+    lo_map->vos(
       )->spots( client->_bind( mt_spot )
       )->spot(
         position      = `{POS}`
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
         scale         = `{SCALE}`
         tooltip       = `{TOOLTIP}` ).
 
-    map->routes( client->_bind( mt_route ) )->route(
+    lo_map->routes( client->_bind( mt_route ) )->route(
       position      = `{POSITION}`
         routetype   = `{ROUTETYPE}`
         linedash    = `{LINEDASH}`
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *        result    =
       ).
 
-    map->legend_area( )->legend(
+    lo_map->legend_area( )->legend(
 *      EXPORTING
 *        id      =
         items   = client->_bind( mt_legend )
@@ -113,6 +113,6 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *      RECEIVING
 *        result =
       ).
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

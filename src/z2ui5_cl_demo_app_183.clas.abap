@@ -16,9 +16,9 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
       END OF ty_row .
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+      mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
     DATA mv_key TYPE string .
-    DATA sortorder TYPE string VALUE `None`.
+    DATA mv_sortorder TYPE string VALUE `None`.
 
     METHODS refresh_data .
   PROTECTED SECTION.
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
       ls_row-checkbox = abap_true.
 *        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
   ENDMETHOD.
 
@@ -56,30 +56,30 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
         lt_arg = client->get( )-t_event_arg.
       WHEN `ONGROUP`.
       WHEN `SORT_ASCENDING`.
-        SORT t_tab BY count ASCENDING.
+        SORT mt_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
       WHEN `SORT_DESCENDING`.
-        SORT t_tab BY count DESCENDING.
+        SORT mt_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - table with column menu (press a column header)`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    DATA(lo_tab) = lo_page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = `20`
             growingscrolltoload = abap_true
-            items               = client->_bind_edit( t_tab )
+            items               = client->_bind_edit( mt_tab )
             sticky              = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
+    lo_tab->header_toolbar(
         )->toolbar(
             )->title( `title of the table`
             )->button(
@@ -106,14 +106,14 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                 press = client->_event( `SORT_ASCENDING` ) ).
 
 *    column menu
-    tab->dependents(
+    lo_tab->dependents(
       )->column_menu( id         = `menu`
                       beforeopen = client->_event( val = `GET_OPENED_COL` t_arg = VALUE #( ( `$event.mParameters.openBy.getId()` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `${$parameters>/item.getKey}` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `$event` ) ) )
        )->column_menu_quick_sort( change = client->_event( `ONSORT` )
          )->items( ns = `columnmenu`
-           )->column_menu_quick_sort_item( sortorder = client->_bind_edit( sortorder )
+           )->column_menu_quick_sort_item( sortorder = client->_bind_edit( mv_sortorder )
        )->get_parent( )->get_parent( )->get_parent(
        )->column_menu_quick_group( change = client->_event( `ONGROUP` )
          )->items( ns = `columnmenu`
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                                      label = `Columns`
                                      press = client->_event( `ONSCOLUMNSACTIONITEM` ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column( headermenu = `menu`
                    id         = `color_col`
             )->text( `Color` )->get_parent(
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                    id         = `chart_col`
             )->text( `Radial Micro Chart` ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{VALUE}`
        )->text( `{INFO}`
        )->text( `{DESCR}`
@@ -161,6 +161,6 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

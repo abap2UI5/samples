@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_descr       TYPE string.
 
@@ -22,7 +22,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init = abap_false.
       mv_init = abap_true.
@@ -41,8 +41,8 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `MESSAGE_SUB` ).
-      client->message_box_display( `event sub app` ).
+    IF mo_client->check_on_event( `MESSAGE_SUB` ).
+      mo_client->message_box_display( `event sub app` ).
 
     ENDIF.
   ENDMETHOD.
@@ -51,22 +51,22 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
     IF mo_view_parent IS NOT BOUND.
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+      DATA(lo_page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( title = `Main View` ).
 
-      mo_view_parent = page->grid( `L6 M12 S12`
+      mo_view_parent = lo_page->grid( `L6 M12 S12`
           )->content( `layout` ).
 
-      page->footer( )->overflow_toolbar(
+      lo_page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button( text  = `event sub app`
-                            press = client->_event( `BUTTON_SAVE` )
+                            press = mo_client->_event( `BUTTON_SAVE` )
                             type  = `Success` ).
 
     ENDIF.
 
-    mo_view_parent->input( value = client->_bind_edit( mv_descr ) ).
+    mo_view_parent->input( value = mo_client->_bind_edit( mv_descr ) ).
     mo_view_parent->button( text  = `event sub app`
-                            press = client->_event( `MESSAGE_SUB` ) ).
+                            press = mo_client->_event( `MESSAGE_SUB` ) ).
   ENDMETHOD.
 ENDCLASS.

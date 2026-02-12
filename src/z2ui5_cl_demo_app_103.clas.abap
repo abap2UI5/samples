@@ -3,9 +3,9 @@ CLASS z2ui5_cl_demo_app_103 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_view_display.
+    METHODS view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -15,27 +15,27 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_view_display( ).
+    IF mo_client->check_on_init( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
            )->page(
               title           = `abap2UI5 - Side Panel Example`
-              navbuttonpress  = client->_event_nav_app_leave( )
+              navbuttonpress  = mo_client->_event_nav_app_leave( )
                 shownavbutton = abap_true ).
 
-    page->header_content(
+    lo_page->header_content(
          )->link( ).
 
-    page->responsive_splitter( defaultpane = `default`
+    lo_page->responsive_splitter( defaultpane = `default`
        )->pane_container(
          )->split_pane( requiredparentwidth = `400`
                         id                  = `default`
@@ -52,6 +52,6 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
                )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
              )->panel( headertext = `second pane` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

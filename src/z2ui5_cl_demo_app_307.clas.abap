@@ -20,36 +20,36 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC FINAL CREATE PUBLIC.
            END OF ty_item.
     TYPES ty_items TYPE STANDARD TABLE OF ty_item WITH DEFAULT KEY.
 
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
-    DATA items             TYPE ty_items.
+    DATA mv_items             TYPE ty_items.
 
     METHODS initialization.
 
     METHODS display_view
-      IMPORTING !client TYPE REF TO z2ui5_if_client.
+      IMPORTING !mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event
-      IMPORTING !client TYPE REF TO z2ui5_if_client.
+      IMPORTING !mo_client TYPE REF TO z2ui5_if_client.
 
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       initialization( ).
-      display_view( client ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 
   METHOD initialization.
 
-    items = VALUE #(
+    mv_items = VALUE #(
         ( title     = `Box title 1`
           subtitle  = `Subtitle 1`
           counter   = 5
@@ -182,11 +182,11 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
+    lo_view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
 
-    view->panel( id               = `panelForGridList`
+    lo_view->panel( id               = `panelForGridList`
                  backgrounddesign = `Transparent`
         )->header_toolbar(
             )->toolbar( height = `3rem`
@@ -195,14 +195,14 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
         )->get_parent(
         )->grid_list( id         = `gridList`
                       headertext = `GridList header`
-                      items      = client->_bind_edit( items )
+                      items      = mo_client->_bind_edit( mv_items )
             )->drag_drop_config(
                 )->drag_info( sourceaggregation = `items`
                 )->grid_drop_info(
                     targetaggregation = `items`
                     dropposition      = `Between`
                     droplayout        = `Horizontal`
-                    drop              = client->_event(
+                    drop              = mo_client->_event(
                         val   = `ON_DROP`
                         t_arg = VALUE #(
                             ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
@@ -227,35 +227,35 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                         )->label( text     = `{SUBTITLE}`
                                   wrapping = abap_true ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `ON_DROP` ).
-      DATA(ondropparameters) = client->get( )-t_event_arg.
+    IF mo_client->check_on_event( `ON_DROP` ).
+      DATA(lo_ondropparameters) = mo_client->get( )-t_event_arg.
       TRY.
-          DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.
-          DATA(drop_position) = CONV i( ondropparameters[ 2 ] ) + 1.
-          DATA(insert_position) = ondropparameters[ 3 ].
-          DATA(item) = items[ drag_position ].
+          DATA(lv_drag_position) = CONV i( lo_ondropparameters[ 1 ] ) + 1.
+          DATA(lv_drop_position) = CONV i( lo_ondropparameters[ 2 ] ) + 1.
+          DATA(lv_insert_position) = lo_ondropparameters[ 3 ].
+          DATA(lv_item) = mv_items[ lv_drag_position ].
         CATCH cx_root.
           RETURN.
       ENDTRY.
 
-      DELETE items INDEX drag_position.
+      DELETE mv_items INDEX lv_drag_position.
 
-      IF drag_position < drop_position.
-        drop_position = drop_position - 1.
+      IF lv_drag_position < lv_drop_position.
+        lv_drop_position = lv_drop_position - 1.
       ENDIF.
 
-      IF insert_position = `Before`.
-        INSERT item INTO items INDEX drop_position.
+      IF lv_insert_position = `Before`.
+        INSERT lv_item INTO mv_items INDEX lv_drop_position.
       ELSE.
-        INSERT item INTO items INDEX drop_position + 1.
+        INSERT lv_item INTO mv_items INDEX lv_drop_position + 1.
       ENDIF.
 
     ENDIF.
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
   ENDMETHOD.
 ENDCLASS.

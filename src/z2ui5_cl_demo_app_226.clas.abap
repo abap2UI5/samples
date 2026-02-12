@@ -16,19 +16,19 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Icon Tab Bar - Sub tabs`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->label(
+    DATA(lo_layout) = lo_page->label(
              wrapping = `true`
              text     = `IconTabBar with filters with own content and sub tabs. The click area is split to allow the user to display the content or alternatively to expand/collapse the sub tabs.`
              class    = `sapUiSmallMargin` ).
 
-    layout->icon_tab_bar( class = `sapUiResponsiveContentPadding`
+    lo_layout->icon_tab_bar( class = `sapUiResponsiveContentPadding`
               )->items(
                   )->icon_tab_filter( key  = `info`
                                       text = `Info`
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
                           )->icon_tab_filter( text = `Note two`
                               )->text( text = `Note two content goes here...` )->get_parent( )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

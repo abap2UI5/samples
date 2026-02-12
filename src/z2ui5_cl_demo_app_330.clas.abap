@@ -4,18 +4,18 @@ CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
     INTERFACES if_serializable_object .
     INTERFACES z2ui5_if_app.
 
-    DATA check_initialized TYPE abap_bool .
+    DATA mv_check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -26,16 +26,16 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->object_page_layout( uppercaseanchorbar = abap_false ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_object_page_layout) = lo_view->object_page_layout( uppercaseanchorbar = abap_false ).
 
-    DATA(header_title) = object_page_layout->header_title(
+    DATA(lo_header_title) = lo_object_page_layout->header_title(
         )->object_page_dyn_header_title( ).
 
-    header_title->expanded_heading(
+    lo_header_title->expanded_heading(
                   )->title( text = `Robot Arm Series 9` ).
 
-    header_title->snapped_heading(
+    lo_header_title->snapped_heading(
                   )->hbox(
                      )->avatar( src     = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
                            class        = `sapUiMediumMarginEnd`
@@ -44,23 +44,23 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                         )->title( text = `Robot Arm Series 9`
                         )->label( text = `PO-48865` ).
 
-    header_title->expanded_content( ns = `uxap`
+    lo_header_title->expanded_content( ns = `uxap`
                   )->label( text = `PO-48865` ).
 
-    header_title->snapped_title_on_mobile(
+    lo_header_title->snapped_title_on_mobile(
                   )->title( text = `Robot Arm Series 9` ).
 
-    header_title->actions( `uxap`
+    lo_header_title->actions( `uxap`
                   )->button( text = `Edit`
                              type = `Emphasized`
                   )->button( text = `Delete`
                   )->button( text = `Simulate Assembly` ).
 
-    DATA(header_content) = object_page_layout->header_content( ns = `uxap`
+    DATA(lo_header_content) = lo_object_page_layout->header_content( ns = `uxap`
                                                )->flex_box( wrap         = `Wrap`
                                                             fitcontainer = abap_true ).
 
-    header_content->avatar( src          = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
+    lo_header_content->avatar( src          = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
                             class        = `sapUiMediumMarginEnd`
                             displayshape = `Square`
                             displaysize  = `L`
@@ -124,9 +124,9 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent( ).
 
-    DATA(section) = object_page_layout->sections( ).
+    DATA(lo_section) = lo_object_page_layout->sections( ).
 
-    section->object_page_section( titleuppercase = abap_false
+    lo_section->object_page_section( titleuppercase = abap_false
                                   title          = `General Information`
              )->sub_sections(
                 )->object_page_sub_section( title     = `Order Details`
@@ -268,7 +268,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                 )->get_parent(
              )->get_parent( ).
 
-    section->object_page_section( titleuppercase = abap_false
+    lo_section->object_page_section( titleuppercase = abap_false
                                   title          = `Contact Information`
              )->sub_sections(
                 )->object_page_sub_section( title = `Contact information`
@@ -315,40 +315,40 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                 )->get_parent(
              )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `ObjectPage sample that demonstrates the combination of header facets and showTitle properties of sections and subsections.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
-      display_view( client ).
+    IF mv_check_initialized = abap_false.
+      mv_check_initialized = abap_true.
+      display_view( mo_client ).
 
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     TYPES:
       BEGIN OF ty_dataset2,
         label                TYPE string,
@@ -43,8 +43,8 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     DATA ms_struc TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS display.
+    METHODS event.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -52,43 +52,43 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
-  METHOD ui5_display.
+  METHOD display.
 
-    client->_bind_edit(
+    mo_client->_bind_edit(
         val                = ms_struc
         custom_mapper      = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )
         custom_mapper_back = z2ui5_cl_ajson_mapping=>create_to_snake_case( ) ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Binding`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( )
            )->button(
             text  = `Rountrip...`
-            press = client->_event( `POPUP` ) ).
+            press = mo_client->_event( `POPUP` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_event.
+  METHOD event.
 
-    IF client->check_on_event( `POPUP` ).
+    IF mo_client->check_on_event( `POPUP` ).
 
       IF ms_struc <> ms_struc2.
-        client->message_box_display( `structure changed error` ).
+        mo_client->message_box_display( `structure changed error` ).
         RETURN.
       ENDIF.
-      client->message_toast_display( `everything works as expected` ).
+      mo_client->message_toast_display( `everything works as expected` ).
     ENDIF.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_navigated( ).
+    IF mo_client->check_on_navigated( ).
 
       ms_struc-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
 
@@ -103,10 +103,10 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       APPEND ls_dataset TO ms_struc-data-datasets.
       ms_struc2 = ms_struc.
 
-      ui5_display( ).
+      display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    event( ).
   ENDMETHOD.
 ENDCLASS.

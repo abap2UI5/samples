@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
     METHODS view_display .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,20 +39,20 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `BOOK` ).
-      client->message_toast_display( `BOOKED !!! ENJOY` ).
+    IF mo_client->check_on_event( `BOOK` ).
+      mo_client->message_toast_display( `BOOKED !!! ENJOY` ).
     ENDIF.
   ENDMETHOD.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
         title          = `Cards Demo`
         class          = `sapUiContentPadding`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+        navbuttonpress = mo_client->_event_nav_app_leave( )
+        shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
     mt_cities = VALUE #( ( text = `Berlin` key = `BR` )
                                                                                                        ( text = `London` key = `LN` )
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                                                                                  ( title = `Notebook XT` subtitle = `ID27852256-D47` revenue = `7.35K EUR` status = `exceeded` status_schema = `Error` )
                                                                                                  ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` ) ).
 
-    DATA(card_1) = page->card( width = `300px`
+    DATA(lo_card_1) = lo_page->card( width = `300px`
                                class = `sapUiMediumMargin`
       )->header( ns = `f`
         )->card_header( title    = `Buy bus ticket on-line`
@@ -80,12 +80,12 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                         )->hbox( justifycontent = `SpaceBetween`
                           )->combobox( width       = `120px`
                                        placeholder = `From City`
-                                       items       = `{path:'` && client->_bind( val = mt_cities path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                                       items       = `{path:'` && mo_client->_bind( val = mt_cities path = abap_true ) && `', sorter: { path: 'TEXT' } }`
                                        )->get( )->item( key  = `{KEY}`
                                                         text = `{TEXT}` )->get_parent(
                           )->combobox( width       = `120px`
                                        placeholder = `To City`
-                                       items       = `{path:'` && client->_bind( val = mt_cities path = abap_true ) && `', sorter: { path: 'TEXT' } }`
+                                       items       = `{path:'` && mo_client->_bind( val = mt_cities path = abap_true ) && `', sorter: { path: 'TEXT' } }`
                                        )->get( )->item( key  = `{KEY}`
                                                         text = `{TEXT}` )->get_parent(
                       )->get_parent(
@@ -95,10 +95,10 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                     placeholder = `Choose Date ...`
                     )->button( text  = `Book`
                                type  = `Emphasized`
-                               press = client->_event( `BOOK` )
+                               press = mo_client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
-    DATA(card_2) = page->card( width = `300px`
+    DATA(lo_card_2) = lo_page->card( width = `300px`
                                class = `sapUiMediumMargin`
                      )->header( ns = `f`
                        )->card_header( title    = `Project Cloud Transformation`
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                    )->content( ns = `f`
                                     )->list( class          = `sapUiSmallMarginBottom`
                                              showseparators = `None`
-                                             items          = client->_bind( mt_products )
+                                             items          = mo_client->_bind( mt_products )
                                        )->custom_list_item(
                                         )->hbox( alignitems     = `Center`
                                                  justifycontent = `SpaceBetween`
@@ -120,12 +120,12 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                                             text  = `{REVENUE}`
                                                             state = `{STATUS_SCHEMA}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_initialized = abap_false.
       mv_initialized = abap_true.

@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
         node TYPE t_nodes2.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,8 +51,8 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
   METHOD detail_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(qv) = view->quick_view( placement = `Left`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(qv) = lo_view->quick_view( placement = `Left`
               )->quick_view_page(
                                   header      = `Employee`
                                   title       = node-title
@@ -77,18 +77,18 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                         value = CONV string( node-team ) ).
     ENDIF.
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `LINE_PRESS`.
-        client->message_toast_display( `LINE_PRESSED` ).
+        mo_client->message_toast_display( `LINE_PRESSED` ).
       WHEN `DETAIL_POPOVER`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
+        DATA(lt_arg) = mo_client->get( )-t_event_arg.
 
         READ TABLE mt_data-nodes INTO DATA(ls_node) WITH KEY id = lt_arg[ 2 ].
 
@@ -99,16 +99,16 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->page(
                     title          = `abap2UI5 - Network Graph - Org Tree`
-                    navbuttonpress = client->_event_nav_app_leave( )
-                    shownavbutton  = client->check_app_prev_stack( ) ).
+                    navbuttonpress = mo_client->_event_nav_app_leave( )
+                    shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(graph) = page->network_graph( enablewheelzoom = abap_false
+    DATA(lo_graph) = lo_page->network_graph( enablewheelzoom = abap_false
                                        orientation     = `TopBottom`
-                                       nodes           = client->_bind( mt_data-nodes )
-                                       lines           = client->_bind( mt_data-lines )
+                                       nodes           = mo_client->_bind( mt_data-nodes )
+                                       lines           = mo_client->_bind( mt_data-lines )
                                        layout          = `Layered`
                                        searchsuggest   = `suggest`
                                        search          = `search`
@@ -130,32 +130,17 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                              showdetailbutton      = abap_false
                                              descriptionlinesize   = `0`
                                              shape                 = `Box`
-*                                            )->get( )->custom_data( ns = `networkgraph` )->core_custom_data( key = `supervisor` value = `{SUPERVISOR}`
-*                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
-*                                                                                        )->core_custom_data( key = `location` value = `{LOCATION}`
-*                                                                                        )->core_custom_data( key = `position` value = `{POSITION}`
-*                                                                                        )->core_custom_data( key = `team` value = `{TEAM}`
-*                                                                                        )->core_custom_data( key = `email` value = `{EMAIL}`
-*                                                                                        )->core_custom_data( key = `phone` value = `{PHONE}`
-*                                           )->get_parent(
-*                                           )->get( )->get_parent( )->get_parent( )->attributes( ns = `networkgraph`
                                            )->get( )->attributes( ns = `networkgraph`
                                             )->element_attribute( label = `{LABEL}`
                                                                   value = `{VALUE}`
                                            )->get_parent(
                                            )->get_parent(
                                            )->get( )->get_parent( )->get_parent( )->action_buttons(
-                                            )->action_button( "id = `{ID}`
-                                                              position = `Left`
+                                            )->action_button( position = `Left`
                                                               title    = `Detail`
                                                               icon     = `sap-icon://employee`
-                                                              press    = client->_event( val = `DETAIL_POPOVER` t_arg = VALUE #( ( `${$source>/id}` )
+                                                              press    = mo_client->_event( val = `DETAIL_POPOVER` t_arg = VALUE #( ( `${$source>/id}` )
                                                                                                                               ( `${ID}` )
-*                                                                                                                              ( `${TEAM}` )
-*                                                                                                                              ( `${LOCATION}` )
-*                                                                                                                              ( `${POSITION}` )
-*                                                                                                                              ( `${EMAIL}` )
-*                                                                                                                              ( `${PHONE}` )
                                                                                                                              ) )
                                            )->get_parent(
                                            )->get_parent(
@@ -172,14 +157,14 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                                             )->line( from             = `{FROM}`
                                                      to               = `{TO}`
                                                      arroworientation = `None`
-                                                     press            = client->_event( `LINE_PRESS` ) ).
+                                                     press            = mo_client->_event( `LINE_PRESS` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_initialized = abap_false.
       mv_initialized = abap_true.

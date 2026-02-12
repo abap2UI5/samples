@@ -11,18 +11,18 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
 
     DATA
       lt_a_data TYPE STANDARD TABLE OF ty_a_data .
-    DATA s_text TYPE string .
+    DATA ms_text TYPE string .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -33,26 +33,26 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Step Input - Value States`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `POPOVER` ) ).
+           press     = mo_client->_event( `POPOVER` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StepInput/sample/sap.m.sample.StepInputValueState` ).
 
-    page->flex_box( items     = client->_bind( lt_a_data )
+    lo_page->flex_box( items     = mo_client->_bind( lt_a_data )
                     direction = `Column`
               )->vbox( class = `sapUiTinyMargin`
                   )->label( text     = `{LABEL}`
@@ -63,27 +63,27 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
                       value      = `5`
                       valuestate = `{VALUE_STATE}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
-      z2ui5_display_popover( `hint_icon` ).
+    IF mo_client->check_on_event( `POPOVER` ).
+      display_popover( `hint_icon` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `This example shows different StepInput value states.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
@@ -91,12 +91,12 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     FIELD-SYMBOLS <fs_a_data> TYPE ty_a_data.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
 
-      s_text = `StepInput with valueState `.
+      ms_text = `StepInput with valueState `.
 
       lt_a_data = VALUE #(
         ( value_state = `None` )
@@ -108,10 +108,10 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
       " Use field symbols to concatenate the string and store it in the label column
 
       LOOP AT lt_a_data ASSIGNING <fs_a_data>.
-        <fs_a_data>-label = s_text && ` ` && <fs_a_data>-value_state.
+        <fs_a_data>-label = ms_text && ` ` && <fs_a_data>-value_state.
       ENDLOOP.
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

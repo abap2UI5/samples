@@ -26,11 +26,11 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
-    METHODS z2ui5_view_vm_popup.
+    METHODS set_data.
+    METHODS view_display.
+    METHODS view_vm_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -39,18 +39,18 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
 
-      z2ui5_view_display( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
@@ -61,19 +61,19 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
         ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title           = `abap2UI5 - List`
-            navbuttonpress  = client->_event_nav_app_leave( )
+            navbuttonpress  = mo_client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
                 )->link(
       )->get_parent( ).
 
-    DATA(tab) = page->ui_table( rows                   = client->_bind( mt_table )
+    DATA(lo_tab) = lo_page->ui_table( rows                   = mo_client->_bind( mt_table )
                                     id                 = `persoTable`
                                     editable           = abap_false
                                     alternaterowcolors = abap_true
@@ -81,19 +81,19 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                     enablegrouping     = abap_false
                                     fixedcolumncount   = `1`
                                     selectionmode      = `None`
-                                    sort               = client->_event( `SORT` )
-                                    filter             = client->_event( `FILTER` )
-                                    customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = `Products` )->toolbar_spacer(
+                                    sort               = mo_client->_event( `SORT` )
+                                    filter             = mo_client->_event( `FILTER` )
+                                    customfilter       = mo_client->_event( `CUSTOMFILTER` ) ).
+    lo_tab->ui_extension( )->overflow_toolbar( )->title( text = `Products` )->toolbar_spacer(
       )->variant_management( showexecuteonselection = abap_true
         )->variant_items(
           )->variant_item( key                = `{KEY}`
                            text               = `{TEXT}`
                            executeonselection = abap_true )->get_parent( ).
-    DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( width = `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
+    DATA(lo_columns) = lo_tab->ui_columns( ).
+    lo_columns->ui_column( width = `4rem` )->checkbox( selected = mo_client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
-                                                       select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}` ).
+                                                       select   = mo_client->_event( `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}` ).
     lo_columns->ui_column( width                         = `5rem`
                            sortproperty                  = `ROW_ID`
                                           filterproperty = `ROW_ID` )->text( text = `Index` )->ui_template( )->text( text = `{ROW_ID}` ).
@@ -130,18 +130,18 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                                                                                          currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
       )->ui_row_action_item( type = `Navigation`
-                           press  = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+                           press  = mo_client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
                           )->get_parent( )->ui_row_action_item( icon  = `sap-icon://edit`
                                                                 text  = `Edit`
-                                                                press = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+                                                                press = mo_client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 *
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_vm_popup.
+  METHOD view_vm_popup.
 
-    DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
-    client->popup_display( popup_sort->stringify( ) ).
+    DATA(lo_popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
+    mo_client->popup_display( lo_popup_sort->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

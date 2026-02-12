@@ -16,9 +16,9 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).
       ENDIF.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell( )->page( showheader = abap_false ).
-      client->view_display( page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = lo_view->shell( )->page( showheader = abap_false ).
+      client->view_display( lo_page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
                                                editable = abap_true
                      )->content( `form`
                          )->label( ``

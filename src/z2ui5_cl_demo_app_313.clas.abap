@@ -26,15 +26,15 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-      DATA(page) = view->shell(
+      DATA(lo_page) = lo_view->shell(
           )->page(
               title          = `abap2UI5 - Smart Controls with Variants`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
-      page->smart_filter_bar(
+      lo_page->smart_filter_bar(
           id             = `smartFilterBar`
           persistencykey = `SmartFilterPKey`
           entityset      = `BookingSupplement`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
           enableexport            = abap_false
           enableautobinding       = abap_true ).
 
-      client->view_display( val                       = view->stringify( )
+      client->view_display( val                       = lo_view->stringify( )
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.

@@ -14,9 +14,9 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-      DATA(lo_p) = view->shell(
+      DATA(lo_p) = lo_view->shell(
                   )->page(
                           title          = `abap2UI5 - Rich Text Editor`
                           navbuttonpress = client->_event( `BACK` )
@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
                     icon  = `sap-icon://paper-plane`
                     press = client->_event( `SERVER` ) ).
 
-      client->view_display( view->stringify( ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 

@@ -18,10 +18,10 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
     DATA mt_table TYPE ty_t_table .
     DATA mt_table_full TYPE ty_t_table .
     DATA mt_table_products TYPE ty_t_table .
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
-    METHODS z2ui5_set_data .
-    METHODS z2ui5_display_view .
+    METHODS set_data .
+    METHODS display_view .
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -29,77 +29,77 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
-  METHOD z2ui5_display_view.
+  METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(lo_page) = lo_view->page( id = `page_main`
             title               = `abap2UI5 - List Report Features`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( ) ).
+            navbuttonpress      = mo_client->_event_nav_app_leave( )
+            shownavbutton       = mo_client->check_app_prev_stack( ) ).
 
-    DATA(facet) = page->facet_filter( id                  = `idFacetFilter`
+    DATA(lo_facet) = lo_page->facet_filter( id                  = `idFacetFilter`
                                       type                = `Light`
                                       showpersonalization = abap_true
                                       showreset           = abap_true
-                                      reset               = client->_event( `RESET` )
+                                      reset               = mo_client->_event( `RESET` )
       )->facet_filter_list( title     = `Products`
                             mode      = `MultiSelect`
-                            items     = client->_bind( mt_table_products )
-                            listclose = client->_event( val                      = `FILTER`
+                            items     = mo_client->_bind( mt_table_products )
+                            listclose = mo_client->_event( val                      = `FILTER`
 *                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
 *                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
                                                                            t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
-    DATA(tab) = page->table( id    = `tab`
-                             items = client->_bind_edit( mt_table ) ).
+    DATA(lo_tab) = lo_page->table( id    = `tab`
+                             items = mo_client->_bind_edit( mt_table ) ).
 
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->link( id    = `link`
                     text  = `{PRODUCT}`
-                    press = client->_event( `POPOVER_DETAIL` ) ).
+                    press = mo_client->_event( `POPOVER_DETAIL` ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
     DATA lt_range TYPE RANGE OF string.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_display_view( ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_init( ).
+      display_view( ).
+      set_data( ).
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `RESET`.
         mt_table = mt_table_full.
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `FILTER`.
 
-        DATA(lt_arg) = client->get( )-t_event_arg.
+        DATA(lt_arg) = mo_client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].
         TRY.
             DATA(lo_json) = z2ui5_cl_ajson=>parse( lv_json ).
 
-            DATA(l_members) = lo_json->members( `/` ).
+            DATA(lo_l_members) = lo_json->members( `/` ).
 
-            LOOP AT l_members INTO DATA(l_member).
+            LOOP AT lo_l_members INTO DATA(l_member).
               DATA(lv_val) = lo_json->get( `/` && l_member && `/mProperties/text` ).
 
               APPEND VALUE #( sign = `I` option = `EQ` low = lv_val ) TO lt_range.
@@ -117,11 +117,11 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
           ENDIF.
         ENDLOOP.
 
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

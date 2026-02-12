@@ -15,13 +15,13 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
         checkbox    TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
-    DATA focuscolumn TYPE string.
-    DATA focusrow TYPE string.
-    DATA focusid TYPE string READ-ONLY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mv_focuscolumn TYPE string.
+    DATA mv_focusrow TYPE string.
+    DATA mv_focusid TYPE string READ-ONLY.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
   PRIVATE SECTION.
@@ -45,9 +45,9 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic( name = `script`
+    lo_view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `window.addEventListener('focus', function(e) {`
                                                 && `  try {`
                                                 && `    const focusCtrlId = sap.ui.getCore().getCurrentFocusedControlId(); `
@@ -84,39 +84,39 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                                                 && `  } catch(e){}`
                                                 && `}` ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Tables and focus`
-            navbuttonpress = client->_event_nav_app_leave( )
+            navbuttonpress = mo_client->_event_nav_app_leave( )
             shownavbutton  = abap_true ).
 
-    DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+    DATA(lo_tab) = lo_page->table(
+            items = mo_client->_bind_edit( mt_tab )
         )->header_toolbar(
             )->overflow_toolbar(
-                )->label( `Column Id` )->input( submit      = client->_event( `FOCUS` )
-                                                value       = client->_bind_edit( focuscolumn )
+                )->label( `Column Id` )->input( submit      = mo_client->_event( `FOCUS` )
+                                                value       = mo_client->_bind_edit( mv_focuscolumn )
                                                 placeholder = `Focus Column`
                                                 width       = `10%`
-                )->label( `Row Index` )->input( submit      = client->_event( `FOCUS` )
-                                                value       = client->_bind_edit( focusrow )
+                )->label( `Row Index` )->input( submit      = mo_client->_event( `FOCUS` )
+                                                value       = mo_client->_bind_edit( mv_focusrow )
                                                 placeholder = `Focus Row`
                                                 width       = `10%`
                                                 type        = `Number`
                 )->button(
                     text  = `Set Focus`
-                    press = client->_event( `FOCUS` )
+                    press = mo_client->_event( `FOCUS` )
                 )->button(
                     text  = `Next Focus`
-                    press = client->_event( `ENTER` )
+                    press = mo_client->_event( `ENTER` )
                 )->button(
                     text  = `Reset Focus`
-                    press = client->_event( `RESET` )
-                )->title( text = client->_bind( focusid )
+                    press = mo_client->_event( `RESET` )
+                )->title( text = mo_client->_bind( mv_focusid )
                 )->toolbar_spacer(
         )->get_parent( )->get_parent( ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Index` )->get_parent(
         )->column(
@@ -130,25 +130,25 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
         )->column(
             )->text( `Description` ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
+    lo_tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->text( text = `{INDEX}`
           )->input( value  = `{TITLE}`
-                    submit = client->_event( `ENTER` )
+                    submit = mo_client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = `ColumnId`
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{VALUE}`
-                    submit = client->_event( `ENTER` )
+                    submit = mo_client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = `ColumnId`
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{INFO}`
-                    submit = client->_event( `ENTER` )
+                    submit = mo_client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = `ColumnId`
                      value      = c_id-info
@@ -161,23 +161,23 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{DESCRIPTION}`
-                    submit = client->_event( `ENTER` )
+                    submit = mo_client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = `ColumnId`
                      value      = c_id-description
                      writetodom = abap_true ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
     focus( ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
           ( index = 0 title = `entry 01`  value = `red`    info = `completed`  description = `this is a description` checkbox = abap_true )
           ( index = 1 title = `entry 02`  value = `blue`   info = `completed`  description = `this is a description` checkbox = abap_true )
           ( index = 2 title = `entry 03`  value = `green`  info = `completed`  description = `this is a description` checkbox = abap_true )
@@ -191,10 +191,10 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BACK`.
-        client->view_destroy( ).
-        client->nav_app_leave( ).
+        mo_client->view_destroy( ).
+        mo_client->nav_app_leave( ).
       WHEN `FOCUS`.
         focus( ).
       WHEN `RESET`.
@@ -205,36 +205,36 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
         focus( ).
     ENDCASE.
 
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
   ENDMETHOD.
 
   METHOD next_focus.
 
-    focuscolumn = SWITCH #(
-                    focuscolumn
+    mv_focuscolumn = SWITCH #(
+                    mv_focuscolumn
                       WHEN c_id-title THEN c_id-color
                       WHEN c_id-color THEN c_id-info
                       WHEN c_id-info  THEN c_id-checkbox
                       WHEN c_id-checkbox THEN c_id-description
                       ELSE c_id-title ).
 
-    IF focuscolumn = c_id-title.
-      IF line_exists( t_tab[ focusrow + 2 ] ).
-        focusrow = condense( CONV i( focusrow + 1 ) ).
+    IF mv_focuscolumn = c_id-title.
+      IF line_exists( mt_tab[ mv_focusrow + 2 ] ).
+        mv_focusrow = condense( CONV i( mv_focusrow + 1 ) ).
       ELSE.
-        focusrow = `0`.
+        mv_focusrow = `0`.
       ENDIF.
     ENDIF.
   ENDMETHOD.
 
   METHOD focus.
 
-    client->follow_up_action( `z2ui5.determineFocusId("` && focuscolumn && `", "` && focusrow && `")` ).
+    mo_client->follow_up_action( `z2ui5.determineFocusId("` && mv_focuscolumn && `", "` && mv_focusrow && `")` ).
   ENDMETHOD.
 
   METHOD default_focus.
 
-    focuscolumn = `Title`.
-    focusrow = `0`.
+    mv_focuscolumn = `Title`.
+    mv_focusrow = `0`.
   ENDMETHOD.
 ENDCLASS.

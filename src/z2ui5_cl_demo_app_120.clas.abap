@@ -3,12 +3,12 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA longitude TYPE string.
-    DATA latitude TYPE string.
-    DATA altitude TYPE string.
-    DATA speed TYPE string.
-    DATA altitudeaccuracy TYPE string.
-    DATA accuracy TYPE string.
+    DATA mv_longitude TYPE string.
+    DATA mv_latitude TYPE string.
+    DATA mv_altitude TYPE string.
+    DATA mv_speed TYPE string.
+    DATA mv_altitudeaccuracy TYPE string.
+    DATA mv_accuracy TYPE string.
 
     TYPES:
       BEGIN OF ty_spot,
@@ -32,35 +32,35 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display( lo_view->shell(
               )->page(
                       title          = `abap2UI5 - Device Capabilities`
                       navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
-                                            longitude        = client->_bind_edit( longitude )
-                                            latitude         = client->_bind_edit( latitude )
-                                            altitude         = client->_bind_edit( altitude )
-                                            altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                                            accuracy         = client->_bind_edit( accuracy )
-                                            speed            = client->_bind_edit( speed )
+                                            longitude        = client->_bind_edit( mv_longitude )
+                                            latitude         = client->_bind_edit( mv_latitude )
+                                            altitude         = client->_bind_edit( mv_altitude )
+                                            altitudeaccuracy = client->_bind_edit( mv_altitudeaccuracy )
+                                            accuracy         = client->_bind_edit( mv_accuracy )
+                                            speed            = client->_bind_edit( mv_speed )
                   )->simple_form( title    = `Geolocation`
                                   editable = abap_true
                       )->content( `form`
                           )->label( `Longitude`
-                          )->input( client->_bind_edit( longitude )
+                          )->input( client->_bind_edit( mv_longitude )
                           )->label( `Latitude`
-                          )->input( client->_bind_edit( latitude )
+                          )->input( client->_bind_edit( mv_latitude )
                           )->label( `Altitude`
-                          )->input( client->_bind_edit( altitude )
+                          )->input( client->_bind_edit( mv_altitude )
                           )->label( `Accuracy`
-                          )->input( client->_bind_edit( accuracy )
+                          )->input( client->_bind_edit( mv_accuracy )
                           )->label( `AltitudeAccuracy`
-                          )->input( client->_bind_edit( altitudeaccuracy )
+                          )->input( client->_bind_edit( mv_altitudeaccuracy )
                           )->label( `Speed`
-                          )->input( client->_bind_edit( speed )
+                          )->input( client->_bind_edit( mv_speed )
                           )->label( `MapContainer`
                           )->button( text  = `Display`
                                      press = client->_event( `MAP_CONTAINER_DISPLAY` )
@@ -72,39 +72,39 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `MAP_CONTAINER_DISPLAY`.
 
-        IF longitude IS NOT INITIAL.
-          mt_spot = VALUE #( ( pos = longitude && `;` && latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).
+        IF mv_longitude IS NOT INITIAL.
+          mt_spot = VALUE #( ( pos = mv_longitude && `;` && mv_latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).
         ENDIF.
 
-        view = z2ui5_cl_xml_view=>factory( ).
-        client->view_display( view->shell(
+        lo_view = z2ui5_cl_xml_view=>factory( ).
+        client->view_display( lo_view->shell(
               )->page(
                       title          = `abap2UI5 - Device Capabilities`
                       navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( )
-                                            longitude        = client->_bind_edit( longitude )
-                                            latitude         = client->_bind_edit( latitude )
-                                            altitude         = client->_bind_edit( altitude )
-                                            altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                                            accuracy         = client->_bind_edit( accuracy )
-                                            speed            = client->_bind_edit( speed )
+                                            longitude        = client->_bind_edit( mv_longitude )
+                                            latitude         = client->_bind_edit( mv_latitude )
+                                            altitude         = client->_bind_edit( mv_altitude )
+                                            altitudeaccuracy = client->_bind_edit( mv_altitudeaccuracy )
+                                            accuracy         = client->_bind_edit( mv_accuracy )
+                                            speed            = client->_bind_edit( mv_speed )
                   )->simple_form( title    = `Geolocation`
                                   editable = abap_true
                       )->content( `form`
                           )->label( `Longitude`
-                          )->input( client->_bind_edit( longitude )
+                          )->input( client->_bind_edit( mv_longitude )
                           )->label( `Latitude`
-                          )->input( client->_bind_edit( latitude )
+                          )->input( client->_bind_edit( mv_latitude )
                           )->label( `Altitude`
-                          )->input( client->_bind_edit( altitude )
+                          )->input( client->_bind_edit( mv_altitude )
                           )->label( `Accuracy`
-                          )->input( client->_bind_edit( accuracy )
+                          )->input( client->_bind_edit( mv_accuracy )
                           )->label( `AltitudeAccuracy`
-                          )->input( client->_bind_edit( altitudeaccuracy )
+                          )->input( client->_bind_edit( mv_altitudeaccuracy )
                           )->label( `Speed`
-                          )->input( client->_bind_edit( speed )
+                          )->input( client->_bind_edit( mv_speed )
                           )->label( `MapContainer`
                           )->button( text  = `Display`
                                      press = client->_event( `MAP_CONTAINER_DISPLAY` )

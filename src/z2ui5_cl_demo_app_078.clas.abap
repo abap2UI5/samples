@@ -25,20 +25,20 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-      view = view->shell( )->page( id = `page_main`
+      lo_view = lo_view->shell( )->page( id = `page_main`
                title                  = `abap2UI5 - Select-Options`
                navbuttonpress         = client->_event_nav_app_leave( )
                shownavbutton          = client->check_app_prev_stack( ) ).
 
-      view->_z2ui5( )->multiinput_ext(
+      lo_view->_z2ui5( )->multiinput_ext(
                             addedtokens   = client->_bind_edit( mt_tokens_added )
                             removedtokens = client->_bind_edit( mt_tokens_removed )
                             change        = client->_event( `UPDATE_BACKEND` )
                             multiinputid  = `test` ).
 
-      view->multi_input(
+      lo_view->multi_input(
                             id            = `test`
                            tokens         = client->_bind_edit( mt_token )
                             showclearicon = abap_true
@@ -49,24 +49,24 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
                                      selected = `{SELKZ}`
                                      editable = `{EDITABLE}` ).
 
-      DATA(tab) = view->table(
+      DATA(lo_tab) = lo_view->table(
         items = client->_bind_edit( mt_token )
         mode  = `MultiSelect` ).
 
-      tab->columns(
+      lo_tab->columns(
         )->column(
            )->text( `KEY` )->get_parent(
         )->column(
            )->text( `TEXT` ).
 
-      tab->items( )->column_list_item( selected = `{SELKZ}`
+      lo_tab->items( )->column_list_item( selected = `{SELKZ}`
         )->cells(
             )->input( value   = `{KEY}`
                       enabled = `{EDITABLE}`
             )->input( value   = `{TEXT}`
                       enabled = `{EDITABLE}`).
 
-      client->view_display( view->stringify( ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 

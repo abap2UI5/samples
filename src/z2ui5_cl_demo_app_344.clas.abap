@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_344 DEFINITION PUBLIC.
     METHODS get_data  IMPORTING iv_tabname TYPE string.
     METHODS get_data2 IMPORTING iv_tabname TYPE string.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -47,12 +47,12 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       mo_layout_obj2 = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data2
                                                        vis_cols = 3 ).
 
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF client->check_on_event( `GO` ).
-      DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
-      client->nav_app_call( app ).
+      DATA(lo_app) = z2ui5_cl_demo_app_336=>factory( ).
+      client->nav_app_call( lo_app ).
     ENDIF.
 
 ***    " Kommen wir aus einer anderen APP
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -77,9 +77,9 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
 
-    ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
+    ASSIGN mt_data->* TO FIELD-SYMBOL(<lo_table>).
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-    IF <val> <> <table>.
+    IF <val> <> <lo_table>.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
 
@@ -92,85 +92,85 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `CALL Next App`
+    lo_page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
                   type  = `Success` ).
 
-    xml_table( i_page   = page
+    xml_table( i_page   = lo_page
                i_client = client
                i_data   = mt_data
                i_layout = mo_layout_obj ).
 
-    xml_table( i_page   = page
+    xml_table( i_page   = lo_page
                i_client = client
                i_data   = mt_data2
                i_layout = mo_layout_obj2 ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD xml_table.
 
-    ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
-    DATA(table) = i_page->table( width = `auto`
-                                 items = i_client->_bind_edit( <table> ) ).
+    ASSIGN i_data->* TO FIELD-SYMBOL(<lo_table>).
+    DATA(lo_table) = i_page->table( width = `auto`
+                                 items = i_client->_bind_edit( <lo_table> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA(lo_columns) = lo_table->columns( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
-      columns->column( visible = i_client->_bind( val       = layout->visible
+      lo_columns->column( visible = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
                                                   tab_index = lv_index )
         )->text( layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
+    DATA(lo_column_list_item) = lo_columns->get_parent( )->items(
                                        )->column_list_item( valign = `Middle`
                                                             type   = `Inactive` ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA(lo_cells) = lo_column_list_item->cells( ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
-      cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
+      lo_cells->object_identifier( text = |\{{ layout->name }\}| ).  "."|\{{ layout->fname }\}| ).
 
     ENDLOOP.
   ENDMETHOD.
 
   METHOD get_data.
 
-    FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <lo_table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( iv_tabname ).
+    DATA(lt_comp) = get_comp( iv_tabname ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_data TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data TYPE HANDLE lv_new_table_desc.
 
-        ASSIGN mt_data->* TO <table>.
+        ASSIGN mt_data->* TO <lo_table>.
 
         SELECT *
           FROM (iv_tabname)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE @<lo_table>
           UP TO 3 ROWS.
 
-        SORT <table>.
+        SORT <lo_table>.
 
       CATCH cx_root.
 
@@ -179,26 +179,26 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD get_data2.
 
-    FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <lo_table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = get_comp( iv_tabname ).
+    DATA(lt_comp) = get_comp( iv_tabname ).
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_data2 TYPE HANDLE new_table_desc.
+        CREATE DATA mt_data2 TYPE HANDLE lv_new_table_desc.
 
-        ASSIGN mt_data2->* TO <table>.
+        ASSIGN mt_data2->* TO <lo_table>.
 
         SELECT *
           FROM (iv_tabname)
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE @<lo_table>
           UP TO 4 ROWS.
 
-        SORT <table>.
+        SORT <lo_table>.
 
       CATCH cx_root.
 
@@ -207,7 +207,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
   METHOD get_comp.
 
-    DATA selkz TYPE abap_bool.
+    DATA lv_selkz TYPE abap_bool.
 
     TRY.
         TRY.
@@ -217,11 +217,11 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
-            DATA(structdesc) = CAST cl_abap_structdescr( typedesc ).
+            DATA(lv_structdesc) = CAST cl_abap_structdescr( typedesc ).
 
-            DATA(comp) = structdesc->get_components( ).
+            DATA(lo_comp) = lv_structdesc->get_components( ).
 
-            LOOP AT comp INTO DATA(com).
+            LOOP AT lo_comp INTO DATA(com).
 
               IF com-as_include = abap_false.
 
@@ -235,11 +235,11 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
         ENDTRY.
 
-        DATA(component) = VALUE cl_abap_structdescr=>component_table(
+        DATA(lv_component) = VALUE cl_abap_structdescr=>component_table(
                                     ( name = `SELKZ`
-                                      type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
+                                      type = CAST #( cl_abap_datadescr=>describe_by_data( lv_selkz ) ) ) ).
 
-        APPEND LINES OF component TO result.
+        APPEND LINES OF lv_component TO result.
 
       CATCH cx_root.
     ENDTRY.

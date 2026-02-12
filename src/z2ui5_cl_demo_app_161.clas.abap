@@ -3,10 +3,10 @@ CLASS z2ui5_cl_demo_app_161 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
-    METHODS ui5_display .
-    METHODS ui5_event .
+    METHODS display .
+    METHODS event .
     METHODS simple_popup1 .
     METHODS simple_popup2 .
   PROTECTED SECTION.
@@ -17,68 +17,68 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD simple_popup1.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
-            afterclose = client->_event( `BTN_OK_1ND` )
+    DATA(lo_dialog) = lo_popup->dialog(
+            afterclose = mo_client->_event( `BTN_OK_1ND` )
          )->content( ).
 
-    DATA(content) = dialog->button( text  = `Open 2nd popup`
-                                    press = client->_event( `GOTO_2ND` ) ).
+    DATA(lo_content) = lo_dialog->button( text  = `Open 2nd popup`
+                                    press = mo_client->_event( `GOTO_2ND` ) ).
 
-    dialog->get_parent( )->buttons(
+    lo_dialog->get_parent( )->buttons(
                   )->button(
                       text  = `OK`
-                      press = client->_event( `BTN_OK_1ND` )
+                      press = mo_client->_event( `BTN_OK_1ND` )
                       type  = `Emphasized` ).
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
   METHOD simple_popup2.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
-        afterclose = client->_event( `BTN_OK_2ND` )
+    DATA(lo_dialog) = lo_popup->dialog(
+        afterclose = mo_client->_event( `BTN_OK_2ND` )
          )->content( ).
 
-    DATA(content) = dialog->label( text = `this is a second popup` ).
+    DATA(lo_content) = lo_dialog->label( text = `this is a second popup` ).
 
-    dialog->get_parent( )->buttons(
+    lo_dialog->get_parent( )->buttons(
                   )->button(
                       text  = `GOTO 1ST POPUP`
-                      press = client->_event( `BTN_OK_2ND` )
+                      press = mo_client->_event( `BTN_OK_2ND` )
                       type  = `Emphasized` ).
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_display.
+  METHOD display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Popup To Popup`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( )
            )->button(
             text  = `Open Popup...`
-            press = client->_event( `POPUP` ) ).
+            press = mo_client->_event( `POPUP` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_event.
+  METHOD event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `GOTO_2ND`.
         simple_popup2( ).
       WHEN `BTN_OK_2ND`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
         simple_popup1( ).
       WHEN `BTN_OK_1ND`.
-        client->popup_destroy( ).
+        mo_client->popup_destroy( ).
       WHEN `POPUP`.
         simple_popup1( ).
     ENDCASE.
@@ -86,13 +86,13 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      ui5_display( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    event( ).
   ENDMETHOD.
 ENDCLASS.

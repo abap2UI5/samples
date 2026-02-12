@@ -4,10 +4,10 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA t_tab TYPE REF TO data.
+    DATA mt_tab TYPE REF TO data.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
   PRIVATE SECTION.
@@ -17,18 +17,18 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - RTTI created Table`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    FIELD-SYMBOLS <tab> TYPE table.
-    ASSIGN t_tab->* TO <tab>.
+    FIELD-SYMBOLS <lo_tab> TYPE table.
+    ASSIGN mt_tab->* TO <lo_tab>.
 
-    DATA(tab) = page->table(
-            items = client->_bind_edit( <tab> )
+    DATA(lo_tab) = lo_page->table(
+            items = mo_client->_bind_edit( <lo_tab> )
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
@@ -36,10 +36,10 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
-                    press = client->_event( `SEND` )
+                    press = mo_client->_event( `SEND` )
         )->get_parent( )->get_parent( ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `uuid` )->get_parent(
         )->column(
@@ -47,34 +47,34 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
         )->column(
             )->text( `previous` )->get_parent( ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
+    lo_tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->input( value = `{ID}`
           )->input( value = `{TIMESTAMPL}`
           )->input( value = `{ID_PREV}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    FIELD-SYMBOLS <tab> TYPE table.
+    FIELD-SYMBOLS <lo_tab> TYPE table.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
+      CREATE DATA mt_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
 
-      ASSIGN t_tab->* TO <tab>.
-
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-        INTO TABLE <tab>.
+      ASSIGN mt_tab->* TO <lo_tab>.
 
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-          INTO TABLE <tab>.
+        INTO TABLE <lo_tab>.
+
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-          INTO TABLE <tab>.
+          INTO TABLE <lo_tab>.
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+          INTO TABLE <lo_tab>.
 
     ENDIF.
     set_view( ).

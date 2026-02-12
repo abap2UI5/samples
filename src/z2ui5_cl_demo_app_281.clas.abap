@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_281 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,33 +24,33 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(css) = `.tileLayout {`    &&
+    DATA(lv_css) = `.tileLayout {`    &&
                 `    float: left;` &&
                 `}`.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
+    DATA lv_base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Tile Statuses`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileStates` ).
+           href   = lv_base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileStates` ).
 
-    page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
+    lo_page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Status Loaded - no press event`
            subheader           = `Subheader`
          )->tile_content( unit   = `Unit`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
        )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Status Loaded - with press event`
            subheader           = `Subheader`
-                        press  = client->_event( `PRESS` )
+                        press  = mo_client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->image_content( src = `sap-icon://home-share` )->get_parent( )->get_parent( )->get_parent(
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                         header = `Status Loading - with press event`
            subheader           = `Subheader`
                         state  = `Loading`
-                        press  = client->_event( `PRESS` )
+                        press  = mo_client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->numeric_content( scale      = `M`
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
            subheader              = `Subheader`
                         frametype = `TwoByOne`
                         state     = `Failed`
-                        press     = client->_event( `PRESS` )
+                        press     = mo_client->_event( `PRESS` )
          )->tile_content( unit   = `Unit`
                           footer = `Footer`
            )->feed_content(
@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                value       = `9` )->get_parent( )->get_parent( )->get_parent(
        )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
          )->generic_tile(
-             backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage1.png`
+             backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage1.png`
              frametype       = `TwoByOne`
              state           = `Loading`
            )->tile_content( unit   = `Unit`
@@ -120,10 +120,10 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                  contenttext = `Status Loading - no press event`
                  subheader   = `Subheader` )->get_parent( )->get_parent( )->get_parent(
          )->generic_tile(
-             backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
+             backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
              frametype       = `TwoByOne`
              state           = `Loaded`
-             press           = client->_event( `PRESS` )
+             press           = mo_client->_event( `PRESS` )
            )->tile_content( unit   = `Unit`
                             footer = `Footer`
              )->news_content(
@@ -142,48 +142,48 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
                         header = `Status Disabled - with press event`
            subheader           = `Subheader`
                         state  = `Disabled`
-                        press  = client->_event( `PRESS` )
+                        press  = mo_client->_event( `PRESS` )
          )->tile_content( footer = `Footer`
                           unit   = `Unit`
            )->numeric_content( value      = `3`
                                icon       = `sap-icon://travel-expense`
                                withmargin = abap_false ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
-        z2ui5_display_popover( `button_hint_id` ).
+        display_popover( `button_hint_id` ).
       WHEN `PRESS`.
-        client->message_toast_display( `The GenericTile is pressed.` ).
+        mo_client->message_toast_display( `The GenericTile is pressed.` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Shows the GenericTile while it is loading, if loading fails, and in disabled status.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

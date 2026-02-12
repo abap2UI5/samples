@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_016 DEFINITION PUBLIC.
 
     METHODS render_tab_bar.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -22,22 +22,22 @@ CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
 
   METHOD render_tab_bar.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(container) = view->shell(
+    DATA(lo_container) = lo_view->shell(
         )->page(
-             showheader    = xsdbool( abap_false = client->get( )-check_launchpad_active )
+             showheader    = xsdbool( abap_false = mo_client->get( )-check_launchpad_active )
             title          = `abap2UI5 - Visualization`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( )
         )->tab_container( ).
 
-    DATA(grid) = container->tab(
+    DATA(lo_grid) = lo_container->tab(
             text     = `Bar Chart`
-            selected = client->_bind( mv_tab_bar_active )
+            selected = mo_client->_bind( mv_tab_bar_active )
         )->grid( `XL6 L6 M6 S12` ).
 
-    grid->link(
+    lo_grid->link(
             text   = `Go to the SAP Demos for Interactive bar Charts here...`
             target = `_blank`
             href   = `https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.InteractiveBarChart/sample/sap.suite.ui.microchart.sample.InteractiveBarChart`
@@ -47,46 +47,46 @@ CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
             )->get( )->layout_data(
                 )->grid_data( `XL12 L12 M12 S12` ).
 
-    DATA(bar) = grid->flex_box(
+    DATA(lo_bar) = lo_grid->flex_box(
             width      = `22rem`
             height     = `13rem`
             alignitems = `Center`
             class      = `sapUiSmallMargin`
         )->items( )->interact_bar_chart(
-                selectionchanged = client->_event( `BAR_CHANGED` )
-                press            = client->_event( `BAR_CHANGED` )
+                selectionchanged = mo_client->_event( `BAR_CHANGED` )
+                press            = mo_client->_event( `BAR_CHANGED` )
                 labelwidth       = `25%`
                 displayedbars    = `4`
             )->bars( ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel1 )
+    lo_bar->interact_bar_chart_bar( selected = mo_client->_bind( mv_sel1 )
                                  label    = `Product 1`
                                  value    = `10` ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel2 )
+    lo_bar->interact_bar_chart_bar( selected = mo_client->_bind( mv_sel2 )
                                  label    = `Product 2`
                                  value    = `20` ).
-    bar->interact_bar_chart_bar( selected = client->_bind( mv_sel3 )
+    lo_bar->interact_bar_chart_bar( selected = mo_client->_bind( mv_sel3 )
                                  label    = `Product 3`
                                  value    = `70` ).
 
-    bar = grid->flex_box(
+    lo_bar = lo_grid->flex_box(
             width      = `22rem`
             height     = `13rem`
             alignitems = `Center`
             class      = `sapUiSmallMargin`
         )->items( )->interact_bar_chart(
-                selectionchanged = client->_event( `BAR_CHANGED` )
+                selectionchanged = mo_client->_event( `BAR_CHANGED` )
             )->bars( ).
-    bar->interact_bar_chart_bar( label          = `Product 1`
+    lo_bar->interact_bar_chart_bar( label          = `Product 1`
                                  value          = `10`
                                  displayedvalue = `10%` ).
-    bar->interact_bar_chart_bar( label          = `Product 2`
+    lo_bar->interact_bar_chart_bar( label          = `Product 2`
                                  value          = `20`
                                  displayedvalue = `20%` ).
-    bar->interact_bar_chart_bar( label          = `Product 3`
+    lo_bar->interact_bar_chart_bar( label          = `Product 3`
                                  value          = `70`
                                  displayedvalue = `70%` ).
 
-    bar = grid->vertical_layout(
+    lo_bar = lo_grid->vertical_layout(
         )->layout_data( `layout`
             )->grid_data( `XL12 L12 M12 S12`
         )->get_parent(
@@ -99,25 +99,25 @@ CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
             alignitems = `Center`
             class      = `sapUiSmallMargin`
         )->items( )->interact_bar_chart(
-                selectionchanged = client->_event( `BAR_CHANGED` )
-                press            = client->_event( `BAR_PRESS` )
+                selectionchanged = mo_client->_event( `BAR_CHANGED` )
+                press            = mo_client->_event( `BAR_PRESS` )
                 labelwidth       = `25%`
             )->bars( ).
-    bar->interact_bar_chart_bar( label = `Product 1`
+    lo_bar->interact_bar_chart_bar( label = `Product 1`
                                  value = `25` ).
-    bar->interact_bar_chart_bar( label = `Product 2`
+    lo_bar->interact_bar_chart_bar( label = `Product 2`
                                  value = `-50` ).
-    bar->interact_bar_chart_bar( label = `Product 3`
+    lo_bar->interact_bar_chart_bar( label = `Product 3`
                                  value = `-100` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       render_tab_bar( ).
     ENDIF.

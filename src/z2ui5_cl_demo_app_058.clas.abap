@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
@@ -72,14 +72,14 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
         get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS on_render.
+    METHODS on_render_main.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_on_render_popup.
-    METHODS z2ui5_on_render_popup_save.
+    METHODS set_data.
+    METHODS on_render_popup.
+    METHODS on_render_popup_save.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -88,28 +88,28 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
-    app-get        = client->get( ).
+    me->mo_client     = mo_client.
+    app-get        = mo_client->get( ).
     app-view_popup = ``.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    on_render( ).
     CLEAR app-get.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
       WHEN `BUTTON_START`.
-        z2ui5_set_data( ).
+        set_data( ).
       WHEN `BUTTON_SETUP`.
         app-view_popup = `POPUP`.
       WHEN `BUTTON_SAVE`.
@@ -129,13 +129,13 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         INSERT ls_layout INTO TABLE mt_db_layout.
         app-view_popup = `POPUP_SAVE`.
       WHEN `BACK`.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
+        mo_client->nav_app_leave( mo_client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
-    z2ui5_set_data( ).
+    set_data( ).
     app-view_main = `MAIN`.
 
     ms_layout-title = `data`.
@@ -147,32 +147,32 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( name = `QUANTITY`   title = `QUANTITY` visible = abap_true ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render.
+  METHOD on_render.
 
     CASE app-view_popup.
       WHEN `POPUP`.
-        z2ui5_on_render_popup( ).
+        on_render_popup( ).
       WHEN `POPUP_SAVE`.
-        z2ui5_on_render_popup_save( ).
+        on_render_popup_save( ).
     ENDCASE.
 
     CASE app-view_main.
       WHEN `MAIN`.
-        z2ui5_on_render_main( ).
+        on_render_main( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_main.
+  METHOD on_render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view = view->shell( )->page( id = `page_main`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view = lo_view->shell( )->page( id = `page_main`
              title                  = `abap2UI5 - Table Layout Sample`
-             navbuttonpress         = client->_event( `BACK` )
-             shownavbutton          = client->check_app_prev_stack( ) ).
+             navbuttonpress         = mo_client->_event( `BACK` )
+             shownavbutton          = mo_client->check_app_prev_stack( ) ).
 
-    DATA(tab) = view->table(
+    DATA(tab) = lo_view->table(
         headertext         = ms_layout-title
-        items              = client->_bind( mt_table )
+        items              = mo_client->_bind( mt_table )
         alternaterowcolors = ms_layout-check_zebra
         sticky             = ms_layout-sticky_header
 *        autopopinmode = abap_true
@@ -184,10 +184,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       )->toolbar_spacer(
               )->button(
                   icon  = `sap-icon://save`
-                  press = client->_event( `BUTTON_SAVE` )
+                  press = mo_client->_event( `BUTTON_SAVE` )
               )->button(
                   icon  = `sap-icon://action-settings`
-                  press = client->_event( `BUTTON_SETUP` ) ).
+                  press = mo_client->_event( `BUTTON_SETUP` ) ).
 
     DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
@@ -201,7 +201,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press    = client->_event( val = `DETAIL` t_arg = VALUE #( ( `${UUID}` ) ) )
+        press    = mo_client->_event( val = `DETAIL` t_arg = VALUE #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
       )->cells( ).
 
@@ -214,10 +214,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_popup.
+  METHOD on_render_popup.
 
     DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -230,7 +230,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           )->bar(
               )->content_right(
           )->button( text  = `zurücksetzten`
-                     press = client->_event( `BUTTON_INIT` ) ).
+                     press = mo_client->_event( `BUTTON_INIT` ) ).
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
@@ -241,28 +241,28 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                        ( key = `MultiSelect`  text = `MultiSelect` ) ).
 
     lo_tab->tab( text     = `Table`
-                 selected = client->_bind_edit( mv_check_table )
+                 selected = mo_client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true
            )->content( `form`
                )->label( `zebra mode`
-               )->checkbox( client->_bind( ms_layout-check_zebra )
+               )->checkbox( mo_client->_bind( ms_layout-check_zebra )
                )->label( `sticky header`
-               )->input( client->_bind( ms_layout-sticky_header )
+               )->input( mo_client->_bind( ms_layout-sticky_header )
                )->label( text = `Title`
-               )->input( value = client->_bind( ms_layout-title )
+               )->input( value = mo_client->_bind( ms_layout-title )
                )->label( `sel mode`
                )->combobox(
-                   selectedkey = client->_bind_edit( ms_layout-selmode )
-                   items       = client->_bind( mt_combo )
+                   selectedkey = mo_client->_bind_edit( ms_layout-selmode )
+                   items       = mo_client->_bind( mt_combo )
                    )->item(
                        key  = `{KEY}`
                        text = `{TEXT}` ).
 
     lo_tab->tab(
                 text     = `Columns`
-                selected = client->_bind( mv_check_columns )
+                selected = mo_client->_bind( mv_check_columns )
        )->table(
-        items = client->_bind_edit( ms_layout-t_cols )
+        items = mo_client->_bind_edit( ms_layout-t_cols )
         )->columns(
             )->column( )->text( `Visible` )->get_parent(
             )->column( )->text( `Name` )->get_parent(
@@ -282,29 +282,29 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     lo_tab->tab(
                     text     = `Sort`
-                    selected = client->_bind( mv_check_sort ) ).
+                    selected = mo_client->_bind( mv_check_sort ) ).
 
     ro_popup->end_button( )->button(
               text  = `continue`
-              press = client->_event( `POPUP_FILTER_CONTINUE` )
+              press = mo_client->_event( `POPUP_FILTER_CONTINUE` )
               type  = `Emphasized` ).
 
-    client->popup_display( ro_popup->stringify( ) ).
+    mo_client->popup_display( ro_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_render_popup_save.
+  METHOD on_render_popup_save.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popup = lo_popup->dialog( title        = `abap2UI5 - Layout`
                                  contentwidth = `50%`
         )->input( description = `Name`
-                  value       = client->_bind( mv_layout )
+                  value       = mo_client->_bind( mv_layout )
         )->button( text  = `Save`
-                   press = client->_event( `BUTTON_SAVE_LAYOUT` )
+                   press = mo_client->_event( `BUTTON_SAVE_LAYOUT` )
         )->table(
             mode  = `SingleSelectLeft`
-            items = client->_bind_edit( mt_db_layout )
+            items = mo_client->_bind_edit( mt_db_layout )
             )->columns(
                 )->column( )->text( `Name` )->get_parent(
                 )->column( )->text( `User` )->get_parent(
@@ -321,17 +321,17 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
             )->toolbar_spacer(
              )->button(
                 text  = `load`
-                press = client->_event( `POPUP_LAYOUT_LOAD` )
+                press = mo_client->_event( `POPUP_LAYOUT_LOAD` )
                 type  = `Emphasized`
             )->button(
                 text  = `close`
-                press = client->_event( `POPUP_LAYOUT_CONTINUE` )
+                press = mo_client->_event( `POPUP_LAYOUT_CONTINUE` )
                 type  = `Emphasized` ).
 
-    client->popup_display( lo_popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table`    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

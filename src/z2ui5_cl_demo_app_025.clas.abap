@@ -46,14 +46,14 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
     CASE mv_show_view.
       WHEN `MAIN` OR ``.
 
-        DATA(view) = z2ui5_cl_xml_view=>factory( ).
-        DATA(page) = view->shell(
+        DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+        DATA(lo_page) = lo_view->shell(
             )->page(
                    title          = `abap2UI5 - flow logic - APP 02`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
-        page->grid( `L6 M12 S12` )->content( `layout`
+        lo_page->grid( `L6 M12 S12` )->content( `layout`
           )->simple_form( `View: FIRST` )->content( `form`
           )->label( `Input set by previous app`
                )->input( mv_input_previous_set
@@ -67,14 +67,14 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
                           press = client->_event( `BACK_WITH_EVENT` ) ).
       WHEN `SECOND`.
 
-        view = z2ui5_cl_xml_view=>factory( ).
-        page = view->shell(
+        lo_view = z2ui5_cl_xml_view=>factory( ).
+        lo_page = lo_view->shell(
             )->page(
                     title          = `abap2UI5 - flow logic - APP 02`
                     navbuttonpress = client->_event( `BACK` )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
-        page->grid( `L6 M12 S12` )->content( `layout`
+        lo_page->grid( `L6 M12 S12` )->content( `layout`
             )->simple_form( `View: SECOND` )->content( `form`
               )->label( `Demo`
               )->button( text  = `leave to previous app`
@@ -84,6 +84,6 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
                          press = client->_event( `SHOW_VIEW_MAIN` ) ).
     ENDCASE.
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

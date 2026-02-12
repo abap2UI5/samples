@@ -11,20 +11,20 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION PUBLIC.
       END OF ty_a_data.
 
     DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
-    DATA s_text TYPE string.
+    DATA ms_text TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
+    METHODS set_data.
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -35,26 +35,26 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Date Picker - Value States`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DatePicker/sample/sap.m.sample.DatePickerValueState` ).
 
-    page->flex_box( items     = client->_bind( lt_a_data )
+    lo_page->flex_box( items     = mo_client->_bind( lt_a_data )
                     direction = `Column`
              )->vbox( class = `sapUiTinyMargin`
                  )->label( text     = `{LABEL}`
@@ -66,65 +66,65 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
                      valuestatetext = `{VALUE_STATE_TEXT}` )->get_parent(
              )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `This example shows different DatePicker value states.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
+      set_data( ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
-    CLEAR s_text.
+    CLEAR ms_text.
     CLEAR lt_a_data.
 
-    s_text = `DatePicker with valueState `.
+    ms_text = `DatePicker with valueState `.
 
     " Append entries to the internal table
-    APPEND VALUE #( label       = s_text && `None`
+    APPEND VALUE #( label       = ms_text && `None`
                     value_state = `None` ) TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Information`
+    APPEND VALUE #( label       = ms_text && `Information`
                     value_state = `Information` ) TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Success`
+    APPEND VALUE #( label       = ms_text && `Success`
                     value_state = `Success` ) TO lt_a_data.
 
-    APPEND VALUE #( label            = s_text && `Warning and long valueStateText`
+    APPEND VALUE #( label            = ms_text && `Warning and long valueStateText`
                     value_state      = `Warning`
                     value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
                                        `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` ) TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Error`
+    APPEND VALUE #( label       = ms_text && `Error`
                     value_state = `Error` ) TO lt_a_data.
   ENDMETHOD.
 ENDCLASS.

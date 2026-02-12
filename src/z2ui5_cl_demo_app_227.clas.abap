@@ -16,13 +16,13 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(lo_page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Page, Toolbar and Bar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(page_02) = page_01->page( title         = `Title`
+    DATA(lo_page_02) = lo_page_01->page( title         = `Title`
                                    class         = `sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer`
                                    shownavbutton = `true`
                               )->header_content(
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
                                           )->button( text = `Delete`
                                                      type = `Delete` ).
 
-    client->view_display( page_02->stringify( ) ).
+    client->view_display( lo_page_02->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

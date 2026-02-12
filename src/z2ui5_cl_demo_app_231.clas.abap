@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
   PRIVATE SECTION.
     DATA
-      check_initialized TYPE abap_bool.
+      mv_check_initialized TYPE abap_bool.
 
     METHODS:
       display_view
@@ -38,26 +38,26 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
+    lo_view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
                     )->page(
                         title          = `abap2UI5 - Sample: Date Range Selection`
                         navbuttonpress = client->_event_nav_app_leave( )
                         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelection` ).
 
-    DATA(vbox) = page->vbox( ).
+    DATA(lo_vbox) = lo_page->vbox( ).
 
     " DRS1
-    vbox->label( text     = `DateRangeSelection displayFormat 'yyyy/MM/dd', set via binding:`
+    lo_vbox->label( text     = `DateRangeSelection displayFormat 'yyyy/MM/dd', set via binding:`
                  labelfor = `DRS1`
        )->date_range_selection(
             id              = `DRS1`
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs1-end ) && `) }` ).
 
     " DRS2
-    vbox->label( text     = `DateRangeSelection with minDate=2016-01-01 and maxDate=2016-12-31:`
+    lo_vbox->label( text     = `DateRangeSelection with minDate=2016-01-01 and maxDate=2016-12-31:`
                  labelfor = `DRS2`
        )->date_range_selection(
             id              = `DRS2`
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs2-end ) && `) }` ).
 
     " DRS3
-    vbox->label( text     = `DateRangeSelection with OK button in the footer and with shortcut for today:"`
+    lo_vbox->label( text     = `DateRangeSelection with OK button in the footer and with shortcut for today:"`
                  labelfor = `DRS3`
        )->date_range_selection(
             id                    = `DRS3`
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             seconddatevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs3-end ) && `) }` ).
 
     " DRS4
-    vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
+    lo_vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
                  labelfor = `DRS3`
        )->date_range_selection(
             id              = `DRS4`
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs4-end ) && `) }` ).
 
     " DRS5
-    vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
+    lo_vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
                  labelfor = `DRS3`
        )->date_range_selection(
             id              = `DRS5`
@@ -108,12 +108,12 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs5-start ) && `) }`
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs5-end ) && `) }` ).
 
-    vbox->label( text     = `Change event`
+    lo_vbox->label( text     = `Change event`
                  labelfor = `TextEvent` ).
-    vbox->text( id   = `TextEvent`
+    lo_vbox->text( id   = `TextEvent`
                 text = client->_bind_edit( text ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD initialize.
@@ -138,16 +138,16 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
     IF client->check_on_event( `HANDLE_CHANGE` ).
 
-      DATA(args) = client->get( )-t_event_arg.
-      DATA(source) = args[ 1 ].
+      DATA(lo_args) = client->get( )-t_event_arg.
+      DATA(lv_source) = lo_args[ 1 ].
 
-      ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
+      ASSIGN me->(lv_source) TO FIELD-SYMBOL(<lv_drs>).
 
-      DATA(drs) = CORRESPONDING t_drs( <drs> ).
+      DATA(lv_drs) = CORRESPONDING t_drs( <lv_drs> ).
 
-      text = |Id: { source }\n|
-          && |From: { drs-start }\n|
-          && |To: { drs-end }|.
+      text = |Id: { lv_source }\n|
+          && |From: { lv_drs-start }\n|
+          && |To: { lv_drs-end }|.
 
     ENDIF.
   ENDMETHOD.

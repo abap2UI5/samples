@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
     DATA mt_comp    TYPE abap_component_tab.
 
   PROTECTED SECTION.
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
@@ -23,13 +23,13 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLEAR`.
         refresh_data( ).
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `ADD`.
         add_data( ).
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
@@ -41,55 +41,55 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD render_main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(page) = view->page( id             = `page_main`
+    DATA(lo_page) = lo_view->page( id             = `page_main`
                              title          = `Refresh`
-                             navbuttonpress = client->_event_nav_app_leave( )
-                             shownavbutton  = client->check_app_prev_stack( )
+                             navbuttonpress = mo_client->_event_nav_app_leave( )
+                             shownavbutton  = mo_client->check_app_prev_stack( )
                              class          = `sapUiContentPadding` ).
-    DATA(table) = page->table( growing = `true`
+    DATA(lo_table) = lo_page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind_edit( <tab> ) ).
+                               items   = mo_client->_bind_edit( <tab> ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA(lo_columns) = lo_table->columns( ).
 
     LOOP AT mt_comp INTO DATA(comp).
-      columns->column( )->text( comp-name ).
+      lo_columns->column( )->text( comp-name ).
     ENDLOOP.
 
-    DATA(cells) = columns->get_parent( )->items(
+    DATA(lo_cells) = lo_columns->get_parent( )->items(
                                        )->column_list_item( valign = `Middle`
                                                             type   = `Navigation`
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = `{` && comp-name && `}` ).
+      lo_cells->object_identifier( text = `{` && comp-name && `}` ).
     ENDLOOP.
 
-    page->button( text  = `Clear`
-                  press = client->_event( `CLEAR` )
+    lo_page->button( text  = `Clear`
+                  press = mo_client->_event( `CLEAR` )
                   )->button( text  = `Add`
-                             press = client->_event( `ADD` ) ).
+                             press = mo_client->_event( `ADD` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       on_init( ).
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
-      client->message_box_display( text = `Frontend Lines <> Backend!`
+      mo_client->message_box_display( text = `Frontend Lines <> Backend!`
                                    type = `error` ).
     ENDIF.
 
@@ -98,17 +98,17 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD refresh_data.
 
-    FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <lo_table> TYPE STANDARD TABLE.
     TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
     TRY.
 
         CREATE DATA mt_table TYPE ty_t_01.
-        ASSIGN mt_table->* TO <table>.
-        mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <table> ).
+        ASSIGN mt_table->* TO <lo_table>.
+        mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <lo_table> ).
 
         SELECT id, id_prev FROM z2ui5_t_01
-          INTO CORRESPONDING FIELDS OF TABLE @<table>
+          INTO CORRESPONDING FIELDS OF TABLE @<lo_table>
           UP TO 2 ROWS.
 
         mv_counter = 2.

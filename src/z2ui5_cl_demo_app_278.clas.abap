@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_278 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,36 +24,36 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(css) = `.tileLayout {`    &&
+    DATA(lv_css) = `.tileLayout {`    &&
                 `    float: left;` &&
                 `}`.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
+    DATA lv_base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Feed and News Tile`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsFeedTile` ).
+           href   = lv_base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsFeedTile` ).
 
-    page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
+    lo_page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Feed Tile that shows updates of the last feeds given to a specific topic:`
            frametype           = `TwoByOne`
-                        press  = client->_event( `PRESS` )
+                        press  = mo_client->_event( `PRESS` )
                )->tile_content( footer = `New Notifications`
                  )->feed_content( contenttext = `@@notify Great outcome of the Presentation today. New functionality well received.`
                      subheader                = `About 1 minute ago in Computer Market`
@@ -61,57 +61,57 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
       )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
          )->tiles(
            )->generic_tile(
-               backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage1.png`
+               backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage1.png`
                frametype       = `TwoByOne`
-               press           = client->_event( `PRESS` )
+               press           = mo_client->_event( `PRESS` )
              )->tile_content( footer = `August 21, 2016`
                )->news_content(
                   contenttext = `Wind Map: Monitoring Real-Time and Fore-casted Wind Conditions across the Globe`
                   subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
            )->generic_tile(
-               backgroundimage = base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
+               backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/GenericTileAsFeedTile/images/NewsImage2.png`
                frametype       = `TwoByOne`
-               press           = client->_event( `PRESS` )
+               press           = mo_client->_event( `PRESS` )
              )->tile_content( footer = `August 21, 2016`
                )->news_content(
                    contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
                    subheader   = `Today, SAP News` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
-        z2ui5_display_popover( `button_hint_id` ).
+        display_popover( `button_hint_id` ).
       WHEN `PRESS`.
-        client->message_toast_display( `The GenericTile is pressed.` ).
+        mo_client->message_toast_display( `The GenericTile is pressed.` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Shows Feed Tile and News Tile samples that can contain feed content, news content, and a footer.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

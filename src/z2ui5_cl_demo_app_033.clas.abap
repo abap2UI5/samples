@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
     METHODS display_view.
     DATA mv_html TYPE string.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -17,12 +17,12 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title           = `abap2UI5 - Illustrated Messages`
-            navbuttonpress  = client->_event_nav_app_leave( )
+            navbuttonpress  = mo_client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
                  )->link(
@@ -32,30 +32,30 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                 )->link(
 
             )->get_parent( ).
-    page->link( text   = `Documentation`
+    lo_page->link( text   = `Documentation`
                 target = `_blank`
                 href   = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
-    page->button( text  = `NoActivities`
-                  press = client->_event( `sapIllus-NoActivities` ) ).
-    page->button( text  = `AddPeople`
-                  press = client->_event( `sapIllus-AddPeople` ) ).
-    page->button( text  = `Connection`
-                  press = client->_event( `sapIllus-Connection` ) ).
-    page->button( text  = `NoDimensionsSet`
-                  press = client->_event( `sapIllus-NoDimensionsSet` ) ).
-    page->button( text  = `NoEntries`
-                  press = client->_event( `sapIllus-NoEntries` ) ).
-    page->illustrated_message( illustrationtype = client->_bind( mv_type )
+    lo_page->button( text  = `NoActivities`
+                  press = mo_client->_event( `sapIllus-NoActivities` ) ).
+    lo_page->button( text  = `AddPeople`
+                  press = mo_client->_event( `sapIllus-AddPeople` ) ).
+    lo_page->button( text  = `Connection`
+                  press = mo_client->_event( `sapIllus-Connection` ) ).
+    lo_page->button( text  = `NoDimensionsSet`
+                  press = mo_client->_event( `sapIllus-NoDimensionsSet` ) ).
+    lo_page->button( text  = `NoEntries`
+                  press = mo_client->_event( `sapIllus-NoEntries` ) ).
+    lo_page->illustrated_message( illustrationtype = mo_client->_bind( mv_type )
       )->additional_content( )->button(
                 text  = `information`
-                press = client->_event( `BUTTON_MESSAGE_BOX` ) ).
+                press = mo_client->_event( `BUTTON_MESSAGE_BOX` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
       `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
@@ -63,17 +63,17 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
       `ghi</pre><p>code: <code>var el = document.getElementById("myId");</code></p><p>cite: <cite>a reference to a source</cite></p>` &&
       `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       mv_type = `sapIllus-NoActivities`.
       display_view( ).
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_MESSAGE_BOX`.
-        client->message_box_display( `Action of illustrated message` ).
+        mo_client->message_box_display( `Action of illustrated message` ).
       WHEN OTHERS.
-        mv_type = client->get( )-event.
+        mv_type = mo_client->get( )-event.
     ENDCASE.
 
     display_view( ).

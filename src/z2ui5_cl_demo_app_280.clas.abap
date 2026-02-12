@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_280 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,26 +24,26 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Header Container - Vertical Mode`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.HeaderContainer/sample/sap.m.sample.HeaderContainerVM` ).
 
-    page->header_container( scrollstep  = `124`
+    lo_page->header_container( scrollstep  = `124`
                             scrolltime  = `500`
                             orientation = `Vertical`
                             height      = `400px`
@@ -51,42 +51,42 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
                              value      = `1.75`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.57`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.04`
                              valuecolor = `Neutral`
                              indicator  = `Up`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `3.65`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.73`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.01`
                              valuecolor = `Critical`
                              indicator  = `Down`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `1.42`
                              valuecolor = `Good`
                              indicator  = `Up`
-                             press      = client->_event( `PRESS` ) )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent(
          )->numeric_content( scale      = `M`
                              value      = `0.21`
                              valuecolor = `Error`
                              indicator  = `Down`
-                             press      = client->_event( `PRESS` ) )->get_parent( )->get_parent(
+                             press      = mo_client->_event( `PRESS` ) )->get_parent( )->get_parent(
        )->header_container( scrollstep  = `200`
                             orientation = `Vertical`
                             height      = `400px`
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
              )->numeric_content( value      = `1.96`
                                  valuecolor = `Error`
                                  indicator  = `Down`
-                                 press      = client->_event( `PRESS` ) )->get_parent( )->get_parent( )->get_parent(
+                                 press      = mo_client->_event( `PRESS` ) )->get_parent( )->get_parent( )->get_parent(
          )->tile_content( footer = `Leave Requests`
            )->content(
              )->numeric_content( value = `35`
@@ -118,41 +118,41 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
              )->numeric_content( value = `1522`
                                  icon  = `sap-icon://bubble-chart` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
-        z2ui5_display_popover( `button_hint_id` ).
+        display_popover( `button_hint_id` ).
       WHEN `PRESS`.
-        client->message_toast_display( `Fire press` ).
+        mo_client->message_toast_display( `Fire press` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `The Header Container with a vertical layout and with divider lines.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

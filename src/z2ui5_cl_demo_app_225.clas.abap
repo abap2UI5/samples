@@ -16,18 +16,18 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Icon Tab Bar - Separator`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->label( wrapping = `true`
+    DATA(lo_layout) = lo_page->label( wrapping = `true`
                                 text     = `No icon(='') used as separator, the separator will be a vertical line.`
                                 class    = `sapUiSmallMargin` ).
 
-    layout->icon_tab_bar( id       = `idIconTabBarSeparatorNoIcon`
+    lo_layout->icon_tab_bar( id       = `idIconTabBarSeparatorNoIcon`
                           expanded = `false`
                           class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -51,11 +51,11 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                                                   iconcolor = `Negative`
                                                   )->text( text = `People content goes here ...` ).
 
-    layout->label( wrapping           = `true`
+    lo_layout->label( wrapping           = `true`
                                 text  = `Icon used as separator, you are free to choose an icon you want.`
                                 class = `sapUiSmallMargin` ).
 
-    layout->icon_tab_bar( id       = `idIconTabBarSeparatorIcon`
+    lo_layout->icon_tab_bar( id       = `idIconTabBarSeparatorIcon`
                           expanded = `false`
                           class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -80,11 +80,11 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                                                   iconcolor = `Negative`
                                                   )->text( text = `People content goes here ...` ).
 
-    layout->label( wrapping           = `true`
+    lo_layout->label( wrapping           = `true`
                                 text  = `Different separators used.`
                                 class = `sapUiSmallMargin` ).
 
-    layout->icon_tab_bar( id       = `idIconTabBarSeparatorMixed`
+    lo_layout->icon_tab_bar( id       = `idIconTabBarSeparatorMixed`
                           expanded = `false`
                           class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                                                   iconcolor = `Negative`
                                                   )->text( text = `People content goes here ...` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

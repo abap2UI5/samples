@@ -4,9 +4,9 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS ui5_display.
-    METHODS ui5_event.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display.
+    METHODS event.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -14,7 +14,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
-  METHOD ui5_event.
+  METHOD event.
 
     TYPES BEGIN OF ty_log_entry.
     TYPES msgnumber TYPE n LENGTH 6.
@@ -40,61 +40,61 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     TYPES END OF ty_log_entry.
     DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `POPUP_BAPIRET`.
 
         DATA(lt_msg) = VALUE bapirettab(
             ( type = `E` id = `MSG1` number = `001` message = `An empty Report field causes an empty XML Message to be sent` )
             ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
 
-        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
+        mo_client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
       WHEN `POPUP_BALLOG`.
 
         lt_bal = VALUE #(
           ( msgid = `MSG1` msgno = `001` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `01` )
           ( msgid = `MSG2` msgno = `002` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `02` ) ).
 
-        client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
+        mo_client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
       WHEN `POPUP_EXCEPTION`.
         TRY.
             DATA(lv_dummy) = 1 / 0.
           CATCH cx_root INTO DATA(lx).
         ENDTRY.
         DATA(lo_app) = z2ui5_cl_pop_error=>factory( lx ).
-        client->nav_app_call( lo_app ).
+        mo_client->nav_app_call( lo_app ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD ui5_display.
+  METHOD display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Popup Messages`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( )
            )->button(
             text  = `Open Popup BAPIRET`
-            press = client->_event( `POPUP_BAPIRET` )
+            press = mo_client->_event( `POPUP_BAPIRET` )
                   )->button(
             text  = `Open Popup BALLOG`
-            press = client->_event( `POPUP_BALLOG` )
+            press = mo_client->_event( `POPUP_BALLOG` )
                              )->button(
             text  = `Open Popup Exception`
-            press = client->_event( `POPUP_EXCEPTION` ) ).
+            press = mo_client->_event( `POPUP_EXCEPTION` ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      ui5_display( ).
+    IF mo_client->check_on_init( ).
+      display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    event( ).
   ENDMETHOD.
 ENDCLASS.

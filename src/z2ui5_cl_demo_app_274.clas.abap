@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_274 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -25,41 +25,41 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
+    DATA lv_base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Slide Tile`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && `sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile` ).
+           href   = lv_base_url && `sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile` ).
 
-    page->vertical_layout(
+    lo_page->vertical_layout(
            )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop`
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
+                   backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( `PRESS_ON_TILE_ONE` )
+                   press           = mo_client->_event( `PRESS_ON_TILE_ONE` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
                            subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
+                   backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( `PRESS_ON_TILE_TWO` )
+                   press           = mo_client->_event( `PRESS_ON_TILE_TWO` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
@@ -68,15 +68,15 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                      transitiontime = `250`
                      displaytime    = `2500`
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
+                   backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
                    frametype       = `TwoByOne`
-                   press           = client->_event( `PRESS_ON_TILE_ONE` )
+                   press           = mo_client->_event( `PRESS_ON_TILE_ONE` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
                            contenttext = `Wind Map: Monitoring Real-Time and Forecasted Wind Conditions across the Globe`
                            subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
                )->generic_tile(
-                   backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
+                   backgroundimage = lv_base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage2.png`
                    frametype       = `TwoByOne`
                    state           = `Failed`
                    )->tile_content( footer = `August 21, 2016`
@@ -84,38 +84,38 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                            contenttext = `AP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
                            subheader   = `Today, SAP News` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
-      z2ui5_display_popover( `button_hint_id` ).
+    IF mo_client->check_on_event( `CLICK_HINT_ICON` ).
+      display_popover( `button_hint_id` ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Shows Generic Tile with the 2x1 frame type displayed as sliding tiles.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

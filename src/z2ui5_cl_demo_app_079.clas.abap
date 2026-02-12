@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `PDF Output`
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `PDF Output`
                                                                   navbuttonpress = client->_event( `BACK` )
                                                                   shownavbutton  = client->check_app_prev_stack( )
                       )->_generic(
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
                             ( n = `width`  v = `90%` )
                     ) ).
 
-      client->view_display( view->stringify( ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 

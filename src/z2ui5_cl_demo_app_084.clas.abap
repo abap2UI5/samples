@@ -34,13 +34,13 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_init.
+    METHODS on_rendering.
+    METHODS on_event.
+    METHODS on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -49,9 +49,9 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       DATA(lv_script) = `` && |\n| &&
                         `function setInputFIlter(){` && |\n| &&
@@ -68,27 +68,27 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                         ` });` && |\n| &&
                         `}`.
 
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->timer( client->_event( `START` )
+      mo_client->view_display( z2ui5_cl_xml_view=>factory(
+        )->_z2ui5( )->timer( mo_client->_event( `START` )
          )->_generic( ns   = `html`
                       name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `START`.
-        z2ui5_on_rendering( ).
+        on_rendering( ).
       WHEN `BUTTON_MCUSTOM`.
 *        send type = '' is mandatory in order to not break current implementation
-        client->message_box_display( type             = ``
+        mo_client->message_box_display( type             = ``
                                      text             = `Custom MessageBox`
                                      icon             = `SUCCESS`
                                      title            = `Custom MessageBox`
@@ -97,33 +97,33 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      onclose          = `callMessageToast()`
                                      details          = `<h3>these are details</h3>` ).
       WHEN `BUTTON_MCONFIRM`.
-        client->message_box_display( type = `confirm`
+        mo_client->message_box_display( type = `confirm`
                                      text = `Confirm MessageBox` ).
       WHEN `BUTTON_MALERT`.
-        client->message_box_display( type = `alert`
+        mo_client->message_box_display( type = `alert`
                                      text = `Alert MessageBox` ).
       WHEN `BUTTON_MERROR`.
-        client->message_box_display( type = `error`
+        mo_client->message_box_display( type = `error`
                                      text = `Error MessageBox` ).
       WHEN `BUTTON_MINFO`.
-        client->message_box_display( type = `information`
+        mo_client->message_box_display( type = `information`
                                      text = `Information MessageBox` ).
       WHEN `BUTTON_MWARNING`.
-        client->message_box_display( type = `warning`
+        mo_client->message_box_display( type = `warning`
                                      text = `Warning MessageBox` ).
       WHEN `BUTTON_MSUCCESS`.
-        client->message_box_display( type = `success`
+        mo_client->message_box_display( type = `success`
                                      text = `Success MessageBox`
                                      icon = `sap-icon://accept` ).
       WHEN `BUTTON_SEND`.
-        client->message_box_display( `success - values send to the server` ).
+        mo_client->message_box_display( `success - values send to the server` ).
       WHEN `BUTTON_CLEAR`.
         CLEAR screen.
-        client->message_toast_display( `View initialized` ).
+        mo_client->message_toast_display( `View initialized` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     screen = VALUE #(
         check_is_active = abap_true
@@ -144,73 +144,73 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         ( descr = `Blue3`  value = `BLUE3` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_rendering.
+  METHOD on_rendering.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `script`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `function callMessageToast(sAction) { sap.m.MessageToast.show('Hello there !!'); }` ).
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
          )->page(
-          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
+          showheader       = xsdbool( abap_false = mo_client->get( )-check_launchpad_active )
             title          = `abap2UI5 - Selection-Screen Example`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L6 M12 S12`
+    DATA(lo_grid) = lo_page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    grid->simple_form( title    = `Input`
+    lo_grid->simple_form( title    = `Input`
                        editable = abap_true
         )->content( `form`
             )->label( `Input with suggestion items`
             )->input(
                     id              = `suggInput`
-                    value           = client->_bind_edit( screen-colour )
+                    value           = mo_client->_bind_edit( screen-colour )
                     placeholder     = `Fill in your favorite color`
-                    suggestionitems = client->_bind( mt_suggestion )
+                    suggestionitems = mo_client->_bind( mt_suggestion )
                     showsuggestion  = abap_true )->get(
                 )->suggestion_items( )->get(
                     )->list_item(
                         text           = `{VALUE}`
                         additionaltext = `{DESCR}` ).
 
-    page->footer( )->overflow_toolbar(
+    lo_page->footer( )->overflow_toolbar(
          )->text( text = `MessageBox Types`
          )->button(
              text  = `Confirm`
-             press = client->_event( `BUTTON_MCONFIRM` )
+             press = mo_client->_event( `BUTTON_MCONFIRM` )
          )->button(
              text  = `Alert`
-             press = client->_event( `BUTTON_MALERT` )
+             press = mo_client->_event( `BUTTON_MALERT` )
          )->button(
              text  = `Error`
-             press = client->_event( `BUTTON_MERROR` )
+             press = mo_client->_event( `BUTTON_MERROR` )
          )->button(
              text  = `Information`
-             press = client->_event( `BUTTON_MINFO` )
+             press = mo_client->_event( `BUTTON_MINFO` )
          )->button(
              text  = `Warning`
-             press = client->_event( `BUTTON_MWARNING` )
+             press = mo_client->_event( `BUTTON_MWARNING` )
          )->button(
              text  = `Success`
-             press = client->_event( `BUTTON_MSUCCESS` )
+             press = mo_client->_event( `BUTTON_MSUCCESS` )
          )->button(
              text  = `Custom`
-             press = client->_event( `BUTTON_MCUSTOM` )
+             press = mo_client->_event( `BUTTON_MCUSTOM` )
          )->toolbar_spacer(
          )->button(
              text  = `Clear`
-             press = client->_event( `BUTTON_CLEAR` )
+             press = mo_client->_event( `BUTTON_CLEAR` )
              type  = `Reject`
              icon  = `sap-icon://delete`
          )->button(
              text  = `Send to Server`
-             press = client->_event( `BUTTON_SEND` )
+             press = mo_client->_event( `BUTTON_SEND` )
              type  = `Success` ).
 
-    view->_generic( name = `script`
+    lo_view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

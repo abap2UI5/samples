@@ -17,11 +17,11 @@ CLASS z2ui5_cl_demo_app_114 DEFINITION PUBLIC.
     DATA mv_value TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS on_event.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -30,20 +30,20 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    IF client->check_on_event( `POST` ).
+    IF mo_client->check_on_event( `POST` ).
 
       IF mv_value IS NOT INITIAL.
         CLEAR ms_feed.
@@ -52,13 +52,13 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
         ms_feed-text = mv_value.
         mv_value = ``.
         INSERT ms_feed INTO mt_feed INDEX 1.
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
 
       ENDIF.
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_feed = VALUE #(
                       ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
@@ -72,23 +72,23 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
       ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
              title          = `Feed Input`
-             navbuttonpress = client->_event_nav_app_leave( )
-             shownavbutton  = client->check_app_prev_stack( ) ).
+             navbuttonpress = mo_client->_event_nav_app_leave( )
+             shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->flex_box(
+    lo_page->flex_box(
             justifycontent = `Start`
             class          = `sapUiSmallMarginEnd`
             alignitems     = `Center`
             )->avatar(
                     class = `sapUiSmallMarginEnd`
             )->text_area(
-                    value       = client->_bind_edit( mv_value )
+                    value       = mo_client->_bind_edit( mv_value )
                     rows        = `4`
                     cols        = `120`
                     class       = `sapUiSmallMarginEnd`
@@ -97,22 +97,22 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
                     enabled     = abap_true
             )->button(
                     icon      = `sap-icon://paper-plane`
-                    press     = client->_event( `POST` )
+                    press     = mo_client->_event( `POST` )
                     iconfirst = abap_true ).
 
-    page->list(
-      items          = client->_bind_edit( mt_feed )
+    lo_page->list(
+      items          = mo_client->_bind_edit( mt_feed )
       showseparators = `Inner`
         )->feed_list_item(
           sender                   = `{AUTHOR}`
-          senderpress              = client->_event( `SENDER_PRESS` )
-          iconpress                = client->_event( `ICON_PRESS` )
+          senderpress              = mo_client->_event( `SENDER_PRESS` )
+          iconpress                = mo_client->_event( `ICON_PRESS` )
           icondensityaware         = abap_false
           showicon                 = abap_false
           info                     = `Reply`
           text                     = `{TEXT}`
           convertlinkstoanchortags = `All` ).
 
-    client->view_display( lo_view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

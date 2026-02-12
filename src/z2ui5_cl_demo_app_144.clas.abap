@@ -9,9 +9,9 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
         value TYPE string,
       END OF ty_row .
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
   PROTECTED SECTION.
@@ -22,21 +22,21 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Binding Cell Level`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    LOOP AT t_tab REFERENCE INTO DATA(lr_row).
+    LOOP AT mt_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.
-      page->input( value = client->_bind_edit( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
-      page->input( value = client->_bind_edit( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
+      lo_page->input( value = mo_client->_bind_edit( val = lr_row->title tab = mt_tab tab_index = lv_tabix ) ).
+      lo_page->input( value = mo_client->_bind_edit( val = lr_row->value tab = mt_tab tab_index = lv_tabix ) ).
     ENDLOOP.
 
-    DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+    DATA(lo_tab) = lo_page->table(
+            items = mo_client->_bind_edit( mt_tab )
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
@@ -50,27 +50,27 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
           )->input( value = `{TITLE}`
           )->input( value = `{VALUE}` ).
 
-    page->input( value = client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
+    lo_page->input( value = mo_client->_bind_edit( val = mt_tab[ 1 ]-title tab = mt_tab tab_index = 1 ) ).
+    lo_page->input( value = mo_client->_bind_edit( val = mt_tab[ 1 ]-value tab = mt_tab tab_index = 1 ) ).
+    lo_page->input( value = mo_client->_bind_edit( val = mt_tab[ 2 ]-title tab = mt_tab tab_index = 2 ) ).
+    lo_page->input( value = mo_client->_bind_edit( val = mt_tab[ 2 ]-value tab = mt_tab tab_index = 2 ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       DO 1 TIMES.
-        t_tab = VALUE #( BASE t_tab
+        mt_tab = VALUE #( BASE mt_tab
             ( title = `entry 01`  value = `red` )
             ( title = `entry 02`  value = `blue` ) ).
       ENDDO.
       set_view( ).
     ENDIF.
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
   ENDMETHOD.
 ENDCLASS.

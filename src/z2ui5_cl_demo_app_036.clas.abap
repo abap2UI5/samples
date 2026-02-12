@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_036 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
         check_initialized TYPE abap_bool,
@@ -17,9 +17,9 @@ CLASS z2ui5_cl_demo_app_036 DEFINITION PUBLIC.
         get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_render.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS on_render.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -28,51 +28,51 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
-    app-get      = client->get( ).
+    me->mo_client = mo_client.
+    app-get      = mo_client->get( ).
     app-view_popup = ``.
 
     IF app-check_initialized = abap_false.
       app-check_initialized = abap_true.
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    on_render( ).
 
     CLEAR app-get.
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
       WHEN `POST`.
-        client->message_toast_display( app-get-t_event_arg[ 1 ] ).
+        mo_client->message_toast_display( app-get-t_event_arg[ 1 ] ).
       WHEN `MYCC`.
-        client->message_toast_display( `MYCC event ` && mv_value ).
+        mo_client->message_toast_display( `MYCC event ` && mv_value ).
       WHEN `BACK`.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
+        mo_client->nav_app_leave( mo_client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     app-view_main = `VIEW_MAIN`.
     mv_value = `test`.
   ENDMETHOD.
 
-  METHOD z2ui5_on_render.
+  METHOD on_render.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lv_xml) = `<mvc:View` && |\n| &&
                           `    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"` && |\n| &&
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event( `BACK` ) && `" ` && |\n| &&
+                          `  press="` && mo_client->_event( `BACK` ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
                           `<html><head><style>` && |\n| &&
                           `body {background-color: powderblue;}` && |\n| &&
@@ -120,6 +120,6 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
                           `</html> ` && |\n| &&
                             `</mvc:View>`.
 
-    client->view_display( lv_xml ).
+    mo_client->view_display( lv_xml ).
   ENDMETHOD.
 ENDCLASS.

@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: TextArea - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout(
+    DATA(lo_layout) = lo_page->vertical_layout(
                          class = `sapUiContentPadding`
                          width = `100%`
                           )->content( ns = `layout`
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
                                             placeholder = `ValueState : Information`
                                             width       = `100%` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

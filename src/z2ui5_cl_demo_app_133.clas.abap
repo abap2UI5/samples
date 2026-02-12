@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA field_01  TYPE string.
-    DATA field_02 TYPE string.
-    DATA focus_id TYPE string.
-    DATA selstart TYPE string.
-    DATA selend TYPE string.
-    DATA update_focus TYPE abap_bool.
+    DATA mv_field_01  TYPE string.
+    DATA mv_field_02 TYPE string.
+    DATA mv_focus_id TYPE string.
+    DATA mv_selstart TYPE string.
+    DATA mv_selend TYPE string.
+    DATA mv_update_focus TYPE abap_bool.
 
   PROTECTED SECTION.
     METHODS display_view
@@ -25,32 +25,32 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    client->view_display( lo_view->shell(
       )->page(
                   title          = `abap2UI5 - Focus`
                   navbuttonpress = client->_event( `BACK` )
                   shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
-                              focusid          = client->_bind_edit( focus_id )
-                                selectionstart = client->_bind_edit( selstart )
-                                selectionend   = client->_bind_edit( selend )
-                                setupdate      = client->_bind_edit( update_focus )
+                              focusid          = client->_bind_edit( mv_focus_id )
+                                selectionstart = client->_bind_edit( mv_selstart )
+                                selectionend   = client->_bind_edit( mv_selend )
+                                setupdate      = client->_bind_edit( mv_update_focus )
               )->simple_form( title    = `Focus & Cursor`
                               editable = abap_true
                   )->content( `form`
                       )->title( `Input`
                       )->label( `Sel_Start`
-                      )->input( value = client->_bind_edit( selstart )
+                      )->input( value = client->_bind_edit( mv_selstart )
                       )->label( `Sel_End`
-                      )->input( value = client->_bind_edit( selend )
+                      )->input( value = client->_bind_edit( mv_selend )
                       )->label( `field_01`
-                      )->input( value = client->_bind_edit( field_01 )
+                      )->input( value = client->_bind_edit( mv_field_01 )
                                 id    = `BUTTON01`
                       )->button( text  = `focus here`
                                  press = client->_event( `BUTTON01` )
                       )->label( `field_02`
-                      )->input( value = client->_bind_edit( field_02 )
+                      )->input( value = client->_bind_edit( mv_field_02 )
                                 id    = `BUTTON02`
                       )->button( text  = `focus here`
                                  press = client->_event( `BUTTON02` )
@@ -59,10 +59,10 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
   METHOD init.
 
-    field_01 = `this is a text`.
-    field_02 = `this is another text`.
-    selstart = `3`.
-    selend = `7`.
+    mv_field_01 = `this is a text`.
+    mv_field_02 = `this is another text`.
+    mv_selstart = `3`.
+    mv_selend = `7`.
     display_view( client ).
   ENDMETHOD.
 
@@ -77,8 +77,8 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
       WHEN `BACK`.
         client->nav_app_leave( ).
       WHEN `BUTTON01` OR `BUTTON02`.
-        update_focus = abap_true.
-        focus_id = client->get( )-event.
+        mv_update_focus = abap_true.
+        mv_focus_id = client->get( )-event.
         client->view_model_update( ).
         client->message_toast_display( |focus changed| ).
     ENDCASE.

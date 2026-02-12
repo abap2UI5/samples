@@ -35,12 +35,12 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
     DATA lv_selkz TYPE abap_bool .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_search.
-    METHODS z2ui5_set_data.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS set_search.
+    METHODS set_data.
 
   PRIVATE SECTION.
 
@@ -63,59 +63,59 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_on_init( ).
+    IF mo_client->check_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
-        client->message_toast_display( `Search Entries` ).
-        z2ui5_set_data( ).
-        z2ui5_set_search( ).
-        client->view_model_update( ).
+        mo_client->message_toast_display( `Search Entries` ).
+        set_data( ).
+        set_search( ).
+        mo_client->view_model_update( ).
       WHEN `SORT`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( `Event SORT` ).
+        DATA(lt_arg) = mo_client->get( )-t_event_arg.
+        mo_client->message_toast_display( `Event SORT` ).
       WHEN `FILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event FILTER` ).
+        lt_arg = mo_client->get( )-t_event_arg.
+        mo_client->message_toast_display( `Event FILTER` ).
       WHEN `SELKZ`.
-        client->message_toast_display( |`Event SELKZ` { lv_selkz } | ).
+        mo_client->message_toast_display( |`Event SELKZ` { lv_selkz } | ).
         set_selkz( lv_selkz ).
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `CUSTOMFILTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( `Event CUSTOMFILTER` ).
+        lt_arg = mo_client->get( )-t_event_arg.
+        mo_client->message_toast_display( `Event CUSTOMFILTER` ).
       WHEN `ROWEDIT`.
-        lt_arg = client->get( )-t_event_arg.
+        lt_arg = mo_client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
         IF sy-subrc = 0.
-          client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
+          mo_client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
         ENDIF.
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
-        lt_arg = client->get( )-t_event_arg.
+        lt_arg = mo_client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
+          mo_client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
         ENDIF.
       WHEN `ROW_ACTION_ITEM_EDIT`.
-        lt_arg = client->get( )-t_event_arg.
+        lt_arg = mo_client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
-          client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
+          mo_client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
         ENDIF.
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mt_mapping = VALUE #(
       (   n = `EQ`     v = `={LOW}` )
@@ -129,56 +129,56 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       (   n = `NE`     v = `!(<leer>)` )
       (   n = `<leer>` v = `<leer>` ) ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page1) = view->page( id = `page_main`
+    DATA(lo_page1) = lo_view->page( id = `page_main`
             title                = `abap2UI5 - sap.ui.table.Table Features`
-            navbuttonpress       = client->_event_nav_app_leave( )
-            shownavbutton        = client->check_app_prev_stack( )
+            navbuttonpress       = mo_client->_event_nav_app_leave( )
+            shownavbutton        = mo_client->check_app_prev_stack( )
             class                = `sapUiContentPadding` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
+    DATA(lo_page) = lo_page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = `f` )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( ns = `f` ).
+    DATA(lo_header_title) = lo_page->title( ns = `f` )->get( )->dynamic_page_title( ).
+    lo_header_title->heading( ns = `f` )->hbox( )->title( `Search Field` ).
+    lo_header_title->expanded_content( `f` ).
+    lo_header_title->snapped_content( ns = `f` ).
 
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+    DATA(lo_box) = lo_page->header( )->dynamic_page_header( pinnable = abap_true
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
     lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind_edit( mv_search_value )
-         search = client->_event( `BUTTON_SEARCH` )
-         change = client->_event( `BUTTON_SEARCH` )
+         value  = mo_client->_bind_edit( mv_search_value )
+         search = mo_client->_event( `BUTTON_SEARCH` )
+         change = mo_client->_event( `BUTTON_SEARCH` )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text  = `Go`
-        press = client->_event( `BUTTON_START` )
+        press = mo_client->_event( `BUTTON_START` )
         type  = `Emphasized` ).
 
-    DATA(cont) = page->content( ns = `f` ).
+    DATA(lo_cont) = lo_page->content( ns = `f` ).
 
-    DATA(tab) = cont->ui_table( rows               = client->_bind( mt_table )
+    DATA(lo_tab) = lo_cont->ui_table( rows               = mo_client->_bind( mt_table )
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `2`
                                 enablegrouping     = abap_false
                                 fixedcolumncount   = `1`
                                 selectionmode      = `None`
-                                sort               = client->_event( `SORT` )
-                                filter             = client->_event( `FILTER` )
-                                customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = `Products` ).
-    DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( width = `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
+                                sort               = mo_client->_event( `SORT` )
+                                filter             = mo_client->_event( `FILTER` )
+                                customfilter       = mo_client->_event( `CUSTOMFILTER` ) ).
+    lo_tab->ui_extension( )->overflow_toolbar( )->title( text = `Products` ).
+    DATA(lo_columns) = lo_tab->ui_columns( ).
+    lo_columns->ui_column( width = `4rem` )->checkbox( selected = mo_client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
-                                                       select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}` ).
+                                                       select   = mo_client->_event( `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}` ).
     lo_columns->ui_column( width                         = `5rem`
                            sortproperty                  = `ROW_ID`
                                           filterproperty = `ROW_ID` )->text( text = `Index` )->ui_template( )->text( text = `{ROW_ID}` ).
@@ -215,15 +215,15 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
                                                                                                          currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
       )->ui_row_action_item( type = `Navigation`
-                           press  = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+                           press  = mo_client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
                           )->get_parent( )->ui_row_action_item( icon  = `sap-icon://edit`
                                                                 text  = `Edit`
-                                                                press = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+                                                                press = mo_client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
@@ -234,7 +234,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

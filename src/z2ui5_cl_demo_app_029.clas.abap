@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
 
     METHODS render_tab_radial.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -18,80 +18,80 @@ CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
 
   METHOD render_tab_radial.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(container) = view->shell(
+    DATA(lo_container) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Visualization`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( )
         )->tab_container( ).
 
-    DATA(grid) = container->tab(
+    DATA(lo_grid) = lo_container->tab(
             text     = `Radial Chart`
-            selected = client->_bind( mv_tab_radial_active )
+            selected = mo_client->_bind( mv_tab_radial_active )
         )->grid( `XL12 L12 M12 S12` ).
 
-    grid->link(
+    lo_grid->link(
         text   = `Go to the SAP Demos for Radial Charts here...`
         target = `_blank`
         href   = `https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.RadialMicroChart/sample/sap.suite.ui.microchart.sample.RadialMicroChart` ).
 
-    grid->vertical_layout(
+    lo_grid->vertical_layout(
         )->horizontal_layout(
             )->radial_micro_chart(
                 size       = `M`
                 percentage = `45`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
             )->radial_micro_chart(
                 size       = `S`
                 percentage = `45`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
                 size       = `M`
                 percentage = `99.9`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Good`
             )->radial_micro_chart(
                 size       = `S`
                 percentage = `99.9`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Good`
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
                 size       = `M`
                 percentage = `0`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Error`
             )->radial_micro_chart(
                 size       = `S`
                 percentage = `0`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Error`
         )->get_parent(
         )->horizontal_layout(
             )->radial_micro_chart(
                 size       = `M`
                 percentage = `0.1`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Critical`
             )->radial_micro_chart(
                 size       = `S`
                 percentage = `0.1`
-                press      = client->_event( `RADIAL_PRESS` )
+                press      = mo_client->_event( `RADIAL_PRESS` )
                 valuecolor = `Critical` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       render_tab_radial( ).
     ENDIF.

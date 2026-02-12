@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_259 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,38 +24,38 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(lo_page_01) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Button`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page_01->header_content(
+    lo_page_01->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page_01->header_content(
+    lo_page_01->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Button/sample/sap.m.sample.Button` ).
 
-    DATA(page_02) = page_01->page(
+    DATA(lo_page_02) = lo_page_01->page(
                               title = `Page`
                               class = `sapUiContentPadding`
                               )->custom_header(
                                   )->toolbar(
                                       )->button( type  = `Back`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->toolbar_spacer(
                                       )->title( text  = `Title`
                                                 level = `H2`
                                       )->toolbar_spacer(
                                       )->button( icon           = `sap-icon://edit`
                                                  type           = `Transparent`
-                                                 press          = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press          = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  arialabelledby = `editButtonLabel`
                                   )->get_parent(
       )->get_parent(
@@ -63,13 +63,13 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                                   )->toolbar(
                                       )->toolbar_spacer(
                                       )->button( text  = `Default`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( type  = `Reject`
                                                  text  = `Reject`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( icon           = `sap-icon://action`
                                                  type           = `Transparent`
-                                                 press          = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press          = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  arialabelledby = `actionButtonLabel`
                                       )->toolbar_spacer(
                                   )->get_parent(
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                               )->content(
                                   )->hbox(
                                       )->button( text            = `Default`
-                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `defaultButtonDescription genericButtonDescription`)->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                                       )->get_parent(
                                       )->button( type            = `Accept`
                                                  text            = `Accept`
-                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `acceptButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
@@ -93,14 +93,14 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                                       )->get_parent(
                                       )->button( type            = `Reject`
                                                  text            = `Reject`
-                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `rejectButtonDescription genericButtonDescription` )->get(
                                           )->layout_data(
                                               )->flex_item_data( growfactor = `1`
                                           )->get_parent(
                                       )->get_parent(
                                       )->button( text            = `Coming Soon`
-                                                 press           = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press           = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                                  ariadescribedby = `comingSoonButtonDescription genericButtonDescription`
                                                  enabled         = abap_false )->get(
                                           )->layout_data(
@@ -136,50 +136,50 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                       )->button( type  = `Emphasized`
                                                  text  = `Emphasized`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( text  = `Default`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->button( icon  = `sap-icon://action`
                                                  type  = `Transparent`
-                                                 press = client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) ) )->get_parent(
+                                                 press = mo_client->_event( val = `ON_PRESS` t_arg = VALUE #( ( `${$source>/id}` ) ) ) )->get_parent(
                                   )->get_parent(
                               )->get_parent( ).
 
-    client->view_display( page_02->stringify( ) ).
+    mo_client->view_display( lo_page_02->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
-        z2ui5_display_popover( `button_hint_id` ).
+        display_popover( `button_hint_id` ).
       WHEN `ON_PRESS`.
-        client->message_toast_display( client->get_event_arg( 1 ) && ` Pressed` ).
+        mo_client->message_toast_display( mo_client->get_event_arg( 1 ) && ` Pressed` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Buttons trigger user actions and come in a variety of shapes and colors. Placing a button on a page header or footer changes its appearance.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

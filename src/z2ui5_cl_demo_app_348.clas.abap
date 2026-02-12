@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_348 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -34,17 +34,17 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
                                                       vis_cols = 5 ).
 
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF client->check_on_event( `GO` ).
-      DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
-      client->nav_app_call( app ).
+      DATA(lo_app) = z2ui5_cl_demo_app_336=>factory( ).
+      client->nav_app_call( lo_app ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -64,22 +64,22 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     client->view_model_update( ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `CALL Next App`
+    lo_page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
                   type  = `Success` ).
 
     xml_form( i_data   = REF #( ms_struc )
-              i_page   = page
+              i_page   = lo_page
               i_client = client ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( lo_page->stringify( ) ).
   ENDMETHOD.
 
   METHOD get_data.
@@ -95,16 +95,16 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
   METHOD xml_form.
 
-    DATA(form) = i_page->simple_form( editable        = abap_true
+    DATA(lo_form) = i_page->simple_form( editable        = abap_true
                                       layout          = `ResponsiveGridLayout`
                                       adjustlabelspan = abap_true
                                  )->content( ns = `form` ).
 
-    DATA(index) = 0.
+    DATA(lv_index) = 0.
 
     LOOP AT mo_layout_obj->ms_data-t_layout REFERENCE INTO DATA(layout).
 
-      index = index + 1.
+      lv_index = lv_index + 1.
 
       FIELD-SYMBOLS <value> TYPE any.
       FIELD-SYMBOLS <data> TYPE any.
@@ -114,13 +114,13 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
         RETURN.
       ENDIF.
 
-      DATA(line) = form->label( wrapping = abap_false
+      DATA(lo_line) = lo_form->label( wrapping = abap_false
                                 text     = layout->name ).
 
-      line->input( value   = i_client->_bind( <value> )
+      lo_line->input( value   = i_client->_bind( <value> )
                    visible = i_client->_bind( val       = layout->visible
                                               tab       = mo_layout_obj->ms_data-t_layout
-                                              tab_index = index )
+                                              tab_index = lv_index )
                    enabled = abap_false ).
     ENDLOOP.
   ENDMETHOD.

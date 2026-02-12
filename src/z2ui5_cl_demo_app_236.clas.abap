@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: TextArea - Growing`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vertical_layout(
+    DATA(lo_layout) = lo_page->vertical_layout(
                           class = `sapUiContentPadding`
                           width = `100%`
                           )->content( ns = `layout`
@@ -77,8 +77,7 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
                                   showicon = abap_true
                                   text     = `Growing TextArea in a SimpleForm`
                                   class    = `sapUiMediumMarginTop`
-                                  )->simple_form( "ns = `form`
-                                      editable = `true`
+                                  )->simple_form( editable = `true`
                                       layout   = `ResponsiveGridLayout`
                                       )->label( text = `Comment`
                               )->text_area( value                                                                                     = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy ` &&
@@ -97,7 +96,7 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
                                                     `nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.`  growing = abap_true
                                             width                                                                                     = `100%` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

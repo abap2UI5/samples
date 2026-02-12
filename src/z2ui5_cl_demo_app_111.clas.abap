@@ -24,12 +24,12 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
     DATA mv_quantity TYPE string .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_search.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS on_event.
+    METHODS set_search.
+    METHODS set_data.
+    METHODS view_display.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -41,31 +41,31 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
+      mo_client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      z2ui5_view_display( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 
@@ -99,31 +99,31 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
+    mo_client->view_display( z2ui5_cl_xml_view=>factory(
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
       )->_generic( ns   = `html`
                    name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).
 
-    DATA(page1) = view->page( id = `page_main`
+    DATA(lo_page1) = lo_view->page( id = `page_main`
             title                = `abap2UI5 - List Report Features`
-            navbuttonpress       = client->_event_nav_app_leave( )
-            shownavbutton        = client->check_app_prev_stack( ) ).
+            navbuttonpress       = mo_client->_event_nav_app_leave( )
+            shownavbutton        = mo_client->check_app_prev_stack( ) ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
+    DATA(lo_page) = lo_page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = `f` )->smart_variant_management( id                     = `svm`
+    DATA(lo_header_title) = lo_page->title( ns = `f` )->get( )->dynamic_page_title( ).
+    lo_header_title->heading( ns = `f` )->smart_variant_management( id                     = `svm`
                                                                  showexecuteonselection = abap_true ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( ns = `f` ).
+    lo_header_title->expanded_content( `f` ).
+    lo_header_title->snapped_content( ns = `f` ).
 
-    DATA(lo_fb) = page->header( )->dynamic_page_header( pinnable = abap_true ).
+    DATA(lo_fb) = lo_page->header( )->dynamic_page_header( pinnable = abap_true ).
 
     lo_fb->filter_bar( id             = `fbar`
                        persistencykey = `myPersKey`
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value           = client->_bind_edit( mv_product )
+            )->input( value           = mo_client->_bind_edit( mv_product )
                       suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
                       change          = `sap.z2ui5.onChange();`
@@ -146,21 +146,21 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_date )
+            )->input( value  = mo_client->_bind_edit( mv_create_date )
                       change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `CREATE_BY`
                               label              = `Create By`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_by )
+            )->input( value  = mo_client->_bind_edit( mv_create_by )
                       change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `STORAGE_LOCATION`
                               label              = `Storage Location`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_storage_location )
+            )->input( value  = mo_client->_bind_edit( mv_storage_location )
                       change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `QUANTITY`
                               label              = `Quantity`
@@ -169,31 +169,31 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
           )->fb_control(
             )->input( suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
-                      value           = client->_bind_edit( mv_quantity )
+                      value           = mo_client->_bind_edit( mv_quantity )
                       change          = `sap.z2ui5.onChange($event);`
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 
-    DATA(cont) = page->content( ns = `f` ).
+    DATA(lo_cont) = lo_page->content( ns = `f` ).
 
-    DATA(tab) = cont->table( id    = `table1`
-                             items = client->_bind_edit( mt_table ) ).
+    DATA(lo_tab) = lo_cont->table( id    = `table1`
+                             items = mo_client->_bind_edit( mt_table ) ).
 
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD get_custom_js.

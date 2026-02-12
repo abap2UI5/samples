@@ -11,36 +11,36 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       END OF t_data .
     TYPES ty_t_data TYPE STANDARD TABLE OF t_data WITH EMPTY KEY.
 
-    DATA gt_data TYPE ty_t_data.
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mt_data TYPE ty_t_data.
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
-    METHODS ui5_on_init .
-    METHODS ui5_on_event .
-    METHODS ui5_view_main_display .
+    METHODS on_init .
+    METHODS on_event .
+    METHODS view_main_display .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
-  METHOD ui5_on_event.
+  METHOD on_event.
 
     TRY.
-        DATA(ok_code) = client->get( )-event.
-        CASE ok_code.
+        DATA(lo_ok_code) = mo_client->get( )-event.
+        CASE lo_ok_code.
           WHEN `ROW_ACTION_ITEM_ADD`.
-            client->message_toast_display( `Something` ).
-            client->view_model_update( ).
+            mo_client->message_toast_display( `Something` ).
+            mo_client->view_model_update( ).
         ENDCASE.
       CATCH cx_root INTO DATA(x).
-        client->message_box_display( text = x->get_text( )
+        mo_client->message_box_display( text = x->get_text( )
                                      type = `error` ).
     ENDTRY.
   ENDMETHOD.
 
-  METHOD ui5_on_init.
+  METHOD on_init.
 
-    gt_data = VALUE ty_t_data(
+    mt_data = VALUE ty_t_data(
       ( field1 = `21` field2 = `T1` field3 = `TEXT1` )
       ( field1 = `22` field2 = `T1` field3 = `TEXT1` )
       ( field1 = `23` field2 = `T2` field3 = `TEXT1` )
@@ -48,27 +48,27 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
       ( field1 = `25` field2 = `T3` field3 = `TEXT2` ) ).
   ENDMETHOD.
 
-  METHOD ui5_view_main_display.
+  METHOD view_main_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page1) = view->page( id = `page_main`
+    DATA(lo_page1) = lo_view->page( id = `page_main`
             title                = `Table Filters Reset after view Update`
             class                = `sapUiContentPadding` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
+    DATA(lo_page) = lo_page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
-    page1->_z2ui5( )->uitableext( tableid = `Table1` ).
+    lo_page1->_z2ui5( )->uitableext( tableid = `Table1` ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = `f` )->hbox( )->title( `Table` ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( ns = `f` ).
+    DATA(lo_header_title) = lo_page->title( ns = `f` )->get( )->dynamic_page_title( ).
+    lo_header_title->heading( ns = `f` )->hbox( )->title( `Table` ).
+    lo_header_title->expanded_content( `f` ).
+    lo_header_title->snapped_content( ns = `f` ).
 
-    DATA(cont) = page->content( ns = `f` ).
+    DATA(lo_cont) = lo_page->content( ns = `f` ).
 
-    DATA(tab) = cont->vbox(
-                  )->ui_table( rows                = client->_bind( gt_data )
+    DATA(lo_tab) = lo_cont->vbox(
+                  )->ui_table( rows                = mo_client->_bind( mt_data )
                                id                  = `Table1`
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
@@ -100,20 +100,20 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                               )->ui_row_action_template( )->ui_row_action(
                               )->ui_row_action_item( icon = `sap-icon://add`
                                                      text = `Add`
-                                    press                 = client->_event( val = `ROW_ACTION_ITEM_ADD` t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
+                                    press                 = mo_client->_event( val = `ROW_ACTION_ITEM_ADD` t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      ui5_on_init( ).
+    IF mo_client->check_on_init( ).
+      on_init( ).
     ENDIF.
 
-    ui5_view_main_display( ).
-    ui5_on_event( ).
+    view_main_display( ).
+    on_event( ).
   ENDMETHOD.
 ENDCLASS.

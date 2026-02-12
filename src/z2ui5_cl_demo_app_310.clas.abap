@@ -4,8 +4,8 @@ CLASS z2ui5_cl_demo_app_310 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA check_strip_active TYPE abap_bool.
-    DATA strip_type TYPE string.
+    DATA mv_check_strip_active TYPE abap_bool.
+    DATA mv_strip_type TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -42,21 +42,21 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                                        animationtimingfunction = `ease-in`
                                        class                   = `my-style` ).
       WHEN `BUTTON_MESSAGE_STRIP_INFO`.
-        check_strip_active = abap_true.
-        strip_type = `Information`.
+        mv_check_strip_active = abap_true.
+        mv_strip_type = `Information`.
       WHEN `BUTTON_MESSAGE_STRIP_ERROR`.
-        check_strip_active = abap_true.
-        strip_type = `Error`.
+        mv_check_strip_active = abap_true.
+        mv_strip_type = `Error`.
       WHEN `BUTTON_MESSAGE_STRIP_SUCCESS`.
-        check_strip_active = abap_true.
-        strip_type = `Success`.
+        mv_check_strip_active = abap_true.
+        mv_strip_type = `Success`.
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( ns   = `html`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->_generic( ns   = `html`
                     name = `style` )->_cc_plain_xml( `.my-style{ background: black !important; opacity: 0.6; color: white; }` ).
 
-    DATA(page) = view->shell(
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title           = `abap2UI5 - Messages`
             navbuttonpress  = client->_event_nav_app_leave( )
@@ -65,12 +65,12 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                 )->link(
             )->get_parent( ).
 
-    IF check_strip_active = abap_true.
-      page->message_strip( text = `This is a Message Strip`
-                           type = strip_type ).
+    IF mv_check_strip_active = abap_true.
+      lo_page->message_strip( text = `This is a Message Strip`
+                           type = mv_strip_type ).
     ENDIF.
 
-    page->grid( `L6 M12 S12`
+    lo_page->grid( `L6 M12 S12`
         )->content( `layout`
             )->simple_form( `Message Box` )->content( `form`
                 )->button(
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                     text  = `Success`
                     press = client->_event( `BUTTON_MESSAGE_BOX_SUCCESS` ) ).
 
-    page->grid( `L6 M12 S12`
+    lo_page->grid( `L6 M12 S12`
         )->content( `layout`
             )->simple_form( `Message Strip` )->content( `form`
                 )->button(
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                     text  = `information`
                     press = client->_event( `BUTTON_MESSAGE_STRIP_INFO` ) ).
 
-    page->grid( `L6 M12 S12`
+    lo_page->grid( `L6 M12 S12`
         )->content( `layout`
             )->simple_form( `Display` )->content( `form`
                 )->button(
@@ -115,6 +115,6 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                     text  = `Message Toast Customized`
                     press = client->_event( `BUTTON_MESSAGE_TOAST2` ) ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

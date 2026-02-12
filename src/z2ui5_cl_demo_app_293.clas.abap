@@ -5,15 +5,15 @@ CLASS z2ui5_cl_demo_app_293 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+        mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+        mo_client TYPE REF TO z2ui5_if_client.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
 
@@ -24,32 +24,32 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `abap2UI5 - Sample: Link`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+           press     = mo_client->_event( `CLICK_HINT_ICON` ) ).
 
-    page->header_content(
+    lo_page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Link/sample/sap.m.sample.Link` ).
 
-    page->vertical_layout(
+    lo_page->vertical_layout(
             class = `sapUiContentPadding`
             width = `100%`
             )->content( ns = `layout`
                 )->link(
                     text  = `Open message box`
-                    press = client->_event( `handleLinkPress` )
+                    press = mo_client->_event( `handleLinkPress` )
                 )->link(
                     text    = `Disabled link`
                     enabled = abap_false
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
                     href   = `http://www.sap.com`
                 )->get_parent( ).
 
-    page->vertical_layout(
+    lo_page->vertical_layout(
            class = `sapUiContentPadding`
            width = `100%`
            )->content( ns = `layout`
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
                    )->link(
                        text    = `Show more information`
                        endicon = `sap-icon://inspect`
-                       press   = client->_event( `handleLinkPress` )
+                       press   = mo_client->_event( `handleLinkPress` )
                    )->link(
                        text    = `Disabled link with icon`
                        icon    = `sap-icon://cart`
@@ -81,42 +81,42 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
                        href = `http://www.sap.com`
            )->get_parent( ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
-        z2ui5_display_popover( `button_hint_id` ).
+        display_popover( `button_hint_id` ).
       WHEN `handleLinkPress`.
-        client->message_box_display( `Link was clicked!` ).
+        mo_client->message_box_display( `Link was clicked!` ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = `Bottom`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
                                   description = `Here are some links. Typically links are used in user interfaces to trigger navigation to related content inside or outside of the current application.` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      display_view( client ).
+    IF mo_client->check_on_init( ).
+      display_view( mo_client ).
 
     ENDIF.
 
-    on_event( client ).
+    on_event( mo_client ).
   ENDMETHOD.
 ENDCLASS.

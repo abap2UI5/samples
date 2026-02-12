@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     TYPES: BEGIN OF ty_s_key_value,
              fname   TYPE string,
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
 
     DATA mt_out TYPE ty_t_out.
 
-    METHODS ui5_display.
+    METHODS display.
 
   PROTECTED SECTION.
     METHODS get_data.
@@ -44,23 +44,23 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
-  METHOD ui5_display.
+  METHOD display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
         )->page( title          = `xxx`
-                 navbuttonpress = client->_event_nav_app_leave( )
-                 shownavbutton  = client->check_app_prev_stack( )
+                 navbuttonpress = mo_client->_event_nav_app_leave( )
+                 shownavbutton  = mo_client->check_app_prev_stack( )
             )->header_content( ).
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
     xml_parse( ).
-    me->client = client.
+    me->mo_client = mo_client.
     get_data( ).
-    ui5_display( ).
+    display( ).
     xml_stringify( ).
   ENDMETHOD.
 
@@ -75,9 +75,9 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     mt_out = VALUE #( ( aa = `aa` bb = `bb` cc = `cc` )
                       ( aa = `a1` bb = `b1` cc = `c1` ) ).
 
-    DATA(kopf) = REF #( mt_out ).
+    DATA(lv_kopf) = REF #( mt_out ).
 
-    LOOP AT kopf->* ASSIGNING <fs_s_head>.
+    LOOP AT lv_kopf->* ASSIGNING <fs_s_head>.
 
       DATA(lo_new_data) = NEW z2ui5_cl_demo_app_193( ).
       INSERT lo_new_data INTO TABLE mt_new_data2.

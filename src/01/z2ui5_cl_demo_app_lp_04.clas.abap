@@ -4,11 +4,11 @@ CLASS z2ui5_cl_demo_app_lp_04 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA product_url  TYPE string.
-    DATA quantity TYPE string.
+    DATA mv_product  TYPE string.
+    DATA mv_product_url  TYPE string.
+    DATA mv_quantity TYPE string.
 
-    DATA check_launchpad_active TYPE abap_bool.
+    DATA mv_check_launchpad_active TYPE abap_bool.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -18,22 +18,22 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    product_url = z2ui5_cl_util=>url_param_get(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    mv_product_url = z2ui5_cl_util=>url_param_get(
                     val = `product`
                     url = client->get( )-s_config-search ).
-    check_launchpad_active = client->get( )-check_launchpad_active.
+    mv_check_launchpad_active = client->get( )-check_launchpad_active.
 
     DATA(lt_params) = client->get( )-t_comp_params.
     TRY.
-        product = lt_params[ n = `PRODUCT` ]-v.
+        mv_product = lt_params[ n = `PRODUCT` ]-v.
       CATCH cx_root.
     ENDTRY.
     IF client->check_on_init( ).
 
-      quantity = `500`.
+      mv_quantity = `500`.
 
-      client->view_display( view->shell(
+      client->view_display( lo_view->shell(
             )->page(
                     showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = `abap2UI5 -  Cross App Navigation App 128`
@@ -50,9 +50,9 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `product nav param`
-                        )->input( client->_bind_edit( product )
+                        )->input( client->_bind_edit( mv_product )
                         )->label( `CHECK_LAUNCHPAD_ACTIVE`
-                        )->input( check_launchpad_active
+                        )->input( mv_check_launchpad_active
                         )->button( press = client->_event( )
                         )->button( text  = `BACK`
                                    press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )

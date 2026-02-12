@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_055 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     METHODS refresh_data.
 
@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_055 IMPLEMENTATION.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
         descr = `this is a description` checkbox = abap_true ).
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
   ENDMETHOD.
 

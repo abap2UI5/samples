@@ -37,36 +37,36 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mo_client            TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_set_data.
+    METHODS display_view.
+    METHODS on_event.
+    METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
-  METHOD z2ui5_display_view.
+  METHOD display_view.
 
     lv_s_date = `2023-04-22T08:15:00`.
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
+    lo_view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
-    DATA(page) = view->page( id = `page_main`
+    DATA(lo_page) = lo_view->page( id = `page_main`
             title               = `abap2UI5 - Planning Calendar`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( )
+            navbuttonpress      = mo_client->_event_nav_app_leave( )
+            shownavbutton       = mo_client->check_app_prev_stack( )
             class               = `sapUiContentPadding` ).
 
-    DATA(lo_vbox) = page->vbox( class =`sapUiSmallMargin` ).
+    DATA(lo_vbox) = lo_page->vbox( class =`sapUiSmallMargin` ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
-                                                          startdate         = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && `) }`
-                                                          rows              = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
-                                                          appointmentselect = client->_event( val = `AppSelected` t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
+                                                          startdate         = `{= Helper.DateCreateObject($` && mo_client->_bind( lv_s_date ) && `) }`
+                                                          rows              = `{path: '` && mo_client->_bind( val = mt_people path = abap_true ) && `'}`
+                                                          appointmentselect = mo_client->_event( val = `AppSelected` t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers   = abap_true ).
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
@@ -93,34 +93,34 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
                                                                       text      = `{INFO}`
                                                                       type      = `{TYPE}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = `DISPLAY_VIEW`.
-      z2ui5_display_view( ).
+    IF mo_client->get( )-check_on_navigated = abap_true OR mo_client->get( )-event = `DISPLAY_VIEW`.
+      display_view( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    IF client->check_on_event( `AppSelected` ).
-      DATA(ls_client) = client->get( ).
-      client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
+    IF mo_client->check_on_event( `AppSelected` ).
+      DATA(ls_client) = mo_client->get( ).
+      mo_client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_people = VALUE #(
       ( name = `Olaf` role = `Team Member` pic = `sap-icon://employee`

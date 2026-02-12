@@ -11,10 +11,10 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
       END OF screen .
   PROTECTED SECTION.
 
-    METHODS z2ui5_on_rendering
+    METHODS on_rendering
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
+    METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
@@ -26,13 +26,13 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      z2ui5_on_rendering( client ).
+      on_rendering( client ).
     ENDIF.
 
-    z2ui5_on_event( client ).
+    on_event( client ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `BUTTON_SEND`.
@@ -43,20 +43,20 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_rendering.
+  METHOD on_rendering.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title           = `abap2UI5 - Side Panel Example`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    page->header_content(
+    lo_page->header_content(
          )->link(
          )->get_parent( ).
 
-    DATA(side_panel) = page->side_panel( sidepanelposition = `Left`
+    DATA(lo_side_panel) = lo_page->side_panel( sidepanelposition = `Left`
       )->main_content(
         )->button( text = `Button 1`
         )->button( text = `Button 2`
@@ -92,6 +92,6 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
           )->side_panel_item( icon = `sap-icon://flight`
                               text = `Fly abroad` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

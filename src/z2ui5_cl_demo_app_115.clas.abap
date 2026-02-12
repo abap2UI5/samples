@@ -87,13 +87,13 @@ CLASS z2ui5_cl_demo_app_115 IMPLEMENTATION.
 *
 *    DATA(lv_html) = cl_demo_output=>get( carriers ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
            )->page(
            )->button( text = `test`
           )->_cc_plain_xml( lv_style
           )->html( lv_html ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view->shell(
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title           = `Main View`
                 id              = `test`
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                 )->link(
       )->get_parent( ).
 
-    page->content(
+    lo_page->content(
       )->button( text  = `Rerender all`
                  press = client->_event( `ALL` )
       )->button( text  = `Rerender Main without nest`

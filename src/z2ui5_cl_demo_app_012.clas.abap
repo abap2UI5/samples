@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_012 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     DATA mv_check_popup TYPE abap_bool.
-    METHODS ui5_popup_decide.
-    METHODS ui5_popup_info_frontend_close.
-    METHODS ui5_view_display.
+    METHODS popup_decide.
+    METHODS popup_info_frontend_close.
+    METHODS view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -17,119 +17,119 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
-  METHOD ui5_popup_decide.
+  METHOD popup_decide.
 
-    DATA(popup)  = z2ui5_cl_xml_view=>factory_popup( ).
-    popup->dialog( `Popup - Decide`
+    DATA(lo_popup)  = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_popup->dialog( `Popup - Decide`
             )->vbox(
                 )->text( `this is a popup to decide, you have to make a decision now...`
             )->get_parent(
             )->buttons(
                 )->button(
                     text  = `Cancel`
-                    press = client->_event( `POPUP_DECIDE_CANCEL` )
+                    press = mo_client->_event( `POPUP_DECIDE_CANCEL` )
                 )->button(
                     text  = `Continue`
-                    press = client->_event( `POPUP_DECIDE_CONTINUE` )
+                    press = mo_client->_event( `POPUP_DECIDE_CONTINUE` )
                     type  = `Emphasized` ).
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_popup_info_frontend_close.
+  METHOD popup_info_frontend_close.
 
-    DATA(popup)  = z2ui5_cl_xml_view=>factory_popup( ).
-    popup->dialog( `Popup - Info`
+    DATA(lo_popup)  = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_popup->dialog( `Popup - Info`
             )->vbox(
                 )->text( `this is an information, press close to go back to the main view without a server roundtrip`
             )->get_parent(
                 )->buttons(
                 )->button(
                     text  = `close`
-                    press = client->_event_client( client->cs_event-popup_close )
+                    press = mo_client->_event_client( mo_client->cs_event-popup_close )
                     type  = `Emphasized` ).
 
-    client->popup_display( popup->stringify( ) ).
+    mo_client->popup_display( lo_popup->stringify( ) ).
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = lo_main->page(
+    DATA(lo_page) = lo_main->page(
             title          = `abap2UI5 - Popups`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+            navbuttonpress = mo_client->_event_nav_app_leave( )
+            shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
+    DATA(lo_grid) = lo_page->grid( `L7 M12 S12` )->content( `layout`
         )->simple_form( `Popup in same App` )->content( `form`
             )->label( `Demo`
             )->button(
                 text  = `popup rendering, no background rendering`
-                press = client->_event( `BUTTON_POPUP_01` )
+                press = mo_client->_event( `BUTTON_POPUP_01` )
             )->label( `Demo`
             )->button(
                 text  = `popup rendering, background destroyed and rerendering`
-                press = client->_event( `BUTTON_POPUP_02` )
+                press = mo_client->_event( `BUTTON_POPUP_02` )
             )->label( `Demo`
             )->button(
                 text  = `popup, background unchanged (default) - close (no roundtrip)`
-                press = client->_event( `BUTTON_POPUP_03` )
+                press = mo_client->_event( `BUTTON_POPUP_03` )
             )->label( `Demo`
             )->button(
                 text  = `popup, background unchanged (default) - close with server`
-                press = client->_event( `BUTTON_POPUP_04` )
+                press = mo_client->_event( `BUTTON_POPUP_04` )
         )->get_parent( )->get_parent( ).
 
-    grid->simple_form( `Popup in new App` )->content( `form`
+    lo_grid->simple_form( `Popup in new App` )->content( `form`
         )->label( `Demo`
         )->button(
             text  = `popup rendering, no background`
-            press = client->_event( `BUTTON_POPUP_05` )
+            press = mo_client->_event( `BUTTON_POPUP_05` )
         )->label( `Demo`
         )->button(
             text  = `popup rendering, hold previous view`
-            press = client->_event( `BUTTON_POPUP_06` ) ).
+            press = mo_client->_event( `BUTTON_POPUP_06` ) ).
 
-    client->view_display( lo_main->stringify( ) ).
+    mo_client->view_display( lo_main->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->get( )-check_on_navigated = abap_true.
-      ui5_view_display( ).
+    IF mo_client->get( )-check_on_navigated = abap_true.
+      view_display( ).
     ENDIF.
 
     IF mv_check_popup = abap_true.
       mv_check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_demo_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
-      client->message_toast_display( app->mv_event && ` pressed` ).
+      DATA(lo_app) = CAST z2ui5_cl_demo_app_020( mo_client->get_app( mo_client->get( )-s_draft-id_prev_app ) ).
+      mo_client->message_toast_display( lo_app->mv_event && ` pressed` ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_POPUP_01`.
-        ui5_popup_decide( ).
-        client->view_destroy( ).
+        popup_decide( ).
+        mo_client->view_destroy( ).
       WHEN `POPUP_DECIDE_CONTINUE`.
-        client->popup_destroy( ).
-        ui5_view_display( ).
-        client->message_toast_display( `continue pressed` ).
+        mo_client->popup_destroy( ).
+        view_display( ).
+        mo_client->message_toast_display( `continue pressed` ).
       WHEN `POPUP_DECIDE_CANCEL`.
-        client->popup_destroy( ).
-        ui5_view_display( ).
-        client->message_toast_display( `cancel pressed` ).
+        mo_client->popup_destroy( ).
+        view_display( ).
+        mo_client->message_toast_display( `cancel pressed` ).
       WHEN `BUTTON_POPUP_02`.
-        ui5_view_display( ).
-        ui5_popup_decide( ).
+        view_display( ).
+        popup_decide( ).
       WHEN `BUTTON_POPUP_03`.
-        ui5_popup_info_frontend_close( ).
+        popup_info_frontend_close( ).
       WHEN `BUTTON_POPUP_04`.
-        ui5_popup_decide( ).
+        popup_decide( ).
       WHEN `BUTTON_POPUP_05`.
         mv_check_popup = abap_true.
-        client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
+        mo_client->view_destroy( ).
+        mo_client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
           i_text          = `(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back`
           i_cancel_text   = `Cancel `
           i_cancel_event  = `POPUP_DECIDE_CANCEL`
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
           ) ).
       WHEN `BUTTON_POPUP_06`.
         mv_check_popup = abap_true.
-        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
+        mo_client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
           i_text          = `(new app )this is a popup to decide, the text is send from the previous app and the answer will be send back`
           i_cancel_text   = `Cancel`
           i_cancel_event  = `POPUP_DECIDE_CANCEL`

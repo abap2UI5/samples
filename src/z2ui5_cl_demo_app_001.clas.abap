@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA mv_product  TYPE string.
+    DATA mv_quantity TYPE string.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS set_data.
     METHODS display_view.
@@ -22,9 +22,9 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       display_view( ).
       set_data( ).
     ENDIF.
@@ -34,35 +34,35 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    mo_client->view_display( lo_view->shell(
            )->page(
                    title          = `abap2UI5 - First Example`
-                   navbuttonpress = client->_event_nav_app_leave( )
-                   shownavbutton  = client->check_app_prev_stack( )
+                   navbuttonpress = mo_client->_event_nav_app_leave( )
+                   shownavbutton  = mo_client->check_app_prev_stack( )
         )->simple_form( title = `Form Title` editable = abap_true
                    )->content( `form`
                        )->title( `Input`
                        )->label( `quantity`
-                       )->input( client->_bind_edit( quantity )
+                       )->input( mo_client->_bind_edit( mv_quantity )
                        )->label( `product`
-                       )->input( value = product enabled = abap_false
+                       )->input( value = mv_product enabled = abap_false
                        )->button(
                            text  = `post`
-                           press = client->_event( `BUTTON_POST` )
+                           press = mo_client->_event( `BUTTON_POST` )
             )->stringify( ) ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `BUTTON_POST` ).
-      client->message_toast_display( |{ product } { quantity } - send to the server| ).
+    IF mo_client->check_on_event( `BUTTON_POST` ).
+      mo_client->message_toast_display( |{ mv_product } { mv_quantity } - send to the server| ).
     ENDIF.
   ENDMETHOD.
 
   METHOD set_data.
 
-    product  = `products`.
-    quantity = `500`.
+    mv_product  = `products`.
+    mv_quantity = `500`.
   ENDMETHOD.
 ENDCLASS.

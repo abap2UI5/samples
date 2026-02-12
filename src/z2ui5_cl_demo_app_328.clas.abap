@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_328 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     IF client->check_on_init( ).
       get_data( ).
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -41,23 +41,23 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
         LOOP AT <tab> ASSIGNING <line>.
 
-          ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
-          IF <selkz> IS NOT ASSIGNED.
+          ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<lv_selkz>).
+          IF <lv_selkz> IS NOT ASSIGNED.
             CONTINUE.
           ENDIF.
 
-          IF <selkz> = abap_true.
-            DATA(okay) = abap_true.
+          IF <lv_selkz> = abap_true.
+            DATA(lv_okay) = abap_true.
             EXIT.
           ENDIF.
 
         ENDLOOP.
 
-        IF okay = abap_true.
+        IF lv_okay = abap_true.
 
           get_data( ).
           mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
-          ui5_view_display( client ).
+          view_display( client ).
 
           ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
           ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
@@ -74,19 +74,19 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( title          = `RTTI IV`
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = `GO`
+    lo_page->button( text  = `GO`
                   press = client->_event( `GO` )
                   type  = `Success` ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
-    page->table( headertext      = `Table`
+    lo_page->table( headertext      = `Table`
                  mode            = `MultiSelect`
                  items           = client->_bind_edit( <table> )
                  selectionchange = client->_event( `SELECTION_CHANGE` )
@@ -98,29 +98,29 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                       )->cells(
                           )->text( `{ID}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD get_data.
 
-    DATA selkz TYPE abap_bool.
+    DATA lv_selkz TYPE abap_bool.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
+    DATA(lt_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
 
     APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
                               ( name = `SELKZ`
-                                type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
+                                type = CAST #( cl_abap_datadescr=>describe_by_data( lv_selkz ) ) ) ) TO lt_comp.
 
     TRY.
 
-        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
+        DATA(lv_new_struct_desc) = cl_abap_structdescr=>create( lt_comp ).
 
-        DATA(new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+        DATA(lv_new_table_desc) = cl_abap_tabledescr=>create( p_line_type  = lv_new_struct_desc
                                                            p_table_kind = cl_abap_tabledescr=>tablekind_std ).
 
-        CREATE DATA mt_table TYPE HANDLE new_table_desc.
+        CREATE DATA mt_table TYPE HANDLE lv_new_table_desc.
 
         ASSIGN mt_table->* TO <table>.
 

@@ -1,10 +1,10 @@
 CLASS z2ui5_cl_demo_app_350 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA check_initialized TYPE abap_bool.
+    DATA mv_check_initialized TYPE abap_bool.
     DATA: view_id TYPE i.
-    DATA text TYPE string VALUE `call booking mask`.
-    DATA varkey TYPE char120.
+    DATA mv_text TYPE string VALUE `call booking mask`.
+    DATA mv_varkey TYPE char120.
 
     METHODS initialize_view2
       IMPORTING
@@ -23,16 +23,16 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       view_id = 1.
       TRY.
           IF client->check_on_init( ) OR client->check_on_navigated( ).
-            DATA(view) = z2ui5_cl_xml_view=>factory( ).
-            DATA(page) = view->shell( )->page(
+            DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+            DATA(lo_page) = lo_view->shell( )->page(
               title = `Startview` ).
-            page->simple_form(
+            lo_page->simple_form(
                   )->content( `form`
                                )->button(
-                                   text  = client->_bind_edit( text )
+                                   text  = client->_bind_edit( mv_text )
                                    width = `20%`
                                    press = client->_event( `CALL_BOOKING_MASK` ) ).
-            client->view_display( view->stringify( ) ).
+            client->view_display( lo_view->stringify( ) ).
             RETURN.
           ENDIF.
 
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               DATA: lf_key TYPE n LENGTH 4.
               DATA(lr_view2) = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
-              lr_view2->varkey = `001`.
+              lr_view2->mv_varkey = `001`.
               client->nav_app_call( lr_view2 ).
               RETURN.
             WHEN `BACK`.
@@ -56,14 +56,14 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 
     ELSEIF view_id = 2.
       TRY.
-          IF check_initialized = abap_false.
-            check_initialized = abap_true.
+          IF mv_check_initialized = abap_false.
+            mv_check_initialized = abap_true.
 
             DATA(lv_fm) = `ENQUEUE_E_TABLE`.
             CALL FUNCTION lv_fm
               EXPORTING
                 tabname        = `ZTEST`
-                varkey         = varkey
+                varkey            = mv_varkey
               EXCEPTIONS
                 foreign_lock   = 1
                 system_failure = 2
@@ -93,9 +93,9 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               lr_view2 = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
               DATA: lf_new_varkey TYPE n LENGTH 4.
-              lf_new_varkey = varkey+0(4).
+              lf_new_varkey = mv_varkey+0(4).
               lf_new_varkey = lf_new_varkey + 1.
-              lr_view2->varkey = lf_new_varkey+0(4).
+              lr_view2->mv_varkey = lf_new_varkey+0(4).
               client->nav_app_call( lr_view2 ).
               RETURN.
             WHEN `BACK`.
@@ -113,21 +113,21 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 
   METHOD initialize_view2.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell( )->page(
       title          = `Stateful Application with lock`
       navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
-    DATA(vbox) = page->vbox( ).
-    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
-    hbox->title(
+    DATA(lo_vbox) = lo_page->vbox( ).
+    DATA(lo_hbox) = lo_vbox->hbox( alignitems = `Center` ).
+    lo_hbox->title(
       text = `Current Lock Value in Table ZTEST` ).
-    hbox->input(
+    lo_hbox->input(
       editable = abap_false
-      value    = client->_bind_edit( varkey ) ).
-    hbox->button(
+      value    = client->_bind_edit( mv_varkey ) ).
+    lo_hbox->button(
       text  = `Next Lock View`
       press = client->_event( `NEXT_LOCK` ) ).
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

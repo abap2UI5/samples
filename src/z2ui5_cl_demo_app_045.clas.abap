@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_info_filter TYPE string.
     METHODS refresh_data.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
         descr = `this is a description` checkbox = abap_true ).
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT ls_row INTO TABLE mt_tab.
     ENDDO.
   ENDMETHOD.
 
@@ -45,14 +45,14 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
       WHEN `FLTER_INFO`.
         refresh_data( ).
         IF mv_info_filter <> ``.
-          DELETE t_tab WHERE info <> mv_info_filter.
+          DELETE mt_tab WHERE info <> mv_info_filter.
         ENDIF.
       WHEN `BUTTON_POST`.
         client->message_box_display( `button post was pressed` ).
     ENDCASE.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
             title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                 )->link(
       )->get_parent( ).
 
-    page->simple_form( title    = `Form Title`
+    lo_page->simple_form( title    = `Form Title`
                        editable = abap_true
                 )->content( `form`
                     )->title( `Filter`
@@ -71,20 +71,20 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                         text  = `filter`
                         press = client->_event( `FLTER_INFO` ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    DATA(lo_tab) = lo_page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
             growingthreshold    = `20`
             growingscrolltoload = abap_true
-            items               = client->_bind( t_tab )
+            items               = client->_bind( mt_tab )
             sticky              = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
+    lo_tab->header_toolbar(
         )->overflow_toolbar(
             )->toolbar_spacer( ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column(
             )->text( `Color` )->get_parent(
         )->column(
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
          )->column(
             )->text( `Counter` ).
 
-    tab->items( )->column_list_item( )->cells(
+    lo_tab->items( )->column_list_item( )->cells(
        )->text( `{VALUE}`
        )->text( `{INFO}`
        )->text( `{DESCR}`
@@ -104,6 +104,6 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view .
     DATA mv_class_2 TYPE string .
     DATA mv_init TYPE abap_bool .
@@ -22,14 +22,14 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
   METHOD display_view.
 
-    mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
+    mo_view_parent->input( value       = mo_client->_bind_edit( mv_class_2 )
                            placeholder = `Input From Class 2` ).
   ENDMETHOD.
 
   METHOD on_event.
 
-    IF client->check_on_event( `MESSAGE_SUB` ).
-      client->message_box_display( `event sub app` ).
+    IF mo_client->check_on_event( `MESSAGE_SUB` ).
+      mo_client->message_box_display( `event sub app` ).
 
     ENDIF.
   ENDMETHOD.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_init = abap_false.
       mv_init = abap_true.

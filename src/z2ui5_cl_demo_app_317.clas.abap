@@ -119,24 +119,24 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->page( ).
 
-    page->_generic( name = `script`
+    lo_page->_generic( name = `script`
                     ns   = `html`
         )->_cc_plain_xml(
-          |function myFunction() \{ z2ui5.oView.byId(`tree`).expandToLevel(5); \}| ).
+          |function myFunction() \{ z2ui5.oView.byId(`lo_tree`).expandToLevel(5); \}| ).
 
-    DATA(tree) = page->tree( items = client->_bind( mt_tree )
+    DATA(lo_tree) = lo_page->tree( items = client->_bind( mt_tree )
                              id    = `tree` ).
-    tree->items(
+    lo_tree->items(
         )->standard_tree_item( title = `{TEXT}`
         )->get(
           )->custom_data(
               )->core_custom_data( key   = `ID`
                                    value = `{ID}`).
 
-    tree->drag_drop_config( ns = `` )->drag_drop_info(
+    lo_tree->drag_drop_config( ns = `` )->drag_drop_info(
       sourceaggregation = `items`
       targetaggregation = `items`
       dragstart         = `Horizontal`
@@ -148,6 +148,6 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       ) ) ).
 
     client->follow_up_action( `myFunction()` ).
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

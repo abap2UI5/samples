@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
          )->page(
             title          = `Sample: Icon Tab Bar - Text Only`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->icon_tab_bar( id       = `idIconTabBarNoIcons`
+    DATA(lo_layout) = lo_page->icon_tab_bar( id       = `idIconTabBarNoIcons`
                                        expanded = `{device>/isNoPhone}`
                                        class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
                                                   key  = `people`
                                                   )->text( text = `People content goes here ...` ).
 
-    client->view_display( view->stringify( ) ).
+    client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

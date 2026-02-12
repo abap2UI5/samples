@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
     DATA mt_filter TYPE z2ui5_cl_util=>ty_t_filter_multi.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     DATA mv_check_initialized TYPE abap_bool.
     METHODS on_event.
     METHODS view_display.
@@ -32,12 +32,12 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_START`.
         set_data( ).
-        client->view_model_update( ).
+        mo_client->view_model_update( ).
       WHEN `PREVIEW_FILTER`.
-        client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_filter ) ).
+        mo_client->nav_app_call( z2ui5_cl_pop_get_range_m=>factory( mt_filter ) ).
     ENDCASE.
   ENDMETHOD.
 
@@ -60,48 +60,48 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id = `page_main`
+    lo_view = lo_view->shell( )->page( id = `page_main`
              title                  = `abap2UI5 - Select-Options`
-             navbuttonpress         = client->_event_nav_app_leave( )
-             shownavbutton          = client->check_app_prev_stack( ) ).
+             navbuttonpress         = mo_client->_event_nav_app_leave( )
+             shownavbutton          = mo_client->check_app_prev_stack( ) ).
 
-    DATA(vbox) = view->vbox( ).
+    DATA(lo_vbox) = lo_view->vbox( ).
 
-    DATA(tab) = vbox->table(
-        items = client->_bind( mt_table )
+    DATA(lo_tab) = lo_vbox->table(
+        items = mo_client->_bind( mt_table )
            )->header_toolbar(
              )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button( text  = `Filter`
-                            press = client->_event( `PREVIEW_FILTER` )
+                            press = mo_client->_event( `PREVIEW_FILTER` )
                             icon  = `sap-icon://filter`
            )->button( text  = `Go`
-                      press = client->_event( `BUTTON_START` )
+                      press = mo_client->_event( `BUTTON_START` )
                       type  = `Emphasized`
             )->get_parent( )->get_parent( ).
 
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
     IF mv_check_initialized = abap_false.
       mv_check_initialized = abap_true.
@@ -111,20 +111,20 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF mo_client->get( )-check_on_navigated = abap_true.
       TRY.
-          DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range_m( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+          DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range_m( mo_client->get_app( mo_client->get( )-s_draft-id_prev_app ) ).
           IF lo_value_help->result( )-check_confirmed = abap_true.
             mt_filter = lo_value_help->result( )-t_filter.
             set_data( ).
-            client->view_model_update( ).
+            mo_client->view_model_update( ).
           ENDIF.
         CATCH cx_root.
       ENDTRY.
       RETURN.
     ENDIF.
 
-    IF client->get( )-event IS NOT INITIAL.
+    IF mo_client->get( )-event IS NOT INITIAL.
       on_event( ).
     ENDIF.
   ENDMETHOD.

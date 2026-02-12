@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_069 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
     METHODS view_display_app_01.
@@ -41,12 +41,12 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
   METHOD view_display_app_01.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( title = `APP_01` ).
+    DATA(lo_page) = lo_view_nested->page( title = `APP_01` ).
 
-    page->button( text  = `Update this view`
-                  press = client->_event( `UPDATE_DETAIL` ) ).
+    lo_page->button( text  = `Update this view`
+                  press = mo_client->_event( `UPDATE_DETAIL` ) ).
 
-    client->nest_view_display(
+    mo_client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = `addMidColumnPage`
@@ -56,28 +56,28 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
   METHOD view_display_app_02.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( title = `APP_02` ).
+    DATA(lo_page) = lo_view_nested->page( title = `APP_02` ).
 
-    page->button( text  = `Update this view`
-                  press = client->_event( `UPDATE_DETAIL` )
+    lo_page->button( text  = `Update this view`
+                  press = mo_client->_event( `UPDATE_DETAIL` )
       )->input( ).
 
-    page->button(
+    lo_page->button(
           text    = `button 01`
-          press   = client->_event( `NEST_TEST` )
-          enabled = client->_bind( mv_check_enabled_01 ) ).
+          press   = mo_client->_event( `NEST_TEST` )
+          enabled = mo_client->_bind( mv_check_enabled_01 ) ).
 
-    page->button(
+    lo_page->button(
           text    = `button 01`
-          press   = client->_event( `NEST_TEST` )
-          enabled = client->_bind( mv_check_enabled_01 ) ).
+          press   = mo_client->_event( `NEST_TEST` )
+          enabled = mo_client->_bind( mv_check_enabled_01 ) ).
 
-    page->button(
+    lo_page->button(
         text    = `button 02`
-        press   = client->_event( `NEST_TEST` )
-        enabled = client->_bind( mv_check_enabled_02 ) ).
+        press   = mo_client->_event( `NEST_TEST` )
+        enabled = mo_client->_bind( mv_check_enabled_02 ) ).
 
-    client->nest_view_display(
+    mo_client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
       method_insert  = `addMidColumnPage`
@@ -86,32 +86,32 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
           title          = `abap2UI5 - Master-Detail View with Nested Views`
-          navbuttonpress = client->_event_nav_app_leave( )
-          shownavbutton  = client->check_app_prev_stack( ) ).
+          navbuttonpress = mo_client->_event_nav_app_leave( )
+          shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    DATA(lr_master) = page->flexible_column_layout( layout = `TwoColumnsBeginExpanded`
+    DATA(lr_master) = lo_page->flexible_column_layout( layout = `TwoColumnsBeginExpanded`
                                                     id     =`test` )->begin_column_pages( ).
 
-    lr_master->tree( items = client->_bind( mt_tree ) )->items(
+    lr_master->tree( items = mo_client->_bind( mt_tree ) )->items(
         )->standard_tree_item(
             type  = `Active`
             title = `{TEXT}`
-            press = client->_event( val = `EVENT_ITEM`
+            press = mo_client->_event( val = `EVENT_ITEM`
                 t_arg                   = VALUE #( ( `${TEXT}` ) )
                  ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       mt_tree = VALUE #( ( text = `Apps`
                     nodes       = VALUE #( ( text = `Frontend`
@@ -132,11 +132,11 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `UPDATE_DETAIL`.
         view_display_app_01( ).
       WHEN `EVENT_ITEM`.
-        CASE client->get_event_arg( 1 ).
+        CASE mo_client->get_event_arg( 1 ).
           WHEN `App_001`.
             view_display_app_01( ).
           WHEN `App_002`.
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
         mv_check_enabled_01 = xsdbool( mv_check_enabled_01 = abap_false ).
         mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
 
-        client->nest_view_model_update( ).
+        mo_client->nest_view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

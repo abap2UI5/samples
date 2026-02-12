@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION PUBLIC.
         INCLUDE TYPE ty_struc_incl.
     DATA END OF ms_struc2.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
   PROTECTED SECTION.
@@ -35,33 +35,33 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Binding Structure Level`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+                navbuttonpress = mo_client->_event_nav_app_leave( )
+                shownavbutton  = mo_client->check_app_prev_stack( ) ).
 
-    page->input( client->_bind_edit( ms_struc-title ) ).
-    page->input( client->_bind_edit( ms_struc-value ) ).
-    page->input( client->_bind_edit( ms_struc-value2 ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc-title ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc-value ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc-value2 ) ).
 
-    page->input( client->_bind_edit( ms_struc2-title ) ).
-    page->input( client->_bind_edit( ms_struc2-value ) ).
-    page->input( client->_bind_edit( ms_struc2-value2 ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-title ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-value ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-value2 ) ).
 
-    page->input( client->_bind_edit( ms_struc2-incl_title ) ).
-    page->input( client->_bind_edit( ms_struc2-incl_value ) ).
-    page->input( client->_bind_edit( ms_struc2-incl_value2 ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-incl_title ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-incl_value ) ).
+    lo_page->input( mo_client->_bind_edit( ms_struc2-incl_value2 ) ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
       ms_struc-title  = `title`.
       ms_struc-value  = `val01`.
@@ -76,6 +76,6 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
 
       set_view( ).
     ENDIF.
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
   ENDMETHOD.
 ENDCLASS.

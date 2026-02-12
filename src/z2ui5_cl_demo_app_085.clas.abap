@@ -44,21 +44,21 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC FINAL CREATE PUBLIC.
     DATA ls_detail TYPE ty_s_tab .
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA mo_client TYPE REF TO z2ui5_if_client .
 
     METHODS view_display_master .
     METHODS view_display_detail .
-    METHODS z2ui5_set_data .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_set_search.
+    METHODS set_data .
+    METHODS on_event .
+    METHODS on_init .
+    METHODS set_search.
   PRIVATE SECTION.
 
     DATA lv_layout TYPE string .
     DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
-    DATA c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
+    DATA mv_c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
     DATA ls_detail_supplier TYPE ty_s_tab_supplier .
-    DATA check_detail_active TYPE abap_bool.
+    DATA mv_check_detail_active TYPE abap_bool.
 
     METHODS sort .
 ENDCLASS.
@@ -80,43 +80,43 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view_nested->object_page_layout(
+    DATA(lo_page) = lo_view_nested->object_page_layout(
             showtitleinheadercontent = abap_true
             showeditheaderbutton     = abap_true
-            editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
+            editheaderbuttonpress    = mo_client->_event( `EDIT_HEADER_PRESS` )
             uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
+    DATA(lo_header_title) = lo_page->header_title( )->object_page_dyn_header_title( ).
 
-    header_title->expanded_heading(
+    lo_header_title->expanded_heading(
             )->hbox(
 *                )->title( Text = |Product Id |
-                )->info_label( text        = |Product Id | && client->_bind( ls_detail-productid )
+                )->info_label( text        = |Product Id | && mo_client->_bind( ls_detail-productid )
                                colorscheme = `9`
                                width       = `200px`
                                icon        = `sap-icon://home-share` ).
 
-    header_title->snapped_heading(
+    lo_header_title->snapped_heading(
             )->flex_box( alignitems = `Center`
-              )->avatar( src   = c_pic_url && ls_detail-pic
+              )->avatar( src   = mv_c_pic_url && ls_detail-pic
                          class = `sapUiTinyMarginEnd`
-                )->info_label( text        = |Product Id | && client->_bind( ls_detail-productid )
+                )->info_label( text        = |Product Id | && mo_client->_bind( ls_detail-productid )
                                colorscheme = `9`
                                width       = `200px`
                                icon        = `sap-icon://home-share` ).
 
-    header_title->expanded_content( ns = `uxap` )->text( client->_bind( ls_detail-productname ) ).
-    header_title->snapped_content( ns = `uxap` )->text( client->_bind( ls_detail-productname ) ).
-    header_title->snapped_title_on_mobile( )->title( client->_bind( ls_detail-productname ) ).
+    lo_header_title->expanded_content( ns = `uxap` )->text( mo_client->_bind( ls_detail-productname ) ).
+    lo_header_title->snapped_content( ns = `uxap` )->text( mo_client->_bind( ls_detail-productname ) ).
+    lo_header_title->snapped_title_on_mobile( )->title( mo_client->_bind( ls_detail-productname ) ).
 
-    header_title->actions( ns = `uxap` )->overflow_toolbar(
+    lo_header_title->actions( ns = `uxap` )->overflow_toolbar(
          )->overflow_toolbar_button(
              icon    = `sap-icon://supplier`
              text    = `Supplier Detail`
              type    = `Transparent`
              enabled = `true`
              tooltip = `Goto Supplier`
-             press   = client->_event( `ONGOTOSUPPLIER` )
+             press   = mo_client->_event( `ONGOTOSUPPLIER` )
          )->overflow_toolbar_button(
              icon    = `sap-icon://exit-full-screen`
              text    = `Exit Fullscreen Mode`
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              enabled = SWITCH string( lv_layout
                                         WHEN `TwoColumnsMidExpanded` THEN `false`
                                         WHEN `MidColumnFullScreen`   THEN `true` )
-             press   = client->_event( `ONEXITFULLSCREENMODE` )
+             press   = mo_client->_event( `ONEXITFULLSCREENMODE` )
           )->overflow_toolbar_button(
              icon    = `sap-icon://full-screen`
              text    = `Enter Fullscreen Mode`
@@ -134,18 +134,18 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                         WHEN `TwoColumnsMidExpanded` THEN `true`
                                         WHEN `MidColumnFullScreen` THEN `false` )
              tooltip = `Fullscreen Mode`
-             press   = client->_event( `ONFULLSCREENMODE` )
+             press   = mo_client->_event( `ONFULLSCREENMODE` )
           )->overflow_toolbar_button(
              icon    = `sap-icon://decline`
              text    = `Exit Detail Screen`
              type    = `Transparent`
              enabled = `true`
              tooltip = `Close Detail`
-             press   = client->_event( `ONCLOSEDETAIL` ) ).
+             press   = mo_client->_event( `ONCLOSEDETAIL` ) ).
 
-    DATA(header_content) = page->header_content( ns = `uxap` ).
-    header_content->flex_box( wrap = `Wrap`
-       )->avatar( src         = c_pic_url && ls_detail-pic
+    DATA(lo_header_content) = lo_page->header_content( ns = `uxap` ).
+    lo_header_content->flex_box( wrap = `Wrap`
+       )->avatar( src         = mv_c_pic_url && ls_detail-pic
                   class       = `sapUiSmallMarginEnd`
                   displaysize = `layout`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
@@ -195,9 +195,9 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                      href = |tel:{ ls_detail_supplier-phone }|
         )->get_parent( ).
 
-    DATA(sections) = page->sections( ).
+    DATA(lo_sections) = lo_page->sections( ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `SectionDescription`
                                    title          = `Description`
         )->heading( ns = `uxap`
@@ -217,9 +217,9 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                         title = `Picture`
                   )->blocks(
                         )->vbox(
-                  )->image( src = c_pic_url && ls_detail-pic ).
+                  )->image( src = mv_c_pic_url && ls_detail-pic ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `SupplierSection`
                                    title          = `Supplier`
        )->heading( ns = `uxap`
@@ -238,7 +238,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                  )->blocks(
                      )->label( text = `20 Days Net` ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `Others`
                                    title          = `Others`
       )->heading( ns = `uxap`
@@ -259,7 +259,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                           )->label( text = `details`
       )->label( text = `details` ).
 
-    sections->object_page_section( titleuppercase = abap_false
+    lo_sections->object_page_section( titleuppercase = abap_false
                                    id             = `OtherSuppliers`
                                    title          = `Other Supplier`
       )->heading( ns = `uxap`
@@ -276,7 +276,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 *                   growing             = abap_true
 *                   growingthreshold    = '20'
 *                   growingscrolltoload = abap_true
-              items          = client->_bind( mt_table_supplier )
+              items          = mo_client->_bind( mt_table_supplier )
               sticky         = `ColumnHeaders,HeaderToolbar`
       )->columns(
         )->column(
@@ -288,14 +288,14 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              )->get_parent(
       )->items(
         )->column_list_item( type  = `Navigation`
-                             press = client->_event( val = `ONPRESSSUPPLIER` t_arg = VALUE #( ( `${SUPPLIERNAME}` ) ) )
+                             press = mo_client->_event( val = `ONPRESSSUPPLIER` t_arg = VALUE #( ( `${SUPPLIERNAME}` ) ) )
            )->cells(
              )->text( text = `{SUPPLIERNAME}` )->get_parent(
              )->text( text = `{COUNTRY}`
              )->text( text = `{CITY}` ).
 
-    check_detail_active = abap_true.
-    client->nest_view_display(
+    mv_check_detail_active = abap_true.
+    mo_client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `Detail`
       method_insert  = `addMidColumnPage`
@@ -304,11 +304,11 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    DATA(lo_page) = lo_view->shell( )->page(
           title           = `abap2UI5 - Master Detail`
-          navbuttonpress  = client->_event_nav_app_leave( )
+          navbuttonpress  = mo_client->_event_nav_app_leave( )
             shownavbutton = abap_true
           )->header_content(
              )->link( text   = `Demo`
@@ -317,10 +317,10 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              )->link(
          )->get_parent( ).
 
-    DATA(lr_master) = page->flexible_column_layout( layout = lv_layout
+    DATA(lr_master) = lo_page->flexible_column_layout( layout = lv_layout
                                                     id     = `Detail` )->begin_column_pages( ).
 
-    DATA(tab) = lr_master->scroll_container( height   = `100%`
+    DATA(lo_tab) = lr_master->scroll_container( height   = `100%`
                                              vertical = abap_true
       )->table(
        inset          = abap_false
@@ -329,21 +329,21 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 *            growing             = abap_true
 *            growingthreshold    = '20'
 *            growingscrolltoload = abap_true
-       items          = client->_bind( mt_table )
+       items          = mo_client->_bind( mt_table )
        sticky         = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar( )->overflow_toolbar(
+    lo_tab->header_toolbar( )->overflow_toolbar(
           )->search_field( id     = `SEARCH`
                            width  = `17.5rem`
-                           search = client->_event( `ONSEARCH` )
-                           change = client->_event( `ONSEARCH` )
-                           value  = client->_bind_edit( mv_search_value )
+                           search = mo_client->_event( `ONSEARCH` )
+                           change = mo_client->_event( `ONSEARCH` )
+                           value  = mo_client->_bind_edit( mv_search_value )
           )->toolbar_spacer(
           )->overflow_toolbar_button( icon  = `sap-icon://sort`
                                       type  = `Transparent`
-                                      press = client->_event( `ONSORT` ) ).
+                                      press = mo_client->_event( `ONSORT` ) ).
 
-    tab->columns(
+    lo_tab->columns(
         )->column( width = `12em`
             )->text( `Product` )->get_parent(
         )->column( minscreenwidth = `Tablet`
@@ -360,9 +360,9 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
          )->column( halign = `End`
             )->text( `Price` ).
 
-    tab->items(
+    lo_tab->items(
         )->column_list_item( type  = `Navigation`
-                             press = client->_event( val = `ONPRESSMASTER` t_arg = VALUE #( ( `${KEY}` ) ) )
+                             press = mo_client->_event( val = `ONPRESSMASTER` t_arg = VALUE #( ( `${KEY}` ) ) )
            )->cells(
              )->object_identifier( text  = `{PRODUCTNAME}`
                                    title = `{PRODUCTID}` )->get_parent(
@@ -376,100 +376,100 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ",  type: 'sap.ui.model.type.Currency , formatOptions: { currencyCode : false } } `
               ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_set_data( ).
+    IF mo_client->check_on_init( ).
+      set_data( ).
       sort( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true.
+    IF mo_client->get( )-check_on_navigated = abap_true.
       view_display_master( ).
       view_display_detail( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `ONGOTOSUPPLIER`.
         DATA(lo_app_next) = NEW z2ui5_cl_demo_app_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
-        client->nav_app_call( lo_app_next ).
+        mo_client->nav_app_call( lo_app_next ).
       WHEN `ONEXITFULLSCREENMODE`.
         lv_layout = `TwoColumnsMidExpanded`.
         view_display_master( ).
         view_display_detail( ).
-        client->nest_view_model_update( ).
-        client->message_toast_display( |Event Close FullScreen Mode | ).
+        mo_client->nest_view_model_update( ).
+        mo_client->message_toast_display( |Event Close FullScreen Mode | ).
       WHEN `ONFULLSCREENMODE`.
         lv_layout = `MidColumnFullScreen`.
         view_display_master( ).
         view_display_detail( ).
-        client->nest_view_model_update( ).
-        client->message_toast_display( |Event FullScreen Detail | ).
+        mo_client->nest_view_model_update( ).
+        mo_client->message_toast_display( |Event FullScreen Detail | ).
       WHEN `ONCLOSEDETAIL`.
         lv_layout = `OneColumn`.
         view_display_master( ).
         view_display_detail( ).
-        check_detail_active = abap_false.
-        client->nest_view_model_update( ).
-        client->message_toast_display( |Event Close Detail | ).
+        mv_check_detail_active = abap_false.
+        mo_client->nest_view_model_update( ).
+        mo_client->message_toast_display( |Event Close Detail | ).
       WHEN `ONPRESSSUPPLIER`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
+        DATA(lt_arg) = mo_client->get( )-t_event_arg.
         READ TABLE mt_table_supplier WITH KEY suppliername = lt_arg[ 1 ] INTO ls_detail_supplier.
-        client->message_toast_display( |Event Press Supplier List Name: { lt_arg[ 1 ] } | ).
+        mo_client->message_toast_display( |Event Press Supplier List Name: { lt_arg[ 1 ] } | ).
         lo_app_next = NEW z2ui5_cl_demo_app_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
-        client->nav_app_call( lo_app_next ).
+        mo_client->nav_app_call( lo_app_next ).
       WHEN `ONPRESSMASTER`.
-        lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( |Event Press Master - Product Id { lt_arg[ 1 ] } | ).
+        lt_arg = mo_client->get( )-t_event_arg.
+        mo_client->message_toast_display( |Event Press Master - Product Id { lt_arg[ 1 ] } | ).
         READ TABLE mt_table WITH KEY key = lt_arg[ 1 ] INTO ls_detail.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
         lv_layout = `TwoColumnsMidExpanded`.
-        IF check_detail_active = abap_false.
+        IF mv_check_detail_active = abap_false.
           view_display_master( ).
         ENDIF.
         view_display_detail( ).
-        client->view_model_update( ).
-        client->nest_view_model_update( ).
+        mo_client->view_model_update( ).
+        mo_client->nest_view_model_update( ).
       WHEN `UPDATE_DETAIL`.
         view_display_detail( ).
       WHEN `ONSORT`.
-        client->message_toast_display( `Sort Entries` ).
+        mo_client->message_toast_display( `Sort Entries` ).
         sort( ).
         READ TABLE mt_table INDEX 1 INTO ls_detail.
         view_display_master( ).
         view_display_detail( ).
-        client->view_model_update( ).
-        client->nest_view_model_update( ).
+        mo_client->view_model_update( ).
+        mo_client->nest_view_model_update( ).
       WHEN `ONSEARCH`.
-        client->message_toast_display( `Search Entries` ).
-        z2ui5_set_data( ).
-        z2ui5_set_search( ).
-        client->view_model_update( ).
-        client->nest_view_model_update( ).
+        mo_client->message_toast_display( `Search Entries` ).
+        set_data( ).
+        set_search( ).
+        mo_client->view_model_update( ).
+        mo_client->nest_view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     view_display_master( ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( key = `1` productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30`
@@ -523,7 +523,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     ls_detail = mt_table[ 1 ].
   ENDMETHOD.
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

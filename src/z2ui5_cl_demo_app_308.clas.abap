@@ -13,13 +13,13 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = lo_view->shell(
           )->page( title          = `Harvey Chart`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
-      page->harvey_ball_micro_chart(
+      lo_page->harvey_ball_micro_chart(
 *                                   colorpalette  =
 *                                   press         =
                                      size          = `L`
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 *                                 result        =
         ).
 
-      client->view_display( view->stringify( ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
   ENDMETHOD.

@@ -4,8 +4,8 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
+    DATA mv_product  TYPE string.
+    DATA mv_quantity TYPE string.
     DATA mv_placement TYPE string.
 
     TYPES:
@@ -19,15 +19,15 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS on_init.
+    METHODS on_event.
+    METHODS display_view.
+    METHODS display_popover
       IMPORTING
         id TYPE string.
-    METHODS z2ui5_display_popover_list
+    METHODS display_popover_list
       IMPORTING
         id TYPE string.
 
@@ -36,59 +36,59 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
-  METHOD z2ui5_display_popover.
+  METHOD display_popover.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->popover(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->popover(
                   title     = `Popover Title`
                   placement = mv_placement
               )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
                       text  = `Cancel`
-                      press = client->_event( `BUTTON_CANCEL` )
+                      press = mo_client->_event( `BUTTON_CANCEL` )
                   )->button(
                       text  = `Confirm`
-                      press = client->_event( `BUTTON_CONFIRM` )
+                      press = mo_client->_event( `BUTTON_CONFIRM` )
                       type  = `Emphasized`
                 )->get_parent( )->get_parent(
             )->text( `make an input here:`
             )->input( value = `abcd` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
-  METHOD z2ui5_display_popover_list.
+  METHOD display_popover_list.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->popover(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    lo_view->popover(
                   title     = `Popover Title`
                   placement = mv_placement
               )->list(
-                items           = client->_bind_edit( mt_tab )
+                items           = mo_client->_bind_edit( mt_tab )
 *                selectionchange = client->_event( 'SEL_CHANGE' t_arg = VALUE #( ( `${$parameters>/listItem}` ) ) )
-                selectionchange = client->_event( `SEL_CHANGE` )
+                selectionchange = mo_client->_event( `SEL_CHANGE` )
                 mode            = `SingleSelectMaster`
                  )->standard_list_item(
                   title       = `{ID}`
                   description = `{NAME}`
                   selected    = `{SELECTED}` ).
 
-    client->popover_display(
-      xml   = view->stringify( )
+    mo_client->popover_display(
+      xml   = lo_view->stringify( )
       by_id = id ).
   ENDMETHOD.
 
-  METHOD z2ui5_display_view.
+  METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    lo_view->shell(
       )->page(
               title          = `abap2UI5 - Popover with List`
-              navbuttonpress = client->_event( `BACK` )
-              shownavbutton  = client->check_app_prev_stack( )
+              navbuttonpress = mo_client->_event( `BACK` )
+              shownavbutton  = mo_client->check_app_prev_stack( )
           )->simple_form( `Popover`
               )->content( `form`
                   )->title( `Input`
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->link( text = `Documentation UI5 Popover Control`
                            href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
                   )->label( `placement`
-                  )->segmented_button( selected_key = client->_bind_edit( mv_placement )
+                  )->segmented_button( selected_key = mo_client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key  = `Left`
@@ -118,49 +118,49 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->label( `popover`
                   )->button(
                       text  = `show popover with list`
-                      press = client->_event( `POPOVER_LIST` )
+                      press = mo_client->_event( `POPOVER_LIST` )
                       id    = `TEST` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      z2ui5_on_init( ).
-      z2ui5_display_view( ).
+    IF mo_client->check_on_init( ).
+      on_init( ).
+      display_view( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
   ENDMETHOD.
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `SEL_CHANGE`.
         DATA(lt_sel) = mt_tab.
         DELETE lt_sel WHERE selected IS INITIAL.
       WHEN `POPOVER_LIST`.
-        z2ui5_display_popover_list( `TEST` ).
+        display_popover_list( `TEST` ).
       WHEN `POPOVER`.
-        z2ui5_display_popover( `TEST` ).
+        display_popover( `TEST` ).
       WHEN `BUTTON_CONFIRM`.
-        client->message_toast_display( |confirm| ).
-        client->popover_destroy( ).
+        mo_client->message_toast_display( |confirm| ).
+        mo_client->popover_destroy( ).
       WHEN `BUTTON_CANCEL`.
-        client->message_toast_display( |cancel| ).
-        client->popover_destroy( ).
+        mo_client->message_toast_display( |cancel| ).
+        mo_client->popover_destroy( ).
     ENDCASE.
   ENDMETHOD.
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_placement = `Left`.
-    product  = `tomato`.
-    quantity = `500`.
+    mv_product  = `tomato`.
+    mv_quantity = `500`.
 
     mt_tab = VALUE #(
                       ( id = `1` name = `name1` )

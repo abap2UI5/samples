@@ -4,10 +4,10 @@ CLASS z2ui5_cl_demo_app_139 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA search  TYPE string.
+    DATA mv_search  TYPE string.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS display_view.
   PRIVATE SECTION.
 ENDCLASS.
@@ -16,40 +16,40 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    me->mo_client = mo_client.
 
-    IF client->check_on_init( ).
-      search = client->get( )-s_config-search && `my_search_string`.
+    IF mo_client->check_on_init( ).
+      mv_search = mo_client->get( )-s_config-search && `my_search_string`.
       display_view( ).
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `SET_VIEW`.
         display_view( ).
-        client->message_toast_display( |{ search } - title changed| ).
+        mo_client->message_toast_display( |{ mv_search } - title changed| ).
       WHEN `BACK`.
-        client->nav_app_leave( ).
+        mo_client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD display_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(tmp) = view->_z2ui5( )->history( client->_bind_edit( search )
+    DATA(lo_tmp) = lo_view->_z2ui5( )->history( mo_client->_bind_edit( mv_search )
          )->shell(
          )->page(
                  title          = `abap2UI5 - Change URL History`
-                 navbuttonpress = client->_event( `BACK` )
-                 shownavbutton  = client->check_app_prev_stack( )
+                 navbuttonpress = mo_client->_event( `BACK` )
+                 shownavbutton  = mo_client->check_app_prev_stack( )
              )->simple_form( title    = `Form Title`
                              editable = abap_true
                  )->content( `form`
                      )->title( `Input`
                      )->label( `search`
-                     )->input( client->_bind_edit( search ) ).
+                     )->input( mo_client->_bind_edit( mv_search ) ).
 
-    client->view_display( tmp->stringify( ) ).
+    mo_client->view_display( lo_tmp->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.

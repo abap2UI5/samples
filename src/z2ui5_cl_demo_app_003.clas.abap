@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      t_tab = VALUE #(
+      mt_tab = VALUE #(
         ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
         ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
@@ -35,16 +35,16 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
         ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(lo_page) = lo_view->shell(
           )->page(
               title           = `abap2UI5 - List`
               navbuttonpress  = client->_event_nav_app_leave( )
                 shownavbutton = client->check_app_prev_stack( ) ).
 
-      page->list(
+      lo_page->list(
           headertext      = `List Ouput`
-          items           = client->_bind_edit( t_tab )
+          items           = client->_bind_edit( mt_tab )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( `SELCHANGE` )
           )->standard_list_item(
@@ -55,12 +55,12 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
               press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
-      client->view_display( view->stringify( ) ).
+      client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 
     IF client->check_on_event( `SELCHANGE` ).
-      client->message_box_display( `go to details for item ` && t_tab[ selected = abap_true ]-title ).
+      client->message_box_display( `go to details for item ` && mt_tab[ selected = abap_true ]-title ).
     ENDIF.
   ENDMETHOD.
 ENDCLASS.

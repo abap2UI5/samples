@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_270 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app.
-    DATA color TYPE string.
+    DATA mv_color TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -23,8 +23,8 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->simple_form( editable = abap_true
              )->content( ns = `form`
                 )->color_picker(
-                  colorstring = client->_bind_edit( color )
-                )->input( client->_bind_edit( color )
+                  colorstring = client->_bind_edit( mv_color )
+                )->input( client->_bind_edit( mv_color )
         )->stringify( ) ).
 
     ENDIF.

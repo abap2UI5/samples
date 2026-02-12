@@ -31,8 +31,8 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).
       ENDIF.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( view->shell(
+      DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display( lo_view->shell(
             )->page(
                     showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = `abap2UI5 - Cross App Navigation App 127 - This App only works when started via Launchpad`

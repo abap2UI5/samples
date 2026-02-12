@@ -21,11 +21,11 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
     METHODS on_event.
-    METHODS z2ui5_set_search.
+    METHODS set_search.
     METHODS set_data.
 
   PRIVATE SECTION.
@@ -35,9 +35,9 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
+    me->mo_client     = mo_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
       set_data( ).
       view_display( ).
       RETURN.
@@ -48,53 +48,53 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         set_data( ).
-        z2ui5_set_search( ).
-        client->view_model_update( ).
+        set_search( ).
+        mo_client->view_model_update( ).
     ENDCASE.
   ENDMETHOD.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( id = `page_main`
+    DATA(lo_page) = lo_view->shell( )->page( id = `page_main`
             title                         = `abap2UI5 - Search with Enter`
-            navbuttonpress                = client->_event_nav_app_leave( )
-            shownavbutton                 = client->check_app_prev_stack( ) ).
+            navbuttonpress                = mo_client->_event_nav_app_leave( )
+            shownavbutton                 = mo_client->check_app_prev_stack( ) ).
 
-    DATA(vbox) = page->vbox( ).
+    DATA(lo_vbox) = lo_page->vbox( ).
 
-    vbox->hbox( )->search_field(
-         value  = client->_bind_edit( mv_search_value )
-         search = client->_event( `BUTTON_SEARCH` )
-         change = client->_event( `BUTTON_SEARCH` )
+    lo_vbox->hbox( )->search_field(
+         value  = mo_client->_bind_edit( mv_search_value )
+         search = mo_client->_event( `BUTTON_SEARCH` )
+         change = mo_client->_event( `BUTTON_SEARCH` )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` )->button(
         text  = `Go`
-        press = client->_event( `BUTTON_START` )
+        press = mo_client->_event( `BUTTON_START` )
         type  = `Emphasized` ).
 
-    DATA(tab) = vbox->table( items = client->_bind( mt_table ) ).
+    DATA(lo_tab) = lo_vbox->table( items = mo_client->_bind( mt_table ) ).
 
-    DATA(lo_columns) = tab->columns( ).
+    DATA(lo_columns) = lo_tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
     lo_columns->column( )->text( text = `Date` ).
     lo_columns->column( )->text( text = `Name` ).
     lo_columns->column( )->text( text = `Location` ).
     lo_columns->column( )->text( text = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    DATA(lo_cells) = lo_tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
     lo_cells->text( `{STORAGE_LOCATION}` ).
     lo_cells->text( `{QUANTITY}` ).
 
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
   ENDMETHOD.
 
   METHOD set_data.
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
   ENDMETHOD.
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 
