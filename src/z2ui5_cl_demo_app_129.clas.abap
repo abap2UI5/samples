@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
       END OF screen .
     DATA
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY .
-    DATA mv_check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS on_rendering
@@ -56,9 +55,8 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_check_initialized = abap_false.
+    IF client->check_on_init( ).
       lv_text = 10.
-      mv_check_initialized = abap_true.
       on_init( ).
       on_rendering( client ).
 

@@ -45,15 +45,13 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
         mv_int_sum = mv_int1 + mv_int2.
       WHEN `BUTTON_DEC`.
         mv_dec_sum = mv_dec1 + mv_dec2.
-      WHEN `BACK`.
-        client->nav_app_leave( ).
     ENDCASE.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lo_page) = lo_view->shell(
         )->page(
                 title          = `abap2UI5 - Integer and Decimals`
-                navbuttonpress = client->_event( `BACK` )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
     lo_page->simple_form( title    = `Integer and Decimals`
                        editable = abap_true

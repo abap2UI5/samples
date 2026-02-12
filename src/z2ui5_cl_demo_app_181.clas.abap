@@ -3,8 +3,6 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA mv_initialized TYPE abap_bool .
-
     TYPES:
       BEGIN OF ty_cities,
         text TYPE string,
@@ -127,8 +125,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
 
       view_display( ).
 

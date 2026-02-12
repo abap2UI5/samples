@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     client->view_display( lo_view->shell(
       )->page(
                   title          = `abap2UI5 - Focus`
-                  navbuttonpress = client->_event( `BACK` )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
                               focusid          = client->_bind_edit( mv_focus_id )
@@ -74,8 +74,6 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN `BACK`.
-        client->nav_app_leave( ).
       WHEN `BUTTON01` OR `BUTTON02`.
         mv_update_focus = abap_true.
         mv_focus_id = client->get( )-event.

@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
       END OF ty_row.
     DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
-    DATA mv_check_initialized TYPE abap_bool.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
     METHODS display.
@@ -91,8 +90,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     me->mo_client = mo_client.
 
     IF mo_client->get( )-check_on_navigated = abap_true.
-      IF mv_check_initialized = abap_false.
-        mv_check_initialized = abap_true.
+      IF mo_client->check_on_init( ).
         display( ).
       ELSE.
         callback( ).

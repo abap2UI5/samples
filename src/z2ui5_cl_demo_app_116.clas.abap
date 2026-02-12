@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       ty_prin_nodes TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY.
 
     DATA mv_prodh_nodes TYPE ty_prodh_nodes .
-    DATA mv_initialized TYPE abap_bool .
     DATA mv_user TYPE c LENGTH 12.
     DATA mv_date TYPE d.
 
@@ -208,8 +207,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
       initialize( ).
 
       DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&

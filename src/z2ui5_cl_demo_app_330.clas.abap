@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_330 DEFINITION PUBLIC.
     INTERFACES if_serializable_object .
     INTERFACES z2ui5_if_app.
 
-    DATA mv_check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA mo_client TYPE REF TO z2ui5_if_client.
@@ -343,8 +342,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_check_initialized = abap_false.
-      mv_check_initialized = abap_true.
+    IF mo_client->check_on_init( ).
       display_view( mo_client ).
 
     ENDIF.

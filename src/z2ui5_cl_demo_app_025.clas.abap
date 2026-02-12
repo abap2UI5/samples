@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
         lo_page = lo_view->shell(
             )->page(
                     title          = `abap2UI5 - flow logic - APP 02`
-                    navbuttonpress = client->_event( `BACK` )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
         lo_page->grid( `L6 M12 S12` )->content( `layout`

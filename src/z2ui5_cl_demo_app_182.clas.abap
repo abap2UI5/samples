@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
              lines TYPE tt_lines4,
            END OF t_json1.
 
-    DATA mv_initialized TYPE abap_bool .
     DATA mt_data TYPE t_json1 .
 
     METHODS on_event .
@@ -166,8 +165,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
 
       mt_data = VALUE #( nodes             = VALUE #( ( id = `Dinter`
                                             title          = `Sophie Dinter`

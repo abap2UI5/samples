@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lo_page) = lo_view->shell(
          )->page( title          = `abap2UI5 - Currency Format`
-                  navbuttonpress = client->_event( `BACK` )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
     lo_page->simple_form( title    = `Currency`

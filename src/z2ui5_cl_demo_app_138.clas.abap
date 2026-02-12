@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
       client->view_display( lo_view->shell(
             )->page(
                     title          = `abap2UI5 - First Example`
-                    navbuttonpress = client->_event( `BACK` )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( )
                 )->simple_form( title    = `Form Title`
                                 editable = abap_true
@@ -66,8 +66,6 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ mv_quantity } - send to the server| ).
-      WHEN `BACK`.
-        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

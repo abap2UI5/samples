@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     DATA(lo_cont) = lo_view->shell( ).
     DATA(lo_page) = lo_cont->page( title = `abap2UI5 - Device Camera Picture`
-                   navbuttonpress  = mo_client->_event( `BACK` )
+                   navbuttonpress  = mo_client->_event_nav_app_leave( )
                    shownavbutton   = mo_client->check_app_prev_stack( ) ).
 
     lo_page->vbox( class = `sapUiSmallMargin`
@@ -140,9 +140,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       WHEN `EDIT`.
 
         edit_image( ).
-      WHEN `BACK`.
-
-        mo_client->nav_app_leave( ).
     ENDCASE.
 
     mt_picture_out = VALUE #( ).

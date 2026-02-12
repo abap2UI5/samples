@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       client->view_display( lo_view->shell(
               )->page(
                       title          = `abap2UI5 - Device Capabilities`
-                      navbuttonpress = client->_event( `BACK` )
+                      navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( `GEOLOCATION_LOADED` )
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         client->view_display( lo_view->shell(
               )->page(
                       title          = `abap2UI5 - Device Capabilities`
-                      navbuttonpress = client->_event( `BACK` )
+                      navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( )
@@ -127,9 +127,6 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                       scale         = `{SCALE}`
                                       tooltip       = `{TOOLTIP}`
                )->stringify( ) ).
-      WHEN `BACK`.
-        client->nav_app_leave( ).
-        RETURN.
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

@@ -8,8 +8,6 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
   PRIVATE SECTION.
     DATA mo_client TYPE REF TO z2ui5_if_client.
-    DATA mv_initialized TYPE abap_bool.
-
     METHODS display_view.
     METHODS on_event.
     METHODS security_check_popup.
@@ -97,8 +95,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     on_event( ).
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
       display_view( ).
     ELSE.
       mo_client->view_model_update( ).

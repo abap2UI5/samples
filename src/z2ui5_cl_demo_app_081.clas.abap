@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     lo_view->shell(
       )->page(
               title          = `abap2UI5 - Popover with List`
-              navbuttonpress = mo_client->_event( `BACK` )
+              navbuttonpress = mo_client->_event_nav_app_leave( )
               shownavbutton  = mo_client->check_app_prev_stack( )
           )->simple_form( `Popover`
               )->content( `form`

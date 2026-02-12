@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
     mo_client->view_display( lo_view->shell(
           )->page(
                   title          = `abap2UI5 - First Example`
-                  navbuttonpress = mo_client->_event( `BACK` )
+                  navbuttonpress = mo_client->_event_nav_app_leave( )
                   shownavbutton  = mo_client->check_app_prev_stack( )
              )->_z2ui5( )->timer(
                   checkactive = mo_client->_bind( mv_check_timer_active )
@@ -53,8 +53,6 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
         mv_check_timer_active = abap_true.
         mv_url = `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123`.
         mo_client->view_model_update( ).
-      WHEN `BACK`.
-        mo_client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

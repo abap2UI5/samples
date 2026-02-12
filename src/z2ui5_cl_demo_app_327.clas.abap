@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
 
       lo_view->shell(
         )->page( title          = `abap2UI5 - Storage`
-                 navbuttonpress = client->_event( `BACK` )
+                 navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
 
         )->simple_form( title    = `Local/Session Storage`
@@ -92,8 +92,6 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
 *        z2ui5_cl_ajson=>parse( stored_value )->to_abap( IMPORTING ev_container = storage-value ).
         mv_storage-value = mv_stored_value.
         client->view_model_update( ).
-      WHEN `BACK`.
-        client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 ENDCLASS.

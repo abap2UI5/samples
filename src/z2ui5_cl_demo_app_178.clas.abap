@@ -27,8 +27,6 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
 
     DATA mv_prodh_nodes TYPE ty_prodh_nodes .
-    DATA mv_initialized TYPE abap_bool .
-
     METHODS display_view .
   PROTECTED SECTION.
 
@@ -130,8 +128,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
       initialize( ).
       display_view( ).
     ENDIF.

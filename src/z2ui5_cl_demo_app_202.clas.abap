@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA mv_init TYPE abap_bool .
   PROTECTED SECTION.
     METHODS display_view
       IMPORTING
@@ -73,9 +72,8 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_init = abap_false.
+    IF client->check_on_init( ).
       display_view( client ).
-      mv_init = abap_true.
       RETURN.
     ENDIF.
 

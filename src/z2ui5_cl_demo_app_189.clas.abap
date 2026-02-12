@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC FINAL CREATE PUBLIC.
       focus_field TYPE string.
 
   PRIVATE SECTION.
-    DATA mv_initialized TYPE abap_bool.
     DATA mo_client TYPE REF TO z2ui5_if_client.
 
     METHODS render.
@@ -60,8 +59,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF mo_client->check_on_init( ).
       focus_field = `IdOne`.
       render( ).
     ENDIF.

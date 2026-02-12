@@ -24,8 +24,6 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
     DATA mv_val    TYPE string.
 
     DATA mo_client      TYPE REF TO z2ui5_if_client.
-    DATA mv_init     TYPE abap_bool.
-
     METHODS on_init.
     METHODS view_build.
 
@@ -120,8 +118,7 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_init = abap_false.
-      mv_init = abap_true.
+    IF mo_client->check_on_init( ).
       on_init( ).
 
     ENDIF.

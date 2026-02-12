@@ -28,8 +28,6 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
       WHEN `SET_VIEW`.
         display_view( ).
         mo_client->message_toast_display( |{ mv_search } - title changed| ).
-      WHEN `BACK`.
-        mo_client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
 
@@ -41,7 +39,7 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
          )->shell(
          )->page(
                  title          = `abap2UI5 - Change URL History`
-                 navbuttonpress = mo_client->_event( `BACK` )
+                 navbuttonpress = mo_client->_event_nav_app_leave( )
                  shownavbutton  = mo_client->check_app_prev_stack( )
              )->simple_form( title    = `Form Title`
                              editable = abap_true

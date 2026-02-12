@@ -49,8 +49,6 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
             DATA(lr_2ui5_lock) = NEW zcl_2ui5_lock( ).
             lr_2ui5_lock->varkey = `0001`.
             client->nav_app_call( lr_2ui5_lock ).
-          WHEN `BACK`.
-            client->nav_app_leave( ).
         ENDCASE.
         client->view_model_update( ).
       CATCH cx_root INTO DATA(lx).
@@ -66,7 +64,7 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lo_page) = lo_view->shell( )->page(
       title          = `Stateful Application with lock`
-      navbuttonpress = client->_event( `BACK` )
+      navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = lo_page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = `Center` ).
@@ -139,11 +137,6 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
             lf_new_varkey = lf_new_varkey + 1.
             lo_2ui5_lock->varkey = lf_new_varkey+0(4).
             client->nav_app_call( lo_2ui5_lock ).
-          WHEN `BACK`.
-            lo_prev_stack_app = client->get_app( client->get( )-s_draft-id_prev_app_stack ).
-            set_session_stateful( client   = client
-                                  stateful = abap_false ).
-            client->nav_app_leave( lo_prev_stack_app ).
         ENDCASE.
         client->view_model_update( ).
       CATCH cx_root INTO DATA(lx).

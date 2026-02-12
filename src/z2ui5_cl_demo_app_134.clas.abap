@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     DATA(lo_page) = lo_view->page(
         id             = `id_page`
         title          = `abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)`
-        navbuttonpress = client->_event( `BACK` )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
     lo_page->_z2ui5( )->scrolling(
@@ -103,8 +103,6 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     client->message_toast_display( `server roundtrip` ).
     CASE client->get( )-event.
-      WHEN `BACK`.
-        client->nav_app_leave( ).
       WHEN `BUTTON_SCROLL_TOP`.
         CLEAR mt_scroll.
         INSERT VALUE #( n = `id_page` v = `0` ) INTO TABLE mt_scroll.

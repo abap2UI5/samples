@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_lock_counter TYPE i READ-ONLY .
-    DATA mv_check_initialized TYPE abap_bool READ-ONLY .
     DATA mv_session_is_stateful TYPE abap_bool READ-ONLY .
     DATA mv_session_text TYPE string READ-ONLY .
     DATA mv_lock_text TYPE string READ-ONLY .
@@ -134,8 +133,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
         CLEAR error.
 
-        IF mv_check_initialized = abap_false.
-          mv_check_initialized = abap_true.
+        IF client->check_on_init( ).
           update_lock_counter( ).
           initialize_view( client ).
         ENDIF.

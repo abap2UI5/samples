@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-    DATA mv_initialized TYPE abap_bool .
     DATA mv_slider_value TYPE i .
 
     TYPES: BEGIN OF ty_shape,
@@ -152,11 +151,10 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
     me->mo_client = mo_client.
 
-    IF mv_initialized = abap_false.
+    IF mo_client->check_on_init( ).
 
       initialize( ).
       render_screen( ).
-      mv_initialized = abap_true.
 
     ENDIF.
 

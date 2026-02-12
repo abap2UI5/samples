@@ -6,8 +6,6 @@ CLASS z2ui5_cl_demo_app_005 DEFINITION PUBLIC.
 
     DATA mv_value1 TYPE int4.
     DATA mv_value2 TYPE int4.
-    DATA mv_initialized TYPE abap_bool.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -16,8 +14,7 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF client->check_on_init( ).
       mv_value1 = 10.
       mv_value2 = 90.
     ENDIF.
