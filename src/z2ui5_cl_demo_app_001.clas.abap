@@ -11,14 +11,9 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-
-    METHODS display_view
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
+    METHODS set_data.
+    METHODS display_view.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -31,7 +26,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       display_view( client ).
-      z2ui5_set_data( ).
+      set_data( ).
     ENDIF.
 
     on_event( client ).
@@ -40,7 +35,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
   METHOD display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( val = view->shell(
+    client->view_display( view->shell(
            )->page(
                    title          = 'abap2UI5 - First Example'
                    navbuttonpress = client->_event_nav_app_leave( )
@@ -61,11 +56,11 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( 'BUTTON_POST' ).
-      client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
+      client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
   ENDMETHOD.
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     product  = 'products'.
     quantity = '500'.
