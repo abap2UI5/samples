@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind_edit( val = <tab> ) ).
+                               items   = client->_bind_edit( <tab> ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(headder) = table->header_toolbar(

@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         press = client->_event( `BUTTON_START` )
         type  = `Emphasized` ).
 
-    DATA(tab) = vbox->table( items = client->_bind( val = mt_table ) ).
+    DATA(tab) = vbox->table( items = client->_bind( mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).

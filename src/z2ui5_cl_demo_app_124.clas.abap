@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
           )->page(
                  showheader      = xsdbool( abap_false = client->get( )-check_launchpad_active )
                   title          = `abap2UI5`
-                  navbuttonpress = client->_event( val = `BACK` )
+                  navbuttonpress = client->_event( `BACK` )
                   shownavbutton  = client->check_app_prev_stack( )
               )->simple_form( title    = `Information`
                               editable = abap_true

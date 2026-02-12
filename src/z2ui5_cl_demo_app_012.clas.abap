@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
             )->label( `Demo`
             )->button(
                 text  = `popup rendering, background destroyed and rerendering`
-                press = client->_event( val = `BUTTON_POPUP_02` )
+                press = client->_event( `BUTTON_POPUP_02` )
             )->label( `Demo`
             )->button(
                 text  = `popup, background unchanged (default) - close (no roundtrip)`
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
             )->label( `Demo`
             )->button(
                 text  = `popup, background unchanged (default) - close with server`
-                press = client->_event( val = `BUTTON_POPUP_04` )
+                press = client->_event( `BUTTON_POPUP_04` )
         )->get_parent( )->get_parent( ).
 
     grid->simple_form( `Popup in new App` )->content( `form`
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
         )->label( `Demo`
         )->button(
             text  = `popup rendering, hold previous view`
-            press = client->_event( val = `BUTTON_POPUP_06` ) ).
+            press = client->_event( `BUTTON_POPUP_06` ) ).
 
     client->view_display( lo_main->stringify( ) ).
   ENDMETHOD.

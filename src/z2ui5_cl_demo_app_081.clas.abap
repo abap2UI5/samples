@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
               )->list(
                 items           = client->_bind_edit( mt_tab )
 *                selectionchange = client->_event( 'SEL_CHANGE' t_arg = VALUE #( ( `${$parameters>/listItem}` ) ) )
-                selectionchange = client->_event( val = `SEL_CHANGE` )
+                selectionchange = client->_event( `SEL_CHANGE` )
                 mode            = `SingleSelectMaster`
                  )->standard_list_item(
                   title       = `{ID}`
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     view->shell(
       )->page(
               title          = `abap2UI5 - Popover with List`
-              navbuttonpress = client->_event( val = `BACK` )
+              navbuttonpress = client->_event( `BACK` )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( `Popover`
               )->content( `form`

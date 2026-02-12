@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                 )->link(
       )->get_parent( ).
 
-    DATA(tab) = page->ui_table( rows                   = client->_bind( val = mt_table )
+    DATA(tab) = page->ui_table( rows                   = client->_bind( mt_table )
                                     id                 = `persoTable`
                                     editable           = abap_false
                                     alternaterowcolors = abap_true

@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     DATA(page) = view->shell(
             )->page(
                     title          = `abap2UI5 - Map Container`
-                    navbuttonpress = client->_event( val = `BACK` )
+                    navbuttonpress = client->_event( `BACK` )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(map) = page->map_container( autoadjustheight = abap_true

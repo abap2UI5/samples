@@ -164,7 +164,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     DATA(cont) = page->content( ns = `f` ).
 
-    DATA(tab) = cont->ui_table( rows               = client->_bind( val = mt_table )
+    DATA(tab) = cont->ui_table( rows               = client->_bind( mt_table )
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `2`

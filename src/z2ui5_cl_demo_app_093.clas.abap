@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
                                   enabled = abap_false
                         )->button(
                             text  = `post`
-                            press = client->_event( val = `BUTTON_POST` )
+                            press = client->_event( `BUTTON_POST` )
              )->stringify( ) ).
 
     ENDIF.

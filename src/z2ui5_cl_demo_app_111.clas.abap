@@ -177,7 +177,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     DATA(cont) = page->content( ns = `f` ).
 
     DATA(tab) = cont->table( id    = `table1`
-                             items = client->_bind_edit( val = mt_table ) ).
+                             items = client->_bind_edit( mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).

@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                   )->content( `form`
                       )->button(
                           text  = `open new tab`
-                          press = client->_event( val = `BUTTON_OPEN_NEW_TAB` )
+                          press = client->_event( `BUTTON_OPEN_NEW_TAB` )
            )->stringify( ) ).
   ENDMETHOD.
 

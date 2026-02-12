@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
                        multiinputid  = `MultiInput` ).
 
     DATA(tab) = vbox->table(
-        items = client->_bind( val = mt_table )
+        items = client->_bind( mt_table )
            )->header_toolbar(
              )->overflow_toolbar(
              )->text( `Product:`

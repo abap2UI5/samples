@@ -42,17 +42,17 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->input( client->_bind_edit( val = ms_struc-title ) ).
-    page->input( client->_bind_edit( val = ms_struc-value ) ).
-    page->input( client->_bind_edit( val = ms_struc-value2 ) ).
+    page->input( client->_bind_edit( ms_struc-title ) ).
+    page->input( client->_bind_edit( ms_struc-value ) ).
+    page->input( client->_bind_edit( ms_struc-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-title ) ).
-    page->input( client->_bind_edit( val = ms_struc2-value ) ).
-    page->input( client->_bind_edit( val = ms_struc2-value2 ) ).
+    page->input( client->_bind_edit( ms_struc2-title ) ).
+    page->input( client->_bind_edit( ms_struc2-value ) ).
+    page->input( client->_bind_edit( ms_struc2-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-incl_title ) ).
-    page->input( client->_bind_edit( val = ms_struc2-incl_value ) ).
-    page->input( client->_bind_edit( val = ms_struc2-incl_value2 ) ).
+    page->input( client->_bind_edit( ms_struc2-incl_title ) ).
+    page->input( client->_bind_edit( ms_struc2-incl_value ) ).
+    page->input( client->_bind_edit( ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

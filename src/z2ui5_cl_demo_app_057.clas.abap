@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     DATA(cont) = page->content( ns = `f` ).
 
-    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+    DATA(tab) = cont->table( items = client->_bind( mt_table ) ).
 
     tab->header_toolbar(
             )->toolbar(

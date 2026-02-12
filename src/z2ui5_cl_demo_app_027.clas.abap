@@ -108,13 +108,13 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
                     value   = product
                     enabled = `{= 500===$` && client->_bind( quantity ) && ` }`
       )->label( `RegExp Set to enabled if the input contains VIP, ignoring the case.`
-                )->input( client->_bind( val = input41 )
+                )->input( client->_bind( input41 )
                 )->button(
                     text    = `VIP`
                     enabled = `{= RegExp('vip', 'i').test($` && client->_bind( input41 ) && `) }`
       )->label( `concatenate both inputs`
-                )->input( client->_bind( val = input51 )
-                )->input( client->_bind( val = input52 )
+                )->input( client->_bind( input51 )
+                )->input( client->_bind( input52 )
                 )->input(
                     value   = `{ parts: [` && |\n| &&
                               `                "` && client->_bind( val = input51 path = abap_true ) && `",` && |\n| &&

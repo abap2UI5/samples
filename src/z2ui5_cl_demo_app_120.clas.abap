@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         client->view_display( view->shell(
               )->page(
                       title          = `abap2UI5 - Device Capabilities`
-                      navbuttonpress = client->_event( val = `BACK` )
+                      navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
                                             finished         = client->_event( )

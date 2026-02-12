@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
       )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
          href       = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
       )->label( `Numeric`
-      )->input( value = client->_bind_edit( val = numeric )
+      )->input( value = client->_bind_edit( numeric )
 
       )->label( `Without leading Zeros`
 

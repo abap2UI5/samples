@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
                                   visiblerowcountmode = `Auto`
          fixedrowcount                                = `1`
                                   selectionmode       = `None`
-                                  rows                = client->_bind_edit( val = output ) ).
+                                  rows                = client->_bind_edit( output ) ).
     DATA(columns) = table->ui_columns( ).
 
     columns->ui_column( width          = `8rem`

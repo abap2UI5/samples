@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
         scrollable    = abap_true
         wheelzoomable = abap_false
         foldedcorners = abap_true
-        nodepress     = client->_event( val = `NODE_PRESS` )
+        nodepress     = client->_event( `NODE_PRESS` )
         nodes         = client->_bind_edit( mt_nodes )
         lanes         = client->_bind_edit( mt_lanes )
       )->nodes( ns = `commons`

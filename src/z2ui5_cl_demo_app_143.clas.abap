@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     DATA(cont) = page->content( ns = `f` ).
 
     DATA(tab) = cont->vbox(
-                  )->ui_table( rows                = client->_bind( val = gt_data )
+                  )->ui_table( rows                = client->_bind( gt_data )
                                id                  = `Table1`
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
