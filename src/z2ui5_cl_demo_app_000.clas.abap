@@ -1849,6 +1849,16 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
+
+    panel->generic_tile( header    = 'Multi Timer Test'
+                         subheader = ''
+                         press     = client->_event( 'z2ui5_cl_demo_app_353' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
+
+
+
+
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
