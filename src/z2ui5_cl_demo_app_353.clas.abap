@@ -86,34 +86,13 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
                                 )->content( ns = `form` ).
 
     form->label( 'device_browser'
-                          )->input( client->_bind_edit( device_browser )
-                          )->label( `device_os`
                           )->input( client->_bind_edit( device_os )
                           )->label( `device_systemtype`
-                          )->input( client->_bind_edit( device_systemtype )
-                          )->label( `ui5_gav`
-                          )->input( client->_bind_edit( ui5_gav )
-                          )->label( `ui5_theme`
-                          )->input( client->_bind_edit( ui5_theme )
-                          )->label( `ui5_version`
-                          )->input( client->_bind_edit( ui5_version )
-                          )->label( `device_phone`
-                          )->input( client->_bind_edit( device_phone )
-                          )->label( `device_desktop`
-                          )->input( client->_bind_edit( device_desktop )
-                          )->label( `device_tablet`
-                          )->input( client->_bind_edit( device_tablet )
-                          )->label( `device_combi`
-                          )->input( client->_bind_edit( device_combi )
-                          )->label( `device_height`
-                          )->input( client->_bind_edit( device_height )
-                          )->label( `device_width`
-                          )->input( client->_bind_edit( device_width )
 
-        )->label( 'Cursor here -> '
-         )->input( id    = `IdOne`
-                   type  = ``
-                   value = client->_bind_edit( one ) ).
+                         )->label( 'Cursor here -> '
+                         )->input( id    = `IdOne`
+                                   type  = ``
+                                   value = client->_bind_edit( one ) ).
 
     client->view_display( page->stringify( ) ).
 

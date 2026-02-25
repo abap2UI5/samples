@@ -60,10 +60,10 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
       client->message_toast_display( 'ERROR - ms_data is inital!' ).
     ENDIF.
 
-    ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-    IF <val> <> ms_struc.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
-    ENDIF.
+*    ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+*    IF <val> <> ms_struc.
+*      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
+*    ENDIF.
 
     client->view_model_update( ).
 
