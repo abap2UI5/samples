@@ -33,55 +33,47 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
             )->button( text = 'button'
             )->text( 'text'
             )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
             )->toolbar_spacer(
             )->text( 'subheader'
             )->toolbar_spacer(
             )->button( text = 'button'
             )->text( 'text'
-            )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5' ).
+            )->link( text = 'link' ).
 
     DATA(grid) = page->grid( 'L4 M4 S4' )->content( 'layout' ).
 
     grid->simple_form( 'Grid width 33%' )->content( 'form'
        )->button( text = 'button'
        )->text( 'text'
-       )->link( text = 'link'
-                href = 'https://twitter.com/abap2UI5' ).
+       )->link( text = 'link' ).
 
     grid->simple_form( 'Grid width 33%' )->content( 'form'
       )->button( text = 'button'
       )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+      )->link( text = 'link' ).
 
     grid->simple_form( 'Grid width 33%' )->content( 'form'
       )->button( text = 'button'
       )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+      )->link( text = 'link' ).
 
     grid = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 
     grid->simple_form( 'grid width 100%' )->content( 'form'
       )->button( text = 'button'
       )->text( 'text'
-      )->link( text = 'link'
-               href = 'https://twitter.com/abap2UI5' ).
+      )->link( text = 'link' ).
 
     page->footer(
         )->overflow_toolbar(
             )->button( text = 'button'
             )->text( 'text'
             )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
             )->toolbar_spacer(
             )->text( 'footer'
             )->toolbar_spacer(
             )->text( 'text'
             )->link( text = 'link'
-                     href = 'https://twitter.com/abap2UI5'
             )->button( text = 'reject'
                        type = 'Reject'
             )->button( text = 'accept'

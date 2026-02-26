@@ -84,13 +84,6 @@ CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
             navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true ).
 
-    page->header_content(
-             )->link( text   = 'Demo'
-                      target = '_blank'
-                      href   = `https://twitter.com/abap2UI5/status/1680261069535584259`
-             )->link(
-         )->get_parent( ).
-
     client->view_display( page->button( text  = 'Open Popup here...'
                                         press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
 

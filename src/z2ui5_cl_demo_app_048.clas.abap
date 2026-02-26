@@ -62,13 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
             title           = 'abap2UI5 - List'
             navbuttonpress  = client->_event( 'BACK' )
               shownavbutton = abap_true
-            )->header_content(
-                  )->link(
-                    text   = 'Demo'
-                    target = '_blank'
-                    href   = `https://twitter.com/abap2UI5/status/1657279838586109953`
-                )->link(
-      )->get_parent( ).
+            ).
 
     page->list(
         headertext      = 'List Ouput'
