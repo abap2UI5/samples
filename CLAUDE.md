@@ -1,18 +1,22 @@
 # CLAUDE.md
 
-## Projekt
+## Project
 
-abap2UI5 Samples - Sammlung von Demo-Apps für das abap2UI5 Framework.
+abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 
-## Regeln
+## Language
+
+- **This entire project is in English.** All code, comments, commit messages, PR titles, PR descriptions, and any other text must be written in English.
+
+## Rules
 
 ### abaplint
 
-- **Vor jedem Commit muss `abaplint` ausgeführt werden und 0 Fehler zeigen.**
-- Konfiguration liegt in `abaplint.jsonc`.
-- Installation: `npm install -g @abaplint/cli`
-- Aufruf: `abaplint`
+- **Run `abaplint` before every commit. It must report 0 issues.**
+- Configuration: `abaplint.jsonc`
+- Install: `npm install -g @abaplint/cli`
+- Run: `abaplint`
 
-### Code-Konventionen
+### Code Conventions
 
-- Kein init-Flag als Attribut verwenden (`check_initialized`, `mv_init`, `is_initialized`, etc.). Stattdessen immer `client->check_on_init( )` nutzen.
+- Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
