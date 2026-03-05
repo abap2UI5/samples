@@ -232,31 +232,29 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-    CASE client->get( )-event.
-      WHEN 'onDrop'.
-        DATA(ondropparameters) = client->get( )-t_event_arg.
-        TRY.
-            DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.
-            DATA(drop_position) = CONV i( ondropparameters[ 2 ] ) + 1.
-            DATA(insert_position) = ondropparameters[ 3 ].
-            DATA(item) = items[ drag_position ].
-          CATCH cx_root.
-            RETURN.
-        ENDTRY.
+    IF client->check_on_event( 'onDrop' ).
+      DATA(ondropparameters) = client->get( )-t_event_arg.
+      TRY.
+          DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.
+          DATA(drop_position) = CONV i( ondropparameters[ 2 ] ) + 1.
+          DATA(insert_position) = ondropparameters[ 3 ].
+          DATA(item) = items[ drag_position ].
+        CATCH cx_root.
+          RETURN.
+      ENDTRY.
 
-        DELETE items INDEX drag_position.
+      DELETE items INDEX drag_position.
 
-        IF drag_position < drop_position.
-          drop_position = drop_position - 1.
-        ENDIF.
+      IF drag_position < drop_position.
+        drop_position = drop_position - 1.
+      ENDIF.
 
-        IF insert_position = `Before`.
-          INSERT item INTO items INDEX drop_position.
-        ELSE.
-          INSERT item INTO items INDEX drop_position + 1.
-        ENDIF.
-
-    ENDCASE.
+      IF insert_position = `Before`.
+        INSERT item INTO items INDEX drop_position.
+      ELSE.
+        INSERT item INTO items INDEX drop_position + 1.
+      ENDIF.
+    ENDIF.
     client->view_model_update( ).
   ENDMETHOD.
 ENDCLASS.

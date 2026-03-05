@@ -55,18 +55,16 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     me->client = client.
 
-    CASE client->get( )-event.
+    IF client->check_on_event( 'BUTTON_SEARCH' ).
+      z2ui5_set_data( ).
+      z2ui5_cl_util=>itab_filter_by_val(
+          EXPORTING
+              val = client->get_event_arg( 1 )
+          CHANGING
+              tab = mt_table ).
 
-      WHEN 'BUTTON_SEARCH'.
-        z2ui5_set_data( ).
-        z2ui5_cl_util=>itab_filter_by_val(
-            EXPORTING
-                val = client->get_event_arg( 1 )
-            CHANGING
-                tab = mt_table ).
-
-        client->view_model_update( ).
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -144,21 +144,20 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'handleChange'.
+    IF client->check_on_event( 'handleChange' ).
 
-        DATA(args) = client->get( )-t_event_arg.
-        DATA(source) = args[ 1 ].
+      DATA(args) = client->get( )-t_event_arg.
+      DATA(source) = args[ 1 ].
 
-        ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
+      ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
 
-        DATA(drs) = CORRESPONDING t_drs( <drs> ).
+      DATA(drs) = CORRESPONDING t_drs( <drs> ).
 
-        text = |Id: { source }\n|
-            && |From: { drs-start }\n|
-            && |To: { drs-end }|.
+      text = |Id: { source }\n|
+          && |From: { drs-start }\n|
+          && |To: { drs-end }|.
 
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 

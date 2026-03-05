@@ -80,20 +80,18 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     DATA lt_event_arguments TYPE string_table.
 
-    CASE client->get( )-event.
+    IF client->check_on_event( 'PL_TOTAL_CHANGE' ).
 
-      WHEN 'PL_TOTAL_CHANGE'.
+      lt_event_arguments = client->get( )-t_event_arg.
+      DATA(lv_id_event) = lt_event_arguments[ 1 ].
 
-        lt_event_arguments = client->get( )-t_event_arg.
-        DATA(lv_id_event) = lt_event_arguments[ 1 ].
+      DATA(lv_tab_index) = lt_event_arguments[ 2 ].
+      DATA(ls_row_submit) = mt_output[ lv_tab_index ].
 
-        DATA(lv_tab_index) = lt_event_arguments[ 2 ].
-        DATA(ls_row_submit) = mt_output[ lv_tab_index ].
+      DATA(lv_id_parent) = lt_event_arguments[ 3 ].
 
-        DATA(lv_id_parent) = lt_event_arguments[ 3 ].
-
-        client->message_box_display( lv_tab_index && lv_id_event && lv_id_parent ).
-    ENDCASE.
+      client->message_box_display( lv_tab_index && lv_id_event && lv_id_parent ).
+    ENDIF.
 
     client->view_model_update( ).
 

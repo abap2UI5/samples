@@ -124,11 +124,10 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-    CASE client->get( )-event.
-      WHEN 'AppSelected'.
-        DATA(ls_client) = client->get( ).
-        client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
-    ENDCASE.
+    IF client->check_on_event( 'AppSelected' ).
+      DATA(ls_client) = client->get( ).
+      client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
+    ENDIF.
   ENDMETHOD.
 
 

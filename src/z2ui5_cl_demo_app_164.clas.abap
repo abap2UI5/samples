@@ -33,11 +33,9 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN `BUTTON_START`.
-        client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
-    ENDCASE.
+    IF client->check_on_event( `BUTTON_START` ).
+      client->nav_app_call( z2ui5_cl_pop_table=>factory( mt_table ) ).
+    ENDIF.
 
   ENDMETHOD.
 

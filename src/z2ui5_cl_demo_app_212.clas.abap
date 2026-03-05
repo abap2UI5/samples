@@ -57,16 +57,9 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'ROW_SELECT'.
-
-        row_select( ).
-
-      WHEN OTHERS.
-
-
-
-    ENDCASE.
+    IF client->check_on_event( 'ROW_SELECT' ).
+      row_select( ).
+    ENDIF.
   ENDMETHOD.
 
   METHOD row_select.

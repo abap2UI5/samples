@@ -61,11 +61,9 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'POST'.
-        client->message_box_display( 'success - values send to the server' ).
-    ENDCASE.
+    IF client->check_on_event( 'POST' ).
+      client->message_box_display( 'success - values send to the server' ).
+    ENDIF.
 
   ENDMETHOD.
 

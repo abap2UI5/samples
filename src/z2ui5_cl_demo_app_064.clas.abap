@@ -88,23 +88,22 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
     DATA lt_arg TYPE string_table.
     DATA ls_arg TYPE string.
 
-    CASE client->get( )-event.
-      WHEN `LOAD`.
+    IF client->check_on_event( `LOAD` ).
 
-        mv_percent = mv_percent + 25.
-        mv_check_active = abap_true.
-        mv_check_enabled = abap_false.
-        IF mv_percent > 100.
-          mv_percent = 0.
-          mv_check_active = abap_false.
-          mv_check_enabled = abap_true.
-        ENDIF.
+      mv_percent = mv_percent + 25.
+      mv_check_active = abap_true.
+      mv_check_enabled = abap_false.
+      IF mv_percent > 100.
+        mv_percent = 0.
+        mv_check_active = abap_false.
+        mv_check_enabled = abap_true.
+      ENDIF.
 
-        client->message_toast_display( `loaded` ).
-        WAIT UP TO 2 SECONDS.
-        client->view_model_update( ).
+      client->message_toast_display( `loaded` ).
+      WAIT UP TO 2 SECONDS.
+      client->view_model_update( ).
 
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 

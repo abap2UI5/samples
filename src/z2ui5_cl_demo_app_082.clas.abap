@@ -52,17 +52,13 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
+    IF client->check_on_event( 'TIMER_FINISHED' ).
+      mv_counter = mv_counter + 1.
+      INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+          INTO TABLE t_tab.
 
-      WHEN 'TIMER_FINISHED'.
-        mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-            INTO TABLE t_tab.
-
-
-
-        client->view_model_update( ).
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 

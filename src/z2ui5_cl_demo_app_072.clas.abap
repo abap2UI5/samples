@@ -66,12 +66,11 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
-      WHEN 'OnSelectIconTabBar'.
-        client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
-        set_filter( ).
-        client->view_model_update( ).
-    ENDCASE.
+    IF client->check_on_event( 'OnSelectIconTabBar' ).
+      client->message_toast_display( |Event SelectedTabBar Key { lv_selectedkey  } | ).
+      set_filter( ).
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -52,20 +52,18 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE client->get( )-event.
+    IF client->check_on_event( 'TIMER_FINISHED' ).
+      mv_counter = mv_counter + 1.
+      INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+          INTO TABLE t_tab.
 
-      WHEN 'TIMER_FINISHED'.
-        mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-            INTO TABLE t_tab.
+      IF mv_counter = 3.
+        mv_check_active = abap_false.
+        client->message_toast_display( `timer deactivated` ).
+      ENDIF.
 
-        IF mv_counter = 3.
-          mv_check_active = abap_false.
-          client->message_toast_display( `timer deactivated` ).
-        ENDIF.
-
-        client->view_model_update( ).
-    ENDCASE.
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 

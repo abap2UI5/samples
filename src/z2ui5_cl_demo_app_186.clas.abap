@@ -46,15 +46,9 @@ CLASS Z2UI5_CL_DEMO_APP_186 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'BUTTON_DOWNLOAD'.
-
-
-
-        client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
-
-    ENDCASE.
+    IF client->check_on_event( 'BUTTON_DOWNLOAD' ).
+      client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 

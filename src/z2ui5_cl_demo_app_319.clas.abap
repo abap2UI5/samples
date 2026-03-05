@@ -82,18 +82,17 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE m_client->get( )-event.
-      WHEN 'PRODTYPE_CHANGED'.
-        INSERT VALUE #( operation = 'EQ' value1 = 'EUR' keyfield = 'CurrencyCode' tokentext = 'Euro (auto added line)' ) INTO TABLE m_selection-product_type-ranges.
-        m_client->view_model_update( ).
-        TRY.
-            m_client->message_box_display(
-              text  = z2ui5_cl_ajson=>new( )->set( iv_path = '/' iv_val = m_selection-product_type-ranges )->stringify( )
-              title = 'range content' ).
-          CATCH z2ui5_cx_ajson_error INTO DATA(lx_ajson).
-            m_client->message_toast_display( lx_ajson->get_text( ) ).
-        ENDTRY.
-    ENDCASE.
+    IF m_client->check_on_event( 'PRODTYPE_CHANGED' ).
+      INSERT VALUE #( operation = 'EQ' value1 = 'EUR' keyfield = 'CurrencyCode' tokentext = 'Euro (auto added line)' ) INTO TABLE m_selection-product_type-ranges.
+      m_client->view_model_update( ).
+      TRY.
+          m_client->message_box_display(
+            text  = z2ui5_cl_ajson=>new( )->set( iv_path = '/' iv_val = m_selection-product_type-ranges )->stringify( )
+            title = 'range content' ).
+        CATCH z2ui5_cx_ajson_error INTO DATA(lx_ajson).
+          m_client->message_toast_display( lx_ajson->get_text( ) ).
+      ENDTRY.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

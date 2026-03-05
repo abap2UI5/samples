@@ -61,10 +61,9 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'CALL_KEYBOARD'.
-        client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
-    ENDCASE.
+    IF client->check_on_event( 'CALL_KEYBOARD' ).
+      client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -80,14 +80,11 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-    CASE client->get( )-event.
-
-      WHEN 'SELECTION_CHANGE'.
-
-        client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
-                                io_table  = mt_table
-                                io_layout = mo_layout ) ).
-    ENDCASE.
+    IF client->check_on_event( 'SELECTION_CHANGE' ).
+      client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
+                              io_table  = mt_table
+                              io_layout = mo_layout ) ).
+    ENDIF.
   ENDMETHOD.
 
   METHOD on_init.

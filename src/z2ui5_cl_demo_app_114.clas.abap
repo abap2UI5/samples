@@ -51,20 +51,19 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-    CASE client->get( )-event.
-      WHEN 'POST'.
+    IF client->check_on_event( 'POST' ).
 
-        IF mv_value IS NOT INITIAL.
-          CLEAR ms_feed.
-          ms_feed-author = sy-uname.
-          ms_feed-type = 'Respond'.
-          ms_feed-text = mv_value.
-          mv_value = ``.
-          INSERT ms_feed INTO mt_feed INDEX 1.
-          client->view_model_update( ).
+      IF mv_value IS NOT INITIAL.
+        CLEAR ms_feed.
+        ms_feed-author = sy-uname.
+        ms_feed-type = 'Respond'.
+        ms_feed-text = mv_value.
+        mv_value = ``.
+        INSERT ms_feed INTO mt_feed INDEX 1.
+        client->view_model_update( ).
 
-        ENDIF.
-    ENDCASE.
+      ENDIF.
+    ENDIF.
   ENDMETHOD.
 
 

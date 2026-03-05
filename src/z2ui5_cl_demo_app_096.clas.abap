@@ -42,12 +42,9 @@ CLASS Z2UI5_CL_DEMO_APP_096 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'MESSAGE_SUB'.
-        client->message_box_display( `event sub app` ).
-
-    ENDCASE.
+    IF client->check_on_event( 'MESSAGE_SUB' ).
+      client->message_box_display( `event sub app` ).
+    ENDIF.
 
   ENDMETHOD.
 

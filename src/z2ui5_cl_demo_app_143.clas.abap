@@ -32,12 +32,10 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
   METHOD ui5_on_event.
 
     TRY.
-        DATA(ok_code) = client->get( )-event.
-        CASE ok_code.
-          WHEN 'ROW_ACTION_ITEM_ADD'.
-            client->message_toast_display( 'Something' ).
-            client->view_model_update( ).
-        ENDCASE.
+        IF client->check_on_event( 'ROW_ACTION_ITEM_ADD' ).
+          client->message_toast_display( 'Something' ).
+          client->view_model_update( ).
+        ENDIF.
       CATCH cx_root INTO DATA(x).
         client->message_box_display( text = x->get_text( )
                                      type = `error` ).

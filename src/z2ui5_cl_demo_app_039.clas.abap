@@ -52,11 +52,9 @@ CLASS Z2UI5_CL_DEMO_APP_039 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
-      WHEN 'POPUP'.
-        client->message_box_display( 'Event raised value:' && mv_value ).
-
-    ENDCASE.
+    IF client->check_on_event( 'POPUP' ).
+      client->message_box_display( 'Event raised value:' && mv_value ).
+    ENDIF.
 
   ENDMETHOD.
 

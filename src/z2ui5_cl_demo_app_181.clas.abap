@@ -45,10 +45,9 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-      WHEN 'BOOK'.
-        client->message_toast_display( 'BOOKED !!! ENJOY' ).
-    ENDCASE.
+    IF client->check_on_event( 'BOOK' ).
+      client->message_toast_display( 'BOOKED !!! ENJOY' ).
+    ENDIF.
 
   ENDMETHOD.
 

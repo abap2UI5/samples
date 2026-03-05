@@ -24,11 +24,9 @@ CLASS Z2UI5_CL_DEMO_APP_163 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'OPEN_ACTION_SHEET'.
-        view_action_sheet( ).
-    ENDCASE.
+    IF client->check_on_event( 'OPEN_ACTION_SHEET' ).
+      view_action_sheet( ).
+    ENDIF.
 
   ENDMETHOD.
 

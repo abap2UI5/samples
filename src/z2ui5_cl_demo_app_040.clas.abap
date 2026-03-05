@@ -48,12 +48,10 @@ CLASS Z2UI5_CL_DEMO_APP_040 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    CASE app-get-event.
-
-      WHEN 'LOAD_BC'.
-        client->message_box_display( 'JSBarcode Library loaded' ).
-        mv_load_lib = abap_true.
-    ENDCASE.
+    IF client->check_on_event( 'LOAD_BC' ).
+      client->message_box_display( 'JSBarcode Library loaded' ).
+      mv_load_lib = abap_true.
+    ENDIF.
 
   ENDMETHOD.
 
