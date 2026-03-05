@@ -38,8 +38,6 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION
         pl_q04         TYPE i,
         per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
       END OF s_output .
-
-    DATA check_initialized TYPE abap_bool .
     DATA mt_output TYPE STANDARD TABLE OF s_output.
     DATA client TYPE REF TO z2ui5_if_client.
 

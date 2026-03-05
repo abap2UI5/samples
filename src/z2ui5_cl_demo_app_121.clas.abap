@@ -12,8 +12,6 @@ CLASS z2ui5_cl_demo_app_121 DEFINITION
     DATA speed TYPE string.
     DATA altitudeaccuracy TYPE string.
     DATA accuracy TYPE string.
-    DATA check_initialized TYPE abap_bool .
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

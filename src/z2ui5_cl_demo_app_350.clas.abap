@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_350 DEFINITION
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA check_initialized TYPE abap_bool.
     DATA: view_id TYPE i.
     DATA text TYPE string VALUE 'call booking mask'.
     DATA varkey TYPE char120.
@@ -62,8 +61,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 
     ELSEIF view_id = 2.
       TRY.
-          IF check_initialized = abap_false.
-            check_initialized = abap_true.
+          IF client->check_on_init( ).
 
             DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
             CALL FUNCTION lv_fm

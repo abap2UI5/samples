@@ -24,7 +24,6 @@ CLASS z2ui5_cl_demo_app_353 DEFINITION
     DATA device_width      TYPE string.
 
   PRIVATE SECTION.
-    DATA initialized TYPE abap_bool.
     DATA client      TYPE REF TO z2ui5_if_client.
 
     METHODS render.
@@ -102,8 +101,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
     me->client = client.
 
-    IF initialized = abap_false.
-      initialized = abap_true.
+    IF client->check_on_init( ).
       focus_field = 'IdOne'.
       mv_check_active = abap_true.
       render( ).

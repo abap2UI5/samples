@@ -11,8 +11,6 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
-    DATA mv_init TYPE abap_bool.
-
     DATA mt_comp         TYPE abap_component_tab.
 
     METHODS set_app_data
@@ -104,8 +102,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF mv_init = abap_false.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
 
       on_init( ).
 

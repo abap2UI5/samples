@@ -23,8 +23,6 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION
       ty_t_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
 
     DATA mv_flag TYPE abap_bool. " VALUE abap_true.
-    DATA mv_initialized TYPE abap_bool.
-
     DATA mt_layout TYPE ty_t_layout.
     DATA mt_data   TYPE ty_t_data.
 
@@ -88,8 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
 
     me->client = client.
 
-    IF mv_initialized = abap_false.
-      mv_initialized = abap_true.
+    IF client->check_on_init( ).
 
       client->_bind( mt_layout ).
 

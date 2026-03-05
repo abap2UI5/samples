@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION
 
     DATA
       t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
-    DATA check_initialized TYPE abap_bool .
     DATA check_ui5 TYPE abap_bool .
     DATA mv_key TYPE string .
     DATA sortorder TYPE string VALUE `None`.

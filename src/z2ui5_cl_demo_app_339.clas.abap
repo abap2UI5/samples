@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_339 DEFINITION
 
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
-    DATA mv_init         TYPE abap_bool.
     DATA mv_table        TYPE string.
 
     DATA mt_table_tmp    TYPE REF TO data.

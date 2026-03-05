@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION
     DATA mt_table TYPE ty_t_table .
     DATA mt_table_full TYPE ty_t_table .
     DATA mt_table_products TYPE ty_t_table .
-    DATA check_initialized TYPE abap_bool .
     DATA client TYPE REF TO z2ui5_if_client .
     DATA mv_check_popover TYPE abap_bool .
     DATA mv_product TYPE string .

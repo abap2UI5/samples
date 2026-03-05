@@ -6,8 +6,6 @@ CLASS z2ui5_cl_demo_app_005 DEFINITION PUBLIC.
 
     DATA value1 TYPE int4.
     DATA value2 TYPE int4.
-    DATA initialized TYPE abap_bool.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -19,8 +17,7 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF initialized = abap_false.
-      initialized = abap_true.
+    IF client->check_on_init( ).
       value1 = 10.
       value2 = 90.
     ENDIF.

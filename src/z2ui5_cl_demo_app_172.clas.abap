@@ -20,8 +20,6 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION
         bool     TYPE abap_bool,
         waers    TYPE waers,
       END OF ty_output .
-
-    DATA check_initialized TYPE abap_bool .
     DATA output TYPE STANDARD TABLE OF ty_output.
     DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.

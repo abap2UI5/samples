@@ -6,8 +6,6 @@ CLASS z2ui5_cl_demo_app_330 DEFINITION
 
     INTERFACES if_serializable_object .
     INTERFACES z2ui5_if_app .
-
-    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -358,8 +356,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_initialized = abap_false.
-      check_initialized = abap_true.
+    IF client->check_on_init( ).
       display_view( client ).
 
     ENDIF.

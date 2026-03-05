@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA instance_counter TYPE i READ-ONLY.
-    DATA check_initialized TYPE abap_bool READ-ONLY.
     DATA session_is_stateful TYPE abap_bool READ-ONLY.
     DATA session_text TYPE string READ-ONLY.
 
@@ -32,8 +31,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     TRY.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+        IF client->check_on_init( ).
           initialize_view( client ).
         ENDIF.
 

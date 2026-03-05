@@ -24,9 +24,6 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION
       text    TYPE string.
 
   PRIVATE SECTION.
-    DATA
-      check_initialized TYPE abap_bool.
-
     METHODS:
       display_view
         IMPORTING

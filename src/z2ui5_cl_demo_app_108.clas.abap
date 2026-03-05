@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION
         input2 TYPE string,
         input3 TYPE string,
       END OF screen .
-    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering

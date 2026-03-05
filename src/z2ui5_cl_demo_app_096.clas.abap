@@ -6,8 +6,6 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_descr       TYPE string.
-
-    DATA mv_init TYPE abap_bool.
     METHODS on_init.
     METHODS on_event.
 
@@ -26,8 +24,7 @@ CLASS Z2UI5_CL_DEMO_APP_096 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF mv_init = abap_false.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
       on_init( ).
       RETURN.
     ENDIF.

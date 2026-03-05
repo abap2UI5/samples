@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY .
 
     DATA client TYPE REF TO z2ui5_if_client .
-    DATA check_initialized TYPE abap_bool .
     DATA gt_multi TYPE ty_t_combo.
     DATA gt_sel_multi TYPE ty_t_combo.
     DATA gt_sel_multi2 TYPE string_table.

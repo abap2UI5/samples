@@ -17,8 +17,6 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION
 
     DATA gt_data TYPE ty_t_data.
     DATA client TYPE REF TO z2ui5_if_client .
-    DATA check_initialized TYPE abap_bool .
-
     METHODS ui5_on_init .
     METHODS ui5_on_event .
     METHODS ui5_view_main_display .

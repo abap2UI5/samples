@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION
       END OF screen .
     DATA
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY .
-    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering

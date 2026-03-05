@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION
       ty_prin_nodes TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY.
 
     DATA prodh_nodes TYPE ty_prodh_nodes .
-    DATA is_initialized TYPE abap_bool .
     DATA gv_user TYPE c LENGTH 12.
     DATA gv_date TYPE d.
 
@@ -225,8 +224,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
     me->client = client.
 
-    IF is_initialized = abap_false.
-      is_initialized = abap_true.
+    IF client->check_on_init( ).
       ui5_initialize( ).
 
       DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&

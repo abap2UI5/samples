@@ -45,7 +45,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION
 
     DATA mt_table TYPE ty_t_table .
     DATA mt_table_supplier TYPE ty_t_table_supplier .
-    DATA check_initialized TYPE abap_bool .
     DATA mv_search_value TYPE string.
     DATA ls_detail TYPE ty_s_tab .
   PROTECTED SECTION.

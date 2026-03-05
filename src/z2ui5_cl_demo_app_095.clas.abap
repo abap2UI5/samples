@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
     DATA mo_app_sub TYPE REF TO z2ui5_cl_demo_app_096.
 
     DATA client      TYPE REF TO z2ui5_if_client.
-    DATA mv_init     TYPE abap_bool.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
 
     DATA mr_input  TYPE REF TO data.
@@ -131,8 +130,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
 
     me->client = client.
 
-    IF mv_init = abap_false.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
       on_init( ).
       on_init_sub( ).
       client->view_display( page->get_root( )->xml_get( ) ).

@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA mv_check_initialized TYPE abap_bool.
     METHODS on_event.
     METHODS view_display.
     METHODS set_data.
@@ -116,8 +115,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     me->client = client.
 
-    IF mv_check_initialized = abap_false.
-      mv_check_initialized = abap_true.
+    IF client->check_on_init( ).
       mt_filter = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
       DELETE mt_filter WHERE name = `SELKZ`.
       view_display( ).

@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION
     INTERFACES z2ui5_if_app .
 
     DATA lock_counter TYPE i READ-ONLY .
-    DATA check_initialized TYPE abap_bool READ-ONLY .
     DATA session_is_stateful TYPE abap_bool READ-ONLY .
     DATA session_text TYPE string READ-ONLY .
     DATA lock_text TYPE string READ-ONLY .
@@ -138,8 +137,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
         CLEAR error.
 
-        IF check_initialized = abap_false.
-          check_initialized = abap_true.
+        IF client->check_on_init( ).
           update_lock_counter( ).
           initialize_view( client ).
         ENDIF.

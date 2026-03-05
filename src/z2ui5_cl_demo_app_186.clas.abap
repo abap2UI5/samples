@@ -7,8 +7,6 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION
 
 
     INTERFACES z2ui5_if_app .
-
-    DATA is_initialized TYPE abap_bool .
     DATA file_content_64 TYPE string .
     DATA file_name TYPE string .
     DATA mime_type TYPE string .

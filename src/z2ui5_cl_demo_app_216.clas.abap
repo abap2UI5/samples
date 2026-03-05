@@ -5,8 +5,6 @@ CLASS z2ui5_cl_demo_app_216 DEFINITION
   PUBLIC SECTION.
 
     INTERFACES z2ui5_if_app .
-
-    DATA check_initialized TYPE abap_bool .
   PROTECTED SECTION.
 
     METHODS display_view
