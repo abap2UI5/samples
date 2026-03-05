@@ -68,8 +68,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_init IS INITIAL.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
 
       render_main( client ).
 
