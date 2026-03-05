@@ -25,13 +25,10 @@ CLASS Z2UI5_CL_DEMO_APP_309 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
-
-      WHEN 'CUSTOM_JS_FROM_EB'.
-
+    IF client->check_on_event( 'CUSTOM_JS_FROM_EB' ).
 *        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
-        client->follow_up_action( `alert("afterBE triggered !!");` ).
-    ENDCASE.
+      client->follow_up_action( `alert("afterBE triggered !!");` ).
+    ENDIF.
 
   ENDMETHOD.
 
