@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'Sample: Icon Tab Bar - Text Only'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->icon_tab_bar( id       = `idIconTabBarNoIcons`
@@ -53,12 +53,6 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
 
 
   METHOD on_event.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 
 

@@ -119,10 +119,6 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
       WHEN 'MYCC'.
         client->message_toast_display( `Custom Control input: ` && mv_value ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -136,7 +132,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event( 'BACK' ) && `" ` && |\n| &&
+                          `  press="` && client->_event_nav_app_leave( ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
                           `<m:Button text="Load Custom Control"    press="` && client->_event( 'LOAD_CC' )    && `" />` && |\n| &&
                           `<m:Button text="Display Custom Control" press="` && client->_event( 'DISPLAY_CC' ) && `" />` && |\n| &&

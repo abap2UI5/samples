@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->page(
             title          = 'abap2UI5 - Hello World App'
             shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
         )->simple_form( editable = abap_true
              )->content( ns = `form`
                 )->color_picker(
@@ -39,12 +39,6 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->stringify( ) ).
 
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 
 ENDCLASS.

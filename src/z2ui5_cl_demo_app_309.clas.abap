@@ -31,11 +31,6 @@ CLASS Z2UI5_CL_DEMO_APP_309 IMPLEMENTATION.
 
 *        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
         client->follow_up_action( `alert("afterBE triggered !!");` ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-
     ENDCASE.
 
   ENDMETHOD.
@@ -50,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_309 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = `Client->FOLLOW_UP_ACTION use cases`
         class          = `sapUiContentPadding`
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
     page = page->vbox( ).
     page->get_parent( )->hbox( class = `sapUiSmallMargin` ).

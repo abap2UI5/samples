@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Popup HTML'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup...'
@@ -58,10 +58,6 @@ CLASS Z2UI5_CL_DEMO_APP_149 IMPLEMENTATION.
                                                      |\n| &&
                                                      `<a href="https://www.w3schools.com" target="_blank">This is a link</a>` ).
         client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

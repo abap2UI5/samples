@@ -54,10 +54,6 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
 
             CLEAR mv_value.
             CLEAR mv_path.
-
-          WHEN 'BACK'.
-            client->nav_app_leave( ).
-
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
@@ -87,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_075 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
             title          = 'abap2UI5 - Upload Files'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     IF mv_file IS NOT INITIAL.

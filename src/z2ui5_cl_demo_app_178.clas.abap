@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
     DATA(page) = view->shell(
          )->page(
             title           = 'abap2UI5 - Tree - Open & Close Popup to see the control keeping expanded'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
     client->view_display( page->button( text  = 'Open Popup here...'
@@ -149,10 +149,6 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'POPUP_TREE'.
         ui5_display_popup_tree_select( ).
 

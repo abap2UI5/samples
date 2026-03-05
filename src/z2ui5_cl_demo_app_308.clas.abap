@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page( title          = 'Harvey Chart'
-                   navbuttonpress = client->_event( 'BACK' )
+                   navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->harvey_ball_micro_chart(
@@ -53,12 +53,6 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
 
   ENDMETHOD.
 

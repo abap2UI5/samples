@@ -109,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
        )->page(
          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
           title           = 'abap2UI5 - Master Detail Page with Nested View'
-          navbuttonpress  = client->_event( 'BACK' )
+          navbuttonpress  = client->_event_nav_app_leave( )
             shownavbutton = abap_true ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
@@ -183,10 +183,6 @@ CLASS Z2UI5_CL_DEMO_APP_098 IMPLEMENTATION.
         client->view_model_update( ).
 
         view_display_detail( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

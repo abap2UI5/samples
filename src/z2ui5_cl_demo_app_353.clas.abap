@@ -43,10 +43,6 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
       WHEN 'INFO_FINISHED'.
 
         client->message_toast_display( 'Frontend finished' ).
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     client->view_model_update( ).
@@ -57,7 +53,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
           )->page( title          = 'abap2UI5 - Multiple Timers'
-                   navbuttonpress = client->_event( 'BACK' )
+                   navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->_z2ui5( )->timer( finished    = client->_event( 'TIMER_FINISHED' )

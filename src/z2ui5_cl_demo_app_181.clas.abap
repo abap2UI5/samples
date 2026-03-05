@@ -48,10 +48,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BOOK'.
         client->message_toast_display( 'BOOKED !!! ENJOY' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
     ENDCASE.
 
   ENDMETHOD.
@@ -64,7 +60,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = `Cards Demo`
         class          = `sapUiContentPadding`
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
 

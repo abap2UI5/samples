@@ -49,10 +49,6 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
 
       WHEN 'BUTTON_SAVE'.
         client->message_box_display( `event main app` ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -90,7 +86,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title           = 'abap2UI5 - Main App with Sub App'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'

@@ -89,9 +89,6 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
     DATA ls_arg TYPE string.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN `LOAD`.
 
         mv_percent = mv_percent + 25.
@@ -131,7 +128,7 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
     temp5 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
     page1 = view->shell( )->page( id = 'page_main'
       title                          = 'abap2UI5 - Progress Bar while Server Request'
-      navbuttonpress                 = client->_event( 'BACK' )
+      navbuttonpress                 = client->_event_nav_app_leave( )
       shownavbutton                  = temp5
       class                          = 'sapUiContentPadding' ).
 

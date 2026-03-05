@@ -98,7 +98,7 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - List'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
     page->button( text  = 'Messages in Popup'
                   press = client->_event( 'POPUP' ) ).
@@ -154,8 +154,6 @@ CLASS Z2UI5_CL_DEMO_APP_038 IMPLEMENTATION.
         z2ui5_display_popover( `test2` ).
       WHEN 'POPOVER'.
         z2ui5_display_popover( `test` ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

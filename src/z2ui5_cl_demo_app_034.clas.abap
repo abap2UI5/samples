@@ -32,7 +32,7 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Popups'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
@@ -103,10 +103,6 @@ CLASS Z2UI5_CL_DEMO_APP_034 IMPLEMENTATION.
 
       WHEN 'POPUP_BAL'.
         mv_popup_name = 'POPUP_BAL'.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     view_main( client ).

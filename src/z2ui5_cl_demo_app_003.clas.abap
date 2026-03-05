@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
       DATA(page) = view->shell(
           )->page(
               title           = 'abap2UI5 - List'
-              navbuttonpress  = client->_event( 'BACK' )
+              navbuttonpress  = client->_event_nav_app_leave( )
                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
       page->list(
@@ -67,9 +67,6 @@ CLASS Z2UI5_CL_DEMO_APP_003 IMPLEMENTATION.
 
       WHEN 'SELCHANGE'.
         client->message_box_display( `go to details for item ` && t_tab[ selected = abap_true ]-title ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

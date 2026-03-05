@@ -37,7 +37,7 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Popup Input Value'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup...'
@@ -55,10 +55,6 @@ CLASS Z2UI5_CL_DEMO_APP_156 IMPLEMENTATION.
       WHEN 'POPUP'.
         DATA(lo_app) = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
         client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

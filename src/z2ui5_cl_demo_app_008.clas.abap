@@ -64,10 +64,6 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
       WHEN 'BUTTON_MESSAGE_STRIP_SUCCESS'.
         check_strip_active = abap_true.
         strip_type = 'Success'.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -75,7 +71,7 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title           = 'abap2UI5 - Messages'
-            navbuttonpress  = client->_event( 'BACK' )
+            navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
                 )->link(

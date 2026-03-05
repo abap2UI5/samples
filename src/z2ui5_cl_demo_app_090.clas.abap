@@ -101,10 +101,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'P13N_OPEN'.
         z2ui5_view_p13n( ).
 
@@ -132,7 +128,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
     page = page->shell( )->page(
         title          = 'abap2UI5 - P13N Dialog'
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
         class          = 'sapUiContentPadding' ).
 

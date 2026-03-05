@@ -55,9 +55,6 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN 'POPUP'.
         app-popup = 'TEST'.
       WHEN 'DATA'.

@@ -74,17 +74,13 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
       WHEN 'MENU_02'.
         client->message_box_display( 'menu 02 pressed' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(tab) = page->scroll_container( height   = '70%'

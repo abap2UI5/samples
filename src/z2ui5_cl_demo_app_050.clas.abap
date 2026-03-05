@@ -26,15 +26,13 @@ CLASS Z2UI5_CL_DEMO_APP_050 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'BUTTON_POST'.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(
         )->page(
                 title          = 'abap2UI5 - Changed CSS'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
             )->_generic( ns   = `html`
                          name = `style` )->_cc_plain_xml(

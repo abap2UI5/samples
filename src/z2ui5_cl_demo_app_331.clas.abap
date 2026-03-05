@@ -27,14 +27,6 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( REF #( ms_struc ) ).
       ui5_view_display( client ).
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
     IF ms_struc IS INITIAL.
       client->message_toast_display( 'ERROR - MS_STRUC is initial!' ).
     ENDIF.
@@ -46,7 +38,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
-                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'GO'

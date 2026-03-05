@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_z2ui5( )->title( `Avatar Group Sample` ).
     view->page( title          = 'abap2UI5 - Sample: Avatar Group'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
         )->slider( value = client->_bind_edit( viewportpercentwidth )
             )->vertical_layout( id    = `vl1`
@@ -241,9 +241,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD on_event.
     DATA(lt_arg) = client->get( )-t_event_arg.
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN `onGroupPress`.
         DATA(group_id) = lt_arg[ 1 ].
         group_items = items.

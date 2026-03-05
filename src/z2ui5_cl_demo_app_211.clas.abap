@@ -55,9 +55,6 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
           WHEN OTHERS.
 
         ENDCASE.
-
-      WHEN 'BACK'.
-
     ENDCASE.
   ENDMETHOD.
 
@@ -77,7 +74,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
     DATA(page) = view->page( id             = `page_main`
                              title          = 'Customizing'
-                             navbuttonpress = client->_event( 'BACK' )
+                             navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
                              class          = 'sapUiContentPadding' ).
 

@@ -80,10 +80,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
       WHEN `BUTTON_DOWNLOAD`.
         mv_check_download = abap_true.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -112,7 +108,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     view = view->page( id    = `page_main`
               title          = 'abap2UI5 - List Report Features'
-              navbuttonpress = client->_event( 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
     IF mv_check_download = abap_true.

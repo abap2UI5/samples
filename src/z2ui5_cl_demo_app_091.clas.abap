@@ -76,14 +76,6 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
   ENDMETHOD.
 
 
@@ -114,7 +106,7 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
         title          = 'abap2UI5 - Process Flow'
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
         class          = 'sapUiContentPadding' ).
 

@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = lo_main->page( title          = 'abap2UI5 - Popups'
-                                navbuttonpress = client->_event( 'BACK' )
+                                navbuttonpress = client->_event_nav_app_leave( )
                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
@@ -83,11 +83,6 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory( io_table  = REF #( mt_table )
                                                               io_layout = mo_layout1 ) ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

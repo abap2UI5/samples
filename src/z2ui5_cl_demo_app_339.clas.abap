@@ -87,11 +87,6 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                                 io_table  = mt_table
                                 io_layout = mo_layout ) ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
     ENDCASE.
   ENDMETHOD.
 

@@ -42,10 +42,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN OTHERS.
         mv_page = client->get( )-event.
         z2ui5_view_display( ).
@@ -59,7 +55,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
         title          = `abap2UI5 - Sample: Nav Container`
        )->content( ).

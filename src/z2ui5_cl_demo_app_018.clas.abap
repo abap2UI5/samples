@@ -67,7 +67,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Template'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
             )->simple_form( title    = 'VIEW_MAIN'
                             editable = abap_true
@@ -105,7 +105,7 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
     view->shell(
           )->page(
                   title          = 'abap2UI5 - Template'
-                  navbuttonpress = client->_event( 'BACK' )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->simple_form( 'VIEW_SECOND'
                   )->content( 'form'
@@ -161,10 +161,6 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
 
       WHEN 'SHOW_VIEW_SECOND'.
         z2ui5_display_view_second( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

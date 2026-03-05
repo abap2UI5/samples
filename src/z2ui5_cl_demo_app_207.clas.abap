@@ -27,7 +27,7 @@ CLASS Z2UI5_CL_DEMO_APP_207 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Radio Button`
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vbox( class = `sapUiSmallMargin`
@@ -82,12 +82,6 @@ CLASS Z2UI5_CL_DEMO_APP_207 IMPLEMENTATION.
 
 
   METHOD on_event.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 
 

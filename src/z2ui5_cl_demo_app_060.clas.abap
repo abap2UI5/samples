@@ -320,10 +320,6 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
 
 
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -333,7 +329,7 @@ CLASS Z2UI5_CL_DEMO_APP_060 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
        title          = 'abap2UI5 - Live Suggestion Event'
-       navbuttonpress = client->_event( 'BACK' )
+       navbuttonpress = client->_event_nav_app_leave( )
        shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'

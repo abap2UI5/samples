@@ -44,11 +44,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     FIELD-SYMBOLS <row> TYPE any.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
       WHEN 'BUTTON'.
 
         LOOP AT mt_comp REFERENCE INTO DATA(comp).

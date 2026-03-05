@@ -39,7 +39,7 @@ CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
         )->shell(
         )->page(
             title          = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
@@ -195,9 +195,6 @@ CLASS Z2UI5_CL_DEMO_APP_013 IMPLEMENTATION.
         total_count = lines( counts ).
 
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

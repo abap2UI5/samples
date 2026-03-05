@@ -58,10 +58,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'ROW_SELECT'.
 
         row_select( ).

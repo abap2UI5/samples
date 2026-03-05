@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
     view->shell(
       )->page(
               title          = 'abap2UI5 - Sample: MaskInput'
-              navbuttonpress = client->_event( 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title    = 'Generic Mask Input'
                           layout   = 'ColumnLayout'
@@ -114,14 +114,6 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
   ENDMETHOD.
 
 

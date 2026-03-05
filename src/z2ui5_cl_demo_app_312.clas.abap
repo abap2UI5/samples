@@ -41,8 +41,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'EVT_DATA_SELECT'.
         client->message_toast_display( client->get_event_arg( 1 ) ).
       WHEN 'EVT_VIZTYPE_CHANGE'.
@@ -204,7 +202,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_header) = lr_dyn_page->header( ns = 'f' )->dynamic_page_header( pinnable = abap_true )->content( ns = 'f' ).
 
     lr_header->button( text    = 'back'
-                       press   = client->_event( 'BACK' )
+                       press   = client->_event_nav_app_leave( )
                        visible = client->check_app_prev_stack( ) ).
 
     " ---------- Set Filter bar -----------------------------------------------------------------------

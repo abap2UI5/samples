@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
         )->page(
                 title           = `Main View`
                 id              = `test`
-                navbuttonpress  = client->_event( 'BACK' )
+                navbuttonpress  = client->_event_nav_app_leave( )
                   shownavbutton = abap_true
             )->header_content(
                 )->link(
@@ -72,10 +72,6 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
                                    method_insert = 'addContent' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.

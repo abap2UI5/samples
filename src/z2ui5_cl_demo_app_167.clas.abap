@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
                 title          = 'abap2UI5 - Event with add Information and t_arg'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->link( text   = 'More Infos..'
@@ -73,10 +73,6 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR 'SOURCE_PROPERTY_TEXT' OR 'EVENT_PROPERTY_VALUE' OR 'PARENT_PROPERTY_ID'.
         client->message_box_display( `backend event :` && lt_arg[ 1 ] ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     client->view_model_update( ).

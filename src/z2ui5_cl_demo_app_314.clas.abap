@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       DATA(page) = view->shell(
           )->page(
               title          = 'abap2UI5 - Device Model, HTTP Model, OData Model'
-              navbuttonpress = client->_event( 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->input( description = `device model`
@@ -105,11 +105,5 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

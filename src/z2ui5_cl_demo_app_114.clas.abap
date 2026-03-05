@@ -52,9 +52,6 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'POST'.
 
         IF mv_value IS NOT INITIAL.
@@ -93,7 +90,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'Feed Input'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->flex_box(

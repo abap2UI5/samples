@@ -56,11 +56,6 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
       WHEN `CLEAR`.
 
         CLEAR: news_list.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
       WHEN 'CLICK_HINT_ICON'.
 
         z2ui5_display_popover( ).
@@ -82,7 +77,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     DATA(page) = view->shell(
                     )->page(
                        title          = 'abap2UI5 - Sample: News Feed over WebSocket'
-                       navbuttonpress = client->_event( 'BACK' )
+                       navbuttonpress = client->_event_nav_app_leave( )
                        shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page->header_content(

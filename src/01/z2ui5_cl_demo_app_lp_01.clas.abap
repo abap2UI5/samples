@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
                                     press = client->_event( 'READ_PARAMS' )
                          )->label( ``
                          )->button( text  = 'Go Back'
-                                    press = client->_event( 'BACK' ) )->stringify( ) ).
+                                    press = client->_event_nav_app_leave( ) )->stringify( ) ).
 
     ENDIF.
 
@@ -41,9 +41,6 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
           lv_text = |{ lv_text } / { ls_param-n } = { ls_param-v }|.
         ENDLOOP.
         client->message_box_display( lv_text ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.

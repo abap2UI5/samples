@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = 'abap2UI5 - Sample: Object Attribute inside Table'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
@@ -88,8 +88,6 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'CLICK_HINT_ICON'.
         z2ui5_display_popover( `button_hint_id` ).
       WHEN 'onPress'.

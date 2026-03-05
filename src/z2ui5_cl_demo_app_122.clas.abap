@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->info_frontend(
                                         finished          = client->_event( `INFO_FINISHED` )
@@ -94,11 +94,5 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     IF client->check_on_init( ).
       display_view( ).
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-    ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

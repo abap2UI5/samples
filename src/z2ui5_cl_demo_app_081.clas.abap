@@ -95,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
     view->shell(
       )->page(
               title          = 'abap2UI5 - Popover with List'
-              navbuttonpress = client->_event( val = 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( 'Popover'
               )->content( 'form'
@@ -169,10 +169,6 @@ CLASS Z2UI5_CL_DEMO_APP_081 IMPLEMENTATION.
       WHEN 'BUTTON_CANCEL'.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

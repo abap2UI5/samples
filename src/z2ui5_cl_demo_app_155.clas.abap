@@ -26,10 +26,6 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
       WHEN 'POPUP'.
         DATA(lo_app) = z2ui5_cl_pop_textedit=>factory( `this is a text` ).
         client->nav_app_call( lo_app ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -41,7 +37,7 @@ CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
     view->shell(
         )->page(
                 title          = 'abap2UI5 - Popup To Text Edit'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup...'

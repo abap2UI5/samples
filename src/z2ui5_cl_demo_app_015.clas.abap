@@ -27,18 +27,11 @@ CLASS Z2UI5_CL_DEMO_APP_015 IMPLEMENTATION.
             `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
-    ENDCASE.
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
             title          = 'abap2UI5 - Formatted Text'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->toolbar_spacer(

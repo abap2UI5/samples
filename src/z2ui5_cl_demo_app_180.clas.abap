@@ -31,11 +31,6 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
         mv_url = `https://www.google.com`.
         client->view_model_update( ).
         client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-
     ENDCASE.
 
   ENDMETHOD.
@@ -47,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
     DATA(page) = view->shell( )->page(
         title          = `Client->FOLLOW_UP_ACTION use cases`
         class          = `sapUiContentPadding`
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
     page = page->vbox( ).
     page->button( text  = `call frontend event from backend event`

@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
         )->page(
                 title          = `Main View`
                 id             = `test`
-                navbuttonpress = i_client->_event( 'BACK' )
+                navbuttonpress = i_client->_event_nav_app_leave( )
                 shownavbutton  = xsdbool( i_client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     i_client->view_display( lo_view->stringify( ) ).
@@ -92,13 +92,6 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
-    ENDCASE.
-
     main_view( client ).
     nest_view( client ).
 

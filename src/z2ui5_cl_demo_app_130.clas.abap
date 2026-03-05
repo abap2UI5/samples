@@ -339,7 +339,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
                )->page(
                   title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
-                  navbuttonpress = client->_event( 'BACK' )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
     ELSE.
@@ -665,11 +665,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         get_values( ).
 
         render_main( ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
       WHEN 'BUTTON_SAVE'.
 
 

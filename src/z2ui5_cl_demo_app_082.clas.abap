@@ -62,10 +62,6 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
 
 
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -93,7 +89,7 @@ CLASS Z2UI5_CL_DEMO_APP_082 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - Roundtrip Speed Test'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(

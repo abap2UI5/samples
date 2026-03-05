@@ -154,9 +154,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             ) INTO TABLE mt_filter.
 
         ENDLOOP.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -194,7 +191,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
     view = view->page( id   = `page_main`
              title          = 'abap2UI5 - Select-Options'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(page) = view->dynamic_page(

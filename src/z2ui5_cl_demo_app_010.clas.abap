@@ -13,16 +13,10 @@ CLASS Z2UI5_CL_DEMO_APP_010 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = 'abap2UI5 - Demo Layout'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(

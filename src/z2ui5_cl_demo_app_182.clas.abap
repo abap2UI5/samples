@@ -102,10 +102,6 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
 
         detail_popover( id   = lt_arg[ 1 ]
                         node = ls_node ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-        RETURN.
     ENDCASE.
 
   ENDMETHOD.
@@ -116,7 +112,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->page(
                     title          = 'abap2UI5 - Network Graph - Org Tree'
-                    navbuttonpress = client->_event( 'BACK' )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(graph) = page->network_graph( enablewheelzoom = abap_false

@@ -93,10 +93,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         DATA(lv_id_parent) = lt_event_arguments[ 3 ].
 
         client->message_box_display( lv_tab_index && lv_id_event && lv_id_parent ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     client->view_model_update( ).
@@ -111,7 +107,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     DATA(page) = view->shell(
       )->page(
         title           = 'abap2UI5 - Event on cell level'
-        navbuttonpress  = client->_event( 'BACK' )
+        navbuttonpress  = client->_event_nav_app_leave( )
           shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->link(

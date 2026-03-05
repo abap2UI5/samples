@@ -69,10 +69,6 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
         ENDDO.
 
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -96,7 +92,7 @@ CLASS Z2UI5_CL_DEMO_APP_049 IMPLEMENTATION.
                                checkrepeat = abap_true ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'abap2UI5 - CL_GUI_TIMER - Monitor'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
 

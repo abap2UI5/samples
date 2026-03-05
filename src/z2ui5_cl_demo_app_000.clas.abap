@@ -43,10 +43,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'expand-all'.
         expand_all( ).
       WHEN 'collapse-all'.
@@ -65,7 +61,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
         )->shell( )->page( id             = `page`
                            title          = c_title
-                           navbuttonpress = client->_event( 'BACK' )
+                           navbuttonpress = client->_event_nav_app_leave( )
                            shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL )
         )->header_content(
             )->toolbar_spacer(

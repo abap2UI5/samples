@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       view = view->shell( )->page( id = `page_main`
                title                  = 'abap2UI5 - Select-Options'
-               navbuttonpress         = client->_event( 'BACK' )
+               navbuttonpress         = client->_event_nav_app_leave( )
                shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
       view->_z2ui5( )->multiinput_ext(
@@ -94,10 +94,6 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
         CLEAR mt_tokens_removed.
         CLEAR mt_tokens_added.
         client->view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

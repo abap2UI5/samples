@@ -95,9 +95,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
       WHEN 'BUTTON_CLEAR'.
         CLEAR screen.
         client->message_toast_display( 'View initialized' ).
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -133,7 +130,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
          )->page(
           showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - Selection-Screen Example'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'

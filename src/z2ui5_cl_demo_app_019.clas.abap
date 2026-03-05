@@ -47,17 +47,13 @@ CLASS Z2UI5_CL_DEMO_APP_019 IMPLEMENTATION.
       WHEN 'BUTTON_READ_SEL'.
         t_tab_sel = t_tab.
         DELETE t_tab_sel WHERE selkz <> abap_true.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
             )->page(
                 title          = 'abap2UI5 - Table with different Selection Modes'
-                navbuttonpress = client->_event( 'BACK' )
+                navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->segmented_button(

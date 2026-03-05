@@ -59,14 +59,6 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-
-    CASE app-s_get-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-s_get-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
-
   ENDMETHOD.
 
 
@@ -86,7 +78,7 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     DATA(lv_xml) = view->shell(
       )->page(
               title          = 'abap2UI5 - Binding Syntax'
-              navbuttonpress = client->_event( 'BACK' )
+              navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title    = 'Binding Syntax'
                           editable = abap_true

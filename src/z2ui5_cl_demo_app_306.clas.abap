@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     DATA(cont) = view->shell( ).
     DATA(page) = cont->page( title = 'abap2UI5 - Device Camera Picture'
-                   navbuttonpress  = client->_event( 'BACK' )
+                   navbuttonpress  = client->_event_nav_app_leave( )
                    shownavbutton   = client->check_app_prev_stack( ) ).
 
     page->vbox( class = `sapUiSmallMargin`
@@ -153,11 +153,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
       WHEN 'EDIT'.
 
         edit_image( ).
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
     mt_picture_out = VALUE #( ).

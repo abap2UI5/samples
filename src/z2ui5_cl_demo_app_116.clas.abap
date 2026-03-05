@@ -258,10 +258,6 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
       WHEN 'START'.
         ui5_display_view( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
       WHEN 'CONTINUE'.
         client->popup_destroy( ).
 

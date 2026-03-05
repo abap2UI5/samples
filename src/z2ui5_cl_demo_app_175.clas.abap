@@ -21,12 +21,6 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     display_view( client ).
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 
   METHOD display_view.
@@ -35,7 +29,7 @@ CLASS z2ui5_cl_demo_app_175 IMPLEMENTATION.
 
     lr_view = lr_view->shell( )->page( id = `page_main`
              title                        = 'abap2UI5 - Demo Wizard Control'
-             navbuttonpress               = client->_event( 'BACK' )
+             navbuttonpress               = client->_event_nav_app_leave( )
              shownavbutton                = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(lr_wizard) = lr_view->wizard( ).

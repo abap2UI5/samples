@@ -67,19 +67,11 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     ENDIF.
 
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-        RETURN.
-
-    ENDCASE.
-
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
             )->page(
                     title          = 'abap2UI5 - Map Container'
-                    navbuttonpress = client->_event( val = 'BACK' )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(map) = page->map_container( autoadjustheight = abap_true

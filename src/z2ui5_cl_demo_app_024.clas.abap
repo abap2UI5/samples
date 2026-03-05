@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page( title = 'abap2UI5 - flow logic - APP 01'
-        navbuttonpress = client->_event( 'BACK' )
+        navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
        )->grid( 'L6 M12 S12' )->content( 'layout'
        )->simple_form( 'Controller' )->content( 'form'
@@ -83,10 +83,6 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
         lo_app_next = NEW z2ui5_cl_demo_app_025( ).
         lo_app_next->mv_event_backend = 'NEW_APP_EVENT'.
         client->nav_app_call( lo_app_next ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

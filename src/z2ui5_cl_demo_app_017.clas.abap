@@ -30,10 +30,6 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
         client->message_box_display(
               text = 'this is a message box with a custom text'
               type = 'success' ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -81,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
              )->button(
                 " icon = `sap-icon://edit`
                  text  = 'Go Back'
-                 press = client->_event( 'BACK' ) ).
+                 press = client->_event_nav_app_leave( ) ).
 
     DATA(header_content) = page->header_content( ns = 'uxap' ).
 

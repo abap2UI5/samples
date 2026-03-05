@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
       DATA(lo_p) = view->shell(
                   )->page(
                           title          = 'abap2UI5 - Rich Text Editor'
-                          navbuttonpress = client->_event( 'BACK' )
+                          navbuttonpress = client->_event_nav_app_leave( )
                           shownavbutton  = client->check_app_prev_stack( ) ).
 
 
@@ -54,10 +54,6 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
 
       WHEN 'SERVER'.
         client->message_box_display( mv_value ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.

@@ -53,10 +53,6 @@ CLASS Z2UI5_CL_DEMO_APP_040 IMPLEMENTATION.
       WHEN 'LOAD_BC'.
         client->message_box_display( 'JSBarcode Library loaded' ).
         mv_load_lib = abap_true.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.
@@ -69,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_040 IMPLEMENTATION.
                           `  xmlns:z2ui5="z2ui5"  xmlns:m="sap.m" xmlns="http://www.w3.org/1999/xhtml"` && |\n| &&
                           `    ><m:Button ` && |\n| &&
                           `  text="back" ` && |\n| &&
-                          `  press="` && client->_event( 'BACK' ) && `" ` && |\n| &&
+                          `  press="` && client->_event_nav_app_leave( ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
       `<html><head>` && |\n| &&
                           `</head>` && |\n| &&

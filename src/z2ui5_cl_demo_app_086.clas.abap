@@ -30,17 +30,11 @@ CLASS Z2UI5_CL_DEMO_APP_086 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
                title          = 'abap2UI5 - Flow Logic - APP 85'
-               navbuttonpress = client->_event( 'BACK' )
+               navbuttonpress = client->_event_nav_app_leave( )
                shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->grid( 'L6 M12 S12' )->content( 'layout'

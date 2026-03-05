@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
         )->page(
              showheader    = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
         )->tab_container( ).
 
@@ -130,12 +130,5 @@ CLASS Z2UI5_CL_DEMO_APP_016 IMPLEMENTATION.
 
       render_tab_bar( ).
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
   ENDMETHOD.
 ENDCLASS.

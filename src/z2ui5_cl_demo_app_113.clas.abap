@@ -52,10 +52,6 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
   ENDMETHOD.
 
 
@@ -90,7 +86,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view->shell( )->page(
              title          = 'Timeline'
-             navbuttonpress = client->_event( 'BACK' )
+             navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(timeline) = page->timeline(

@@ -42,11 +42,6 @@ CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
       WHEN 'TIMER_FINISHED'.
         client->message_box_display( `Timer finished!` ).
         RETURN.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-        RETURN.
-
     ENDCASE.
 
 
@@ -56,7 +51,7 @@ CLASS Z2UI5_CL_DEMO_APP_121 IMPLEMENTATION.
     client->view_display( view->shell(
           )->page(
                   title          = 'abap2UI5'
-                  navbuttonpress = client->_event( val = 'BACK' )
+                  navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->timer(
                                         finished = client->_event( `TIMER_FINISHED` )

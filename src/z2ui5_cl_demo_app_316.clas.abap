@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
         )->_z2ui5( )->title( `URL Helper Sample`
         )->shell(
             )->page( title          = 'abap2UI5 - Sample: URL Helper'
-                     navbuttonpress = client->_event( 'BACK' )
+                     navbuttonpress = client->_event_nav_app_leave( )
                      shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
@@ -143,10 +143,6 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
   ENDMETHOD.
 
   METHOD z2ui5_if_app~main.

@@ -135,9 +135,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           name = mv_layout ).
         INSERT ls_layout INTO TABLE mt_db_layout.
         app-view_popup = `POPUP_SAVE`.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
   ENDMETHOD.
@@ -181,7 +178,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view = view->shell( )->page( id = `page_main`
              title                  = 'abap2UI5 - Table Layout Sample'
-             navbuttonpress         = client->_event( 'BACK' )
+             navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
 

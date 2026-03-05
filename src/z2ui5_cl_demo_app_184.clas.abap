@@ -39,13 +39,6 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
   METHOD on_event.
-    CASE client->get( )-event.
-
-      WHEN 'BACK'.
-
-        client->nav_app_leave( ).
-
-    ENDCASE.
   ENDMETHOD.
 
   METHOD on_init.

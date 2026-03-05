@@ -53,9 +53,6 @@ CLASS Z2UI5_CL_DEMO_APP_039 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE app-get-event.
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( app-get-s_draft-id_prev_app_stack ) ).
       WHEN 'POPUP'.
         client->message_box_display( 'Event raised value:' && mv_value ).
 

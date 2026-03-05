@@ -36,7 +36,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
     lr_view = lr_view->shell( )->page( id = `page_main`
              title                        = 'abap2UI5 - Demo Wizard Control'
-             navbuttonpress               = client->_event( 'BACK' )
+             navbuttonpress               = client->_event_nav_app_leave( )
              shownavbutton                = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     DATA(lr_wizard) = lr_view->wizard( id              = `wiz`
@@ -98,8 +98,6 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
       WHEN 'STEP22'.
 
         client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).

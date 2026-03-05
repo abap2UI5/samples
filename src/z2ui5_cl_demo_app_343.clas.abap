@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
   METHOD render_main.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
-                                                                navbuttonpress = client->_event( 'BACK' )
+                                                                navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     TRY.
@@ -110,12 +110,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
       get_data( ).
       render_main( client ).
     ENDIF.
-
-    CASE client->get( )-event.
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-    ENDCASE.
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       render_main( client ).

@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
             )->page(
                     showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
                     title          = 'abap2UI5 -  Cross App Navigation App 128'
-                    navbuttonpress = client->_event( 'BACK' )
+                    navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( )
                 )->header_content(
                     )->link(
@@ -76,10 +76,6 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
       WHEN 'BUTTON_POST'.
 
 *        client->message_toast_display( |{ product } { quantity } - send to the server| ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
     ENDCASE.
 
   ENDMETHOD.

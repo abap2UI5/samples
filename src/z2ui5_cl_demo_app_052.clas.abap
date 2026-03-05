@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
     DATA(page) = view->page( id = `page_main`
             title               = 'abap2UI5 - List Report Features'
-            navbuttonpress      = client->_event( 'BACK' )
+            navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
 
     page = page->dynamic_page( headerexpanded = abap_true
@@ -123,10 +123,6 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         mv_check_popover = abap_true.
         mv_product = client->get_event_arg( 2 ).
         z2ui5_display_popover( client->get_event_arg( 1 ) ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
-
     ENDCASE.
 
   ENDMETHOD.

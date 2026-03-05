@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
           title          = 'abap2UI5 - Master-Detail View with Nested Views'
-          navbuttonpress = client->_event( 'BACK' )
+          navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded'
@@ -163,9 +163,6 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
         mv_check_enabled_02 = xsdbool( mv_check_enabled_01 = abap_false ).
 
         client->nest_view_model_update( ).
-
-      WHEN 'BACK'.
-        client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
