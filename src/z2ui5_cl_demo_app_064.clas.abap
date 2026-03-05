@@ -125,7 +125,7 @@ CLASS Z2UI5_CL_DEMO_APP_064 IMPLEMENTATION.
         finished    = client->_event( 'LOAD' )
         checkactive = client->_bind( mv_check_active ) ).
 
-    temp5 = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ).
+    temp5 = client->check_app_prev_stack( ).
     page1 = view->shell( )->page( id = 'page_main'
       title                          = 'abap2UI5 - Progress Bar while Server Request'
       navbuttonpress                 = client->_event_nav_app_leave( )

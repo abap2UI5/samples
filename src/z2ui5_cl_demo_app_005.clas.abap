@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_005 IMPLEMENTATION.
         )->page(
                 title          = 'abap2UI5 - Range Slider Example'
                 navbuttonpress = client->_event_nav_app_leave( )
-                 shownavbutton = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                 shownavbutton = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L12 M12 S12' )->content( 'layout' ).
 

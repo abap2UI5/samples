@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
                 title          = `Main View`
                 id             = `test`
                 navbuttonpress = i_client->_event_nav_app_leave( )
-                shownavbutton  = xsdbool( i_client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+                shownavbutton  = i_client->check_app_prev_stack( ) ).
 
     i_client->view_display( lo_view->stringify( ) ).
 

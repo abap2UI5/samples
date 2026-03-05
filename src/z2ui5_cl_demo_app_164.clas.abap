@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     view = view->shell( )->page( id = `page_main`
              title                  = 'abap2UI5 - Popup Display Table'
              navbuttonpress         = client->_event_nav_app_leave( )
-             shownavbutton          = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL ) ).
+             shownavbutton          = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = view->vbox( ).
 
