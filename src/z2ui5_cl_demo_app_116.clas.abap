@@ -168,7 +168,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                          )->tree_columns(
                           )->tree_column( label = 'Label'
                           )->tree_template(
-                           )->text( text = `{####}`
+                           )->text( text = `{TEXT}`
                           )->get_parent( )->get_parent(
                           )->tree_column( label = 'PRODH'
                           )->tree_template(
