@@ -22,6 +22,8 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
+- Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
+- Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 
 ## Framework Reference
 
