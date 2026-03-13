@@ -23,6 +23,32 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
 
+## How Apps Work
+
+Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The framework calls `main()` on every roundtrip (HTTP POST). Use the lifecycle checks to react to different situations:
+
+- `client->check_on_init( )` — true on the very first call
+- `client->check_on_navigated( )` — true when returning from a sub-app or popup
+- `client->check_on_event( )` — true when a user triggered an event
+
+### Client API (`z2ui5_if_client`)
+
+| Category | Methods | Purpose |
+|---|---|---|
+| Views | `view_display`, `view_destroy`, `view_model_update` | Main view lifecycle |
+| Nested views | `nest_view_display/destroy/model_update`, `nest2_view_*` | Embedded sub-views |
+| Popups | `popup_display`, `popup_destroy`, `popup_model_update` | Modal dialogs |
+| Popovers | `popover_display`, `popover_destroy`, `popover_model_update` | Context popovers |
+| Binding | `_bind(val)`, `_bind_edit(val)` | Read-only / two-way binding |
+| Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
+| Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
+| Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
+| Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
+| Session | `set_session_stateful(val)`, `set_app_state_active(val)` | Session management |
+| Browser | `set_push_state(val)`, `set_nav_back(val)`, `follow_up_action(val)` | Browser interaction |
+| Info | `get()`, `get_event_arg()`, `get_app(id)` | Request/context data |
+| Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
+
 ## App Structure
 
 ### Simple apps (< 50 lines total)
