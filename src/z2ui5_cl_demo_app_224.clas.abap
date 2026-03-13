@@ -36,16 +36,16 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
                           )->items(
                               )->icon_tab_filter( text = `Info`
                                                   key  = `info`
-                                                  )->text( text = `Info content goes here ...` )->get_parent(
+                                                  )->text( `Info content goes here ...` )->get_parent(
                               )->icon_tab_filter( text = `Attachments`
                                                   key  = `attachments`
-                                                  )->text( text = `Attachments go here ...` )->get_parent(
+                                                  )->text( `Attachments go here ...` )->get_parent(
                               )->icon_tab_filter( text = `Notes`
                                                   key  = `notes`
-                                                  )->text( text = `Notes go here ...` )->get_parent(
+                                                  )->text( `Notes go here ...` )->get_parent(
                               )->icon_tab_filter( text = `People`
                                                   key  = `people`
-                                                  )->text( text = `People content goes here ...` ).
+                                                  )->text( `People content goes here ...` ).
 
     client->view_display( page->stringify( ) ).
 

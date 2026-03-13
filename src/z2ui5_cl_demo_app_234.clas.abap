@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_234 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout(
                          class = `sapUiContentPadding`
                          width = `100%`
-                          )->content( ns = `layout`
+                          )->content( `layout`
                               )->text_area( valuestate  = `Warning`
                                             placeholder = `ValueState : Warning`
                                             width       = `100%`

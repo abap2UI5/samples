@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
   METHOD view_display_app_01.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( title = `APP_01` ).
+    DATA(page) = lo_view_nested->page( `APP_01` ).
 
     page->button( text  = 'Update this view'
                   press = client->_event( 'UPDATE_DETAIL' ) ).
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
   METHOD view_display_app_02.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( title = `APP_02` ).
+    DATA(page) = lo_view_nested->page( `APP_02` ).
 
     page->button( text  = 'Update this view'
                   press = client->_event( 'UPDATE_DETAIL' )
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     DATA(lr_master) = page->flexible_column_layout( layout = 'TwoColumnsBeginExpanded'
                                                     id     ='test' )->begin_column_pages( ).
 
-    lr_master->tree( items = client->_bind( mt_tree ) )->items(
+    lr_master->tree( client->_bind( mt_tree ) )->items(
         )->standard_tree_item(
             type  = 'Active'
             title = '{TEXT}'

@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
         )->object_page_dyn_header_title( ).
 
     header_title->expanded_heading(
-                  )->title( text = `Robot Arm Series 9` ).
+                  )->title( `Robot Arm Series 9` ).
 
     header_title->snapped_heading(
                   )->hbox(
@@ -45,14 +45,14 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                            class        = `sapUiMediumMarginEnd`
                            displayshape = `Square`
                      )->vbox(
-                        )->title( text = `Robot Arm Series 9`
-                        )->label( text = `PO-48865` ).
+                        )->title( `Robot Arm Series 9`
+                        )->label( `PO-48865` ).
 
-    header_title->expanded_content( ns = `uxap`
-                  )->label( text = `PO-48865` ).
+    header_title->expanded_content( `uxap`
+                  )->label( `PO-48865` ).
 
     header_title->snapped_title_on_mobile(
-                  )->title( text = `Robot Arm Series 9` ).
+                  )->title( `Robot Arm Series 9` ).
 
     header_title->actions( 'uxap'
                   )->button( text = `Edit`
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                   )->button( text = `Delete`
                   )->button( text = `Simulate Assembly` ).
 
-    DATA(header_content) = object_page_layout->header_content( ns = `uxap`
+    DATA(header_content) = object_page_layout->header_content( `uxap`
                                                )->flex_box( wrap         = `Wrap`
                                                             fitcontainer = abap_true ).
 
@@ -69,19 +69,19 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                             displayshape = `Square`
                             displaysize  = `L`
 
-                 )->vbox( class = `sapUiLargeMarginEnd sapUiSmallMarginBottom`
+                 )->vbox( `sapUiLargeMarginEnd sapUiSmallMarginBottom`
                     )->hbox( class      = `sapUiTinyMarginBottom`
                              rendertype = `Bare`
                        )->label( text  = `Manufacturer:`
                                  class = `sapUiTinyMarginEnd`
-                       )->text( text = `Robotech`
+                       )->text( `Robotech`
                     )->get_parent(
 
                     )->hbox( class      = `sapUiTinyMarginBottom`
                              rendertype = `Bare`
                        )->label( text  = `Factory:`
                                  class = `sapUiTinyMarginEnd`
-                       )->text( text = `Orlando, Florida`
+                       )->text( `Orlando, Florida`
                     )->get_parent(
 
                     )->hbox(
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent(
 
-                 )->vbox( class = `sapUiLargeMarginEnd sapUiSmallMarginBottom`
+                 )->vbox( `sapUiLargeMarginEnd sapUiSmallMarginBottom`
                     )->title( text  = `Status`
                               class = `sapUiTinyMarginBottom`
                     )->object_status( text  = `Delivery`
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent(
 
-                 )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+                 )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
                     )->title( text  = `Delivery Time`
                               class = `sapUiTinyMarginBottom`
                     )->object_status( text  = `12 Days`
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent(
 
-                 )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+                 )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
                     )->title( text  = `Assembly Option`
                               class = `sapUiTinyMarginBottom`
                     )->object_status( text  = `To Be Selected`
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent(
 
-                 )->vbox( class = `sapUiLargeMarginEnd`
+                 )->vbox( `sapUiLargeMarginEnd`
                     )->title( text  = `Monthly Leasing Instalment`
                               class = `sapUiTinyMarginBottom`
                     )->object_number( number     = `379.99`
@@ -144,41 +144,41 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                                       )->title( ns   = `core`
                                                 text = `Order Details`
 
-                                      )->label( text = `Order ID`
-                                      )->text( text = `589946637`
+                                      )->label( `Order ID`
+                                      )->text( `589946637`
 
-                                      )->label( text = `Contract`
+                                      )->label( `Contract`
                                       )->link( text = `10045876`
 
-                                      )->label( text = `Transaction Date`
-                                      )->text( text = `May 6, 2018`
+                                      )->label( `Transaction Date`
+                                      )->text( `May 6, 2018`
 
-                                      )->label( text = `Expected Delivery Date`
-                                      )->text( text = `June 23, 2018`
+                                      )->label( `Expected Delivery Date`
+                                      )->text( `June 23, 2018`
 
-                                      )->label( text = `Factory`
-                                      )->text( text = `Orlando, FL`
+                                      )->label( `Factory`
+                                      )->text( `Orlando, FL`
 
-                                      )->label( text = `Supplier`
-                                      )->text( text = `Robotech`
+                                      )->label( `Supplier`
+                                      )->text( `Robotech`
 
                                       )->title( ns   = `core`
                                                 text = `Configuration Accounts`
 
-                                      )->label( text = `Model`
-                                      )->text( text = `Robot Arm Series 9`
+                                      )->label( `Model`
+                                      )->text( `Robot Arm Series 9`
 
-                                      )->label( text = `Color`
-                                      )->text( text = `White (default)`
+                                      )->label( `Color`
+                                      )->text( `White (default)`
 
-                                      )->label( text = `Socket`
-                                      )->text( text = `Default Socket 10`
+                                      )->label( `Socket`
+                                      )->text( `Default Socket 10`
 
-                                      )->label( text = `Leasing Instalment`
-                                      )->text( text = `379.99 USD per month`
+                                      )->label( `Leasing Instalment`
+                                      )->text( `379.99 USD per month`
 
-                                      )->label( text = `Axis`
-                                      )->text( text = `6 Axis`
+                                      )->label( `Axis`
+                                      )->text( `6 Axis`
                       )->get_parent(
                    )->get_parent(
                 )->get_parent(
@@ -211,60 +211,60 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
                          )->columns(
                             )->column(
-                               )->text( text = `Document Number`
+                               )->text( `Document Number`
                             )->get_parent(
                             )->column( minscreenwidth = `Tablet`
                                        demandpopin    = abap_true
-                               )->text( text = `Company`
+                               )->text( `Company`
                             )->get_parent(
                             )->column( minscreenwidth = `Tablet`
                                        demandpopin    = abap_true
-                               )->text( text = `Contact Person`
+                               )->text( `Contact Person`
                             )->get_parent(
                             )->column( minscreenwidth = `Tablet`
                                        demandpopin    = abap_true
-                               )->text( text = `Posting Date`
+                               )->text( `Posting Date`
                             )->get_parent(
                             )->column( halign = `End`
-                               )->text( text = `Amount (Local Currency)`
+                               )->text( `Amount (Local Currency)`
                             )->get_parent(
                          )->get_parent(
 
                          )->items(
                             )->column_list_item(
                                )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
+                               )->text( `Jologa`
+                               )->text( `Denise Smith`
+                               )->text( `11/15/19`
+                               )->text( `12,897.00 EUR`
                             )->get_parent(
                             )->column_list_item(
                                )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
+                               )->text( `Jologa`
+                               )->text( `Denise Smith`
+                               )->text( `11/15/19`
+                               )->text( `12,897.00 EUR`
                             )->get_parent(
                             )->column_list_item(
                                )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
+                               )->text( `Jologa`
+                               )->text( `Denise Smith`
+                               )->text( `11/15/19`
+                               )->text( `12,897.00 EUR`
                             )->get_parent(
                             )->column_list_item(
                                )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
+                               )->text( `Jologa`
+                               )->text( `Denise Smith`
+                               )->text( `11/15/19`
+                               )->text( `12,897.00 EUR`
                             )->get_parent(
                             )->column_list_item(
                                )->link( text = `10223882001820`
-                               )->text( text = `Jologa`
-                               )->text( text = `Denise Smith`
-                               )->text( text = `11/15/19`
-                               )->text( text = `12,897.00 EUR`
+                               )->text( `Jologa`
+                               )->text( `Denise Smith`
+                               )->text( `11/15/19`
+                               )->text( `12,897.00 EUR`
                             )->get_parent(
                          )->get_parent(
                       )->get_parent(
@@ -284,35 +284,35 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                                       )->title( ns   = `core`
                                                 text = `Phone Numbers`
 
-                                      )->label( text = `Home`
-                                      )->text( text = `+ 1 415-321-1234`
+                                      )->label( `Home`
+                                      )->text( `+ 1 415-321-1234`
 
-                                      )->label( text = `Office phone`
-                                      )->text( text = `+ 1 415-321-5555`
+                                      )->label( `Office phone`
+                                      )->text( `+ 1 415-321-5555`
 
                                       )->title( ns   = `core`
                                                 text = `Social Accounts`
 
-                                      )->label( text = `LinkedIn`
-                                      )->text( text = `/DeniseSmith`
+                                      )->label( `LinkedIn`
+                                      )->text( `/DeniseSmith`
 
-                                      )->label( text = `Twitter`
-                                      )->text( text = `@DeniseSmith`
+                                      )->label( `Twitter`
+                                      )->text( `@DeniseSmith`
 
                                       )->title( ns   = `core`
                                                 text = `Addresses`
 
-                                      )->label( text = `Home Address`
-                                      )->text( text = `2096 Mission Street`
+                                      )->label( `Home Address`
+                                      )->text( `2096 Mission Street`
 
-                                      )->label( text = `Mailing Address`
-                                      )->text( text = `PO Box 32114`
+                                      )->label( `Mailing Address`
+                                      )->text( `PO Box 32114`
 
                                       )->title( ns   = `core`
                                                 text = `Mailing Address`
 
-                                      )->label( text = `Work`
-                                      )->text( text = `DeniseSmith@sap.com`
+                                      )->label( `Work`
+                                      )->text( `DeniseSmith@sap.com`
 
                       )->get_parent(
                    )->get_parent(

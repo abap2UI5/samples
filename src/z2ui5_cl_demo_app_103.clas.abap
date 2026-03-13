@@ -54,16 +54,16 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
        )->pane_container(
          )->split_pane( requiredparentwidth = `400`
                         id                  = `default`
-           )->layout_data( ns = `layout`
+           )->layout_data( `layout`
              )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
            )->panel( headertext = `first pane` )->get_parent( )->get_parent(
          )->pane_container( orientation = `Vertical`
            )->split_pane( requiredparentwidth = `600`
-             )->layout_data( ns = `layout`
+             )->layout_data( `layout`
                )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
              )->panel( headertext = `second pane` )->get_parent( )->get_parent(
            )->split_pane( requiredparentwidth = `800`
-             )->layout_data( ns = `layout`
+             )->layout_data( `layout`
                )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
              )->panel( headertext = `second pane` ).
 

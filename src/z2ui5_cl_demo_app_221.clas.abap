@@ -36,18 +36,18 @@ CLASS z2ui5_cl_demo_app_221 IMPLEMENTATION.
                           )->items(
                               )->icon_tab_filter( icon = `sap-icon://hint`
                                                   key  = `info`
-                                                  )->text( text = `Info content goes here ...` )->get_parent(
+                                                  )->text( `Info content goes here ...` )->get_parent(
                               )->icon_tab_filter( icon  = `sap-icon://attachment`
                                                   key   = `attachments`
                                                   count = `3`
-                                                  )->text( text = `Attachments go here ...` )->get_parent(
+                                                  )->text( `Attachments go here ...` )->get_parent(
                               )->icon_tab_filter( icon  = `sap-icon://notes`
                                                   key   = `notes`
                                                   count = `12`
-                                                  )->text( text = `Notes go here ...` )->get_parent(
+                                                  )->text( `Notes go here ...` )->get_parent(
                               )->icon_tab_filter( icon = `sap-icon://group`
                                                   key  = `people`
-                                                  )->text( text = `People content goes here ...` ).
+                                                  )->text( `People content goes here ...` ).
 
     client->view_display( page->stringify( ) ).
 

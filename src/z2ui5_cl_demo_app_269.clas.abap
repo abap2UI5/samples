@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
         navbuttonpressed    = client->_event_nav_app_leave( )
         )->_generic( name = `menu`
                      ns   = `f`
-            )->_generic( name = `Menu`
+            )->_generic( `Menu`
                 )->menu_item( text = `Flight booking`
                               icon = `sap-icon://flight`
                 )->menu_item( text = `Car rental`

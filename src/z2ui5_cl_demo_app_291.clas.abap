@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
     page->vertical_layout(
            class = `sapUiContentPadding`
            width = `100%`
-           )->content( ns = `layout`
+           )->content( `layout`
       )->message_strip(
                   text                = client->_bind( lv_default )
                   enableformattedtext = abap_true

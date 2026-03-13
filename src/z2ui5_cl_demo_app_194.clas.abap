@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
           CONTINUE.
         ELSE.
 
-          client->_bind( val = <val> ).
+          client->_bind( <val> ).
 
         ENDIF.
 

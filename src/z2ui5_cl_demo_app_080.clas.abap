@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
 
-    DATA(lo_vbox) = page->vbox( class ='sapUiSmallMargin' ).
+    DATA(lo_vbox) = page->vbox( 'sapUiSmallMargin' ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
                                                           startdate         = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && ') }'

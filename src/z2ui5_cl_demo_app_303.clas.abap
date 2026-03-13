@@ -28,13 +28,13 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
             )->vbox(
                 )->title( text     = `Object Page Header with Header Container`
                           wrapping = abap_true
-                )->label( text = `Example of an ObjectPage with header facet` ).
+                )->label( `Example of an ObjectPage with header facet` ).
 
-    header_title->expanded_content( ns = `uxap`
-        )->label( text = `Example of an ObjectPage with header facet` ).
+    header_title->expanded_content( `uxap`
+        )->label( `Example of an ObjectPage with header facet` ).
 
     header_title->snapped_title_on_mobile(
-        )->title( text = `Object Page Header with Header Container` ).
+        )->title( `Object Page Header with Header Container` ).
 
     header_title->actions( 'uxap'
         )->button( text = `Edit`
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     text    = `Share`
                                     tooltip = `action` ).
 
-    DATA(header_content) = object_page_layout->header_content( ns = 'uxap'
+    DATA(header_content) = object_page_layout->header_content( 'uxap'
         )->header_container_control( id           = `headerContainer`
                                      scrollstep   = `200`
                                      showdividers = abap_false ).
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
         )->avatar( src         = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
                    class       = `sapUiMediumMarginEnd sapUiSmallMarginBottom`
                    displaysize = `L`
-        )->vbox( class = `sapUiSmallMarginBottom`
+        )->vbox( `sapUiSmallMarginBottom`
             )->title( class = `sapUiTinyMarginBottom` )->get(
                 )->link( text = `Order Details`
                 )->get_parent(
@@ -63,23 +63,23 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                      rendertype = `Bare`
                 )->label( text  = `Manufacturer:`
                           class = `sapUiTinyMarginEnd`
-                )->text( text = `Robotech`
+                )->text( `Robotech`
                 )->get_parent(
             )->hbox( class      = `sapUiTinyMarginBottom`
                      rendertype = `Bare`
                 )->label( text  = `Factory:`
                           class = `sapUiTinyMarginEnd`
-                )->text( text = `Florida, OL`
+                )->text( `Florida, OL`
                 )->get_parent(
             )->hbox( class      = `sapUiTinyMarginBottom`
                      rendertype = `Bare`
                 )->label( text  = `Supplier:`
                           class = `sapUiTinyMarginEnd`
-                )->text( text = `Robotech (234242343)`
+                )->text( `Robotech (234242343)`
                 )->get_parent(
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Contact Information`
                   class = `sapUiTinyMarginBottom`
         )->hbox( class = `sapUiTinyMarginBottom`
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                      class = `sapUiSmallMarginBegin`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->hbox( class = `sapUiTinyMarginBottom`
             )->label( text  = `Created By:`
                       class = `sapUiSmallMarginEnd`
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                  rendertype = `Bare`
             )->label( text  = `Created On:`
                       class = `sapUiSmallMarginEnd`
-            )->text( text = `February 20, 2020`
+            )->text( `February 20, 2020`
             )->get_parent(
         )->hbox( class = `sapUiTinyMarginBottom`
             )->label( text  = `Changed By:`
@@ -118,10 +118,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
         )->hbox( class = `sapUiTinyMarginBottom`
             )->label( text  = `Changed On:`
                       class = `sapUiSmallMarginEnd`
-            )->text( text = `February 20, 2020`
+            )->text( `February 20, 2020`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Product Description`
                   class = `sapUiTinyMarginBottom`
         )->text(
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
             text  = |Top-design high-quality coffee mug - ideal for a comforting moment; Pack: 6; material: | &&
             |Porcelain - durable dishwasher and microwave-safe porcelain that cleans easily and is ideal for everyday service. Comes in two bright colors.|
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( class = `sapUiTinyMarginBottom` )->get(
             )->link( text = `Status`
             )->get_parent(
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Delivery Time`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `12 Days`
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Assembly Option`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `To Be Selected`
@@ -154,23 +154,23 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( text  = `Price`
                   class = `sapUiTinyMarginBottom`
         )->object_status( text  = `579 EUR`
                           class = `sapMObjectStatusLarge`
             )->get_parent(
         )->get_parent(
-      )->vbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
+      )->vbox( `sapUiSmallMarginEnd sapUiSmallMarginBottom`
         )->title( class = `sapUiTinyMarginBottom` )->get(
             )->link( text = `Average User Rating`
             )->get_parent(
-        )->label( text = `6 Reviews`
+        )->label( `6 Reviews`
         )->rating_indicator( value    = `4`
                              iconsize = `16px`
                              )->get_parent(
         )->vbox( alignitems = `End`
-            )->text( text = `4.1 out of 5` ).
+            )->text( `4.1 out of 5` ).
 
     DATA(section) = object_page_layout->sections( ).
 
@@ -188,12 +188,12 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     columnsl   = `3`
                                     columnsxl  = `4`
                                     labelspanl = `12`
-                        )->label( text = `Evangelize the UI framework across the company`
-                        )->text( text = `4 days overdue Cascaded`
-                        )->label( text = `Get trained in development management direction`
-                        )->text( text = `Due Nov 21`
-                        )->label( text = `Mentor junior developers`
-                        )->text( text = `Due Dec 31 Cascaded` ).
+                        )->label( `Evangelize the UI framework across the company`
+                        )->text( `4 days overdue Cascaded`
+                        )->label( `Get trained in development management direction`
+                        )->text( `Due Nov 21`
+                        )->label( `Mentor junior developers`
+                        )->text( `Due Dec 31 Cascaded` ).
     section->object_page_section( titleuppercase = abap_false
                                   id             = `personalSection`
                                   title          = `Personal`
@@ -212,10 +212,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Phone Numbers`
-                            )->label( text = `Home`
-                            )->text( text = `+ 1 415-321-1234`
-                            )->label( text = `Office phone`
-                            )->text( text = `+ 1 415-321-5555`
+                            )->label( `Home`
+                            )->text( `+ 1 415-321-1234`
+                            )->label( `Office phone`
+                            )->text( `+ 1 415-321-5555`
                         )->get_parent(
                     )->simple_form( editable   = abap_false
                                     layout     = `ColumnLayout`
@@ -226,10 +226,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Social Accounts`
-                            )->label( text = `LinkedIn`
-                            )->text( text = `/DeniseSmith`
-                            )->label( text = `Twitter`
-                            )->text( text = `@DeniseSmith`
+                            )->label( `LinkedIn`
+                            )->text( `/DeniseSmith`
+                            )->label( `Twitter`
+                            )->text( `@DeniseSmith`
                         )->get_parent(
                     )->simple_form( editable   = abap_false
                                     layout     = `ColumnLayout`
@@ -240,10 +240,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Addresses`
-                            )->label( text = `Home Address`
-                            )->text( text = `2096 Mission Street`
-                            )->label( text = `Mailing Address`
-                            )->text( text = `PO Box 32114`
+                            )->label( `Home Address`
+                            )->text( `2096 Mission Street`
+                            )->label( `Mailing Address`
+                            )->text( `PO Box 32114`
                         )->get_parent(
                     )->simple_form( editable   = abap_false
                                     layout     = `ColumnLayout`
@@ -254,8 +254,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Mailing Address`
-                            )->label( text = `Work`
-                            )->text( text = `DeniseSmith@sap.com`
+                            )->label( `Work`
+                            )->text( `DeniseSmith@sap.com`
                         )->get_parent(
                     )->get_parent(
                 )->get_parent(
@@ -275,8 +275,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanxl = `12`
                         )->title( ns   = `core`
                                   text = `Main Payment Method`
-                        )->label( text = `Bank Transfer`
-                        )->text( text = `Sparkasse Heimfeld, Germany`
+                        )->label( `Bank Transfer`
+                        )->text( `Sparkasse Heimfeld, Germany`
                         )->get_parent(
                     )->get_parent(
                 )->more_blocks(
@@ -292,8 +292,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanxl = `12`
                         )->title( ns   = `core`
                                   text = `Payment method for Expenses`
-                        )->label( text = `Extra Travel Expenses`
-                        )->text( text = `Cash 100 USD` ).
+                        )->label( `Extra Travel Expenses`
+                        )->text( `Cash 100 USD` ).
 
     section->object_page_section( titleuppercase = abap_false
                                   id             = `employmentSection`
@@ -314,12 +314,12 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanm  = `12`
                                     labelspanl  = `12`
                                     labelspanxl = `12`
-                        )->label( text = `Job classification`
-                        )->text( text = `Senior Ui Developer (UIDEV-SR)`
-                        )->label( text = `Pay Grade`
-                        )->text( text = `Salary Grade 18 (GR-14)`
-                        )->label( text = `Job title`
-                        )->text( text = `Developer`
+                        )->label( `Job classification`
+                        )->text( `Senior Ui Developer (UIDEV-SR)`
+                        )->label( `Pay Grade`
+                        )->text( `Salary Grade 18 (GR-14)`
+                        )->label( `Job title`
+                        )->text( `Developer`
                         )->get_parent(
                     )->simple_form( id          = `jobinfopart2`
                                     editable    = abap_false
@@ -332,19 +332,19 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanm  = `12`
                                     labelspanl  = `12`
                                     labelspanxl = `12`
-                        )->label( text = `Employee Class`
-                        )->text( text = `Employee`
-                        )->label( text = `FTE`
-                        )->text( text = `1`
+                        )->label( `Employee Class`
+                        )->text( `Employee`
+                        )->label( `FTE`
+                        )->text( `1`
                         )->get_parent(
                     )->horizontal_layout( class = `sapUiSmallMarginTop`
                         )->vertical_layout(
-                            )->label( text = `Manager`
+                            )->label( `Manager`
                                 )->horizontal_layout(
-                                    )->content( ns = `layout`
+                                    )->content( `layout`
                                     )->vertical_layout(
-                                        )->text( text = `James Smith`
-                                        )->text( text = `Development Manager`
+                                        )->text( `James Smith`
+                                        )->text( `Development Manager`
                                         )->get_parent(
                                     )->get_parent(
                                 )->get_parent(
@@ -367,10 +367,10 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     labelspanl = `12`
                         )->title( ns   = `core`
                                   text = `Termination information`
-                            )->label( text = `Ok to return`
-                            )->text( text = `No`
-                            )->label( text = `Regret Termination`
-                            )->text( text = `Yes`
+                            )->label( `Ok to return`
+                            )->text( `No`
+                            )->label( `Regret Termination`
+                            )->text( `Yes`
                         )->get_parent(
                     )->get_parent(
                 )->more_blocks(
@@ -383,14 +383,14 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                         columnsxl  = `4`
                                         labelspans = `12`
                                         labelspanl = `12`
-                            )->label( text = `Start Date`
-                            )->text( text = `Jan 01, 2001`
-                            )->label( text = `End Date`
-                            )->text( text = `Jun 30, 2014`
-                            )->label( text = `Last Date Worked`
-                            )->text( text = `Jun 01, 2014`
-                            )->label( text = `Payroll End Date`
-                            )->text( text = `Jun 01, 2014`
+                            )->label( `Start Date`
+                            )->text( `Jan 01, 2001`
+                            )->label( `End Date`
+                            )->text( `Jun 30, 2014`
+                            )->label( `Last Date Worked`
+                            )->text( `Jun 01, 2014`
+                            )->label( `Payroll End Date`
+                            )->text( `Jun 01, 2014`
                             )->get_parent(
                         )->simple_form( id         = `empdetailpart3`
                                         editable   = abap_false
@@ -401,14 +401,14 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                         columnsxl  = `4`
                                         labelspans = `12`
                                         labelspanl = `12`
-                            )->label( text = `Payroll End Date`
-                            )->text( text = `Jan 01, 2014`
-                            )->label( text = `Benefits End Date`
-                            )->text( text = `Jun 30, 2014`
-                            )->label( text = `Stock End Date`
-                            )->text( text = `Jun 01, 2014`
-                            )->label( text = `Eligible for Salary Contribution`
-                            )->text( text = `No` ).
+                            )->label( `Payroll End Date`
+                            )->text( `Jan 01, 2014`
+                            )->label( `Benefits End Date`
+                            )->text( `Jun 30, 2014`
+                            )->label( `Stock End Date`
+                            )->text( `Jun 01, 2014`
+                            )->label( `Eligible for Salary Contribution`
+                            )->text( `No` ).
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

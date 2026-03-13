@@ -191,14 +191,14 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                  backgrounddesign = `Transparent`
         )->header_toolbar(
             )->toolbar( height = `3rem`
-                )->title( text = `Grid List with Drag and Drop`
+                )->title( `Grid List with Drag and Drop`
             )->get_parent(
         )->get_parent(
         )->grid_list( id         = `gridList`
                       headertext = `GridList header`
                       items      = client->_bind_edit( items )
             )->drag_drop_config(
-                )->drag_info( sourceaggregation = `items`
+                )->drag_info( `items`
                 )->grid_drop_info(
                     targetaggregation = `items`
                     dropposition      = `Between`
@@ -210,7 +210,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                             ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
                             ( `${$parameters>/dropPosition}` ) ) )
             )->get_parent(
-            )->custom_layout( ns = 'f'
+            )->custom_layout( 'f'
                 )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
             )->grid_list_item( counter   = '{COUNTER}'
@@ -218,7 +218,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                                type      = '{TYPE}'
                                unread    = '{UNREAD}'
                 )->vbox( height = `100%`
-                    )->vbox( class = `sapUiSmallMargin`
+                    )->vbox( `sapUiSmallMargin`
                         )->layout_data(
                             )->flex_item_data( growfactor   = `1`
                                                shrinkfactor = `0`

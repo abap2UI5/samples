@@ -64,11 +64,11 @@ CLASS Z2UI5_CL_DEMO_APP_197 IMPLEMENTATION.
                              items = client->_bind_edit( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
+    lo_columns->column( )->text( `Product` ).
+    lo_columns->column( )->text( `Date` ).
+    lo_columns->column( )->text( `Name` ).
+    lo_columns->column( )->text( `Location` ).
+    lo_columns->column( )->text( `Quantity` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->link( id    = `link`

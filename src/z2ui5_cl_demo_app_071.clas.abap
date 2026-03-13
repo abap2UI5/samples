@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     ENDDO.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( val = view->shell(
+    client->view_display( view->shell(
          )->page(
                  title          = 'abap2UI5 - First Example'
                  navbuttonpress = client->_event_nav_app_leave( )

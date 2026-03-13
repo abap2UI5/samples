@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_243 IMPLEMENTATION.
                class      = `sapUiContentPadding`
              )->sub_header( )->toolbar( design = `Info`
                  )->icon( src = `sap-icon://begin`
-                     )->text( text = `This sample demonstrates classes which let you to add negative margin at two opposite sides (begin/end).` )->get_parent( )->get_parent( ).
+                     )->text( `This sample demonstrates classes which let you to add negative margin at two opposite sides (begin/end).` )->get_parent( )->get_parent( ).
 
     DATA(layout) = page->panel( class = `sapUiTinyNegativeMarginBeginEnd`
                           )->content(

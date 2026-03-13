@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view_nested->page( title = `Nested View` ).
+    DATA(page) = lo_view_nested->page( `Nested View` ).
 
     DATA(tab) = page->ui_table( rows               = client->_bind_edit( val = t_tab2 view = client->cs_view-nested )
                                 editable           = abap_false
@@ -56,15 +56,15 @@ CLASS Z2UI5_CL_DEMO_APP_097 IMPLEMENTATION.
                                 sort               = client->_event( 'SORT' )
                                 filter             = client->_event( 'FILTER' )
                                 customfilter       = client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( 'Products' ).
     DATA(lo_columns) = tab->ui_columns( ).
 
     lo_columns->ui_column( sortproperty                  = 'TITLE'
-                                          filterproperty = 'TITLE' )->text( text = `Index` )->ui_template( )->text( text = `{TITLE}` ).
+                                          filterproperty = 'TITLE' )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
     lo_columns->ui_column( sortproperty   = 'DESCR'
-                           filterproperty = 'DESCR' )->text( text = `DESCR` )->ui_template( )->text( text = `{DESCR}` ).
+                           filterproperty = 'DESCR' )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
     lo_columns->ui_column( sortproperty   = 'INFO'
-                           filterproperty = 'INFO' )->text( text = `INFO` )->ui_template( )->text( text = `{INFO}` ).
+                           filterproperty = 'INFO' )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
        )->ui_row_action_item( icon = `sap-icon://delete`
                            press   = client->_event( val = 'ROW_DELETE' t_arg = VALUE #( ( `${TITLE}` ) ) ) ).

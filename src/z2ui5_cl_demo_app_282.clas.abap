@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_282 IMPLEMENTATION.
                                       )->button( type  = `Back`
                                                  press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )
                                       )->toolbar_spacer(
-                                      )->title( text = `Title`
+                                      )->title( `Title`
                                       )->toolbar_spacer(
                                       )->button( icon           = `sap-icon://edit`
                                                  press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/id}` ) ) )

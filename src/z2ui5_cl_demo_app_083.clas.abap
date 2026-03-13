@@ -201,12 +201,12 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(header_title) = page->title( ns = 'f'
             )->get( )->dynamic_page_title( ).
 
-    header_title->heading( ns = 'f' )->hbox(
+    header_title->heading( 'f' )->hbox(
         )->title( `Select-Option` ).
     header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->snapped_content( 'f' ).
 
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+    DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
@@ -301,7 +301,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                      key  = '{N}'
                      text = '{N}'
              )->get_parent(
-             )->input( value = `{LOW}`
+             )->input( `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
              )->button( icon  = 'sap-icon://decline'

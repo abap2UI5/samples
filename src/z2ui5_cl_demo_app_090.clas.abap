@@ -194,7 +194,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       ( n = `showReset`               v = `true` )
       ( n = `initialVisiblePanelType` v = `sort` )
       )
-      )->_generic( name = `panels`
+      )->_generic( `panels`
       )->_generic( name = `P13nColumnsPanel`
       t_prop            = VALUE #(
 *     ( n = `title`   v = `Columns` )
@@ -206,7 +206,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
          )->_generic( name = `P13nItem`
            t_prop          = VALUE #( ( n = `columnKey` v = `{columnkey}` )
                              ( n = `text`      v = `{text}` ) ) )->get_parent( )->get_parent(
-      )->_generic( name = `columnsItems`
+      )->_generic( `columnsItems`
            )->_generic( name = `P13nColumnsItem`
                t_prop        = VALUE #( ( n = `columnKey` v = `{columnkey}` )
                                   ( n = `visible`   v = `{visible}` )
@@ -217,7 +217,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       )->_generic( name = `P13nItem`
            t_prop       = VALUE #( ( n = `columnKey` v = `{columnkey}` )
                              ( n = `text`      v = `{text}` ) ) )->get_parent( )->get_parent(
-      )->_generic( name = `groupItems`
+      )->_generic( `groupItems`
         )->_generic( name = `P13nGroupItem`
             t_prop        = VALUE #( ( n = `columnKey` v = `{columnkey}` )
                               ( n = `operation` v = `{operation}` )

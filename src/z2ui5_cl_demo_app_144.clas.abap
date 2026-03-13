@@ -38,8 +38,8 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.
-      page->input( value = client->_bind_edit( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
-      page->input( value = client->_bind_edit( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
+      page->input( client->_bind_edit( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
+      page->input( client->_bind_edit( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
     ENDLOOP.
 
     DATA(tab) = page->table(
@@ -54,13 +54,13 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
         )->column( )->text( 'Value' )->get_parent( )->get_parent(
       )->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{TITLE}'
-          )->input( value = '{VALUE}' ).
+          )->input( '{TITLE}'
+          )->input( '{VALUE}' ).
 
-    page->input( value = client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
-    page->input( value = client->_bind_edit( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
+    page->input( client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
+    page->input( client->_bind_edit( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
+    page->input( client->_bind_edit( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
+    page->input( client->_bind_edit( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
 
     client->view_display( view->stringify( ) ).
 

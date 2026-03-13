@@ -245,8 +245,8 @@ CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
                  '    "wrap": true}'
       ).
 
-    column->text( text = `Object Name` ).
-    column->tree_template( )->label( text = `{OBJECTNAME}` ).
+    column->text( `Object Name` ).
+    column->tree_template( )->label( `{OBJECTNAME}` ).
 
     gantt->axis_time_strategy(
       )->proportion_zoom_strategy(

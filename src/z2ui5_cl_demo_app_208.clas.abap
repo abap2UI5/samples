@@ -30,7 +30,7 @@ CLASS Z2UI5_CL_DEMO_APP_208 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->vbox( class = `sapUiSmallMargin`
+    DATA(layout) = page->vbox( `sapUiSmallMargin`
                           )->label( labelfor = `rbg1`
                                     text     = `An example with 'matrix' layout`
                           )->radio_button_group( id      = `rbg1`

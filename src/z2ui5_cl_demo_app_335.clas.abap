@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
                                     adjustlabelspan = abap_true
-                              )->content( ns = `form` ).
+                              )->content( `form` ).
 
     DATA(index) = 0.
 

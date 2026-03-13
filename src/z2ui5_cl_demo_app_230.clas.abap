@@ -32,8 +32,8 @@ CLASS z2ui5_cl_demo_app_230 IMPLEMENTATION.
 
     DATA(layout) = page->list(
                           headertext = `Input List Item`
-                          )->input_list_item( label = `Battery Saving`
-                              )->segmented_button( selected_key = `SBYes`
+                          )->input_list_item( `Battery Saving`
+                              )->segmented_button( `SBYes`
                                   )->items(
                                       )->segmented_button_item( text = `High`
                                                                 key  = `SBYes`

@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
-              )->vbox( class = `sapUiTinyMargin`
+              )->vbox( `sapUiTinyMargin`
                   )->label( text     = '{LABEL}'
                             labelfor = `SI`
                   )->step_input(

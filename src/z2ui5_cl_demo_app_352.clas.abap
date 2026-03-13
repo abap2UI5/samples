@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
              )->page( title          = 'abap2UI5 - Softkeyboard on/off'
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
-                      )->_z2ui5( )->focus( focusid = `ZINPUT`
+                      )->_z2ui5( )->focus( `ZINPUT`
       )->simple_form( editable = abap_true
                  )->content( 'form'
                      )->title( 'Keyboard on/off'

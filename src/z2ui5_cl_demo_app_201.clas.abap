@@ -340,13 +340,13 @@ CLASS Z2UI5_CL_DEMO_APP_201 IMPLEMENTATION.
                  )->get( ).
 
     input->suggestion_columns(
-        )->column( )->label( text = 'Name' )->get_parent(
-        )->column( )->label( text = 'Currency' ).
+        )->column( )->label( 'Name' )->get_parent(
+        )->column( )->label( 'Currency' ).
 
     input->suggestion_rows(
         )->column_list_item(
-            )->label( text = '{CURRENCYNAME}'
-            )->label( text = '{CURRENCY}' ).
+            )->label( '{CURRENCYNAME}'
+            )->label( '{CURRENCY}' ).
 
     page->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).

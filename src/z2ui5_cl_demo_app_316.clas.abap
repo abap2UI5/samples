@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
 
-    DATA(email_form) = layout->simple_form( title = `Trigger E-Mail` ).
+    DATA(email_form) = layout->simple_form( `Trigger E-Mail` ).
 
     email_form->label( text     = `E-Mail`
                        labelfor = `inputEmail` ).
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                                        t_arg = VALUE #( ( `TRIGGER_EMAIL` )
                                                                         ( |${ client->_bind_edit( email ) }| ) ) ) ).
 
-    DATA(telephone_form) = layout->simple_form( title = `Trigger Telephone` ).
+    DATA(telephone_form) = layout->simple_form( `Trigger Telephone` ).
 
     telephone_form->label( text     = `Telephone`
                            labelfor = `inputTel` ).
@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                        t_arg = VALUE #( ( `TRIGGER_TEL` )
                                                         ( |${ client->_bind_edit( phone ) }| ) ) ) ).
 
-    DATA(mobile_form) = layout->simple_form( title = `Trigger SMS` ).
+    DATA(mobile_form) = layout->simple_form( `Trigger SMS` ).
 
     mobile_form->label( text     = `Number`
                         labelfor = `inputNumber` ).
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                                         t_arg = VALUE #( ( `TRIGGER_SMS` )
                                                                          ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
 
-    DATA(url_form) = layout->simple_form( title = `Redirect` ).
+    DATA(url_form) = layout->simple_form( `Redirect` ).
     url_form->label( text     = `URL`
                      labelfor = `inputUrl` ).
     url_form->input( id          = `inputUrl`

@@ -49,14 +49,14 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
                              )->message_strip( text  = `A Toolbar's centering technique will be slightly off the center if there is a button on the left.`
                                                class = `sapUiTinyMargin`
                              )->toolbar(
-                                 )->label( text = `Toolbar can shrink content in case of overflow.`
+                                 )->label( `Toolbar can shrink content in case of overflow.`
                                      )->layout_data(
                                          )->toolbar_layout_data( shrinkable = abap_false )->get_parent( )->get_parent(
                                  )->button( text = `Accept`
                                             type = `Accept`
                                      )->layout_data(
                                          )->toolbar_layout_data( shrinkable = abap_true )->get_parent( )->get_parent(
-                                 )->label( text = `This is a long non-shrinkable label.`
+                                 )->label( `This is a long non-shrinkable label.`
                                      )->layout_data(
                                          )->toolbar_layout_data( shrinkable = abap_false )->get_parent( )->get_parent(
                                  )->button( text = `Reject`
@@ -69,25 +69,25 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
           )->label(
                                  )->bar(
                                      )->content_left(
-                                         )->label( text = `Bar cannot really handle overflow it just cuts the content.` )->get_parent(
+                                         )->label( `Bar cannot really handle overflow it just cuts the content.` )->get_parent(
                                      )->content_middle(
                                          )->button( text = `Accept`
                                                     type = `Accept`
-                                         )->label( text = `This is a long non-shrinkable label.`
+                                         )->label( `This is a long non-shrinkable label.`
                                          )->button( text = `Reject`
                                                     type = `Reject`
                                          )->button( text = `Edit`
                                          )->button( text = `Big Big Big Big Big Big Big Big Button` )->get_parent( )->get_parent(
           )->label(
                                  )->overflow_toolbar(
-                                     )->label( text = `OverflowToolbar provides a See more (...) button for overflow.`
+                                     )->label( `OverflowToolbar provides a See more (...) button for overflow.`
                                          )->layout_data(
                                              )->toolbar_layout_data( shrinkable = abap_false )->get_parent( )->get_parent(
                                      )->button( text = `Accept`
                                                 type = `Accept`
                                          )->layout_data(
                                              )->toolbar_layout_data( shrinkable = abap_true )->get_parent( )->get_parent(
-                                     )->label( text = `This is a long non-shrinkable label.`
+                                     )->label( `This is a long non-shrinkable label.`
                                          )->layout_data(
                                              )->toolbar_layout_data( shrinkable = abap_false )->get_parent( )->get_parent(
                                      )->button( text = `Reject`

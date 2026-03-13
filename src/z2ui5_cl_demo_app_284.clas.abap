@@ -65,35 +65,35 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
                                           emptyspanm     = `0`
                                           columnsl       = `2`
                                           columnsm       = `2`
-                                          )->content( ns = `form`
+                                          )->content( `form`
                                               )->title( ns   = `core`
                                                         text = `Office`
-                                              )->label( text = `Name`
-                                              )->text( text = `Red Point Stores`
-                                              )->label( text = `Street/No.`
-                                              )->text( text = `Main St 1618`
-                                              )->label( text = `ZIP Code/City`
-                                              )->text( text = `31415 Maintown`
-                                              )->label( text = `Country`
-                                              )->text( text = `Germany`
+                                              )->label( `Name`
+                                              )->text( `Red Point Stores`
+                                              )->label( `Street/No.`
+                                              )->text( `Main St 1618`
+                                              )->label( `ZIP Code/City`
+                                              )->text( `31415 Maintown`
+                                              )->label( `Country`
+                                              )->text( `Germany`
                                               )->title( ns   = `core`
                                                         text = `Online`
-                                              )->label( text = `Web`
-                                              )->text( text = `http://www.sap.com`
-                                              )->label( text = `Twitter`
-                                              )->text( text = `@sap` )->get_parent(
-                                          )->layout_data( ns = `form`
+                                              )->label( `Web`
+                                              )->text( `http://www.sap.com`
+                                              )->label( `Twitter`
+                                              )->text( `@sap` )->get_parent(
+                                          )->layout_data( `form`
                                               )->flex_item_data( shrinkfactor     = `0`
                                                                  backgrounddesign = `Solid`
                                                                  styleclass       = `sapContrastPlus` )->get_parent( )->get_parent(
                                       )->analytical_table( ns            = `table`
                                                            selectionmode = `MultiToggle`
-                                          )->rowmode( ns = `table`
+                                          )->rowmode( `table`
                                               )->auto( ns               = `trm`
                                                        rowcontentheight = `32` )->get_parent( )->get_parent(
                                           )->toolbar( ns = `table`
                                             )->overflow_toolbar(
-                                              )->title( text = `Title Bar Here`
+                                              )->title( `Title Bar Here`
                                               )->toolbar_spacer(
                                               )->search_field( width = `12rem`
                                               )->segmented_button(
@@ -104,11 +104,11 @@ CLASS z2ui5_cl_demo_app_284 IMPLEMENTATION.
                                                          type = `Transparent`
                                               )->button( icon = `sap-icon://action-settings`
                                                          type = `Transparent` )->get_parent( )->get_parent(
-                                          )->columns( ns = `table`
-                                              )->analytical_column( ns = `table` )->get_parent(
-                                              )->analytical_column( ns = `table` )->get_parent(
-                                              )->analytical_column( ns = `table` )->get_parent( )->get_parent(
-                                          )->layout_data( ns = `table`
+                                          )->columns( `table`
+                                              )->analytical_column( `table` )->get_parent(
+                                              )->analytical_column( `table` )->get_parent(
+                                              )->analytical_column( `table` )->get_parent( )->get_parent(
+                                          )->layout_data( `table`
                                               )->flex_item_data( growfactor = `1`
                                                                  basesize   = `0%`
                                                                  styleclass = `sapUiResponsiveContentPadding` )->get_parent( )->get_parent( )->get_parent( )->get_parent(

@@ -113,11 +113,11 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
                                width       = '200px'
                                icon        = 'sap-icon://home-share' ).
 
-    header_title->expanded_content( ns = `uxap` )->text( client->_bind( ls_detail-productname ) ).
-    header_title->snapped_content( ns = `uxap` )->text( client->_bind( ls_detail-productname ) ).
+    header_title->expanded_content( `uxap` )->text( client->_bind( ls_detail-productname ) ).
+    header_title->snapped_content( `uxap` )->text( client->_bind( ls_detail-productname ) ).
     header_title->snapped_title_on_mobile( )->title( client->_bind( ls_detail-productname ) ).
 
-    header_title->actions( ns = `uxap` )->overflow_toolbar(
+    header_title->actions( `uxap` )->overflow_toolbar(
          )->overflow_toolbar_button(
              icon    = `sap-icon://supplier`
              text    = 'Supplier Detail'
@@ -153,24 +153,24 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
              tooltip = 'Close Detail'
              press   = client->_event( 'ONCLOSEDETAIL' ) ).
 
-    DATA(header_content) = page->header_content( ns = 'uxap' ).
+    DATA(header_content) = page->header_content( 'uxap' ).
     header_content->flex_box( wrap = 'Wrap'
        )->avatar( src         = c_pic_url && ls_detail-pic
                   class       = 'sapUiSmallMarginEnd'
                   displaysize = 'layout'
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-            )->label( text = 'Dimension'
-            )->label( text = 'Weight'
-            )->label( text = 'Price'
-            )->label( text = 'Rating'
-            )->label( text = 'Achived goals'
+            )->label( 'Dimension'
+            )->label( 'Weight'
+            )->label( 'Price'
+            )->label( 'Rating'
+            )->label( 'Achived goals'
         )->get_parent(
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-            )->text( text = | { ls_detail-width } x { ls_detail-depth } x { ls_detail-height } { ls_detail-dimunit }|
+            )->text( | { ls_detail-width } x { ls_detail-depth } x { ls_detail-height } { ls_detail-dimunit }|
             )->object_number( number = CONV string( ls_detail-measure )
                               unit   = ls_detail-unit
                               state  = ls_detail-state_measure
-            )->text( text = |{ ls_detail-price } { ls_detail-waers } |
+            )->text( |{ ls_detail-price } { ls_detail-waers } |
 **            )->object_number( number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` state = ls_detail-state_price
             )->vbox(
             )->rating_indicator( class       = 'sapUiSmallMarginBottom'
@@ -184,17 +184,17 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
                                    showvalue    = 'true'
         )->get_parent( )->get_parent(
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-            )->label( text = 'Supplier'
-            )->label( text = 'Country'
-            )->label( text = 'City'
-            )->label( text = 'Street'
-            )->label( text = 'Mail'
-            )->label( text = 'Phone'
+            )->label( 'Supplier'
+            )->label( 'Country'
+            )->label( 'City'
+            )->label( 'Street'
+            )->label( 'Mail'
+            )->label( 'Phone'
         )->get_parent(
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-            )->label( text = ls_detail_supplier-suppliername
-            )->label( text = ls_detail_supplier-country
-            )->label( text = |{ ls_detail_supplier-zipcode }-{ ls_detail_supplier-city } |
+            )->label( ls_detail_supplier-suppliername
+            )->label( ls_detail_supplier-country
+            )->label( |{ ls_detail_supplier-zipcode }-{ ls_detail_supplier-city } |
             )->link( text = ls_detail_supplier-street
                      href = |https://www.google.com/maps/search/?api=1&query={ ls_detail_supplier-street },{ ls_detail_supplier-city },{ ls_detail_supplier-country }|
              target       = '_blank'
@@ -210,7 +210,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'SectionDescription'
                                    title          = 'Description'
-        )->heading( ns = `uxap`
+        )->heading( `uxap`
 *            )->message_strip( text = 'this is a message strip'
         )->get_parent(
         )->sub_sections(
@@ -232,7 +232,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'SupplierSection'
                                    title          = 'Supplier'
-       )->heading( ns = `uxap`
+       )->heading( `uxap`
        )->get_parent(
        )->sub_sections(
            )->object_page_sub_section( id    = 'SupplierSection1'
@@ -240,41 +240,41 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
                )->blocks(
 *                     )->simple_form( layout = 'ResponsiveGridLayout' editable = 'false'
 *                     )->content(
-                     )->label( text = |Phone { ls_detail_supplier-phone }|
-                     )->label( text = |Mail  { ls_detail_supplier-email }|
+                     )->label( |Phone { ls_detail_supplier-phone }|
+                     )->label( |Mail  { ls_detail_supplier-email }|
            )->get_parent( )->get_parent( )->get_parent(
            )->object_page_sub_section( id    = 'SupplierSection2'
                                        title = 'Payment information  '
                  )->blocks(
-                     )->label( text = '20 Days Net' ).
+                     )->label( '20 Days Net' ).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'Others'
                                    title          = 'Others'
-      )->heading( ns = `uxap`
+      )->heading( `uxap`
       )->get_parent(
       )->sub_sections(
          )->object_page_sub_section( id    = 'Others1'
                                      title = 'Information'
                 )->blocks(
                    )->vbox(
-                   )->label( text = 'info'
-                   )->label( text = 'info'
+                   )->label( 'info'
+                   )->label( 'info'
                 )->get_parent( )->get_parent( )->get_parent(
                       )->object_page_sub_section( id    = 'Others2'
                                                   title = 'Details '
                       )->blocks(
                             )->vbox(
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-      )->label( text = 'details' ).
+                          )->label( 'details'
+                          )->label( 'details'
+      )->label( 'details' ).
 
 
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'OtherSuppliers'
                                    title          = 'Other Supplier'
-      )->heading( ns = `uxap`
+      )->heading( `uxap`
       )->get_parent(
       )->sub_sections(
        )->object_page_sub_section( id    = 'OtherSupplier1'
@@ -302,9 +302,9 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
         )->column_list_item( type  = 'Navigation'
                              press = client->_event( val = `ONPRESSSUPPLIER` t_arg = VALUE #( ( `${SUPPLIERNAME}` ) ) )
            )->cells(
-             )->text( text = '{SUPPLIERNAME}' )->get_parent(
-             )->text( text = '{COUNTRY}'
-             )->text( text = '{CITY}' ).
+             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( '{COUNTRY}'
+             )->text( '{CITY}' ).
 
 
     check_detail_active = abap_true.
@@ -354,7 +354,7 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
                                       press = client->_event( 'ONSORT' ) ).
 
     tab->columns(
-        )->column( width = '12em'
+        )->column( '12em'
             )->text( 'Product' )->get_parent(
         )->column( minscreenwidth = 'Tablet'
                    demandpopin    = abap_true
@@ -376,8 +376,8 @@ CLASS Z2UI5_CL_DEMO_APP_085 IMPLEMENTATION.
            )->cells(
              )->object_identifier( text  = '{PRODUCTNAME}'
                                    title = '{PRODUCTID}' )->get_parent(
-             )->text( text = '{SUPPLIERNAME}' )->get_parent(
-             )->text( text = '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
+             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}'
                                unit   = '{UNIT}'
                                state  = '{STATE_MEASURE}'

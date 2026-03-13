@@ -55,11 +55,11 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
                     )->title( text     = 'Oblomov Dev'
                               wrapping = abap_true ).
 
-    header_title->expanded_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
-    header_title->snapped_content( ns = `uxap` )->text( `abap2UI5 Developer` ).
+    header_title->expanded_content( `uxap` )->text( `abap2UI5 Developer` ).
+    header_title->snapped_content( `uxap` )->text( `abap2UI5 Developer` ).
     header_title->snapped_title_on_mobile( )->title( `abap2UI5 Developer` ).
 
-    header_title->actions( ns = `uxap` )->overflow_toolbar(
+    header_title->actions( `uxap` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = 'edit header'
@@ -79,7 +79,7 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
                  text  = 'Go Back'
                  press = client->_event_nav_app_leave( ) ).
 
-    DATA(header_content) = page->header_content( ns = 'uxap' ).
+    DATA(header_content) = page->header_content( 'uxap' ).
 
     header_content->flex_box( wrap = 'Wrap'
            )->avatar( src         = lcl_help=>get_avatar( )
@@ -90,11 +90,11 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
                 )->link( text = 'email@email.com'
             )->get_parent(
             )->horizontal_layout( class = 'sapUiSmallMarginBeginEnd'
-                )->label( text = 'Hello! I an abap2UI5 developer'
-                )->label( text = 'San Jose, USA'
+                )->label( 'Hello! I an abap2UI5 developer'
+                )->label( 'San Jose, USA'
             )->get_parent(
             )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-                )->label( text = 'Hello! I an abap2UI5 developer'
+                )->label( 'Hello! I an abap2UI5 developer'
                 )->vbox(
                     )->label( 'Achived goals'
                     )->progress_indicator( percentvalue = '30%'
@@ -102,7 +102,7 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
             )->get_parent( )->get_parent(
           "  )->avatar( src = lcl_help=>get_avatar( ) class = 'sapUiSmallMarginEnd' displaySize = 'layout'
             )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-                )->label( text = 'San Jose, USA'
+                )->label( 'San Jose, USA'
             )->get_parent( ).
 
 
@@ -111,86 +111,86 @@ CLASS Z2UI5_CL_DEMO_APP_017 IMPLEMENTATION.
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'goalsSectionSS1'
                                    title          = '2014 Goals Plan'
-            )->heading( ns = `uxap`
-                )->message_strip( text = 'this is a message strip'
+            )->heading( `uxap`
+                )->message_strip( 'this is a message strip'
             )->get_parent(
             )->sub_sections(
                 )->object_page_sub_section( id    = 'goalssubSectionSS1'
                                             title = 'goals1'
                     )->blocks(
                           )->vbox(
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
-                          )->label( text = 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
+                          )->label( 'goals1'
           )->get_parent( )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = 'goalsSectionWS1'
                                             title = 'goals2'
                       )->blocks(
                             )->vbox(
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2'
-                          )->label( text = 'goals2' ).
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2'
+                          )->label( 'goals2' ).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'PersonalSection'
                                    title          = 'Personal'
-            )->heading( ns = `uxap`
+            )->heading( `uxap`
            "     )->message_strip( text = 'this is a message strip'
             )->get_parent(
             )->sub_sections(
                 )->object_page_sub_section( id    = 'personalSectionSS1'
                                             title = 'Connect'
                     )->blocks(
-                          )->label( text = 'telefon'
-                          )->label( text = 'email'
+                          )->label( 'telefon'
+                          )->label( 'email'
                 )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = 'personalSectionWS2'
                                             title = 'Payment information  '
                       )->blocks(
-                          )->label( text = 'Hello! I an abap2UI5 developer'
-                          )->label( text = 'San Jose, USA' ).
+                          )->label( 'Hello! I an abap2UI5 developer'
+                          )->label( 'San Jose, USA' ).
 
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'employmentSection'
                                    title          = 'Employment'
-             )->heading( ns = `uxap`
+             )->heading( `uxap`
            "     )->message_strip( text = 'this is a message strip'
              )->get_parent(
              )->sub_sections(
                 )->object_page_sub_section( id    = 'empSectionSS1'
                                             title = 'Job information'
                     )->blocks(
-                          )->label( text = 'info'
-                          )->label( text = 'info'
-                          )->label( text = 'info'
-                          )->label( text = 'info'
-                          )->label( text = 'info'
+                          )->label( 'info'
+                          )->label( 'info'
+                          )->label( 'info'
+                          )->label( 'info'
+                          )->label( 'info'
                 )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = 'empSectionWS2'
                                             title = 'Employee Details '
                       )->blocks(
                             )->vbox(
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details'
-                          )->label( text = 'details' ).
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details'
+                          )->label( 'details' ).
 
     client->view_display( view->stringify( ) ).
 

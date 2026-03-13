@@ -93,32 +93,32 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
            target = '_blank'
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav' ).
 
-    DATA(layout) = page->vbox( class = `navigationExamples`
+    DATA(layout) = page->vbox( `navigationExamples`
                           )->panel( headertext = `Variable width`
                               )->flex_box(
                                   class          = `ne-flexbox1`
                                   rendertype     = `List`
                                   justifycontent = `Center`
                                   alignitems     = `Center`
-                                  )->html( content = `<a >Item 1</a>` )->get_parent(
-                                  )->html( content = `<a >Long item 2</a>` )->get_parent(
-                                  )->html( content = `<a >Item 3</a>` )->get_parent( )->get_parent(
+                                  )->html( `<a >Item 1</a>` )->get_parent(
+                                  )->html( `<a >Long item 2</a>` )->get_parent(
+                                  )->html( `<a >Item 3</a>` )->get_parent( )->get_parent(
       )->panel( headertext = `Same width, transition effect`
                               )->flex_box(
                                   class          = `ne-flexbox2`
                                   rendertype     = `List`
                                   justifycontent = `SpaceBetween`
                                   alignitems     = `Center`
-                                  )->html( content = `<a >Item 1</a>` )->get(
-                                      )->layout_data( ns = `core`
+                                  )->html( `<a >Item 1</a>` )->get(
+                                      )->layout_data( `core`
                                           )->flex_item_data( growfactor = `1`
                                                              basesize   = `25%` )->get_parent( )->get_parent(
-                                  )->html( content = `<a >Long item 2</a>` )->get(
-                                      )->layout_data( ns = `core`
+                                  )->html( `<a >Long item 2</a>` )->get(
+                                      )->layout_data( `core`
                                           )->flex_item_data( growfactor = `1`
                                                              basesize   = `25%` )->get_parent( )->get_parent(
-                                  )->html( content = `<a >Item 3</a>` )->get(
-                                      )->layout_data( ns = `core`
+                                  )->html( `<a >Item 3</a>` )->get(
+                                      )->layout_data( `core`
                                           )->flex_item_data( growfactor = `1`
                                                              basesize   = `25%` )->get_parent( )->get_parent( ).
 

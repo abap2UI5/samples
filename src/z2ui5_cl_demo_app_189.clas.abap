@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
               shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->simple_form(
-       )->content( ns = 'form'
+       )->content( 'form'
        )->label( 'One (Press Enter)' )->input( id     = 'IdOne'
                                                value  = client->_bind_edit( one )
                                                submit = client->_event( 'one_enter' )
@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
        )->label( 'Three' )->input( id    = 'IdThree'
                                    value = client->_bind_edit( three ) ).
 
-    page->_z2ui5( )->focus( focusid = client->_bind( focus_field ) ).
+    page->_z2ui5( )->focus( client->_bind( focus_field ) ).
 
     client->view_display( page->stringify( ) ).
 

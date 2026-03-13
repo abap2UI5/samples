@@ -51,8 +51,8 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout(
                           class = `sapUiContentPadding`
                           width = `100%`
-                          )->content( ns = `layout`
-                              )->html( content = `<div class="content"><h4>Lorem ipsum</h4><div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
+                          )->content( `layout`
+                              )->html( `<div class="content"><h4>Lorem ipsum</h4><div>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
                                                  `sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                                                  `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
                                                  `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&

@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
         afterclose = client->_event( 'BTN_OK_2ND' )
          )->content( ).
 
-    DATA(content) = dialog->label( text = 'this is a second popup' ).
+    DATA(content) = dialog->label( 'this is a second popup' ).
 
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(

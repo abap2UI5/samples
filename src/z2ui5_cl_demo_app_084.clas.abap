@@ -188,7 +188,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                         additionaltext = '{DESCR}' ).
 
     page->footer( )->overflow_toolbar(
-         )->text( text = `MessageBox Types`
+         )->text( `MessageBox Types`
          )->button(
              text  = 'Confirm'
              press = client->_event( 'BUTTON_MCONFIRM' )

@@ -87,8 +87,8 @@ CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
              layout     = `ResponsiveGridLayout`
              labelspanl = `4`
              labelspanm = `4`
-             )->content( ns = `form`
-                 )->label( text = `Clearing with Customer`
+             )->content( `form`
+                 )->label( `Clearing with Customer`
                  )->checkbox( text = `Option`
                  )->checkbox( text     = `Option 2`
                               selected = abap_true )->get(

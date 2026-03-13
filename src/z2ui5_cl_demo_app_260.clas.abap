@@ -50,17 +50,17 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
     DATA(layout) = page->splitter( height      = `500px`
                                    orientation = `Vertical`
                           )->splitter( )->get(
-                              )->layout_data( ns = `layout`
+                              )->layout_data( `layout`
                                   )->splitter_layout_data( size = `50px` )->get_parent( )->get_parent(
-                              )->content_areas( ns = `layout`
+                              )->content_areas( `layout`
                                   )->button( width = `100%`
                                              text  = `Content 1` )->get(
                                       )->layout_data(
                                           )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                           )->splitter( )->get(
-                              )->layout_data( ns = `layout`
+                              )->layout_data( `layout`
                                   )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
-                              )->content_areas( ns = `layout`
+                              )->content_areas( `layout`
                                   )->button( width = `100%`
                                              text  = `Content 2` )->get(
                                        )->layout_data(
@@ -81,9 +81,9 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
                                   )->splitter_layout_data( size    = `30%`
                                                            minsize = `200px` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
                           )->splitter( )->get(
-                               )->layout_data( ns = `layout`
+                               )->layout_data( `layout`
                                    )->splitter_layout_data( size = `50px` )->get_parent( )->get_parent( ")->get_parent(
-                               )->content_areas( ns = `layout`
+                               )->content_areas( `layout`
                                    )->button( width = `100%`
                                               text  = `Content 6` )->get(
                                        )->layout_data(

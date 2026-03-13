@@ -63,14 +63,14 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
-    page1->_z2ui5( )->uitableext( tableid = `Table1` ).
+    page1->_z2ui5( )->uitableext( `Table1` ).
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Table` ).
+    header_title->heading( 'f' )->hbox( )->title( `Table` ).
     header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->snapped_content( 'f' ).
 
-    DATA(cont) = page->content( ns = 'f' ).
+    DATA(cont) = page->content( 'f' ).
 
 
     DATA(tab) = cont->vbox(
@@ -88,20 +88,20 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                               )->ui_column( sortproperty   = 'FIELD1'
                                             filterproperty = 'FIELD1'
                                             autoresizable  = 'true'
-                                             )->text( text = `Field1`
-                                              )->ui_template( )->text( text = `{FIELD1}`
+                                             )->text( `Field1`
+                                              )->ui_template( )->text( `{FIELD1}`
                                )->get_parent( )->get_parent(
                                )->ui_column( sortproperty   = 'FIELD2'
                                              filterproperty = 'FIELD2'
                                              autoresizable  = 'true'
-                                              )->text( text = `Field2`
-                                               )->ui_template( )->text( text = `{FIELD2}`
+                                              )->text( `Field2`
+                                               )->ui_template( )->text( `{FIELD2}`
                                )->get_parent( )->get_parent(
                                )->ui_column( sortproperty   = 'FIELD3'
                                              filterproperty = 'FIELD3'
                                              autoresizable  = 'true'
-                                              )->text( text = `Field3`
-                                               )->ui_template( )->text( text = `{FIELD3}`
+                                              )->text( `Field3`
+                                               )->ui_template( )->text( `{FIELD3}`
                          )->get_parent( )->get_parent( )->get_parent(
                               )->ui_row_action_template( )->ui_row_action(
                               )->ui_row_action_item( icon = 'sap-icon://add'

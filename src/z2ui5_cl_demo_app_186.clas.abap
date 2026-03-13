@@ -47,7 +47,7 @@ CLASS Z2UI5_CL_DEMO_APP_186 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( 'BUTTON_DOWNLOAD' ).
-      client->follow_up_action( val = client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
+      client->follow_up_action( client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.
 
   ENDMETHOD.
@@ -71,7 +71,7 @@ CLASS Z2UI5_CL_DEMO_APP_186 IMPLEMENTATION.
                     height         = `600px`
                     alignitems     = `Center`
                     justifycontent = `SpaceAround`
-      )->vbox( )->text( text = `Base64 String:`
+      )->vbox( )->text( `Base64 String:`
       )->text_area( value    = client->_bind_edit( file_content_64 )
                     rows     = `20`
                     width    = `800px`
@@ -79,7 +79,7 @@ CLASS Z2UI5_CL_DEMO_APP_186 IMPLEMENTATION.
       )->get_parent(
       )->vbox( justifycontent = `Center`
                alignitems     = `Center`
-      )->text( text = `fill filename:`
+      )->text( `fill filename:`
       )->input( value = client->_bind_edit( file_name )
                 class = `sapUiLargeMarginBottom`
                 width = `15rem`

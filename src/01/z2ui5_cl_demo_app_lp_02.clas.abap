@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_LP_02 IMPLEMENTATION.
         DATA(page) = shell->page( showheader = abap_false ).
         page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
       ELSE.
-        page = shell->page( title = client->_bind_edit( mv_title ) ).
+        page = shell->page( client->_bind_edit( mv_title ) ).
       ENDIF.
 
       client->view_display( page->simple_form( title    = 'Set Launchpad Title Dynamically'

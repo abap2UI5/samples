@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
                                     adjustlabelspan = abap_true
-                              )->content( ns = `form` ).
+                              )->content( `form` ).
 
     ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
     ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     DATA(line) = form->label( wrapping = abap_false
                               text     = 'ID' ).
 
-    line->input( value = client->_bind( <value> ) ).
+    line->input( client->_bind( <value> ) ).
 
     client->view_display( page->stringify( ) ).
 

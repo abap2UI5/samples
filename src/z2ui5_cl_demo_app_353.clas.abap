@@ -74,11 +74,11 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
                                     device_height     = client->_bind_edit( device_height )
                                     device_width      = client->_bind_edit( device_width ) ).
 
-    DATA(form) = page->_z2ui5( )->focus( focusid = client->_bind( focus_field )
+    DATA(form) = page->_z2ui5( )->focus( client->_bind( focus_field )
 
           )->simple_form( editable = abap_true
 
-                                )->content( ns = `form` ).
+                                )->content( `form` ).
 
     form->label( 'device_browser'
                           )->input( client->_bind_edit( device_os )

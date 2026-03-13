@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
                       type  = 'Emphasized'
                 )->get_parent( )->get_parent(
             )->text( 'make an input here:'
-            )->input( value = 'abcd' ).
+            )->input( 'abcd' ).
 
     client->popover_display(
       xml   = view->stringify( )
@@ -69,7 +69,7 @@ CLASS Z2UI5_CL_DEMO_APP_026 IMPLEMENTATION.
                   )->link( text = 'Documentation UI5 Popover Control'
                            href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
                   )->label( 'placement'
-                  )->segmented_button( selected_key = client->_bind_edit( mv_placement )
+                  )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key  = 'Left'

@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                    navbuttonpress  = client->_event_nav_app_leave( )
                    shownavbutton   = client->check_app_prev_stack( ) ).
 
-    page->vbox( class = `sapUiSmallMargin`
+    page->vbox( `sapUiSmallMargin`
        )->label( text     = `facingMode: `
                  labelfor = `ComboFacingMode`
        )->combobox( id          = `ComboFacingMode`
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
-    page->vbox( class = `sapUiSmallMargin`
+    page->vbox( `sapUiSmallMargin`
        )->label( text     = `device: `
                  labelfor = `ComboDevice`
        )->_z2ui5( )->camera_selector(

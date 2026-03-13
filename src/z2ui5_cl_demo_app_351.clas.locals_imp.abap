@@ -30,7 +30,7 @@ CLASS zcl_2ui5_start IMPLEMENTATION.
         IF client->check_on_init( ) OR client->check_on_navigated( )..
           DATA(view) = z2ui5_cl_xml_view=>factory( ).
           DATA(page) = view->shell( )->page(
-            title = `Startview` ).
+            `Startview` ).
           page->simple_form(
                 )->content( 'form'
                              )->button(
@@ -72,7 +72,7 @@ CLASS zcl_2ui5_lock IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
     hbox->title(
-      text = 'Current Lock Value in Table ZTEST' ).
+      'Current Lock Value in Table ZTEST' ).
     hbox->input(
       editable = abap_false
       value    = client->_bind_edit( varkey ) ).

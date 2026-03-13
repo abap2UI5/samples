@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout(
                           class = `sapUiContentPadding`
                           width = `100%`
-                          )->content( ns = `layout`
+                          )->content( `layout`
                               )->message_strip(
                                   showicon = abap_true
                                   text     = `This TextArea shows up to 7 lines, then a scrollbar is presented.`
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
                                   )->simple_form( "ns = `form`
                                       editable = `true`
                                       layout   = `ResponsiveGridLayout`
-                                      )->label( text = `Comment`
+                                      )->label( `Comment`
                               )->text_area( value                                                                                     = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy ` &&
                                                     `eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                                                     `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, ` &&

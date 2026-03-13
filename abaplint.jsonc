@@ -22,6 +22,8 @@
     "errorNamespace": "."
   },
   "rules": {
+    "exporting": true,
+    "omit_parameter_name": true,
     "downport": true,
     "begin_end_names": true,
     "check_ddic": true,
