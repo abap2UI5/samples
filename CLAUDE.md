@@ -57,9 +57,9 @@ Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The 
 
 ## App Structure
 
-### Simple apps (< 50 lines total)
+### Simple apps (< 50 lines in `main`)
 
-Write everything directly in `main` — no method encapsulation needed.
+Write everything directly in `main` — no method encapsulation needed. Count only the lines inside the `main` method, not the total class length.
 
 ### Larger apps — canonical template
 
