@@ -33,9 +33,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
                   text  = `post`
                   press = client->_event( `BUTTON_POST` )
           )->stringify( ) ).
-    ENDIF.
-
-    IF client->check_on_event( `BUTTON_POST` ).
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
 

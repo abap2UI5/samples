@@ -37,6 +37,17 @@ Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The 
 - `client->check_on_navigated( )` — true when returning from a sub-app or popup
 - `client->check_on_event( )` — true when a user triggered an event
 
+Always use `ELSEIF` to chain these checks — never separate `IF` blocks:
+```abap
+IF client->check_on_init( ).
+  ...
+ELSEIF client->check_on_navigated( ).
+  ...
+ELSEIF client->check_on_event( ).
+  ...
+ENDIF.
+```
+
 ### Client API (`z2ui5_if_client`)
 
 | Category | Methods | Purpose |
