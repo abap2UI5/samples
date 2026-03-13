@@ -27,6 +27,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
 - No blank lines between `SECTION.` keywords, between methods, or between `CLASS`/`ENDCLASS` — use compact formatting without extra empty lines.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
+- Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 
 ## Framework Reference
 
