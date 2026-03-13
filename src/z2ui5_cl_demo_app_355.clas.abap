@@ -36,6 +36,11 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->header_content(
+       )->link( text   = `UI5 Demo Kit`
+                target = `_blank`
+                href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` ).
+
     DATA(list) = page->_generic( name   = `List`
                                  t_prop = VALUE #( ( n = `headerText` v = `Input` ) ) ).
 
