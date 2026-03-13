@@ -19,6 +19,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 
 ### Code Conventions
 
+- Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
 
