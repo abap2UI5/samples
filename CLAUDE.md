@@ -26,7 +26,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
 - **Blank lines — class definition** (`EMPTY_LINES_IN_CLASS_DEFINITION`):
-  - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`).
+  - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`) — unless the preceding section is empty.
   - No blank line directly below a section keyword.
   - No blank line above `ENDCLASS.`.
   - Max 1 consecutive blank line inside the definition block.
