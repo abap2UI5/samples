@@ -30,89 +30,71 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
       volume    = `7`.
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - InputListItem`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_util_xml=>factory( ).
+    DATA(root) = view->_( n = `View` ns = `mvc`
+        p = VALUE #( ( n = `displayBlock` v = abap_true )
+                     ( n = `height`       v = `100%` )
+                     ( n = `xmlns`        v = `sap.m` )
+                     ( n = `xmlns:core`   v = `sap.ui.core` )
+                     ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    page->header_content(
-       )->link( text   = `UI5 Demo Kit`
-                target = `_blank`
-                href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` ).
+    DATA(page) = root->_( `Shell` )->_( n = `Page`
+        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                     ( n = `title`          v = `abap2UI5 - InputListItem` ) ) ).
 
-    DATA(list) = page->_generic( name   = `List`
-                                 t_prop = VALUE #( ( n = `headerText` v = `Input` ) ) ).
+    page->_( `headerContent`
+       )->__( n = `Link`
+              p = VALUE #( ( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` )
+                           ( n = `target` v = `_blank` )
+                           ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `WLAN` ) )
-        )->_generic( name   = `Switch`
-                     t_prop = VALUE #( ( n = `state` v = client->_bind_edit( wlan ) ) )
-        )->get_parent( )->get_parent( ).
+    DATA(list) = page->_( n = `List` a = `headerText` v = `Input` ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `Flight Mode` ) )
-        )->_generic( name   = `CheckBox`
-                     t_prop = VALUE #( ( n = `selected` v = client->_bind_edit( flight ) ) )
-        )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `WLAN`
+       )->__( n = `Switch` a = `state` v = client->_bind_edit( wlan ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `High Performance` ) )
-        )->_generic( name   = `RadioButton`
-                     t_prop = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                                       ( n = `selected`  v = client->_bind_edit( high_perf ) ) )
-        )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `Flight Mode`
+       )->__( n = `CheckBox` a = `selected` v = client->_bind_edit( flight ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `Battery Saving` ) )
-        )->_generic( name   = `RadioButton`
-                     t_prop = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                                       ( n = `selected`  v = client->_bind_edit( battery ) ) )
-        )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `High Performance`
+       )->__( n = `RadioButton`
+              p = VALUE #( ( n = `groupName` v = `GroupPerf` )
+                           ( n = `selected`  v = client->_bind_edit( high_perf ) ) ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `Price (EUR)` ) )
-        )->_generic( name   = `Input`
-                     t_prop = VALUE #( ( n = `placeholder` v = `Price` )
-                                       ( n = `value`       v = client->_bind_edit( price ) )
-                                       ( n = `type`        v = `Number` ) )
-        )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `Battery Saving`
+       )->__( n = `RadioButton`
+              p = VALUE #( ( n = `groupName` v = `GroupPerf` )
+                           ( n = `selected`  v = client->_bind_edit( battery ) ) ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `Address` ) )
-        )->_generic( name   = `Input`
-                     t_prop = VALUE #( ( n = `placeholder` v = `Address` )
-                                       ( n = `value`       v = client->_bind_edit( address ) ) )
-        )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `Price (EUR)`
+       )->__( n = `Input`
+              p = VALUE #( ( n = `placeholder` v = `Price` )
+                           ( n = `type`        v = `Number` )
+                           ( n = `value`       v = client->_bind_edit( price ) ) ) ).
 
-    DATA(select) = list->_generic( name   = `InputListItem`
-                                   t_prop = VALUE #( ( n = `label` v = `Country` ) )
-                       )->_generic( name   = `Select`
-                                    t_prop = VALUE #( ( n = `selectedKey` v = client->_bind_edit( country ) ) ) ).
-    select->_generic( name = `Item` ns = `core`
-                      t_prop = VALUE #( ( n = `key` v = `GR` ) ( n = `text` v = `Greece` ) )
-           )->get_parent( )->_generic( name = `Item` ns = `core`
-                      t_prop = VALUE #( ( n = `key` v = `MX` ) ( n = `text` v = `Mexico` ) )
-           )->get_parent( )->_generic( name = `Item` ns = `core`
-                      t_prop = VALUE #( ( n = `key` v = `NO` ) ( n = `text` v = `Norway` ) )
-           )->get_parent( )->_generic( name = `Item` ns = `core`
-                      t_prop = VALUE #( ( n = `key` v = `NZ` ) ( n = `text` v = `New Zealand` ) )
-           )->get_parent( )->_generic( name = `Item` ns = `core`
-                      t_prop = VALUE #( ( n = `key` v = `NL` ) ( n = `text` v = `Netherlands` ) )
-           )->get_parent( )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `Address`
+       )->__( n = `Input`
+              p = VALUE #( ( n = `placeholder` v = `Address` )
+                           ( n = `value`       v = client->_bind_edit( address ) ) ) ).
 
-    list->_generic( name   = `InputListItem`
-                    t_prop = VALUE #( ( n = `label` v = `Volume` ) )
-        )->_generic( name   = `HBox`
-                     t_prop = VALUE #( ( n = `justifyContent` v = `End` ) )
-            )->_generic( name   = `Slider`
-                         t_prop = VALUE #( ( n = `min`   v = `0` )
-                                           ( n = `max`   v = `10` )
-                                           ( n = `value` v = client->_bind_edit( volume ) )
-                                           ( n = `width` v = `200px` ) )
-            )->get_parent( )->get_parent( )->get_parent( ).
+    list->_( n = `InputListItem` a = `label` v = `Country`
+       )->_( n = `Select` a = `selectedKey` v = client->_bind_edit( country )
+           )->__( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `GR` ) ( n = `text` v = `Greece` ) )
+           )->__( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `MX` ) ( n = `text` v = `Mexico` ) )
+           )->__( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NO` ) ( n = `text` v = `Norway` ) )
+           )->__( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NZ` ) ( n = `text` v = `New Zealand` ) )
+           )->__( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NL` ) ( n = `text` v = `Netherlands` ) ) ).
 
-    client->view_display( page->stringify( ) ).
+    list->_( n = `InputListItem` a = `label` v = `Volume`
+       )->_( n = `HBox` a = `justifyContent` v = `End`
+           )->__( n = `Slider`
+                  p = VALUE #( ( n = `max`   v = `10` )
+                               ( n = `min`   v = `0` )
+                               ( n = `value` v = client->_bind_edit( volume ) )
+                               ( n = `width` v = `200px` ) ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
