@@ -7,78 +7,38 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
     DATA product  TYPE string.
     DATA quantity TYPE string.
 
-
-  PROTECTED SECTION.
-
-    DATA client TYPE REF TO z2ui5_if_client.
-
-    METHODS z2ui5_set_data.
-
-    METHODS display_view
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-    METHODS on_event
-      IMPORTING
-        client TYPE REF TO z2ui5_if_client.
-
-  PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
-
-
     IF client->check_on_init( ).
-      display_view( client ).
-      z2ui5_set_data( ).
-    ENDIF.
-
-    on_event( client ).
-
-  ENDMETHOD.
-
-
-  METHOD display_view.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( val = view->shell(
-           )->page(
-                   title          = 'abap2UI5 - First Example'
+      product  = `products`.
+      quantity = `500`.
+      client->view_display( z2ui5_cl_xml_view=>factory(
+           )->shell( )->page(
+                   title          = `abap2UI5 - First Example`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form( title = 'Form Title' editable = abap_true
-                   )->content( 'form'
-                       )->title( 'Input'
-                       )->label( 'quantity'
-                       )->input( client->_bind_edit( quantity )
-                       )->label( `product`
-                       )->input( value = product enabled = abap_false
-                       )->button(
-                           text  = 'post'
-                           press = client->_event( 'BUTTON_POST' )
-            )->stringify( ) ).
+          )->simple_form( title = `Form Title` editable = abap_true
+          )->content( `form`
+              )->title( `Input`
+              )->label( `quantity`
+              )->input( client->_bind_edit( quantity )
+              )->label( `product`
+              )->input( value = product enabled = abap_false
+              )->button(
+                  text  = `post`
+                  press = client->_event( `BUTTON_POST` )
+          )->stringify( ) ).
+    ENDIF.
 
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    IF client->check_on_event( 'BUTTON_POST' ).
+    IF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
 
   ENDMETHOD.
 
-
-  METHOD z2ui5_set_data.
-
-    product  = 'products'.
-    quantity = '500'.
-
-  ENDMETHOD.
 ENDCLASS.
