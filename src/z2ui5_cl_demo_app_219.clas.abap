@@ -31,23 +31,23 @@ CLASS z2ui5_cl_demo_app_219 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(layout) = page->list( headertext = `Input`
-                           )->input_list_item( label = `WLAN`
+                           )->input_list_item( `WLAN`
                                )->switch( state = `true` )->get_parent(
-                           )->input_list_item( label = `Flight Mode`
-                               )->checkbox( selected = `true` )->get_parent(
-                           )->input_list_item( label = `High Performance`
+                           )->input_list_item( `Flight Mode`
+                               )->checkbox( `true` )->get_parent(
+                           )->input_list_item( `High Performance`
                                )->radio_button( groupname = `GroupInputListItem`
                                                 selected  = abap_true )->get_parent( )->get_parent(
-                           )->input_list_item( label = `Battery Saving`
+                           )->input_list_item( `Battery Saving`
                                )->radio_button( groupname = `GroupInputListItem` )->get_parent( )->get_parent(
-                           )->input_list_item( label = `Price (EUR)`
+                           )->input_list_item( `Price (EUR)`
                                )->input( placeholder = `Price`
                                          value       = `799`
                                          type        = `Number` )->get_parent(
-                           )->input_list_item( label = `Address`
+                           )->input_list_item( `Address`
                                )->input( placeholder = `Address`
                                          value       = `Main Rd, Manchester` )->get_parent(
-                           )->input_list_item( label = `Country`
+                           )->input_list_item( `Country`
                                )->select(
                                    )->item( key  = `GR`
                                             text = `Greece`
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_219 IMPLEMENTATION.
                                             text = `New Zealand`
                                    )->item( key  = `NL`
                                             text = `Netherlands` )->get_parent( )->get_parent(
-                           )->input_list_item( label = `Volume`
+                           )->input_list_item( `Volume`
                                )->slider( min   = `0`
                                           max   = `10`
                                           value = `7`

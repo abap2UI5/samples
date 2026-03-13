@@ -360,9 +360,9 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
               )->table(
                   )->columns(
                       )->column(
-                          )->text( text = `ObjectStatus with default text wrapping` )->get_parent(
+                          )->text( `ObjectStatus with default text wrapping` )->get_parent(
                       )->column(
-                          )->text( text = `ObjectStatus with enhanced text wrapping via 'sapMObjectStatusLongText' CSS class` )->get_parent(
+                          )->text( `ObjectStatus with enhanced text wrapping via 'sapMObjectStatusLongText' CSS class` )->get_parent(
                       )->get_parent(
                   )->column_list_item(
                       )->cells(

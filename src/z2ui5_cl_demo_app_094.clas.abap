@@ -77,12 +77,12 @@ CLASS Z2UI5_CL_DEMO_APP_094 IMPLEMENTATION.
     ASSIGN mr_screen->* TO <screen>.
 
     page = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page( title = `test` ).
+          )->page( `test` ).
 
     DATA(o_grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    DATA(content) = o_grid->simple_form( title = 'Input'
+    DATA(content) = o_grid->simple_form( 'Input'
           )->content( 'form' ).
 
     content->label( 'structure level 01'

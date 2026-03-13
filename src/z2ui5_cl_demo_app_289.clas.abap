@@ -62,13 +62,13 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
            items    = client->_bind( lt_a_data )
            )->columns(
                )->column(
-                   )->text( text = `Products`
+                   )->text( `Products`
                )->get_parent(
                )->column(
-                   )->text( text = `Status`
+                   )->text( `Status`
                )->get_parent(
                )->column(
-                   )->text( text = `Status (active)`
+                   )->text( `Status (active)`
                )->get_parent( )->get_parent(
            )->column_list_item(
                )->object_identifier(

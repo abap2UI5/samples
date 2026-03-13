@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                 text  = 'letf side button'
                 icon  = 'sap-icon://account'
                 press = client->_event( 'BUTTON_SORT' )
-            )->segmented_button( selected_key = mv_key
+            )->segmented_button( mv_key
                 )->items(
                     )->segmented_button_item(
                         key  = 'BLUE'
@@ -126,14 +126,14 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `${$parameters>/item.getKey}` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `$event` ) ) )
        )->column_menu_quick_sort( change = client->_event( 'ONSORT' )
-         )->items( ns = `columnmenu`
+         )->items( `columnmenu`
            )->column_menu_quick_sort_item( sortorder = client->_bind_edit( sortorder )
        )->get_parent( )->get_parent( )->get_parent(
        )->column_menu_quick_group( change = client->_event( 'ONGROUP' )
-         )->items( ns = `columnmenu`
+         )->items( `columnmenu`
            )->column_menu_quick_group_item(
        )->get_parent( )->get_parent( )->get_parent(
-       )->items( ns = `columnmenu`
+       )->items( `columnmenu`
          )->column_menu_action_item( icon  = `sap-icon://sort`
                                      label = `Sort`
                                      press = client->_event( 'ONSORTACTIONITEM' ) )->get_parent(

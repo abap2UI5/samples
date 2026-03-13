@@ -41,32 +41,32 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
                                       text = `Info`
                       )->items(
                           )->icon_tab_filter( text = `Info one`
-                              )->text( text = `Info one content goes here...`
-                              )->text( text = `Select another sub tab to see its content...` )->get_parent(
+                              )->text( `Info one content goes here...`
+                              )->text( `Select another sub tab to see its content...` )->get_parent(
                           )->icon_tab_filter( text = `Info two`
-                              )->text( text = `Info two content goes here...` )->get_parent(
+                              )->text( `Info two content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Info three`
-                              )->text( text = `Info three content goes here...` )->get_parent(
+                              )->text( `Info three content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Info four`
-                              )->text( text = `Info four content goes here...` )->get_parent( )->get_parent(
-                      )->text( text = `Info own content goes here...`
-                      )->text( text = `Select a sub tab to see its content...` )->get_parent(
+                              )->text( `Info four content goes here...` )->get_parent( )->get_parent(
+                      )->text( `Info own content goes here...`
+                      )->text( `Select a sub tab to see its content...` )->get_parent(
       )->icon_tab_filter( key  = `attachments`
                           text = `Attachments`
                       )->items(
                           )->icon_tab_filter( text = `Attachment one`
-                              )->text( text = `Attachment one goes here...` )->get_parent(
+                              )->text( `Attachment one goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Attachment two`
-                              )->text( text = `Attachment two goes here...` )->get_parent( )->get_parent(
-                      )->text( text = `Attachments own content goes here...` )->get_parent(
+                              )->text( `Attachment two goes here...` )->get_parent( )->get_parent(
+                      )->text( `Attachments own content goes here...` )->get_parent(
       )->icon_tab_filter( key  = `notes`
                           text = `Notes`
                       )->items(
                           )->icon_tab_filter( text = `Note one`
-                              )->text( text = `Note one goes here...` )->get_parent(
+                              )->text( `Note one goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Note two`
-                              )->text( text = `Note two goes here...` )->get_parent( )->get_parent(
-                      )->text( text = `Notes own content goes here...` )->get_parent( )->get_parent( )->get_parent(
+                              )->text( `Note two goes here...` )->get_parent( )->get_parent(
+                      )->text( `Notes own content goes here...` )->get_parent( )->get_parent( )->get_parent(
       )->label(
                 wrapping = `true`
                 text     = `IconTabBar with filters without own content - only sub tabs`
@@ -77,27 +77,27 @@ CLASS z2ui5_cl_demo_app_226 IMPLEMENTATION.
                                       text = `Info`
                       )->items(
                           )->icon_tab_filter( text = `Info one`
-                              )->text( text = `Info one content goes here...` )->get_parent(
+                              )->text( `Info one content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Info two`
-                              )->text( text = `Info two content goes here...` )->get_parent(
+                              )->text( `Info two content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Info three`
-                              )->text( text = `Info three content goes here...` )->get_parent(
+                              )->text( `Info three content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Info four`
-                              )->text( text = `Info four content goes here...` )->get_parent( )->get_parent( )->get_parent(
+                              )->text( `Info four content goes here...` )->get_parent( )->get_parent( )->get_parent(
       )->icon_tab_filter( key  = `attachments`
                           text = `Attachments`
                       )->items(
                           )->icon_tab_filter( text = `Attachment one`
-                              )->text( text = `Attachment one goes here...` )->get_parent(
+                              )->text( `Attachment one goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Attachment two`
-                              )->text( text = `Attachment two goes here...` )->get_parent( )->get_parent( )->get_parent(
+                              )->text( `Attachment two goes here...` )->get_parent( )->get_parent( )->get_parent(
       )->icon_tab_filter( key  = `notes`
                           text = `Notes`
                       )->items(
                           )->icon_tab_filter( text = `Note one`
-                              )->text( text = `Note one content goes here...` )->get_parent(
+                              )->text( `Note one content goes here...` )->get_parent(
                           )->icon_tab_filter( text = `Note two`
-                              )->text( text = `Note two content goes here...` )->get_parent( )->get_parent( ).
+                              )->text( `Note two content goes here...` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 

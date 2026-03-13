@@ -59,8 +59,8 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
                                id   = `idSearchListToolbar`
                   )->get_parent(
               )->get_parent(
-              )->vbox( class = `sapUiSmallMargin`
-                  )->label( text = `Default Search Field:`
+              )->vbox( `sapUiSmallMargin`
+                  )->label( `Default Search Field:`
                   )->search_field( width = `90%`
                                    class = `sapUiSmallMargin`
               )->get_parent( ).

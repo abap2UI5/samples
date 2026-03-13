@@ -39,7 +39,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                           layout   = 'ColumnLayout'
                           editable = abap_true
 *              )->content( 'form'
-                  )->label( text = 'Unique ID'
+                  )->label( 'Unique ID'
                   )->mask_input( mask              = `~~~~~~~~~~`
                                  placeholdersymbol = `_`
                                  placeholder       = 'All characters allowed' )->get(
@@ -47,14 +47,14 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                       )->mask_input_rule( maskformatsymbol = '~'
                                           regex            = `[^_]`
                     )->get_parent( )->get_parent( )->get_parent(
-                 )->label( text = `Promo code`
+                 )->label( `Promo code`
                  )->mask_input( mask              = `**********`
                                 placeholdersymbol = `_`
                                 placeholder       = `Latin characters (case insensitive) and numbers` )->get(
                   )->rules(
                     )->mask_input_rule(
                   )->get_parent( )->get_parent( )->get_parent(
-                )->label( text = `Phone number`
+                )->label( `Phone number`
                  )->mask_input( mask              = `(999) 999 999999`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter twelve-digit number`
@@ -65,7 +65,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
       )->simple_form( title    = 'Possible usages (may require additional coding)'
                       layout   = 'ColumnLayout'
                       editable = abap_true
-                )->label( text = `Serial number`
+                )->label( `Serial number`
                  )->mask_input( mask              = `CCCC-CCCC-CCCC-CCCC-CCCC`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter digits and capital letters`
@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                     )->mask_input_rule( maskformatsymbol = `C`
                                         regex            = `[A-Z0-9]`
                   )->get_parent( )->get_parent( )->get_parent(
-                )->label( text = `Product activation key`
+                )->label( `Product activation key`
                  )->mask_input( mask              = `SAP-CCCCC-CCCCC`
                                 placeholdersymbol = `_`
                                 placeholder       = `Starts with 'SAP' followed by digits and capital letters`
@@ -83,7 +83,7 @@ CLASS Z2UI5_CL_DEMO_APP_110 IMPLEMENTATION.
                     )->mask_input_rule( maskformatsymbol = `C`
                                         regex            = `[A-Z0-9]`
                   )->get_parent( )->get_parent( )->get_parent(
-                )->label( text = `ISBN`
+                )->label( `ISBN`
                  )->mask_input( mask              = `999-99-999-9999-9`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter thirteen-digit number`

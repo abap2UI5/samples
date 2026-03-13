@@ -237,17 +237,17 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
                      press   = client->_event( `ALL` )
          )->get_parent( )->get_parent(
        )->columns(
-        )->column( )->text( text = `Title` )->get_parent(
-        )->column( )->text( text = `Info` )->get_parent(
-        )->column( )->text( text = `Descr` )->get_parent(
-        )->column( )->text( text = `Icon` )->get_parent(
+        )->column( )->text( `Title` )->get_parent(
+        )->column( )->text( `Info` )->get_parent(
+        )->column( )->text( `Descr` )->get_parent(
+        )->column( )->text( `Icon` )->get_parent(
        )->get_parent(
       )->items(
         )->column_list_item( valign = `Middle`
           )->cells(
-            )->text( text = `{TITLE}`
-            )->text( text = `{INFO}`
-            )->text( text = `{DESCR}`
+            )->text( `{TITLE}`
+            )->text( `{INFO}`
+            )->text( `{DESCR}`
             )->avatar( src = `{ICON}` ).
 
     client->view_display( view->stringify( ) ).

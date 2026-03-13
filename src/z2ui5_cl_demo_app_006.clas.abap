@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
                 text  = 'letf side button'
                 icon  = 'sap-icon://account'
                 press = client->_event( 'BUTTON_SORT' )
-            )->segmented_button( selected_key = mv_key
+            )->segmented_button( mv_key
                 )->items(
                     )->segmented_button_item(
                         key  = 'BLUE'

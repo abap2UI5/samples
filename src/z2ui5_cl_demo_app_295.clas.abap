@@ -62,8 +62,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
-             )->vbox( class = `sapUiTinyMargin`
-                 )->label( text = '{LABEL}'
+             )->vbox( `sapUiTinyMargin`
+                 )->label( '{LABEL}'
                  )->date_range_selection(
                      width          = `100%`
                      valuestate     = '{VALUE_STATE}'

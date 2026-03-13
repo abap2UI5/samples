@@ -104,22 +104,22 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
                                     sort               = client->_event( 'SORT' )
                                     filter             = client->_event( 'FILTER' )
                                     customfilter       = client->_event( 'CUSTOMFILTER' ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( text = 'Products' )->toolbar_spacer(
+    tab->ui_extension( )->overflow_toolbar( )->title( 'Products' )->toolbar_spacer(
       )->variant_management( showexecuteonselection = abap_true
         )->variant_items(
           )->variant_item( key                = `{KEY}`
                            text               = `{TEXT}`
                            executeonselection = abap_true )->get_parent( ).
     DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( width = '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )
+    lo_columns->ui_column( '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
-                                                       select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( selected = `{SELKZ}` ).
+                                                       select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
     lo_columns->ui_column( width                         = '5rem'
                            sortproperty                  = 'ROW_ID'
-                                          filterproperty = 'ROW_ID' )->text( text = `Index` )->ui_template( )->text( text = `{ROW_ID}` ).
+                                          filterproperty = 'ROW_ID' )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'PROCESS'
-                           filterproperty = 'PROCESS' )->text( text = `Process Indicator`
+                           filterproperty = 'PROCESS' )->text( `Process Indicator`
       )->ui_template( )->progress_indicator( class        = 'sapUiSmallMarginBottom'
                                              percentvalue = `{PROCESS}`
                                              displayvalue = '{PROCESS} %'
@@ -127,26 +127,26 @@ CLASS Z2UI5_CL_DEMO_APP_100 IMPLEMENTATION.
                                              state        = '{PROCESS_STATE}' ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'PRODUCT'
-                           filterproperty = 'PRODUCT' )->text( text = `Product` )->ui_template( )->input( value    = `{PRODUCT}`
+                           filterproperty = 'PRODUCT' )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
                                                                                                           editable = abap_false ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'CREATE_DATE'
-                           filterproperty = 'CREATE_DATE' )->text( text = `Date` )->ui_template( )->text( text = `{CREATE_DATE}` ).
+                           filterproperty = 'CREATE_DATE' )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'CREATE_BY'
-                           filterproperty = 'CREATE_BY' )->text( text = `Name` )->ui_template( )->text( text = `{CREATE_BY}` ).
+                           filterproperty = 'CREATE_BY' )->text( `Name` )->ui_template( )->text( `{CREATE_BY}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'STORAGE_LOCATION'
-                           filterproperty = 'STORAGE_LOCATION' )->text( text = `Location` )->ui_template( )->text( text = `{STORAGE_LOCATION}` ).
+                           filterproperty = 'STORAGE_LOCATION' )->text( `Location` )->ui_template( )->text( `{STORAGE_LOCATION}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'QUANTITY'
-                           filterproperty = 'QUANTITY' )->text( text = `Quantity` )->ui_template( )->text( text = `{QUANTITY}` ).
+                           filterproperty = 'QUANTITY' )->text( `Quantity` )->ui_template( )->text( `{QUANTITY}` ).
     lo_columns->ui_column( width          = '6rem'
                            sortproperty   = 'MEINS'
-                           filterproperty = 'MEINS' )->text( text = `Unit` )->ui_template( )->text( text = `{MEINS}` ).
+                           filterproperty = 'MEINS' )->text( `Unit` )->ui_template( )->text( `{MEINS}` ).
     lo_columns->ui_column( width          = '11rem'
                            sortproperty   = 'PRICE'
-                           filterproperty = 'PRICE' )->text( text = `Price` )->ui_template( )->currency( value    = `{PRICE}`
+                           filterproperty = 'PRICE' )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
                                                                                                          currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
       )->ui_row_action_item( type = 'Navigation'

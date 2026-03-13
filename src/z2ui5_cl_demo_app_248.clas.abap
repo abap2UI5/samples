@@ -48,11 +48,11 @@ CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter3' ).
 
     DATA(layout) = page->splitter(
-                          )->text( text = `Content 1` )->get(
+                          )->text( `Content 1` )->get(
                               )->layout_data(
                                   )->splitter_layout_data( size      = `30%`
                                                            resizable = abap_false )->get_parent( )->get_parent( )->get_parent(
-                          )->text( text = `Content 2` )->get(
+                          )->text( `Content 2` )->get(
                               )->layout_data(
                                   )->splitter_layout_data( size = `auto` ).
 

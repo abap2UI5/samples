@@ -119,7 +119,7 @@ CLASS Z2UI5_CL_DEMO_APP_014 IMPLEMENTATION.
                                       displayedvalue = '9.9%' ).
 
     point = grid->vertical_layout(
-        )->layout_data( ns = 'layout'
+        )->layout_data( 'layout'
             )->grid_data( 'XL12 L12 M12 S12'
         )->get_parent(
         )->text(

@@ -150,25 +150,25 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                  contentwidth   = `250px`
                                  contentheight  = `332px`
         )->card(
-            )->content( ns = `f`
+            )->content( `f`
                 )->vertical_layout( class = `sapUiContentPadding`
                     )->hbox( alignitems = `Center`
                         )->avatar( src          = client->_bind( item-src )
                                    initials     = client->_bind( item-initials )
                                    badgetooltip = client->_bind( item-tooltip )
                                    fallbackicon = client->_bind( item-fallbackicon )
-                        )->vbox( class = `sapUiTinyMarginBegin`
-                            )->title( text = client->_bind( item-name )
-                            )->text( text = client->_bind( item-jobposition )
+                        )->vbox( `sapUiTinyMarginBegin`
+                            )->title( client->_bind( item-name )
+                            )->text( client->_bind( item-jobposition )
                         )->get_parent(
                     )->get_parent(
-                    )->title( text = `Contact Details`
-                    )->label( text = `Mobile`
-                    )->text( text = client->_bind( item-mobile )
-                    )->label( text = `Phone`
-                    )->text( text = client->_bind( item-phone )
-                    )->label( text = `Email`
-                    )->text( text = client->_bind( item-email ) ).
+                    )->title( `Contact Details`
+                    )->label( `Mobile`
+                    )->text( client->_bind( item-mobile )
+                    )->label( `Phone`
+                    )->text( client->_bind( item-phone )
+                    )->label( `Email`
+                    )->text( client->_bind( item-email ) ).
 
     client->popover_display( xml   = individual_popover->stringify( )
                              by_id = id ).
@@ -205,8 +205,8 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                                                              t_arg = VALUE #( ( `${ID}` ) ) )
                             )->get_parent(
                             )->vbox(
-                                )->text( text = `{NAME}`
-                                )->text( text = `{JOBPOSITION}` ).
+                                )->text( `{NAME}`
+                                )->text( `{JOBPOSITION}` ).
 
     nav_container->page( id             = `detail`
                          shownavbutton  = client->check_app_prev_stack( )
@@ -214,25 +214,25 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                          titlealignment = `Center`
                          title          = |Team Members ({ lines( group_items ) })|
         )->card(
-            )->content( ns = `f`
+            )->content( `f`
                 )->vertical_layout( class = `sapUiContentPadding`
                     )->hbox( alignitems = `Center`
                         )->avatar( src          = client->_bind( item-src )
                                    initials     = client->_bind( item-initials )
                                    badgetooltip = client->_bind( item-tooltip )
                                    fallbackicon = client->_bind( item-fallbackicon )
-                        )->vbox( class = `sapUiTinyMarginBegin`
-                            )->title( text = client->_bind( item-name )
-                            )->text( text = client->_bind( item-jobposition )
+                        )->vbox( `sapUiTinyMarginBegin`
+                            )->title( client->_bind( item-name )
+                            )->text( client->_bind( item-jobposition )
                         )->get_parent(
                     )->get_parent(
-                    )->title( text = `Contact Details`
-                    )->label( text = `Mobile`
-                    )->text( text = client->_bind( item-mobile )
-                    )->label( text = `Phone`
-                    )->text( text = client->_bind( item-phone )
-                    )->label( text = `Email`
-                    )->text( text = client->_bind( item-email ) ).
+                    )->title( `Contact Details`
+                    )->label( `Mobile`
+                    )->text( client->_bind( item-mobile )
+                    )->label( `Phone`
+                    )->text( client->_bind( item-phone )
+                    )->label( `Email`
+                    )->text( client->_bind( item-email ) ).
 
     client->popover_display( xml   = view->stringify( )
                              by_id = id ).
@@ -247,7 +247,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_height = calculate_content_height( lines( group_items ) ).
         content_width = '450px'.
 
-        display_group_popover( id = group_id ).
+        display_group_popover( group_id ).
         client->popover_destroy( ).
 
       WHEN `onIndividualPress`.
@@ -262,10 +262,10 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_width = '450px'.
 
         IF overflow_button_pressed = abap_true.
-          display_group_popover( id = item_id ).
+          display_group_popover( item_id ).
         ELSE.
           item = VALUE #( items[ item_table_index + 1 ] OPTIONAL ).
-          display_individual_popover( id = item_id ).
+          display_individual_popover( item_id ).
         ENDIF.
         client->popover_destroy( ).
 

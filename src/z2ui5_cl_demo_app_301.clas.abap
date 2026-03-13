@@ -65,27 +65,27 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
                  autopopinmode = abap_true
                )->columns(
                    )->column(
-                       )->text( text = `Product`
+                       )->text( `Product`
                    )->get_parent(
                    )->column(
-                       )->text( text = `Attribute 1`
+                       )->text( `Attribute 1`
                    )->get_parent(
                    )->column(
-                       )->text( text = `Attribute 2`
+                       )->text( `Attribute 2`
                    )->get_parent(
                    )->column(
-                       )->text( text = `Status`
+                       )->text( `Status`
                    )->get_parent(
                )->get_parent(
       )->items(
                    )->column_list_item(
                        )->cells(
-                           )->text( text = `{NAME}` ")->get_parent(
+                           )->text( `{NAME}` ")->get_parent(
                            )->expandable_text( class        = `sapUiTinyMarginBottom sapUiTinyMarginTop`
                                                text         = `{ATTRIBUTE_1}`
                                                overflowmode = `{OVERFLOW_MODE}` )->get_parent(
-                           )->text( text = `{ATTRIBUTE_2}` )->get_parent(
-                           )->text( text = `{STATUS}` )->get_parent(
+                           )->text( `{ATTRIBUTE_2}` )->get_parent(
+                           )->text( `{STATUS}` )->get_parent(
                        )->get_parent(
                    )->get_parent(
                )->get_parent( ).

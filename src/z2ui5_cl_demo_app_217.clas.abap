@@ -32,10 +32,10 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
 
     DATA(layout) = page->overflow_toolbar( design = `Transparent`
                                            height = `3rem`
-                          )->title( text = `Title Only` ).
+                          )->title( `Title Only` ).
     page->overflow_toolbar( design = `Transparent`
                             height = `3rem`
-                          )->title( text = `Title and Actions`
+                          )->title( `Title and Actions`
                           )->toolbar_spacer(
                           )->button( icon = `sap-icon://group-2`
                           )->button( icon = `sap-icon://action-settings` ).

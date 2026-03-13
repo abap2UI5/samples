@@ -28,7 +28,7 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
     IF client->check_on_event( 'CALL_EF' ).
       mv_url = `https://www.google.com`.
       client->view_model_update( ).
-      client->follow_up_action( val = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
+      client->follow_up_action( client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
     ENDIF.
 
   ENDMETHOD.
@@ -45,8 +45,8 @@ CLASS Z2UI5_CL_DEMO_APP_180 IMPLEMENTATION.
     page = page->vbox( ).
     page->button( text  = `call frontend event from backend event`
                   press = client->_event( `CALL_EF` ) ).
-    page->label( text = `MV_URL was set AFTER backend event and model update to:` ).
-    page->label( text = client->_bind_edit( mv_url ) ).
+    page->label( `MV_URL was set AFTER backend event and model update to:` ).
+    page->label( client->_bind_edit( mv_url ) ).
 
     client->view_display( view->stringify( ) ).
 

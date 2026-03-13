@@ -138,12 +138,12 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                                       headerpinned   = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->smart_variant_management( id                     = `svm`
+    header_title->heading( 'f' )->smart_variant_management( id                     = `svm`
                                                                  showexecuteonselection = abap_true ).
     header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->snapped_content( 'f' ).
 
-    DATA(lo_fb) = page->header( )->dynamic_page_header( pinnable = abap_true ).
+    DATA(lo_fb) = page->header( )->dynamic_page_header( abap_true ).
 
     lo_fb->filter_bar( id             = `fbar`
                        persistencykey = `myPersKey`
@@ -194,17 +194,17 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 
-    DATA(cont) = page->content( ns = 'f' ).
+    DATA(cont) = page->content( 'f' ).
 
     DATA(tab) = cont->table( id    = `table1`
                              items = client->_bind_edit( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
+    lo_columns->column( )->text( `Product` ).
+    lo_columns->column( )->text( `Date` ).
+    lo_columns->column( )->text( `Name` ).
+    lo_columns->column( )->text( `Location` ).
+    lo_columns->column( )->text( `Quantity` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).

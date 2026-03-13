@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
     DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'STEP1'
                                                  validated = abap_true
                                                  nextstep  = 'STEP2' ).
-    lr_wiz_step1->message_strip( text = 'STEP1' ).
+    lr_wiz_step1->message_strip( 'STEP1' ).
 
 
     DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = 'STEP2'
@@ -52,7 +52,7 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
                                                  validated       = abap_true
                                                  subsequentsteps = 'STEP22, STEP23' ).
 
-    lr_wiz_step2->message_strip( text = `STEP2` ).
+    lr_wiz_step2->message_strip( `STEP2` ).
     lr_wiz_step2->button(
 *      EXPORTING
         text  = `Press Step 2.2`
@@ -67,20 +67,20 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
                                                  title     = `STEP2.2`
                                                  validated = abap_true ).
 
-    lr_wiz_step22->message_strip( text = 'STEP22' ).
+    lr_wiz_step22->message_strip( 'STEP22' ).
 
 
     DATA(lr_wiz_step23) = lr_wizard->wizard_step( id       = `STEP23`
                                                  title     = `STEP2.3`
                                                  validated = abap_true ).
 
-    lr_wiz_step23->message_strip( text = 'STEP23' ).
+    lr_wiz_step23->message_strip( 'STEP23' ).
 
 
     DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = `STEP3`
                                                  validated = abap_true ).
 
-    lr_wiz_step3->message_strip( text = 'STEP3' ).
+    lr_wiz_step3->message_strip( 'STEP3' ).
 
 *
     client->view_display( lr_view->stringify( ) ).
@@ -100,11 +100,11 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'STEP22'.
 
-        client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
+        client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
 
       WHEN 'STEP23'.
 
-        client->follow_up_action( val = 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
+        client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
 
     ENDCASE.
     client->view_model_update( ).

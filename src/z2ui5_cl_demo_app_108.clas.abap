@@ -79,16 +79,16 @@ CLASS Z2UI5_CL_DEMO_APP_108 IMPLEMENTATION.
         )->button( text = `Button 1`
         )->button( text = `Button 2`
         )->vbox(
-          )->label( text = `Switch 1`
+          )->label( `Switch 1`
           )->switch(
           )->get_parent(
-        )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut` &&
+        )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut` &&
                         `labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris` &&
                         `nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse` &&
                         `cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui` &&
                         `officia deserunt mollit anim id est laborum`
                         )->get_parent(
-          )->items( ns = `f`
+          )->items( `f`
             )->side_panel_item( icon = `sap-icon://physical-activity`
                                 text = `Run`
               )->vbox(

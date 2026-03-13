@@ -128,11 +128,11 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
                                      headerpinned   = abap_true ).
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
-    header_title->heading( ns = 'f' )->hbox( )->title( `Download CSV` ).
+    header_title->heading( 'f' )->hbox( )->title( `Download CSV` ).
     header_title->expanded_content( 'f' ).
-    header_title->snapped_content( ns = 'f' ).
+    header_title->snapped_content( 'f' ).
 
-    DATA(lo_box) = page->header( )->dynamic_page_header( pinnable = abap_true
+    DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
@@ -142,9 +142,9 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
         press = client->_event( `BUTTON_START` )
         type  = `Emphasized` ).
 
-    DATA(cont) = page->content( ns = 'f' ).
+    DATA(cont) = page->content( 'f' ).
 
-    DATA(tab) = cont->table( items = client->_bind( val = mt_table ) ).
+    DATA(tab) = cont->table( client->_bind( val = mt_table ) ).
 
     tab->header_toolbar(
             )->toolbar(
@@ -154,11 +154,11 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
                     press = client->_event( 'BUTTON_DOWNLOAD' ) ).
 
     DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
+    lo_columns->column( )->text( `Product` ).
+    lo_columns->column( )->text( `Date` ).
+    lo_columns->column( )->text( `Name` ).
+    lo_columns->column( )->text( `Location` ).
+    lo_columns->column( )->text( `Quantity` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).

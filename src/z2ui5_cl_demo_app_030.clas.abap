@@ -77,15 +77,15 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
 
     DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
 
-    header_title->heading( ns = 'f' )->title( 'Header Title' ).
+    header_title->heading( 'f' )->title( 'Header Title' ).
 
     header_title->expanded_content( 'f'
-             )->label( text = 'this is a subheading' ).
+             )->label( 'this is a subheading' ).
 
-    header_title->snapped_content( ns = 'f'
-             )->label( text = 'this is a subheading' ).
+    header_title->snapped_content( 'f'
+             )->label( 'this is a subheading' ).
 
-    header_title->actions( ns = 'f' )->overflow_toolbar(
+    header_title->actions( 'f' )->overflow_toolbar(
          )->overflow_toolbar_button(
              icon    = `sap-icon://edit`
              text    = 'edit header'
@@ -113,7 +113,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
             )->button( icon = 'sap-icon://decline'
                        type = 'Transparent' ).
 
-    page->header( )->dynamic_page_header( pinnable = abap_true
+    page->header( )->dynamic_page_header( abap_true
         )->horizontal_layout(
             )->vertical_layout(
                    )->object_attribute( title = 'Location'
@@ -140,7 +140,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
                                         text  = '34' ).
 
 
-    DATA(cont) = page->content( ns = 'f' ).
+    DATA(cont) = page->content( 'f' ).
 
     cont->list(
          headertext = 'List Ouput'
@@ -152,7 +152,7 @@ CLASS Z2UI5_CL_DEMO_APP_030 IMPLEMENTATION.
              info        = '{INFO}' ).
 
 
-    page->footer( ns = `f` )->overflow_toolbar(
+    page->footer( `f` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
                  text    = 'edit header'

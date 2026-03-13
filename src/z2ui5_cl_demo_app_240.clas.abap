@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_240 IMPLEMENTATION.
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Switch/sample/sap.m.sample.Switch' ).
 
     DATA(layout) = page->vbox(
-                            class = `sapUiSmallMargin`
+                            `sapUiSmallMargin`
                             )->hbox(
                                 )->switch( state = abap_true )->get(
                                     )->layout_data(

@@ -193,7 +193,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     tab->header_toolbar(
           )->toolbar(
-              )->title( text = ms_layout-title && ` (` && shift_right( CONV string( lines( mt_table ) ) ) && `)`
+              )->title( ms_layout-title && ` (` && shift_right( CONV string( lines( mt_table ) ) ) && `)`
       )->toolbar_spacer(
               )->button(
                   icon  = 'sap-icon://save'
@@ -209,7 +209,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       lo_columns->column(
             minscreenwidth = shift_right( CONV string( lv_width ) ) && `px`
             demandpopin    = abap_true
-            width          = lr_field->length )->text( text = CONV string( lr_field->title ) ).
+            width          = lr_field->length )->text( CONV string( lr_field->title ) ).
       lv_width = lv_width + 10.
     ENDLOOP.
 
@@ -223,7 +223,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       IF lr_field->editable = abap_true.
         lo_cells->input( `{` && lr_field->name && `}` ).
       ELSE.
-        lo_cells->text( text = `{` && lr_field->name && `}` ).
+        lo_cells->text( `{` && lr_field->name && `}` ).
       ENDIF.
     ENDLOOP.
 
@@ -263,8 +263,8 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                )->checkbox( client->_bind( ms_layout-check_zebra )
                )->label( 'sticky header'
                )->input( client->_bind( ms_layout-sticky_header )
-               )->label( text = `Title`
-               )->input( value = client->_bind( ms_layout-title )
+               )->label( `Title`
+               )->input( client->_bind( ms_layout-title )
                )->label( 'sel mode'
                )->combobox(
                    selectedkey = client->_bind_edit( ms_layout-selmode )
@@ -277,7 +277,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                 text     = 'Columns'
                 selected = client->_bind( mv_check_columns )
        )->table(
-        items = client->_bind_edit( ms_layout-t_cols )
+        client->_bind_edit( ms_layout-t_cols )
         )->columns(
             )->column( )->text( 'Visible' )->get_parent(
             )->column( )->text( 'Name' )->get_parent(

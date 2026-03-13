@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
       INSERT lo_new_data INTO TABLE mt_new_data2.
 
       lr_structdescr ?= cl_abap_structdescr=>describe_by_data( <fs_s_head> ).
-      lr_tabdescr ?= cl_abap_tabledescr=>create( p_line_type = lr_structdescr ).
+      lr_tabdescr ?= cl_abap_tabledescr=>create( lr_structdescr ).
 
       CREATE DATA lo_new_data->mt_kopf TYPE HANDLE lr_tabdescr.
       ASSIGN lo_new_data->mt_kopf->* TO <fs_t_head_new>.

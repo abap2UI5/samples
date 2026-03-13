@@ -120,7 +120,7 @@ CLASS Z2UI5_CL_DEMO_APP_107 IMPLEMENTATION.
                                   )->toolbar_spacer(
                                   )->upload_set_toolbar_placeholder(
                               )->get_parent( )->get_parent( )->get_parent(
-                              )->items( ns = `upload`
+                              )->items( `upload`
                                 )->upload_set_item( filename  = `{FILENAME}`
                                                     url       = `{URL}`
                                                     mediatype = `{MEDIATYPE}`

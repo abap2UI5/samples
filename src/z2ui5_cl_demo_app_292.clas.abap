@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_292 IMPLEMENTATION.
     page->vertical_layout(
             class = `sapUiContentPadding`
             width = `100%`
-           )->title( text = `Breadcrumbs with current page aggregation set`
+           )->title( `Breadcrumbs with current page aggregation set`
            )->breadcrumbs( id                  = `idBreadcrumbs`
                            separatorstyle      = `{/selected}`
                            currentlocationtext = `Page 7`

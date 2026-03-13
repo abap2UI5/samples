@@ -62,13 +62,13 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding equalColumns`
                                           width = `100%`
                           )->flex_box( class = `columns`
-                              )->text( text = `Although they have different amounts of text, both columns are of equal height.` )->get(
+                              )->text( `Although they have different amounts of text, both columns are of equal height.` )->get(
                                   )->layout_data(
                                       )->flex_item_data( growfactor       = `1`
                                                          basesize         = `0`
                                                          backgrounddesign = `Solid`
                                                          styleclass       = `sapUiTinyMargin` )->get_parent( )->get_parent(
-                              )->text( text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
+                              )->text( `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ` &&
                                               `sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                                               `At vero eos et accusam et justo hey nonny no duo dolores et ea rebum. ` &&
                                               `Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&

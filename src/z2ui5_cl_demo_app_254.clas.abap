@@ -83,35 +83,35 @@ CLASS z2ui5_cl_demo_app_254 IMPLEMENTATION.
                           fitcontainer = `abap_true`
                           alignitems   = `Stretch`
                           class        = `sapUiSmallMargin nestedFlexboxes`
-                          )->html( content = `<h2>1</h2>`
-                              )->layout_data( ns = `core`
+                          )->html( `<h2>1</h2>`
+                              )->layout_data( `core`
                                   )->flex_item_data( growfactor = `2`
                                                      styleclass = `item1` )->get_parent( )->get_parent(
-                          )->html( content = `<h2>2</h2>`
-                              )->layout_data( ns = `core`
+                          )->html( `<h2>2</h2>`
+                              )->layout_data( `core`
                                   )->flex_item_data( growfactor = `3`
                                                      styleclass = `item2` )->get_parent( )->get_parent(
       )->vbox( fitcontainer = abap_false
                               )->layout_data(
                                   )->flex_item_data( growfactor = `7` )->get_parent(
-      )->html( content = `<h2>3</h2>`
-                                  )->layout_data( ns = `core`
+      )->html( `<h2>3</h2>`
+                                  )->layout_data( `core`
                                       )->flex_item_data( growfactor = `5`
                                                          styleclass = `item3` )->get_parent( )->get_parent(
       )->hbox( fitcontainer = `abap_true`
                alignitems   = `Stretch`
                                   )->layout_data(
                                       )->flex_item_data( growfactor = `3` )->get_parent(
-      )->html( content = `<h2>4</h2>`
-                                          )->layout_data( ns = `core`
+      )->html( `<h2>4</h2>`
+                                          )->layout_data( `core`
                                               )->flex_item_data( growfactor = `1`
                                                                  styleclass = `item4` )->get_parent( )->get_parent(
-                                      )->html( content = `<h2>5</h2>`
-                                          )->layout_data( ns = `core`
+                                      )->html( `<h2>5</h2>`
+                                          )->layout_data( `core`
                                               )->flex_item_data( growfactor = `1`
                                                                  styleclass = `item5` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-      )->html( content = `<h2>6</h2>`
-                              )->layout_data( ns = `core`
+      )->html( `<h2>6</h2>`
+                              )->layout_data( `core`
                                   )->flex_item_data( growfactor = `5`
                                                      styleclass = `item6` )->get_parent( )->get_parent( ).
 

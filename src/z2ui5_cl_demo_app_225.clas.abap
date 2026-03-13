@@ -41,22 +41,22 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                               )->icon_tab_filter( key       = `info`
                                                   icon      = `sap-icon://hint`
                                                   iconcolor = `Neutral`
-                                                  )->text( text = `Info content goes here ...` )->get_parent(
+                                                  )->text( `Info content goes here ...` )->get_parent(
                               )->icon_tab_separator( icon = `` )->get_parent(
                               )->icon_tab_filter( key       = `attachments`
                                                   icon      = `sap-icon://attachment`
                                                   iconcolor = `Neutral`
                                                   count     = `3`
-                                                  )->text( text = `Attachments go here ...` )->get_parent(
+                                                  )->text( `Attachments go here ...` )->get_parent(
                               )->icon_tab_filter( key   = `notes`
                                                   icon  = `sap-icon://notes`
                                                   count = `12`
-                                                  )->text( text = `Notes go here ...` )->get_parent(
+                                                  )->text( `Notes go here ...` )->get_parent(
                               )->icon_tab_separator( icon = `` )->get_parent(
                               )->icon_tab_filter( key       = `people`
                                                   icon      = `sap-icon://group`
                                                   iconcolor = `Negative`
-                                                  )->text( text = `People content goes here ...` ).
+                                                  )->text( `People content goes here ...` ).
 
     layout->label( wrapping           = `true`
                                 text  = `Icon used as separator, you are free to choose an icon you want.`
@@ -69,23 +69,23 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                               )->icon_tab_filter( key       = `info`
                                                   icon      = `sap-icon://hint`
                                                   iconcolor = `Neutral`
-                                                  )->text( text = `Info content goes here ...` )->get_parent(
+                                                  )->text( `Info content goes here ...` )->get_parent(
                               )->icon_tab_filter( key       = `attachments`
                                                   icon      = `sap-icon://attachment`
                                                   iconcolor = `Neutral`
                                                   count     = `3`
-                                                  )->text( text = `Attachments go here ...` )->get_parent(
+                                                  )->text( `Attachments go here ...` )->get_parent(
                               )->icon_tab_separator( icon = `sap-icon://process` )->get_parent(
                               )->icon_tab_filter( key       = `notes`
                                                   icon      = `sap-icon://notes`
                                                   iconcolor = `Positive`
                                                   count     = `12`
-                                                  )->text( text = `Notes go here ...` )->get_parent(
+                                                  )->text( `Notes go here ...` )->get_parent(
                               )->icon_tab_separator( icon = `sap-icon://process` )->get_parent(
                               )->icon_tab_filter( key       = `people`
                                                   icon      = `sap-icon://group`
                                                   iconcolor = `Negative`
-                                                  )->text( text = `People content goes here ...` ).
+                                                  )->text( `People content goes here ...` ).
 
     layout->label( wrapping           = `true`
                                 text  = `Different separators used.`
@@ -98,24 +98,24 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
                               )->icon_tab_filter( key       = `info`
                                                   icon      = `sap-icon://hint`
                                                   iconcolor = `Critical`
-                                                  )->text( text = `Info content goes here ...` )->get_parent(
+                                                  )->text( `Info content goes here ...` )->get_parent(
                               )->icon_tab_separator( icon = `` )->get_parent(
                               )->icon_tab_filter( key       = `info`
                                                   icon      = `sap-icon://attachment`
                                                   iconcolor = `Neutral`
                                                   count     = `3`
-                                                  )->text( text = `Attachments go here ...` )->get_parent(
+                                                  )->text( `Attachments go here ...` )->get_parent(
                               )->icon_tab_separator( icon = `sap-icon://vertical-grip` )->get_parent(
                               )->icon_tab_filter( key       = `notes`
                                                   icon      = `sap-icon://notes`
                                                   iconcolor = `Positive`
                                                   count     = `12`
-                                                  )->text( text = `Notes go here ...` )->get_parent(
+                                                  )->text( `Notes go here ...` )->get_parent(
       )->icon_tab_separator( icon = `sap-icon://process` )->get_parent(
                               )->icon_tab_filter( key       = `people`
                                                   icon      = `sap-icon://group`
                                                   iconcolor = `Negative`
-                                                  )->text( text = `People content goes here ...` ).
+                                                  )->text( `People content goes here ...` ).
 
     client->view_display( page->stringify( ) ).
 

@@ -91,32 +91,32 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
                src   = `sap-icon://syringe`
                class = `size1`
                color = `#031E48` )->get(
-               )->layout_data( ns = `core`
+               )->layout_data( `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
                src   = `sap-icon://pharmacy`
                class = `size2`
                color = `#64E4CE` )->get(
-               )->layout_data( ns = `core`
+               )->layout_data( `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
                src   = `sap-icon://electrocardiogram`
                class = `size3`
                color = `#E69A17` )->get(
-               )->layout_data( ns = `core`
+               )->layout_data( `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
                src   = `sap-icon://doctor`
                class = `size4`
                color = `#1C4C98` )->get(
-               )->layout_data( ns = `core`
+               )->layout_data( `core`
                    )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent(
            )->icon(
                src   = `sap-icon://stethoscope`
                class = `size5`
                color = `#8875E7`
                press = client->_event( `handleStethoscopePress` ) )->get(
-               )->layout_data( ns = `core`
+               )->layout_data( `core`
                    )->flex_item_data( growfactor = `1` ).
 
     client->view_display( page->stringify( ) ).

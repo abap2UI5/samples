@@ -118,7 +118,7 @@ CLASS Z2UI5_CL_DEMO_APP_091 IMPLEMENTATION.
         nodepress     = client->_event( val = `NODE_PRESS` )
         nodes         = client->_bind_edit( mt_nodes )
         lanes         = client->_bind_edit( mt_lanes )
-      )->nodes( ns = `commons`
+      )->nodes( `commons`
         )->process_flow_node(
           laneid            = `{LANE}`
           nodeid            = `{ID}`

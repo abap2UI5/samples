@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     DATA(timeline) = page->timeline(
           content = client->_bind( mt_feed ) ).
 
-    timeline->content( ns = `commons` )->timeline_item(
+    timeline->content( `commons` )->timeline_item(
         datetime    = `{DATETIME}`
         title       = `{TITLE}`
         userpicture = `{AUTHORPIC}`

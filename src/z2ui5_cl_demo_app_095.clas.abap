@@ -55,7 +55,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
   METHOD on_event_sub.
 
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->z2ui5_if_app~main( client ).
 
   ENDMETHOD.
 
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
 
     mo_app_sub = NEW #( ).
     mo_app_sub->mo_view_parent = mo_grid_sub.
-    mo_app_sub->z2ui5_if_app~main( client = client ).
+    mo_app_sub->z2ui5_if_app~main( client ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 
@@ -90,7 +90,7 @@ CLASS Z2UI5_CL_DEMO_APP_095 IMPLEMENTATION.
     DATA(o_grid) = page->grid( 'L6 M12 S12'
         )->content( 'layout' ).
 
-    DATA(content) = o_grid->simple_form( title = 'Input'
+    DATA(content) = o_grid->simple_form( 'Input'
           )->content( 'form' ).
     content->label( 'main app'
       )->input(

@@ -358,7 +358,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     grid->simple_form( get_txt( 'BU_DYNID' )
         )->content( 'form'
-            )->label( text = get_txt( 'BU_DYNID' )
+            )->label( get_txt( 'BU_DYNID' )
              )->combobox(
              change      = client->_event( 'INPUT_SCREEN_CHANGE' )
              items       = client->_bind_edit( mt_screens )
@@ -366,7 +366,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  )->item(
                      key  = '{SCREEN_NAME}'
                      text = '{SCREEN_NAME} - {DESCR}'
-         )->get_parent( )->label( text = get_txt( 'DESCR_40' )
+         )->get_parent( )->label( get_txt( 'DESCR_40' )
             )->input(
             value         = client->_bind_edit( mv_screen_descr )
             showvaluehelp = abap_false
@@ -376,13 +376,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
             )->content( 'form'
-                )->label( text = get_txt( '/SCWM/WB_VARIANT' )
+                )->label( get_txt( '/SCWM/WB_VARIANT' )
             )->input(
             value            = client->_bind_edit( mv_variant )
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( 'CALL_POPUP_VARIANT' )
             submit           = client->_event( 'INPUT_VARIANT_CHANGE' )
-            )->label( text = get_txt( 'DESCR_40' )
+            )->label( get_txt( 'DESCR_40' )
             )->input(
             value         = client->_bind_edit( mv_description )
             showvaluehelp = abap_false ).
@@ -397,7 +397,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         DATA(scrtext) = get_txt( CONV #( lr_tab->field_doma ) ).
 
-        content->label( text = scrtext
+        content->label( scrtext
           )->multi_input(
                    tokens           = client->_bind( val = lr_tab->t_token tab = mt_fields tab_index = lv_tabix )
                    showclearicon    = abap_true
@@ -473,7 +473,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                      key  = '{N}'
                      text = '{N}'
              )->get_parent(
-             )->input( value = `{LOW}`
+             )->input( `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
              )->button( icon = 'sap-icon://decline'
@@ -544,11 +544,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     lo_popup->simple_form( get_txt( '/SCWM/WB_VARIANT' )
                )->content( 'form'
-                   )->label( text = get_txt( '/SCWM/WB_VARIANT' )
+                   )->label( get_txt( '/SCWM/WB_VARIANT' )
                )->input(
                value         = client->_bind_edit( mv_variant_copy )
                showvaluehelp = abap_false
-               )->label( text = get_txt( 'DESCR_40' )
+               )->label( get_txt( 'DESCR_40' )
                )->input(
                value         = client->_bind_edit( mv_description_copy )
                showvaluehelp = abap_false ).

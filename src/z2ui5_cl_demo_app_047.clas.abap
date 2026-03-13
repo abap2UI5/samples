@@ -62,8 +62,8 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
              )->content( 'form'
                  )->title( 'Input'
                  )->label( 'integer'
-                 )->input( value = client->_bind_edit( int1 )
-                 )->input( value = client->_bind_edit( int2 )
+                 )->input( client->_bind_edit( int1 )
+                 )->input( client->_bind_edit( int2 )
                  )->input( enabled = abap_false
                            value   = client->_bind_edit( int_sum )
                  )->button( text  = 'calc sum'

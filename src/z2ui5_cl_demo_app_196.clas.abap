@@ -133,7 +133,7 @@ CLASS Z2UI5_CL_DEMO_APP_196 IMPLEMENTATION.
 
     DATA(panel) = page->panel( class = `sapUiResponsiveMargin SIPanelStyle`
                                width = `95%` ).
-    panel->text( text = `Use the slider for adjusting the fill` ).
+    panel->text( `Use the slider for adjusting the fill` ).
     panel->slider( class           = `sapUiLargeMarginBottom`
                    enabletickmarks = abap_true
                value               = client->_bind_edit( mv_slider_value ) )->get(

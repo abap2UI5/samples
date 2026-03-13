@@ -54,9 +54,9 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->input( value = '{ID}'
-          )->input( value = '{TIMESTAMPL}'
-          )->input( value = '{ID_PREV}' ).
+          )->input( '{ID}'
+          )->input( '{TIMESTAMPL}'
+          )->input( '{ID_PREV}' ).
 
     client->view_display( view->stringify( ) ).
 

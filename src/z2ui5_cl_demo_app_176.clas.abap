@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 
     lo_view_nested->shell( )->page( `Nested View`
-      )->table( items = i_client->_bind( mt_data )
+      )->table( i_client->_bind( mt_data )
       )->columns(
         )->template_repeat( list = `{template>/MT_LAYOUT}`
                             var  = `LO`

@@ -120,9 +120,9 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
     header_title->expanded_heading(
             )->hbox(
-                )->title( text = 'PriceList' ).
+                )->title( 'PriceList' ).
 
-    DATA(header_content) = page->header_content( ns = 'uxap').
+    DATA(header_content) = page->header_content( 'uxap').
     header_content->block_layout(
       )->block_layout_row(
       )->block_layout_cell( backgroundcolorset   = 'ColorSet10'
@@ -134,7 +134,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                     text   = 'Something:'
       )->get_parent(
       )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-        )->text( text = 'Other'
+        )->text( 'Other'
       )->get_parent( )->get_parent(
       )->hbox( justifycontent = 'End'
         )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
@@ -155,7 +155,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
     DATA(cont) = sections->object_page_section( titleuppercase = abap_false
                                                 id             = 'Sets'
                                                 title          = 'Sets'
-        )->heading( ns = `uxap`
+        )->heading( `uxap`
         )->get_parent(
         )->sub_sections(
             )->object_page_sub_section( id    = 'SETS'
@@ -166,20 +166,20 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
                          rows            = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
                          toggleopenstate = `saveState()`
                          )->tree_columns(
-                          )->tree_column( label = 'Label'
+                          )->tree_column( 'Label'
                           )->tree_template(
-                           )->text( text = `{TEXT}`
+                           )->text( `{TEXT}`
                           )->get_parent( )->get_parent(
-                          )->tree_column( label = 'PRODH'
+                          )->tree_column( 'PRODH'
                           )->tree_template(
-                           )->text( text = `{PRODH}`
+                           )->text( `{PRODH}`
                           )->get_parent( )->get_parent(
-                          )->tree_column( label = 'Counter'
+                          )->tree_column( 'Counter'
                           )->tree_template(
                            )->link( text    = `{COUNTER}`
                                       press = client->_event( val = 'POPOVER' t_arg = VALUE #( ( `${$source>/id}` ) ) )
       )->get_parent( )->get_parent(
-                          )->tree_column( label = 'ADD'
+                          )->tree_column( 'ADD'
                           )->tree_template(
                            )->button( icon = 'sap-icon://add'
                                  press     = client->_event( val = 'ROW_ADD' t_arg = VALUE #( ( `${PRODH}` ) ) )
@@ -275,7 +275,7 @@ CLASS Z2UI5_CL_DEMO_APP_116 IMPLEMENTATION.
 
         client->view_model_update( ).
 
-        client->follow_up_action( val = `setState();` ).
+        client->follow_up_action( `setState();` ).
 
     ENDCASE.
 

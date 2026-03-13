@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
             shownavbutton  = abap_true ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
                 )->label( `Column Id` )->input( submit      = client->_event( 'FOCUS' )
@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                 )->button(
                     text  = 'Reset Focus'
                     press = client->_event( 'RESET' )
-                )->title( text = client->_bind( focusid )
+                )->title( client->_bind( focusid )
                 )->toolbar_spacer(
         )->get_parent( )->get_parent( ).
 
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
-          )->text( text = '{INDEX}'
+          )->text( '{INDEX}'
           )->input( value  = '{TITLE}'
                     submit = client->_event( 'ENTER' )
           )->get( )->custom_data( )->core_custom_data(
@@ -156,7 +156,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      value      = c_id-info
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->checkbox( selected = '{CHECKBOX}'
+          )->checkbox( '{CHECKBOX}'
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-checkbox

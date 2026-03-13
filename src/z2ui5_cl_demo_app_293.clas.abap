@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
     page->vertical_layout(
             class = `sapUiContentPadding`
             width = `100%`
-            )->content( ns = `layout`
+            )->content( `layout`
                 )->link(
                     text  = `Open message box`
                     press = client->_event( `handleLinkPress` )
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
     page->vertical_layout(
            class = `sapUiContentPadding`
            width = `100%`
-           )->content( ns = `layout`
+           )->content( `layout`
                )->label( text     = `Links with Icons`
                          design   = `Bold`
                          wrapping = abap_true

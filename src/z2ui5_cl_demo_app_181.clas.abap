@@ -77,12 +77,12 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
     DATA(card_1) = page->card( width = `300px`
                                class = `sapUiMediumMargin`
-      )->header( ns = `f`
+      )->header( `f`
         )->card_header( title    = `Buy bus ticket on-line`
                         subtitle = `Buy a single-ride ticket for a date`
                         iconsrc  = `sap-icon://bus-public-transport`
                       )->get_parent( )->get_parent(
-                    )->content( ns = `f`
+                    )->content( `f`
                       )->vbox( height         = `110px`
                                class          = `sapUiSmallMargin`
                                justifycontent = `SpaceBetween`
@@ -110,21 +110,21 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
     DATA(card_2) = page->card( width = `300px`
                                class = `sapUiMediumMargin`
-                     )->header( ns = `f`
+                     )->header( `f`
                        )->card_header( title    = `Project Cloud Transformation`
                                        subtitle = `Revenue per Product | EUR`
                                      )->get_parent( )->get_parent(
-                                   )->content( ns = `f`
+                                   )->content( `f`
                                     )->list( class          = `sapUiSmallMarginBottom`
                                              showseparators = `None`
                                              items          = client->_bind( mt_products )
                                        )->custom_list_item(
                                         )->hbox( alignitems     = `Center`
                                                  justifycontent = `SpaceBetween`
-                                          )->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
+                                          )->vbox( `sapUiSmallMarginBegin sapUiSmallMarginTopBottom`
                                             )->title( text       = `{TITLE}`
                                                       titlestyle = `H3`
-                                            )->text( text = `{SUBTITLE}`
+                                            )->text( `{SUBTITLE}`
                                           )->get_parent(
                                           )->object_status( class = `sapUiTinyMargin sapUiSmallMarginEnd`
                                                             text  = `{REVENUE}`

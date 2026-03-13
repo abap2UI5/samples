@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = 'id_sec1'
-                                     title          = '...' )->heading( ns = `uxap`
+                                     title          = '...' )->heading( `uxap`
         )->get_parent( )->sub_sections( )->object_page_sub_section( id    = 'id_input'
                                                                     title = 'Input field'
         )->blocks( )->vbox(
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = 'id_sec2'
-                                     title          = '...' )->heading( ns = `uxap`
+                                     title          = '...' )->heading( `uxap`
         )->get_parent( )->sub_sections( )->object_page_sub_section( id    = 'id_text_area'
                                                                     title = 'Text area'
         )->blocks( )->vbox(

@@ -75,11 +75,11 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
                     shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(map) = page->map_container( autoadjustheight = abap_true
-         )->content( ns = `vk`
+         )->content( `vk`
              )->container_content(
                title = `Analytic Map`
                icon  = `sap-icon://geographic-bubble-chart`
-                 )->content( ns = `vk`
+                 )->content( `vk`
                      )->analytic_map(
                        initialposition = `9.933573;50;0`
                        initialzoom     = `6` ).

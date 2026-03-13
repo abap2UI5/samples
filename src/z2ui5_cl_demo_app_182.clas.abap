@@ -128,7 +128,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
                                                                                      nodespacing   = `40`
                                      )->get_parent(
                                      )->get_parent(
-                                  )->nodes( ns = `networkgraph`
+                                  )->nodes( `networkgraph`
                                     )->node( icon                  = `sap-icon://action-settings`
                                              key                   = `{ID}`
                                              description           = `{TITLE}`
@@ -149,7 +149,7 @@ CLASS Z2UI5_CL_DEMO_APP_182 IMPLEMENTATION.
 *                                                                                        )->core_custom_data( key = `phone` value = `{PHONE}`
 *                                           )->get_parent(
 *                                           )->get( )->get_parent( )->get_parent( )->attributes( ns = `networkgraph`
-                                           )->get( )->attributes( ns = `networkgraph`
+                                           )->get( )->attributes( `networkgraph`
                                             )->element_attribute( label = `{LABEL}`
                                                                   value = `{VALUE}`
                                            )->get_parent(

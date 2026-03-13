@@ -49,12 +49,12 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
              navbuttonpress            = client->_event_nav_app_leave( )
              shownavbutton             = client->check_app_prev_stack( ) ).
 
-    view->table( items = client->_bind( mt_data )
+    view->table( client->_bind( mt_data )
       )->columns(
         )->template_repeat( list = `{template>/MT_LAYOUT}`
                             var  = `L0`
           )->column( mergeduplicates = `{L0>MERGE}`
-                     visible         = `{L0>VISIBLE}` )->text( text = `{L0>FNAME}` )->get_parent(
+                     visible         = `{L0>VISIBLE}` )->text( `{L0>FNAME}` )->get_parent(
         )->get_parent( )->get_parent(
         )->items(
           )->column_list_item(
@@ -64,12 +64,12 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
                 )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
 
-    view->label( text = `IF Template (with re-rendering)` ).
+    view->label( `IF Template (with re-rendering)` ).
     view->switch( state  = client->_bind_edit( mv_flag )
                   change = client->_event( `CHANGE_FLAG` ) ).
     view = view->vbox( ).
 
-    view->template_if( test = `{template>/XX/MV_FLAG}`
+    view->template_if( `{template>/XX/MV_FLAG}`
       )->template_then(
         )->icon( src   = `sap-icon://accept`
                  color = `green` )->get_parent(

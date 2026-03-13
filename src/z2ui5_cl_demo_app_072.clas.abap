@@ -120,7 +120,7 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
            items          = client->_bind( mt_table ) ).
 
     tab->columns(
-        )->column( width = '12em'
+        )->column( '12em'
             )->text( 'Product' )->get_parent(
         )->column( minscreenwidth = 'Tablet'
                    demandpopin    = abap_true
@@ -143,8 +143,8 @@ CLASS Z2UI5_CL_DEMO_APP_072 IMPLEMENTATION.
            )->cells(
              )->object_identifier( text  = '{PRODUCTNAME}'
                                    title = '{PRODUCTID}' )->get_parent(
-             )->text( text = '{SUPPLIERNAME}' )->get_parent(
-             )->text( text = '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
+             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}'
                                unit   = '{UNIT}'
                                state  = '{STATE_MEASURE}'

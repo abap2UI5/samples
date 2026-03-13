@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
       ASSIGN mr_table->* TO <tab>.
 
       DATA(tab) = page->table(
-              items = COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
+              COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
           )->header_toolbar(
               )->overflow_toolbar(
                   )->title( 'CSV Content'

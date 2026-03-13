@@ -100,11 +100,11 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     DATA(tab) = lo_box->table( client->_bind( mt_table ) ).
     DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Date` ).
-    lo_columns->column( )->text( text = `Name` ).
-    lo_columns->column( )->text( text = `Location` ).
-    lo_columns->column( )->text( text = `Quantity` ).
+    lo_columns->column( )->text( `Product` ).
+    lo_columns->column( )->text( `Date` ).
+    lo_columns->column( )->text( `Name` ).
+    lo_columns->column( )->text( `Location` ).
+    lo_columns->column( )->text( `Quantity` ).
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).

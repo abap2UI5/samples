@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
   METHOD display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( val = view->shell(
+    client->view_display( view->shell(
            )->page(
                    title          = 'abap2UI5 - First Example'
                    navbuttonpress = client->_event_nav_app_leave( )
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( 'BUTTON_POST' ).
-      client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
+      client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
 
   ENDMETHOD.

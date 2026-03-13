@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
               )->core_custom_data( key   = 'ID'
                                    value = '{ID}').
 
-    tree->drag_drop_config( ns = `` )->drag_drop_info(
+    tree->drag_drop_config( `` )->drag_drop_info(
       sourceaggregation = `items`
       targetaggregation = `items`
       dragstart         = `Horizontal`

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(layout) = page->label( text = `Numeric content with margins` ).
+    DATA(layout) = page->label( `Numeric content with margins` ).
     layout->numeric_content( value      = `65.5`
                              scale      = `MM`
                              class      = `sapUiSmallMargin`
@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_228 IMPLEMENTATION.
                              class      = `sapUiSmallMargin`
                              withmargin = abap_true ).
 
-    layout->label( text = `Numeric content without margins` ).
+    layout->label( `Numeric content without margins` ).
     layout->numeric_content( value      = `65.5`
                              scale      = `MM`
                              class      = `sapUiSmallMargin`

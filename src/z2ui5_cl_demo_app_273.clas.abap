@@ -70,9 +70,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Beamer`
                                      title    = `This is a beamer`
                                      subtitle = `This is beamer's description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Beamer`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Beamer`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -91,9 +91,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `USB`
                                      title    = `This is a USB`
                                      subtitle = `This is USB's description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `USB`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `USB`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -112,9 +112,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Speakers`
                                      title    = `These are speakers`
                                      subtitle = `This is speakers' description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Speakers`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Speakers`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -133,9 +133,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Nature image`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Nature image`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -154,9 +154,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Nature image`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Nature image`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -175,9 +175,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Nature image`
-                                  )->text( text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Nature image`
+                                  )->text( `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum lectus et tempus blandit.`    &&
                                                   `Sed porta ex quis tortor gravida, ut suscipit felis dignissim. Ut iaculis elit vel ligula scelerisque,` &&
                                                   `et porttitor est pretium. Suspendisse purus dolor, fermentum in tortor eu, semper finibus velit.`       &&
                                                   `Proin vel lobortis leo, vel eleifend lorem. Etiam ac erat sollicitudin, condimentum magna ac,`          &&
@@ -196,9 +196,9 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
                                      alt      = `Nature image`
                                      title    = `This is a sample image`
                                      subtitle = `This is a place for description` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-                          )->vbox( class = `sapUiSmallMarginBegin`
-                              )->title( text = `Unavailable image`
-                                  )->text( text = `Shows an error when an image could not be loaded, or when it takes too much time to load it.` )->get_parent( )->get_parent( ).
+                          )->vbox( `sapUiSmallMarginBegin`
+                              )->title( `Unavailable image`
+                                  )->text( `Shows an error when an image could not be loaded, or when it takes too much time to load it.` )->get_parent( )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
 

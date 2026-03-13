@@ -65,30 +65,30 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
     DATA(layout) = page->fix_flex( ns             = `layout`
                                    class          = `fixFlexFixedSize`
                                    fixcontentsize = `150px`
-                         )->fix_content( ns = `layout`
+                         )->fix_content( `layout`
                                 )->scroll_container( height   = `100%`
                                                      vertical = abap_true
-                                    )->text( text = `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
+                                    )->text( `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
                                                     `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley `      &&
                                                     `of type and scrambled it to make a type specimen book. `                                                                   &&
                                                     `It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ` &&
                                                     `It was popularised in the 1960s with the release of Letraset sheets containing.`
-                                    )->text( text = `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
+                                    )->text( `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
                                                     `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley `      &&
                                                     `of type and scrambled it to make a type specimen book. `                                                                   &&
                                                     `It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ` &&
                                                     `It was popularised in the 1960s with the release of Letraset sheets containing.`
-                                    )->text( text = `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
+                                    )->text( `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
                                                     `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley `      &&
                                                     `of type and scrambled it to make a type specimen book. `                                                                   &&
                                                     `It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ` &&
                                                     `It was popularised in the 1960s with the release of Letraset sheets containing.`
-                                    )->text( text = `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
+                                    )->text( `Fix content - Lorem Ipsum is simply dummy text of the printing and typesetting industry. `                                 &&
                                                     `Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley `      &&
                                                     `of type and scrambled it to make a type specimen book. `                                                                   &&
                                                     `It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ` &&
                                                     `It was popularised in the 1960s with the release of Letraset sheets containing.` )->get_parent( )->get_parent(
-                         )->flex_content( ns = `layout`
+                         )->flex_content( `layout`
                                     )->text( class = `column1`
                                              text  = `This container is flexible and it will adapt its size to fill the remaining size in the FixFlex control` ).
 
