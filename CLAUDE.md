@@ -24,6 +24,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Use backticks for all string literals, not single quotes.
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
+- Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
 
 ## Framework Reference
 
