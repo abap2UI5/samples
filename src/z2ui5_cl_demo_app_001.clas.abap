@@ -17,11 +17,12 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     IF client->check_on_init( ).
       product  = `products`.
       quantity = `500`.
-      client->view_display( z2ui5_cl_xml_view=>factory(
-           )->shell( )->page(
-                   title          = `abap2UI5 - First Example`
-                   navbuttonpress = client->_event_nav_app_leave( )
-                   shownavbutton  = client->check_app_prev_stack( )
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      view->shell(
+          )->page(
+              title          = `abap2UI5 - First Example`
+              navbuttonpress = client->_event_nav_app_leave( )
+              shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title = `Form Title` editable = abap_true
           )->content( `form`
               )->title( `Input`
@@ -31,8 +32,8 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
               )->input( value = product enabled = abap_false
               )->button(
                   text  = `post`
-                  press = client->_event( `BUTTON_POST` )
-          )->stringify( ) ).
+                  press = client->_event( `BUTTON_POST` ) ).
+      client->view_display( view->stringify( ) ).
     ELSEIF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
