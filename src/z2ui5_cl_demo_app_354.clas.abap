@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_354 IMPLEMENTATION.
                                       ( n = `height`       v = `100%` )
                                       ( n = `xmlns`        v = `sap.m` )
                                       ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` )
-                                      ( n = `xmlns:core`   v = `sap.ui.core` )
                                       ( n = `xmlns:form`   v = `sap.ui.layout.form` ) )
                               )->_( `Shell`
                               )->_( n = `Page` p = VALUE #(
