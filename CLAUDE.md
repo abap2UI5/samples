@@ -25,6 +25,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
+- No blank lines between `SECTION.` keywords, between methods, or between `CLASS`/`ENDCLASS` — use compact formatting without extra empty lines.
 
 ## Framework Reference
 
@@ -79,27 +80,21 @@ The following is the **maximum structure**. Only add methods that are actually n
 
 ```abap
 CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC CREATE PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     " bound data (DATA attributes for _bind/_bind_edit)...
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-
     METHODS on_init.        " first call: load data, display view
     METHODS on_event.       " user triggered an event
     METHODS on_navigation.  " returned from sub-app or popup
     METHODS view_display.   " build and render the view
     METHODS data_read.      " SELECT from database
     METHODS data_update.    " INSERT / UPDATE / DELETE
-
   PRIVATE SECTION.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
     me->client = client.
     IF client->check_on_init( ).
@@ -110,17 +105,14 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
       on_event( ).
     ENDIF.
   ENDMETHOD.
-
   METHOD on_init.
     data_read( ).
     view_display( ).
   ENDMETHOD.
-
   METHOD on_navigation.
     data_read( ).
     client->view_model_update( ).
   ENDMETHOD.
-
   METHOD on_event.
     CASE client->get( )-event.
       WHEN `SAVE`.
@@ -129,20 +121,16 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
         client->nav_app_leave( ).
     ENDCASE.
   ENDMETHOD.
-
   METHOD view_display.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     " ...
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
-
   METHOD data_read.
     " SELECT ...
   ENDMETHOD.
-
   METHOD data_update.
     " INSERT / UPDATE / DELETE ...
   ENDMETHOD.
-
 ENDCLASS.
 ```

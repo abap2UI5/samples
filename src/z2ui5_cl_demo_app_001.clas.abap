@@ -1,23 +1,14 @@
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
-
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
-
     DATA product  TYPE string.
     DATA quantity TYPE string.
-
   PROTECTED SECTION.
-
   PRIVATE SECTION.
-
 ENDCLASS.
 
-
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
-
     IF client->check_on_init( ).
       product  = `products`.
       quantity = `500`.
@@ -41,7 +32,5 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     ELSEIF client->check_on_event( `BUTTON_POST` ).
       client->message_toast_display( text = |{ product } { quantity } - send to the server| ).
     ENDIF.
-
   ENDMETHOD.
-
 ENDCLASS.
