@@ -80,15 +80,24 @@ Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `inpu
 ### 2. `z2ui5_cl_util_xml` — generic XML builder
 Builds any XML structure directly from element names, namespaces and attributes. **Look up the control in the [UI5 API Reference](https://ui5.sap.com/#/api) and translate 1:1 to ABAP** — no wrapper, no abstraction layer.
 
+**UI5 XML:**
+```xml
+<form:SimpleForm title="T" editable="true">
+  <form:content>
+    <Label text="qty"/>
+    <Input value="{...}"/>
+  </form:content>
+</form:SimpleForm>
+```
+
+**ABAP:**
 ```abap
-" UI5 XML:                              " ABAP:
-" <form:SimpleForm title="T"            ->_( n = `SimpleForm` ns = `form` p = VALUE #(
-"   editable="true">                         ( n = `title`    v = `T` )
-"   <form:content>                           ( n = `editable` v = abap_true ) )
-"     <Label text="qty"/>              )->_( n = `content` ns = `form`
-"     <Input value="{...}"/>           )->__( n = `Label` a = `text` v = `qty`
-"   </form:content>                    )->__( n = `Input` a = `value` v = client->_bind_edit( qty ) )
-" </form:SimpleForm>
+->_( n = `SimpleForm` ns = `form` p = VALUE #(
+        ( n = `title`    v = `T` )
+        ( n = `editable` v = abap_true ) )
+)->_( n = `content` ns = `form`
+)->__( n = `Label` a = `text` v = `qty`
+)->__( n = `Input` a = `value` v = client->_bind_edit( qty ) )
 ```
 
 Key rules for `z2ui5_cl_util_xml`:
