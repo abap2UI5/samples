@@ -33,11 +33,11 @@ CLASS z2ui5_cl_demo_app_354 IMPLEMENTATION.
       lo_content->__( n = `Input` a = `value` v = client->_bind_edit( quantity ) ).
       lo_content->__( n = `Label` a = `text` v = `product` ).
       lo_content->__( n = `Input`
-          p = VALUE z2ui5_cl_util=>ty_t_name_value(
+          p = VALUE #(
                 ( n = `value` v = product )
                 ( n = `enabled` v = `false` ) ) ).
       lo_content->__( n = `Button`
-          p = VALUE z2ui5_cl_util=>ty_t_name_value(
+          p = VALUE #(
                 ( n = `text` v = `post` )
                 ( n = `press` v = client->_event( `BUTTON_POST` ) ) ) ).
       client->view_display( view->stringify( ) ).
