@@ -23,6 +23,10 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
 
+## Framework Reference
+
+For deeper information about how the abap2UI5 framework works internally — architecture, roundtrip processing, data binding engine, session persistence, and core classes — refer to the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5) and its `CLAUDE.md`.
+
 ## How Apps Work
 
 Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The framework calls `main()` on every roundtrip (HTTP POST). Use the lifecycle checks to react to different situations:
