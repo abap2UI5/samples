@@ -32,10 +32,10 @@ CLASS z2ui5_cl_demo_app_354 IMPLEMENTATION.
           )->_( n = `Page` p = lt_page
           )->_( n = `SimpleForm` ns = `form` p = lt_form
           )->_( n = `content` ns = `form` ).
-      lo_content->__( n = `Title` a = `text` v = `Input` ).
-      lo_content->__( n = `Label` a = `text` v = `quantity` ).
-      lo_content->__( n = `Input` a = `value` v = client->_bind_edit( quantity ) ).
-      lo_content->__( n = `Label` a = `text` v = `product` ).
+      lo_content->__( n = `Title` a = `text` v = `Input`
+               )->__( n = `Label` a = `text` v = `quantity`
+               )->__( n = `Input` a = `value` v = client->_bind_edit( quantity )
+               )->__( n = `Label` a = `text` v = `product` ).
       lo_content->__( n = `Input`
           p = VALUE #(
                 ( n = `value`   v = product )
