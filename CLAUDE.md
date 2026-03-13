@@ -25,7 +25,21 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
-- No blank lines between `SECTION.` keywords, between methods, or between `CLASS`/`ENDCLASS` — use compact formatting without extra empty lines.
+- **Blank lines — class definition** (`EMPTY_LINES_IN_CLASS_DEFINITION`):
+  - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`) — unless the preceding section is empty.
+  - No blank line directly below a section keyword.
+  - No blank line above `ENDCLASS.`.
+  - Max 1 consecutive blank line inside the definition block.
+  - Add one blank line between groups of different declaration types (e.g. between `INTERFACES` and `DATA`, or `DATA` and `METHODS`).
+- **Blank lines — outside methods** (`EMPTY_LINES_OUTSIDE_METHODS`):
+  - Exactly 1 blank line between `ENDCLASS.` and the next `CLASS … IMPLEMENTATION.` (i.e. between the definition and the implementation block).
+  - Exactly 1 blank line between two `METHOD … ENDMETHOD.` blocks.
+  - Exactly 2 blank lines between two top-level class blocks.
+- **Blank lines — inside methods** (`EMPTY_LINES_WITHIN_METHODS`):
+  - Max 1 consecutive blank line inside a method body.
+  - At most 1 blank line at the very start of a method body (after `METHOD`).
+  - At most 1 blank line at the very end of a method body (before `ENDMETHOD`).
+  - One blank line above the first executable statement is allowed.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 

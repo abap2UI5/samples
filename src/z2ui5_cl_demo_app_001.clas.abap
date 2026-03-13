@@ -1,8 +1,10 @@
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA product  TYPE string.
     DATA quantity TYPE string.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
