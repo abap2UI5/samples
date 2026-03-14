@@ -36,10 +36,9 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
   - Exactly 1 blank line between two `METHOD … ENDMETHOD.` blocks.
   - Exactly 2 blank lines between two top-level class blocks.
 - **Blank lines — inside methods** (`EMPTY_LINES_WITHIN_METHODS`):
+  - Always add exactly 1 blank line at the very start of a method body (after `METHOD`).
+  - Always add exactly 1 blank line at the very end of a method body (before `ENDMETHOD`).
   - Max 1 consecutive blank line inside a method body.
-  - At most 1 blank line at the very start of a method body (after `METHOD`).
-  - At most 1 blank line at the very end of a method body (before `ENDMETHOD`).
-  - One blank line above the first executable statement is allowed.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 

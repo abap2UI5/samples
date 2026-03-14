@@ -19,28 +19,35 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
   ENDMETHOD.
 
   METHOD on_init.
+
     product  = `products`.
     quantity = `500`.
     view_display( ).
+
   ENDMETHOD.
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDCASE.
+
   ENDMETHOD.
 
   METHOD view_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
            )->page(
@@ -58,6 +65,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
                            text  = `post`
                            press = client->_event( `BUTTON_POST` )
             )->stringify( ) ).
+
   ENDMETHOD.
 
 ENDCLASS.
