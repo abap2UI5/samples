@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
-    DATA(root) = view->_( n = `View` ns = `mvc`
+    DATA(root) = view->__( n = `View` ns = `mvc`
         p = VALUE #( ( n = `displayBlock` v = abap_true )
                      ( n = `height`       v = `100%` )
                      ( n = `xmlns`        v = `sap.m` )
@@ -41,56 +41,56 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
                      ( n = `xmlns:l`      v = `sap.ui.layout` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->_( `Shell` )->_( n = `Page`
+    DATA(page) = root->__( `Shell` )->__( n = `Page`
         p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
                      ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
                      ( n = `title`          v = `abap2UI5 - Controls` ) ) ).
 
-    page->_( `headerContent`
-       )->__( n = `Link`
+    page->__( `headerContent`
+       )->_( n = `Link`
               p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/controls` )
                            ( n = `target` v = `_blank` )
                            ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
-    DATA(panel) = page->_( n = `Panel`
+    DATA(panel) = page->__( n = `Panel`
         p = VALUE #( ( n = `accessibleRole`   v = `Region` )
                      ( n = `backgroundDesign` v = `Transparent` )
                      ( n = `class`            v = `sapUiNoContentPadding` ) ) ).
 
-    panel->_( `headerToolbar` )->_( `Toolbar`
-       )->__( n = `Title`
+    panel->__( `headerToolbar` )->__( `Toolbar`
+       )->_( n = `Title`
               p = VALUE #( ( n = `level`      v = `H1` )
                            ( n = `text`       v = `Featured Controls` )
                            ( n = `titleStyle` v = `H1` )
                            ( n = `width`      v = `100%` ) ) ).
 
-    DATA(bl)  = panel->_( n = `BlockLayout` ns = `l` ).
-    DATA(row) = bl->_( n = `BlockLayoutRow` ns = `l` ).
+    DATA(bl)  = panel->__( n = `BlockLayout` ns = `l` ).
+    DATA(row) = bl->__( n = `BlockLayoutRow` ns = `l` ).
     add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://edit`         iv_title = `Input`   iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Input`   iv_descr = `User interaction` ).
     add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://list`         iv_title = `Lists`   iv_href = `https://ui5.sap.com/sdk/#/controls/filter/List`    iv_descr = `Various list structures` ).
     add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://table-view`   iv_title = `Tables`  iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Table`   iv_descr = `Simple or more powerful tables` ).
     add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://popup-window` iv_title = `Pop-Ups` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Popup`   iv_descr = `Dialogs and popovers` ).
 
-    row = bl->_( n = `BlockLayoutRow` ns = `l` ).
+    row = bl->__( n = `BlockLayoutRow` ns = `l` ).
     add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://grid`          iv_title = `Tiles`    iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Tile`    iv_descr = `Tiles for e.g. texts, images or charts` ).
     add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://message-popup` iv_title = `Messages` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Message` iv_descr = `User notification` ).
     add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://header`        iv_title = `Bars`     iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Bar`     iv_descr = `Toolbars and headers` ).
     add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://tree`          iv_title = `Trees`    iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Tree`    iv_descr = `Hierarchical data representation` ).
 
-    panel = page->_( n = `Panel`
+    panel = page->__( n = `Panel`
         p = VALUE #( ( n = `accessibleRole`   v = `Region` )
                      ( n = `backgroundDesign` v = `Transparent` )
                      ( n = `class`            v = `sapUiNoContentPadding` ) ) ).
 
-    panel->_( `headerToolbar` )->_( `Toolbar`
-       )->__( n = `Title`
+    panel->__( `headerToolbar` )->__( `Toolbar`
+       )->_( n = `Title`
               p = VALUE #( ( n = `level`      v = `H1` )
                            ( n = `text`       v = `Layout & Pages` )
                            ( n = `titleStyle` v = `H1` )
                            ( n = `width`      v = `100%` ) ) ).
 
-    bl  = panel->_( n = `BlockLayout` ns = `l` ).
-    row = bl->_( n = `BlockLayoutRow` ns = `l` ).
+    bl  = panel->__( n = `BlockLayout` ns = `l` ).
+    row = bl->__( n = `BlockLayoutRow` ns = `l` ).
     add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://write-new`          iv_title = `Object Page`            iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Object%20Page`             iv_descr = `Displaying, creating, or editing objects` ).
     add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://chart-table-view`   iv_title = `Dynamic Page`           iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Dynamic%20Page`            iv_descr = `Page with title, header, and content area` ).
     add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://screen-split-three` iv_title = `Flexible Column Layout` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Flexible%20Column%20Layout` iv_descr = `Page with up to 3 columns` ).
@@ -102,19 +102,19 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
   METHOD add_cell.
 
-    DATA(cell) = io_row->_( n = `BlockLayoutCell` ns = `l`
+    DATA(cell) = io_row->__( n = `BlockLayoutCell` ns = `l`
         p = VALUE #( ( n = `backgroundColorSet`   v = `ColorSet10` )
                      ( n = `backgroundColorShade` v = iv_shade ) ) ).
-    DATA(vl) = cell->_( n = `VerticalLayout` ns = `l` ).
-    vl->__( n = `Icon` ns = `core`
+    DATA(vl) = cell->__( n = `VerticalLayout` ns = `l` ).
+    vl->_( n = `Icon` ns = `core`
             p = VALUE #( ( n = `class` v = `sapUiTinyMarginBottom` )
                          ( n = `size`  v = `2rem` )
                          ( n = `src`   v = iv_icon ) )
-      )->__( n = `Link`
+      )->_( n = `Link`
              p = VALUE #( ( n = `href`   v = iv_href )
                           ( n = `target` v = `_blank` )
                           ( n = `text`   v = iv_title ) )
-      )->__( n = `Text` a = `text` v = iv_descr ).
+      )->_( n = `Text` a = `text` v = iv_descr ).
 
   ENDMETHOD.
 

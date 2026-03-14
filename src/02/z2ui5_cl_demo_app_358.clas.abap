@@ -64,66 +64,66 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
-    DATA(root) = view->_( n = `View` ns = `mvc`
+    DATA(root) = view->__( n = `View` ns = `mvc`
         p = VALUE #( ( n = `displayBlock` v = abap_true )
                      ( n = `height`       v = `100%` )
                      ( n = `xmlns`        v = `sap.m` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->_( `Shell` )->_( n = `Page`
+    DATA(page) = root->__( `Shell` )->__( n = `Page`
         p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
                      ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
                      ( n = `title`          v = `abap2UI5 - Table` ) ) ).
 
-    page->_( `headerContent`
-       )->__( n = `Link`
+    page->__( `headerContent`
+       )->_( n = `Link`
               p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/entity/sap.m.Table/sample/sap.m.sample.Table` )
                            ( n = `target` v = `_blank` )
                            ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
-    DATA(tab) = page->_( n = `Table`
+    DATA(tab) = page->__( n = `Table`
         p = VALUE #( ( n = `inset` v = abap_false )
                      ( n = `items` v = client->_bind( mt_products ) ) ) ).
 
-    tab->_( `headerToolbar` )->_( `OverflowToolbar`
-       )->__( n = `Title`
+    tab->__( `headerToolbar` )->__( `OverflowToolbar`
+       )->_( n = `Title`
               p = VALUE #( ( n = `level` v = `H2` )
                            ( n = `text`  v = `Products` ) )
-       )->__( `ToolbarSpacer` ).
+       )->_( `ToolbarSpacer` ).
 
-    DATA(cols) = tab->_( `columns` ).
-    cols->_( n = `Column` a = `width` v = `12em`
-       )->__( n = `Text` a = `text` v = `Product` ).
-    cols->_( n = `Column`
+    DATA(cols) = tab->__( `columns` ).
+    cols->__( n = `Column` a = `width` v = `12em`
+       )->_( n = `Text` a = `text` v = `Product` ).
+    cols->__( n = `Column`
              p = VALUE #( ( n = `demandPopin`    v = abap_true )
                           ( n = `minScreenWidth` v = `Tablet` ) )
-       )->__( n = `Text` a = `text` v = `Supplier` ).
-    cols->_( n = `Column`
+       )->_( n = `Text` a = `text` v = `Supplier` ).
+    cols->__( n = `Column`
              p = VALUE #( ( n = `demandPopin`    v = abap_true )
                           ( n = `hAlign`         v = `End` )
                           ( n = `minScreenWidth` v = `Desktop` ) )
-       )->__( n = `Text` a = `text` v = `Dimensions` ).
-    cols->_( n = `Column`
+       )->_( n = `Text` a = `text` v = `Dimensions` ).
+    cols->__( n = `Column`
              p = VALUE #( ( n = `demandPopin`    v = abap_true )
                           ( n = `hAlign`         v = `Center` )
                           ( n = `minScreenWidth` v = `Desktop` ) )
-       )->__( n = `Text` a = `text` v = `Weight` ).
-    cols->_( n = `Column` a = `hAlign` v = `End`
-       )->__( n = `Text` a = `text` v = `Price` ).
+       )->_( n = `Text` a = `text` v = `Weight` ).
+    cols->__( n = `Column` a = `hAlign` v = `End`
+       )->_( n = `Text` a = `text` v = `Price` ).
 
-    DATA(cells) = tab->_( `items`
-        )->_( n = `ColumnListItem` a = `vAlign` v = `Middle`
-        )->_( `cells` ).
-    cells->__( n = `ObjectIdentifier`
+    DATA(cells) = tab->__( `items`
+        )->__( n = `ColumnListItem` a = `vAlign` v = `Middle`
+        )->__( `cells` ).
+    cells->_( n = `ObjectIdentifier`
                p = VALUE #( ( n = `text`  v = `{PRODUCT_ID}` )
                             ( n = `title` v = `{NAME}` ) ) ).
-    cells->__( n = `Text` a = `text` v = `{SUPPLIER_NAME}` ).
-    cells->__( n = `Text` a = `text` v = `{DIMENSIONS}` ).
-    cells->__( n = `ObjectNumber`
+    cells->_( n = `Text` a = `text` v = `{SUPPLIER_NAME}` ).
+    cells->_( n = `Text` a = `text` v = `{DIMENSIONS}` ).
+    cells->_( n = `ObjectNumber`
                p = VALUE #( ( n = `number` v = `{WEIGHT_MEASURE}` )
                             ( n = `state`  v = `{WEIGHT_STATE}` )
                             ( n = `unit`   v = `{WEIGHT_UNIT}` ) ) ).
-    cells->__( n = `ObjectNumber`
+    cells->_( n = `ObjectNumber`
                p = VALUE #( ( n = `number` v = `{PRICE}` )
                             ( n = `unit`   v = `{CURRENCY_CODE}` ) ) ).
 

@@ -60,59 +60,59 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
         ` formatOptions: { source: { pattern: "yyyy-MM-dd" }, style: "long" } }`.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
-    DATA(root) = view->_( n = `View` ns = `mvc`
+    DATA(root) = view->__( n = `View` ns = `mvc`
         p = VALUE #( ( n = `displayBlock` v = abap_true )
                      ( n = `height`       v = `100%` )
                      ( n = `xmlns`        v = `sap.m` )
                      ( n = `xmlns:form`   v = `sap.ui.layout.form` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->_( `Shell` )->_( n = `Page`
+    DATA(page) = root->__( `Shell` )->__( n = `Page`
         p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
                      ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
                      ( n = `title`          v = `abap2UI5 - Formatter` ) ) ).
 
-    page->_( `headerContent`
-       )->__( n = `Link`
+    page->__( `headerContent`
+       )->_( n = `Link`
               p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/topic/07e4b920f5734fd78fdaa236f26236d8` )
                            ( n = `target` v = `_blank` )
                            ( n = `text`   v = `UI5 Docs` ) ) ).
 
-    DATA(form) = page->_( n = `SimpleForm` ns = `form`
+    DATA(form) = page->__( n = `SimpleForm` ns = `form`
         p = VALUE #( ( n = `editable` v = abap_true )
                      ( n = `layout`   v = `ResponsiveGridLayout` )
                      ( n = `title`    v = `Formatter` ) ) ).
-    DATA(ct) = form->_( n = `content` ns = `form` ).
+    DATA(ct) = form->__( n = `content` ns = `form` ).
 
-    ct->__( n = `Title` a = `text` v = `Number` ).
-    ct->__( n = `Label`  a = `text` v = `Raw value` ).
-    ct->__( n = `Input`  a = `value` v = client->_bind_edit( mv_big_number ) ).
-    ct->__( n = `Label`  a = `text` v = `Float (grouped, 2 decimals)` ).
-    ct->__( n = `Input`
+    ct->_( n = `Title` a = `text` v = `Number` ).
+    ct->_( n = `Label`  a = `text` v = `Raw value` ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_big_number ) ).
+    ct->_( n = `Label`  a = `text` v = `Float (grouped, 2 decimals)` ).
+    ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
                          ( n = `value`   v = lv_float_bind ) ) ).
-    ct->__( n = `Label`  a = `text` v = `Raw integer` ).
-    ct->__( n = `Input`  a = `value` v = client->_bind_edit( mv_integer ) ).
-    ct->__( n = `Label`  a = `text` v = `Integer (formatted)` ).
-    ct->__( n = `Input`
+    ct->_( n = `Label`  a = `text` v = `Raw integer` ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_integer ) ).
+    ct->_( n = `Label`  a = `text` v = `Integer (formatted)` ).
+    ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
                          ( n = `value`   v = lv_int_bind ) ) ).
 
-    ct->__( n = `Title` a = `text` v = `Currency` ).
-    ct->__( n = `Label`  a = `text` v = `Price` ).
-    ct->__( n = `Input`  a = `value` v = client->_bind_edit( mv_price ) ).
-    ct->__( n = `Label`  a = `text` v = `Currency code` ).
-    ct->__( n = `Input`  a = `value` v = client->_bind_edit( mv_currency ) ).
-    ct->__( n = `Label`  a = `text` v = `Formatted (Currency type)` ).
-    ct->__( n = `Input`
+    ct->_( n = `Title` a = `text` v = `Currency` ).
+    ct->_( n = `Label`  a = `text` v = `Price` ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_price ) ).
+    ct->_( n = `Label`  a = `text` v = `Currency code` ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_currency ) ).
+    ct->_( n = `Label`  a = `text` v = `Formatted (Currency type)` ).
+    ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
                          ( n = `value`   v = lv_curr_bind ) ) ).
 
-    ct->__( n = `Title` a = `text` v = `Date` ).
-    ct->__( n = `Label`  a = `text` v = `Raw date (yyyy-MM-dd)` ).
-    ct->__( n = `Input`  a = `value` v = client->_bind_edit( mv_date ) ).
-    ct->__( n = `Label`  a = `text` v = `Formatted (long style)` ).
-    ct->__( n = `Input`
+    ct->_( n = `Title` a = `text` v = `Date` ).
+    ct->_( n = `Label`  a = `text` v = `Raw date (yyyy-MM-dd)` ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_date ) ).
+    ct->_( n = `Label`  a = `text` v = `Formatted (long style)` ).
+    ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
                          ( n = `value`   v = lv_date_bind ) ) ).
 
