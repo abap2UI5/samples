@@ -84,6 +84,36 @@ ENDIF.
 | Info | `get()`, `get_event_arg()`, `get_app(id)` | Request/context data |
 | Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
 
+## Navigation
+
+### Back Navigation
+
+Always use `client->_event_nav_app_leave()` to bind the back button event directly in the view. This triggers navigation without a roundtrip to the ABAP backend:
+
+```abap
+METHOD view_display.
+  DATA(view) = z2ui5_cl_xml_view=>factory( ).
+  DATA(page) = view->page( title = `My App`
+                            shownavbutton = client->check_app_prev_stack( )
+                            navbuttonpress = client->_event_nav_app_leave( ) ).
+  " ...
+  client->view_display( view->stringify( ) ).
+ENDMETHOD.
+```
+
+Only use the manual pattern (handling `BACK` in `on_event`) when you need to do something with the app or client instance **before** navigating back — for example, writing data back to the previous app:
+
+```abap
+METHOD on_event.
+  CASE client->get( )-event.
+    WHEN `BACK`.
+      " interact with previous app instance first
+      CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( ms_result ).
+      client->nav_app_leave( ).
+  ENDCASE.
+ENDMETHOD.
+```
+
 ## Building Views
 
 Views are XML strings passed to `client->view_display()`. There are two ways to build them:
@@ -134,6 +164,10 @@ Write everything directly in `main` — no method encapsulation needed. Count on
 
 The following is the **maximum structure**. Only add methods that are actually needed.
 
+### Event handler sub-methods
+
+When the body of a single `WHEN` branch in `on_event` grows too long, extract it into a dedicated method named `on_event_<event>` (e.g. `on_event_save`, `on_event_delete`). The `on_event` method then stays a thin dispatcher — one call per branch — and all the logic lives in the sub-method.
+
 ```abap
 CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
@@ -172,10 +206,13 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN `SAVE`.
-        data_update( ).
+        on_event_save( ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
+  ENDMETHOD.
+  METHOD on_event_save.
+    data_update( ).
   ENDMETHOD.
   METHOD view_display.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
