@@ -134,6 +134,10 @@ Write everything directly in `main` — no method encapsulation needed. Count on
 
 The following is the **maximum structure**. Only add methods that are actually needed.
 
+### Event handler sub-methods
+
+When the body of a single `WHEN` branch in `on_event` grows too long, extract it into a dedicated method named `on_event_<event>` (e.g. `on_event_save`, `on_event_delete`). The `on_event` method then stays a thin dispatcher — one call per branch — and all the logic lives in the sub-method.
+
 ```abap
 CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
@@ -172,10 +176,13 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
       WHEN `SAVE`.
-        data_update( ).
+        on_event_save( ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
+  ENDMETHOD.
+  METHOD on_event_save.
+    data_update( ).
   ENDMETHOD.
   METHOD view_display.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
