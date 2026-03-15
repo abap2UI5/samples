@@ -42,11 +42,8 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
                       text  = `post`
                       press = client->_event( `BUTTON_POST` ) ).
       client->view_display( view->stringify( ) ).
-    ELSEIF client->check_on_event( ).
-      CASE client->get( )-event.
-        WHEN `BUTTON_POST`.
-          client->message_toast_display( |{ product } { quantity } - send to the server| ).
-      ENDCASE.
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDIF.
 
   ENDMETHOD.

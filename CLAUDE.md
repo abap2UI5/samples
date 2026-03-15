@@ -65,6 +65,22 @@ ELSEIF client->check_on_event( ).
 ENDIF.
 ```
 
+### Event checking — inline vs. CASE
+
+`check_on_event( )` accepts an optional event name argument. Use it to check for a specific event directly in the `ELSEIF` chain when there are **2–3 events** and no complex dispatch logic is needed:
+
+```abap
+IF client->check_on_init( ).
+  ...
+ELSEIF client->check_on_event( `SAVE` ).
+  data_update( ).
+ELSEIF client->check_on_event( `DELETE` ).
+  data_delete( ).
+ENDIF.
+```
+
+Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only when there are **4 or more events**, or when a dedicated `on_event` method is extracted for a larger app.
+
 ### Client API (`z2ui5_if_client`)
 
 | Category | Methods | Purpose |
