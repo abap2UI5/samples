@@ -8,8 +8,10 @@ CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_view_main_display.
-    METHODS z2ui5_view_second_display.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS view_main_display.
+    METHODS view_second_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -21,34 +23,44 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-
-      z2ui5_view_main_display( ).
-      client->message_box_display( `app started, init values set` ).
-
+      on_init( ).
     ELSEIF client->check_on_event( ).
-
-      CASE client->get( )-event.
-        WHEN `BUTTON_ROUNDTRIP`.
-          client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
-        WHEN `BUTTON_RESTART`.
-          client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
-        WHEN `BUTTON_CHANGE_VIEW`.
-          CASE view_main.
-            WHEN `MAIN`.
-              z2ui5_view_second_display( ).
-            WHEN `SECOND`.
-              z2ui5_view_main_display( ).
-          ENDCASE.
-        WHEN `BUTTON_ERROR`.
-          DATA(dummy) = 1 / 0.
-      ENDCASE.
-
+      on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_main_display.
+  METHOD on_init.
+
+    view_main_display( ).
+    client->message_box_display( `app started, init values set` ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get( )-event.
+      WHEN `BUTTON_ROUNDTRIP`.
+        client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
+      WHEN `BUTTON_RESTART`.
+        client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
+      WHEN `BUTTON_CHANGE_VIEW`.
+        CASE view_main.
+          WHEN `MAIN`.
+            view_second_display( ).
+          WHEN `SECOND`.
+            view_main_display( ).
+        ENDCASE.
+      WHEN `BUTTON_ERROR`.
+        DATA(dummy) = 1 / 0.
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD view_main_display.
 
     view_main = `MAIN`.
 
@@ -87,7 +99,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_second_display.
+  METHOD view_second_display.
 
     view_main = `SECOND`.
 
