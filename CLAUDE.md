@@ -132,6 +132,22 @@ Indent the fluent chain to reflect the XML hierarchy:
 - Each method that **navigates into a child element** (returns a child node) is indented **4 spaces deeper** than its parent call.
 - Methods that **add a sibling** within the same container (and return the container) stay at the **same indentation level**.
 
+#### Parameter formatting
+
+- **Single parameter**: write inline — `)->label( `Quantity` )` or `)->input( client->_bind_edit( qty ) )`.
+- **More than one parameter**: always split across multiple lines — one parameter per line, aligned below the opening `(`, closing `)` on its own line:
+
+```abap
+)->input(
+    value   = product
+    enabled = abap_false
+)->button(
+    text  = `Post`
+    press = client->_event( `POST` ) ).
+```
+
+Never put two or more named parameters on the same line.
+
 ```abap
 METHOD view_display.
 
@@ -141,12 +157,16 @@ METHOD view_display.
           title          = `My App`
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( title = `Form Title` editable = abap_true
+          )->simple_form(
+              title    = `Form Title`
+              editable = abap_true
               )->content( `form`
               )->label( `Quantity`
               )->input( client->_bind_edit( quantity )
               )->label( `Product`
-              )->input( value = product enabled = abap_false
+              )->input(
+                  value   = product
+                  enabled = abap_false
               )->button(
                   text  = `Post`
                   press = client->_event( `POST` ) ).
