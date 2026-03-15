@@ -158,6 +158,8 @@ Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `inpu
 
 #### View structure and indentation
 
+Always add 1 blank line before `DATA(view) = z2ui5_cl_xml_view=>factory( ).` to visually separate view construction from preceding logic.
+
 Always build the view in `view_display` and call `client->view_display( view->stringify( ) )` as a **standalone statement at the end** — never nested inside the chain.
 
 Indent the fluent chain to reflect the XML hierarchy:

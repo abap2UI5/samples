@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
       product  = `products`.
       quantity = `500`.
+
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       view->shell(
           )->page(
