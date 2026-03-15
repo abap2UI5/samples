@@ -24,6 +24,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Use backticks for all string literals, not single quotes.
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
+- Use `DEFINITION PUBLIC.` — never `DEFINITION PUBLIC CREATE PUBLIC.` (`CREATE PUBLIC` is the default and adds unnecessary overhead).
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
 - **Blank lines — class definition** (`EMPTY_LINES_IN_CLASS_DEFINITION`):
   - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`) — unless the preceding section is empty.
@@ -260,7 +261,7 @@ The following is the **maximum structure**. Only add methods that are actually n
 When the body of a single `WHEN` branch in `on_event` grows too long, extract it into a dedicated method named `on_event_<event>` (e.g. `on_event_save`, `on_event_delete`). The `on_event` method then stays a thin dispatcher — one call per branch — and all the logic lives in the sub-method.
 
 ```abap
-CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     " bound data (DATA attributes for _bind/_bind_edit)...
