@@ -42,21 +42,51 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
   METHOD on_init.
 
     t_products = VALUE #(
-      ( name = `Notebook Basic 15`  product_id = `HT-1000` supplier_name = `Very Best Screens`
-        dimensions = `30 x 18 x 3 cm` weight_measure = `4.2` weight_unit = `KG`
-        weight_state = `None`    price = `956`  currency_code = `EUR` )
-      ( name = `Notebook Basic 17`  product_id = `HT-1001` supplier_name = `Very Best Screens`
-        dimensions = `29 x 17 x 4 cm` weight_measure = `4.5` weight_unit = `KG`
-        weight_state = `Warning` price = `1249` currency_code = `EUR` )
-      ( name = `Notebook Basic 18`  product_id = `HT-1002` supplier_name = `Smartcards`
-        dimensions = `28 x 16 x 4 cm` weight_measure = `4.2` weight_unit = `KG`
-        weight_state = `None`    price = `1570` currency_code = `EUR` )
-      ( name = `ITelO Vault`         product_id = `HT-1007` supplier_name = `TECUM`
-        dimensions = `32 x 10 x 1 cm` weight_measure = `0.1` weight_unit = `KG`
-        weight_state = `None`    price = `299`  currency_code = `USD` )
-      ( name = `Gladiator MX`        product_id = `HT-1024` supplier_name = `Panorama Studios`
-        dimensions = `53 x 30 x 7 cm` weight_measure = `7.5` weight_unit = `KG`
-        weight_state = `Error`   price = `1430` currency_code = `EUR` ) ).
+      ( name           = `Notebook Basic 15`
+        product_id     = `HT-1000`
+        supplier_name  = `Very Best Screens`
+        dimensions     = `30 x 18 x 3 cm`
+        weight_measure = `4.2`
+        weight_unit    = `KG`
+        weight_state   = `None`
+        price          = `956`
+        currency_code  = `EUR` )
+      ( name           = `Notebook Basic 17`
+        product_id     = `HT-1001`
+        supplier_name  = `Very Best Screens`
+        dimensions     = `29 x 17 x 4 cm`
+        weight_measure = `4.5`
+        weight_unit    = `KG`
+        weight_state   = `Warning`
+        price          = `1249`
+        currency_code  = `EUR` )
+      ( name           = `Notebook Basic 18`
+        product_id     = `HT-1002`
+        supplier_name  = `Smartcards`
+        dimensions     = `28 x 16 x 4 cm`
+        weight_measure = `4.2`
+        weight_unit    = `KG`
+        weight_state   = `None`
+        price          = `1570`
+        currency_code  = `EUR` )
+      ( name           = `ITelO Vault`
+        product_id     = `HT-1007`
+        supplier_name  = `TECUM`
+        dimensions     = `32 x 10 x 1 cm`
+        weight_measure = `0.1`
+        weight_unit    = `KG`
+        weight_state   = `None`
+        price          = `299`
+        currency_code  = `USD` )
+      ( name           = `Gladiator MX`
+        product_id     = `HT-1024`
+        supplier_name  = `Panorama Studios`
+        dimensions     = `53 x 30 x 7 cm`
+        weight_measure = `7.5`
+        weight_unit    = `KG`
+        weight_state   = `Error`
+        price          = `1430`
+        currency_code  = `EUR` ) ).
 
     view_display( ).
 
