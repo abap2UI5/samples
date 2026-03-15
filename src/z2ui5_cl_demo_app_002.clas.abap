@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
       END OF combobox_item.
 
     DATA:
-      BEGIN OF screen,
+      BEGIN OF s_screen,
         check_is_active TYPE abap_bool,
         colour          TYPE string,
         combo_key       TYPE string,
@@ -27,10 +27,10 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
         time_end        TYPE string,
         check_switch_01 TYPE abap_bool VALUE abap_false,
         check_switch_02 TYPE abap_bool VALUE abap_false,
-      END OF screen.
+      END OF s_screen.
 
-    DATA suggestions TYPE STANDARD TABLE OF suggestion_item WITH EMPTY KEY.
-    DATA combo       TYPE STANDARD TABLE OF combobox_item WITH EMPTY KEY.
+    DATA t_suggestions TYPE STANDARD TABLE OF suggestion_item WITH EMPTY KEY.
+    DATA t_combo       TYPE STANDARD TABLE OF combobox_item WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
 
   METHOD on_init.
 
-    screen = VALUE #(
+    s_screen = VALUE #(
         check_is_active = abap_true
         colour          = `BLUE`
         combo_key       = `GRAY`
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         time_start      = `05:24:00`
         time_end        = `17:23:57` ).
 
-    suggestions = VALUE #(
+    t_suggestions = VALUE #(
         ( descr = `Green`  value = `GREEN` )
         ( descr = `Blue`   value = `BLUE` )
         ( descr = `Black`  value = `BLACK` )
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         ( descr = `Blue2`  value = `BLUE2` )
         ( descr = `Blue3`  value = `BLUE3` ) ).
 
-    combo = VALUE #(
+    t_combo = VALUE #(
         ( key = `BLUE`  text = `green` )
         ( key = `GREEN` text = `blue` )
         ( key = `BLACK` text = `red` )
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
       WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values send to the server` ).
       WHEN `BUTTON_CLEAR`.
-        screen = VALUE #( ).
+        s_screen = VALUE #( ).
         client->message_toast_display( `View initialized` ).
     ENDCASE.
 
@@ -120,9 +120,9 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         )->label( `Input with suggestion items`
         )->input(
             id              = `suggInput`
-            value           = client->_bind_edit( screen-colour )
+            value           = client->_bind_edit( s_screen-colour )
             placeholder     = `Fill in your favorite color`
-            suggestionitems = client->_bind( suggestions )
+            suggestionitems = client->_bind( t_suggestions )
             showsuggestion  = abap_true )->get(
         )->suggestion_items( )->get(
             )->list_item(
@@ -134,12 +134,12 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         editable = abap_true
         )->content( `form`
         )->label( `Date`
-        )->date_picker( client->_bind_edit( screen-date )
+        )->date_picker( client->_bind_edit( s_screen-date )
         )->label( `Date and Time`
-        )->date_time_picker( client->_bind_edit( screen-date_time )
+        )->date_time_picker( client->_bind_edit( s_screen-date_time )
         )->label( `Time Begin/End`
-        )->time_picker( client->_bind_edit( screen-time_start )
-        )->time_picker( client->_bind_edit( screen-time_end ) ).
+        )->time_picker( client->_bind_edit( s_screen-time_start )
+        )->time_picker( client->_bind_edit( s_screen-time_end ) ).
 
     DATA(content) = page->grid( `L12 M12 S12`
         )->content( `layout`
@@ -149,26 +149,26 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
                 )->content( `form` ).
 
     content->label( `Checkbox` )->checkbox(
-        selected = client->_bind_edit( screen-check_is_active )
+        selected = client->_bind_edit( s_screen-check_is_active )
         text     = `this is a checkbox`
         enabled  = abap_true ).
 
     content->label( `Combobox` )->combobox(
-        selectedkey = client->_bind_edit( screen-combo_key )
-        items       = client->_bind( combo )
+        selectedkey = client->_bind_edit( s_screen-combo_key )
+        items       = client->_bind( t_combo )
         )->item(
             key  = `{KEY}`
             text = `{TEXT}` ).
 
     content->label( `Combobox2` )->combobox(
-        selectedkey = client->_bind_edit( screen-combo_key2 )
-        items       = client->_bind( combo )
+        selectedkey = client->_bind_edit( s_screen-combo_key2 )
+        items       = client->_bind( t_combo )
         )->item(
             key  = `{KEY}`
             text = `{TEXT}` ).
 
     content->label( `Segmented Button` )->segmented_button(
-        client->_bind_edit( screen-segment_key )
+        client->_bind_edit( s_screen-segment_key )
         )->items(
             )->segmented_button_item(
                 key  = `BLUE`
@@ -189,13 +189,13 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
         customtextoff = `B` ).
 
     content->label( `Switch accept/reject` )->switch(
-        state         = client->_bind_edit( screen-check_switch_01 )
+        state         = client->_bind_edit( s_screen-check_switch_01 )
         customtexton  = `on`
         customtextoff = `off`
         type          = `AcceptReject` ).
 
     content->label( `Switch normal` )->switch(
-        state         = client->_bind_edit( screen-check_switch_02 )
+        state         = client->_bind_edit( s_screen-check_switch_02 )
         customtexton  = `YES`
         customtextoff = `NO` ).
 
