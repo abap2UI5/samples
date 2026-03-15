@@ -58,13 +58,17 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
             title          = `abap2UI5 - First Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
-            )->simple_form( title = `Form Title` editable = abap_true
+            )->simple_form(
+                title    = `Form Title`
+                editable = abap_true
                 )->content( `form`
                 )->title( `Input`
                 )->label( `quantity`
                 )->input( client->_bind_edit( quantity )
                 )->label( `product`
-                )->input( value = product enabled = abap_false
+                )->input(
+                    value   = product
+                    enabled = abap_false
                 )->button(
                     text  = `post`
                     press = client->_event( `BUTTON_POST` ) ).
