@@ -1,10 +1,10 @@
-CLASS z2ui5_cl_demo_app_358 DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_358 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_product,
+      BEGIN OF ty_s_product,
         name           TYPE string,
         product_id     TYPE string,
         supplier_name  TYPE string,
@@ -14,9 +14,8 @@ CLASS z2ui5_cl_demo_app_358 DEFINITION PUBLIC CREATE PUBLIC.
         weight_state   TYPE string,
         price          TYPE string,
         currency_code  TYPE string,
-      END OF ty_product.
-
-    DATA mt_products TYPE STANDARD TABLE OF ty_product WITH EMPTY KEY.
+      END OF ty_s_product.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -26,6 +25,7 @@ CLASS z2ui5_cl_demo_app_358 DEFINITION PUBLIC CREATE PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
 
@@ -38,9 +38,10 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
-    mt_products = VALUE #(
+    t_products = VALUE #(
       ( name = `Notebook Basic 15`  product_id = `HT-1000` supplier_name = `Very Best Screens`
         dimensions = `30 x 18 x 3 cm` weight_measure = `4.2` weight_unit = `KG`
         weight_state = `None`    price = `956`  currency_code = `EUR` )
@@ -60,6 +61,7 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
     view_display( ).
 
   ENDMETHOD.
+
 
   METHOD view_display.
 
@@ -83,7 +85,7 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
 
     DATA(tab) = page->__( n = `Table`
         p = VALUE #( ( n = `inset` v = abap_false )
-                     ( n = `items` v = client->_bind( mt_products ) ) ) ).
+                     ( n = `items` v = client->_bind( t_products ) ) ) ).
 
     tab->__( `headerToolbar` )->__( `OverflowToolbar`
        )->_( n = `Title`

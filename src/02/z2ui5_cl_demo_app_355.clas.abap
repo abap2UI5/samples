@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_355 DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_355 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -13,22 +13,42 @@ CLASS z2ui5_cl_demo_app_355 DEFINITION PUBLIC CREATE PUBLIC.
     DATA volume    TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_init.
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
-      wlan      = abap_true.
-      flight    = abap_true.
-      high_perf = abap_true.
-      price     = `799`.
-      address   = `Main Rd, Manchester`.
-      country   = `GR`.
-      volume    = `7`.
+      on_init( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    wlan      = abap_true.
+    flight    = abap_true.
+    high_perf = abap_true.
+    price     = `799`.
+    address   = `Main Rd, Manchester`.
+    country   = `GR`.
+    volume    = `7`.
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
     DATA(root) = view->__( n = `View` ns = `mvc`

@@ -1,14 +1,14 @@
-CLASS z2ui5_cl_demo_app_359 DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_359 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_first_name TYPE string.
-    DATA mv_last_name  TYPE string.
-    DATA mv_num_a      TYPE i.
-    DATA mv_num_b      TYPE i.
-    DATA mv_amount     TYPE string.
-    DATA mv_search     TYPE string.
+    DATA first_name TYPE string.
+    DATA last_name  TYPE string.
+    DATA num_a      TYPE i.
+    DATA num_b      TYPE i.
+    DATA amount     TYPE string.
+    DATA search     TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -18,6 +18,7 @@ CLASS z2ui5_cl_demo_app_359 DEFINITION PUBLIC CREATE PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
 
@@ -30,28 +31,26 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
-    mv_first_name = `John`.
-    mv_last_name  = `Doe`.
-    mv_num_a      = 42.
-    mv_num_b      = 77.
-    mv_amount     = `-15`.
-    mv_search     = `VIPCustomer`.
-
+    first_name = `John`.
+    last_name  = `Doe`.
+    num_a      = 42.
+    num_b      = 77.
+    amount     = `-15`.
+    search     = `VIPCustomer`.
     view_display( ).
 
   ENDMETHOD.
 
+
   METHOD view_display.
 
-    DATA(lv_concat) = `{= $` && client->_bind( mv_first_name ) &&
-                      ` + ' ' + $` && client->_bind( mv_last_name ) && `}`.
-    DATA(lv_max)    = `{= Math.max($` && client->_bind( mv_num_a ) &&
-                      `, $` && client->_bind( mv_num_b ) && `)}`.
-    DATA(lv_sign)   = `{= $` && client->_bind( mv_amount ) &&
-                      ` >= 0 ? 'Positive' : 'Negative' }`.
-    DATA(lv_vip_en) = `{= /vip/i.test($` && client->_bind( mv_search ) && `)}`.
+    DATA(concat)  = |\{= ${ client->_bind( first_name ) } + ' ' + ${ client->_bind( last_name ) }\}|.
+    DATA(max)     = |\{= Math.max(${ client->_bind( num_a ) }, ${ client->_bind( num_b ) })\}|.
+    DATA(sign)    = |\{= ${ client->_bind( amount ) } >= 0 ? 'Positive' : 'Negative' \}|.
+    DATA(vip_en)  = |\{= /vip/i.test(${ client->_bind( search ) })\}|.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
     DATA(root) = view->__( n = `View` ns = `mvc`
@@ -80,38 +79,38 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
 
     ct->_( n = `Title` a = `text` v = `String Concatenation` ).
     ct->_( n = `Label`  a = `text` v = `First Name` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_first_name ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( first_name ) ).
     ct->_( n = `Label`  a = `text` v = `Last Name` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_last_name ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( last_name ) ).
     ct->_( n = `Label`  a = `text` v = `Result` ).
-    ct->_( n = `Text`   a = `text` v = lv_concat ).
+    ct->_( n = `Text`   a = `text` v = concat ).
 
     ct->_( n = `Title` a = `text` v = `Arithmetic` ).
     ct->_( n = `Label`  a = `text` v = `Number A` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( mv_num_a ) ) ) ).
+                         ( n = `value` v = client->_bind_edit( num_a ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Number B` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( mv_num_b ) ) ) ).
+                         ( n = `value` v = client->_bind_edit( num_b ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Math.max(A, B)` ).
-    ct->_( n = `Text`   a = `text` v = lv_max ).
+    ct->_( n = `Text`   a = `text` v = max ).
 
     ct->_( n = `Title` a = `text` v = `Ternary Operator` ).
     ct->_( n = `Label`  a = `text` v = `Amount` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( mv_amount ) ) ) ).
+                         ( n = `value` v = client->_bind_edit( amount ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Sign` ).
-    ct->_( n = `Text`   a = `text` v = lv_sign ).
+    ct->_( n = `Text`   a = `text` v = sign ).
 
     ct->_( n = `Title` a = `text` v = `Regular Expression` ).
     ct->_( n = `Label`  a = `text` v = `Customer Name` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_search ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( search ) ).
     ct->_( n = `Label`  a = `text` v = `VIP Action` ).
     ct->_( n = `Button`
-            p = VALUE #( ( n = `enabled` v = lv_vip_en )
+            p = VALUE #( ( n = `enabled` v = vip_en )
                          ( n = `text`    v = `Grant VIP Access` )
                          ( n = `type`    v = `Emphasized` ) ) ).
 

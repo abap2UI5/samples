@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_357 DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_357 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -11,13 +11,14 @@ CLASS z2ui5_cl_demo_app_357 DEFINITION PUBLIC CREATE PUBLIC.
   PRIVATE SECTION.
     METHODS add_cell
       IMPORTING
-        io_row   TYPE REF TO z2ui5_cl_util_xml
-        iv_icon  TYPE string
-        iv_title TYPE string
-        iv_href  TYPE string
-        iv_descr TYPE string
-        iv_shade TYPE string.
+        row   TYPE REF TO z2ui5_cl_util_xml
+        icon  TYPE string
+        title TYPE string
+        href  TYPE string
+        descr TYPE string
+        shade TYPE string.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
@@ -29,6 +30,7 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 
   METHOD view_display.
 
@@ -66,16 +68,16 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
     DATA(bl)  = panel->__( n = `BlockLayout` ns = `l` ).
     DATA(row) = bl->__( n = `BlockLayoutRow` ns = `l` ).
-    add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://edit`         iv_title = `Input`   iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Input`   iv_descr = `User interaction` ).
-    add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://list`         iv_title = `Lists`   iv_href = `https://ui5.sap.com/sdk/#/controls/filter/List`    iv_descr = `Various list structures` ).
-    add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://table-view`   iv_title = `Tables`  iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Table`   iv_descr = `Simple or more powerful tables` ).
-    add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://popup-window` iv_title = `Pop-Ups` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Popup`   iv_descr = `Dialogs and popovers` ).
+    add_cell( row = row shade = `ShadeA` icon = `sap-icon://edit`         title = `Input`   href = `https://ui5.sap.com/sdk/#/controls/filter/Input`   descr = `User interaction` ).
+    add_cell( row = row shade = `ShadeB` icon = `sap-icon://list`         title = `Lists`   href = `https://ui5.sap.com/sdk/#/controls/filter/List`    descr = `Various list structures` ).
+    add_cell( row = row shade = `ShadeC` icon = `sap-icon://table-view`   title = `Tables`  href = `https://ui5.sap.com/sdk/#/controls/filter/Table`   descr = `Simple or more powerful tables` ).
+    add_cell( row = row shade = `ShadeA` icon = `sap-icon://popup-window` title = `Pop-Ups` href = `https://ui5.sap.com/sdk/#/controls/filter/Popup`   descr = `Dialogs and popovers` ).
 
     row = bl->__( n = `BlockLayoutRow` ns = `l` ).
-    add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://grid`          iv_title = `Tiles`    iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Tile`    iv_descr = `Tiles for e.g. texts, images or charts` ).
-    add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://message-popup` iv_title = `Messages` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Message` iv_descr = `User notification` ).
-    add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://header`        iv_title = `Bars`     iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Bar`     iv_descr = `Toolbars and headers` ).
-    add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://tree`          iv_title = `Trees`    iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Tree`    iv_descr = `Hierarchical data representation` ).
+    add_cell( row = row shade = `ShadeB` icon = `sap-icon://grid`          title = `Tiles`    href = `https://ui5.sap.com/sdk/#/controls/filter/Tile`    descr = `Tiles for e.g. texts, images or charts` ).
+    add_cell( row = row shade = `ShadeA` icon = `sap-icon://message-popup` title = `Messages` href = `https://ui5.sap.com/sdk/#/controls/filter/Message` descr = `User notification` ).
+    add_cell( row = row shade = `ShadeB` icon = `sap-icon://header`        title = `Bars`     href = `https://ui5.sap.com/sdk/#/controls/filter/Bar`     descr = `Toolbars and headers` ).
+    add_cell( row = row shade = `ShadeC` icon = `sap-icon://tree`          title = `Trees`    href = `https://ui5.sap.com/sdk/#/controls/filter/Tree`    descr = `Hierarchical data representation` ).
 
     panel = page->__( n = `Panel`
         p = VALUE #( ( n = `accessibleRole`   v = `Region` )
@@ -91,30 +93,31 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
     bl  = panel->__( n = `BlockLayout` ns = `l` ).
     row = bl->__( n = `BlockLayoutRow` ns = `l` ).
-    add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://write-new`          iv_title = `Object Page`            iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Object%20Page`             iv_descr = `Displaying, creating, or editing objects` ).
-    add_cell( io_row = row iv_shade = `ShadeB` iv_icon = `sap-icon://chart-table-view`   iv_title = `Dynamic Page`           iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Dynamic%20Page`            iv_descr = `Page with title, header, and content area` ).
-    add_cell( io_row = row iv_shade = `ShadeC` iv_icon = `sap-icon://screen-split-three` iv_title = `Flexible Column Layout` iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Flexible%20Column%20Layout` iv_descr = `Page with up to 3 columns` ).
-    add_cell( io_row = row iv_shade = `ShadeA` iv_icon = `sap-icon://screen-split-one`   iv_title = `Split App`              iv_href = `https://ui5.sap.com/sdk/#/controls/filter/Split%20App`               iv_descr = `Two-column layout` ).
+    add_cell( row = row shade = `ShadeA` icon = `sap-icon://write-new`          title = `Object Page`            href = `https://ui5.sap.com/sdk/#/controls/filter/Object%20Page`             descr = `Displaying, creating, or editing objects` ).
+    add_cell( row = row shade = `ShadeB` icon = `sap-icon://chart-table-view`   title = `Dynamic Page`           href = `https://ui5.sap.com/sdk/#/controls/filter/Dynamic%20Page`            descr = `Page with title, header, and content area` ).
+    add_cell( row = row shade = `ShadeC` icon = `sap-icon://screen-split-three` title = `Flexible Column Layout` href = `https://ui5.sap.com/sdk/#/controls/filter/Flexible%20Column%20Layout` descr = `Page with up to 3 columns` ).
+    add_cell( row = row shade = `ShadeA` icon = `sap-icon://screen-split-one`   title = `Split App`              href = `https://ui5.sap.com/sdk/#/controls/filter/Split%20App`               descr = `Two-column layout` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
+
   METHOD add_cell.
 
-    DATA(cell) = io_row->__( n = `BlockLayoutCell` ns = `l`
+    DATA(cell) = row->__( n = `BlockLayoutCell` ns = `l`
         p = VALUE #( ( n = `backgroundColorSet`   v = `ColorSet10` )
-                     ( n = `backgroundColorShade` v = iv_shade ) ) ).
+                     ( n = `backgroundColorShade` v = shade ) ) ).
     DATA(vl) = cell->__( n = `VerticalLayout` ns = `l` ).
     vl->_( n = `Icon` ns = `core`
             p = VALUE #( ( n = `class` v = `sapUiTinyMarginBottom` )
                          ( n = `size`  v = `2rem` )
-                         ( n = `src`   v = iv_icon ) )
+                         ( n = `src`   v = icon ) )
       )->_( n = `Link`
-             p = VALUE #( ( n = `href`   v = iv_href )
+             p = VALUE #( ( n = `href`   v = href )
                           ( n = `target` v = `_blank` )
-                          ( n = `text`   v = iv_title ) )
-      )->_( n = `Text` a = `text` v = iv_descr ).
+                          ( n = `text`   v = title ) )
+      )->_( n = `Text` a = `text` v = descr ).
 
   ENDMETHOD.
 

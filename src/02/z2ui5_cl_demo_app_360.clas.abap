@@ -1,13 +1,13 @@
-CLASS z2ui5_cl_demo_app_360 DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_360 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_price      TYPE string.
-    DATA mv_currency   TYPE string.
-    DATA mv_big_number TYPE string.
-    DATA mv_integer    TYPE string.
-    DATA mv_date       TYPE string.
+    DATA price      TYPE string.
+    DATA currency   TYPE string.
+    DATA big_number TYPE string.
+    DATA integer    TYPE string.
+    DATA date       TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -17,6 +17,7 @@ CLASS z2ui5_cl_demo_app_360 DEFINITION PUBLIC CREATE PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
+
 
 CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
 
@@ -29,35 +30,25 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
-    mv_price      = `1234.56`.
-    mv_currency   = `EUR`.
-    mv_big_number = `9876543.21`.
-    mv_integer    = `42`.
-    mv_date       = `2025-12-31`.
-
+    price      = `1234.56`.
+    currency   = `EUR`.
+    big_number = `9876543.21`.
+    integer    = `42`.
+    date       = `2025-12-31`.
     view_display( ).
 
   ENDMETHOD.
 
+
   METHOD view_display.
 
-    DATA(lv_float_bind) = `{ path: "` &&
-        client->_bind( val = mv_big_number path = abap_true ) &&
-        `", type: "sap.ui.model.type.Float",` &&
-        ` formatOptions: { decimals: 2, groupingEnabled: true } }`.
-    DATA(lv_int_bind)   = `{ path: "` &&
-        client->_bind( val = mv_integer path = abap_true ) &&
-        `", type: "sap.ui.model.type.Integer" }`.
-    DATA(lv_curr_bind)  = `{ parts: [{ path: "` &&
-        client->_bind( val = mv_price    path = abap_true ) && `" },` &&
-        `{ path: "` && client->_bind( val = mv_currency path = abap_true ) &&
-        `" }], type: "sap.ui.model.type.Currency" }`.
-    DATA(lv_date_bind)  = `{ path: "` &&
-        client->_bind( val = mv_date path = abap_true ) &&
-        `", type: "sap.ui.model.type.Date",` &&
-        ` formatOptions: { source: { pattern: "yyyy-MM-dd" }, style: "long" } }`.
+    DATA(float_bind) = |\{ path: "{ client->_bind( val = big_number path = abap_true ) }", type: "sap.ui.model.type.Float", formatOptions: \{ decimals: 2, groupingEnabled: true \} \}|.
+    DATA(int_bind)   = |\{ path: "{ client->_bind( val = integer path = abap_true ) }", type: "sap.ui.model.type.Integer" \}|.
+    DATA(curr_bind)  = |\{ parts: [\{ path: "{ client->_bind( val = price path = abap_true ) }" \},\{ path: "{ client->_bind( val = currency path = abap_true ) }" \}], type: "sap.ui.model.type.Currency" \}|.
+    DATA(date_bind)  = |\{ path: "{ client->_bind( val = date path = abap_true ) }", type: "sap.ui.model.type.Date", formatOptions: \{ source: \{ pattern: "yyyy-MM-dd" \}, style: "long" \} \}|.
 
     DATA(view) = z2ui5_cl_util_xml=>factory( ).
     DATA(root) = view->__( n = `View` ns = `mvc`
@@ -86,35 +77,35 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
 
     ct->_( n = `Title` a = `text` v = `Number` ).
     ct->_( n = `Label`  a = `text` v = `Raw value` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_big_number ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( big_number ) ).
     ct->_( n = `Label`  a = `text` v = `Float (grouped, 2 decimals)` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = lv_float_bind ) ) ).
+                         ( n = `value`   v = float_bind ) ) ).
     ct->_( n = `Label`  a = `text` v = `Raw integer` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_integer ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( integer ) ).
     ct->_( n = `Label`  a = `text` v = `Integer (formatted)` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = lv_int_bind ) ) ).
+                         ( n = `value`   v = int_bind ) ) ).
 
     ct->_( n = `Title` a = `text` v = `Currency` ).
     ct->_( n = `Label`  a = `text` v = `Price` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_price ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( price ) ).
     ct->_( n = `Label`  a = `text` v = `Currency code` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_currency ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( currency ) ).
     ct->_( n = `Label`  a = `text` v = `Formatted (Currency type)` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = lv_curr_bind ) ) ).
+                         ( n = `value`   v = curr_bind ) ) ).
 
     ct->_( n = `Title` a = `text` v = `Date` ).
     ct->_( n = `Label`  a = `text` v = `Raw date (yyyy-MM-dd)` ).
-    ct->_( n = `Input`  a = `value` v = client->_bind_edit( mv_date ) ).
+    ct->_( n = `Input`  a = `value` v = client->_bind_edit( date ) ).
     ct->_( n = `Label`  a = `text` v = `Formatted (long style)` ).
     ct->_( n = `Input`
             p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = lv_date_bind ) ) ).
+                         ( n = `value`   v = date_bind ) ) ).
 
     client->view_display( view->stringify( ) ).
 
