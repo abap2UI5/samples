@@ -41,6 +41,7 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Use `DEFINITION PUBLIC.` — never `DEFINITION PUBLIC CREATE PUBLIC.` (`CREATE PUBLIC` is the default and adds unnecessary overhead).
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
+- Keep `PRIVATE SECTION.` always empty — declare everything at `PROTECTED SECTION.` level at most.
 - In every section (`PUBLIC SECTION.`, `PROTECTED SECTION.`), always follow this declaration order: `TYPES` first, then `DATA`, then `METHODS`.
 - **Blank lines — class definition** (`EMPTY_LINES_IN_CLASS_DEFINITION`):
   - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`) — unless the preceding section is empty.
@@ -58,6 +59,17 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
   - Max 1 consecutive blank line inside a method body.
   - Always add 1 blank line **before** an `IF` block — **except** when the method is a pure dispatcher (its only purpose is to jump to other methods, with no own logic before the `IF`). In that case, omit the blank line between the opening assignment and the `IF`.
   - Always add 1 blank line **before** `ELSEIF` and `ELSE`.
+  - In setup methods (`on_init` and similar), add 1 blank line between the last data assignment and the first non-assignment statement (e.g. before `view_display( )`):
+    ```abap
+    METHOD on_init.
+
+      price    = `1234`.
+      currency = `EUR`.
+
+      view_display( ).
+
+    ENDMETHOD.
+    ```
   - If a branch (`IF`, `ELSEIF`, `ELSE`) contains **more than one statement**, add 1 blank line directly after the condition line as well:
     ```abap
     me->client = client.
@@ -263,6 +275,63 @@ Key rules for `z2ui5_cl_util_xml`:
 - Namespace declarations go on the root `mvc:View` element as regular attributes (`xmlns:form`, etc.)
 - Only declare namespaces that are actually used in the view
 - `stringify()` on the factory root produces the complete XML string
+
+#### Method chaining
+
+Each call in a chain must start on its own line — never place two `->_()` / `->__()` calls on the same line:
+
+```abap
+" Wrong
+DATA(page) = root->__( `Shell` )->__( n = `Page`
+
+" Correct
+DATA(page) = root->__( `Shell`
+   )->__( n = `Page`
+```
+
+Chain continuations (`)->`) are indented 3 spaces relative to the statement's base indentation.
+
+#### Parameter alignment
+
+When `p` appears on a continuation line, align it directly under `n` — one space after the opening `(`:
+
+```abap
+" Wrong — p is one space too far right
+)->_( n = `Input`
+              p = VALUE #( ... ) ).
+
+" Correct — p directly under n
+)->_( n = `Input`
+             p = VALUE #( ... ) ).
+```
+
+Continuation lines inside `VALUE #( )` align with the first tuple `(`:
+
+```abap
+)->_( n = `Input`
+      p = VALUE #( ( n = `type`  v = `Number` )
+                   ( n = `value` v = client->_bind_edit( qty ) ) ) ).
+```
+
+#### VALUE #( ) formatting
+
+In `VALUE #( )` constructor expressions with named fields, use **either** entirely inline (all fields on one line) **or** each field on its own line — never mix both styles in the same expression:
+
+```abap
+" Wrong — mixed
+t_products = VALUE #(
+  ( name = `Notebook Basic 15`  product_id = `HT-1000` supplier_name = `Very Best Screens`
+    dimensions = `30 x 18 x 3 cm` weight_measure = `4.2` weight_unit = `KG` ) ).
+
+" Correct — one field per line, = signs aligned
+t_products = VALUE #(
+  ( name           = `Notebook Basic 15`
+    product_id     = `HT-1000`
+    supplier_name  = `Very Best Screens`
+    dimensions     = `30 x 18 x 3 cm`
+    weight_measure = `4.2`
+    weight_unit    = `KG` ) ).
+```
 
 ## App Structure
 
