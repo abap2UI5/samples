@@ -124,6 +124,40 @@ Views are XML strings passed to `client->view_display()`. There are two ways to 
 ### 1. `z2ui5_cl_xml_view` — typed fluent API
 Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `input`, `button`, etc.). Use this for standard layouts.
 
+#### View structure and indentation
+
+Always build the view in `view_display` and call `client->view_display( view->stringify( ) )` as a **standalone statement at the end** — never nested inside the chain.
+
+Indent the fluent chain to reflect the XML hierarchy:
+- Each method that **navigates into a child element** (returns a child node) is indented **4 spaces deeper** than its parent call.
+- Methods that **add a sibling** within the same container (and return the container) stay at the **same indentation level**.
+
+```abap
+METHOD view_display.
+
+  DATA(view) = z2ui5_cl_xml_view=>factory( ).
+  view->shell(
+      )->page(
+          title          = `My App`
+          navbuttonpress = client->_event_nav_app_leave( )
+          shownavbutton  = client->check_app_prev_stack( )
+          )->simple_form( title = `Form Title` editable = abap_true
+              )->content( `form`
+              )->label( `Quantity`
+              )->input( client->_bind_edit( quantity )
+              )->label( `Product`
+              )->input( value = product enabled = abap_false
+              )->button(
+                  text  = `Post`
+                  press = client->_event( `POST` ) ).
+  client->view_display( view->stringify( ) ).
+
+ENDMETHOD.
+```
+
+The hierarchy above is: `shell` → `page` → `simple_form` → `content` → (leaf elements).
+`label`, `input`, `button` are siblings inside `content`, so they stay at the same indent level as `)->content(`.
+
 ### 2. `z2ui5_cl_util_xml` — generic XML builder
 Builds any XML structure directly from element names, namespaces and attributes. **Look up the control in the [UI5 API Reference](https://ui5.sap.com/#/api) and translate 1:1 to ABAP** — no wrapper, no abstraction layer.
 
