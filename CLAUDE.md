@@ -17,6 +17,16 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
 
+### abapGit file consistency
+
+All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types) must conform to the abapGit file format:
+- **Encoding**: UTF-8 (with optional BOM: `xEF BB BF`)
+- **Line endings**: LF (`x0A`) only — never CRLF
+- **Final newline**: every file must end with a single newline character after the last line
+- **Indentation**: 2 spaces — never tabs
+
+**Always verify consistency for all file types before committing**, not just `.abap` files. abaplint covers `.abap` files; for `.xml` and other files, check manually or via editor tooling that the above rules are met.
+
 ### Code Conventions
 
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
