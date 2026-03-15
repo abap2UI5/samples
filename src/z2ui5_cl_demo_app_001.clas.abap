@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -29,6 +30,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
     product  = `products`.
@@ -36,6 +38,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     view_display( ).
 
   ENDMETHOD.
+
 
   METHOD on_event.
 
@@ -45,6 +48,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 
   METHOD view_display.
 

@@ -32,8 +32,8 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
   - Max 1 consecutive blank line inside the definition block.
   - Add one blank line between groups of different declaration types (e.g. between `INTERFACES` and `DATA`, or `DATA` and `METHODS`).
 - **Blank lines — outside methods** (`EMPTY_LINES_OUTSIDE_METHODS`):
-  - Exactly 1 blank line between `ENDCLASS.` and the next `CLASS … IMPLEMENTATION.` (i.e. between the definition and the implementation block).
-  - Exactly 1 blank line between two `METHOD … ENDMETHOD.` blocks.
+  - Exactly 2 blank lines between `ENDCLASS.` and the next `CLASS … IMPLEMENTATION.` (i.e. between the definition and the implementation block).
+  - Exactly 2 blank lines between two `METHOD … ENDMETHOD.` blocks.
   - Exactly 2 blank lines between two top-level class blocks.
 - **Blank lines — inside methods** (`EMPTY_LINES_WITHIN_METHODS`):
   - Always add exactly 1 blank line at the very start of a method body (after `METHOD`).
@@ -91,12 +91,14 @@ Always use `client->_event_nav_app_leave()` to bind the back button event direct
 
 ```abap
 METHOD view_display.
+
   DATA(view) = z2ui5_cl_xml_view=>factory( ).
   DATA(page) = view->page( title = `My App`
                             shownavbutton = client->check_app_prev_stack( )
                             navbuttonpress = client->_event_nav_app_leave( ) ).
   " ...
   client->view_display( view->stringify( ) ).
+
 ENDMETHOD.
 ```
 
@@ -104,12 +106,14 @@ Only use the manual pattern (handling `BACK` in `on_event`) when you need to do 
 
 ```abap
 METHOD on_event.
+
   CASE client->get( )-event.
     WHEN `BACK`.
       " interact with previous app instance first
       CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( ms_result ).
       client->nav_app_leave( ).
   ENDCASE.
+
 ENDMETHOD.
 ```
 
@@ -183,8 +187,11 @@ CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC CREATE PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
+
   METHOD z2ui5_if_app~main.
+
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
@@ -193,36 +200,66 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
   ENDMETHOD.
+
+
   METHOD on_init.
+
     data_read( ).
     view_display( ).
+
   ENDMETHOD.
+
+
   METHOD on_navigation.
+
     data_read( ).
     client->view_model_update( ).
+
   ENDMETHOD.
+
+
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN `SAVE`.
         on_event_save( ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
+
   ENDMETHOD.
+
+
   METHOD on_event_save.
+
     data_update( ).
+
   ENDMETHOD.
+
+
   METHOD view_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     " ...
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
+
+
   METHOD data_read.
+
     " SELECT ...
+
   ENDMETHOD.
+
+
   METHOD data_update.
+
     " INSERT / UPDATE / DELETE ...
+
   ENDMETHOD.
+
 ENDCLASS.
 ```
