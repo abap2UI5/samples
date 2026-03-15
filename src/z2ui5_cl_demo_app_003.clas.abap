@@ -13,8 +13,7 @@ CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
         selected TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    TYPES ty_t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA t_tab TYPE ty_t_tab.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
