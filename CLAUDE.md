@@ -40,6 +40,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
   - Always add exactly 1 blank line at the very end of a method body (before `ENDMETHOD`).
   - Max 1 consecutive blank line inside a method body.
   - Always add 1 blank line **before** an `IF` block.
+  - Always add 1 blank line **before** `ELSEIF` and `ELSE`.
   - If a branch (`IF`, `ELSEIF`, `ELSE`) contains **more than one statement**, add 1 blank line directly after the condition line as well:
     ```abap
     me->client = client.
@@ -49,6 +50,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
       product  = `products`.
       quantity = `500`.
       view_display( ).
+
     ELSEIF client->check_on_event( `SAVE` ).
       data_update( ).
     ENDIF.
