@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_008 DEFINITION PUBLIC.
     DATA check_strip_active TYPE abap_bool.
     DATA strip_type         TYPE string.
 
-    METHODS on_init.
     METHODS on_event.
     METHODS view_display.
 
@@ -22,17 +21,10 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    view_display( ).
 
   ENDMETHOD.
 
