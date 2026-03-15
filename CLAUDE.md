@@ -32,6 +32,7 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
+- Do not use Hungarian notation — no type prefixes on variable or attribute names (e.g. `product` not `lv_product`, `client` not `mo_client`).
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Use `DEFINITION PUBLIC.` — never `DEFINITION PUBLIC CREATE PUBLIC.` (`CREATE PUBLIC` is the default and adds unnecessary overhead).
