@@ -39,7 +39,7 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
   - Always add exactly 1 blank line at the very start of a method body (after `METHOD`).
   - Always add exactly 1 blank line at the very end of a method body (before `ENDMETHOD`).
   - Max 1 consecutive blank line inside a method body.
-  - Always add 1 blank line **before** an `IF` block.
+  - Always add 1 blank line **before** an `IF` block — **except** when the method is a pure dispatcher (its only purpose is to jump to other methods, with no own logic before the `IF`). In that case, omit the blank line between the opening assignment and the `IF`.
   - Always add 1 blank line **before** `ELSEIF` and `ELSE`.
   - If a branch (`IF`, `ELSEIF`, `ELSE`) contains **more than one statement**, add 1 blank line directly after the condition line as well:
     ```abap
