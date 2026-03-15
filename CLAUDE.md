@@ -142,9 +142,11 @@ Always use `client->_event_nav_app_leave()` to bind the back button event direct
 METHOD view_display.
 
   DATA(view) = z2ui5_cl_xml_view=>factory( ).
-  DATA(page) = view->page( title = `My App`
-                            shownavbutton = client->check_app_prev_stack( )
-                            navbuttonpress = client->_event_nav_app_leave( ) ).
+  DATA(page) = view->shell(
+      )->page(
+          title          = `My App`
+          shownavbutton  = client->check_app_prev_stack( )
+          navbuttonpress = client->_event_nav_app_leave( ) ).
   " ...
   client->view_display( view->stringify( ) ).
 
@@ -287,6 +289,7 @@ CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
     " bound data (DATA attributes for _bind/_bind_edit)...
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS on_init.        " first call: load data, display view
     METHODS on_event.       " user triggered an event
     METHODS on_navigation.  " returned from sub-app or popup
