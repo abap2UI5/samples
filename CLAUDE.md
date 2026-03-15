@@ -41,7 +41,7 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Use `DEFINITION PUBLIC.` — never `DEFINITION PUBLIC CREATE PUBLIC.` (`CREATE PUBLIC` is the default and adds unnecessary overhead).
 - Always include `PROTECTED SECTION.` and `PRIVATE SECTION.` in the class definition, even if empty.
-- In `PROTECTED SECTION.`, always declare `DATA client TYPE REF TO z2ui5_if_client.` first, before any `METHODS` declarations.
+- In every section (`PUBLIC SECTION.`, `PROTECTED SECTION.`), always follow this declaration order: `TYPES` first, then `DATA`, then `METHODS`.
 - **Blank lines — class definition** (`EMPTY_LINES_IN_CLASS_DEFINITION`):
   - Add one blank line above each section keyword (`PUBLIC SECTION.`, `PROTECTED SECTION.`, `PRIVATE SECTION.`) — unless the preceding section is empty.
   - No blank line directly below a section keyword.
