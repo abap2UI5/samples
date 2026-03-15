@@ -65,9 +65,9 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
 
     page->__( `headerContent`
        )->_( n = `Link`
-              p = VALUE #( ( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` )
-                           ( n = `target` v = `_blank` )
-                           ( n = `text`   v = `UI5 Demo Kit` ) ) ).
+             p = VALUE #( ( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` )
+                          ( n = `target` v = `_blank` )
+                          ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
     DATA(list) = page->__( n = `List` a = `headerText` v = `Input` ).
 
@@ -79,24 +79,24 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
 
     list->__( n = `InputListItem` a = `label` v = `High Performance`
        )->_( n = `RadioButton`
-              p = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                           ( n = `selected`  v = client->_bind_edit( high_perf ) ) ) ).
+             p = VALUE #( ( n = `groupName` v = `GroupPerf` )
+                          ( n = `selected`  v = client->_bind_edit( high_perf ) ) ) ).
 
     list->__( n = `InputListItem` a = `label` v = `Battery Saving`
        )->_( n = `RadioButton`
-              p = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                           ( n = `selected`  v = client->_bind_edit( battery ) ) ) ).
+             p = VALUE #( ( n = `groupName` v = `GroupPerf` )
+                          ( n = `selected`  v = client->_bind_edit( battery ) ) ) ).
 
     list->__( n = `InputListItem` a = `label` v = `Price (EUR)`
        )->_( n = `Input`
-              p = VALUE #( ( n = `placeholder` v = `Price` )
-                           ( n = `type`        v = `Number` )
-                           ( n = `value`       v = client->_bind_edit( price ) ) ) ).
+             p = VALUE #( ( n = `placeholder` v = `Price` )
+                          ( n = `type`        v = `Number` )
+                          ( n = `value`       v = client->_bind_edit( price ) ) ) ).
 
     list->__( n = `InputListItem` a = `label` v = `Address`
        )->_( n = `Input`
-              p = VALUE #( ( n = `placeholder` v = `Address` )
-                           ( n = `value`       v = client->_bind_edit( address ) ) ) ).
+             p = VALUE #( ( n = `placeholder` v = `Address` )
+                          ( n = `value`       v = client->_bind_edit( address ) ) ) ).
 
     list->__( n = `InputListItem` a = `label` v = `Country`
        )->__( n = `Select` a = `selectedKey` v = client->_bind_edit( country )
@@ -109,10 +109,10 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
     list->__( n = `InputListItem` a = `label` v = `Volume`
        )->__( n = `HBox` a = `justifyContent` v = `End`
            )->_( n = `Slider`
-                  p = VALUE #( ( n = `max`   v = `10` )
-                               ( n = `min`   v = `0` )
-                               ( n = `value` v = client->_bind_edit( volume ) )
-                               ( n = `width` v = `200px` ) ) ).
+                 p = VALUE #( ( n = `max`   v = `10` )
+                              ( n = `min`   v = `0` )
+                              ( n = `value` v = client->_bind_edit( volume ) )
+                              ( n = `width` v = `200px` ) ) ).
 
     client->view_display( view->stringify( ) ).
 

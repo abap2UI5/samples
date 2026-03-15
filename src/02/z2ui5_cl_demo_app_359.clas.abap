@@ -67,9 +67,9 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
 
     page->__( `headerContent`
        )->_( n = `Link`
-              p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0` )
-                           ( n = `target` v = `_blank` )
-                           ( n = `text`   v = `UI5 Docs` ) ) ).
+             p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0` )
+                          ( n = `target` v = `_blank` )
+                          ( n = `text`   v = `UI5 Docs` ) ) ).
 
     DATA(form) = page->__( n = `SimpleForm` ns = `form`
         p = VALUE #( ( n = `editable` v = abap_true )
@@ -88,20 +88,20 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
     ct->_( n = `Title` a = `text` v = `Arithmetic` ).
     ct->_( n = `Label`  a = `text` v = `Number A` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( num_a ) ) ) ).
+           p = VALUE #( ( n = `type`  v = `Number` )
+                        ( n = `value` v = client->_bind_edit( num_a ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Number B` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( num_b ) ) ) ).
+           p = VALUE #( ( n = `type`  v = `Number` )
+                        ( n = `value` v = client->_bind_edit( num_b ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Math.max(A, B)` ).
     ct->_( n = `Text`   a = `text` v = max ).
 
     ct->_( n = `Title` a = `text` v = `Ternary Operator` ).
     ct->_( n = `Label`  a = `text` v = `Amount` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `type`  v = `Number` )
-                         ( n = `value` v = client->_bind_edit( amount ) ) ) ).
+           p = VALUE #( ( n = `type`  v = `Number` )
+                        ( n = `value` v = client->_bind_edit( amount ) ) ) ).
     ct->_( n = `Label`  a = `text` v = `Sign` ).
     ct->_( n = `Text`   a = `text` v = sign ).
 
@@ -110,9 +110,9 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
     ct->_( n = `Input`  a = `value` v = client->_bind_edit( search ) ).
     ct->_( n = `Label`  a = `text` v = `VIP Action` ).
     ct->_( n = `Button`
-            p = VALUE #( ( n = `enabled` v = vip_en )
-                         ( n = `text`    v = `Grant VIP Access` )
-                         ( n = `type`    v = `Emphasized` ) ) ).
+           p = VALUE #( ( n = `enabled` v = vip_en )
+                        ( n = `text`    v = `Grant VIP Access` )
+                        ( n = `type`    v = `Emphasized` ) ) ).
 
     client->view_display( view->stringify( ) ).
 

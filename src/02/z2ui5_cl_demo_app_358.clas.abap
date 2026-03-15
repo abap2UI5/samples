@@ -79,9 +79,9 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
 
     page->__( `headerContent`
        )->_( n = `Link`
-              p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/entity/sap.m.Table/sample/sap.m.sample.Table` )
-                           ( n = `target` v = `_blank` )
-                           ( n = `text`   v = `UI5 Demo Kit` ) ) ).
+             p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/entity/sap.m.Table/sample/sap.m.sample.Table` )
+                          ( n = `target` v = `_blank` )
+                          ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
     DATA(tab) = page->__( n = `Table`
         p = VALUE #( ( n = `inset` v = abap_false )
@@ -89,26 +89,26 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
 
     tab->__( `headerToolbar` )->__( `OverflowToolbar`
        )->_( n = `Title`
-              p = VALUE #( ( n = `level` v = `H2` )
-                           ( n = `text`  v = `Products` ) )
+             p = VALUE #( ( n = `level` v = `H2` )
+                          ( n = `text`  v = `Products` ) )
        )->_( `ToolbarSpacer` ).
 
     DATA(cols) = tab->__( `columns` ).
     cols->__( n = `Column` a = `width` v = `12em`
        )->_( n = `Text` a = `text` v = `Product` ).
     cols->__( n = `Column`
-             p = VALUE #( ( n = `demandPopin`    v = abap_true )
-                          ( n = `minScreenWidth` v = `Tablet` ) )
+              p = VALUE #( ( n = `demandPopin`    v = abap_true )
+                           ( n = `minScreenWidth` v = `Tablet` ) )
        )->_( n = `Text` a = `text` v = `Supplier` ).
     cols->__( n = `Column`
-             p = VALUE #( ( n = `demandPopin`    v = abap_true )
-                          ( n = `hAlign`         v = `End` )
-                          ( n = `minScreenWidth` v = `Desktop` ) )
+              p = VALUE #( ( n = `demandPopin`    v = abap_true )
+                           ( n = `hAlign`         v = `End` )
+                           ( n = `minScreenWidth` v = `Desktop` ) )
        )->_( n = `Text` a = `text` v = `Dimensions` ).
     cols->__( n = `Column`
-             p = VALUE #( ( n = `demandPopin`    v = abap_true )
-                          ( n = `hAlign`         v = `Center` )
-                          ( n = `minScreenWidth` v = `Desktop` ) )
+              p = VALUE #( ( n = `demandPopin`    v = abap_true )
+                           ( n = `hAlign`         v = `Center` )
+                           ( n = `minScreenWidth` v = `Desktop` ) )
        )->_( n = `Text` a = `text` v = `Weight` ).
     cols->__( n = `Column` a = `hAlign` v = `End`
        )->_( n = `Text` a = `text` v = `Price` ).
@@ -117,17 +117,17 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
         )->__( n = `ColumnListItem` a = `vAlign` v = `Middle`
         )->__( `cells` ).
     cells->_( n = `ObjectIdentifier`
-               p = VALUE #( ( n = `text`  v = `{PRODUCT_ID}` )
-                            ( n = `title` v = `{NAME}` ) ) ).
+              p = VALUE #( ( n = `text`  v = `{PRODUCT_ID}` )
+                           ( n = `title` v = `{NAME}` ) ) ).
     cells->_( n = `Text` a = `text` v = `{SUPPLIER_NAME}` ).
     cells->_( n = `Text` a = `text` v = `{DIMENSIONS}` ).
     cells->_( n = `ObjectNumber`
-               p = VALUE #( ( n = `number` v = `{WEIGHT_MEASURE}` )
-                            ( n = `state`  v = `{WEIGHT_STATE}` )
-                            ( n = `unit`   v = `{WEIGHT_UNIT}` ) ) ).
+              p = VALUE #( ( n = `number` v = `{WEIGHT_MEASURE}` )
+                           ( n = `state`  v = `{WEIGHT_STATE}` )
+                           ( n = `unit`   v = `{WEIGHT_UNIT}` ) ) ).
     cells->_( n = `ObjectNumber`
-               p = VALUE #( ( n = `number` v = `{PRICE}` )
-                            ( n = `unit`   v = `{CURRENCY_CODE}` ) ) ).
+              p = VALUE #( ( n = `number` v = `{PRICE}` )
+                           ( n = `unit`   v = `{CURRENCY_CODE}` ) ) ).
 
     client->view_display( view->stringify( ) ).
 

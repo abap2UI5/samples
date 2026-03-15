@@ -65,9 +65,9 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
 
     page->__( `headerContent`
        )->_( n = `Link`
-              p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/topic/07e4b920f5734fd78fdaa236f26236d8` )
-                           ( n = `target` v = `_blank` )
-                           ( n = `text`   v = `UI5 Docs` ) ) ).
+             p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/topic/07e4b920f5734fd78fdaa236f26236d8` )
+                          ( n = `target` v = `_blank` )
+                          ( n = `text`   v = `UI5 Docs` ) ) ).
 
     DATA(form) = page->__( n = `SimpleForm` ns = `form`
         p = VALUE #( ( n = `editable` v = abap_true )
@@ -80,14 +80,14 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
     ct->_( n = `Input`  a = `value` v = client->_bind_edit( big_number ) ).
     ct->_( n = `Label`  a = `text` v = `Float (grouped, 2 decimals)` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = float_bind ) ) ).
+           p = VALUE #( ( n = `enabled` v = abap_false )
+                        ( n = `value`   v = float_bind ) ) ).
     ct->_( n = `Label`  a = `text` v = `Raw integer` ).
     ct->_( n = `Input`  a = `value` v = client->_bind_edit( integer ) ).
     ct->_( n = `Label`  a = `text` v = `Integer (formatted)` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = int_bind ) ) ).
+           p = VALUE #( ( n = `enabled` v = abap_false )
+                        ( n = `value`   v = int_bind ) ) ).
 
     ct->_( n = `Title` a = `text` v = `Currency` ).
     ct->_( n = `Label`  a = `text` v = `Price` ).
@@ -96,16 +96,16 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
     ct->_( n = `Input`  a = `value` v = client->_bind_edit( currency ) ).
     ct->_( n = `Label`  a = `text` v = `Formatted (Currency type)` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = curr_bind ) ) ).
+           p = VALUE #( ( n = `enabled` v = abap_false )
+                        ( n = `value`   v = curr_bind ) ) ).
 
     ct->_( n = `Title` a = `text` v = `Date` ).
     ct->_( n = `Label`  a = `text` v = `Raw date (yyyy-MM-dd)` ).
     ct->_( n = `Input`  a = `value` v = client->_bind_edit( date ) ).
     ct->_( n = `Label`  a = `text` v = `Formatted (long style)` ).
     ct->_( n = `Input`
-            p = VALUE #( ( n = `enabled` v = abap_false )
-                         ( n = `value`   v = date_bind ) ) ).
+           p = VALUE #( ( n = `enabled` v = abap_false )
+                        ( n = `value`   v = date_bind ) ) ).
 
     client->view_display( view->stringify( ) ).
 

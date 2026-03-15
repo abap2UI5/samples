@@ -50,9 +50,9 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
     page->__( `headerContent`
        )->_( n = `Link`
-              p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/controls` )
-                           ( n = `target` v = `_blank` )
-                           ( n = `text`   v = `UI5 Demo Kit` ) ) ).
+             p = VALUE #( ( n = `href`   v = `https://ui5.sap.com/sdk/#/controls` )
+                          ( n = `target` v = `_blank` )
+                          ( n = `text`   v = `UI5 Demo Kit` ) ) ).
 
     DATA(panel) = page->__( n = `Panel`
         p = VALUE #( ( n = `accessibleRole`   v = `Region` )
@@ -61,10 +61,10 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
     panel->__( `headerToolbar` )->__( `Toolbar`
        )->_( n = `Title`
-              p = VALUE #( ( n = `level`      v = `H1` )
-                           ( n = `text`       v = `Featured Controls` )
-                           ( n = `titleStyle` v = `H1` )
-                           ( n = `width`      v = `100%` ) ) ).
+             p = VALUE #( ( n = `level`      v = `H1` )
+                          ( n = `text`       v = `Featured Controls` )
+                          ( n = `titleStyle` v = `H1` )
+                          ( n = `width`      v = `100%` ) ) ).
 
     DATA(bl)  = panel->__( n = `BlockLayout` ns = `l` ).
     DATA(row) = bl->__( n = `BlockLayoutRow` ns = `l` ).
@@ -86,10 +86,10 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
 
     panel->__( `headerToolbar` )->__( `Toolbar`
        )->_( n = `Title`
-              p = VALUE #( ( n = `level`      v = `H1` )
-                           ( n = `text`       v = `Layout & Pages` )
-                           ( n = `titleStyle` v = `H1` )
-                           ( n = `width`      v = `100%` ) ) ).
+             p = VALUE #( ( n = `level`      v = `H1` )
+                          ( n = `text`       v = `Layout & Pages` )
+                          ( n = `titleStyle` v = `H1` )
+                          ( n = `width`      v = `100%` ) ) ).
 
     bl  = panel->__( n = `BlockLayout` ns = `l` ).
     row = bl->__( n = `BlockLayoutRow` ns = `l` ).
@@ -110,13 +110,13 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
                      ( n = `backgroundColorShade` v = shade ) ) ).
     DATA(vl) = cell->__( n = `VerticalLayout` ns = `l` ).
     vl->_( n = `Icon` ns = `core`
-            p = VALUE #( ( n = `class` v = `sapUiTinyMarginBottom` )
-                         ( n = `size`  v = `2rem` )
-                         ( n = `src`   v = icon ) )
+           p = VALUE #( ( n = `class` v = `sapUiTinyMarginBottom` )
+                        ( n = `size`  v = `2rem` )
+                        ( n = `src`   v = icon ) )
       )->_( n = `Link`
-             p = VALUE #( ( n = `href`   v = href )
-                          ( n = `target` v = `_blank` )
-                          ( n = `text`   v = title ) )
+            p = VALUE #( ( n = `href`   v = href )
+                         ( n = `target` v = `_blank` )
+                         ( n = `text`   v = title ) )
       )->_( n = `Text` a = `text` v = descr ).
 
   ENDMETHOD.
