@@ -263,6 +263,8 @@ Key rules for `z2ui5_cl_util_xml`:
 
 Write everything directly in `main` — no method encapsulation needed. Count only the lines inside the `main` method, not the total class length.
 
+**Do not extract `view_display` or any other helper method just because the app has a view.** A separate `view_display` method is only justified when the app is large enough to warrant the full canonical structure (≥ 50 lines in `main`). Extracting it in a simple app adds unnecessary indirection.
+
 ### Larger apps — canonical template
 
 The following is the **maximum structure**. Only add methods that are actually needed.
