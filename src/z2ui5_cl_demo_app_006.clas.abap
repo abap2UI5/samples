@@ -1,11 +1,10 @@
 CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         count      TYPE i,
         value      TYPE string,
         descr      TYPE string,
@@ -14,119 +13,146 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
         checkbox   TYPE abap_bool,
         percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
-      END OF ty_row.
-
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      END OF ty_s_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
     DATA check_ui5 TYPE abap_bool.
-    DATA mv_key TYPE string.
-    METHODS refresh_data.
+    DATA key       TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_init.
+    METHODS on_event.
+    METHODS view_display.
+    METHODS refresh_data.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
 
-  METHOD refresh_data.
-
-    DO 10000 TIMES.
-      DATA ls_row TYPE ty_row.
-      ls_row-count = sy-index.
-      ls_row-value = 'red'.
-      ls_row-descr = 'this is a description'.
-      ls_row-checkbox = abap_true.
-      ls_row-valuecolor = `Good`.
-      INSERT ls_row INTO TABLE t_tab.
-    ENDDO.
+    me->client = client.
+    IF client->check_on_init( ).
+      on_init( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
+  METHOD on_init.
 
-    IF client->check_on_init( ).
-      refresh_data( ).
-    ENDIF.
+    refresh_data( ).
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
 
     CASE client->get( )-event.
-
-      WHEN 'SORT_ASCENDING'.
+      WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
-        client->message_toast_display( 'sort ascending' ).
-
-      WHEN 'SORT_DESCENDING'.
+        client->message_toast_display( `sort ascending` ).
+      WHEN `SORT_DESCENDING`.
         SORT t_tab BY count DESCENDING.
-        client->message_toast_display( 'sort descending' ).
+        client->message_toast_display( `sort descending` ).
     ENDCASE.
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD refresh_data.
+
+    t_tab = VALUE #( FOR i = 1 UNTIL i > 10000 (
+        count      = i
+        value      = `red`
+        descr      = `this is a description`
+        checkbox   = abap_true
+        valuecolor = `Good` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
+            title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->scroll_container( height   = '70%'
-                                        vertical = abap_true
+    DATA(tab) = page->scroll_container(
+        height   = `70%`
+        vertical = abap_true
         )->table(
             growing             = abap_true
-            growingthreshold    = '20'
+            growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind_edit( t_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
 
     tab->header_toolbar(
         )->toolbar(
-            )->title( 'title of the table'
+            )->title( `title of the table`
             )->button(
-                text  = 'letf side button'
-                icon  = 'sap-icon://account'
-                press = client->_event( 'BUTTON_SORT' )
-            )->segmented_button( mv_key
+                text  = `letf side button`
+                icon  = `sap-icon://account`
+                press = client->_event( `BUTTON_SORT` )
+            )->segmented_button( key
                 )->items(
                     )->segmented_button_item(
-                        key  = 'BLUE'
-                        icon = 'sap-icon://accept'
-                        text = 'blue'
+                        key  = `BLUE`
+                        icon = `sap-icon://accept`
+                        text = `blue`
                     )->segmented_button_item(
-                        key  = 'GREEN'
-                        icon = 'sap-icon://add-favorite'
-                        text = 'green'
+                        key  = `GREEN`
+                        icon = `sap-icon://add-favorite`
+                        text = `green`
             )->get_parent( )->get_parent(
             )->toolbar_spacer(
             )->button(
-                icon  = 'sap-icon://sort-descending'
-                press = client->_event( 'SORT_DESCENDING' )
+                icon  = `sap-icon://sort-descending`
+                press = client->_event( `SORT_DESCENDING` )
             )->button(
-                icon  = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' ) ).
+                icon  = `sap-icon://sort-ascending`
+                press = client->_event( `SORT_ASCENDING` ) ).
 
     tab->columns(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column(
-            )->text( 'Description' )->get_parent(
+            )->text( `Description` )->get_parent(
         )->column(
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
         )->column(
-            )->text( 'Counter' )->get_parent(
+            )->text( `Counter` )->get_parent(
         )->column(
-            )->text( 'Radial Micro Chart' ).
+            )->text( `Radial Micro Chart` ).
 
-    tab->items( )->column_list_item( )->cells(
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
-       )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}'
+    tab->items(
+        )->column_list_item(
+            )->cells(
+                )->text( `{VALUE}`
+                )->text( `{INFO}`
+                )->text( `{DESCR}`
+                )->checkbox(
+                    selected = `{CHECKBOX}`
                     enabled  = abap_false
-       )->text( '{COUNT}' ).
+                )->text( `{COUNT}` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.
