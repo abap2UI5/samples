@@ -4,15 +4,15 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF suggestion_item,
+      BEGIN OF ty_s_suggestion_item,
         value TYPE string,
         descr TYPE string,
-      END OF suggestion_item.
+      END OF ty_s_suggestion_item.
     TYPES:
-      BEGIN OF combobox_item,
+      BEGIN OF ty_s_combobox_item,
         key  TYPE string,
         text TYPE string,
-      END OF combobox_item.
+      END OF ty_s_combobox_item.
 
     DATA:
       BEGIN OF s_screen,
@@ -29,8 +29,8 @@ CLASS z2ui5_cl_demo_app_002 DEFINITION PUBLIC.
         check_switch_02 TYPE abap_bool VALUE abap_false,
       END OF s_screen.
 
-    DATA t_suggestions TYPE STANDARD TABLE OF suggestion_item WITH EMPTY KEY.
-    DATA t_combo       TYPE STANDARD TABLE OF combobox_item WITH EMPTY KEY.
+    DATA t_suggestions TYPE STANDARD TABLE OF ty_s_suggestion_item WITH EMPTY KEY.
+    DATA t_combo       TYPE STANDARD TABLE OF ty_s_combobox_item WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

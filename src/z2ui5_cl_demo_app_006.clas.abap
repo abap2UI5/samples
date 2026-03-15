@@ -16,11 +16,10 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+    DATA client    TYPE REF TO z2ui5_if_client.
     DATA check_ui5 TYPE abap_bool.
     DATA key       TYPE string.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
