@@ -33,7 +33,7 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
 - Prefer functional to procedural language constructs — use `var = VALUE #( ).` to reset a variable, never `CLEAR var.`.
-- Do not use Hungarian notation — no type prefixes on variable or attribute names (e.g. `product` not `lv_product`, `client` not `mo_client`).
+- Use Hungarian notation — always add type prefixes to variable and attribute names (e.g. `lv_product` not `product`, `mo_client` not `client`, `lt_items` not `items`, `ls_row` not `row`). Common prefixes: `lv_` local value, `lt_` local table, `ls_` local structure, `lr_` local reference, `mv_` instance attribute value, `mt_` instance attribute table, `ms_` instance attribute structure, `mo_` instance attribute object.
 - Class names are always written in **lowercase** in both `DEFINITION` and `IMPLEMENTATION` — never uppercase.
 - Classes are **not** `FINAL` — do not add the `FINAL` keyword to class definitions.
 - Use `DEFINITION PUBLIC.` — never `DEFINITION PUBLIC CREATE PUBLIC.` (`CREATE PUBLIC` is the default and adds unnecessary overhead).
@@ -56,15 +56,15 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
   - Always add 1 blank line **before** `ELSEIF` and `ELSE`.
   - If a branch (`IF`, `ELSEIF`, `ELSE`) contains **more than one statement**, add 1 blank line directly after the condition line as well:
     ```abap
-    me->client = client.
+    mo_client = io_client.
 
-    IF client->check_on_init( ).
+    IF mo_client->check_on_init( ).
 
-      product  = `products`.
-      quantity = `500`.
+      mv_product  = `products`.
+      mv_quantity = `500`.
       view_display( ).
 
-    ELSEIF client->check_on_event( `SAVE` ).
+    ELSEIF mo_client->check_on_event( `SAVE` ).
       data_update( ).
     ENDIF.
     ```
@@ -85,11 +85,11 @@ Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The 
 
 Always use `ELSEIF` to chain these checks — never separate `IF` blocks:
 ```abap
-IF client->check_on_init( ).
+IF mo_client->check_on_init( ).
   ...
-ELSEIF client->check_on_navigated( ).
+ELSEIF mo_client->check_on_navigated( ).
   ...
-ELSEIF client->check_on_event( ).
+ELSEIF mo_client->check_on_event( ).
   ...
 ENDIF.
 ```
@@ -99,11 +99,11 @@ ENDIF.
 `check_on_event( )` accepts an optional event name argument. Use it to check for a specific event directly in the `ELSEIF` chain when there are **2–3 events** and no complex dispatch logic is needed:
 
 ```abap
-IF client->check_on_init( ).
+IF mo_client->check_on_init( ).
   ...
-ELSEIF client->check_on_event( `SAVE` ).
+ELSEIF mo_client->check_on_event( `SAVE` ).
   data_update( ).
-ELSEIF client->check_on_event( `DELETE` ).
+ELSEIF mo_client->check_on_event( `DELETE` ).
   data_delete( ).
 ENDIF.
 ```
@@ -137,12 +137,12 @@ Always use `client->_event_nav_app_leave()` to bind the back button event direct
 ```abap
 METHOD view_display.
 
-  DATA(view) = z2ui5_cl_xml_view=>factory( ).
-  DATA(page) = view->page( title = `My App`
-                            shownavbutton = client->check_app_prev_stack( )
-                            navbuttonpress = client->_event_nav_app_leave( ) ).
+  DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+  DATA(lo_page) = lo_view->page( title = `My App`
+                                  shownavbutton  = mo_client->check_app_prev_stack( )
+                                  navbuttonpress = mo_client->_event_nav_app_leave( ) ).
   " ...
-  client->view_display( view->stringify( ) ).
+  mo_client->view_display( lo_view->stringify( ) ).
 
 ENDMETHOD.
 ```
@@ -152,11 +152,11 @@ Only use the manual pattern (handling `BACK` in `on_event`) when you need to do 
 ```abap
 METHOD on_event.
 
-  CASE client->get( )-event.
+  CASE mo_client->get( )-event.
     WHEN `BACK`.
       " interact with previous app instance first
-      CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( ms_result ).
-      client->nav_app_leave( ).
+      CAST z2ui5_cl_app_parent( mo_client->get_app_prev( ) )->set_result( ms_result ).
+      mo_client->nav_app_leave( ).
   ENDCASE.
 
 ENDMETHOD.
@@ -171,9 +171,9 @@ Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `inpu
 
 #### View structure and indentation
 
-Always add 1 blank line before `DATA(view) = z2ui5_cl_xml_view=>factory( ).` to visually separate view construction from preceding logic.
+Always add 1 blank line before `DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).` to visually separate view construction from preceding logic.
 
-Always build the view in `view_display` and call `client->view_display( view->stringify( ) )` as a **standalone statement at the end** — never nested inside the chain.
+Always build the view in `view_display` and call `mo_client->view_display( lo_view->stringify( ) )` as a **standalone statement at the end** — never nested inside the chain.
 
 Indent the fluent chain to reflect the XML hierarchy:
 - Each method that **navigates into a child element** (returns a child node) is indented **4 spaces deeper** than its parent call.
@@ -186,11 +186,11 @@ Indent the fluent chain to reflect the XML hierarchy:
 
 ```abap
 )->input(
-    value   = product
+    value   = mv_product
     enabled = abap_false
 )->button(
     text  = `Post`
-    press = client->_event( `POST` ) ).
+    press = mo_client->_event( `POST` ) ).
 ```
 
 Never put two or more named parameters on the same line.
@@ -198,26 +198,26 @@ Never put two or more named parameters on the same line.
 ```abap
 METHOD view_display.
 
-  DATA(view) = z2ui5_cl_xml_view=>factory( ).
-  view->shell(
+  DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+  lo_view->shell(
       )->page(
           title          = `My App`
-          navbuttonpress = client->_event_nav_app_leave( )
-          shownavbutton  = client->check_app_prev_stack( )
+          navbuttonpress = mo_client->_event_nav_app_leave( )
+          shownavbutton  = mo_client->check_app_prev_stack( )
           )->simple_form(
               title    = `Form Title`
               editable = abap_true
               )->content( `form`
               )->label( `Quantity`
-              )->input( client->_bind_edit( quantity )
+              )->input( mo_client->_bind_edit( mv_quantity )
               )->label( `Product`
               )->input(
-                  value   = product
+                  value   = mv_product
                   enabled = abap_false
               )->button(
                   text  = `Post`
-                  press = client->_event( `POST` ) ).
-  client->view_display( view->stringify( ) ).
+                  press = mo_client->_event( `POST` ) ).
+  mo_client->view_display( lo_view->stringify( ) ).
 
 ENDMETHOD.
 ```
@@ -245,7 +245,7 @@ Builds any XML structure directly from element names, namespaces and attributes.
         ( n = `editable` v = abap_true ) )
 )->_( n = `content` ns = `form`
 )->__( n = `Label` a = `text` v = `qty`
-)->__( n = `Input` a = `value` v = client->_bind_edit( qty ) )
+)->__( n = `Input` a = `value` v = mo_client->_bind_edit( mv_qty ) )
 ```
 
 Key rules for `z2ui5_cl_util_xml`:
@@ -280,7 +280,7 @@ CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     " bound data (DATA attributes for _bind/_bind_edit)...
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_client TYPE REF TO z2ui5_if_client.
     METHODS on_init.        " first call: load data, display view
     METHODS on_event.       " user triggered an event
     METHODS on_navigation.  " returned from sub-app or popup
@@ -295,12 +295,12 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
-    IF client->check_on_init( ).
+    mo_client = io_client.
+    IF mo_client->check_on_init( ).
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF mo_client->check_on_navigated( ).
       on_navigation( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF mo_client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -318,18 +318,18 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
   METHOD on_navigation.
 
     data_read( ).
-    client->view_model_update( ).
+    mo_client->view_model_update( ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE mo_client->get( )-event.
       WHEN `SAVE`.
         on_event_save( ).
       WHEN `BACK`.
-        client->nav_app_leave( ).
+        mo_client->nav_app_leave( ).
     ENDCASE.
 
   ENDMETHOD.
@@ -344,9 +344,9 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     " ...
-    client->view_display( view->stringify( ) ).
+    mo_client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.
 
