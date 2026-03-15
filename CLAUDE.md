@@ -32,6 +32,7 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 - Follow the [SAP ABAP Style Guide](https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md).
 - Never use an init flag attribute (`check_initialized`, `mv_init`, `is_initialized`, etc.). Always use `client->check_on_init( )` instead.
 - Use backticks for all string literals, not single quotes.
+- Use string templates (`|...|` with `{ }` for embedded expressions) instead of `&&` for string concatenation (e.g. `|item { name }|` not `` `item ` && name ``).
 - Prefer functional to procedural language constructs — use `var = VALUE #( ).` to reset a variable, never `CLEAR var.`.
 - Use type prefixes only for tables and structures: prefix table variables/attributes with `t_` (e.g. `t_items`) and structure variables/attributes with `s_` (e.g. `s_screen`). Do not add prefixes to scalar variables or object references.
 - Name local types with a `ty_s_` prefix for structure types (e.g. `ty_s_row`) and `ty_t_` for table types (e.g. `ty_t_rows`). Only define a `ty_t_` table type when it is used more than once — for a single-use table, declare it inline with `STANDARD TABLE OF ty_s_xxx`.
