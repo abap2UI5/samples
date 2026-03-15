@@ -39,6 +39,20 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
   - Always add exactly 1 blank line at the very start of a method body (after `METHOD`).
   - Always add exactly 1 blank line at the very end of a method body (before `ENDMETHOD`).
   - Max 1 consecutive blank line inside a method body.
+  - Always add 1 blank line **before** an `IF` block.
+  - If a branch (`IF`, `ELSEIF`, `ELSE`) contains **more than one statement**, add 1 blank line directly after the condition line as well:
+    ```abap
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      product  = `products`.
+      quantity = `500`.
+      view_display( ).
+    ELSEIF client->check_on_event( `SAVE` ).
+      data_update( ).
+    ENDIF.
+    ```
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 
