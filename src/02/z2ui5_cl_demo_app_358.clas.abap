@@ -72,10 +72,11 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
                      ( n = `xmlns`        v = `sap.m` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->__( `Shell` )->__( n = `Page`
-        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                     ( n = `title`          v = `abap2UI5 - Table` ) ) ).
+    DATA(page) = root->__( `Shell`
+       )->__( n = `Page`
+              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                           ( n = `title`          v = `abap2UI5 - Table` ) ) ).
 
     page->__( `headerContent`
        )->_( n = `Link`
@@ -87,7 +88,8 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
         p = VALUE #( ( n = `inset` v = abap_false )
                      ( n = `items` v = client->_bind( t_products ) ) ) ).
 
-    tab->__( `headerToolbar` )->__( `OverflowToolbar`
+    tab->__( `headerToolbar`
+       )->__( `OverflowToolbar`
        )->_( n = `Title`
              p = VALUE #( ( n = `level` v = `H2` )
                           ( n = `text`  v = `Products` ) )
@@ -114,8 +116,8 @@ CLASS z2ui5_cl_demo_app_358 IMPLEMENTATION.
        )->_( n = `Text` a = `text` v = `Price` ).
 
     DATA(cells) = tab->__( `items`
-        )->__( n = `ColumnListItem` a = `vAlign` v = `Middle`
-        )->__( `cells` ).
+       )->__( n = `ColumnListItem` a = `vAlign` v = `Middle`
+       )->__( `cells` ).
     cells->_( n = `ObjectIdentifier`
               p = VALUE #( ( n = `text`  v = `{PRODUCT_ID}` )
                            ( n = `title` v = `{NAME}` ) ) ).

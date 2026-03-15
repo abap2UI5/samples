@@ -40,6 +40,7 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
     num_b      = 77.
     amount     = `-15`.
     search     = `VIPCustomer`.
+
     view_display( ).
 
   ENDMETHOD.
@@ -60,10 +61,11 @@ CLASS z2ui5_cl_demo_app_359 IMPLEMENTATION.
                      ( n = `xmlns:form`   v = `sap.ui.layout.form` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->__( `Shell` )->__( n = `Page`
-        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                     ( n = `title`          v = `abap2UI5 - Expression Binding` ) ) ).
+    DATA(page) = root->__( `Shell`
+       )->__( n = `Page`
+              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                           ( n = `title`          v = `abap2UI5 - Expression Binding` ) ) ).
 
     page->__( `headerContent`
        )->_( n = `Link`

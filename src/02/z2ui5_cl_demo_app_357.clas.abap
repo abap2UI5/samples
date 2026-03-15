@@ -43,10 +43,11 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
                      ( n = `xmlns:l`      v = `sap.ui.layout` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->__( `Shell` )->__( n = `Page`
-        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                     ( n = `title`          v = `abap2UI5 - Controls` ) ) ).
+    DATA(page) = root->__( `Shell`
+       )->__( n = `Page`
+              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                           ( n = `title`          v = `abap2UI5 - Controls` ) ) ).
 
     page->__( `headerContent`
        )->_( n = `Link`
@@ -59,7 +60,8 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
                      ( n = `backgroundDesign` v = `Transparent` )
                      ( n = `class`            v = `sapUiNoContentPadding` ) ) ).
 
-    panel->__( `headerToolbar` )->__( `Toolbar`
+    panel->__( `headerToolbar`
+       )->__( `Toolbar`
        )->_( n = `Title`
              p = VALUE #( ( n = `level`      v = `H1` )
                           ( n = `text`       v = `Featured Controls` )
@@ -84,7 +86,8 @@ CLASS z2ui5_cl_demo_app_357 IMPLEMENTATION.
                      ( n = `backgroundDesign` v = `Transparent` )
                      ( n = `class`            v = `sapUiNoContentPadding` ) ) ).
 
-    panel->__( `headerToolbar` )->__( `Toolbar`
+    panel->__( `headerToolbar`
+       )->__( `Toolbar`
        )->_( n = `Title`
              p = VALUE #( ( n = `level`      v = `H1` )
                           ( n = `text`       v = `Layout & Pages` )

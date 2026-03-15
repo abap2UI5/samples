@@ -24,10 +24,11 @@ CLASS z2ui5_cl_demo_app_356 IMPLEMENTATION.
                      ( n = `xmlns:l`      v = `sap.ui.layout` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->__( `Shell` )->__( n = `Page`
-        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                     ( n = `title`          v = `abap2UI5 - Label` ) ) ).
+    DATA(page) = root->__( `Shell`
+       )->__( n = `Page`
+              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                           ( n = `title`          v = `abap2UI5 - Label` ) ) ).
 
     page->__( `headerContent`
        )->_( n = `Link`

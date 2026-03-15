@@ -38,6 +38,7 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
     big_number = `9876543.21`.
     integer    = `42`.
     date       = `2025-12-31`.
+
     view_display( ).
 
   ENDMETHOD.
@@ -58,10 +59,11 @@ CLASS z2ui5_cl_demo_app_360 IMPLEMENTATION.
                      ( n = `xmlns:form`   v = `sap.ui.layout.form` )
                      ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
 
-    DATA(page) = root->__( `Shell` )->__( n = `Page`
-        p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                     ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                     ( n = `title`          v = `abap2UI5 - Formatter` ) ) ).
+    DATA(page) = root->__( `Shell`
+       )->__( n = `Page`
+              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
+                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
+                           ( n = `title`          v = `abap2UI5 - Formatter` ) ) ).
 
     page->__( `headerContent`
        )->_( n = `Link`
