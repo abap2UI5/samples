@@ -51,8 +51,8 @@ CLASS z2ui5_cl_demo_app_009 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
-    METHODS popup_f4_suggestion.
-    METHODS popup_f4_employee.
+    METHODS popup_value_suggestion.
+    METHODS popup_value_employee.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -108,37 +108,37 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN `POPUP_TABLE_F4`.
+      WHEN `POPUP_TABLE_value`.
         t_suggestion_sel = t_suggestion.
-        popup_f4_suggestion( ).
-      WHEN `POPUP_TABLE_F4_CUSTOM`.
+        popup_value_suggestion( ).
+      WHEN `POPUP_TABLE_value_CUSTOM`.
         t_employees_sel = VALUE #( ).
-        popup_f4_employee( ).
+        popup_value_employee( ).
       WHEN `SEARCH`.
         t_employees_sel = t_employees.
 
         IF s_screen-city IS NOT INITIAL.
           DELETE t_employees_sel WHERE city <> s_screen-city.
         ENDIF.
-        popup_f4_employee( ).
-      WHEN `POPUP_TABLE_F4_CUSTOM_CONTINUE`.
+        popup_value_employee( ).
+      WHEN `POPUP_TABLE_value_CUSTOM_CONTINUE`.
         DELETE t_employees_sel WHERE selkz = abap_false.
 
         IF lines( t_employees_sel ) = 1.
 
           s_screen-name     = t_employees_sel[ 1 ]-name.
           s_screen-lastname = t_employees_sel[ 1 ]-lastname.
-          client->message_toast_display( `f4 value selected` ).
+          client->message_toast_display( `value value selected` ).
           client->popup_destroy( ).
 
         ENDIF.
-      WHEN `POPUP_TABLE_F4_CONTINUE`.
+      WHEN `POPUP_TABLE_value_CONTINUE`.
         DELETE t_suggestion_sel WHERE selkz = abap_false.
 
         IF lines( t_suggestion_sel ) = 1.
 
           s_screen-color_02 = t_suggestion_sel[ 1 ]-value.
-          client->message_toast_display( `f4 value selected` ).
+          client->message_toast_display( `value value selected` ).
           client->popup_destroy( ).
 
         ENDIF.
@@ -185,24 +185,24 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             type        = `Number`
             placeholder = `quantity` ).
 
-    form->label( `Input with F4`
+    form->label( `Input with value`
         )->input(
             value            = client->_bind_edit( s_screen-color_02 )
             placeholder      = `fill in your favorite colour`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_F4` ) ).
+            valuehelprequest = client->_event( `POPUP_TABLE_value` ) ).
 
-    form->label( `Custom F4 Popup`
+    form->label( `Custom value Popup`
         )->input(
             value            = client->_bind_edit( s_screen-name )
             placeholder      = `name`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_F4_CUSTOM` )
+            valuehelprequest = client->_event( `POPUP_TABLE_value_CUSTOM` )
         )->input(
             value            = client->_bind_edit( s_screen-lastname )
             placeholder      = `lastname`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_F4_CUSTOM` ) ).
+            valuehelprequest = client->_event( `POPUP_TABLE_value_CUSTOM` ) ).
 
     page->footer(
         )->overflow_toolbar(
@@ -224,10 +224,10 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD popup_f4_suggestion.
+  METHOD popup_value_suggestion.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( `abap2UI5 - F4 Value Help` ).
+    DATA(dialog) = popup->dialog( `abap2UI5 - value Value Help` ).
     DATA(tab) = dialog->table(
         mode  = `SingleSelectLeft`
         items = client->_bind_edit( t_suggestion_sel ) ).
@@ -246,7 +246,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     dialog->buttons(
         )->button(
             text  = `continue`
-            press = client->_event( `POPUP_TABLE_F4_CONTINUE` )
+            press = client->_event( `POPUP_TABLE_value_CONTINUE` )
             type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
@@ -254,10 +254,10 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD popup_f4_employee.
+  METHOD popup_value_employee.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( `abap2UI5 - F4 Value Help` ).
+    DATA(dialog) = popup->dialog( `abap2UI5 - value Value Help` ).
 
     dialog->simple_form(
         )->label( `Location`
@@ -299,7 +299,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     dialog->buttons(
         )->button(
             text  = `continue`
-            press = client->_event( `POPUP_TABLE_F4_CUSTOM_CONTINUE` )
+            press = client->_event( `POPUP_TABLE_value_CUSTOM_CONTINUE` )
             type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
