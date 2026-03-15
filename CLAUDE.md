@@ -272,6 +272,8 @@ Write everything directly in `main` — no method encapsulation needed. Count on
 
 ### Larger apps — canonical template
 
+When the logic no longer fits inside `main`, always extract exactly `on_init` and `on_event` as the first step — never use other method names for this purpose. `main` then becomes a pure dispatcher that calls these two methods. Only add further methods (`view_display`, `data_read`, etc.) when they are actually needed.
+
 The following is the **maximum structure**. Only add methods that are actually needed.
 
 ### Event handler sub-methods
