@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
       WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values send to the server` ).
       WHEN `BUTTON_CLEAR`.
-        CLEAR screen.
+        screen = VALUE #( ).
         client->message_toast_display( `View initialized` ).
     ENDCASE.
 
