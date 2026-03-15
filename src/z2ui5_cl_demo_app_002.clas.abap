@@ -91,21 +91,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN `BUTTON_MCONFIRM`.
-        client->message_box_display( type = `confirm`     text = `Confirm MessageBox` ).
-      WHEN `BUTTON_MALERT`.
-        client->message_box_display( type = `alert`       text = `Alert MessageBox` ).
-      WHEN `BUTTON_MERROR`.
-        client->message_box_display( type = `error`       text = `Error MessageBox` ).
-      WHEN `BUTTON_MINFO`.
-        client->message_box_display( type = `information` text = `Information MessageBox` ).
-      WHEN `BUTTON_MWARNING`.
-        client->message_box_display( type = `warning`     text = `Warning MessageBox` ).
-      WHEN `BUTTON_MSUCCESS`.
-        client->message_box_display(
-            type = `success`
-            text = `Success MessageBox`
-            icon = `sap-icon://accept` ).
       WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values send to the server` ).
       WHEN `BUTTON_CLEAR`.
@@ -121,7 +106,6 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = `abap2UI5 - Selection-Screen Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
