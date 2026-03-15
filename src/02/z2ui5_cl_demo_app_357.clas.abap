@@ -7,8 +7,6 @@ CLASS z2ui5_cl_demo_app_357 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-
-  PRIVATE SECTION.
     METHODS add_cell
       IMPORTING
         row   TYPE REF TO z2ui5_cl_util_xml
@@ -17,6 +15,8 @@ CLASS z2ui5_cl_demo_app_357 DEFINITION PUBLIC.
         href  TYPE string
         descr TYPE string
         shade TYPE string.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 
