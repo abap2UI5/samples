@@ -6,7 +6,6 @@ CLASS z2ui5_cl_demo_app_010 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS view_display.
 
   PRIVATE SECTION.
@@ -19,15 +18,8 @@ CLASS z2ui5_cl_demo_app_010 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      on_init( ).
+      view_display( ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    view_display( ).
 
   ENDMETHOD.
 
