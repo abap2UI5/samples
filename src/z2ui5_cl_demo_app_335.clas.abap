@@ -24,6 +24,8 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    FIELD-SYMBOLS <row> TYPE z2ui5_t_01.
+
     IF client->check_on_init( ).
 
       get_data( ).
@@ -49,8 +51,8 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
     ENDCASE.
 
-    IF client->get( )-check_on_navigated = abap_true
-        AND client->check_on_init( )          = abap_false.
+    IF     client->get( )-check_on_navigated = abap_true
+       AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
 
@@ -64,6 +66,18 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
     IF mo_layout_obj_2->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  is not bound!' ).
+    ENDIF.
+
+    ASSIGN mo_layout_obj_2->mr_data->* TO <row>.
+
+    IF <row>-id <> ms_struc-id.
+      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data->id  does not match ms_struc-id!' ).
+    ENDIF.
+
+    ASSIGN mo_layout_obj->mr_data->* TO <row>.
+
+    IF <row>-id <> ms_struc-id.
+      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->id  does not match ms_struc-id!' ).
     ENDIF.
 
     client->view_model_update( ).
