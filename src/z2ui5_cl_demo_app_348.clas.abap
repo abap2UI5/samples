@@ -129,6 +129,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
   METHOD xml_form.
 
     FIELD-SYMBOLS <layout> TYPE z2ui5_cl_demo_app_333=>ty_s_layout.
+    FIELD-SYMBOLS <data>   TYPE any.
     FIELD-SYMBOLS <value>  TYPE any.
 
     DATA(form) = i_page->simple_form( editable        = abap_true
@@ -142,7 +143,9 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
       index = index + 1.
 
-      ASSIGN COMPONENT <layout>-name OF STRUCTURE i_data->* TO <value>.
+      ASSIGN i_data->* TO <data>.
+
+      ASSIGN COMPONENT <layout>-name OF STRUCTURE <data> TO <value>.
 
       IF <value> IS NOT ASSIGNED.
         RETURN.
