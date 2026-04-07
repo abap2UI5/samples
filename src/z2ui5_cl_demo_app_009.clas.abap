@@ -173,7 +173,8 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             value           = client->_bind_edit( s_screen-color_01 )
             placeholder     = `fill in your favorite colour`
             suggestionitems = client->_bind( t_suggestion )
-            showsuggestion  = abap_true )->get(
+            showsuggestion  = abap_true
+        )->get(
         )->suggestion_items( )->get(
             )->list_item(
                 text           = `{VALUE}`
@@ -264,7 +265,8 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         )->input(
             value           = client->_bind_edit( s_screen-city )
             suggestionitems = client->_bind( t_cities )
-            showsuggestion  = abap_true )->get(
+            showsuggestion  = abap_true
+        )->get(
         )->suggestion_items( )->get(
             )->list_item(
                 text           = `{VALUE}`

@@ -123,7 +123,8 @@ CLASS z2ui5_cl_demo_app_002 IMPLEMENTATION.
             value           = client->_bind_edit( s_screen-colour )
             placeholder     = `Fill in your favorite color`
             suggestionitems = client->_bind( t_suggestions )
-            showsuggestion  = abap_true )->get(
+            showsuggestion  = abap_true
+        )->get(
         )->suggestion_items( )->get(
             )->list_item(
                 text           = `{VALUE}`
