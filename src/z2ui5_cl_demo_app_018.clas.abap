@@ -1,127 +1,141 @@
 CLASS z2ui5_cl_demo_app_018 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA quantity TYPE string.
-    DATA mv_textarea TYPE string.
+    DATA textarea TYPE string.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
-
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
-
-    METHODS z2ui5_display_view_main.
-    METHODS z2ui5_display_view_second.
-    METHODS z2ui5_display_popup_input.
+    METHODS on_init.
+    METHODS on_event.
+    METHODS view_display.
+    METHODS view_second_display.
+    METHODS popup_input_display.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
+CLASS z2ui5_cl_demo_app_018 IMPLEMENTATION.
 
-CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
+  METHOD on_init.
 
-
-  METHOD z2ui5_display_popup_input.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->dialog(
-             title = 'Title'
-             icon  = 'sap-icon://edit'
-                  )->content(
-                      )->text_area(
-                          height = '100%'
-                          width  = '100%'
-                          value  = client->_bind_edit( mv_textarea )
-                        )->button(
-                          text  = 'Cancel'
-                          press = client->_event( 'POPUP_CANCEL' )
-                      )->button(
-                          text  = 'Confirm'
-                          press = client->_event( 'POPUP_CONFIRM' )
-                          type  = 'Emphasized' ).
-*                  )->get_parent(
-*                  )->footer( )->overflow_toolbar(
-*                      )->toolbar_spacer(
-*                      )->button(
-*                          text  = 'Cancel'
-*                          press = client->_event( 'POPUP_CANCEL' )
-*                      )->button(
-*                          text  = 'Confirm'
-*                          press = client->_event( 'POPUP_CONFIRM' )
-*                          type  = 'Emphasized' ).
-
-    client->popup_display( view->stringify( ) ).
+    quantity = `500`.
+    view_display( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view_main.
+  METHOD on_event.
+
+    CASE client->get( )-event.
+      WHEN `SHOW_POPUP`.
+        popup_input_display( ).
+      WHEN `POPUP_CONFIRM`.
+        client->message_toast_display( `confirm` ).
+        client->popup_destroy( ).
+      WHEN `POPUP_CANCEL`.
+        textarea = VALUE #( ).
+        client->message_toast_display( `cancel` ).
+        client->popup_destroy( ).
+      WHEN `SHOW_VIEW_MAIN`.
+        view_display( ).
+      WHEN `SHOW_VIEW_SECOND`.
+        view_second_display( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Template'
+                title          = `abap2UI5 - Template`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
-            )->simple_form( title    = 'VIEW_MAIN'
-                            editable = abap_true
-                )->content( 'form'
-                    )->title( 'Input'
-                    )->label( 'quantity'
+            )->simple_form(
+                title    = `VIEW_MAIN`
+                editable = abap_true
+                )->content( `form`
+                    )->title( `Input`
+                    )->label( `quantity`
                     )->input( client->_bind_edit( quantity )
-                    )->label( 'text'
+                    )->label( `text`
                     )->input(
-                        value   = client->_bind_edit( mv_textarea )
+                        value   = client->_bind_edit( textarea )
                         enabled = abap_false
                     )->button(
-                        text  = 'show popup input'
-                        press = client->_event( 'SHOW_POPUP' )
+                        text  = `show popup input`
+                        press = client->_event( `SHOW_POPUP` )
                         )->get_parent( )->get_parent( )->footer(
                       )->overflow_toolbar(
               )->toolbar_spacer(
               )->overflow_toolbar_button(
-                  text  = 'Clear'
-                  press = client->_event( 'BUTTON_CLEAR' )
-                  type  = 'Reject'
-                  icon  = 'sap-icon://delete'
+                  text  = `Clear`
+                  press = client->_event( `BUTTON_CLEAR` )
+                  type  = `Reject`
+                  icon  = `sap-icon://delete`
               )->button(
-                  text  = 'Go to View Second'
-                  press = client->_event( 'SHOW_VIEW_SECOND' ) ).
+                  text  = `Go to View Second`
+                  press = client->_event( `SHOW_VIEW_SECOND` ) ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view_second.
+  METHOD view_second_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
           )->page(
-                  title          = 'abap2UI5 - Template'
+                  title          = `abap2UI5 - Template`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form( 'VIEW_SECOND'
-                  )->content( 'form'
+              )->simple_form( `VIEW_SECOND`
+                  )->content( `form`
       )->get_parent( )->get_parent( )->footer(
             )->overflow_toolbar(
                 )->toolbar_spacer(
                 )->overflow_toolbar_button(
-                    text  = 'Clear'
-                    press = client->_event( 'BUTTON_CLEAR' )
-                    type  = 'Reject'
-                    icon  = 'sap-icon://delete'
+                    text  = `Clear`
+                    press = client->_event( `BUTTON_CLEAR` )
+                    type  = `Reject`
+                    icon  = `sap-icon://delete`
                 )->button(
-                    text  = 'Go to View Main'
-                    press = client->_event( 'SHOW_VIEW_MAIN' ) ).
+                    text  = `Go to View Main`
+                    press = client->_event( `SHOW_VIEW_MAIN` ) ).
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD popup_input_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->dialog(
+             title = `Title`
+             icon  = `sap-icon://edit`
+                  )->content(
+                      )->text_area(
+                          height = `100%`
+                          width  = `100%`
+                          value  = client->_bind_edit( textarea )
+                        )->button(
+                          text  = `Cancel`
+                          press = client->_event( `POPUP_CANCEL` )
+                      )->button(
+                          text  = `Confirm`
+                          press = client->_event( `POPUP_CONFIRM` )
+                          type  = `Emphasized` ).
+
+    client->popup_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -129,47 +143,12 @@ CLASS Z2UI5_CL_DEMO_APP_018 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
-      RETURN.
+      on_init( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
-    z2ui5_on_event( ).
-
   ENDMETHOD.
 
-
-  METHOD z2ui5_on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'SHOW_POPUP'.
-        z2ui5_display_popup_input( ).
-
-      WHEN 'POPUP_CONFIRM'.
-        client->message_toast_display( |confirm| ).
-        client->popup_destroy( ).
-
-      WHEN 'POPUP_CANCEL'.
-        CLEAR mv_textarea.
-        client->message_toast_display( |cancel| ).
-        client->popup_destroy( ).
-
-      WHEN 'SHOW_VIEW_MAIN'.
-        z2ui5_display_view_main( ).
-
-      WHEN 'SHOW_VIEW_SECOND'.
-        z2ui5_display_view_second( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_on_init.
-
-    quantity = '500'.
-    z2ui5_display_view_main( ).
-
-  ENDMETHOD.
 ENDCLASS.

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     CLASS-METHODS factory
@@ -14,64 +13,56 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
 
-
-
-    DATA mv_text TYPE string.
-    DATA mv_cancel_text TYPE string.
-    DATA mv_cancel_event TYPE string.
-    DATA mv_confirm_text TYPE string.
-    DATA mv_confirm_event TYPE string.
-    DATA mv_event TYPE string.
+    DATA text          TYPE string.
+    DATA cancel_text   TYPE string.
+    DATA cancel_event  TYPE string.
+    DATA confirm_text  TYPE string.
+    DATA confirm_event TYPE string.
+    DATA event         TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_020 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
 
   METHOD factory.
 
     result = NEW #( ).
-
-    result->mv_text = i_text.
-    result->mv_cancel_text = i_cancel_text.
-    result->mv_cancel_event = i_cancel_event.
-    result->mv_confirm_text = i_confirm_text.
-    result->mv_confirm_event = i_confirm_event.
+    result->text          = i_text.
+    result->cancel_text   = i_cancel_text.
+    result->cancel_event  = i_cancel_event.
+    result->confirm_text  = i_confirm_text.
+    result->confirm_event = i_confirm_event.
 
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
-    ENDIF.
-
     CASE client->get( )-event.
-
-      WHEN mv_cancel_event OR mv_confirm_event.
-        mv_event = client->get( )-event.
+      WHEN cancel_event OR confirm_event.
+        event = client->get( )-event.
         client->popup_destroy( ).
         client->nav_app_leave( ).
         RETURN.
     ENDCASE.
 
     client->popup_display( z2ui5_cl_xml_view=>factory_popup(
-         )->dialog( 'abap2UI5 - Popup to decide'
+         )->dialog( `abap2UI5 - Popup to decide`
                 )->vbox(
-                    )->text( mv_text )->get_parent(
+                    )->text( text )->get_parent(
                 )->buttons(
                         )->button(
-                            text  = mv_cancel_text
-                            press = client->_event( mv_cancel_event )
+                            text  = cancel_text
+                            press = client->_event( cancel_event )
                         )->button(
-                            text  = mv_confirm_text
-                            press = client->_event( mv_confirm_event )
-                            type  = 'Emphasized'
+                            text  = confirm_text
+                            press = client->_event( confirm_event )
+                            type  = `Emphasized`
                         )->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -1,7 +1,6 @@
 CLASS lcl_help DEFINITION.
 
   PUBLIC SECTION.
-
     CLASS-METHODS get_avatar
       RETURNING
         VALUE(result) TYPE string.
