@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_338 DEFINITION
     DATA mo_main_page      TYPE REF TO z2ui5_cl_xml_view.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS render_main.
 
     METHODS render_sub_app.
@@ -36,22 +35,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
 
-  METHOD on_event.
-
-    CASE client->get( )-event.
-
-      WHEN 'ONSELECTICONTABBAR'.
-
-        CASE mv_selectedkey.
-
-          WHEN space.
-
-          WHEN OTHERS.
-
-        ENDCASE.
-    ENDCASE.
-
-  ENDMETHOD.
 
   METHOD on_init.
 
@@ -91,21 +74,17 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-
       on_init( ).
       render_main( ).
     ENDIF.
-
-    on_event( ).
     render_sub_app( ).
 
   ENDMETHOD.
 
   METHOD render_sub_app.
-    FIELD-SYMBOLS <view_display> TYPE any.
 
+    FIELD-SYMBOLS <view_display> TYPE any.
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
@@ -145,7 +124,6 @@ CLASS z2ui5_cl_demo_app_338 IMPLEMENTATION.
     ENDCASE.
 
     client->view_model_update( ).
-
 
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 
