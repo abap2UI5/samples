@@ -7,6 +7,7 @@ CLASS z2ui5_cl_demo_app_339 DEFINITION
 
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    DATA mv_init         TYPE abap_bool.
     DATA mv_table        TYPE string.
 
     DATA mt_table_tmp    TYPE REF TO data.
@@ -46,7 +47,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
         TRY.
 
             cl_abap_typedescr=>describe_by_name( EXPORTING  p_name         = mv_table
-                                                 RECEIVING p_descr_ref     = DATA(typedesc)
+                                                 RECEIVING  p_descr_ref    = DATA(typedesc)
                                                  EXCEPTIONS type_not_found = 1
                                                             OTHERS         = 2 ).
 
@@ -80,11 +81,19 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_event.
-    IF client->check_on_event( 'SELECTION_CHANGE' ).
-      client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
-                              io_table  = mt_table
-                              io_layout = mo_layout ) ).
-    ENDIF.
+    CASE client->get( )-event.
+
+      WHEN 'SELECTION_CHANGE'.
+
+        client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
+                                io_table  = mt_table
+                                io_layout = mo_layout  ) ).
+
+      WHEN 'BACK'.
+
+        client->nav_app_leave( ).
+
+    ENDCASE.
   ENDMETHOD.
 
   METHOD on_init.
@@ -103,14 +112,14 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
-    mo_layout = z2ui5_cl_demo_app_333=>factory( i_data       = mt_table
+    mo_layout = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
                                                     vis_cols = 5 ).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width           = 'auto'
-                               mode            = 'SingleSelectLeft'
-                               selectionchange = client->_event( 'SELECTION_CHANGE' )
-                               items           = client->_bind_edit( val = <table> ) ).
+    DATA(table) = page->table( width = 'auto'
+                               mode  = 'SingleSelectLeft'
+                               selectionchange  = client->_event( 'SELECTION_CHANGE' )
+                               items = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -120,7 +129,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
       columns->column( visible = client->_bind( val       = layout->visible
                                                 tab       = mo_layout->ms_data-t_layout
                                                 tab_index = lv_index )
-        )->text( layout->name ).
+       )->text( layout->name ).
 
     ENDLOOP.
 
@@ -158,7 +167,8 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF mv_init IS INITIAL.
+      mv_init = abap_true.
 
       get_data( ).
 
@@ -170,7 +180,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*' ).
+      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
     ENDIF.
 
     on_event( client ).
