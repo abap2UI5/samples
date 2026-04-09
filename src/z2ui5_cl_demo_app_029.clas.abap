@@ -1,108 +1,102 @@
 CLASS z2ui5_cl_demo_app_029 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
-
-
-    DATA mv_tab_radial_active TYPE abap_bool.
-
-    METHODS render_tab_radial.
-
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA tab_radial_active TYPE abap_bool.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_029 IMPLEMENTATION.
-
-
-  METHOD render_tab_radial.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-    DATA(container) = view->shell(
-        )->page(
-            title          = 'abap2UI5 - Visualization'
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-        )->tab_container( ).
-
-    DATA(grid) = container->tab(
-            text     = 'Radial Chart'
-            selected = client->_bind( mv_tab_radial_active )
-        )->grid( 'XL12 L12 M12 S12' ).
-
-    grid->link(
-        text   = 'Go to the SAP Demos for Radial Charts here...'
-        target = '_blank'
-        href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.RadialMicroChart/sample/sap.suite.ui.microchart.sample.RadialMicroChart' ).
-
-    grid->vertical_layout(
-        )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '45'
-                press      = client->_event( 'RADIAL_PRESS' )
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '45'
-                press      = client->_event( 'RADIAL_PRESS' )
-        )->get_parent(
-        )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '99.9'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Good'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '99.9'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Good'
-        )->get_parent(
-        )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '0'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Error'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '0'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Error'
-        )->get_parent(
-        )->horizontal_layout(
-            )->radial_micro_chart(
-                size       = 'M'
-                percentage = '0.1'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Critical'
-            )->radial_micro_chart(
-                size       = 'S'
-                percentage = '0.1'
-                press      = client->_event( 'RADIAL_PRESS' )
-                valuecolor = 'Critical' ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
+CLASS z2ui5_cl_demo_app_029 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-
-
-
-      render_tab_radial( ).
+      view_display( ).
     ENDIF.
+
   ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    DATA(container) = view->shell(
+        )->page(
+            title          = `abap2UI5 - Visualization`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( )
+        )->tab_container( ).
+
+    DATA(grid) = container->tab(
+            text     = `Radial Chart`
+            selected = client->_bind( tab_radial_active )
+        )->grid( `XL12 L12 M12 S12` ).
+
+    grid->link(
+        text   = `Go to the SAP Demos for Radial Charts here...`
+        target = `_blank`
+        href   = `https://sapui5.hana.ondemand.com/#/entity/sap.suite.ui.microchart.RadialMicroChart/sample/sap.suite.ui.microchart.sample.RadialMicroChart` ).
+
+    grid->vertical_layout(
+        )->horizontal_layout(
+            )->radial_micro_chart(
+                size       = `M`
+                percentage = `45`
+                press      = client->_event( `RADIAL_PRESS` )
+            )->radial_micro_chart(
+                size       = `S`
+                percentage = `45`
+                press      = client->_event( `RADIAL_PRESS` )
+        )->get_parent(
+        )->horizontal_layout(
+            )->radial_micro_chart(
+                size       = `M`
+                percentage = `99.9`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Good`
+            )->radial_micro_chart(
+                size       = `S`
+                percentage = `99.9`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Good`
+        )->get_parent(
+        )->horizontal_layout(
+            )->radial_micro_chart(
+                size       = `M`
+                percentage = `0`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Error`
+            )->radial_micro_chart(
+                size       = `S`
+                percentage = `0`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Error`
+        )->get_parent(
+        )->horizontal_layout(
+            )->radial_micro_chart(
+                size       = `M`
+                percentage = `0.1`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Critical`
+            )->radial_micro_chart(
+                size       = `S`
+                percentage = `0.1`
+                press      = client->_event( `RADIAL_PRESS` )
+                valuecolor = `Critical` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
 ENDCLASS.
