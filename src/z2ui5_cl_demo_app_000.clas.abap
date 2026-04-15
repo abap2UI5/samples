@@ -185,6 +185,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = 'LineMode'
                          class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
 
+    panel->generic_tile( header    = 'Clipboard'
+                         subheader = 'Copy & Paste Text'
+                         press     = client->_event( 'Z2UI5_CL_DEMO_APP_325' )
+                         mode      = 'LineMode'
+                         class     = 'sapUiTinyMarginEnd sapUiTinyMarginBottom' ).
+
     panel->generic_tile( header = 'Focus I'
                          press  = client->_event( 'z2ui5_cl_demo_app_133' )
                          mode   = 'LineMode'
