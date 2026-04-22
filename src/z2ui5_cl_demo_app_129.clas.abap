@@ -35,17 +35,17 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
 
   PROTECTED SECTION.
-    METHODS z2ui5_on_rendering
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_init.
-    METHODS z2ui5_on_rendering_popup
+    METHODS popup_display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_rendering_popover
+    METHODS popover_display
       IMPORTING
         id     TYPE string
         client TYPE REF TO z2ui5_if_client.
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     IF client->check_on_init( ).
       lv_text = 10.
       on_init( ).
-      z2ui5_on_rendering( client ).
+      view_display( client ).
 
     ENDIF.
 
@@ -80,9 +80,9 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
       WHEN `BUTTON_SEND`.
 
-        z2ui5_on_rendering_popup( client ).
+        popup_display_view( client ).
       WHEN `BUTTON_POPOVER`.
-        z2ui5_on_rendering_popover( client = client
+        popover_display( client = client
                                     id     = `ppvr` ).
     ENDCASE.
 
@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering_popover.
+  METHOD popover_display.
 
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
@@ -160,7 +160,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering_popup.
+  METHOD popup_display_view.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( )->dialog( ).
 

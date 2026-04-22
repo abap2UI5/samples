@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
-    METHODS z2ui5_on_rendering.
+    METHODS view_display.
     METHODS on_event.
     METHODS on_init.
 
@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `START`.
-        z2ui5_on_rendering( ).
+        view_display( ).
       WHEN `BUTTON_MCUSTOM`.
 *        send type = '' is mandatory in order to not break current implementation
         client->message_box_display( type             = ``
@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `script`

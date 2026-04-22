@@ -71,12 +71,12 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
+    METHODS view_display.
+    METHODS view_display_main.
 
     METHODS z2ui5_set_data.
-    METHODS z2ui5_on_render_popup.
-    METHODS z2ui5_on_render_popup_save.
+    METHODS popup_display_view.
+    METHODS popup_display_save.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    view_display( ).
     CLEAR app-get.
 
   ENDMETHOD.
@@ -150,24 +150,24 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD view_display.
 
     CASE app-view_popup.
       WHEN `POPUP`.
-        z2ui5_on_render_popup( ).
+        popup_display_view( ).
       WHEN `POPUP_SAVE`.
-        z2ui5_on_render_popup_save( ).
+        popup_display_save( ).
     ENDCASE.
 
     CASE app-view_main.
       WHEN `MAIN`.
-        z2ui5_on_render_main( ).
+        view_display_main( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD view_display_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view = view->shell( )->page( id = `page_main`
@@ -225,7 +225,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_popup.
+  METHOD popup_display_view.
 
     DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -302,7 +302,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_popup_save.
+  METHOD popup_display_save.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 

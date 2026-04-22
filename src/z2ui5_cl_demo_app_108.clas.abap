@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
       END OF screen.
 
   PROTECTED SECTION.
-    METHODS z2ui5_on_rendering
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       on_init( ).
-      z2ui5_on_rendering( client ).
+      view_display( client ).
     ENDIF.
 
     on_event( client ).
@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_rendering.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(

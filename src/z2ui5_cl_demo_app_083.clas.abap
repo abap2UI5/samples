@@ -65,8 +65,8 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_pop_filter.
+    METHODS view_display_main.
+    METHODS popover_display_filter.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
       WHEN `BUTTON_POST`.
         CREATE DATA mt_table TYPE (mv_name).
-        z2ui5_on_render_main( ).
+        view_display_main( ).
 
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         client->popup_model_update( ).
 
       WHEN `FILTER_VALUE_HELP`.
-        z2ui5_on_render_pop_filter( ).
+        popover_display_filter( ).
 
         mt_filter = VALUE #( ).
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
@@ -161,7 +161,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       ( screen_name = `screen_02` field_doma = `PRODUCT` field = `PRODUCT` ) ).
 
     mv_name = `screen_01`.
-    z2ui5_on_render_main( ).
+    view_display_main( ).
 
     mt_mapping = VALUE #(
       (   n = `EQ`     v = `={LOW}` )
@@ -178,7 +178,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD view_display_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -262,7 +262,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_pop_filter.
+  METHOD popover_display_filter.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 

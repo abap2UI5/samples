@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
-    METHODS z2ui5_on_render.
+    METHODS view_display.
     METHODS popover_display.
 
   PRIVATE SECTION.
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_render( ).
+    view_display( ).
 
   ENDMETHOD.
 
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD view_display.
 
     SELECT
       SINGLE FROM icfservloc

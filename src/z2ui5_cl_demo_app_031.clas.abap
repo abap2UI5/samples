@@ -14,8 +14,8 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS view_display_main.
+    METHODS popup_display_view.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
       on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
+    view_display_main( ).
+    popup_display_view( ).
 
     CLEAR app-get.
 
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD view_display_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_popup.
+  METHOD popup_display_view.
 
     IF app-popup = `TEST`.
       DATA(lv_xml) = `<core:FragmentDefinition` && |\n| &&

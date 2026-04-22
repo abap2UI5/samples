@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
 
     METHODS z2ui5_load_cc.
     METHODS on_event.
-    METHODS z2ui5_on_render.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_render( ).
+      view_display( ).
     ENDIF.
 
     on_event( ).
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `DISPLAY_VIEW`.
-        z2ui5_on_render( ).
+        view_display( ).
 
       WHEN `POST`.
         client->message_toast_display( client->get_event_arg( 1 ) ).
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
       WHEN `DISPLAY_CC`.
         mv_display_cc = abap_true.
-        z2ui5_on_render( ).
+        view_display( ).
         client->message_box_display( `Custom Control displayed ` ).
 
       WHEN `MYCC`.
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lv_xml) = `<mvc:View` && |\n| &&

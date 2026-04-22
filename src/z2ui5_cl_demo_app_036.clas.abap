@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_036 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
       on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    view_display( ).
 
     CLEAR app-get.
 
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lv_xml) = `<mvc:View` && |\n| &&

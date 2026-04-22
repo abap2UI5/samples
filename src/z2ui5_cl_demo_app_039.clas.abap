@@ -13,8 +13,8 @@ CLASS z2ui5_cl_demo_app_039 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render_main.
-    METHODS z2ui5_on_render_popup.
+    METHODS view_display_main.
+    METHODS popup_display_view.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -35,8 +35,8 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
       on_event( ).
     ENDIF.
 
-    z2ui5_on_render_main( ).
-    z2ui5_on_render_popup( ).
+    view_display_main( ).
+    popup_display_view( ).
 
     CLEAR app-get.
 
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD view_display_main.
 
     DATA(lv_xml) = `<mvc:View` && |\n| &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_popup.
+  METHOD popup_display_view.
 
     client->popup_display( `<core:FragmentDefinition` && |\n| &&
                          `  xmlns="sap.m"` && |\n| &&

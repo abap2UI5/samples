@@ -30,8 +30,8 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_on_render.
-    METHODS z2ui5_on_render_main.
+    METHODS view_display.
+    METHODS view_display_main.
 
     METHODS z2ui5_set_data.
 
@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
       on_event( ).
     ENDIF.
 
-    z2ui5_on_render( ).
+    view_display( ).
 
     CLEAR app-get.
 
@@ -82,17 +82,17 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render.
+  METHOD view_display.
 
     CASE app-view_main.
       WHEN `MAIN`.
-        z2ui5_on_render_main( ).
+        view_display_main( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_render_main.
+  METHOD view_display_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
