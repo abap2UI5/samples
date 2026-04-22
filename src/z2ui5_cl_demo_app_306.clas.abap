@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     me->client = client.
 
-    IF me->z2ui5_if_app~check_initialized = abap_false.
+    IF client->check_on_init( ).
       facing_modes = VALUE tt_combo( ( key = `` text = `` )
                                      ( key = `environment` text = `environment` )
                                      ( key = `user` text = `user` )

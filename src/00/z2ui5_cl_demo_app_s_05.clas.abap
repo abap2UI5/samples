@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
     me->client = client.
 
-    IF me->z2ui5_if_app~check_initialized = abap_false.
+    IF client->check_on_init( ).
       connections = z2ui5_cl_demo_app_s_05_ws=>get_active_connections( ).
     ENDIF.
 
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
         icon  = `sap-icon://clear-all`
         press = client->_event( `CLEAR` ) ).
 
-    IF me->z2ui5_if_app~check_initialized = abap_false.
+    IF client->check_on_init( ).
       view->_generic( name = `script`
                       ns   = `html`
          )->_cc_plain_xml(
