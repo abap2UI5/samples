@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                     )->button(
                         text  = `post`
                         press = client->_event( `BUTTON_POST` )
-         )->get_root( )->xml_get( ) ).
+         )->stringify( ) ).
 
   ENDMETHOD.
 
