@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
 
@@ -67,16 +67,16 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `BUTTON_SEARCH` OR 'BUTTON_START'.
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mt_mapping = VALUE #(
       (   n = `EQ`     v = `={LOW}` )

@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS z2ui5_on_render.
     METHODS popover_display.
 
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
       client->view_model_update( ).
       RETURN.
     ENDIF.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA news TYPE t_news.
 

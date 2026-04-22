@@ -38,10 +38,10 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
     METHODS z2ui5_on_rendering
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_event
+    METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_on_init.
+    METHODS on_init.
     METHODS z2ui5_on_rendering_popup
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -60,17 +60,17 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       lv_text = 10.
-      z2ui5_on_init( ).
+      on_init( ).
       z2ui5_on_rendering( client ).
 
     ENDIF.
 
-    z2ui5_on_event( client ).
+    on_event( client ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `REFRESH`.
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     screen = VALUE #(
         check_is_active = abap_true

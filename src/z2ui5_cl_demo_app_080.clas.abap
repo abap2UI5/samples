@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
     DATA client            TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
@@ -110,12 +110,12 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     IF client->check_on_event( `AppSelected` ).
       DATA(ls_client) = client->get( ).

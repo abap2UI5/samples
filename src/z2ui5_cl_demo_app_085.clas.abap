@@ -49,8 +49,8 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS view_display_master.
     METHODS view_display_detail.
     METHODS z2ui5_set_data.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_init.
+    METHODS on_event.
+    METHODS on_init.
     METHODS z2ui5_set_search.
 
   PRIVATE SECTION.
@@ -391,7 +391,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     IF client->check_on_init( ).
       z2ui5_set_data( ).
       sort( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
@@ -401,12 +401,12 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
@@ -473,7 +473,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     view_display_master( ).
 

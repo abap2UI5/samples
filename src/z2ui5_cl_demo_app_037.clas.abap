@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
         VALUE(result) TYPE string.
 
     METHODS z2ui5_load_cc.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS z2ui5_on_render.
 
   PRIVATE SECTION.
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
       z2ui5_on_render( ).
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 

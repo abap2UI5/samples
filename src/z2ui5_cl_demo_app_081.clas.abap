@@ -18,8 +18,8 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS view_display.
     METHODS popover_display
       IMPORTING
@@ -133,17 +133,17 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
       view_display( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
@@ -169,7 +169,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_placement = `Left`.
     product  = `tomato`.

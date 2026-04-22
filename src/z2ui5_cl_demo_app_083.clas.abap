@@ -63,8 +63,8 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_pop_filter.
     METHODS z2ui5_set_data.
@@ -81,16 +81,16 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
 
@@ -151,7 +151,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mt_01 = VALUE #( ( screen_name = `screen_01` ) ( screen_name = `screen_02` ) ).
 

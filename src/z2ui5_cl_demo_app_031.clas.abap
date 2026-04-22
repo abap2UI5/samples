@@ -12,8 +12,8 @@ CLASS z2ui5_cl_demo_app_031 DEFINITION PUBLIC.
         popup             TYPE string,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_popup.
 
@@ -30,11 +30,11 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
     app-popup = ``.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
     z2ui5_on_render_main( ).
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
       WHEN `POPUP`.
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_value  = `200`.
 

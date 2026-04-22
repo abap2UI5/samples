@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
 
     METHODS z2ui5_set_data.
     METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -61,12 +61,12 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
   ENDMETHOD.
 

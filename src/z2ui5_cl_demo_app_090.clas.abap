@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     METHODS z2ui5_view_display.
     METHODS z2ui5_view_p13n.
     METHODS z2ui5_view_p13n_popup.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS init_data_set.
     METHODS get_custom_js
       RETURNING
@@ -87,13 +87,13 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       z2ui5_view_display( ).
 
     ELSE.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `P13N_OPEN`.

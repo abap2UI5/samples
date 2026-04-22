@@ -40,8 +40,8 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
@@ -57,21 +57,21 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       z2ui5_set_data( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

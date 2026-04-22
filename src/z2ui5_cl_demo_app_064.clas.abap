@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
 
   PRIVATE SECTION.
     METHODS set_selkz
@@ -67,16 +67,16 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA lt_arg TYPE string_table.
     DATA ls_arg TYPE string.
@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
     DATA view TYPE REF TO z2ui5_cl_xml_view.

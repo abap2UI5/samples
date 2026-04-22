@@ -14,8 +14,8 @@ CLASS z2ui5_cl_demo_app_036 DEFINITION PUBLIC.
         get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_on_render.
 
   PRIVATE SECTION.
@@ -31,11 +31,11 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
     app-view_popup = ``.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
     z2ui5_on_render( ).
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE app-get-event.
 
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     app-view_main = `VIEW_MAIN`.
     mv_value = `test`.

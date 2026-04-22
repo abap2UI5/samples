@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_040 DEFINITION PUBLIC.
         get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS z2ui5_on_render.
 
   PRIVATE SECTION.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
     app-view_popup = ``.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
     z2ui5_on_render( ).
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     IF client->check_on_event( `LOAD_BC` ).
       client->message_box_display( `JSBarcode Library loaded` ).

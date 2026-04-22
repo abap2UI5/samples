@@ -11,8 +11,8 @@ CLASS z2ui5_cl_demo_app_039 DEFINITION PUBLIC.
       BEGIN OF app,        get               TYPE z2ui5_if_types=>ty_s_get,
       END OF app.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_on_render_main.
     METHODS z2ui5_on_render_popup.
 
@@ -28,11 +28,11 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
     IF app-get-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
     z2ui5_on_render_main( ).
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     IF client->check_on_event( `POPUP` ).
       client->message_box_display( `Event raised value:` && mv_value ).
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_value  = `200`.
 

@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
     DATA check_load_cc TYPE abap_bool.
 
     METHODS z2ui5_view_display.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -73,12 +73,12 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
   ENDMETHOD.
 

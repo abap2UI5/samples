@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     METHODS z2ui5_on_rendering.
-    METHODS z2ui5_on_event.
-    METHODS z2ui5_on_init.
+    METHODS on_event.
+    METHODS on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -73,16 +73,16 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                       name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
-      z2ui5_on_init( ).
+      on_init( ).
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `START`.
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     screen = VALUE #(
         check_is_active = abap_true

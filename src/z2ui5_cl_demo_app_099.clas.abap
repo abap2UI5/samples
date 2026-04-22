@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     METHODS z2ui5_view_filter_popup.
     METHODS z2ui5_view_group_popup.
     METHODS z2ui5_view_settings_popup.
-    METHODS z2ui5_on_event.
+    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -63,12 +63,12 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    z2ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `ALL`.

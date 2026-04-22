@@ -18,8 +18,8 @@ CLASS z2ui5_cl_demo_app_082 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_init.
-    METHODS z2ui5_on_event.
+    METHODS on_init.
+    METHODS on_event.
     METHODS z2ui5_view_display.
 
   PRIVATE SECTION.
@@ -33,18 +33,18 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_on_init( ).
+      on_init( ).
       z2ui5_view_display( ).
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     IF client->check_on_event( `TIMER_FINISHED` ).
       mv_counter = mv_counter + 1.
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_init.
+  METHOD on_init.
 
     mv_counter = 1.
 

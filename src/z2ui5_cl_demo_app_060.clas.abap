@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_060 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_on_event.
+    METHODS on_event.
     METHODS z2ui5_view_display.
     METHODS set_data.
 
@@ -286,13 +286,13 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
-      z2ui5_on_event( ).
+      on_event( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_on_event.
+  METHOD on_event.
 
     DATA lt_range TYPE RANGE OF string.
 
