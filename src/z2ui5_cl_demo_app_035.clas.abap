@@ -22,11 +22,11 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( title          = 'abap2UI5 - File Editor'
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - File Editor`
                                        navbuttonpress = client->_event_nav_app_leave( )
                                        shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(temp) = page->simple_form( title    = 'File'
+    DATA(temp) = page->simple_form( title    = `File`
                                     editable = abap_true )->content( `form`
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
@@ -42,29 +42,29 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                     )->get( ).
 
     temp3->suggestion_items(
-                )->list_item( text           = '{N}'
+                )->list_item( text           = `{N}`
                               additionaltext = '{V}' ).
 
-    temp->label( '' )->button( text = 'Download'
+    temp->label( '' )->button( text = `Download`
                     press           = client->_event( `DB_LOAD` )
-                    icon            = 'sap-icon://download-from-cloud' ).
+                    icon            = `sap-icon://download-from-cloud` ).
 
     page->code_editor( type     = client->_bind_edit( mv_type )
                        editable = client->_bind( mv_check_editable )
                        value    = client->_bind( mv_editor ) ).
 
     page->footer( )->overflow_toolbar(
-        )->button( text  = 'Clear'
+        )->button( text  = `Clear`
                    press = client->_event( `CLEAR` )
-                   icon  = 'sap-icon://delete'
+                   icon  = `sap-icon://delete`
         )->toolbar_spacer(
-        )->button( text  = 'Edit'
+        )->button( text  = `Edit`
                    press = client->_event( `EDIT` )
-                   icon  = 'sap-icon://edit'
-        )->button( text    = 'Upload'
+                   icon  = `sap-icon://edit`
+        )->button( text    = `Upload`
                    press   = client->_event( `DB_SAVE` )
-                   type    = 'Emphasized'
-                   icon    = 'sap-icon://upload-to-cloud'
+                   type    = `Emphasized`
+                   icon    = `sap-icon://upload-to-cloud`
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
     client->view_display( page->stringify( ) ).
@@ -98,8 +98,8 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `DB_SAVE`.
-        client->message_box_display( text = 'Upload successfull. File saved!'
-                                     type = 'success' ).
+        client->message_box_display( text = `Upload successfull. File saved!`
+                                     type = `success` ).
       WHEN `EDIT`.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).

@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton' ).
 
     DATA(page_02) = page_01->page(

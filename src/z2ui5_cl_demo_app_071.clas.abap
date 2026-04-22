@@ -42,10 +42,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
          )->page(
-                 title          = 'abap2UI5 - First Example'
+                 title          = `abap2UI5 - First Example`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( title = 'Form Title' editable = abap_true
+             )->simple_form( title = `Form Title` editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'
                      )->label( 'Link'
@@ -55,10 +55,10 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                      )->input( value = client->_bind_edit( mv_combo_number )
                      )->label( 'demo'
                      )->combobox( items = client->_bind( lt_combo )
-                        )->item( key = '{KEY}' text = '{TEXT}'
+                        )->item( key = '{KEY}' text = `{TEXT}`
                         )->get_parent( )->get_parent(
                      )->button(
-                         text  = 'Press 2x update'
+                         text  = `Press 2x update`
                          press = client->_event( val = 'UPDATE' )
         )->stringify( ) ).
 

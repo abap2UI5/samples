@@ -41,15 +41,15 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(ls_row) = VALUE ty_row( title = 'Peter'  value = 'red' info = 'completed'  descr = 'this is a description' ).
+    DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = 'this is a description' ).
     DO 100 TIMES.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page(
-        id             = 'id_page'
-        title          = 'abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)'
+        id             = `id_page`
+        title          = `abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
           items     = client->_bind_edit( mt_scroll ) ).
 
     DATA(tab) = page->table( sticky     = 'ColumnHeaders,HeaderToolbar'
-                             headertext = 'Table with some entries'
+                             headertext = `Table with some entries`
                              items      = client->_bind( t_tab ) ).
 
     tab->columns(
@@ -74,13 +74,13 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
       )->text( '{DESCR}' ).
 
     page->footer( )->overflow_toolbar(
-         )->button( text  = 'Scroll Top'
+         )->button( text  = `Scroll Top`
                     press = client->_event( `BUTTON_SCROLL_TOP` )
-         )->button( text  = 'Scroll 500 up'
+         )->button( text  = `Scroll 500 up`
                     press = client->_event( `BUTTON_SCROLL_UP` )
-         )->button( text  = 'Scroll 500 down'
+         )->button( text  = `Scroll 500 down`
                     press = client->_event( `BUTTON_SCROLL_DOWN` )
-         )->button( text  = 'Scroll Bottom'
+         )->button( text  = `Scroll Bottom`
                     press = client->_event( `BUTTON_SCROLL_BOTTOM` ) ).
 
     client->view_display( view->stringify( ) ).

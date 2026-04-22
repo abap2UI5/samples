@@ -82,25 +82,25 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
-          title           = 'abap2UI5 - Master Detail Page with Nested View'
+          title           = `abap2UI5 - Master Detail Page with Nested View`
           navbuttonpress  = client->_event_nav_app_leave( )
             shownavbutton = abap_true ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
-                                                     id     ='test' ).
+                                                     id     =`test` ).
 
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     DATA(lr_list) = lr_master->list(
-          headertext      = 'List Ouput'
+          headertext      = `List Ouput`
           items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( val = 'SELCHANGE' )
           )->standard_list_item(
-              title       = '{TITLE}'
-              description = '{DESCR}'
-              icon        = '{ICON}'
-              info        = '{INFO}'
+              title       = `{TITLE}`
+              description = `{DESCR}`
+              icon        = `{ICON}`
+              info        = `{INFO}`
               press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
@@ -116,8 +116,8 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = 'Class 1'  info = 'z2ui5_cl_demo_app_105'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Class 2'  info = 'z2ui5_cl_demo_app_112' descr = 'this is a description' icon = 'sap-icon://account' ) ).
+        ( title = `Class 1`  info = `z2ui5_cl_demo_app_105`   descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Class 2`  info = `z2ui5_cl_demo_app_112` descr = 'this is a description' icon = `sap-icon://account` ) ).
 
       mv_layout = `OneColumn`.
       view_display_master( ).

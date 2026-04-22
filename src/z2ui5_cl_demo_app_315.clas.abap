@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Table with odata source'
+              title          = `abap2UI5 - Table with odata source`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

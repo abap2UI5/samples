@@ -63,13 +63,13 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id = `page_main`
-             title                  = 'abap2UI5 - Action Sheet'
+             title                  = `abap2UI5 - Action Sheet`
              navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = view->vbox( ).
 
-    vbox->button( text  = 'Open Action Sheet'
+    vbox->button( text  = `Open Action Sheet`
                   press = client->_event( `OPEN_ACTION_SHEET` )
                   id    = `actionSheet`
                   class = `sapUiSmallMargin` ).

@@ -33,12 +33,12 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
       mv_display = 'LIST'.
 
       t_tab = VALUE #(
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'Peter'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Peter`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
 
     ELSE.
 
@@ -51,13 +51,13 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = 'abap2UI5 - Table output in two different Ways - Changing UI without Model'
+            title          = `abap2UI5 - Table output in two different Ways - Changing UI without Model`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
-                )->button( text  = 'Display List'
+                )->button( text  = `Display List`
                            press = client->_event( `LIST` )
-                )->button( text  = 'Display Table'
+                )->button( text  = `Display Table`
                            press = client->_event( `TABLE` )
                 )->link(
       )->get_parent( ).
@@ -66,18 +66,18 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
       WHEN `LIST`.
         page->list(
-            headertext = 'List Control'
+            headertext = `List Control`
             items      = client->_bind( t_tab )
             )->standard_list_item(
-                title       = '{TITLE}'
-                description = '{DESCR}'
-                icon        = '{ICON}'
-                info        = '{INFO}' ).
+                title       = `{TITLE}`
+                description = `{DESCR}`
+                icon        = `{ICON}`
+                info        = `{INFO}` ).
 
       WHEN `TABLE`.
 
         DATA(tab) = page->table(
-          headertext = 'Table Control'
+          headertext = `Table Control`
           items      = client->_bind( t_tab ) ).
 
         tab->columns(

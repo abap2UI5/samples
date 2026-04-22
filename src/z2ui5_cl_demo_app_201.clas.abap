@@ -312,7 +312,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
   METHOD z2ui5_view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-       title          = 'abap2UI5 - Live Suggestion Event'
+       title          = `abap2UI5 - Live Suggestion Event`
        navbuttonpress = client->_event_nav_app_leave( )
        shownavbutton  = client->check_app_prev_stack( ) ).
 

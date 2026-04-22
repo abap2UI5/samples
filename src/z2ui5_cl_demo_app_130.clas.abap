@@ -349,7 +349,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
              selectedkey = client->_bind_edit( mv_screen )
                  )->item(
                      key  = '{SCREEN_NAME}'
-                     text = '{SCREEN_NAME} - {DESCR}'
+                     text = `{SCREEN_NAME} - {DESCR}`
          )->get_parent( )->label( get_txt( 'DESCR_40' )
             )->input(
             value         = client->_bind_edit( mv_screen_descr )
@@ -406,18 +406,18 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  )->button(
                      text    = get_txt( '/SCWM/DE_HUDEL' )
                      press   = client->_event( `BUTTON_DELETE` )
-                     type    = 'Reject'
-                     icon    = 'sap-icon://delete'
+                     type    = `Reject`
+                     icon    = `sap-icon://delete`
                      enabled = mv_button_active
                  )->button(
                      text    = get_txt( 'B_KOPIE' )
                      press   = client->_event( `BUTTON_COPY` )
-                     type    = 'Default'
+                     type    = `Default`
                      enabled = mv_button_active
                   )->button(
                      text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
                      press   = client->_event( `BUTTON_SAVE` )
-                     type    = 'Success'
+                     type    = `Success`
                      enabled = mv_button_active ).
 
     IF mo_parent_view IS INITIAL.
@@ -454,19 +454,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  items       = client->_bind_edit( mt_mapping )
              )->item(
                      key  = '{N}'
-                     text = '{N}'
+                     text = `{N}`
              )->get_parent(
              )->input( `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon = 'sap-icon://decline'
+             )->button( icon = `sap-icon://decline`
              type            = `Transparent`
              press           = client->_event( val = `POPUP_FILTER_DELETE`
              t_arg                                 = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->button( text = get_txt( 'FC_DELALL' )
-                  icon  = 'sap-icon://delete'
+                  icon  = `sap-icon://delete`
                   type  = `Transparent`
                   press = client->_event( `POPUP_FILTER_DELETE_ALL` )
         )->button( text  = get_txt( 'RSLPO_GUI_ADDPART' )
@@ -476,7 +476,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->button(
             text  = get_txt( 'MSSRCF_ACTION' )
             press = client->_event( `POPUP_FILTER_OK` )
-            type  = 'Emphasized' ).
+            type  = `Emphasized` ).
 
     client->popup_display( lo_popup->stringify( ) ).
 
@@ -488,7 +488,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->dialog( title        = get_txt( '/SCWM/WB_VARIANT' )
-                   contentwidth = '30%'
+                   contentwidth = `30%`
       )->table(
             mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_variants_pop )
@@ -510,7 +510,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             )->button(
                 text  = get_txt( 'MSSRCF_ACTION' )
                 press = client->_event( `POPUP_VARIANT_CLOSE` )
-                type  = 'Emphasized' ).
+                type  = `Emphasized` ).
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
@@ -541,11 +541,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->button(
             text  = get_txt( 'XEXIT' )
             press = client->_event( `POPUP_COPY_EXIT` )
-            type  = 'Reject'
+            type  = `Reject`
        )->button(
             text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
             press   = client->_event( `POPUP_COPY_SAVE` )
-            type    = 'Emphasized'
+            type    = `Emphasized`
             enabled = `{= ${MV_VARIANT_COPY} !== "" }`
        ).
 

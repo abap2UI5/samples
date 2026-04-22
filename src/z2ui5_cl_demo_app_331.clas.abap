@@ -37,13 +37,13 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'GO'
+    page->button( text  = `GO`
                   press = client->_event( `GO` )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
     DATA(form) = page->simple_form( editable        = abap_true
                                     layout          = `ResponsiveGridLayout`
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     ENDIF.
 
     DATA(line) = form->label( wrapping = abap_false
-                              text     = 'ID' ).
+                              text     = `ID` ).
 
     line->input( client->_bind( <value> ) ).
 

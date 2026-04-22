@@ -54,12 +54,12 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ASSIGN mt_table->* TO <tab>.
 
     DATA(page) = view->page( id             = `page_main`
-                             title          = 'Refresh'
+                             title          = `Refresh`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
-                             class          = 'sapUiContentPadding' ).
+                             class          = `sapUiContentPadding` ).
     DATA(table) = page->table( growing = 'true'
-                               width   = 'auto'
+                               width   = `auto`
                                items   = client->_bind_edit( <tab> ) ).
 
     DATA(columns) = table->columns( ).
@@ -70,16 +70,16 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     DATA(cells) = columns->get_parent( )->items(
                                        )->column_list_item( valign = 'Middle'
-                                                            type   = 'Navigation'
+                                                            type   = `Navigation`
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = '{' && comp-name && '}' ).
+      cells->object_identifier( text = `{` && comp-name && '}' ).
     ENDLOOP.
 
-    page->button( text  = 'Clear'
+    page->button( text  = `Clear`
                   press = client->_event( `CLEAR` )
-                  )->button( text  = 'Add'
+                  )->button( text  = `Add`
                              press = client->_event( `ADD` ) ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
@@ -98,8 +98,8 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
-      client->message_box_display( text = 'Frontend Lines <> Backend!'
-                                   type = 'error' ).
+      client->message_box_display( text = `Frontend Lines <> Backend!`
+                                   type = `error` ).
     ENDIF.
 
     on_event( ).

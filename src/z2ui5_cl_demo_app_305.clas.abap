@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
                     )->page(
-                      title          = 'abap2UI5 - Tables and cell colors'
+                      title          = `abap2UI5 - Tables and cell colors`
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -76,11 +76,11 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
           )->get(
             )->custom_data(
               )->core_custom_data( key        = 'color'
-                                   value      = '{VALUE}'
+                                   value      = `{VALUE}`
                                    writetodom = abap_true
             )->get_parent(
           )->get_parent(
-        )->input( value   = '{VALUE}'
+        )->input( value   = `{VALUE}`
                   enabled = abap_true ).
 
     client->view_display( view->stringify( ) ).
@@ -94,12 +94,12 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       t_tab = VALUE #(
-          ( title = 'entry 01'  value = 'red' )
-          ( title = 'entry 02'  value = 'blue' )
-          ( title = 'entry 03'  value = 'green' )
-          ( title = 'entry 04'  value = 'yellow' )
-          ( title = 'entry 05'  value = 'orange' )
-          ( title = 'entry 06'  value = 'grey' ) ).
+          ( title = `entry 01`  value = `red` )
+          ( title = `entry 02`  value = `blue` )
+          ( title = `entry 03`  value = `green` )
+          ( title = `entry 04`  value = `yellow` )
+          ( title = `entry 05`  value = `orange` )
+          ( title = `entry 06`  value = `grey` ) ).
 
       set_view( ).
     ENDIF.

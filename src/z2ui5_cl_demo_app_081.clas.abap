@@ -40,17 +40,17 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->popover(
-                  title     = 'Popover Title'
+                  title     = `Popover Title`
                   placement = mv_placement
               )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
-                      text  = 'Cancel'
+                      text  = `Cancel`
                       press = client->_event( `BUTTON_CANCEL` )
                   )->button(
-                      text  = 'Confirm'
+                      text  = `Confirm`
                       press = client->_event( `BUTTON_CONFIRM` )
-                      type  = 'Emphasized'
+                      type  = `Emphasized`
                 )->get_parent( )->get_parent(
             )->text( 'make an input here:'
             )->input( 'abcd' ).
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->popover(
-                  title     = 'Popover Title'
+                  title     = `Popover Title`
                   placement = mv_placement
               )->list(
                 items           = client->_bind_edit( mt_tab )
@@ -90,40 +90,40 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Popover with List'
+              title          = `abap2UI5 - Popover with List`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( 'Popover'
               )->content( 'form'
                   )->title( 'Input'
                   )->label( 'Link'
-                  )->link( text = 'Documentation UI5 Popover Control'
+                  )->link( text = `Documentation UI5 Popover Control`
                            href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
                   )->label( 'placement'
                   )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key  = 'Left'
-                                icon = 'sap-icon://add-favorite'
-                                text = 'Left'
+                                icon = `sap-icon://add-favorite`
+                                text = `Left`
                         )->segmented_button_item(
                                 key  = 'Top'
-                                icon = 'sap-icon://accept'
-                                text = 'Top'
+                                icon = `sap-icon://accept`
+                                text = `Top`
                         )->segmented_button_item(
                                 key  = 'Bottom'
-                                icon = 'sap-icon://accept'
-                                text = 'Bottom'
+                                icon = `sap-icon://accept`
+                                text = `Bottom`
                         )->segmented_button_item(
                                 key  = 'Right'
-                                icon = 'sap-icon://attachment'
-                                text = 'Right'
+                                icon = `sap-icon://attachment`
+                                text = `Right`
                   )->get_parent( )->get_parent(
                   )->label( 'popover'
                   )->button(
-                      text  = 'show popover with list'
+                      text  = `show popover with list`
                       press = client->_event( `POPOVER_LIST` )
-                      id    = 'TEST' ).
+                      id    = `TEST` ).
 
     client->view_display( view->stringify( ) ).
 

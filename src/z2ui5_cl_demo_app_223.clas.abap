@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_223 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Icon Tab Bar - Inline Mode'
+            title          = `abap2UI5 - Sample: Icon Tab Bar - Inline Mode`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

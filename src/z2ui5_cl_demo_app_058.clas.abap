@@ -174,7 +174,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view = view->shell( )->page( id = `page_main`
-             title                  = 'abap2UI5 - Table Layout Sample'
+             title                  = `abap2UI5 - Table Layout Sample`
              navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = client->check_app_prev_stack( ) ).
 
@@ -191,10 +191,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
               )->title( ms_layout-title && ` (` && shift_right( CONV string( lines( mt_table ) ) ) && `)`
       )->toolbar_spacer(
               )->button(
-                  icon  = 'sap-icon://save'
+                  icon  = `sap-icon://save`
                   press = client->_event( `BUTTON_SAVE` )
               )->button(
-                  icon  = 'sap-icon://action-settings'
+                  icon  = `sap-icon://action-settings`
                   press = client->_event( `BUTTON_SETUP` ) ).
 
     DATA(lv_width) = 10.
@@ -231,7 +231,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(ro_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    ro_popup = ro_popup->dialog( title        = 'View Setup'
+    ro_popup = ro_popup->dialog( title        = `View Setup`
                                  resizable    = abap_true
           contentheight                       = `50%`
                                  contentwidth = `50%` ).
@@ -245,12 +245,12 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     DATA(lo_tab) = ro_popup->tab_container( ).
 
     mt_combo = VALUE ty_t_combo(
-                       ( key = 'None'  text = 'None' )
-                       ( key = 'SingleSelect' text = 'SingleSelect' )
-                       ( key = 'SingleSelectLeft' text = 'SingleSelectLeft' )
-                       ( key = 'MultiSelect'  text = 'MultiSelect' ) ).
+                       ( key = 'None'  text = `None` )
+                       ( key = 'SingleSelect' text = `SingleSelect` )
+                       ( key = 'SingleSelectLeft' text = `SingleSelectLeft` )
+                       ( key = 'MultiSelect'  text = `MultiSelect` ) ).
 
-    lo_tab->tab( text     = 'Table'
+    lo_tab->tab( text     = `Table`
                  selected = client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true
            )->content( 'form'
@@ -266,10 +266,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                    items       = client->_bind( mt_combo )
                    )->item(
                        key  = '{KEY}'
-                       text = '{TEXT}' ).
+                       text = `{TEXT}` ).
 
     lo_tab->tab(
-                text     = 'Columns'
+                text     = `Columns`
                 selected = client->_bind( mv_check_columns )
        )->table(
         client->_bind_edit( ms_layout-t_cols )
@@ -291,13 +291,13 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( ).
 
     lo_tab->tab(
-                    text     = 'Sort'
+                    text     = `Sort`
                     selected = client->_bind( mv_check_sort ) ).
 
     ro_popup->end_button( )->button(
-              text  = 'continue'
+              text  = `continue`
               press = client->_event( `POPUP_FILTER_CONTINUE` )
-              type  = 'Emphasized' ).
+              type  = `Emphasized` ).
 
     client->popup_display( ro_popup->get_root( )->xml_get( ) ).
 
@@ -308,7 +308,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    lo_popup = lo_popup->dialog( title        = 'abap2UI5 - Layout'
+    lo_popup = lo_popup->dialog( title        = `abap2UI5 - Layout`
                                  contentwidth = `50%`
         )->input( description = `Name`
                   value       = client->_bind( mv_layout )
@@ -332,13 +332,13 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         )->footer( )->overflow_toolbar(
             )->toolbar_spacer(
              )->button(
-                text  = 'load'
+                text  = `load`
                 press = client->_event( `POPUP_LAYOUT_LOAD` )
-                type  = 'Emphasized'
+                type  = `Emphasized`
             )->button(
-                text  = 'close'
+                text  = `close`
                 press = client->_event( `POPUP_LAYOUT_CONTINUE` )
-                type  = 'Emphasized' ).
+                type  = `Emphasized` ).
 
     client->popup_display( lo_popup->get_root( )->xml_get( ) ).
 

@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5'
+                  title          = `abap2UI5`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->info_frontend(
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                                         device_combi      = client->_bind_edit( device_combi )
                                         device_height     = client->_bind_edit( device_height )
                                         device_width      = client->_bind_edit( device_width )
-              )->simple_form( title    = 'Information'
+              )->simple_form( title    = `Information`
                               editable = abap_true
                   )->content( 'form'
                       )->label( 'device_browser'

@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: HTML'
+            title          = `abap2UI5 - Sample: HTML`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_242 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.HTML/sample/sap.ui.core.sample.Html' ).
 
     DATA(layout) = page->vertical_layout(

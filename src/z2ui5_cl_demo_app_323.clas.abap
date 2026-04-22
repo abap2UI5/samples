@@ -18,16 +18,16 @@ CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
              )->page(
-                     title          = 'abap2UI5 - Navigation with app state'
+                     title          = `abap2UI5 - Navigation with app state`
                      navbuttonpress = client->_event( `BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( title = 'Form Title' editable = abap_true
+          )->simple_form( title = `Form Title` editable = abap_true
                      )->content( 'form'
                          )->title( 'Input'
                          )->label( 'quantity'
                          )->input( client->_bind_edit( mv_quantity )
                          )->button(
-                             text  = 'share'
+                             text  = `share`
                              press = client->_event( `BUTTON_POST` )
               )->stringify( ) ).
     ENDIF.

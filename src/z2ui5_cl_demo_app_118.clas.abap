@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(page) = view->_z2ui5( )->title( 'ABAP2UI5 Weird behavior showcase' )->shell(
         )->page(
-            title          = 'ABAP2UI5 Weird behavior showcase'
+            title          = `ABAP2UI5 Weird behavior showcase`
             navbuttonpress = client->_event( `BACK` )
             showheader     = abap_true ).
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = |Go|
-                    icon  = 'sap-icon://blur'
+                    icon  = `sap-icon://blur`
                     press = client->_event( `ON_BTN_GO` ) ).
 
     tab_ko->columns(
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     tab_ko->items(
          )->column_list_item(
              )->cells(
-                 )->object_identifier( title = '{ID}' )->get_parent(
+                 )->object_identifier( title = `{ID}` )->get_parent(
                  )->text( '{DESCR}'
                  )->text( '{ADATE}'
                  )->text( '{ATIME}' ).
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     tab_ok->items(
          )->column_list_item(
              )->cells(
-                 )->object_identifier( title = '{ID}' )->get_parent(
+                 )->object_identifier( title = `{ID}` )->get_parent(
                  )->text( '{DESCR}'
                  )->text( '{ADATE}'
                  )->text( '{ATIME}' ).

@@ -23,26 +23,26 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title           = 'abap2UI5 - Illustrated Messages'
+            title           = `abap2UI5 - Illustrated Messages`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             ).
-    page->link( text   = 'Documentation'
-                target = '_blank'
+    page->link( text   = `Documentation`
+                target = `_blank`
                 href   = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
-    page->button( text  = 'NoActivities'
+    page->button( text  = `NoActivities`
                   press = client->_event( `sapIllus-NoActivities` ) ).
-    page->button( text  = 'AddPeople'
+    page->button( text  = `AddPeople`
                   press = client->_event( `sapIllus-AddPeople` ) ).
-    page->button( text  = 'Connection'
+    page->button( text  = `Connection`
                   press = client->_event( `sapIllus-Connection` ) ).
-    page->button( text  = 'NoDimensionsSet'
+    page->button( text  = `NoDimensionsSet`
                   press = client->_event( `sapIllus-NoDimensionsSet` ) ).
-    page->button( text  = 'NoEntries'
+    page->button( text  = `NoEntries`
                   press = client->_event( `sapIllus-NoEntries` ) ).
     page->illustrated_message( illustrationtype = client->_bind( mv_type )
       )->additional_content( )->button(
-                text  = 'information'
+                text  = `information`
                 press = client->_event( `BUTTON_MESSAGE_BOX` ) ).
 
     client->view_display( view->stringify( ) ).

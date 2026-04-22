@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Date Range Selection - Value States'
+            title          = `abap2UI5 - Date Range Selection - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -50,8 +50,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState' ).
 
     page->flex_box( items     = client->_bind( lt_a_data )
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
                  )->label( '{LABEL}'
                  )->date_range_selection(
                      width          = `100%`
-                     valuestate     = '{VALUE_STATE}'
+                     valuestate     = `{VALUE_STATE}`
                      valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
              )->get_parent( ).
 

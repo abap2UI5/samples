@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Step Input - Value States'
+            title          = `abap2UI5 - Sample: Step Input - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -50,20 +50,20 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StepInput/sample/sap.m.sample.StepInputValueState' ).
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
               )->vbox( `sapUiTinyMargin`
-                  )->label( text     = '{LABEL}'
+                  )->label( text     = `{LABEL}`
                             labelfor = `SI`
                   )->step_input(
                       id         = `SI`
                       width      = `100%`
                       value      = `5`
-                      valuestate = '{VALUE_STATE}' ).
+                      valuestate = `{VALUE_STATE}` ).
 
     client->view_display( page->stringify( ) ).
 

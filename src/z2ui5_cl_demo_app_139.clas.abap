@@ -43,10 +43,10 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
     DATA(tmp) = view->_z2ui5( )->history( client->_bind_edit( search )
          )->shell(
          )->page(
-                 title          = 'abap2UI5 - Change URL History'
+                 title          = `abap2UI5 - Change URL History`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( title    = 'Form Title'
+             )->simple_form( title    = `Form Title`
                              editable = abap_true
                  )->content( 'form'
                      )->title( 'Input'

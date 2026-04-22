@@ -34,11 +34,11 @@ CLASS z2ui5_cl_demo_app_151 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Inform'
+                title          = `abap2UI5 - Popup To Inform`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Open Popup...'
+            text  = `Open Popup...`
             press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).

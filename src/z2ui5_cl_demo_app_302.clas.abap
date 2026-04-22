@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Object Attribute inside Table'
+            title          = `abap2UI5 - Sample: Object Attribute inside Table`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -48,8 +48,8 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectAttributeInTable' ).
 
     page->table( id = `idProductsTable`
@@ -66,11 +66,11 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
                )->get_parent( )->get_parent(
            )->column_list_item(
                )->object_identifier(
-                   text = '{PRODUCT}' )->get_parent(
+                   text = `{PRODUCT}` )->get_parent(
                )->object_attribute(
-                   text = '{SUPPLIER}'
+                   text = `{SUPPLIER}`
                )->object_attribute(
-                   text   = '{SUPPLIER}'
+                   text   = `{SUPPLIER}`
                    active = abap_true
            )->get_parent( ).
 

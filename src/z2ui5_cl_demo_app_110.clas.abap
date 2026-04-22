@@ -25,17 +25,17 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Sample: MaskInput'
+              title          = `abap2UI5 - Sample: MaskInput`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( title    = 'Generic Mask Input'
-                          layout   = 'ColumnLayout'
+          )->simple_form( title    = `Generic Mask Input`
+                          layout   = `ColumnLayout`
                           editable = abap_true
 *              )->content( 'form'
                   )->label( 'Unique ID'
                   )->mask_input( mask              = `~~~~~~~~~~`
                                  placeholdersymbol = `_`
-                                 placeholder       = 'All characters allowed' )->get(
+                                 placeholder       = `All characters allowed` )->get(
                     )->rules(
                       )->mask_input_rule( maskformatsymbol = '~'
                                           regex            = `[^_]`
@@ -55,8 +55,8 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                   )->rules(
                     )->mask_input_rule(
                   )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-      )->simple_form( title    = 'Possible usages (may require additional coding)'
-                      layout   = 'ColumnLayout'
+      )->simple_form( title    = `Possible usages (may require additional coding)`
+                      layout   = `ColumnLayout`
                       editable = abap_true
                 )->label( `Serial number`
                  )->mask_input( mask              = `CCCC-CCCC-CCCC-CCCC-CCCC`

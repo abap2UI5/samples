@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     page->message_strip(
         text    = client->_bind( error-text )
-        type    = 'Error'
+        type    = `Error`
         visible = client->_bind( error-flag ) ).
 
     DATA(vbox) = page->vbox( ).
@@ -58,29 +58,29 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     hbox->info_label( text = client->_bind( session_text ) ).
 
     hbox->button(
-      text  = 'End session'
+      text  = `End session`
       press = client->_event( `END_SESSION` ) ).
 
     hbox->button(
-      text  = 'Start session again'
+      text  = `Start session again`
       press = client->_event( `START_SESSION` ) ).
 
     hbox = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text  = 'press button to create lock entry (SM12) in backend session'
-                 class = 'sapUiTinyMarginEnd' ).
+    hbox->label( text  = `press button to create lock entry (SM12) in backend session`
+                 class = `sapUiTinyMarginEnd` ).
     hbox->button(
-      text  = 'Lock'
+      text  = `Lock`
       press = client->_event( `LOCK` )
-      type  = 'Emphasized' ).
+      type  = `Emphasized` ).
 
     hbox = vbox->hbox( ).
 
     hbox->button(
-      text  = 'Refresh lock counter'
+      text  = `Refresh lock counter`
       press = client->_event( `REFRESH` ) ).
 
     hbox->button(
-      text  = 'Rollback Work'
+      text  = `Rollback Work`
       press = client->_event( `ROLLBACK` ) ).
 
     vbox->hbox( )->info_label( client->_bind( lock_text ) ).

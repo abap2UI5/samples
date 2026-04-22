@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
       DATA(header_title) = page->header_title(
          )->object_page_dyn_header_title( ).
 
-      header_title->expanded_heading( )->hbox( )->title( text     = 'Test'
+      header_title->expanded_heading( )->hbox( )->title( text     = `Test`
                                                          wrapping = abap_true ).
       header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text     = 'Test'
                                                                                   wrapping = abap_true ).
@@ -33,34 +33,34 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
       DATA(sections) = page->sections( ).
 
       sections->object_page_section( titleuppercase = abap_false
-                                     id             = 'id_sec1'
+                                     id             = `id_sec1`
                                      title          = '...' )->heading( `uxap`
-        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = 'id_input'
-                                                                    title = 'Input field'
+        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_input`
+                                                                    title = `Input field`
         )->blocks( )->vbox(
         )->input( value = client->_bind_edit( input )
                   width = `50%`
-        )->button( text  = 'Copy input'
-                   type  = 'Emphasized'
+        )->button( text  = `Copy input`
+                   type  = `Emphasized`
                    press = client->_event( `COPY_INPUT` ) ).
 
       sections->object_page_section( titleuppercase = abap_false
-                                     id             = 'id_sec2'
+                                     id             = `id_sec2`
                                      title          = '...' )->heading( `uxap`
-        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = 'id_text_area'
-                                                                    title = 'Text area'
+        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_text_area`
+                                                                    title = `Text area`
         )->blocks( )->vbox(
-        )->button( text  = 'Copy text area'
-                   type  = 'Emphasized'
+        )->button( text  = `Copy text area`
+                   type  = `Emphasized`
                    press = client->_event( `COPY_TEXT_AREA` )
         )->text_area( valueliveupdate = abap_true
                       editable        = abap_true
                       value           = client->_bind_edit( text )
                       growing         = abap_true
         growingmaxlines               = '50'
-                      width           = '100%'
-                      rows            = '15'
-                      id              = 'text_id' ).
+                      width           = `100%`
+                      rows            = `15`
+                      id              = `text_id` ).
 
       client->view_display( page->stringify( ) ).
 

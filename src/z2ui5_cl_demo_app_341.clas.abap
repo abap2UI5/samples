@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
   METHOD ui5_view_display.
 
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = lo_main->page( title          = 'abap2UI5 - Popups'
+    DATA(page) = lo_main->page( title          = `abap2UI5 - Popups`
                                 navbuttonpress = client->_event_nav_app_leave( )
                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -37,10 +37,10 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'
         )->simple_form( 'Popups' )->content( 'form'
             )->label( 'Demo'
-            )->button( text  = 'Popup to Select'
+            )->button( text  = `Popup to Select`
                        press = client->_event( `BUTTON_POPUP_01` )
             )->label( 'Demo'
-            )->button( text  = 'other Popup'
+            )->button( text  = `other Popup`
                        press = client->_event( `BUTTON_POPUP_02` ) ).
 
     client->view_display( lo_main->stringify( ) ).

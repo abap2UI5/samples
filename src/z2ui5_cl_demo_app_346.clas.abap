@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Tables and focus'
+            title          = `abap2UI5 - Tables and focus`
             navbuttonpress = client->_event( `BACK` )
             shownavbutton  = abap_true ).
 
@@ -103,15 +103,15 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                                                 value       = client->_bind_edit( focusrow )
                                                 placeholder = `Focus Row`
                                                 width       = `10%`
-                                                type        = 'Number'
+                                                type        = `Number`
                 )->button(
-                    text  = 'Set Focus'
+                    text  = `Set Focus`
                     press = client->_event( `FOCUS` )
                 )->button(
-                    text  = 'Next Focus'
+                    text  = `Next Focus`
                     press = client->_event( `ENTER` )
                 )->button(
-                    text  = 'Reset Focus'
+                    text  = `Reset Focus`
                     press = client->_event( `RESET` )
                 )->title( client->_bind( focusid )
                 )->toolbar_spacer(
@@ -134,21 +134,21 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->text( '{INDEX}'
-          )->input( value  = '{TITLE}'
+          )->input( value  = `{TITLE}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{VALUE}'
+          )->input( value  = `{VALUE}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{INFO}'
+          )->input( value  = `{INFO}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
@@ -161,7 +161,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      value      = c_id-checkbox
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->input( value  = '{DESCRIPTION}'
+          )->input( value  = `{DESCRIPTION}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
@@ -181,11 +181,11 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-          ( index = 0 title = 'entry 01'  value = 'red'    info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 1 title = 'entry 02'  value = 'blue'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 2 title = 'entry 03'  value = 'green'  info = 'completed'  description = 'this is a description' checkbox = abap_true )
-          ( index = 3 title = 'entry 04'  value = 'orange' info = 'completed'  description = '' checkbox = abap_true )
-          ( index = 4 title = 'entry 05'  value = 'grey'   info = 'completed'  description = 'this is a description' checkbox = abap_true )
+          ( index = 0 title = `entry 01`  value = `red`    info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 1 title = `entry 02`  value = `blue`   info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 2 title = `entry 03`  value = `green`  info = `completed`  description = `this is a description` checkbox = abap_true )
+          ( index = 3 title = `entry 04`  value = `orange` info = `completed`  description = `` checkbox = abap_true )
+          ( index = 4 title = `entry 05`  value = `grey`   info = `completed`  description = `this is a description` checkbox = abap_true )
           ( index = 5 ) ).
 
       default_focus( ).

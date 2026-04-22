@@ -122,14 +122,14 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
       )->stringify( ) ).
 
     DATA(page1) = view->page( id = `page_main`
-            title                = 'abap2UI5 - List Report Features'
+            title                = `abap2UI5 - List Report Features`
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
+    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( 'f' )->smart_variant_management( id                     = `svm`
                                                                  showexecuteonselection = abap_true ).
     header_title->expanded_content( 'f' ).

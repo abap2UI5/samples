@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
     DO 100 TIMES.
       DATA ls_row TYPE ty_row.
       ls_row-count = sy-index.
-      ls_row-value = 'red'.
+      ls_row-value = `red`.
 *        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
       ls_row-descr = 'this is a description'.
       ls_row-checkbox = abap_true.
@@ -66,13 +66,13 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = 'abap2UI5 - Table with Cell Copy'
+            title          = `abap2UI5 - Table with Cell Copy`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(tab) = page->table(
             growing             = abap_true
-            growingthreshold    = '20'
+            growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind_edit( t_tab )
             sticky              = 'ColumnHeaders,HeaderToolbar' ).
@@ -81,15 +81,15 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
         )->toolbar(
             )->title( 'title of the table'
             )->button(
-                text  = 'letf side button'
-                icon  = 'sap-icon://account'
+                text  = `letf side button`
+                icon  = `sap-icon://account`
                 press = client->_event( `BUTTON_SORT` )
             )->toolbar_spacer(
             )->button(
-                icon  = 'sap-icon://sort-descending'
+                icon  = `sap-icon://sort-descending`
                 press = client->_event( `SORT_DESCENDING` )
             )->button(
-                icon  = 'sap-icon://sort-ascending'
+                icon  = `sap-icon://sort-ascending`
                 press = client->_event( `SORT_ASCENDING` ) ).
 
     tab->columns(

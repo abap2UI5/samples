@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->page(
-                    title          = 'abap2UI5 - Network Graph - Org Tree'
+                    title          = `abap2UI5 - Network Graph - Org Tree`
                     navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( ) ).
 

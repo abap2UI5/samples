@@ -165,12 +165,12 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     t_tab = VALUE #(
-      ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_02'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_03'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_04'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-      ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+      ( title = `row_01`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+      ( title = `row_02`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
+      ( title = `row_03`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+      ( title = `row_04`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+      ( title = `row_05`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+      ( title = `row_06`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
 
     t_tab_group = VALUE #(
        ( text = `Title`       key = `title` )
@@ -195,7 +195,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title           = 'abap2UI5 - List'
+            title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             )->header_content(
@@ -203,7 +203,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       )->get_parent( ).
 
     page->table(
-        headertext = 'Table Output'
+        headertext = `Table Output`
         items      = `{path:'` && client->_bind_edit( val = t_tab path = abap_true )
                             && `',sorter:{path:'` && mv_sorter_group
                             && `',group:` && `true` && `}`

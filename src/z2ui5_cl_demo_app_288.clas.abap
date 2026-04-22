@@ -54,8 +54,8 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select' ).
 
     DATA(page_02) = page_01->page(
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                          selectedkey    = client->_bind( selected_product )
                                          items          = client->_bind( lt_product_collection )
                                          )->item( key  = '{PRODUCT_ID}'
-                                                  text = '{NAME}'
+                                                  text = `{NAME}`
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                             selectedkey    = client->_bind( selected_product2 )
                                             items          = client->_bind( lt_product_collection2 )
                                             )->item( key  = '{PRODUCT_ID}'
-                                                     text = '{NAME}'
+                                                     text = `{NAME}`
                                       )->get_parent(
                                       )->vbox(
                                           )->hbox( alignitems = `Center`
@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                               autoadjustwidth = abap_true
                                               items           = client->_bind( lt_product_collection3 )
                                               )->item( key  = '{PRODUCT_ID}'
-                                                       text = '{NAME}' ).
+                                                       text = `{NAME}` ).
 
     client->view_display( page_02->stringify( ) ).
 
@@ -155,25 +155,25 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
       selected_product3 = `HT-1001`.
 
       " Populate the internal tables
-      lt_product_collection = VALUE #( ( product_id = 'HT-1000' name = 'Notebook Basic 15' )
-                                       ( product_id = 'HT-1001' name = 'Notebook Basic 17' )
-                                       ( product_id = 'HT-1002' name = 'Notebook Basic 18' )
-                                       ( product_id = 'HT-1003' name = 'Notebook Basic 19' )
-                                       ( product_id = 'HT-1007' name = 'ITelO Vault' ) ).
+      lt_product_collection = VALUE #( ( product_id = 'HT-1000' name = `Notebook Basic 15` )
+                                       ( product_id = 'HT-1001' name = `Notebook Basic 17` )
+                                       ( product_id = 'HT-1002' name = `Notebook Basic 18` )
+                                       ( product_id = 'HT-1003' name = `Notebook Basic 19` )
+                                       ( product_id = 'HT-1007' name = `ITelO Vault` ) ).
       SORT lt_product_collection BY name.
 
-      lt_product_collection2 = VALUE #( ( product_id = 'HT-1000' name = 'Notebook Basic 15' )
-                                        ( product_id = 'HT-1001' name = 'Notebook Basic 17' )
-                                        ( product_id = 'HT-1002' name = 'Notebook Basic 18' )
-                                        ( product_id = 'HT-1003' name = 'Notebook Basic 19' )
-                                        ( product_id = 'HT-1007' name = 'ITelO Vault' ) ).
+      lt_product_collection2 = VALUE #( ( product_id = 'HT-1000' name = `Notebook Basic 15` )
+                                        ( product_id = 'HT-1001' name = `Notebook Basic 17` )
+                                        ( product_id = 'HT-1002' name = `Notebook Basic 18` )
+                                        ( product_id = 'HT-1003' name = `Notebook Basic 19` )
+                                        ( product_id = 'HT-1007' name = `ITelO Vault` ) ).
       SORT lt_product_collection2 BY name.
 
-      lt_product_collection3 = VALUE #( ( product_id = 'HT-1000' name = 'Notebook Basic 15' )
-                                        ( product_id = 'HT-1001' name = 'Notebook Basic 17' )
-                                        ( product_id = 'HT-1002' name = 'Notebook Basic 18' )
-                                        ( product_id = 'HT-1003' name = 'Notebook Basic 19' )
-                                        ( product_id = 'HT-1007' name = 'ITelO Vault' ) ).
+      lt_product_collection3 = VALUE #( ( product_id = 'HT-1000' name = `Notebook Basic 15` )
+                                        ( product_id = 'HT-1001' name = `Notebook Basic 17` )
+                                        ( product_id = 'HT-1002' name = `Notebook Basic 18` )
+                                        ( product_id = 'HT-1003' name = `Notebook Basic 19` )
+                                        ( product_id = 'HT-1007' name = `ITelO Vault` ) ).
       SORT lt_product_collection3 BY name.
 
       editable = abap_true.

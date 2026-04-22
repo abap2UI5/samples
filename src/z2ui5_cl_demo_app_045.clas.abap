@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
   METHOD refresh_data.
 
     DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_row( count = sy-index  value = 'red'
+      DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
         descr = 'this is a description' checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
@@ -58,28 +58,28 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = 'abap2UI5 - Scroll Container with Table and Toolbar'
+            title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->link(
       )->get_parent( ).
 
-    page->simple_form( title    = 'Form Title'
+    page->simple_form( title    = `Form Title`
                        editable = abap_true
                 )->content( 'form'
                     )->title( 'Filter'
                     )->label( 'info'
                     )->input( client->_bind( mv_info_filter )
                     )->button(
-                        text  = 'filter'
+                        text  = `filter`
                         press = client->_event( `FLTER_INFO` ) ).
 
-    DATA(tab) = page->scroll_container( height   = '70%'
+    DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true
-            growingthreshold    = '20'
+            growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind( t_tab )
             sticky              = 'ColumnHeaders,HeaderToolbar' ).

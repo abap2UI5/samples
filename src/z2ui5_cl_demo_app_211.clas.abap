@@ -57,10 +57,10 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( class = 'Z2UI5_CL_DEMO_APP_212'
-                       ( id = '1' count = '5' table = 'Z2UI5_T003' descr = 'Table 01' icon = 'sap-icon://add' )
+    mt_t002 = VALUE #( class = `Z2UI5_CL_DEMO_APP_212`
+                       ( id = `1` count = '5' table = 'Z2UI5_T003' descr = 'Table 01' icon = `sap-icon://add` )
 *                       ( id = '2' count = '10' table = 'Z2UI5_T003'  descr = 'Table 01' icon = 'sap-icon://add' )
-                       ( id = '3' count = '15' table = 'Z2UI5_T004'  descr = 'Table 02' icon = 'sap-icon://accept' ) ).
+                       ( id = `3` count = '15' table = 'Z2UI5_T004'  descr = 'Table 02' icon = `sap-icon://accept` ) ).
 
     mv_selectedkey = '1'.
 
@@ -72,12 +72,12 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id             = `page_main`
-                             title          = 'Customizing'
+                             title          = `Customizing`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
-                             class          = 'sapUiContentPadding' ).
+                             class          = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
+    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( `ONSELECTICONTABBAR` )
                                                        )->items( ).

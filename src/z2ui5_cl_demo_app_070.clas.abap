@@ -138,15 +138,15 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
-            title                = 'abap2UI5 - sap.ui.table.Table Features'
+            title                = `abap2UI5 - sap.ui.table.Table Features`
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( )
-            class                = 'sapUiContentPadding' ).
+            class                = `sapUiContentPadding` ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
+    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( 'f' )->hbox( )->title( `Search Field` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( 'f' ).
@@ -185,45 +185,45 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     lo_columns->ui_column( '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
-    lo_columns->ui_column( width                         = '5rem'
+    lo_columns->ui_column( width                         = `5rem`
                            sortproperty                  = 'ROW_ID'
                                           filterproperty = 'ROW_ID' )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'PROCESS'
                            filterproperty = 'PROCESS' )->text( `Process Indicator`
-      )->ui_template( )->progress_indicator( class        = 'sapUiSmallMarginBottom'
+      )->ui_template( )->progress_indicator( class        = `sapUiSmallMarginBottom`
                                              percentvalue = `{PROCESS}`
                                              displayvalue = '{PROCESS} %'
                                              showvalue    = 'true'
-                                             state        = '{PROCESS_STATE}' ).
-    lo_columns->ui_column( width          = '11rem'
+                                             state        = `{PROCESS_STATE}` ).
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'PRODUCT'
                            filterproperty = 'PRODUCT' )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
                                                                                                           editable = abap_false ).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'CREATE_DATE'
                            filterproperty = 'CREATE_DATE' )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'CREATE_BY'
                            filterproperty = 'CREATE_BY')->text( `Name` )->ui_template( )->text( `{CREATE_BY}` ).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'STORAGE_LOCATION'
                            filterproperty = 'STORAGE_LOCATION' )->text( `Location` )->ui_template( )->text( `{STORAGE_LOCATION}`).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'QUANTITY'
                            filterproperty = 'QUANTITY' )->text( `Quantity` )->ui_template( )->text( `{QUANTITY}`).
-    lo_columns->ui_column( width          = '6rem'
+    lo_columns->ui_column( width          = `6rem`
                            sortproperty   = 'MEINS'
                            filterproperty = 'MEINS' )->text( `Unit` )->ui_template( )->text( `{MEINS}`).
-    lo_columns->ui_column( width          = '11rem'
+    lo_columns->ui_column( width          = `11rem`
                            sortproperty   = 'PRICE'
                            filterproperty = 'PRICE' )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
                                                                                                          currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
-      )->ui_row_action_item( type = 'Navigation'
+      )->ui_row_action_item( type = `Navigation`
                            press  = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROW_ID}` ) ) )
-                          )->get_parent( )->ui_row_action_item( icon  = 'sap-icon://edit'
-                                                                text  = 'Edit'
+                          )->get_parent( )->ui_row_action_item( icon  = `sap-icon://edit`
+                                                                text  = `Edit`
                                                                 press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).

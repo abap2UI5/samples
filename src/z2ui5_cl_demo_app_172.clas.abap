@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     DO 11 TIMES.
 
       ls_output-index = sy-index.
-      ls_output-text = 'Text'.
+      ls_output-text = `Text`.
       ls_output-link = 'Link'.
       ls_output-currency = '123.45'.
       ls_output-waers = 'EUR'.
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     DATA(page) = view->shell(
       )->page(
         id              = `page`
-        title           = 'abap2UI5 - Demo ui.table'
+        title           = `abap2UI5 - Demo ui.table`
         navbuttonpress  = client->_event_nav_app_leave( )
           shownavbutton = client->check_app_prev_stack( )
         )->header_content(
@@ -122,24 +122,24 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
                                   rows                = client->_bind_edit( val = output ) ).
     DATA(columns) = table->ui_columns( ).
 
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'TEXT'
                         filterproperty = 'TEXT' )->text( 'Text Column' )->ui_template( )->text( `{TEXT}` ).
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'LINK'
                         filterproperty = 'LINK' )->text( 'Link Column' )->ui_template( )->link( text = `{LINK}`
       press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = VALUE #( ( `${INDEX}`) ) ) ).
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'CURRENCY'
                         filterproperty = 'CURRENCY' )->text( 'Currency Column' )->ui_template( )->text(
       `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'PERCENT1'
                         filterproperty = 'PERCENT1' )->text( 'Percentage' )->ui_template( )->text( `{PERCENT1} %` ).
 
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'INPUT1'
                         filterproperty = 'INPUT1' )->text( 'Input Column' )->ui_template( )->input(
       value           = `{INPUT1}`
@@ -150,9 +150,9 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         ( `$event.oSource.oParent.sId` ) "Access the id of the parent element
         ( `INPUT1` ) "Pass the column name as simple string to the event
          ) ) editable = abap_true
-      type            = 'Number' ).
+      type            = `Number` ).
 
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'INPUT2'
                         filterproperty = 'INPUT2' )->text( 'Input Column'
       )->ui_template(
@@ -168,9 +168,9 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
          ) )
        submit   = client->_event( `INPUT_SUBMIT` )
        editable = abap_true
-       type     = 'Number' ).
+       type     = `Number` ).
 
-    columns->ui_column( width          = '8rem'
+    columns->ui_column( width          = `8rem`
                         sortproperty   = 'INPUT3'
                         filterproperty = 'INPUT3' )->text( 'Input Column' )->ui_template( )->input(
       value           = `{INPUT3}`
@@ -181,7 +181,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         ( `$event.oSource.oParent.sId` )
         ( `INPUT3` )
          ) ) editable = abap_true
-      type            = 'Number' ).
+      type            = `Number` ).
 
     client->view_display( view->stringify( ) ).
 

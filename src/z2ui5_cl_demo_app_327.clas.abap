@@ -46,11 +46,11 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view->shell(
-        )->page( title          = 'abap2UI5 - Storage'
+        )->page( title          = `abap2UI5 - Storage`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
 
-        )->simple_form( title    = 'Local/Session Storage'
+        )->simple_form( title    = `Local/Session Storage`
                         editable = abap_true
             )->content( 'form'
                 )->label( 'Type'
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                                  selectedkey    = client->_bind_edit( storage-type )
                                  items          = client->_bind( storage_types )
                           )->item( key  = '{TYPE}'
-                                   text = '{TYPE}'
+                                   text = `{TYPE}`
                           )->get_parent(
                 )->label( 'Prefix'
                 )->input( client->_bind_edit( storage-prefix )
@@ -66,11 +66,11 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                 )->input( client->_bind_edit( storage-key )
                 )->label( 'Value'
                 )->input( client->_bind_edit( storage-value )
-                )->button( text  = 'store'
+                )->button( text  = `store`
                            press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data
                                                           t_arg = VALUE #( ( |${ client->_bind_edit( storage ) }| ) ) )
 
-                )->button( text  = 'get'
+                )->button( text  = `get`
                            press = client->_event( `GET_STORED_VALUE` )
                                        )->get_parent(
                                        )->get_parent(

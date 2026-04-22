@@ -85,16 +85,16 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'GO'
+    page->button( text  = `GO`
                   press = client->_event( `GO` )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
-    page->table( headertext      = 'Table'
+    page->table( headertext      = `Table`
                  mode            = 'MultiSelect'
                  items           = client->_bind_edit( <table> )
                  selectionchange = client->_event( `SELECTION_CHANGE` )
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
 
     APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
-                              ( name = 'SELKZ'
+                              ( name = `SELKZ`
                                 type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
 
     TRY.

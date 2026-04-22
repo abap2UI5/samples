@@ -100,25 +100,25 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
        )->page(
          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
-          title           = 'abap2UI5 - Master Detail Page with Nested View'
+          title           = `abap2UI5 - Master Detail Page with Nested View`
           navbuttonpress  = client->_event_nav_app_leave( )
             shownavbutton = abap_true ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
-                                                     id     ='test' ).
+                                                     id     =`test` ).
 
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     DATA(lr_list) = lr_master->list(
-          headertext      = 'List Ouput'
+          headertext      = `List Ouput`
           items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( `SELCHANGE` )
           )->standard_list_item(
-              title       = '{TITLE}'
-              description = '{DESCR}'
-              icon        = '{ICON}'
-              info        = '{INFO}'
+              title       = `{TITLE}`
+              description = `{DESCR}`
+              icon        = `{ICON}`
+              info        = `{INFO}`
               press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
@@ -134,12 +134,12 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = 'row_01'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_02'  info = 'incompleted' descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_03'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_04'  info = 'working'     descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_05'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
-        ( title = 'row_06'  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+        ( title = `row_01`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `row_02`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `row_03`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `row_04`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `row_05`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+        ( title = `row_06`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
 
       mv_layout = `OneColumn`.
 

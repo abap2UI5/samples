@@ -59,12 +59,12 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
   METHOD ui5_init.
 
     t_bapiret = VALUE #(
-      ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-      ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-      ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-      ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-      ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-      ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
+      ( message = 'An empty Report field causes an empty XML Message to be sent' type = `E` id = `MSG1` number = '001' )
+      ( message = 'Check was executed for wrong Scenario' type = `E` id = `MSG1` number = '002' )
+      ( message = 'Request was handled without errors' type = `S` id = `MSG1` number = '003' )
+      ( message = 'product activated' type = `S` id = `MSG4` number = '375' )
+      ( message = 'check the input values' type = `W` id = `MSG2` number = '375' )
+      ( message = 'product already in use' type = `I` id = `MSG2` number = '375' ) ).
 
   ENDMETHOD.
 
@@ -74,32 +74,32 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
-       contentheight = '500px'
-       contentwidth  = '500px'
-       title         = 'Title' ).
+       contentheight = `500px`
+       contentwidth  = `500px`
+       title         = `Title` ).
 
     dialog->content(
            )->simple_form(
-               )->label( text = 'Input1'
-                         id   = 'lbl1'
+               )->label( text = `Input1`
+                         id   = `lbl1`
                )->input( client->_bind_edit( ms_popup_input-value1 )
                )->label( 'Input2'
                )->input( client->_bind_edit( ms_popup_input-value2 )
                )->label( 'Checkbox'
                )->checkbox(
                    selected = client->_bind_edit( ms_popup_input-check_is_active )
-                   text     = 'this is a checkbox'
+                   text     = `this is a checkbox`
                    enabled  = abap_true
          )->get_parent( )->get_parent(
          )->footer( )->overflow_toolbar(
            )->toolbar_spacer(
            )->button(
-               text  = 'Cancel'
+               text  = `Cancel`
                press = client->_event( `BUTTON_TEXTAREA_CANCEL` )
            )->button(
-               text  = 'Confirm'
+               text  = `Confirm`
                press = client->_event_client( client->cs_event-popup_close )
-               type  = 'Emphasized' ).
+               type  = `Emphasized` ).
 
     dialog->_generic( name   = `HTML`
                       ns     = `core`
@@ -131,7 +131,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                     ns   = `html` )->_cc_plain_xml( script )->get_parent( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - Popups'
+                title          = `abap2UI5 - Popups`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -140,7 +140,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     grid->simple_form( 'Inputs' )->content( 'form'
         )->label( '01'
         )->button(
-            text  = 'Popup Get Input Values'
+            text  = `Popup Get Input Values`
             press = client->_event( `POPUP_TO_INPUT` ) ).
 
     client->view_display( view->stringify( ) ).

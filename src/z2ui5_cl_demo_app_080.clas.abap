@@ -57,10 +57,10 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
-            title               = 'abap2UI5 - Planning Calendar'
+            title               = `abap2UI5 - Planning Calendar`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
-            class               = 'sapUiContentPadding' ).
+            class               = `sapUiContentPadding` ).
 
     DATA(lo_vbox) = page->vbox( 'sapUiSmallMargin' ).
 
@@ -73,26 +73,26 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(
                                                      appointments    = `{path:'APPOINTMENTS', templateShareable: false}`
-                                                     icon            = '{PIC}'
-                                                     title           = '{NAME}'
-                                                     text            = '{ROLE}'
+                                                     icon            = `{PIC}`
+                                                     title           = `{NAME}`
+                                                     text            = `{ROLE}`
                                                      intervalheaders = `{path:'HEADERS', templateShareable: false}` ).
     lo_planningcalendarrow->appointments( )->calendar_appointment(
                                                                   startdate = `{= Helper.DateCreateObject(${START} ) }`
                                                                   enddate   = `{= Helper.DateCreateObject(${END} ) }`
-                                                                  icon      = '{PIC}'
-                                                                  title     = '{TITLE}'
-                                                                  text      = '{INFO}'
-                                                                  type      = '{TYPE}'
+                                                                  icon      = `{PIC}`
+                                                                  title     = `{TITLE}`
+                                                                  text      = `{INFO}`
+                                                                  type      = `{TYPE}`
                                                                   tentative = '{TENTATIVE}' ).
 
     lo_planningcalendarrow->interval_headers( )->calendar_appointment(
                                                                       startdate = `{= Helper.DateCreateObject(${START} ) }`
                                                                       enddate   = `{= Helper.DateCreateObject(${END} ) }`
-                                                                      icon      = '{PIC}'
-                                                                      title     = '{TITLE}'
-                                                                      text      = '{INFO}'
-                                                                      type      = '{TYPE}' ).
+                                                                      icon      = `{PIC}`
+                                                                      title     = `{TITLE}`
+                                                                      text      = `{INFO}`
+                                                                      type      = `{TYPE}` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -130,22 +130,22 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_people = VALUE #(
-      ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
+      ( name = `Olaf` role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
-          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = 'Mittag1' type = 'Type01' title = 'App1' tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = 'Mittag2' type = 'Type02' title = 'App2' tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = 'Mittag3' type = 'Type03' title = 'App3' tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
+          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = `Mittag1` type = `Type01` title = `App1` tentative = abap_false pic = 'sap-icon://sap-ui5' )
+          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = `Mittag2` type = `Type02` title = `App2` tentative = abap_false pic = 'sap-icon://sap-ui5' )
+          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = `Mittag3` type = `Type03` title = `App3` tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
           headers = VALUE #(
-              ( start = '2020-04-22T08:15:00' end = '2020-04-23T08:15:00' type = 'Type11' title = 'Reminder1' tentative = abap_true )
-              ( start = '2020-04-25T10:30:00' end = '2020-04-26T11:30:00' type = 'Type12' title = 'Reminder2' tentative = abap_false ) ) )
-      ( name = 'Stefanie' role = 'Team Member' pic = 'sap-icon://employee'
+              ( start = '2020-04-22T08:15:00' end = '2020-04-23T08:15:00' type = `Type11` title = `Reminder1` tentative = abap_true )
+              ( start = '2020-04-25T10:30:00' end = '2020-04-26T11:30:00' type = `Type12` title = `Reminder2` tentative = abap_false ) ) )
+      ( name = `Stefanie` role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
-          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = 'Mittag11' type = 'Type11' title = 'App11' tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = 'Mittag21' type = 'Type12' title = 'App12' tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = 'Mittag31' type = 'Type13' title = 'App13' tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
+          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = `Mittag11` type = `Type11` title = `App11` tentative = abap_false pic = 'sap-icon://sap-ui5' )
+          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = `Mittag21` type = `Type12` title = `App12` tentative = abap_false pic = 'sap-icon://sap-ui5' )
+          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = `Mittag31` type = `Type13` title = `App13` tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
           headers = VALUE #(
-              ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' type = 'Type11' title = 'Reminder11' tentative = abap_true )
-              ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' type = 'Type12' title = 'Reminder21' tentative = abap_false ) ) ) ).
+              ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' type = `Type11` title = `Reminder11` tentative = abap_true )
+              ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' type = `Type12` title = `Reminder21` tentative = abap_false ) ) ) ).
 
   ENDMETHOD.
 ENDCLASS.

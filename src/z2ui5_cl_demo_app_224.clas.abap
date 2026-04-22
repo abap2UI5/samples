@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'Sample: Icon Tab Bar - Text Only'
+            title          = `Sample: Icon Tab Bar - Text Only`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

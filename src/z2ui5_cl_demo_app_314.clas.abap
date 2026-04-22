@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       DO 10 TIMES.
         DATA ls_row TYPE ty_row.
         ls_row-count = sy-index.
-        ls_row-value = 'red'.
+        ls_row-value = `red`.
         ls_row-descr = 'this is a description'.
         ls_row-checkbox = abap_true.
         ls_row-valuecolor = `Good`.
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = 'abap2UI5 - Device Model, HTTP Model, OData Model'
+              title          = `abap2UI5 - Device Model, HTTP Model, OData Model`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

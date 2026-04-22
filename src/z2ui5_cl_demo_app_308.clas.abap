@@ -16,14 +16,14 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
-          )->page( title          = 'Harvey Chart'
+          )->page( title          = `Harvey Chart`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->harvey_ball_micro_chart(
 *                                   colorpalette  =
 *                                   press         =
-                                     size          = 'L'
+                                     size          = `L`
 *                                   height        =
 *                                   width         =
                                      total         = '10'

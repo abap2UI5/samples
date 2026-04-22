@@ -51,26 +51,26 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
                                          )->nav_container( id                    = `NavCon`
                                                            initialpage           = `page1`
                                                            defaulttransitionname = `flip`
-                                                           height                = '400px'
+                                                           height                = `400px`
                                            )->pages(
                                             )->page(
-                                              title = 'first page'
+                                              title = `first page`
                                               id    = `page1`
                                            )->get_parent(
                                             )->page(
-                                              title = 'second page'
+                                              title = `second page`
                                               id    = `page2`
                                            )->get_parent(
                                             )->page(
-                                              title = 'third page'
+                                              title = `third page`
                                               id    = `page3` ).
 
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
-                      text  = 'OK'
+                      text  = `OK`
                       press = client->_event( `BTN_OK_1ND` )
-                      type  = 'Emphasized' ).
+                      type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -90,9 +90,9 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     dialog->get_parent( )->footer( )->overflow_toolbar(
                   )->toolbar_spacer(
                   )->button(
-                      text  = 'GOTO 1ST POPUP'
+                      text  = `GOTO 1ST POPUP`
                       press = client->_event( `BTN_OK_2ND` )
-                      type  = 'Emphasized' ).
+                      type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -104,11 +104,11 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Popup'
+                title          = `abap2UI5 - Popup To Popup`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
-            text  = 'Open Popup...'
+            text  = `Open Popup...`
             press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).

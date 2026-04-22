@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'SELKZ'
+                                    ( name = `SELKZ`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
 
         APPEND LINES OF component TO result.
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
                                                     vis_cols = 5 ).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width = 'auto'
+    DATA(table) = page->table( width = `auto`
                                mode  = 'SingleSelectLeft'
                                selectionchange  = client->_event( `SELECTION_CHANGE` )
                                items = client->_bind_edit( val = <table> ) ).

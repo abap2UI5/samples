@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(
               )->page(
-                      title          = 'abap2UI5 - Device Capabilities'
+                      title          = `abap2UI5 - Device Capabilities`
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = 'Geolocation'
+                  )->simple_form( title    = `Geolocation`
                                   editable = abap_true
                       )->content( 'form'
                           )->label( 'Longitude'
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         view = z2ui5_cl_xml_view=>factory( ).
         client->view_display( view->shell(
               )->page(
-                      title          = 'abap2UI5 - Device Capabilities'
+                      title          = `abap2UI5 - Device Capabilities`
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( )
                   )->_z2ui5( )->geolocation(
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
                                             accuracy         = client->_bind_edit( accuracy )
                                             speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = 'Geolocation'
+                  )->simple_form( title    = `Geolocation`
                                   editable = abap_true
                       )->content( 'form'
                           )->label( 'Longitude'

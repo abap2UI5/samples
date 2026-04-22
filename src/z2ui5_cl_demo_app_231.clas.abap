@@ -43,14 +43,14 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
     DATA(page) = view->shell(
                     )->page(
-                        title          = 'abap2UI5 - Sample: Date Range Selection'
+                        title          = `abap2UI5 - Sample: Date Range Selection`
                         navbuttonpress = client->_event_nav_app_leave( )
                         shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelection' ).
 
     DATA(vbox) = page->vbox( ).
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `DateRangeSelection displayFormat 'yyyy/MM/dd', set via binding:`
                  labelfor = `DRS1`
        )->date_range_selection(
-            id              = 'DRS1'
+            id              = `DRS1`
             displayformat   = 'yyyy/MM/dd'
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS2` ) ) )
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs1-start ) && ') }'
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `DateRangeSelection with minDate=2016-01-01 and maxDate=2016-12-31:`
                  labelfor = `DRS2`
        )->date_range_selection(
-            id              = 'DRS2'
+            id              = `DRS2`
             mindate         = `{= Helper.DateCreateObject($` && client->_bind( mindate ) && ') }'
             maxdate         = `{= Helper.DateCreateObject($` && client->_bind( maxdate ) && ') }'
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS2` ) ) )
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `DateRangeSelection with OK button in the footer and with shortcut for today:"`
                  labelfor = `DRS3`
        )->date_range_selection(
-            id                    = 'DRS3'
+            id                    = `DRS3`
             showcurrentdatebutton = abap_true
             showfooter            = abap_true
             change                = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS3` ) ) )
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
                  labelfor = `DRS3`
        )->date_range_selection(
-            id              = 'DRS4'
+            id              = `DRS4`
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS4` ) ) )
             displayformat   = 'MM/yyyy'
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs4-start ) && ') }'
@@ -101,15 +101,15 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `DateRangeSelection with displayFormat 'MM/yyyy':`
                  labelfor = `DRS3`
        )->date_range_selection(
-            id              = 'DRS5'
+            id              = `DRS5`
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS5` ) ) )
             displayformat   = 'yyyy'
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs5-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs5-end ) && ') }' ).
 
-    vbox->label( text     = 'Change event'
+    vbox->label( text     = `Change event`
                  labelfor = 'TextEvent' ).
-    vbox->text( id   = 'TextEvent'
+    vbox->text( id   = `TextEvent`
                 text = client->_bind_edit( text ) ).
 
     client->view_display( page->stringify( ) ).

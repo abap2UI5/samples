@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id = `page_main`
-            title               = 'abap2UI5 - List Report Features'
+            title               = `abap2UI5 - List Report Features`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->link( id    = `link`
-                    text  = '{PRODUCT}'
+                    text  = `{PRODUCT}`
                     press = client->_event( `POPOVER_DETAIL` ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).

@@ -70,15 +70,15 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                          defaulttransitionname = `flip`
                                      )->pages(
                                      )->page(
-                                       title = 'first page'
+                                       title = `first page`
                                        id    = `page1`
                                     )->get_parent(
                                      )->page(
-                                       title = 'second page'
+                                       title = `second page`
                                        id    = `page2`
                                     )->get_parent(
                                      )->page(
-                                       title = 'third page'
+                                       title = `third page`
                                        id    = `page3` ).
 
     client->view_display( page->stringify( ) ).

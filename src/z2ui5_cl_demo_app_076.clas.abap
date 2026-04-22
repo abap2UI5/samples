@@ -78,10 +78,10 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
 
     DATA(page) = view->page( id = `page_main`
-            title               = 'abap2UI5 - Gantt'
+            title               = `abap2UI5 - Gantt`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
-            class               = 'sapUiContentPadding' ).
+            class               = `sapUiContentPadding` ).
 
     DATA(gantt) = page->gantt_chart_container(
       )->gantt_chart_with_table( id                 = `gantt`

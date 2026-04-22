@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(cont) = view->shell( ).
-    DATA(page) = cont->page( title          = 'abap2UI5 - Device Camera Picture'
+    DATA(page) = cont->page( title          = `abap2UI5 - Device Camera Picture`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     DATA(lo_list) = page->list(
                                 " TODO: check spelling: Ouput (typo) -> Output (ABAP cleaner)
-                                headertext      = 'List Ouput'
+                                headertext      = `List Ouput`
                                 items           = client->_bind_edit( mt_picture_out )
                                 mode            = `SingleSelectMaster`
                                 selectionchange = client->_event( `DISPLAY` ) ).
@@ -97,8 +97,8 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     lo_hbox->text( `{NAME}` ).
 
     IF mv_pic_display IS NOT INITIAL.
-      page->button( text  = 'Edit'
-                    icon  = 'sap-icon://edit'
+      page->button( text  = `Edit`
+                    icon  = `sap-icon://edit`
                     press = client->_event( `EDIT` ) ).
     ENDIF.
 

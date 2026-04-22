@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->page( id    = `page_main`
-              title          = 'abap2UI5 - List Report Features'
+              title          = `abap2UI5 - List Report Features`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     DATA(page) = view->dynamic_page( headerexpanded = abap_true
                                      headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f' )->get( )->dynamic_page_title( ).
+    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( 'f' )->hbox( )->title( `Download CSV` ).
     header_title->expanded_content( 'f' ).
     header_title->snapped_content( 'f' ).
@@ -142,7 +142,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
             )->toolbar(
                 )->toolbar_spacer(
                 )->button(
-                    icon  = 'sap-icon://download'
+                    icon  = `sap-icon://download`
                     press = client->_event( `BUTTON_DOWNLOAD` ) ).
 
     DATA(lo_columns) = tab->columns( ).

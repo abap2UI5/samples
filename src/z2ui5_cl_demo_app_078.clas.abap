@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
       view = view->shell( )->page( id = `page_main`
-               title                  = 'abap2UI5 - Select-Options'
+               title                  = `abap2UI5 - Select-Options`
                navbuttonpress         = client->_event_nav_app_leave( )
                shownavbutton          = client->check_app_prev_stack( ) ).
 
@@ -65,9 +65,9 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       tab->items( )->column_list_item( selected = '{SELKZ}'
         )->cells(
-            )->input( value   = '{KEY}'
+            )->input( value   = `{KEY}`
                       enabled = `{EDITABLE}`
-            )->input( value   = '{TEXT}'
+            )->input( value   = `{TEXT}`
                       enabled = `{EDITABLE}`).
 
       client->view_display( view->stringify( ) ).

@@ -24,16 +24,16 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     ENDIF.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( title          = 'abap2UI5 - Currency Format'
+         )->page( title          = `abap2UI5 - Currency Format`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->simple_form( title    = 'Currency'
+    page->simple_form( title    = `Currency`
                        editable = abap_true
       )->content( 'form'
          )->title( 'Input'
          )->label( 'Documentation'
-         )->link( text = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
+         )->link( text = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
                   href = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
          )->label( 'One field'
          )->input(
@@ -83,15 +83,15 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
          )->label( 'event'
-         )->button( text  = 'send'
+         )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
 
-    page->simple_form( title    = 'No Zeros'
+    page->simple_form( title    = `No Zeros`
                        editable = abap_true
       )->content( 'form'
       )->title( 'Input'
       )->label( 'Documentation'
-      )->link( text = 'https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue'
+      )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
          href       = 'https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue'
       )->label( 'Numeric'
       )->input( client->_bind_edit( val = numeric )

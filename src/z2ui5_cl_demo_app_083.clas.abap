@@ -187,7 +187,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->page( id   = `page_main`
-             title          = 'abap2UI5 - Select-Options'
+             title          = `abap2UI5 - Select-Options`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -195,7 +195,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             headerexpanded = abap_true
             headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = 'f'
+    DATA(header_title) = page->title( ns = `f`
             )->get( )->dynamic_page_title( ).
 
     header_title->heading( 'f' )->hbox(
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     vbox->input( client->_bind_edit( mv_name ) ).
 
     vbox->button(
-                text  = 'read'
+                text  = `read`
                 press = client->_event( `BUTTON_POST` ) ).
 
     vbox = lo_box->vbox( ).
@@ -273,7 +273,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-        title       = 'Define Conditons - Product' ).
+        title       = `Define Conditons - Product` ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
                                  justifycontent = 'SpaceBetween' ).
@@ -296,18 +296,18 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                  items       = client->_bind_edit( mt_mapping )
              )->item(
                      key  = '{N}'
-                     text = '{N}'
+                     text = `{N}`
              )->get_parent(
              )->input( `{LOW}`
              )->input( value   = `{HIGH}`
                        visible = `{= ${OPTION} === 'BT' }`
-             )->button( icon  = 'sap-icon://decline'
+             )->button( icon  = `sap-icon://decline`
                         type  = `Transparent`
                         press = client->_event( val = `POPUP_DELETE` t_arg = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
         )->button( text  = `Delete All`
-                   icon  = 'sap-icon://delete'
+                   icon  = `sap-icon://delete`
                    type  = `Transparent`
                    press = client->_event( `POPUP_DELETE_ALL` )
         )->button( text  = `Add Item`
@@ -315,11 +315,11 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                    press = client->_event( `POPUP_ADD` )
         )->toolbar_spacer(
         )->button(
-            text  = 'OK'
+            text  = `OK`
             press = client->_event( `FILTER_VALUE_HELP_OK` )
-            type  = 'Emphasized'
+            type  = `Emphasized`
        )->button(
-            text  = 'Cancel'
+            text  = `Cancel`
             press = client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
 
     client->popup_display( lo_popup->stringify( ) ).

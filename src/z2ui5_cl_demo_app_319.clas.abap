@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     DATA(l_view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(l_page) = l_view->shell( )->page( title      = 'SearchPage'
+    DATA(l_page) = l_view->shell( )->page( title      = `SearchPage`
                                        navbuttonpress = m_client->_event_nav_app_leave( )
                                        shownavbutton  = m_client->check_app_prev_stack( ) ).
 
@@ -70,9 +70,9 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
                           multiinputid  = `ProductTypeMultiInput` ).
 
     l_page->smart_multi_input(
-      id                = 'ProductTypeMultiInput'
+      id                = `ProductTypeMultiInput`
 *     value             = '{ProductType}'
-      value             = '{CurrencyCode}'
+      value             = `{CurrencyCode}`
       entityset         = 'Booking'
       supportranges     = 'true'
       enableodataselect = 'true' ).
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
       TRY.
           m_client->message_box_display(
             text  = z2ui5_cl_ajson=>new( )->set( iv_path = '/' iv_val = m_selection-product_type-ranges )->stringify( )
-            title = 'range content' ).
+            title = `range content` ).
         CATCH z2ui5_cx_ajson_error INTO DATA(lx_ajson).
           m_client->message_toast_display( lx_ajson->get_text( ) ).
       ENDTRY.

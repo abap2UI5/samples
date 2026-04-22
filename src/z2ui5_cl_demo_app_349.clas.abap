@@ -84,13 +84,13 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'CALL Next App'
+    page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
     xml_table( i_page   = page
                i_client = client ).
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
   METHOD xml_table.
 
-    DATA(table) = i_page->table( width = 'auto'
+    DATA(table) = i_page->table( width = `auto`
                                  items = i_client->_bind_edit( val = mt_data ) ).
 
     DATA(columns) = table->columns( ).

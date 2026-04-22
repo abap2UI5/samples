@@ -194,7 +194,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_dyn_page) = lr_view->dynamic_page( showfooter = abap_false ).
 
     " ---------- Get header title ---------------------------------------------------------------------
-    DATA(lr_header_title) = lr_dyn_page->title( ns = 'f' )->get( )->dynamic_page_title( ).
+    DATA(lr_header_title) = lr_dyn_page->title( ns = `f` )->get( )->dynamic_page_title( ).
 
     " ---------- Set header title text ----------------------------------------------------------------
     lr_header_title->heading( 'f' )->title( 'abap2UI5 - VizFrame Charts' ).
@@ -202,7 +202,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     " ---------- Get page header area ----------------------------------------------------------------
     DATA(lr_header) = lr_dyn_page->header( 'f' )->dynamic_page_header( abap_true )->content( 'f' ).
 
-    lr_header->button( text    = 'back'
+    lr_header->button( text    = `back`
                        press   = client->_event_nav_app_leave( )
                        visible = client->check_app_prev_stack( ) ).
 
@@ -210,8 +210,8 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_filter_bar) = lr_header->filter_bar( usetoolbar = 'false' )->filter_group_items( ).
 
     " ---------- Set filter ---------------------------------------------------------------------------
-    DATA(lr_filter) = lr_filter_bar->filter_group_item( name               = 'VizFrameType'
-                                                        label              = 'VizFrame type'
+    DATA(lr_filter) = lr_filter_bar->filter_group_item( name               = `VizFrameType`
+                                                        label              = `VizFrame type`
                                                         groupname          = |GroupVizFrameType|
                                                         visibleinfilterbar = 'true'
                                                          )->filter_control( ).
@@ -222,21 +222,21 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                          showclearicon = abap_true
                          items         = client->_bind( me->mt_viztypes )
                               )->item( key  = '{N}'
-                                       text = '{V}' ).
+                                       text = `{V}` ).
 
     " ---------- Get page content area ----------------------------------------------------------------
     DATA(lr_content) = lr_dyn_page->content( 'f' ).
 
     " ---------- Set vizframe chart -------------------------------------------------------------------
     DATA(lr_vizframe) = lr_content->viz_frame(
-                            id            = 'idVizFrame'
+                            id            = `idVizFrame`
 *                            legendvisible =
 *                            vizcustomizations =
                             vizproperties = mv_prop
 *                            vizscales     =
                             viztype       = client->_bind( me->ms_screen-viztype )
-                            height        = '500px'
-                            width         = '100%'
+                            height        = `500px`
+                            width         = `100%`
 *                            uiconfig      = `{applicationSet:'fiori'}`
 *                            visible       =
                             selectdata    = client->_event( val   = 'EVT_DATA_SELECT'
@@ -258,9 +258,9 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 *                                                                       datatype =
 *                                                                       displayvalue =
 *                                                                       identity =
-                                                                       name  = 'Week'
+                                                                       name  = `Week`
 *                                                                       sorter =
-                                                                       value = '{WEEK}' ).
+                                                                       value = `{WEEK}` ).
 
     " ---------- Set vizframe measures ----------------------------------------------------------------
     DATA(lr_measures) = lr_flatteneddataset->viz_measures( ).
@@ -271,10 +271,10 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 *                                                                  format =
 *                                                                  group =
 *                                                                  identity =
-                                                                  name  = 'Revenue'
+                                                                  name  = `Revenue`
 *                                                                  range =
 *                                                                  unit  =
-                                                                  value = '{REVENUE}' ).
+                                                                  value = `{REVENUE}` ).
 
     " ---------- Set vizframe measure definition 2 ----------------------------------------------------
     " TODO: variable is assigned but never used (ABAP cleaner)
@@ -282,26 +282,26 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 *                                                                  format =
 *                                                                  group =
 *                                                                  identity =
-                                                                  name  = 'Cost'
+                                                                  name  = `Cost`
 *                                                                  range =
 *                                                                  unit  =
-                                                                  value = '{COST}' ).
+                                                                  value = `{COST}` ).
 
     " ---------- Set vizframe feeds -------------------------------------------------------------------
     DATA(lr_feeds) = lr_vizframe->viz_feeds( ).
 
     " ---------- Set vizframe feed for value axis -----------------------------------------------------
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(lr_lr_feed_item1) = lr_feeds->viz_feed_item( id     = 'valueAxisFeed'
+    DATA(lr_lr_feed_item1) = lr_feeds->viz_feed_item( id     = `valueAxisFeed`
                                                       uid    = 'valueAxis'
-                                                      type   = 'Measure'
+                                                      type   = `Measure`
                                                       values = client->_bind( me->mt_feed_values ) ).
 
     " ---------- Set vizframe feed for category axis --------------------------------------------------
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(lr_lr_feed_item2) = lr_feeds->viz_feed_item( id     = 'categoryAxisFeed'
+    DATA(lr_lr_feed_item2) = lr_feeds->viz_feed_item( id     = `categoryAxisFeed`
                                                       uid    = 'categoryAxis'
-                                                      type   = 'Dimension'
+                                                      type   = `Dimension`
                                                       values = 'Week' ).
 
     client->view_display( lr_view->stringify( ) ).

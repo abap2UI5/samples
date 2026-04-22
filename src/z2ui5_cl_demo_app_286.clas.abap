@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Standard List Item - Info State Inverted'
+            title          = `abap2UI5 - Sample: Standard List Item - Info State Inverted`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -50,8 +50,8 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemInfoStateInverted' ).
 
     page->list(
@@ -61,13 +61,13 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
            items      = client->_bind( lt_o_model )
            )->items(
                )->standard_list_item(
-                   title             = '{TITLE}'
-                   description       = '{DESC}'
-                   icon              = '{ICON}'
+                   title             = `{TITLE}`
+                   description       = `{DESC}`
+                   icon              = `{ICON}`
                    iconinset         = abap_false
                    highlight         = '{HIGHLIGHT}'
-                   info              = '{INFO}'
-                   infostate         = '{HIGHLIGHT}'
+                   info              = `{INFO}`
+                   infostate         = `{HIGHLIGHT}`
                    infostateinverted = abap_true ).
 
     client->view_display( page->stringify( ) ).
@@ -108,11 +108,11 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
       display_view( client ).
 
       lt_o_model = VALUE #(
-        ( title = 'Title text' desc = 'Description text' icon = 'sap-icon://favorite'  highlight = 'Success'     info = 'Completed' )
-        ( title = 'Title text' desc = 'Description text' icon = 'sap-icon://employee' highlight = 'Error'       info = 'Incomplete' )
-        ( title = 'Title text'                           icon = 'sap-icon://accept'   highlight = 'Information' info = 'Information' )
-        ( title = 'Title text'                           icon = 'sap-icon://activities' highlight = 'None'      info = 'None' )
-        ( title = 'Title text' desc = 'Description text' icon = 'sap-icon://badge'    highlight = 'Warning'     info = 'Warning' ) ).
+        ( title = `Title text` desc = 'Description text' icon = `sap-icon://favorite`  highlight = 'Success'     info = `Completed` )
+        ( title = `Title text` desc = 'Description text' icon = `sap-icon://employee` highlight = 'Error'       info = `Incomplete` )
+        ( title = `Title text`                           icon = `sap-icon://accept`   highlight = 'Information' info = `Information` )
+        ( title = `Title text`                           icon = `sap-icon://activities` highlight = 'None'      info = `None` )
+        ( title = `Title text` desc = 'Description text' icon = `sap-icon://badge`    highlight = 'Warning'     info = `Warning` ) ).
     ENDIF.
 
     on_event( client ).

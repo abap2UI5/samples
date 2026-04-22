@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
 
     IF client->check_on_event( `TIMER_FINISHED` ).
       mv_counter = mv_counter + 1.
-      INSERT VALUE #( title = 'entry' && mv_counter   info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' )
+      INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
       client->view_model_update( ).
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
     mv_counter = 1.
 
     t_tab = VALUE #(
-            ( title = 'entry' && mv_counter  info = 'completed'   descr = 'this is a description' icon = 'sap-icon://account' ) ).
+            ( title = `entry` && mv_counter  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
 
   ENDMETHOD.
 
@@ -77,18 +77,18 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
                                checkrepeat = abap_true ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'abap2UI5 - Roundtrip Speed Test'
+             title          = `abap2UI5 - Roundtrip Speed Test`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->list(
-         headertext = 'Data auto refresh (2 sec)'
+         headertext = `Data auto refresh (2 sec)`
          items      = client->_bind( t_tab )
          )->standard_list_item(
-             title       = '{TITLE}'
-             description = '{DESCR}'
-             icon        = '{ICON}'
-             info        = '{INFO}' ).
+             title       = `{TITLE}`
+             description = `{DESCR}`
+             icon        = `{ICON}`
+             info        = `{INFO}` ).
 
     client->view_display( lo_view->stringify( ) ).
 

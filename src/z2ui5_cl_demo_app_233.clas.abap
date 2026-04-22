@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_233 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'Sample: MultiComboBox - Suggestions wrapping'
+            title          = `Sample: MultiComboBox - Suggestions wrapping`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

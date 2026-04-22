@@ -76,17 +76,17 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
   METHOD ui5_view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->button( text  = 'CALL Next App'
+    page->button( text  = `CALL Next App`
                   press = client->_event( `GO` )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
-    page->button( text  = 'Read from DB'
+    page->button( text  = `Read from DB`
                   press = client->_event( `GET_DATA` )
-                  type  = 'Success' ).
+                  type  = `Success` ).
 
     xml_form( i_data   = REF #( ms_struc )
               i_page   = page

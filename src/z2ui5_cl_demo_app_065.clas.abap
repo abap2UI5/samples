@@ -29,17 +29,17 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
       )->get_parent( ).
 
     page->content(
-      )->button( text  = 'Rerender all'
+      )->button( text  = `Rerender all`
                  press = client->_event( `ALL` )
-      )->button( text  = 'Rerender Main without nest'
+      )->button( text  = `Rerender Main without nest`
                  press = client->_event( `MAIN` )
-      )->button( text  = 'Rerender only nested view'
+      )->button( text  = `Rerender only nested view`
                  press = client->_event( `NEST` )
       )->input( client->_bind_edit( mv_input_main ) ).
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory(
           )->page( `Nested View`
-              )->button( text  = 'event'
+              )->button( text  = `event`
                          press = client->_event( `TEST` )
               )->button( text  = `frontend event`
                          press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) )

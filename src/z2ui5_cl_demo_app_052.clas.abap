@@ -56,9 +56,9 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
          )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
-                text  = 'details'
+                text  = `details`
                 press = client->_event( `BUTTON_DETAILS` )
-                type  = 'Emphasized' ).
+                type  = `Emphasized` ).
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
 
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->page( id = `page_main`
-            title               = 'abap2UI5 - List Report Features'
+            title               = `abap2UI5 - List Report Features`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
     DATA(lo_cells) = tab->items( )->column_list_item( ).
     lo_cells->link( id    = `link`
-                    text  = '{PRODUCT}'
+                    text  = `{PRODUCT}`
                     press = client->_event( val = `POPOVER_DETAIL` t_arg = VALUE #( ( `${$source>/id}` ) ( `${PRODUCT}` ) ) ) ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).

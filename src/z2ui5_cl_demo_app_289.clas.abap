@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Sample: Object Marker in a table'
+            title          = `abap2UI5 - Sample: Object Marker in a table`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -48,8 +48,8 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectMarker/sample/sap.m.sample.ObjectMarker' ).
 
     page->table( id = `idProductsTable`
@@ -66,12 +66,12 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                )->get_parent( )->get_parent(
            )->column_list_item(
                )->object_identifier(
-                   text = '{PRODUCT}' )->get_parent(
+                   text = `{PRODUCT}` )->get_parent(
                )->object_marker(
-                   type           = '{TYPE}'
+                   type           = `{TYPE}`
                    additionalinfo = '{ADDITIONALINFO}' )->get_parent(
                )->object_marker(
-                   type           = '{TYPE}'
+                   type           = `{TYPE}`
                    additionalinfo = '{ADDITIONALINFO}'
                    press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
 
@@ -116,16 +116,16 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
       display_view( client ).
 
       lt_a_data = VALUE #(
-        ( product = 'Power Projector 4713'    type = 'Locked' )
-        ( product = 'Power Projector 4713'    type = 'LockedBy' additionalinfo = 'John Doe' )
-        ( product = 'Power Projector 4713'    type = 'LockedBy' )
-        ( product = 'Gladiator MX'            type = 'Draft' )
-        ( product = 'Hurricane GX'            type = 'Unsaved' )
-        ( product = 'Hurricane GX'            type = 'UnsavedBy' additionalinfo = 'John Doe' )
-        ( product = 'Hurricane GX'            type = 'UnsavedBy' )
-        ( product = 'Hurricane GX'            type = 'Unsaved' )
-        ( product = 'Webcam'                  type = 'Favorite' )
-        ( product = 'Deskjet Super Highspeed' type = 'Flagged' ) ).
+        ( product = 'Power Projector 4713'    type = `Locked` )
+        ( product = 'Power Projector 4713'    type = `LockedBy` additionalinfo = 'John Doe' )
+        ( product = 'Power Projector 4713'    type = `LockedBy` )
+        ( product = 'Gladiator MX'            type = `Draft` )
+        ( product = 'Hurricane GX'            type = `Unsaved` )
+        ( product = 'Hurricane GX'            type = `UnsavedBy` additionalinfo = 'John Doe' )
+        ( product = 'Hurricane GX'            type = `UnsavedBy` )
+        ( product = 'Hurricane GX'            type = `Unsaved` )
+        ( product = 'Webcam'                  type = `Favorite` )
+        ( product = 'Deskjet Super Highspeed' type = `Flagged` ) ).
 
     ENDIF.
 

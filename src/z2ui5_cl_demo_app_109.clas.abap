@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
-              title          = 'abap2UI5 - Popover Quickview Examples'
+              title          = `abap2UI5 - Popover Quickview Examples`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( 'QuickView Popover'
@@ -81,26 +81,26 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                         )->items(
                         )->segmented_button_item(
                                 key  = 'Left'
-                                icon = 'sap-icon://add-favorite'
-                                text = 'Left'
+                                icon = `sap-icon://add-favorite`
+                                text = `Left`
                         )->segmented_button_item(
                                 key  = 'Top'
-                                icon = 'sap-icon://accept'
-                                text = 'Top'
+                                icon = `sap-icon://accept`
+                                text = `Top`
                         )->segmented_button_item(
                                 key  = 'Bottom'
-                                icon = 'sap-icon://accept'
-                                text = 'Bottom'
+                                icon = `sap-icon://accept`
+                                text = `Bottom`
                         )->segmented_button_item(
                                 key  = 'Right'
-                                icon = 'sap-icon://attachment'
-                                text = 'Right'
+                                icon = `sap-icon://attachment`
+                                text = `Right`
                   )->get_parent( )->get_parent(
                     )->label( 'popover'
                     )->button(
-                        text  = 'show'
+                        text  = `show`
                         press = client->_event( `POPOVER` )
-                        id    = 'TEST'
+                        id    = `TEST`
                         width = `10rem` ).
 
     client->view_display( view->stringify( ) ).

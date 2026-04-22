@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
                   )->content( 'form'
                                )->button(
                                    text  = client->_bind_edit( text )
-                                   width = '20%'
+                                   width = `20%`
                                    press = client->_event( `CALL_BOOKING_MASK` ) ).
             client->view_display( view->stringify( ) ).
             "client->set_app_state_active( ).
@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       editable = abap_false
       value    = client->_bind_edit( varkey ) ).
     hbox->button(
-      text  = 'Next Lock View'
+      text  = `Next Lock View`
       press = client->_event( `NEXT_LOCK` ) ).
     client->view_display( view->stringify( ) ).
 

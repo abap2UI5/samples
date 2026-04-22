@@ -58,20 +58,20 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     vbox->info_label( text = client->_bind( session_text ) ).
 
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
-    hbox->label( text  = 'press button to increment counter in backend session'
-                 class = 'sapUiTinyMarginEnd' ).
+    hbox->label( text  = `press button to increment counter in backend session`
+                 class = `sapUiTinyMarginEnd` ).
     hbox->button(
       text  = client->_bind( instance_counter )
       press = client->_event( `INCREMENT` )
-      type  = 'Emphasized' ).
+      type  = `Emphasized` ).
 
     hbox = vbox->hbox( ).
     hbox->button(
-      text  = 'End session'
+      text  = `End session`
       press = client->_event( `END_SESSION` ) ).
 
     hbox->button(
-      text  = 'Start session again'
+      text  = `Start session again`
       press = client->_event( `START_SESSION` ) ).
 
     client->view_display( view->stringify( ) ).

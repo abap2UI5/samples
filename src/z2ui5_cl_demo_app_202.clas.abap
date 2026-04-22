@@ -32,18 +32,18 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                                                      `}` ).
 
     lr_view = lr_view->shell( )->page( id = `page_main`
-             title                        = 'abap2UI5 - Demo Wizard Control'
+             title                        = `abap2UI5 - Demo Wizard Control`
              navbuttonpress               = client->_event_nav_app_leave( )
              shownavbutton                = client->check_app_prev_stack( ) ).
 
     DATA(lr_wizard) = lr_view->wizard( id              = `wiz`
                                        enablebranching = abap_true ).
-    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = 'STEP1'
+    DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = `STEP1`
                                                  validated = abap_true
                                                  nextstep  = 'STEP2' ).
     lr_wiz_step1->message_strip( 'STEP1' ).
 
-    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = 'STEP2'
+    DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = `STEP2`
                                                  title           = `STEP2`
                                                  validated       = abap_true
                                                  subsequentsteps = 'STEP22, STEP23' ).

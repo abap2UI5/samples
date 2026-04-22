@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(
         )->page(
-                title          = 'abap2UI5 - Changed CSS'
+                title          = `abap2UI5 - Changed CSS`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
             )->_generic( ns   = `html`
@@ -68,11 +68,11 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                          `}`
             )->get_parent(
             )->button(
-                        text  = 'post'
+                        text  = `post`
                         press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
             )->input( value = client->_bind( quantity )
-            )->simple_form( title    = 'Form Title'
+            )->simple_form( title    = `Form Title`
                             editable = abap_true
                 )->content( 'form'
                     )->title( 'Input'
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                         value   = product
                         enabled = abap_false
                     )->button(
-                        text  = 'post'
+                        text  = `post`
                         press = client->_event( `BUTTON_POST` )
          )->get_root( )->xml_get( ) ).
 

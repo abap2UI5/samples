@@ -92,9 +92,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
              )->overflow_toolbar(
                 )->toolbar_spacer(
                 )->button(
-                    text  = 'OK'
+                    text  = `OK`
                     press = client->_event( `POPOVER_OK` )
-                    type  = 'Emphasized'
+                    type  = `Emphasized`
            )->get_parent( )->get_parent(
            )->text( 'TEST' ).
 
@@ -124,37 +124,37 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                             backgroundcolorshade = 'ShadeE'
       )->flex_box( justifycontent = 'SpaceBetween'
       )->hbox(
-      )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-          )->label( design = 'Bold'
-                    text   = 'Something:'
+      )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
+          )->label( design = `Bold`
+                    text   = `Something:`
       )->get_parent(
-      )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
+      )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
         )->text( 'Other'
       )->get_parent( )->get_parent(
       )->hbox( justifycontent = 'End'
-        )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-          )->label( design = 'Bold'
-                    text   = 'User:'
-          )->label( design = 'Bold'
-                    text   = 'Date:'
+        )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
+          )->label( design = `Bold`
+                    text   = `User:`
+          )->label( design = `Bold`
+                    text   = `Date:`
         )->get_parent(
-      )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
+      )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
         )->text( client->_bind( gv_user )
         )->text( client->_bind( gv_date ) ).
 
     DATA(sections) = page->sections( ).
 
     DATA(cont) = sections->object_page_section( titleuppercase = abap_false
-                                                id             = 'Sets'
-                                                title          = 'Sets'
+                                                id             = `Sets`
+                                                title          = `Sets`
         )->heading( `uxap`
         )->get_parent(
         )->sub_sections(
-            )->object_page_sub_section( id    = 'SETS'
-                                        title = 'Sets'
+            )->object_page_sub_section( id    = `SETS`
+                                        title = `Sets`
                 )->scroll_container( vertical = abap_true
                  )->vbox(
-                      )->tree_table( id  = 'treeTable'
+                      )->tree_table( id  = `treeTable`
                          rows            = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
                          toggleopenstate = `saveState()`
                          )->tree_columns(
@@ -173,9 +173,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
       )->get_parent( )->get_parent(
                           )->tree_column( 'ADD'
                           )->tree_template(
-                           )->button( icon = 'sap-icon://add'
+                           )->button( icon = `sap-icon://add`
                                  press     = client->_event( val = 'ROW_ADD' t_arg = VALUE #( ( `${PRODH}` ) ) )
-                                 tooltip   = 'ADD'
+                                 tooltip   = `ADD`
                           )->get_parent( )->get_parent( ).
     client->view_display( page->get_root( )->xml_get( ) ).
 
@@ -185,24 +185,24 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   METHOD ui5_initialize.
 
     prodh_nodes =
-      VALUE #( ( text = 'Machines'
+      VALUE #( ( text = `Machines`
                prodh  = '00100'
-               nodes  = VALUE #( ( text = 'Pumps'
+               nodes  = VALUE #( ( text = `Pumps`
                                   prodh = '0010000100'
-                                  nodes = VALUE #( ( text  = 'Pump 001'
+                                  nodes = VALUE #( ( text  = `Pump 001`
                                                      prodh = '001000010000000100' )
-                                                   ( text  = 'Pump 002'
+                                                   ( text  = `Pump 002`
                                                      prodh = '001000010000000105' )
                                           )
                        ) )
              )
-             ( text  = 'Paints'
+             ( text  = `Paints`
                prodh = '00110'
-               nodes = VALUE #( ( text  = 'Gloss paints'
+               nodes = VALUE #( ( text  = `Gloss paints`
                                   prodh = '0011000105'
-                                  nodes = VALUE #( ( text  = 'Paint 001'
+                                  nodes = VALUE #( ( text  = `Paint 001`
                                                      prodh = '001100010500000100' )
-                                                   ( text  = 'Paint 002'
+                                                   ( text  = `Paint 002`
                                                      prodh = '001100010500000105' )
                                           )
                        ) )

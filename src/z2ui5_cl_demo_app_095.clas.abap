@@ -81,7 +81,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
     page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title           = 'abap2UI5 - Main App with Sub App'
+            title           = `abap2UI5 - Main App with Sub App`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
@@ -101,19 +101,19 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(
                    )->button(
-                       text  = 'Delete'
+                       text  = `Delete`
                        press = client->_event( `BUTTON_DELETE` )
-                       type  = 'Reject'
-                       icon  = 'sap-icon://delete'
+                       type  = `Reject`
+                       icon  = `sap-icon://delete`
                    )->button(
-                       text  = 'Add'
+                       text  = `Add`
                        press = client->_event( `BUTTON_ADD` )
-                       type  = 'Default'
-                       icon  = 'sap-icon://add'
+                       type  = `Default`
+                       icon  = `sap-icon://add`
                    )->button(
-                       text  = 'Save'
+                       text  = `Save`
                        press = client->_event( `BUTTON_SAVE` )
-                       type  = 'Success' ).
+                       type  = `Success` ).
 
   ENDMETHOD.
 

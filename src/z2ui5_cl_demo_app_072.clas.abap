@@ -78,41 +78,41 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page( id = `page_main`
            showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title                         = 'abap2UI5 - IconTabBar'
+            title                         = `abap2UI5 - IconTabBar`
             navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( )
-            class                         = 'sapUiContentPadding' ).
+            class                         = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
+    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( lv_selectedkey )
                                          select      = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count   = client->_bind_edit( lv_cnt_total )
-                               text    = 'Products'
+                               text    = `Products`
                                key     = 'ALL'
                                showall = abap_true ).
     lo_items->icon_tab_separator( ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://begin'
+    lo_items->icon_tab_filter( icon      = `sap-icon://begin`
                                iconcolor = 'Positive'
                                count     = client->_bind_edit( lv_cnt_pos )
-                               text      = 'OK'
+                               text      = `OK`
                                key       = 'OK' ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://compare'
+    lo_items->icon_tab_filter( icon      = `sap-icon://compare`
                                iconcolor = 'Critical'
                                count     = client->_bind_edit( lv_cnt_heavy )
-                               text      = 'Heavy'
+                               text      = `Heavy`
                                key       = 'HEAVY' ).
-    lo_items->icon_tab_filter( icon      = 'sap-icon://inventory'
+    lo_items->icon_tab_filter( icon      = `sap-icon://inventory`
                                iconcolor = 'Negative'
                                count     = client->_bind_edit( lv_cnt_neg )
-                               text      = 'Overweight'
+                               text      = `Overweight`
                                key       = 'OVERWEIGHT' ).
 
-    DATA(tab) = page->scroll_container( height   = '70%'
+    DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true
        )->table(
            inset          = abap_false
            showseparators = 'Inner'
-           headertext     = 'Products'
+           headertext     = `Products`
            items          = client->_bind( mt_table ) ).
 
     tab->columns(
@@ -137,15 +137,15 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     tab->items(
         )->column_list_item(
            )->cells(
-             )->object_identifier( text  = '{PRODUCTNAME}'
-                                   title = '{PRODUCTID}' )->get_parent(
+             )->object_identifier( text  = `{PRODUCTNAME}`
+                                   title = `{PRODUCTID}` )->get_parent(
              )->text( '{SUPPLIERNAME}' )->get_parent(
              )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}'
                                unit   = '{UNIT}'
-                               state  = '{STATE_MEASURE}'
+                               state  = `{STATE_MEASURE}`
              )->object_number(
-                   state  = '{STATE_PRICE}'
+                   state  = `{STATE_PRICE}`
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ).
 
     client->view_display( view->stringify( ) ).

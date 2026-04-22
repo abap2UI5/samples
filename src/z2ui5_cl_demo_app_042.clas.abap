@@ -23,8 +23,8 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
 
       WHEN `BUTTON_MSG_BOX`.
         client->message_box_display(
-              text = 'this is a message box with a custom text'
-              type = 'success' ).
+              text = `this is a message box with a custom text`
+              type = `success` ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -39,14 +39,14 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
 
     header_title->expanded_heading(
                 )->hbox(
-                    )->title( text     = 'Oblomov Dev'
+                    )->title( text     = `Oblomov Dev`
                               wrapping = abap_true ).
 
     header_title->snapped_heading(
                 )->flex_box( alignitems = `Center`
                   )->avatar( src   = lcl_help=>get_avatar( )
-                             class = 'sapUiTinyMarginEnd'
-                    )->title( text     = 'Oblomov Dev'
+                             class = `sapUiTinyMarginEnd`
+                    )->title( text     = `Oblomov Dev`
                               wrapping = abap_true ).
 
     header_title->expanded_content( `uxap` )->text( `abap2UI5 Developer` ).
@@ -56,59 +56,59 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
     header_title->actions( `uxap` )->overflow_toolbar(
              )->overflow_toolbar_button(
                  icon    = `sap-icon://edit`
-                 text    = 'edit header'
-                 type    = 'Emphasized'
-                 tooltip = 'edit'
+                 text    = `edit header`
+                 type    = `Emphasized`
+                 tooltip = `edit`
              )->overflow_toolbar_button(
                  icon    = `sap-icon://pull-down`
-                 text    = 'show section'
-                 type    = 'Emphasized'
-                 tooltip = 'pull-down'
+                 text    = `show section`
+                 type    = `Emphasized`
+                 tooltip = `pull-down`
              )->overflow_toolbar_button(
                  icon    = `sap-icon://show`
-                 text    = 'show state'
-                 tooltip = 'show'
+                 text    = `show state`
+                 tooltip = `show`
              )->button(
                 " icon = `sap-icon://edit`
-                 text  = 'Go Back'
+                 text  = `Go Back`
                  press = client->_event_nav_app_leave( ) ).
 
     DATA(header_content) = page->header_content( 'uxap' ).
 
     header_content->flex_box( wrap = 'Wrap'
            )->avatar( src         = lcl_help=>get_avatar( )
-                      class       = 'sapUiSmallMarginEnd'
+                      class       = `sapUiSmallMarginEnd`
                       displaysize = 'layout'
-            )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
-                )->link( text = '+33 6 4512 5158'
-                )->link( text = 'email@email.com'
+            )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
+                )->link( text = `+33 6 4512 5158`
+                )->link( text = `email@email.com`
             )->get_parent(
-            )->horizontal_layout( class = 'sapUiSmallMarginBeginEnd'
+            )->horizontal_layout( class = `sapUiSmallMarginBeginEnd`
                 )->label( 'Hello! I an abap2UI5 developer'
                 )->label( 'San Jose, USA'
             )->get_parent(
-            )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
+            )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
                 )->label( 'Hello! I an abap2UI5 developer'
                 )->vbox(
                     )->label( 'Achived goals'
                     )->progress_indicator( percentvalue = '30%'
                                            displayvalue = '30%'
             )->get_parent( )->get_parent(
-            )->vertical_layout( class = 'sapUiSmallMarginBeginEnd'
+            )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
                 )->label( 'San Jose, USA'
             )->get_parent( ).
 
     DATA(sections) = page->sections( ).
 
     sections->object_page_section( titleuppercase = abap_false
-                                   id             = 'goalsSectionSS1'
-                                   title          = '2014 Goals Plan'
+                                   id             = `goalsSectionSS1`
+                                   title          = `2014 Goals Plan`
             )->heading( `uxap`
                 )->message_strip( 'this is a message strip'
             )->get_parent(
             )->sub_sections(
-                )->object_page_sub_section( id    = 'goalssubSectionSS1'
-                                            title = 'goals1'
+                )->object_page_sub_section( id    = `goalssubSectionSS1`
+                                            title = `goals1`
                     )->blocks(
                           )->vbox(
                           )->label( 'goals1'
@@ -122,8 +122,8 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( 'goals1'
                           )->label( 'goals1'
           )->get_parent( )->get_parent( )->get_parent(
-                )->object_page_sub_section( id    = 'goalsSectionWS1'
-                                            title = 'goals2'
+                )->object_page_sub_section( id    = `goalsSectionWS1`
+                                            title = `goals2`
                       )->blocks(
                             )->vbox(
                           )->label( 'goals2'
@@ -136,33 +136,33 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( 'goals2').
 
     sections->object_page_section( titleuppercase = abap_false
-                                   id             = 'PersonalSection'
-                                   title          = 'Personal'
+                                   id             = `PersonalSection`
+                                   title          = `Personal`
             )->heading( `uxap`
            "     )->message_strip( text = 'this is a message strip'
             )->get_parent(
             )->sub_sections(
-                )->object_page_sub_section( id    = 'personalSectionSS1'
-                                            title = 'Connect'
+                )->object_page_sub_section( id    = `personalSectionSS1`
+                                            title = `Connect`
                     )->blocks(
                           )->label( 'telefon'
                           )->label( 'email'
                 )->get_parent( )->get_parent(
-                )->object_page_sub_section( id    = 'personalSectionWS2'
-                                            title = 'Payment information  '
+                )->object_page_sub_section( id    = `personalSectionWS2`
+                                            title = `Payment information  `
                       )->blocks(
                           )->label( 'Hello! I an abap2UI5 developer'
                           )->label( 'San Jose, USA' ).
 
     sections->object_page_section( titleuppercase = abap_false
-                                   id             = 'employmentSection'
-                                   title          = 'Employment'
+                                   id             = `employmentSection`
+                                   title          = `Employment`
              )->heading( `uxap`
            "     )->message_strip( text = 'this is a message strip'
              )->get_parent(
              )->sub_sections(
-                )->object_page_sub_section( id    = 'empSectionSS1'
-                                            title = 'Job information'
+                )->object_page_sub_section( id    = `empSectionSS1`
+                                            title = `Job information`
                     )->blocks(
                           )->label( 'info'
                           )->label( 'info'
@@ -170,8 +170,8 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( 'info'
                           )->label( 'info'
                 )->get_parent( )->get_parent(
-                )->object_page_sub_section( id    = 'empSectionWS2'
-                                            title = 'Employee Details '
+                )->object_page_sub_section( id    = `empSectionWS2`
+                                            title = `Employee Details `
                       )->blocks(
                             )->vbox(
                           )->label( 'details'

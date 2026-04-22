@@ -119,19 +119,19 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
         checkactive = client->_bind( mv_check_active ) ).
 
     temp5 = client->check_app_prev_stack( ).
-    page1 = view->shell( )->page( id = 'page_main'
-      title                          = 'abap2UI5 - Progress Bar while Server Request'
+    page1 = view->shell( )->page( id = `page_main`
+      title                          = `abap2UI5 - Progress Bar while Server Request`
       navbuttonpress                 = client->_event_nav_app_leave( )
       shownavbutton                  = temp5
-      class                          = 'sapUiContentPadding' ).
+      class                          = `sapUiContentPadding` ).
 
-    layout = page1->vertical_layout( class = 'sapuicontentpadding'
-                                     width = '100%' ).
+    layout = page1->vertical_layout( class = `sapuicontentpadding`
+                                     width = `100%` ).
     layout->vbox( )->progress_indicator(
       percentvalue = client->_bind_edit( mv_percent )
       displayvalue = client->_bind_edit( screen-display_value )
       showvalue    = abap_true
-           state   = 'Success' ).
+           state   = `Success` ).
 
     layout->button(
         text    = `Load`

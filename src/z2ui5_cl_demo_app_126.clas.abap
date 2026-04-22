@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'ROW_ID'
+                                    ( name = `ROW_ID`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( index ) ) ) ).
 
         APPEND LINES OF component TO result.
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = '0,44GB of 32GB used'
                                showvalue    = abap_true
-                               state        = 'Success' ).
+                               state        = `Success` ).
 
     IF mo_parent_view IS INITIAL.
 

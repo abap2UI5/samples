@@ -34,11 +34,11 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
       WHEN `POPUP`.
 
         mt_tab = VALUE #( descr = 'this is a description'
-             ( zzselkz = mv_preselect title = 'title_01'  value = 'value_01' )
-             ( zzselkz = mv_preselect title = 'title_02'  value = 'value_02' )
-             ( zzselkz = mv_preselect title = 'title_03'  value = 'value_03' )
-             ( zzselkz = mv_preselect title = 'title_04'  value = 'value_04' )
-             ( zzselkz = mv_preselect title = 'title_05'  value = 'value_05' ) ).
+             ( zzselkz = mv_preselect title = `title_01`  value = `value_01` )
+             ( zzselkz = mv_preselect title = `title_02`  value = `value_02` )
+             ( zzselkz = mv_preselect title = `title_03`  value = `value_03` )
+             ( zzselkz = mv_preselect title = `title_04`  value = `value_04` )
+             ( zzselkz = mv_preselect title = `title_05`  value = `value_05` ) ).
 
         DATA(lo_app) = z2ui5_cl_pop_to_select=>factory(
                            i_tab         = mt_tab
@@ -66,23 +66,23 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
-                title          = 'abap2UI5 - Popup To Select'
+                title          = `abap2UI5 - Popup To Select`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
            )->hbox(
-           )->text( text  = 'Multiselect: '
-                    class = 'sapUiTinyMargin'
+           )->text( text  = `Multiselect: `
+                    class = `sapUiTinyMargin`
            )->switch( state  = client->_bind_edit( mv_multiselect )
                       change = client->_event( `MULTISELECT_TOGGLE` )
            )->get_parent(
            )->hbox(
-           )->text( text  = 'Preselect all entries: '
-                    class = 'sapUiTinyMargin'
+           )->text( text  = `Preselect all entries: `
+                    class = `sapUiTinyMargin`
            )->switch( state   = client->_bind_edit( mv_preselect )
                       enabled = client->_bind_edit( mv_multiselect )
            )->get_parent(
            )->button(
-            text  = 'Open Popup...'
+            text  = `Open Popup...`
             press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).

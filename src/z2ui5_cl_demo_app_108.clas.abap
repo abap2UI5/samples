@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title           = 'abap2UI5 - Side Panel Example'
+            title           = `abap2UI5 - Side Panel Example`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 

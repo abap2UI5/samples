@@ -84,8 +84,8 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
     page->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav' ).
 
     DATA(layout) = page->vbox( `navigationExamples`

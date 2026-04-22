@@ -55,10 +55,10 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_190'  count = '10' table = 'Z2UI5_T_11' )
-                       ( id = '2' class = 'Z2UI5_CL_DEMO_APP_190'  count = '20' table = 'Z2UI5_T_12' )
-                       ( id = '3' class = 'Z2UI5_CL_DEMO_APP_190'  count = '30' table = 'Z2UI5_T_11' )
-                       ( id = '4' class = 'Z2UI5_CL_DEMO_APP_190'  count = '40' table = 'Z2UI5_T_12' ) ).
+    mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_DEMO_APP_190`  count = '10' table = 'Z2UI5_T_11' )
+                       ( id = `2` class = `Z2UI5_CL_DEMO_APP_190`  count = '20' table = 'Z2UI5_T_12' )
+                       ( id = `3` class = `Z2UI5_CL_DEMO_APP_190`  count = '30' table = 'Z2UI5_T_11' )
+                       ( id = `4` class = `Z2UI5_CL_DEMO_APP_190`  count = '40' table = 'Z2UI5_T_12' ) ).
 
     mv_selectedkey = '1'.
 
@@ -69,12 +69,12 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page( id             = `page_main`
-                             title          = 'Main App calling Subapps'
+                             title          = `Main App calling Subapps`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
-                             class          = 'sapUiContentPadding' ).
+                             class          = `sapUiContentPadding` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = 'sapUiResponsiveContentPadding'
+    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( mv_selectedkey )
                                          select      = client->_event( `ONSELECTICONTABBAR` )
                                                        )->items( ).

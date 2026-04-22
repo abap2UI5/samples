@@ -45,10 +45,10 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     client->view_display( val = view->shell(
-           )->page( title          = 'abap2UI5 - Conversion Exit'
+           )->page( title          = `abap2UI5 - Conversion Exit`
                     navbuttonpress = client->_event_nav_app_leave( )
                     shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form( title    = 'Form Title'
+        )->simple_form( title    = `Form Title`
                         editable = abap_true
                    )->content( 'form'
                        )->title( 'Conversion'

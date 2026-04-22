@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
                  )->toolbar_spacer(
                  )->button( text  = `event sub app`
                             press = client->_event( `BUTTON_SAVE` )
-                            type  = 'Success' ).
+                            type  = `Success` ).
 
     ENDIF.
 

@@ -31,10 +31,10 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory( )->shell(
           )->page(
                  showheader      = xsdbool( abap_false = client->get( )-check_launchpad_active )
-                  title          = 'abap2UI5'
+                  title          = `abap2UI5`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form( title    = 'Information'
+              )->simple_form( title    = `Information`
                               editable = abap_true
                   )->content( 'form'
                       )->label( 'mv_scan_input'

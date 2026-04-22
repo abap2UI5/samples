@@ -119,10 +119,10 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
     page = page->shell( )->page(
-        title          = 'abap2UI5 - P13N Dialog'
+        title          = `abap2UI5 - P13N Dialog`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
-        class          = 'sapUiContentPadding' ).
+        class          = `sapUiContentPadding` ).
 
     page = page->vbox( ).
 

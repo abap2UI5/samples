@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view = view->shell( )->page( id = `page_main`
-             title                  = 'abap2UI5 - Popup Display Table'
+             title                  = `abap2UI5 - Popup Display Table`
              navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = client->check_app_prev_stack( ) ).
 

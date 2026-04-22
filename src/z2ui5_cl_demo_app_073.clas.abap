@@ -24,18 +24,18 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5 - First Example'
+                  title          = `abap2UI5 - First Example`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
              )->_z2ui5( )->timer(
                   checkactive = client->_bind( mv_check_timer_active )
                   finished    = client->_event_client( val     = client->cs_event-open_new_tab
                                                          t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
-              )->simple_form( title    = 'Form Title'
+              )->simple_form( title    = `Form Title`
                               editable = abap_true
                   )->content( 'form'
                       )->button(
-                          text  = 'open new tab'
+                          text  = `open new tab`
                           press = client->_event( val = 'BUTTON_OPEN_NEW_TAB' )
            )->stringify( ) ).
 

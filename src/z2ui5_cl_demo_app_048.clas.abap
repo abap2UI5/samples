@@ -31,12 +31,12 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = 'entry_01'   info = 'Information'   descr = 'this is a description1 1234567890 1234567890'  icon = 'sap-icon://badge'      highlight = 'Information' wrapcharlimit = '100' )
-        ( title = 'entry_02'  info = 'Success'        descr = 'this is a description2 1234567890 1234567890'  icon = 'sap-icon://favorite'   highlight = 'Success'  wrapcharlimit = '10')
-        ( title = 'entry_03'  info = 'Warning'        descr = 'this is a description3 1234567890 1234567890'  icon = 'sap-icon://employee'   highlight = 'Warning'  wrapcharlimit = '100')
-        ( title = 'entry_04'  info = 'Error'          descr = 'this is a description4 1234567890 1234567890'  icon = 'sap-icon://accept'     highlight = 'Error'  wrapcharlimit = '10' )
-        ( title = 'entry_05'  info = 'None'           descr = 'this is a description5 1234567890 1234567890'  icon = 'sap-icon://activities' highlight = 'None'  wrapcharlimit = '10')
-        ( title = 'entry_06'  info = 'Information'    descr = 'this is a description6 1234567890 1234567890'  icon = 'sap-icon://account'    highlight = 'Information'   wrapcharlimit = '100' ) ).
+        ( title = `entry_01`   info = `Information`   descr = 'this is a description1 1234567890 1234567890'  icon = `sap-icon://badge`      highlight = 'Information' wrapcharlimit = '100' )
+        ( title = `entry_02`  info = `Success`        descr = 'this is a description2 1234567890 1234567890'  icon = `sap-icon://favorite`   highlight = 'Success'  wrapcharlimit = '10')
+        ( title = `entry_03`  info = `Warning`        descr = 'this is a description3 1234567890 1234567890'  icon = `sap-icon://employee`   highlight = 'Warning'  wrapcharlimit = '100')
+        ( title = `entry_04`  info = `Error`          descr = 'this is a description4 1234567890 1234567890'  icon = `sap-icon://accept`     highlight = 'Error'  wrapcharlimit = '10' )
+        ( title = `entry_05`  info = `None`           descr = 'this is a description5 1234567890 1234567890'  icon = `sap-icon://activities` highlight = 'None'  wrapcharlimit = '10')
+        ( title = `entry_06`  info = `Information`    descr = 'this is a description6 1234567890 1234567890'  icon = `sap-icon://account`    highlight = 'Information'   wrapcharlimit = '100' ) ).
 
     ENDIF.
 
@@ -52,13 +52,13 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title           = 'abap2UI5 - List'
+            title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true
             ).
 
     page->list(
-        headertext      = 'List Ouput'
+        headertext      = `List Ouput`
         items           = client->_bind_edit( t_tab )
         mode            = `SingleSelectMaster`
         selectionchange = client->_event( `SELCHANGE` )

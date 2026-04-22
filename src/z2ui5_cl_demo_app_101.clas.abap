@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
       ENDIF.
       CLEAR ms_feed.
       ms_feed-author = sy-uname.
-      ms_feed-type = 'Respond'.
+      ms_feed-type = `Respond`.
       ms_feed-text = mv_value.
       mv_value = ``.
       INSERT ms_feed INTO mt_feed INDEX 1.
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(
-             title          = 'Feed Input'
+             title          = `Feed Input`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).
 

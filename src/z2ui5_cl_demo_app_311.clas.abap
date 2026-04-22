@@ -59,8 +59,8 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
 
     popup = popup->dialog(
           title         = `Messages`
-          contentheight = '50%'
-          contentwidth  = '50%' ).
+          contentheight = `50%`
+          contentwidth  = `50%` ).
 
     popup->message_view(
             items      = client->_bind( t_msg
@@ -77,10 +77,10 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
       )->toolbar_spacer(
       )->button(
           id    = `test2`
-          text  = 'test'
+          text  = `test`
           press = client->_event( `TEST` )
       )->button(
-          text  = 'close'
+          text  = `close`
           press = client->_event_client( client->cs_event-popup_close ) ).
 
     client->popup_display( popup->stringify( ) ).
@@ -95,10 +95,10 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
                     name = `style` )->_cc_plain_xml( `.sapMDialogScroll { height:100%; }` ).
     DATA(page) = view->shell(
         )->page(
-            title           = 'abap2UI5 - List'
+            title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
-    page->button( text  = 'Messages in Popup'
+    page->button( text  = `Messages in Popup`
                   press = client->_event( `POPUP` ) ).
     page->message_view(
         items      = client->_bind( t_msg )
@@ -112,15 +112,15 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
          )->button(
-             id    = 'test'
-             text  = 'Messages (6)'
+             id    = `test`
+             text  = `Messages (6)`
              press = client->_event( `POPOVER` )
-             type  = 'Emphasized'
+             type  = `Emphasized`
          )->toolbar_spacer(
          )->button(
-             text  = 'Send to Server'
+             text  = `Send to Server`
              press = client->_event( `BUTTON_SEND` )
-             type  = 'Success' ).
+             type  = `Success` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -134,10 +134,10 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_msg = VALUE #(
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Error'     group = 'group 01' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 01' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 02' )
-          ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Success' group = 'group 03' ) ).
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Error`     group = 'group 01' )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = 'group 01' )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = 'group 02' )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Success` group = 'group 03' ) ).
 
       view_display( ).
 

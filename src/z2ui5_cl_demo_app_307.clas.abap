@@ -222,7 +222,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
             )->get_parent(
             )->grid_list_item( counter   = '{COUNTER}'
                                highlight = '{HIGHLIGHT}'
-                               type      = '{TYPE}'
+                               type      = `{TYPE}`
                                unread    = '{UNREAD}'
                 )->vbox( height = `100%`
                     )->vbox( `sapUiSmallMargin`
@@ -230,9 +230,9 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                             )->flex_item_data( growfactor   = `1`
                                                shrinkfactor = `0`
                         )->get_parent(
-                        )->title( text     = '{TITLE}'
+                        )->title( text     = `{TITLE}`
                                   wrapping = abap_true
-                        )->label( text     = '{SUBTITLE}'
+                        )->label( text     = `{SUBTITLE}`
                                   wrapping = abap_true ).
 
     client->view_display( view->stringify( ) ).

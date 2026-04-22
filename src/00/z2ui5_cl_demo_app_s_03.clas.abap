@@ -81,11 +81,11 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     IF client->get( )-event = 'enter'.
       IF magic_key = `abap2UI5`.
         client->follow_up_action( val = `playSuccess()` ).
-        message-type = 'Success'.
-        message-text = 'Hooray!'.
+        message-type = `Success`.
+        message-text = `Hooray!`.
       ELSE.
         client->follow_up_action( val = `playError()` ).
-        message-type = 'Error'.
+        message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.
       CLEAR magic_key.

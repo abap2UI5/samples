@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = 'abap2UI5 - Upload Files'
+            title          = `abap2UI5 - Upload Files`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
     footer->_z2ui5( )->file_uploader(
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
-      placeholder = 'filepath here...'
+      placeholder = `filepath here...`
 *      enabled     = abap_false
       upload      = client->_event( `UPLOAD` ) ).
 

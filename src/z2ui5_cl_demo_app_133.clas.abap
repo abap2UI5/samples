@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
       )->page(
-                  title          = 'abap2UI5 - Focus'
+                  title          = `abap2UI5 - Focus`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
                                 selectionstart = client->_bind_edit( selstart )
                                 selectionend   = client->_bind_edit( selend )
                                 setupdate      = client->_bind_edit( update_focus )
-              )->simple_form( title    = 'Focus & Cursor'
+              )->simple_form( title    = `Focus & Cursor`
                               editable = abap_true
                   )->content( 'form'
                       )->title( 'Input'
@@ -48,13 +48,13 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
                       )->input( value = client->_bind_edit( selend )
                       )->label( 'field_01'
                       )->input( value = client->_bind_edit( field_01 )
-                                id    = 'BUTTON01'
-                      )->button( text  = 'focus here'
+                                id    = `BUTTON01`
+                      )->button( text  = `focus here`
                                  press = client->_event( `BUTTON01` )
                       )->label( `field_02`
                       )->input( value = client->_bind_edit( field_02 )
-                                id    = 'BUTTON02'
-                      )->button( text  = 'focus here'
+                                id    = `BUTTON02`
+                      )->button( text  = `focus here`
                                  press = client->_event( `BUTTON02` )
            )->stringify( ) ).
 

@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = 'abap2UI5 - Popups'
+                title          = `abap2UI5 - Popups`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
     grid->simple_form( 'Tables' )->content( 'form'
         )->label( '01'
         )->button(
-            text  = 'Show bapiret tab'
+            text  = `Show bapiret tab`
             press = client->_event( `POPUP_BAL` ) ).
 
     mv_main_xml = page->get_root( )->xml_get( ).
@@ -72,9 +72,9 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
             )->footer( )->overflow_toolbar(
                 )->toolbar_spacer(
                 )->button(
-                    text  = 'close'
+                    text  = `close`
                     press = client->_event( `POPUP_BAL_CLOSE` )
-                    type  = 'Emphasized' ).
+                    type  = `Emphasized` ).
 
     mv_popup_xml = popup->get_root( )->xml_get( ).
 
@@ -86,12 +86,12 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_bapiret = VALUE #(
-        ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-        ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-        ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-        ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-        ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-        ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' ) ).
+        ( message = 'An empty Report field causes an empty XML Message to be sent' type = `E` id = `MSG1` number = '001' )
+        ( message = 'Check was executed for wrong Scenario' type = `E` id = `MSG1` number = '002' )
+        ( message = 'Request was handled without errors' type = `S` id = `MSG1` number = '003' )
+        ( message = 'product activated' type = `S` id = `MSG4` number = '375' )
+        ( message = 'check the input values' type = `W` id = `MSG2` number = '375' )
+        ( message = 'product already in use' type = `I` id = `MSG2` number = '375' ) ).
 
     ENDIF.
 

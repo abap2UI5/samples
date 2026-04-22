@@ -43,13 +43,13 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
     client->view_display( view->shell(
           )->page(
-                  title          = 'abap2UI5'
+                  title          = `abap2UI5`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->_z2ui5( )->timer(
                                         finished = client->_event( `TIMER_FINISHED` )
                                         delayms  = `2000`
-              )->simple_form( title    = 'Timer Interval 2000 ms'
+              )->simple_form( title    = `Timer Interval 2000 ms`
                               editable = abap_true
                   )->content( 'form'
            )->stringify( ) ).

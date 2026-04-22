@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = 'abap2UI5 - Generic Tag Example'
+            title          = `abap2UI5 - Generic Tag Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -31,33 +31,33 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
                                           width = `100%` ).
     layout->generic_tag(
             arialabelledby = 'genericTagLabel'
-            text           = 'Project Cost'
-            design         = 'StatusIconHidden'
+            text           = `Project Cost`
+            design         = `StatusIconHidden`
             status         = 'Error'
-            class          = 'sapUiSmallMarginBottom'
+            class          = `sapUiSmallMarginBottom`
         )->object_number(
-            state      = 'Error'
+            state      = `Error`
             emphasized = 'false'
             number     = '3.5M'
             unit       = 'EUR' ).
 
     layout->generic_tag(
         arialabelledby = 'genericTagLabel'
-        text           = 'Project Cost'
-        design         = 'StatusIconHidden'
+        text           = `Project Cost`
+        design         = `StatusIconHidden`
         status         = 'Success'
-        class          = 'sapUiSmallMarginBottom'
+        class          = `sapUiSmallMarginBottom`
         )->object_number(
-            state      = 'Success'
+            state      = `Success`
             emphasized = 'false'
             number     = '3.5M'
             unit       = 'EUR' ).
 
     layout->generic_tag(
         arialabelledby = 'genericTagLabel'
-        text           = 'Input'
-        design         = 'StatusIconHidden'
-        class          = 'sapUiSmallMarginBottom'
+        text           = `Input`
+        design         = `StatusIconHidden`
+        class          = `sapUiSmallMarginBottom`
         )->object_number(
             emphasized = 'true'
             number     = '3.5M'

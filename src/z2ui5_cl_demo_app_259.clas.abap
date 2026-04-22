@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_259 IMPLEMENTATION.
 
     page_01->header_content(
        )->link(
-           text   = 'UI5 Demo Kit'
-           target = '_blank'
+           text   = `UI5 Demo Kit`
+           target = `_blank`
            href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Button/sample/sap.m.sample.Button' ).
 
     DATA(page_02) = page_01->page(

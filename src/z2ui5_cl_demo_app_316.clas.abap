@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->title( `URL Helper Sample`
         )->shell(
-            )->page( title          = 'abap2UI5 - Sample: URL Helper'
+            )->page( title          = `abap2UI5 - Sample: URL Helper`
                      navbuttonpress = client->_event_nav_app_leave( )
                      shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                        value           = client->_bind_edit( email-body )
                        growing         = abap_true
                        growingmaxlines = '7'
-                       width           = '100%' ).
+                       width           = `100%` ).
 
     email_form->button( text  = `Trigger Email`
                         press = client->_event_client( val   = client->cs_event-urlhelper
