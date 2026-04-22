@@ -16,9 +16,9 @@ CLASS z2ui5_cl_demo_app_311 DEFINITION PUBLIC.
     DATA t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY.
 
 
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popup.
-    METHODS z2ui5_display_popover
+    METHODS view_display.
+    METHODS popup_display.
+    METHODS popover_display
       IMPORTING
         id TYPE string.
 
@@ -34,7 +34,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_popup.
+  METHOD popup_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( ns   = `html`
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
           ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Information' group = 'group 02' )
           ( description = 'descr' subtitle = 'subtitle' title = 'title' type = 'Success' group = 'group 03' ) ).
 
-      z2ui5_display_view( ).
+      view_display( ).
 
     ENDIF.
 
@@ -151,11 +151,11 @@ CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
       WHEN 'POPOVER_CLOSE'.
         client->popover_destroy( ).
       WHEN 'POPUP'.
-        z2ui5_display_popup( ).
+        popup_display( ).
       WHEN 'TEST'.
-        z2ui5_display_popover( `test2` ).
+        popover_display( `test2` ).
       WHEN 'POPOVER'.
-        z2ui5_display_popover( `test` ).
+        popover_display( `test` ).
     ENDCASE.
 
   ENDMETHOD.

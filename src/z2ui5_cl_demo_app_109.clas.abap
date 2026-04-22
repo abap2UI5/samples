@@ -15,8 +15,8 @@ CLASS z2ui5_cl_demo_app_109 DEFINITION PUBLIC.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS view_display.
+    METHODS popover_display
       IMPORTING
         id TYPE string.
 
@@ -28,7 +28,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = mv_placement
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       z2ui5_on_init( ).
-      z2ui5_display_view( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
       WHEN 'CLOSE_POPOVER'.
         client->popover_destroy( ).
       WHEN 'POPOVER'.
-        z2ui5_display_popover( `TEST` ).
+        popover_display( `TEST` ).
 
       WHEN 'BUTTON_CONFIRM'.
         client->message_toast_display( |confirm| ).

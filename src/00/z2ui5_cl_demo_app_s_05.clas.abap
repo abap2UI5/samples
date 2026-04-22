@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
 
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_render.
-    METHODS z2ui5_display_popover.
+    METHODS popover_display.
 
   PRIVATE SECTION.
 
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
         CLEAR: news_list.
       WHEN 'CLICK_HINT_ICON'.
 
-        z2ui5_display_popover( ).
+        popover_display( ).
 
     ENDCASE.
 
@@ -177,7 +177,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`

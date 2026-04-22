@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
     DATA mv_product TYPE string .
 
     METHODS z2ui5_set_data .
-    METHODS z2ui5_display_view .
+    METHODS view_display .
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -35,7 +35,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_display_view( ).
+      view_display( ).
       z2ui5_set_data( ).
       RETURN.
     ENDIF.

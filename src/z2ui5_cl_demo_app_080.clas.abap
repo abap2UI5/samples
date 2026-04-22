@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
     DATA client            TYPE REF TO z2ui5_if_client.
 
 
-    METHODS z2ui5_display_view.
+    METHODS view_display.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
 
@@ -53,7 +53,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     lv_s_date = '2023-04-22T08:15:00'.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = 'DISPLAY_VIEW'.
-      z2ui5_display_view( ).
+      view_display( ).
       RETURN.
     ENDIF.
 

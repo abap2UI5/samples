@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_293 DEFINITION PUBLIC.
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+    METHODS popover_display
       IMPORTING
         id TYPE string.
 
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'CLICK_HINT_ICON'.
-        z2ui5_display_popover( `button_hint_id` ).
+        popover_display( `button_hint_id` ).
       WHEN 'handleLinkPress'.
         client->message_box_display( `Link was clicked!` ).
     ENDCASE.
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`

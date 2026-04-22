@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_248 DEFINITION PUBLIC.
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS z2ui5_display_popover
+    METHODS popover_display
       IMPORTING
         id TYPE string.
 
@@ -62,13 +62,13 @@ CLASS z2ui5_cl_demo_app_248 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( 'POPOVER' ).
-      z2ui5_display_popover( `hint_icon` ).
+      popover_display( `hint_icon` ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`

@@ -23,8 +23,8 @@ CLASS z2ui5_cl_demo_app_052 DEFINITION PUBLIC.
     DATA mv_product TYPE string.
 
     METHODS  z2ui5_set_data.
-    METHODS z2ui5_display_view.
-    METHODS z2ui5_display_popover
+    METHODS view_display.
+    METHODS popover_display
       IMPORTING
         id TYPE string.
 
@@ -37,7 +37,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_popover.
+  METHOD popover_display.
 
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_display_view( ).
+      view_display( ).
       z2ui5_set_data( ).
       RETURN.
     ENDIF.
@@ -122,7 +122,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
       WHEN `POPOVER_DETAIL`.
         mv_check_popover = abap_true.
         mv_product = client->get_event_arg( 2 ).
-        z2ui5_display_popover( client->get_event_arg( 1 ) ).
+        popover_display( client->get_event_arg( 1 ) ).
     ENDCASE.
 
   ENDMETHOD.

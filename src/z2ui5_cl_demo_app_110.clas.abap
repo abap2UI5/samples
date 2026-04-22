@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
-    METHODS z2ui5_display_view.
+    METHODS view_display.
 
 
   PRIVATE SECTION.
@@ -25,7 +25,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
 
-  METHOD z2ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       z2ui5_on_init( ).
-      z2ui5_display_view( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
