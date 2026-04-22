@@ -1,4 +1,4 @@
-CLASS lcl_file_api DEFINITION FINAL.
+CLASS lcl_file_api DEFINITION.
 
   PUBLIC SECTION.
 

@@ -1,4 +1,4 @@
-CLASS lcl_static_container DEFINITION CREATE PRIVATE FINAL.
+CLASS lcl_static_container DEFINITION CREATE PRIVATE.
   PUBLIC SECTION.
     CLASS-DATA counter TYPE i READ-ONLY.
     CLASS-METHODS increment
