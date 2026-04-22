@@ -6,8 +6,8 @@ CLASS z2ui5_cl_demo_app_170 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA mv_selected_key TYPE string.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS view_display.
+    METHODS on_event.
     METHODS simple_popup1.
     METHODS simple_popup2.
 
@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
       WHEN `GOTO_2ND`.
@@ -140,11 +140,11 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

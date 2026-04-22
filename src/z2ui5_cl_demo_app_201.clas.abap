@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
-    METHODS z2ui5_view_display.
+    METHODS view_display.
     METHODS set_data.
 
   PRIVATE SECTION.
@@ -293,7 +293,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `START`.
-        z2ui5_view_display( ).
+        view_display( ).
       WHEN `ON_SUGGEST`.
 
         lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
@@ -310,7 +310,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
        title          = `abap2UI5 - Live Suggestion Event`

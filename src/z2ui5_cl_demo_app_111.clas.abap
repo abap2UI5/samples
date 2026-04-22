@@ -29,8 +29,8 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
     METHODS on_event.
     METHODS z2ui5_set_search.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -46,13 +46,13 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
+      set_data( ).
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

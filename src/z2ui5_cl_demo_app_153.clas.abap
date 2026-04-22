@@ -43,8 +43,8 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     DATA ms_struc TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS view_display.
+    METHODS on_event.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -52,7 +52,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     client->_bind_edit(
         val                = ms_struc
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
@@ -109,11 +109,11 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       APPEND ls_dataset TO ms_struc-data-datasets.
       ms_struc2 = ms_struc.
 
-      ui5_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

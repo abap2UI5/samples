@@ -19,8 +19,8 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -33,15 +33,15 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_feed = VALUE #(
               ( author = `Developer9` authorpic = `sap-icon://employee` type = `Reply`  datetime = `01.11.2023` text = `newest entry` )
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view->shell( )->page(

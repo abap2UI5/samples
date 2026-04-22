@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_331 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
     IF client->check_on_init( ).
       get_data( ).
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( REF #( ms_struc ) ).
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF ms_struc IS INITIAL.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )

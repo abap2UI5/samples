@@ -27,8 +27,8 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
     METHODS z2ui5_view_vm_popup.
 
   PRIVATE SECTION.
@@ -43,16 +43,16 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
 
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(

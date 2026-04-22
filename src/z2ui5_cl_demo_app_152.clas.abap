@@ -17,8 +17,8 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS view_display.
+    METHODS on_event.
     METHODS ui5_callback.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -27,7 +27,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
-  METHOD ui5_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
 
       IF client->check_on_init( ).
-        ui5_display( ).
+        view_display( ).
 
       ELSE.
         ui5_callback( ).
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
 
     DATA mv_page TYPE string.
 
-    METHODS z2ui5_view_display.
+    METHODS view_display.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -67,14 +67,14 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
       RETURN.
 
     ELSEIF client->check_on_init( ).
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     client->_bind_edit( mv_file_raw ).
 

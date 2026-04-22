@@ -22,8 +22,8 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -36,8 +36,8 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_event( `BUTTON_SEARCH` ).
-      z2ui5_set_data( ).
+      set_data( ).
       z2ui5_cl_util=>itab_filter_by_val(
           EXPORTING
               val = client->get_event_arg( 1 )
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

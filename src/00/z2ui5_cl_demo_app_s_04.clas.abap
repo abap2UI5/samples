@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_s_04 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
+    METHODS set_data.
 
     METHODS display_view
       IMPORTING
@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       display_view( client ).
-      z2ui5_set_data( ).
+      set_data( ).
     ENDIF.
 
   ENDMETHOD.
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     unit = `ST`.   " internal ST -> external PC (if logged in in english)
     numc = 10.     " internal 0000000010 -> external 10

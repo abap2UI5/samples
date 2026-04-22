@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
     DATA mv_check_popover TYPE abap_bool.
     DATA mv_product TYPE string.
 
-    METHODS z2ui5_set_data.
+    METHODS set_data.
     METHODS view_display.
 
   PROTECTED SECTION.
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( ).
-      z2ui5_set_data( ).
+      set_data( ).
       RETURN.
     ENDIF.
 
@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

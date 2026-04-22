@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_view_display.
+    METHODS view_display.
     METHODS ui5_popup_input.
     METHODS ui5_handle_event.
     METHODS ui5_init.
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(css) = `` &&
                 `.lbl-color { color: red !important; font-size: 30px !important; }`.
@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_view_display( ).
+      view_display( ).
     ENDIF.
 
     ui5_handle_event( ).

@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 
     DATA mv_page TYPE string.
 
-    METHODS z2ui5_view_display.
+    METHODS view_display.
     METHODS on_event.
   PRIVATE SECTION.
 ENDCLASS.
@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       mv_page = `page1`.
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -37,14 +37,14 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN OTHERS.
         mv_page = client->get( )-event.
-        z2ui5_view_display( ).
+        view_display( ).
 
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(

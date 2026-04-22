@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS on_event.
-    METHODS z2ui5_set_data.
+    METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
+      set_data( ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = `DISPLAY_VIEW`.
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_people = VALUE #(
       ( name = `Olaf` role = `Team Member` pic = `sap-icon://employee`

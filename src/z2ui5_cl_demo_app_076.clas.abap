@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS z2ui5_set_data.
+    METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
       on_init( ).
       RETURN.
     ENDIF.
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #( children = VALUE #( ( id = `line`
       text                                       = `Level 1`

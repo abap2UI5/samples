@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
 
 *    DATA mo_layout   type ref to z2ui5_cl_layo_manager .
 
-    METHODS ui5_view_display.
+    METHODS view_display.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -26,7 +26,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_main) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = lo_main->page( title          = `abap2UI5 - Popups`
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_view_display( ).
+      view_display( ).
 
       mt_table = VALUE ty_t_table( index = 1
                                    value = 10

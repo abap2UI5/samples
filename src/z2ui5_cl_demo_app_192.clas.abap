@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
 
     DATA mt_out TYPE ty_t_out.
 
-    METHODS ui5_display.
+    METHODS view_display.
   PROTECTED SECTION.
     METHODS get_data.
     METHODS xml_parse.
@@ -44,7 +44,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     xml_parse( ).
     me->client = client.
     get_data( ).
-    ui5_display( ).
+    view_display( ).
     xml_stringify( ).
 
   ENDMETHOD.

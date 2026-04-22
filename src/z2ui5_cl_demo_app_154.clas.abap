@@ -5,8 +5,8 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS view_display.
+    METHODS on_event.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -15,7 +15,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
-  METHOD ui5_event.
+  METHOD on_event.
 
     TYPES BEGIN OF ty_log_entry.
     TYPES msgnumber TYPE n LENGTH 6.
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -99,11 +99,11 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

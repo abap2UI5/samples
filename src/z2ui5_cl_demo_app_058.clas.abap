@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
     METHODS view_display.
     METHODS view_display_main.
 
-    METHODS z2ui5_set_data.
+    METHODS set_data.
     METHODS popup_display_view.
     METHODS popup_display_save.
   PRIVATE SECTION.
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     CASE app-get-event.
       WHEN `BUTTON_START`.
-        z2ui5_set_data( ).
+        set_data( ).
       WHEN `BUTTON_SETUP`.
         app-view_popup = `POPUP`.
       WHEN `BUTTON_SAVE`.
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
   METHOD on_init.
 
-    z2ui5_set_data( ).
+    set_data( ).
     app-view_main = `MAIN`.
 
     ms_layout-title = `data`.
@@ -343,7 +343,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( product = `table`    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )

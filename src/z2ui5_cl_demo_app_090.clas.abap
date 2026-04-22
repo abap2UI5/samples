@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
 
     DATA mv_page TYPE string.
 
-    METHODS z2ui5_view_display.
+    METHODS view_display.
     METHODS z2ui5_view_p13n.
     METHODS z2ui5_view_p13n_popup.
     METHODS on_event.
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     ELSEIF check_view_loaded = abap_false.
       check_view_loaded = abap_true.
       init_data_set( ).
-      z2ui5_view_display( ).
+      view_display( ).
 
     ELSE.
       on_event( ).
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     client->_bind_edit( val           = mt_columns_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).

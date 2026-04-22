@@ -39,8 +39,8 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -54,16 +54,16 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
 
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_nodes = VALUE #( ( id = `1` lane = `0` title = `Sales Order 1` titleabbreviation = `SO 1` children = VALUE #( ( 10 ) ( 11 ) ( 12 ) ) state = `Positive` statetext = `OK status` focused = abap_true
                           highlighted = abap_false texts = VALUE #( ( `Sales Order Document Overdue long text for the wrap up all the aspects` ) ( `Not cleared` ) ) )
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

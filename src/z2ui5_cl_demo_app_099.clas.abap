@@ -37,8 +37,8 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
     METHODS z2ui5_view_sort_popup.
     METHODS z2ui5_view_filter_popup.
     METHODS z2ui5_view_group_popup.
@@ -57,9 +57,9 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      z2ui5_set_data( ).
+      set_data( ).
 
-      z2ui5_view_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           DATA(mv_filter_len) = strlen( mv_filter ) - 1.
           mv_filter = mv_filter+0(mv_filter_len).
 
-          z2ui5_view_display( ).
+          view_display( ).
 
         ENDIF.
 
@@ -156,7 +156,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
             mv_sorter_group = VALUE #( ).
           ENDIF.
 
-          z2ui5_view_display( ).
+          view_display( ).
 
         ENDIF.
 
@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     t_tab = VALUE #(
       ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
@@ -194,7 +194,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(

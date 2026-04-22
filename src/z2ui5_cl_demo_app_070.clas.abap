@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
     METHODS z2ui5_set_search.
-    METHODS z2ui5_set_data.
+    METHODS set_data.
 
     METHODS set_selkz
       IMPORTING
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         client->message_toast_display( `Search Entries` ).
-        z2ui5_set_data( ).
+        set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
       WHEN `SORT`.
@@ -234,7 +234,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )

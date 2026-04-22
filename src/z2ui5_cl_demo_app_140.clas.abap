@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     DATA gt_sel_multi2 TYPE string_table.
 
     METHODS ui5_on_init.
-    METHODS ui5_on_event.
+    METHODS on_event.
     METHODS ui5_view_main_display.
 
   PROTECTED SECTION.
@@ -27,7 +27,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 
-  METHOD ui5_on_event.
+  METHOD on_event.
 
     TRY.
         IF client->check_on_event( `FILTERBAR` ).
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     ENDIF.
 
     ui5_view_main_display( ).
-    ui5_on_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

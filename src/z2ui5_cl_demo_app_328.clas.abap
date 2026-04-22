@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_328 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     IF client->check_on_init( ).
       get_data( ).
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
           get_data( ).
           mo_table_obj = z2ui5_cl_demo_app_329=>factory( mt_table ).
-          ui5_view_display( client ).
+          view_display( client ).
 
           ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
           ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )

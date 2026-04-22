@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_set_data.
+    METHODS set_data.
 
     METHODS set_filter.
   PRIVATE SECTION.
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
+      set_data( ).
       on_init( ).
       RETURN.
     ENDIF.
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30` dimunit = `CM` measure = 100  unit = `ST` price = `1000.50` waers = `EUR`  state_price = `Success` rating = `0` state_measure = `Warning` )
@@ -177,7 +177,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
   METHOD set_filter.
 
-    z2ui5_set_data( ).
+    set_data( ).
     CASE lv_selectedkey.
       WHEN `ALL`.
       WHEN `OK`.

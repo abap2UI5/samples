@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_348 DEFINITION PUBLIC.
     METHODS get_data.
     METHODS get_data2.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
                                                       vis_cols = 5 ).
 
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
     IF     client->get( )-check_on_navigated = abap_true
        AND client->check_on_init( )          = abap_false.
-      ui5_view_display( client ).
+      view_display( client ).
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )

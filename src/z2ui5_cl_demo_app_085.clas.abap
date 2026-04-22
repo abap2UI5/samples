@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
 
     METHODS view_display_master.
     METHODS view_display_detail.
-    METHODS z2ui5_set_data.
+    METHODS set_data.
     METHODS on_event.
     METHODS z2ui5_set_search.
 
@@ -387,7 +387,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
+      set_data( ).
       sort( ).
       view_display_master( ).
       RETURN.
@@ -463,7 +463,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->nest_view_model_update( ).
       WHEN `ONSEARCH`.
         client->message_toast_display( `Search Entries` ).
-        z2ui5_set_data( ).
+        set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
@@ -472,7 +472,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_table = VALUE #(
         ( key = `1` productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30`

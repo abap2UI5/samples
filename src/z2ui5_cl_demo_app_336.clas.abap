@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
     DATA mo_layout_obj   TYPE REF TO z2ui5_cl_demo_app_333.
     DATA mo_layout_obj_2 TYPE REF TO z2ui5_cl_demo_app_333.
 
-    METHODS ui5_view_display
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_struc )
                                                         vis_cols = 3 ).
 
-      ui5_view_display( client ).
+      view_display( client ).
 
     ENDIF.
     client->view_model_update( ).
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_336 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_display.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )

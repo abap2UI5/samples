@@ -19,8 +19,8 @@ CLASS z2ui5_cl_demo_app_114 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
-    METHODS z2ui5_set_data.
-    METHODS z2ui5_view_display.
+    METHODS set_data.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -33,8 +33,8 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      z2ui5_set_data( ).
-      z2ui5_view_display( ).
+      set_data( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     mt_feed = VALUE #(
                       ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_display.
+  METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 

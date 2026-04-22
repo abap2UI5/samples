@@ -5,8 +5,8 @@ CLASS z2ui5_cl_demo_app_168 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_display.
-    METHODS ui5_event.
+    METHODS view_display.
+    METHODS on_event.
     METHODS ui5_callback.
 
   PROTECTED SECTION.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
@@ -68,12 +68,12 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_display( ).
+      view_display( ).
       ui5_callback( ).
       RETURN.
     ENDIF.
 
-    ui5_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

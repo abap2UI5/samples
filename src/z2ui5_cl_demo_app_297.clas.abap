@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_297 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_set_data.
+    METHODS set_data.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       display_view( client ).
-      z2ui5_set_data( ).
+      set_data( ).
     ENDIF.
 
     on_event( client ).
@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_data.
+  METHOD set_data.
 
     selected_product = VALUE #( ).
     lt_product_collection = VALUE #( ).
