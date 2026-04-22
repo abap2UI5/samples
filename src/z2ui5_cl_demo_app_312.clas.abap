@@ -316,6 +316,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
       on_rendering( ).
+
     ELSE.
       on_event( ).
     ENDIF.

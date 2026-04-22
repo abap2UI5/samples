@@ -71,6 +71,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     IF lv_sort_desc = abap_true.
       SORT mt_table BY productid ASCENDING.
       lv_sort_desc = abap_false.
+
     ELSE.
       SORT mt_table BY productid DESCENDING.
       lv_sort_desc = abap_true.

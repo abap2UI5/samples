@@ -96,6 +96,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
       IF client->check_on_init( ).
         ui5_display( ).
+
       ELSE.
         ui5_callback( ).
       ENDIF.

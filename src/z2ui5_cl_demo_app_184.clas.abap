@@ -54,6 +54,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
+
     ELSE.
       page = mo_parent_view->get( `Page` ).
     ENDIF.

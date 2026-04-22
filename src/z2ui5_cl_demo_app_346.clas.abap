@@ -224,6 +224,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     IF focuscolumn = c_id-title.
       IF line_exists( t_tab[ focusrow + 2 ] ).
         focusrow = condense( CONV i( focusrow + 1 ) ).
+
       ELSE.
         focusrow = `0`.
       ENDIF.

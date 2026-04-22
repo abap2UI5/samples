@@ -87,6 +87,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
           IF mv_sort_descending = abap_true.
             SORT t_tab BY (sort_field) DESCENDING.
+
           ELSE.
             SORT t_tab BY (sort_field) ASCENDING.
 
@@ -133,6 +134,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
             IF mv_group_descending = abap_true.
               SORT t_tab BY (group_field) DESCENDING.
+
             ELSE.
               SORT t_tab BY (group_field) ASCENDING.
             ENDIF.
@@ -144,6 +146,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
             IF mv_group_descending = abap_true.
               SORT t_tab BY (group_field) DESCENDING.
+
             ELSE.
               SORT t_tab BY (group_field) ASCENDING.
             ENDIF.

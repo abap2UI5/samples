@@ -66,6 +66,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       WHEN `BACK`.
         IF dirty = abap_true.
           security_check_popup( ).
+
         ELSE.
           client->nav_app_leave( ).
         ENDIF.
@@ -104,6 +105,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       display_view( ).
+
     ELSE.
       client->view_model_update( ).
     ENDIF.

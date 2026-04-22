@@ -71,6 +71,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
             IF sy-subrc <> 0.
               client->set_session_stateful( abap_false ).
               client->nav_app_leave( ).
+
             ELSE.
               client->set_session_stateful( ).
               initialize_view2( client ).

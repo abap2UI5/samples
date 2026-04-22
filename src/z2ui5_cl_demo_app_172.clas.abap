@@ -49,6 +49,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       IF sy-index = 1.
         ls_output-bool = abap_false.
         ls_output-percent1 = `100.00`.
+
       ELSE.
         ls_output-bool = abap_true.
         ls_output-percent1 = `10.00`.

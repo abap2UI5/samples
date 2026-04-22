@@ -83,6 +83,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
         client->follow_up_action( val = `playSuccess()` ).
         message-type = `Success`.
         message-text = `Hooray!`.
+
       ELSE.
         client->follow_up_action( val = `playError()` ).
         message-type = `Error`.

@@ -120,9 +120,11 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
         lr_tab->editable = check_editable_active.
       ENDLOOP.
       client->view_model_update( ).
+
     ELSEIF client->check_on_event( `BUTTON_DELETE` ).
       DELETE t_tab WHERE selkz = abap_true.
       client->view_model_update( ).
+
     ELSEIF client->check_on_event( `BUTTON_ADD` ).
       INSERT VALUE #( ) INTO TABLE t_tab.
       client->view_model_update( ).

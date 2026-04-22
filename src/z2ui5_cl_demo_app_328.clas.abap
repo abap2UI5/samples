@@ -70,6 +70,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
           IF <table> <> <val>.
             client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA` ).
+
           ELSE.
             client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA` ).
           ENDIF.

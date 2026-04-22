@@ -60,11 +60,13 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
       IF <fs1>-prodh = p_prodh.
         <fs1>-counter = <fs1>-counter + 1.
         EXIT.
+
       ELSE.
         LOOP AT <fs1>-nodes ASSIGNING FIELD-SYMBOL(<fs2>).
           IF <fs2>-prodh = p_prodh.
             <fs2>-counter = <fs2>-counter + 1.
             EXIT.
+
           ELSE.
             LOOP AT <fs2>-nodes ASSIGNING FIELD-SYMBOL(<fs3>).
               IF <fs3>-prodh = p_prodh.

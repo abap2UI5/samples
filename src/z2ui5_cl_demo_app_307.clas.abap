@@ -261,6 +261,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
       IF insert_position = `Before`.
         INSERT item INTO items INDEX drop_position.
+
       ELSE.
         INSERT item INTO items INDEX drop_position + 1.
       ENDIF.

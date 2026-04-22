@@ -216,6 +216,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           WHERE visible = abap_true.
       IF lr_field->editable = abap_true.
         lo_cells->input( `{` && lr_field->name && `}` ).
+
       ELSE.
         lo_cells->text( `{` && lr_field->name && `}` ).
       ENDIF.

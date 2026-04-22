@@ -49,6 +49,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
         ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
         IF <val> IS NOT ASSIGNED.
           CONTINUE.
+
         ELSE.
 
           client->_bind( <val> ).
@@ -76,6 +77,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
+
     ELSE.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
