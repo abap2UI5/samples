@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
   METHOD build_tree.
 
-    CLEAR mt_tree.
+    mt_tree = VALUE #( ).
     LOOP AT mt_node INTO DATA(ls_node) WHERE id_parent IS INITIAL.
 
       DATA(ls_root) = CORRESPONDING ty_node1( ls_node ).

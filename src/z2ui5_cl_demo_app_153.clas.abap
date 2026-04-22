@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
       ms_struc-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
 
       DATA ls_dataset TYPE ty_dataset.
-      CLEAR ls_dataset.
+      ls_dataset = VALUE #( ).
       ls_dataset-label = `Fully Rounded`.
       ls_dataset-border_width = 2.
       ls_dataset-border_radius = 200.

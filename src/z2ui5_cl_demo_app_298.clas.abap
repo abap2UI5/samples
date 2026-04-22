@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     CLEAR selectedproductwrnngcollection.
     CLEAR selectedproductsccsscollection.
     CLEAR selectedproductinforcollection.
-    CLEAR lt_a_products.
+    lt_a_products = VALUE #( ).
 
     selectedproducterrorcollection  = `HT-998`.
     selectedproductwrnngcollection  = `HT-999`.

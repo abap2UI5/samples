@@ -33,12 +33,12 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
 
     IF mt_pos_xml IS NOT INITIAL.
       mt_kopf = z2ui5_cl_util=>xml_srtti_parse( mt_kopf_xml ).
-      CLEAR mt_kopf_xml.
+      mt_kopf_xml = VALUE #( ).
     ENDIF.
 
     IF mt_pos_xml IS NOT INITIAL.
       mt_pos = z2ui5_cl_util=>xml_srtti_parse( mt_pos_xml ).
-      CLEAR mt_pos_xml.
+      mt_pos_xml = VALUE #( ).
     ENDIF.
 
   ENDMETHOD.
@@ -49,13 +49,13 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
     ASSIGN mt_kopf->* TO FIELD-SYMBOL(<head>).
     IF sy-subrc = 0.
       mt_kopf_xml = z2ui5_cl_util=>xml_srtti_stringify( <head> ).
-      CLEAR mt_kopf.
+      mt_kopf = VALUE #( ).
     ENDIF.
 
     ASSIGN mt_pos->* TO FIELD-SYMBOL(<pos>).
     IF sy-subrc = 0.
       mt_pos_xml = z2ui5_cl_util=>xml_srtti_stringify( <pos> ).
-      CLEAR mt_pos.
+      mt_pos = VALUE #( ).
     ENDIF.
 
   ENDMETHOD.

@@ -50,8 +50,8 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
           INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
         ENDLOOP.
 
-        CLEAR mt_tokens_removed.
-        CLEAR mt_tokens_added.
+        mt_tokens_removed = VALUE #( ).
+        mt_tokens_added = VALUE #( ).
 
         mt_range = z2ui5_cl_util=>filter_get_range_t_by_token_t( mt_token ).
         set_data( ).

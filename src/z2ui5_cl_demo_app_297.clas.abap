@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     CLEAR selected_product.
-    CLEAR lt_product_collection.
+    lt_product_collection = VALUE #( ).
 
     selected_product  = `HT-1001`.
 

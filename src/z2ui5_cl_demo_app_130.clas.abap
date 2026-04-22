@@ -158,7 +158,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = `TO`         field = `TOSTAT`  field_doma = `/SCWM/DE_TOSTAT` )
       ( screen_name = `TO`         field = `VLPLA`   field_doma = `/SCWM/LTAP_VLPLA` ) ).
 
-    CLEAR mt_fields.
+    mt_fields = VALUE #( ).
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
 
       APPEND INITIAL LINE TO mt_fields REFERENCE INTO DATA(field).

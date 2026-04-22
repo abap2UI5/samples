@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       WHEN `FILTER_VALUE_HELP`.
         z2ui5_on_render_pop_filter( ).
 
-        CLEAR mt_filter.
+        mt_filter = VALUE #( ).
         LOOP AT ms_filter-product REFERENCE INTO DATA(lr_product).
           INSERT VALUE #(
                    low    = lr_product->low

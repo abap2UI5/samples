@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
       IF mv_value IS INITIAL.
         RETURN.
       ENDIF.
-      CLEAR ms_feed.
+      ms_feed = VALUE #( ).
       ms_feed-author = sy-uname.
       ms_feed-type = `Respond`.
       ms_feed-text = mv_value.

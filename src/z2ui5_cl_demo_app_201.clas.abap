@@ -297,7 +297,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
         lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
 
-        CLEAR mt_suggestion_out.
+        mt_suggestion_out = VALUE #( ).
         LOOP AT mt_suggestion INTO DATA(ls_sugg)
             WHERE currencyname IN lt_range.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.

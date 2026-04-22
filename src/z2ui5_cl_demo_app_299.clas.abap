@@ -114,8 +114,8 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    CLEAR lt_product_collection.
-    CLEAR lt_product_collection2.
+    lt_product_collection = VALUE #( ).
+    lt_product_collection2 = VALUE #( ).
 
     " Populating lt_product_collection
     lt_product_collection = VALUE #(

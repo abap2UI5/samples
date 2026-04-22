@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
   METHOD load_output_table.
 
     DATA ls_output TYPE s_output.
-    CLEAR mt_output.
+    mt_output = VALUE #( ).
 
     DO 10 TIMES.
       ls_output-index = sy-index.

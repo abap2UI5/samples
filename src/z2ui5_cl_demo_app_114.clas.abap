@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
     IF client->check_on_event( `POST` ).
 
       IF mv_value IS NOT INITIAL.
-        CLEAR ms_feed.
+        ms_feed = VALUE #( ).
         ms_feed-author = sy-uname.
         ms_feed-type = `Respond`.
         ms_feed-text = mv_value.

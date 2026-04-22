@@ -85,8 +85,8 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
           INSERT VALUE #( key = ls_token-key text = ls_token-text visible = abap_true editable = abap_true ) INTO TABLE mt_token.
         ENDLOOP.
 
-        CLEAR mt_tokens_removed.
-        CLEAR mt_tokens_added.
+        mt_tokens_removed = VALUE #( ).
+        mt_tokens_added = VALUE #( ).
         client->view_model_update( ).
     ENDCASE.
 

@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     client->message_toast_display( `server roundtrip` ).
     CASE client->get( )-event.
       WHEN `BUTTON_SCROLL_TOP`.
-        CLEAR mt_scroll.
+        mt_scroll = VALUE #( ).
         INSERT VALUE #( n = `id_page` v = `0` ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         client->view_model_update( ).
 
       WHEN `BUTTON_SCROLL_BOTTOM`.
-        CLEAR mt_scroll.
+        mt_scroll = VALUE #( ).
         INSERT VALUE #( n = `id_page` v = `99999` ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).

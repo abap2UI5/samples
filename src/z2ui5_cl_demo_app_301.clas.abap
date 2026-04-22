@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    CLEAR lt_o_data.
+    lt_o_data = VALUE #( ).
 
     lt_o_data = VALUE #(
       ( name          = `Product 1`
