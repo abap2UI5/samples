@@ -16,4 +16,5 @@ CLASS z2ui5_cl_demo_app_044 IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory( )->label( `Hello World!` )->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -160,4 +160,5 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
     client->popup_display( popup_sort->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

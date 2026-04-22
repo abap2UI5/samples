@@ -148,4 +148,5 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
               ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' type = `Type12` title = `Reminder21` tentative = abap_false ) ) ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

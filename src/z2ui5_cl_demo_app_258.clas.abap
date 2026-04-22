@@ -192,4 +192,5 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     render_main_view( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

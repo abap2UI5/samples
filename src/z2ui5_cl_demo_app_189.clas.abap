@@ -72,4 +72,5 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     dispatch( ).
 
   ENDMETHOD.
+
 ENDCLASS.

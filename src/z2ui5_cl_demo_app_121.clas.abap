@@ -55,4 +55,5 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
            )->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

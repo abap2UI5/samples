@@ -55,4 +55,5 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 ENDCLASS.

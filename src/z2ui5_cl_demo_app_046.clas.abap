@@ -101,4 +101,5 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
     client->view_display( page->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -330,4 +330,5 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
   ENDMETHOD.
+
 ENDCLASS.

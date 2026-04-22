@@ -356,4 +356,5 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

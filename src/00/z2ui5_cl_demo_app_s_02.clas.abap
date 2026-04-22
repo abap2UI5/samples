@@ -112,4 +112,5 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->view_model_update( ).
 
   ENDMETHOD.
+
 ENDCLASS.

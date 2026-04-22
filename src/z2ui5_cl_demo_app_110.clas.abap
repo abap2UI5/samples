@@ -114,4 +114,5 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
   METHOD z2ui5_on_init.
 
   ENDMETHOD.
+
 ENDCLASS.

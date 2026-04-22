@@ -88,4 +88,5 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
          )->get_root( )->xml_get( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -129,4 +129,5 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
     client->view_display( lv_xml ).
 
   ENDMETHOD.
+
 ENDCLASS.

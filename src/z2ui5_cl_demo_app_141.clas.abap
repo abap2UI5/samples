@@ -162,4 +162,5 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     ui5_handle_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

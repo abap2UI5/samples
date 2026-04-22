@@ -170,4 +170,5 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     client->popup_display( dialog->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

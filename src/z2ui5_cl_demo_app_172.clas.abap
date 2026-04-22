@@ -223,4 +223,5 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     <f_input> = lv_sum.
 
   ENDMETHOD.
+
 ENDCLASS.

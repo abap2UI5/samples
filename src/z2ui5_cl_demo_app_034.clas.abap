@@ -115,4 +115,5 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
     CLEAR: mv_main_xml, mv_popup_xml.
 
   ENDMETHOD.
+
 ENDCLASS.

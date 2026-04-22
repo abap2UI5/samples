@@ -150,4 +150,5 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
     quantity = `500`.
 
   ENDMETHOD.
+
 ENDCLASS.

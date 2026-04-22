@@ -307,4 +307,5 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     result = |{ condense( lv_string ) }px|.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -83,4 +83,5 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     set_view( ).
 
   ENDMETHOD.
+
 ENDCLASS.

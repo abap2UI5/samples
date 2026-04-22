@@ -126,4 +126,5 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
       ( label = s_text && 'Error'    value_state = `Error` ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -164,4 +164,5 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
         overflow_mode = `Popover` ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -74,4 +74,5 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

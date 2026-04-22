@@ -155,4 +155,5 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     on_event_sub( ).
 
   ENDMETHOD.
+
 ENDCLASS.

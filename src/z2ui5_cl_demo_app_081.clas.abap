@@ -184,4 +184,5 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                       ( id = `4` name = `name4` ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

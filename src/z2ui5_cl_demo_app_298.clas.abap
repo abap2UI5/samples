@@ -198,4 +198,5 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     SORT lt_a_products BY name.
 
   ENDMETHOD.
+
 ENDCLASS.

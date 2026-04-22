@@ -131,4 +131,5 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     client->message_toast_display( `server roundtrip` ).
 
   ENDMETHOD.
+
 ENDCLASS.

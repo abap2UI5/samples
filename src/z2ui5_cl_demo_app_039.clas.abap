@@ -194,4 +194,5 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
                          `</core:FragmentDefinition>` ).
 
   ENDMETHOD.
+
 ENDCLASS.
