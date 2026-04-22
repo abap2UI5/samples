@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsFeedTile' ).
+           href   = base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsFeedTile` ).
 
     page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Feed Tile that shows updates of the last feeds given to a specific topic:`

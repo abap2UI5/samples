@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderCircleImage' ).
+           href   = base_url && `sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderCircleImage` ).
 
     page->object_header(
            icon             = base_url && `test-resources/sap/m/images/Woman_04.png`

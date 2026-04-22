@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.FeedInput/sample/sap.m.sample.FeedInput' ).
+           href   = base_url && `sdk/#/entity/sap.m.FeedInput/sample/sap.m.sample.FeedInput` ).
 
     page->label( text  = `Without Icon`
                  class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).

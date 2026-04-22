@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileStates' ).
+           href   = base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileStates` ).
 
     page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header = `Status Loaded - no press event`

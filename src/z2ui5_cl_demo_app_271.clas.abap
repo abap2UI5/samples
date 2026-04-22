@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && '/sdk/#/entity/sap.m.ImageContent/sample/sap.m.sample.ImageContent' ).
+           href   = base_url && `/sdk/#/entity/sap.m.ImageContent/sample/sap.m.sample.ImageContent` ).
 
     page->image_content(
            class       = `sapUiLargeMarginTop sapUiLargeMarginBottom`

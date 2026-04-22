@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_273 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox' ).
+           href   = base_url && `sdk/#/entity/sap.m.LightBox/sample/sap.m.sample.LightBox` ).
 
     page->message_strip( text                                                                                                             = `Clicking on each of the images will open a LightBox, showing the real size of the image. ` &&
                                 `Images will be scaled down if their size is bigger than the window size." class="sapUiSmallMargin` class = `sapUiSmallMargin`

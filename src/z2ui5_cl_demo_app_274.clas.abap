@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = base_url && 'sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile' ).
+           href   = base_url && `sdk/#/entity/sap.m.SlideTile/sample/sap.m.sample.SlideTile` ).
 
     page->vertical_layout(
            )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop`
