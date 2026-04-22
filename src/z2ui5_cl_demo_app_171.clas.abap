@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
           "init values here..
 
         ELSEIF client->check_on_navigated( ).
-
           DATA(lo_app_prev) = client->get_app_prev( ).
           "read attributes of previous app here...
 
