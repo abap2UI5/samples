@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
         client->message_toast_display( app-get-t_event_arg[ 1 ] ).
 
       WHEN 'MYCC'.
-        client->message_toast_display( 'MYCC event ' && mv_value ).
+        client->message_toast_display( `MYCC event ` && mv_value ).
     ENDCASE.
 
   ENDMETHOD.
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
                           ` function myFunction( ) { alert( 'button pressed' ) }` && |\n| &&
                           ` function myFunction2( ) { sap.z2ui5.oView.getController().onEvent({ 'EVENT' : 'POST', 'METHOD' : 'UPDATE' }, ` && ' document.getElementById(sap.z2ui5.oView.createId( "input" )).value ' && ` ) }` && |\n| &&
                                                                     `</script> <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/barcodes/JsBarcode.code128.min.js"> </script>` &&
-*                                                    ` <z2ui5:MyCC change=" ` && client->_event( 'MYCC' ) && `"  value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
+*                                                    ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
       `</body>` && |\n| &&
                           `</html> ` && |\n| &&
                             `</mvc:View>`.

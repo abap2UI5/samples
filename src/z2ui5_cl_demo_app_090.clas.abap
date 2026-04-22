@@ -164,7 +164,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       )->get_parent( )->get_parent( ).
 
     page->button( text  = `Open P13N Dialog`
-                  press = client->_event( 'P13N_OPEN' )
+                  press = client->_event( `P13N_OPEN` )
                   class = `sapUiTinyMarginBeginEnd`
       )->button( text  = `Open P13N.POPUP`
                  press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
@@ -227,7 +227,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
     p13n_popup->_generic( name       = `Popup`
                           ns         = `p13n`
                               t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
-*                                                ( n = `close` v = client->_event( 'P13N_CLOSE' ) )
+*                                                ( n = `close` v = client->_event( `P13N_CLOSE` ) )
 *                                                ( n = `warningText`  v = `Are you sure?` )
                                                 ( n = `id`  v = `p13nPopup` )
 *                                                ( n = `reset`  v = client->_event( `P13N_RESET` ) )

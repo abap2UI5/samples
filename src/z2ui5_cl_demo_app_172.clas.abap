@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         ( `$event.oSource.oParent.sId` )
         ( `INPUT2` )
          ) )
-       submit   = client->_event( 'INPUT_SUBMIT' )
+       submit   = client->_event( `INPUT_SUBMIT` )
        editable = abap_true
        type     = 'Number' ).
 

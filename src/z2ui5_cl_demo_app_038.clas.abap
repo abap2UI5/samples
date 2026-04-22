@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
             groupitems        = abap_true
             placement         = `Top`
             initiallyexpanded = abap_true
-            beforeclose       = client->_event( 'POPOVER_CLOSE' )
+            beforeclose       = client->_event( `POPOVER_CLOSE` )
         )->message_item(
             type        = `{TYPE}`
             title       = `{TITLE}`
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
     page->button( text  = 'Messages in Popup'
-                  press = client->_event( 'POPUP' ) ).
+                  press = client->_event( `POPUP` ) ).
     page->message_view(
         items      = client->_bind( t_msg )
         groupitems = abap_true
@@ -112,12 +112,12 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
          )->button(
              id    = 'test'
              text  = 'Messages (6)'
-             press = client->_event( 'POPOVER' )
+             press = client->_event( `POPOVER` )
              type  = 'Emphasized'
          )->toolbar_spacer(
          )->button(
              text  = 'Send to Server'
-             press = client->_event( 'BUTTON_SEND' )
+             press = client->_event( `BUTTON_SEND` )
              type  = 'Success' ).
 
     client->view_display( view->stringify( ) ).

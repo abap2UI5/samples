@@ -75,13 +75,13 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
          )->button( text  = 'Scroll Top'
-                    press = client->_event( 'BUTTON_SCROLL_TOP' )
+                    press = client->_event( `BUTTON_SCROLL_TOP` )
          )->button( text  = 'Scroll 500 up'
-                    press = client->_event( 'BUTTON_SCROLL_UP' )
+                    press = client->_event( `BUTTON_SCROLL_UP` )
          )->button( text  = 'Scroll 500 down'
-                    press = client->_event( 'BUTTON_SCROLL_DOWN' )
+                    press = client->_event( `BUTTON_SCROLL_DOWN` )
          )->button( text  = 'Scroll Bottom'
-                    press = client->_event( 'BUTTON_SCROLL_BOTTOM' ) ).
+                    press = client->_event( `BUTTON_SCROLL_BOTTOM` ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->message_toast_display( 'server roundtrip' ).
+    client->message_toast_display( `server roundtrip` ).
     CASE client->get( )-event.
       WHEN 'BUTTON_SCROLL_TOP'.
         CLEAR mt_scroll.

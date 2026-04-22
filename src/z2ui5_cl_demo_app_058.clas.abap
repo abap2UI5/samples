@@ -192,10 +192,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
       )->toolbar_spacer(
               )->button(
                   icon  = 'sap-icon://save'
-                  press = client->_event( 'BUTTON_SAVE' )
+                  press = client->_event( `BUTTON_SAVE` )
               )->button(
                   icon  = 'sap-icon://action-settings'
-                  press = client->_event( 'BUTTON_SETUP' ) ).
+                  press = client->_event( `BUTTON_SETUP` ) ).
 
     DATA(lv_width) = 10.
     DATA(lo_columns) = tab->columns( ).
@@ -240,7 +240,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
           )->bar(
               )->content_right(
           )->button( text  = `zurücksetzten`
-                     press = client->_event( 'BUTTON_INIT' ) ).
+                     press = client->_event( `BUTTON_INIT` ) ).
 
     DATA(lo_tab) = ro_popup->tab_container( ).
 
@@ -296,7 +296,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     ro_popup->end_button( )->button(
               text  = 'continue'
-              press = client->_event( 'POPUP_FILTER_CONTINUE' )
+              press = client->_event( `POPUP_FILTER_CONTINUE` )
               type  = 'Emphasized' ).
 
     client->popup_display( ro_popup->get_root( )->xml_get( ) ).
@@ -333,11 +333,11 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
             )->toolbar_spacer(
              )->button(
                 text  = 'load'
-                press = client->_event( 'POPUP_LAYOUT_LOAD' )
+                press = client->_event( `POPUP_LAYOUT_LOAD` )
                 type  = 'Emphasized'
             )->button(
                 text  = 'close'
-                press = client->_event( 'POPUP_LAYOUT_CONTINUE' )
+                press = client->_event( `POPUP_LAYOUT_CONTINUE` )
                 type  = 'Emphasized' ).
 
     client->popup_display( lo_popup->get_root( )->xml_get( ) ).

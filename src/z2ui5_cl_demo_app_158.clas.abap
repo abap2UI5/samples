@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
                 text  = 'Open Popup...'
-                press = client->_event( 'POPUP' ) ).
+                press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
 

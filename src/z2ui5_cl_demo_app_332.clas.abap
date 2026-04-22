@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
 
     ENDIF.
     IF ms_struc IS INITIAL.
-      client->message_toast_display( 'ERROR - MS_STRUC is initial!' ).
+      client->message_toast_display( `ERROR - MS_STRUC is initial!` ).
     ENDIF.
 
     client->view_model_update( ).
@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'GO'
-                  press = client->_event( 'GO' )
+                  press = client->_event( `GO` )
                   type  = 'Success' ).
 
     DATA(form) = page->simple_form( editable        = abap_true

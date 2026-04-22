@@ -46,10 +46,10 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'Cancel'
-                      press = client->_event( 'BUTTON_CANCEL' )
+                      press = client->_event( `BUTTON_CANCEL` )
                   )->button(
                       text  = 'Confirm'
-                      press = client->_event( 'BUTTON_CONFIRM' )
+                      press = client->_event( `BUTTON_CONFIRM` )
                       type  = 'Emphasized'
                 )->get_parent( )->get_parent(
             )->text( 'make an input here:'
@@ -122,7 +122,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->label( 'popover'
                   )->button(
                       text  = 'show popover with list'
-                      press = client->_event( 'POPOVER_LIST' )
+                      press = client->_event( `POPOVER_LIST` )
                       id    = 'TEST' ).
 
     client->view_display( view->stringify( ) ).

@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         showlegendbutton      = abap_true
         showsettingbutton     = abap_true
         showtimezoomcontrol   = abap_true
-*        findbuttonpress           = client->_event( 'FIRE' )
+*        findbuttonpress           = client->_event( `FIRE` )
 *    stepcountofslider         =
 *    zoomcontroltype           =
 *        zoomlevel                 = client->_bind_edit( zoomlevel )

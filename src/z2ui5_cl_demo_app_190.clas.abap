@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                          )->toolbar_spacer(
                          )->button( text  = 'Save'
-                                    press = client->_event( 'BUTTON' )
+                                    press = client->_event( `BUTTON` )
                                     type  = 'Success' ).
 
     IF mo_parent_view IS INITIAL.

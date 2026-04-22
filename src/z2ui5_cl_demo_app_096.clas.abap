@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'MESSAGE_SUB' ).
+    IF client->check_on_event( `MESSAGE_SUB` ).
       client->message_box_display( `event sub app` ).
     ENDIF.
 
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
       page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button( text  = `event sub app`
-                            press = client->_event( 'BUTTON_SAVE' )
+                            press = client->_event( `BUTTON_SAVE` )
                             type  = 'Success' ).
 
     ENDIF.

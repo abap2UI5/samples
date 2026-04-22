@@ -344,7 +344,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->content( 'form'
             )->label( get_txt( 'BU_DYNID' )
              )->combobox(
-             change      = client->_event( 'INPUT_SCREEN_CHANGE' )
+             change      = client->_event( `INPUT_SCREEN_CHANGE` )
              items       = client->_bind_edit( mt_screens )
              selectedkey = client->_bind_edit( mv_screen )
                  )->item(
@@ -363,8 +363,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             )->input(
             value            = client->_bind_edit( mv_variant )
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( 'CALL_POPUP_VARIANT' )
-            submit           = client->_event( 'INPUT_VARIANT_CHANGE' )
+            valuehelprequest = client->_event( `CALL_POPUP_VARIANT` )
+            submit           = client->_event( `INPUT_VARIANT_CHANGE` )
             )->label( get_txt( 'DESCR_40' )
             )->input(
             value         = client->_bind_edit( mv_description )
@@ -405,18 +405,18 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  )->toolbar_spacer(
                  )->button(
                      text    = get_txt( '/SCWM/DE_HUDEL' )
-                     press   = client->_event( 'BUTTON_DELETE' )
+                     press   = client->_event( `BUTTON_DELETE` )
                      type    = 'Reject'
                      icon    = 'sap-icon://delete'
                      enabled = mv_button_active
                  )->button(
                      text    = get_txt( 'B_KOPIE' )
-                     press   = client->_event( 'BUTTON_COPY' )
+                     press   = client->_event( `BUTTON_COPY` )
                      type    = 'Default'
                      enabled = mv_button_active
                   )->button(
                      text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
-                     press   = client->_event( 'BUTTON_SAVE' )
+                     press   = client->_event( `BUTTON_SAVE` )
                      type    = 'Success'
                      enabled = mv_button_active ).
 
@@ -444,7 +444,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     DATA(item) = vbox->list(
       nodata          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
       items           = client->_bind_edit( mt_filter )
-      selectionchange = client->_event( 'SELCHANGE' )
+      selectionchange = client->_event( `SELCHANGE` )
                         )->custom_list_item( ).
 
     DATA(grid) = item->grid( ).
@@ -475,7 +475,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->toolbar_spacer(
         )->button(
             text  = get_txt( 'MSSRCF_ACTION' )
-            press = client->_event( 'POPUP_FILTER_OK' )
+            press = client->_event( `POPUP_FILTER_OK` )
             type  = 'Emphasized' ).
 
     client->popup_display( lo_popup->stringify( ) ).
@@ -509,7 +509,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             )->toolbar_spacer(
             )->button(
                 text  = get_txt( 'MSSRCF_ACTION' )
-                press = client->_event( 'POPUP_VARIANT_CLOSE' )
+                press = client->_event( `POPUP_VARIANT_CLOSE` )
                 type  = 'Emphasized' ).
     client->popup_display( popup->stringify( ) ).
 
@@ -540,11 +540,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->toolbar_spacer(
         )->button(
             text  = get_txt( 'XEXIT' )
-            press = client->_event( 'POPUP_COPY_EXIT' )
+            press = client->_event( `POPUP_COPY_EXIT` )
             type  = 'Reject'
        )->button(
             text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
-            press   = client->_event( 'POPUP_COPY_SAVE' )
+            press   = client->_event( `POPUP_COPY_SAVE` )
             type    = 'Emphasized'
             enabled = `{= ${MV_VARIANT_COPY} !== "" }`
        ).

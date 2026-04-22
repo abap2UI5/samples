@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'POST' ).
+    IF client->check_on_event( `POST` ).
       IF mv_value IS INITIAL.
         RETURN.
       ENDIF.
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(fi) = page->vbox(
-      )->feed_input( post                     = client->_event( 'POST' )
+      )->feed_input( post                     = client->_event( `POST` )
                              growing          = abap_true
                              rows             = `4`
                              icondensityaware = abap_false
@@ -101,8 +101,8 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
         showseparators = `Inner`
           )->feed_list_item(
             sender                   = `{AUTHOR}`
-            senderpress              = client->_event( 'SENDER_PRESS' )
-            iconpress                = client->_event( 'ICON_PRESS' )
+            senderpress              = client->_event( `SENDER_PRESS` )
+            iconpress                = client->_event( `ICON_PRESS` )
             icondensityaware         = abap_false
             showicon                 = abap_false
             info                     = `Reply`

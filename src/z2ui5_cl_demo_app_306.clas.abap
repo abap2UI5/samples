@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     page->_z2ui5( )->camera_picture( value      = client->_bind_edit( mv_picture_base )
                                      thumbnail  = client->_bind_edit( mv_picture_thumb )
-                                     onphoto    = client->_event( 'CAPTURE' )
+                                     onphoto    = client->_event( `CAPTURE` )
                                      facingmode = client->_bind_edit( facing_mode )
                                      deviceid   = client->_bind_edit( device ) ).
 
@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                                 headertext      = 'List Ouput'
                                 items           = client->_bind_edit( mt_picture_out )
                                 mode            = `SingleSelectMaster`
-                                selectionchange = client->_event( 'DISPLAY' ) ).
+                                selectionchange = client->_event( `DISPLAY` ) ).
 
     DATA(lo_item) = lo_list->_generic( name   = `CustomListItem`
                                        t_prop = VALUE #( ( n = `selected` v = `{SELECTED}` ) ) ).
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     IF mv_pic_display IS NOT INITIAL.
       page->button( text  = 'Edit'
                     icon  = 'sap-icon://edit'
-                    press = client->_event( 'EDIT' ) ).
+                    press = client->_event( `EDIT` ) ).
     ENDIF.
 
     client->view_display( view->stringify( ) ).

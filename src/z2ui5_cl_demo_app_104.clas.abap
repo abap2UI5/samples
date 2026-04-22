@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
               description = '{DESCR}'
               icon        = '{ICON}'
               info        = '{INFO}'
-              press       = client->_event( 'TEST' )
+              press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).

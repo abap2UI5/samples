@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
                     text  = 'Send To Server'
                     type  = 'Emphasized'
                     icon  = 'sap-icon://paper-plane'
-                    press = client->_event( 'SERVER' ) ).
+                    press = client->_event( `SERVER` ) ).
 
       client->view_display( view->stringify( ) ).
 

@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'POST' ).
+    IF client->check_on_event( `POST` ).
 
       IF mv_value IS NOT INITIAL.
         CLEAR ms_feed.
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
                     enabled     = abap_true
             )->button(
                     icon      = `sap-icon://paper-plane`
-                    press     = client->_event( 'POST' )
+                    press     = client->_event( `POST` )
                     iconfirst = abap_true ).
 
     page->list(
@@ -113,8 +113,8 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
       showseparators = `Inner`
         )->feed_list_item(
           sender                   = `{AUTHOR}`
-          senderpress              = client->_event( 'SENDER_PRESS' )
-          iconpress                = client->_event( 'ICON_PRESS' )
+          senderpress              = client->_event( `SENDER_PRESS` )
+          iconpress                = client->_event( `ICON_PRESS` )
           icondensityaware         = abap_false
           showicon                 = abap_false
           info                     = `Reply`

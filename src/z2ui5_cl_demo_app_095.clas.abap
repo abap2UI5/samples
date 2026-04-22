@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'BUTTON_SAVE' ).
+    IF client->check_on_event( `BUTTON_SAVE` ).
       client->message_box_display( `event main app` ).
     ENDIF.
 
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     content->label( 'main app'
       )->input(
           value  = client->_bind_edit( ms_screen-input )
-          submit = client->_event( 'INPUT' ) ).
+          submit = client->_event( `INPUT` ) ).
 
     mo_grid_sub = page->grid( 'L12 M12 S12'
         )->content( 'layout' ).
@@ -102,17 +102,17 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
                    )->toolbar_spacer(
                    )->button(
                        text  = 'Delete'
-                       press = client->_event( 'BUTTON_DELETE' )
+                       press = client->_event( `BUTTON_DELETE` )
                        type  = 'Reject'
                        icon  = 'sap-icon://delete'
                    )->button(
                        text  = 'Add'
-                       press = client->_event( 'BUTTON_ADD' )
+                       press = client->_event( `BUTTON_ADD` )
                        type  = 'Default'
                        icon  = 'sap-icon://add'
                    )->button(
                        text  = 'Save'
-                       press = client->_event( 'BUTTON_SAVE' )
+                       press = client->_event( `BUTTON_SAVE` )
                        type  = 'Success' ).
 
   ENDMETHOD.

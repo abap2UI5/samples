@@ -56,23 +56,23 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
-        client->message_toast_display( 'sort ascending' ).
+        client->message_toast_display( `sort ascending` ).
 
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
-        client->message_toast_display( 'sort descending' ).
+        client->message_toast_display( `sort descending` ).
 
       WHEN 'BUTTON_POST'.
-        client->message_box_display( 'button post was pressed' ).
+        client->message_box_display( `button post was pressed` ).
 
       WHEN 'MENU_DEFAULT'.
-        client->message_box_display( 'menu default pressed' ).
+        client->message_box_display( `menu default pressed` ).
 
       WHEN 'MENU_01'.
-        client->message_box_display( 'menu 01 pressed' ).
+        client->message_box_display( `menu 01 pressed` ).
 
       WHEN 'MENU_02'.
-        client->message_box_display( 'menu 02 pressed' ).
+        client->message_box_display( `menu 02 pressed` ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
             )->button(
                 text  = 'letf side button'
                 icon  = 'sap-icon://account'
-                press = client->_event( 'BUTTON_SORT' )
+                press = client->_event( `BUTTON_SORT` )
             )->segmented_button( mv_key
                 )->items(
                     )->segmented_button_item(
@@ -125,25 +125,25 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
             )->toolbar_spacer(
             )->overflow_toolbar_toggle_button(
                 icon  = 'sap-icon://sort-descending'
-                press = client->_event( 'SORT_DESCENDING' )
+                press = client->_event( `SORT_DESCENDING` )
             )->overflow_toolbar_toggle_button(
                 icon  = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' )
+                press = client->_event( `SORT_ASCENDING` )
 
             )->overflow_toolbar_menu_button(
         text          = `Export`
         type          = `Transparent`
         tooltip       = `Export`
-        defaultaction = client->_event( 'MENU_DEFAULT' )
+        defaultaction = client->_event( `MENU_DEFAULT` )
         icon          = `sap-icon://share`
          buttonmode   = `Split`
       )->_generic( `menu` )->_generic( `Menu`
         )->menu_item(
-            press = client->_event( 'MENU_01' )
+            press = client->_event( `MENU_01` )
             text  = `Export as PDF`
             icon  = `sap-icon://pdf-attachment`
       )->menu_item(
-            press = client->_event( 'MENU_02' )
+            press = client->_event( `MENU_02` )
             text  = `Export to Excel`
             icon  = `sap-icon://excel-attachment` ).
 

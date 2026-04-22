@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
             )->button( id = `hint_icon`
                 icon      = `sap-icon://hint`
                 tooltip   = `Sample information`
-                press     = client->_event( 'POPOVER' ) ).
+                press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
             )->link(
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
                    )->news_content(
                        contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                        subheader   = `August 21, 2013`
-                       press       = client->_event( 'NEWS_CONTENT_PRESS' ) ).
+                       press       = client->_event( `NEWS_CONTENT_PRESS` ) ).
 
     client->view_display( page->stringify( ) ).
 

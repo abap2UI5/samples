@@ -45,8 +45,8 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
 
   METHOD z2ui5_on_event.
 
-    IF client->check_on_event( 'LOAD_BC' ).
-      client->message_box_display( 'JSBarcode Library loaded' ).
+    IF client->check_on_event( `LOAD_BC` ).
+      client->message_box_display( `JSBarcode Library loaded` ).
       mv_load_lib = abap_true.
     ENDIF.
 
@@ -65,9 +65,9 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
       `<html><head>` && |\n| &&
                           `</head>` && |\n| &&
                           `<body>` && |\n| &&
-                          `<m:Button text="LoadJSBarcode" press="` && client->_event( 'LOAD_BC' ) && `" />` && |\n| &&
+                          `<m:Button text="LoadJSBarcode" press="` && client->_event( `LOAD_BC` ) && `" />` && |\n| &&
                           `<m:Input value="` && client->_bind_edit( mv_barcode ) && `" />` && |\n| &&
-                         `<m:Button text="Display Barcode" press="` && client->_event( 'DISPLAY_BC' ) && `" />` && |\n| &&
+                         `<m:Button text="Display Barcode" press="` && client->_event( `DISPLAY_BC` ) && `" />` && |\n| &&
                           `<h1>JSBarcode Library</h1>` && |\n| &&
                           `  <svg id="barcode">` && |\n| &&
 *                          `  jsbarcode-format="upc"` && |\n|  &&

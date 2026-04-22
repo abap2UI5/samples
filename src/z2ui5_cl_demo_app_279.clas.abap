@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
                    )->shell(
                    )->page(
                       title          = 'abap2UI5 - data loss protection'
-                      navbuttonpress = client->_event( 'BACK' )
+                      navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(box) = page->flex_box( direction  = `Row`
@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     box->input(
       id          = `input`
       value       = client->_bind_edit( text_input )
-      submit      = client->_event( 'submit' )
+      submit      = client->_event( `submit` )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     box->button(
       text    = 'Reset'
-      press   = client->_event( 'reset' )
+      press   = client->_event( `reset` )
       class   = `sapUiSmallMarginBegin`
       visible = client->_bind( dirty ) ).
 

@@ -78,9 +78,9 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDLOOP.
 
     page->button( text  = 'Clear'
-                  press = client->_event( 'CLEAR' )
+                  press = client->_event( `CLEAR` )
                   )->button( text  = 'Add'
-                             press = client->_event( 'ADD' ) ).
+                             press = client->_event( `ADD` ) ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 

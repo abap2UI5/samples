@@ -62,11 +62,11 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
         )->button( text = 'Continue'
                icon     = `sap-icon://accept`
                type     = `Accept`
-               press    = client->_event( 'CONTINUE' )
+               press    = client->_event( `CONTINUE` )
         )->button( text = 'Cancel'
                icon     = `sap-icon://decline`
                type     = `Reject`
-               press    = client->_event( 'CANCEL' ) ).
+               press    = client->_event( `CANCEL` ) ).
 
     client->popup_display( dialog->stringify( ) ).
 
@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
               shownavbutton = abap_true ).
 
     client->view_display( page->button( text  = 'Open Popup here...'
-                                        press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
+                                        press = client->_event( `POPUP_TREE` ) )->stringify( ) ).
 
   ENDMETHOD.
 

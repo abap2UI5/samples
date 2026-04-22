@@ -81,23 +81,23 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
-        client->message_toast_display( 'Search Entries' ).
+        client->message_toast_display( `Search Entries` ).
         z2ui5_set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
       WHEN 'SORT'.
         DATA(lt_arg) = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event SORT' ).
+        client->message_toast_display( `Event SORT` ).
       WHEN 'FILTER'.
         lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event FILTER' ).
+        client->message_toast_display( `Event FILTER` ).
       WHEN 'SELKZ'.
         client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
         set_selkz( lv_selkz ).
         client->view_model_update( ).
       WHEN 'CUSTOMFILTER'.
         lt_arg = client->get( )-t_event_arg.
-        client->message_toast_display( 'Event CUSTOMFILTER' ).
+        client->message_toast_display( `Event CUSTOMFILTER` ).
       WHEN 'ROWEDIT'.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
@@ -157,8 +157,8 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     lo_box->vbox( )->text( `Search` )->search_field(
          value  = client->_bind_edit( mv_search_value )
-         search = client->_event( 'BUTTON_SEARCH' )
-         change = client->_event( 'BUTTON_SEARCH' )
+         search = client->_event( `BUTTON_SEARCH` )
+         change = client->_event( `BUTTON_SEARCH` )
 *         livechange = client->__event( 'BUTTON_SEARCH' )
          width  = `17.5rem`
          id     = `SEARCH` ).
@@ -177,9 +177,9 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
                                 enablegrouping     = abap_false
                                 fixedcolumncount   = '1'
                                 selectionmode      = 'None'
-                                sort               = client->_event( 'SORT' )
-                                filter             = client->_event( 'FILTER' )
-                                customfilter       = client->_event( 'CUSTOMFILTER' ) ).
+                                sort               = client->_event( `SORT` )
+                                filter             = client->_event( `FILTER` )
+                                customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( 'Products' ).
     DATA(lo_columns) = tab->ui_columns( ).
     lo_columns->ui_column( '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )

@@ -67,11 +67,11 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
-        client->message_toast_display( 'sort ascending' ).
+        client->message_toast_display( `sort ascending` ).
 
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
-        client->message_toast_display( 'sort descending' ).
+        client->message_toast_display( `sort descending` ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
             )->button(
                 text  = 'letf side button'
                 icon  = 'sap-icon://account'
-                press = client->_event( 'BUTTON_SORT' )
+                press = client->_event( `BUTTON_SORT` )
             )->segmented_button( mv_key
                 )->items(
                     )->segmented_button_item(
@@ -111,10 +111,10 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
             )->toolbar_spacer(
             )->button(
                 icon  = 'sap-icon://sort-descending'
-                press = client->_event( 'SORT_DESCENDING' )
+                press = client->_event( `SORT_DESCENDING` )
             )->button(
                 icon  = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' ) ).
+                press = client->_event( `SORT_ASCENDING` ) ).
 
 *    column menu
     tab->dependents(
@@ -122,27 +122,27 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
                       beforeopen = client->_event( val = `GET_OPENED_COL` t_arg = VALUE #( ( `$event.mParameters.openBy.getId()` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `${$parameters>/item.getKey}` ) ) )
 *      )->column_menu_quick_sort( change = client->_event( val = 'ONSORT' t_arg = VALUE #( ( `$event` ) ) )
-       )->column_menu_quick_sort( change = client->_event( 'ONSORT' )
+       )->column_menu_quick_sort( change = client->_event( `ONSORT` )
          )->items( `columnmenu`
            )->column_menu_quick_sort_item( sortorder = client->_bind_edit( sortorder )
        )->get_parent( )->get_parent( )->get_parent(
-       )->column_menu_quick_group( change = client->_event( 'ONGROUP' )
+       )->column_menu_quick_group( change = client->_event( `ONGROUP` )
          )->items( `columnmenu`
            )->column_menu_quick_group_item(
        )->get_parent( )->get_parent( )->get_parent(
        )->items( `columnmenu`
          )->column_menu_action_item( icon  = `sap-icon://sort`
                                      label = `Sort`
-                                     press = client->_event( 'ONSORTACTIONITEM' ) )->get_parent(
+                                     press = client->_event( `ONSORTACTIONITEM` ) )->get_parent(
          )->column_menu_action_item( icon  = `sap-icon://group-2`
                                      label = `Group`
-                                     press = client->_event( 'ONSGROUPACTIONITEM' ) )->get_parent(
+                                     press = client->_event( `ONSGROUPACTIONITEM` ) )->get_parent(
          )->column_menu_action_item( icon  = `sap-icon://filter`
                                      label = `Filter`
-                                     press = client->_event( 'ONSFILTERACTIONITEM' ) )->get_parent(
+                                     press = client->_event( `ONSFILTERACTIONITEM` ) )->get_parent(
          )->column_menu_action_item( icon  = `sap-icon://table-column`
                                      label = `Columns`
-                                     press = client->_event( 'ONSCOLUMNSACTIONITEM' ) ).
+                                     press = client->_event( `ONSCOLUMNSACTIONITEM` ) ).
 
     tab->columns(
         )->column( headermenu = `menu`

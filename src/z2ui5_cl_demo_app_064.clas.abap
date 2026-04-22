@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     view = z2ui5_cl_xml_view=>factory( ).
 
     view->_z2ui5( )->timer(
-        finished    = client->_event( 'LOAD' )
+        finished    = client->_event( `LOAD` )
         checkactive = client->_bind( mv_check_active ) ).
 
     temp5 = client->check_app_prev_stack( ).
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     layout->button(
         text    = `Load`
-        press   = client->_event( 'LOAD' )
+        press   = client->_event( `LOAD` )
         enabled = client->_bind( mv_check_enabled ) ).
 
     client->view_display( view->stringify( ) ).

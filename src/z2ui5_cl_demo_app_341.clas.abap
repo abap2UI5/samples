@@ -38,10 +38,10 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
         )->simple_form( 'Popups' )->content( 'form'
             )->label( 'Demo'
             )->button( text  = 'Popup to Select'
-                       press = client->_event( 'BUTTON_POPUP_01' )
+                       press = client->_event( `BUTTON_POPUP_01` )
             )->label( 'Demo'
             )->button( text  = 'other Popup'
-                       press = client->_event( 'BUTTON_POPUP_02' ) ).
+                       press = client->_event( `BUTTON_POPUP_02` ) ).
 
     client->view_display( lo_main->stringify( ) ).
 

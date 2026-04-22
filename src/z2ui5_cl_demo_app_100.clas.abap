@@ -94,9 +94,9 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                     enablegrouping     = abap_false
                                     fixedcolumncount   = '1'
                                     selectionmode      = 'None'
-                                    sort               = client->_event( 'SORT' )
-                                    filter             = client->_event( 'FILTER' )
-                                    customfilter       = client->_event( 'CUSTOMFILTER' ) ).
+                                    sort               = client->_event( `SORT` )
+                                    filter             = client->_event( `FILTER` )
+                                    customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( 'Products' )->toolbar_spacer(
       )->variant_management( showexecuteonselection = abap_true
         )->variant_items(

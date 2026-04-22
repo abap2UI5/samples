@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         )->get_parent(
         )->button(
         text  = 'Open Popup...'
-        press = client->_event( 'POPUP' ) )->stringify( ) ).
+        press = client->_event( `POPUP` ) )->stringify( ) ).
 
       RETURN.
     ENDIF.

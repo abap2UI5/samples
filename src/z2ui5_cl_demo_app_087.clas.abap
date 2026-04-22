@@ -56,11 +56,11 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
       WHEN 'SORT_ASCENDING'.
         SORT t_tab BY count ASCENDING.
-        client->message_toast_display( 'sort ascending' ).
+        client->message_toast_display( `sort ascending` ).
 
       WHEN 'SORT_DESCENDING'.
         SORT t_tab BY count DESCENDING.
-        client->message_toast_display( 'sort descending' ).
+        client->message_toast_display( `sort descending` ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -83,14 +83,14 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
             )->button(
                 text  = 'letf side button'
                 icon  = 'sap-icon://account'
-                press = client->_event( 'BUTTON_SORT' )
+                press = client->_event( `BUTTON_SORT` )
             )->toolbar_spacer(
             )->button(
                 icon  = 'sap-icon://sort-descending'
-                press = client->_event( 'SORT_DESCENDING' )
+                press = client->_event( `SORT_DESCENDING` )
             )->button(
                 icon  = 'sap-icon://sort-ascending'
-                press = client->_event( 'SORT_ASCENDING' ) ).
+                press = client->_event( `SORT_ASCENDING` ) ).
 
     tab->columns(
         )->column(

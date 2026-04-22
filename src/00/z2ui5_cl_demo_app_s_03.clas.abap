@@ -65,10 +65,10 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     vbox->input( id          = `inputApp`
                  value       = client->_bind_edit( magic_key )
                  placeholder = `Enter magic key`
-                 submit      = client->_event( 'enter' ) ).
+                 submit      = client->_event( `enter` ) ).
     vbox->button( text  = `submit`
                   type  = `accept`
-                  press = client->_event( 'enter' ) ).
+                  press = client->_event( `enter` ) ).
 
     view->_z2ui5( )->focus( focusid = `inputApp` ).
     client->view_display( view->stringify( ) ).

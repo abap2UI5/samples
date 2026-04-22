@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                                                           t_arg = VALUE #( ( |${ client->_bind_edit( storage ) }| ) ) )
 
                 )->button( text  = 'get'
-                           press = client->_event( 'GET_STORED_VALUE' )
+                           press = client->_event( `GET_STORED_VALUE` )
                                        )->get_parent(
                                        )->get_parent(
 

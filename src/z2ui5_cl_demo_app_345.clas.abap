@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'CALL Next App'
-                  press = client->_event( 'GO' )
+                  press = client->_event( `GO` )
                   type  = 'Success' ).
 
     xml_table( i_page = page
@@ -175,13 +175,13 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout_obj1->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
 
     ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
     ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
     IF <val> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
 
   ENDMETHOD.

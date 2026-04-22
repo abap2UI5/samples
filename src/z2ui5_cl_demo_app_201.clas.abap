@@ -325,7 +325,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
             )->input(
                     id                           = `suggInput`
                     value                        = client->_bind_edit( input )
-                    suggest                      = client->_event( 'ON_SUGGEST' )
+                    suggest                      = client->_event( `ON_SUGGEST` )
                     showtablesuggestionvaluehelp = abap_false
                     suggestionrows               = client->_bind( mt_suggestion_out )
                     showsuggestion               = abap_true

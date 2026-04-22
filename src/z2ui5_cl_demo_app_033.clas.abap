@@ -31,19 +31,19 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
                 target = '_blank'
                 href   = `https://openui5.hana.ondemand.com/api/sap.m.IllustratedMessageType#properties` ).
     page->button( text  = 'NoActivities'
-                  press = client->_event( 'sapIllus-NoActivities' ) ).
+                  press = client->_event( `sapIllus-NoActivities` ) ).
     page->button( text  = 'AddPeople'
-                  press = client->_event( 'sapIllus-AddPeople' ) ).
+                  press = client->_event( `sapIllus-AddPeople` ) ).
     page->button( text  = 'Connection'
-                  press = client->_event( 'sapIllus-Connection' ) ).
+                  press = client->_event( `sapIllus-Connection` ) ).
     page->button( text  = 'NoDimensionsSet'
-                  press = client->_event( 'sapIllus-NoDimensionsSet' ) ).
+                  press = client->_event( `sapIllus-NoDimensionsSet` ) ).
     page->button( text  = 'NoEntries'
-                  press = client->_event( 'sapIllus-NoEntries' ) ).
+                  press = client->_event( `sapIllus-NoEntries` ) ).
     page->illustrated_message( illustrationtype = client->_bind( mv_type )
       )->additional_content( )->button(
                 text  = 'information'
-                press = client->_event( 'BUTTON_MESSAGE_BOX' ) ).
+                press = client->_event( `BUTTON_MESSAGE_BOX` ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'BUTTON_MESSAGE_BOX'.
-        client->message_box_display( 'Action of illustrated message' ).
+        client->message_box_display( `Action of illustrated message` ).
 
       WHEN OTHERS.
         mv_type = client->get( )-event.

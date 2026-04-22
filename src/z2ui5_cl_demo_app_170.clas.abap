@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog( stretch = abap_true
-            afterclose                    = client->_event( 'BTN_OK_1ND' )
+            afterclose                    = client->_event( `BTN_OK_1ND` )
          )->content( ).
 
     DATA(content) = dialog->icon_tab_bar( selectedkey        = client->_bind_edit( mv_selected_key )
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'OK'
-                      press = client->_event( 'BTN_OK_1ND' )
+                      press = client->_event( `BTN_OK_1ND` )
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(dialog) = popup->dialog(
-        afterclose = client->_event( 'BTN_OK_2ND' )
+        afterclose = client->_event( `BTN_OK_2ND` )
          )->content( ).
 
     DATA(content) = dialog->label( 'this is a second popup' ).
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
                   )->toolbar_spacer(
                   )->button(
                       text  = 'GOTO 1ST POPUP'
-                      press = client->_event( 'BTN_OK_2ND' )
+                      press = client->_event( `BTN_OK_2ND` )
                       type  = 'Emphasized' ).
 
     client->popup_display( popup->stringify( ) ).
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup...'
-            press = client->_event( 'POPUP' ) ).
+            press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
 

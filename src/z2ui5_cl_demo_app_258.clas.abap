@@ -34,31 +34,31 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'MENU_HOME'.
-        client->message_toast_display( 'Home Button pressed' ).
+        client->message_toast_display( `Home Button pressed` ).
         selected_menu_entry = 'Home'.
       WHEN 'MENU_HOME_1'.
-        client->message_toast_display( 'Home Sub 1 Button pressed' ).
+        client->message_toast_display( `Home Sub 1 Button pressed` ).
         selected_menu_entry = 'Home1'.
       WHEN 'MENU_HOME_2'.
-        client->message_toast_display( 'Home Sub 2 Button pressed' ).
+        client->message_toast_display( `Home Sub 2 Button pressed` ).
         selected_menu_entry = 'Home2'.
       WHEN 'MENU_HOME_3'.
-        client->message_toast_display( 'Home Sub 3 Button pressed' ).
+        client->message_toast_display( `Home Sub 3 Button pressed` ).
         selected_menu_entry = 'Home3'.
       WHEN 'MENU_CUSTOMER'.
-        client->message_toast_display( 'Customer Button pressed' ).
+        client->message_toast_display( `Customer Button pressed` ).
         selected_menu_entry = 'Customers'.
       WHEN 'MENU_SUPPLIER'.
-        client->message_toast_display( 'Supplier Button pressed' ).
+        client->message_toast_display( `Supplier Button pressed` ).
         selected_menu_entry = 'Suppliers'.
       WHEN 'MENU_FIX1'.
-        client->message_toast_display( 'Fixed Button 1 pressed' ).
+        client->message_toast_display( `Fixed Button 1 pressed` ).
         selected_menu_entry = 'Fix1'.
       WHEN 'MENU_FIX2'.
-        client->message_toast_display( 'Fixed Button 2 pressed' ).
+        client->message_toast_display( `Fixed Button 2 pressed` ).
         selected_menu_entry = 'Fix2'.
       WHEN 'MENU_FIX3'.
-        client->message_toast_display( 'Fixed Button 3 pressed' ).
+        client->message_toast_display( `Fixed Button 3 pressed` ).
         selected_menu_entry = 'Fix3'.
     ENDCASE.
 
@@ -97,40 +97,40 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     "This part of the menu is scrollable if there are too many entries for the current screen size
     navlist->navigation_list_item( text   = 'Home'
                                    icon   = 'sap-icon://home'
-                                   select = client->_event( 'MENU_HOME' )
+                                   select = client->_event( `MENU_HOME` )
                                    key    = 'Home'
       )->get_child( )->navigation_list_item( text   = 'Home Sub 1'
-                                             select = client->_event( 'MENU_HOME_1' )
+                                             select = client->_event( `MENU_HOME_1` )
                                              key    = 'Home1'
       )->navigation_list_item( text   = 'Home Sub 2'
-                               select = client->_event( 'MENU_HOME_2' )
+                               select = client->_event( `MENU_HOME_2` )
                                key    = 'Home2'
       )->navigation_list_item( text   = 'Home Sub 3'
-                               select = client->_event( 'MENU_HOME_3' )
+                               select = client->_event( `MENU_HOME_3` )
                                key    = 'Home3' ).
 
     navlist->navigation_list_item( text   = 'Customers'
                                    icon   = 'sap-icon://customer'
-                                   select = client->_event( 'MENU_CUSTOMER' )
+                                   select = client->_event( `MENU_CUSTOMER` )
                                    key    = 'Customers' ).
     navlist->navigation_list_item( text   = 'Suppliers'
                                    icon   = 'sap-icon://supplier'
-                                   select = client->_event( 'MENU_SUPPLIER' )
+                                   select = client->_event( `MENU_SUPPLIER` )
                                    key    = 'Suppliers' ).
 
     "This part of the menu is fixed and always visible
     navlist->get_parent( )->fixed_item( )->navigation_list(
       )->navigation_list_item( text   = 'Fixed Entry 1'
                                icon   = 'sap-icon://heart'
-                               select = client->_event( 'MENU_FIX1' )
+                               select = client->_event( `MENU_FIX1` )
                                key    = 'Fix1'
       )->navigation_list_item( text   = 'Fixed Entry 2'
                                icon   = 'sap-icon://flight'
-                               select = client->_event( 'MENU_FIX2' )
+                               select = client->_event( `MENU_FIX2` )
                                key    = 'Fix2'
       )->navigation_list_item( text   = 'Fixed Entry 3'
                                icon   = 'sap-icon://email-read'
-                               select = client->_event( 'MENU_FIX3' )
+                               select = client->_event( `MENU_FIX3` )
                                key    = 'Fix3'
       )->navigation_list_item( text = 'Link'
                                icon = 'sap-icon://chain-link'

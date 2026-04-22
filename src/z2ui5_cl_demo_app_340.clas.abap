@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'POPUP_CLOSE' ).
+    IF client->check_on_event( `POPUP_CLOSE` ).
       client->popup_destroy( ).
       client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDIF.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(simple_form) = popup->dialog( title        = 'Test'
                                        contentwidth = '60%'
-                                       afterclose   = client->_event( 'POPUP_CLOSE' )
+                                       afterclose   = client->_event( `POPUP_CLOSE` )
           )->simple_form( title    = ''
                           layout   = 'ResponsiveGridLayout'
                           editable = abap_true
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout->mr_data IS INITIAL.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is initial' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is initial` ).
       RETURN.
     ENDIF.
 
@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->* ne mt_table->*' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data->* ne mt_table->*` ).
     ENDIF.
     on_event( client ).
 

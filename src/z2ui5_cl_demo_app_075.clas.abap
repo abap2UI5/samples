@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'
 *      enabled     = abap_false
-      upload      = client->_event( 'UPLOAD' ) ).
+      upload      = client->_event( `UPLOAD` ) ).
 
     client->view_display( view->stringify( ) ).
 

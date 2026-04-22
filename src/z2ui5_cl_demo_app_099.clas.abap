@@ -291,7 +291,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(
-                                    confirm     = client->_event( 'ALL_EVENT' )
+                                    confirm     = client->_event( `ALL_EVENT` )
                                     sortitems   = client->_bind_edit( t_tab_sort )
                                     groupitems  = client->_bind_edit( t_tab_group )
                                     filteritems = client->_bind_edit( t_tab_filter )

@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
       title          = `abap2UI5 - Sample: Sticky Session`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = page->vbox( ).
@@ -62,17 +62,17 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
                  class = 'sapUiTinyMarginEnd' ).
     hbox->button(
       text  = client->_bind( instance_counter )
-      press = client->_event( 'INCREMENT' )
+      press = client->_event( `INCREMENT` )
       type  = 'Emphasized' ).
 
     hbox = vbox->hbox( ).
     hbox->button(
       text  = 'End session'
-      press = client->_event( 'END_SESSION' ) ).
+      press = client->_event( `END_SESSION` ) ).
 
     hbox->button(
       text  = 'Start session again'
-      press = client->_event( 'START_SESSION' ) ).
+      press = client->_event( `START_SESSION` ) ).
 
     client->view_display( view->stringify( ) ).
 

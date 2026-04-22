@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
         ENDIF.
 
       WHEN 'BUTTON_POST'.
-        client->message_box_display( 'button post was pressed' ).
+        client->message_box_display( `button post was pressed` ).
     ENDCASE.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                     )->input( client->_bind( mv_info_filter )
                     )->button(
                         text  = 'filter'
-                        press = client->_event( 'FLTER_INFO' ) ).
+                        press = client->_event( `FLTER_INFO` ) ).
 
     DATA(tab) = page->scroll_container( height   = '70%'
                                         vertical = abap_true

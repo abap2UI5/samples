@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
                         )->input( client->_bind_edit( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val )
                         )->button(
                             text  = 'post'
-                            press = client->_event( 'BUTTON_POST' )
+                            press = client->_event( `BUTTON_POST` )
              )->stringify( ) ).
 
     ENDIF.

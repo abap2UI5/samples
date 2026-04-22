@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                      )->input( id               = `ZINPUT`
                                value            = client->_bind_edit( input )
                                showvaluehelp    = abap_true
-                               valuehelprequest = client->_event( 'CALL_KEYBOARD' )
+                               valuehelprequest = client->_event( `CALL_KEYBOARD` )
                                valuehelpiconsrc = 'sap-icon://keyboard-and-mouse' ).
 
     client->view_display( page->stringify( ) ).
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'CALL_KEYBOARD' ).
+    IF client->check_on_event( `CALL_KEYBOARD` ).
       client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
     ENDIF.
 

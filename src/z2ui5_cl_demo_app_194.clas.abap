@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    IF client->check_on_event( 'BUTTON' ).
+    IF client->check_on_event( `BUTTON` ).
 
       LOOP AT mt_comp REFERENCE INTO DATA(comp).
 
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                          )->toolbar_spacer(
                          )->button( text  = 'Save'
-                                    press = client->_event( 'BUTTON' )
+                                    press = client->_event( `BUTTON` )
                                     type  = 'Success' ).
 
     IF mo_parent_view IS INITIAL.

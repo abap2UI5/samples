@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'ROW_SELECT' ).
+    IF client->check_on_event( `ROW_SELECT` ).
       row_select( ).
     ENDIF.
 

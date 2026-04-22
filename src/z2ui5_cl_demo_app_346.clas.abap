@@ -88,31 +88,31 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = 'abap2UI5 - Tables and focus'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event( `BACK` )
             shownavbutton  = abap_true ).
 
     DATA(tab) = page->table(
             client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
-                )->label( `Column Id` )->input( submit      = client->_event( 'FOCUS' )
+                )->label( `Column Id` )->input( submit      = client->_event( `FOCUS` )
                                                 value       = client->_bind_edit( focuscolumn )
                                                 placeholder = `Focus Column`
                                                 width       = `10%`
-                )->label( `Row Index` )->input( submit      = client->_event( 'FOCUS' )
+                )->label( `Row Index` )->input( submit      = client->_event( `FOCUS` )
                                                 value       = client->_bind_edit( focusrow )
                                                 placeholder = `Focus Row`
                                                 width       = `10%`
                                                 type        = 'Number'
                 )->button(
                     text  = 'Set Focus'
-                    press = client->_event( 'FOCUS' )
+                    press = client->_event( `FOCUS` )
                 )->button(
                     text  = 'Next Focus'
-                    press = client->_event( 'ENTER' )
+                    press = client->_event( `ENTER` )
                 )->button(
                     text  = 'Reset Focus'
-                    press = client->_event( 'RESET' )
+                    press = client->_event( `RESET` )
                 )->title( client->_bind( focusid )
                 )->toolbar_spacer(
         )->get_parent( )->get_parent( ).
@@ -135,21 +135,21 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
       )->cells(
           )->text( '{INDEX}'
           )->input( value  = '{TITLE}'
-                    submit = client->_event( 'ENTER' )
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = '{VALUE}'
-                    submit = client->_event( 'ENTER' )
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = '{INFO}'
-                    submit = client->_event( 'ENTER' )
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-info
@@ -162,7 +162,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = '{DESCRIPTION}'
-                    submit = client->_event( 'ENTER' )
+                    submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
                      key        = 'ColumnId'
                      value      = c_id-description

@@ -63,14 +63,14 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
                  )->input( enabled = abap_false
                            value   = client->_bind_edit( int_sum )
                  )->button( text  = 'calc sum'
-                            press = client->_event( 'BUTTON_INT' )
+                            press = client->_event( `BUTTON_INT` )
                  )->label( 'decimals'
                  )->input( client->_bind_edit( dec1 )
                  )->input( client->_bind_edit( dec2 )
                  )->input( enabled = abap_false
                            value   = client->_bind_edit( dec_sum )
                  )->button( text  = 'calc sum'
-                            press = client->_event( 'BUTTON_DEC' )
+                            press = client->_event( `BUTTON_DEC` )
                  )->label( 'date'
                  )->input( client->_bind_edit( date )
                  )->label( 'time'

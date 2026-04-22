@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
          )->_generic( ns   = `html`
                       name = `script` )->_cc_plain_xml( get_js_custom_control( )
          )->_z2ui5( )->timer(
-                finished = client->_event( 'DISPLAY_VIEW' )
+                finished = client->_event( `DISPLAY_VIEW` )
                 delayms  = `0`
          )->stringify( ) ).
 
@@ -106,12 +106,12 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
       WHEN 'LOAD_CC'.
         mv_load_cc = abap_true.
         z2ui5_load_cc( ).
-        client->message_box_display( 'Custom Control loaded ' ).
+        client->message_box_display( `Custom Control loaded ` ).
 
       WHEN 'DISPLAY_CC'.
         mv_display_cc = abap_true.
         z2ui5_on_render( ).
-        client->message_box_display( 'Custom Control displayed ' ).
+        client->message_box_display( `Custom Control displayed ` ).
 
       WHEN 'MYCC'.
         client->message_toast_display( `Custom Control input: ` && mv_value ).
@@ -130,14 +130,14 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                           `  text="back" ` && |\n| &&
                           `  press="` && client->_event_nav_app_leave( ) && `" ` && |\n| &&
                           `  class="sapUiContentPadding sapUiResponsivePadding--content"/> ` && |\n| &&
-                          `<m:Button text="Load Custom Control"    press="` && client->_event( 'LOAD_CC' )    && `" />` && |\n| &&
-                          `<m:Button text="Display Custom Control" press="` && client->_event( 'DISPLAY_CC' ) && `" />` && |\n| &&
+                          `<m:Button text="Load Custom Control"    press="` && client->_event( `LOAD_CC` )    && `" />` && |\n| &&
+                          `<m:Button text="Display Custom Control" press="` && client->_event( `DISPLAY_CC` ) && `" />` && |\n| &&
                           `<html><head> ` &&
                           `</head>` && |\n| &&
                           `<body>`.
 
     IF mv_display_cc = abap_true.
-      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( 'MYCC' ) && `"  value="` && client->_bind_edit( mv_value ) && `"/>`.
+      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind_edit( mv_value ) && `"/>`.
     ENDIF.
 
     lv_xml = lv_xml && `</body>` && |\n| &&

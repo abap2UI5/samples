@@ -81,13 +81,13 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
                 shownavbutton  = client->check_app_prev_stack( )
            )->button(
             text  = 'Open Popup BAPIRET'
-            press = client->_event( 'POPUP_BAPIRET' )
+            press = client->_event( `POPUP_BAPIRET` )
                   )->button(
             text  = 'Open Popup BALLOG'
-            press = client->_event( 'POPUP_BALLOG' )
+            press = client->_event( `POPUP_BALLOG` )
                              )->button(
             text  = 'Open Popup Exception'
-            press = client->_event( 'POPUP_EXCEPTION' ) ).
+            press = client->_event( `POPUP_EXCEPTION` ) ).
 
     client->view_display( view->stringify( ) ).
 

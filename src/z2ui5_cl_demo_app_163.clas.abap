@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'OPEN_ACTION_SHEET' ).
+    IF client->check_on_event( `OPEN_ACTION_SHEET` ).
       view_action_sheet( ).
     ENDIF.
 
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     DATA(vbox) = view->vbox( ).
 
     vbox->button( text  = 'Open Action Sheet'
-                  press = client->_event( 'OPEN_ACTION_SHEET' )
+                  press = client->_event( `OPEN_ACTION_SHEET` )
                   id    = `actionSheet`
                   class = `sapUiSmallMargin` ).
 

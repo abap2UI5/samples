@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     DATA(page) = view->shell( )->page(
       title          = `abap2UI5 - Sample: Sticky Session with locks - (ABAP Standard Only)`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
@@ -59,29 +59,29 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     hbox->button(
       text  = 'End session'
-      press = client->_event( 'END_SESSION' ) ).
+      press = client->_event( `END_SESSION` ) ).
 
     hbox->button(
       text  = 'Start session again'
-      press = client->_event( 'START_SESSION' ) ).
+      press = client->_event( `START_SESSION` ) ).
 
     hbox = vbox->hbox( alignitems = 'Center' ).
     hbox->label( text  = 'press button to create lock entry (SM12) in backend session'
                  class = 'sapUiTinyMarginEnd' ).
     hbox->button(
       text  = 'Lock'
-      press = client->_event( 'LOCK' )
+      press = client->_event( `LOCK` )
       type  = 'Emphasized' ).
 
     hbox = vbox->hbox( ).
 
     hbox->button(
       text  = 'Refresh lock counter'
-      press = client->_event( 'REFRESH' ) ).
+      press = client->_event( `REFRESH` ) ).
 
     hbox->button(
       text  = 'Rollback Work'
-      press = client->_event( 'ROLLBACK' ) ).
+      press = client->_event( `ROLLBACK` ) ).
 
     vbox->hbox( )->info_label( client->_bind( lock_text ) ).
 

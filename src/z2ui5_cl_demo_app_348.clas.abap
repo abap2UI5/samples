@@ -56,17 +56,17 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     ENDIF.
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
 
     IF ms_struc IS INITIAL.
       " TODO: check spelling: inital (typo) -> initial (ABAP cleaner)
-      client->message_toast_display( 'ERROR - ms_struc is inital!' ).
+      client->message_toast_display( `ERROR - ms_struc is inital!` ).
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO <row>.
     IF <row> <> ms_struc.
-      client->message_toast_display( 'ERROR - mo_layout_obj->mr_data->*  <> ms_struc!' ).
+      client->message_toast_display( `ERROR - mo_layout_obj->mr_data->*  <> ms_struc!` ).
     ENDIF.
 
     client->view_model_update( ).
@@ -81,11 +81,11 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'CALL Next App'
-                  press = client->_event( 'GO' )
+                  press = client->_event( `GO` )
                   type  = 'Success' ).
 
     page->button( text  = 'Read from DB'
-                  press = client->_event( 'GET_DATA' )
+                  press = client->_event( `GET_DATA` )
                   type  = 'Success' ).
 
     xml_form( i_data   = REF #( ms_struc )

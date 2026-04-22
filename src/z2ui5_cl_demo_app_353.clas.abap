@@ -37,10 +37,10 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'TIMER_FINISHED'.
 
-        client->message_toast_display( 'Timer finished' ).
+        client->message_toast_display( `Timer finished` ).
       WHEN 'INFO_FINISHED'.
 
-        client->message_toast_display( 'Frontend finished' ).
+        client->message_toast_display( `Frontend finished` ).
     ENDCASE.
 
     client->view_model_update( ).
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->_z2ui5( )->timer( finished    = client->_event( 'TIMER_FINISHED' )
+    page->_z2ui5( )->timer( finished    = client->_event( `TIMER_FINISHED` )
                             delayms     = `4000`
                             checkactive = client->_bind( mv_check_active ) ).
 

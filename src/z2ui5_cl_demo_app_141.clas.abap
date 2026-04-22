@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
            )->toolbar_spacer(
            )->button(
                text  = 'Cancel'
-               press = client->_event( 'BUTTON_TEXTAREA_CANCEL' )
+               press = client->_event( `BUTTON_TEXTAREA_CANCEL` )
            )->button(
                text  = 'Confirm'
                press = client->_event_client( client->cs_event-popup_close )
@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
         )->label( '01'
         )->button(
             text  = 'Popup Get Input Values'
-            press = client->_event( 'POPUP_TO_INPUT' ) ).
+            press = client->_event( `POPUP_TO_INPUT` ) ).
 
     client->view_display( view->stringify( ) ).
 

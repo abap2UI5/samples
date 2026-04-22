@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_event( 'BUTTON_SEARCH' ).
+    IF client->check_on_event( `BUTTON_SEARCH` ).
       z2ui5_set_data( ).
       z2ui5_cl_util=>itab_filter_by_val(
           EXPORTING

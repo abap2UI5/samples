@@ -23,13 +23,13 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( )
         )->button(
             text  = 'SY'
-            press = client->_event( 'SY' )
+            press = client->_event( `SY` )
                 )->button(
             text  = 'BAPIRET'
-            press = client->_event( 'BAPIRET' )
+            press = client->_event( `BAPIRET` )
                 )->button(
             text  = 'CX_ROOT'
-            press = client->_event( 'CX_ROOT' )
+            press = client->_event( `CX_ROOT` )
         )->stringify( ) ).
 
       RETURN.

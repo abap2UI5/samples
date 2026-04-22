@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                     )->label( 'popover'
                     )->button(
                         text  = 'show'
-                        press = client->_event( 'POPOVER' )
+                        press = client->_event( `POPOVER` )
                         id    = 'TEST'
                         width = `10rem` ).
 

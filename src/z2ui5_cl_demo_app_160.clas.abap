@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     DATA lt_event_arguments TYPE string_table.
 
-    IF client->check_on_event( 'PL_TOTAL_CHANGE' ).
+    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
 
       lt_event_arguments = client->get( )-t_event_arg.
       DATA(lv_id_event) = lt_event_arguments[ 1 ].

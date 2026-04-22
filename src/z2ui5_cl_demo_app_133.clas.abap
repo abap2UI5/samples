@@ -50,12 +50,12 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
                       )->input( value = client->_bind_edit( field_01 )
                                 id    = 'BUTTON01'
                       )->button( text  = 'focus here'
-                                 press = client->_event( 'BUTTON01' )
+                                 press = client->_event( `BUTTON01` )
                       )->label( `field_02`
                       )->input( value = client->_bind_edit( field_02 )
                                 id    = 'BUTTON02'
                       )->button( text  = 'focus here'
-                                 press = client->_event( 'BUTTON02' )
+                                 press = client->_event( `BUTTON02` )
            )->stringify( ) ).
 
   ENDMETHOD.

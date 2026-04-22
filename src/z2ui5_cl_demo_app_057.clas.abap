@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     icon  = 'sap-icon://download'
-                    press = client->_event( 'BUTTON_DOWNLOAD' ) ).
+                    press = client->_event( `BUTTON_DOWNLOAD` ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( `Product` ).

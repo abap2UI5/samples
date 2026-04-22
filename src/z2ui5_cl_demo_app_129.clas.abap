@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
-    page->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
+    page->_z2ui5( )->timer( finished    = client->_event( `REFRESH` )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
 
@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
              type  = 'Ghost'
          )->button(
              text  = 'Open Popup'
-             press = client->_event( 'BUTTON_SEND' )
+             press = client->_event( `BUTTON_SEND` )
              type  = 'Success' ).
 
     client->view_display( page->stringify( ) ).

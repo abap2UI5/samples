@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
       WHEN 'POPUP'.
         app-popup = 'TEST'.
       WHEN 'DATA'.
-        client->message_box_display( 'Event raised value:' && mv_value ).
+        client->message_box_display( `Event raised value:` && mv_value ).
     ENDCASE.
 
   ENDMETHOD.
@@ -78,16 +78,16 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n| &&
-                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( 'BACK') && `"/>` && |\n| &&
+                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( `BACK`) && `"/>` && |\n| &&
                         `   </form:SimpleForm>  ` && |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( 'POPUP' ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( `POPUP` ) && `"` && |\n| &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n| &&
                         `       <TileContent>` && |\n| &&
                         `           <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png" />` && |\n| &&
                         `       </TileContent>` && |\n| &&
                         `   </GenericTile>` && |\n| &&
                         |\n| &&
-                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && client->_event( 'DATA' ) && `"` && |\n| &&
+                        `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Sales Fulfillment Application Title" press="` && client->_event( `DATA` ) && `"` && |\n| &&
                         `       subheader="Subtitle" frameType= "TwoByHalf">` && |\n| &&
                         `       <TileContent />` && |\n| &&
                         `   </GenericTile>` && |\n| &&

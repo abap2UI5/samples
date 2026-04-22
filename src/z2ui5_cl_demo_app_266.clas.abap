@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page_01->header_content(
        )->link(

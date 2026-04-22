@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
   METHOD ui5_on_event.
 
     TRY.
-        IF client->check_on_event( 'FILTERBAR' ).
+        IF client->check_on_event( `FILTERBAR` ).
           client->view_model_update( ).
         ENDIF.
       CATCH cx_root INTO DATA(x).
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     view->shell(
             )->page(
                     title          = 'abap2UI5 - Multi Combo Box'
-                    navbuttonpress = client->_event( 'BACK' )
+                    navbuttonpress = client->_event( `BACK` )
                     shownavbutton  = client->check_app_prev_stack( )
                )->simple_form( title    = 'Form Title'
                                editable = abap_true
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                                   )->get_parent(
                   )->button(
                             text  = 'post'
-                            press = client->_event( 'BUTTON_POST' ) ).
+                            press = client->_event( `BUTTON_POST` ) ).
 
     client->view_display( view->stringify( ) ).
 

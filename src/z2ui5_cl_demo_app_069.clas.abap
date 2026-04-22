@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     DATA(page) = lo_view_nested->page( `APP_01` ).
 
     page->button( text  = 'Update this view'
-                  press = client->_event( 'UPDATE_DETAIL' ) ).
+                  press = client->_event( `UPDATE_DETAIL` ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     DATA(page) = lo_view_nested->page( `APP_02` ).
 
     page->button( text  = 'Update this view'
-                  press = client->_event( 'UPDATE_DETAIL' )
+                  press = client->_event( `UPDATE_DETAIL` )
       )->input( ).
 
     page->button(

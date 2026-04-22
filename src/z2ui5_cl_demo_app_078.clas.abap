@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       view->_z2ui5( )->multiinput_ext(
                             addedtokens   = client->_bind_edit( mt_tokens_added )
                             removedtokens = client->_bind_edit( mt_tokens_removed )
-                            change        = client->_event( 'UPDATE_BACKEND' )
+                            change        = client->_event( `UPDATE_BACKEND` )
                             multiinputid  = `test` ).
 
       view->multi_input(

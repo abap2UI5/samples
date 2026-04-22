@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
                               additionaltext = '{V}' ).
 
     temp->label( '' )->button( text = 'Download'
-                    press           = client->_event( 'DB_LOAD' )
+                    press           = client->_event( `DB_LOAD` )
                     icon            = 'sap-icon://download-from-cloud' ).
 
     page->code_editor( type     = `html`
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
         )->toolbar_spacer(
         )->button( text    = 'PDF'
-                   press   = client->_event( 'PDF' )
+                   press   = client->_event( `PDF` )
                    type    = 'Emphasized'
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 

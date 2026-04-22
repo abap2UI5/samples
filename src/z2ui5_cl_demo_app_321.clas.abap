@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
       client->view_display( view->shell(
              )->page(
                      title          = 'abap2UI5 - Navigation with app state'
-                     navbuttonpress = client->_event( 'BACK' )
+                     navbuttonpress = client->_event( `BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title = 'Form Title' editable = abap_true
                      )->content( 'form'
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
                          )->input( client->_bind_edit( mv_quantity )
                          )->button(
                              text  = 'post with state'
-                             press = client->_event( 'BUTTON_POST' )
+                             press = client->_event( `BUTTON_POST` )
               )->stringify( ) ).
     ENDIF.
 

@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
             )->toolbar_spacer(
             )->button(
                 text  = 'details'
-                press = client->_event( 'BUTTON_DETAILS' )
+                press = client->_event( `BUTTON_DETAILS` )
                 type  = 'Emphasized' ).
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).

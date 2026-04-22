@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                               additionaltext = '{V}' ).
 
     temp->label( '' )->button( text = 'Download'
-                    press           = client->_event( 'DB_LOAD' )
+                    press           = client->_event( `DB_LOAD` )
                     icon            = 'sap-icon://download-from-cloud' ).
 
     page->code_editor( type     = client->_bind_edit( mv_type )
@@ -55,14 +55,14 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     page->footer( )->overflow_toolbar(
         )->button( text  = 'Clear'
-                   press = client->_event( 'CLEAR' )
+                   press = client->_event( `CLEAR` )
                    icon  = 'sap-icon://delete'
         )->toolbar_spacer(
         )->button( text  = 'Edit'
-                   press = client->_event( 'EDIT' )
+                   press = client->_event( `EDIT` )
                    icon  = 'sap-icon://edit'
         )->button( text    = 'Upload'
-                   press   = client->_event( 'DB_SAVE' )
+                   press   = client->_event( `DB_SAVE` )
                    type    = 'Emphasized'
                    icon    = 'sap-icon://upload-to-cloud'
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
             WHEN mv_path CS 'text' THEN lcl_file_api=>read_text( )
             WHEN mv_path CS 'js'   THEN lcl_file_api=>read_js( ) ).
 
-        client->message_toast_display( 'Download successfull' ).
+        client->message_toast_display( `Download successfull` ).
 
         client->view_model_update( ).
 

@@ -139,7 +139,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'handleChange' ).
+    IF client->check_on_event( `handleChange` ).
 
       DATA(args) = client->get( )-t_event_arg.
       DATA(source) = args[ 1 ].

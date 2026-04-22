@@ -217,7 +217,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
     vbox->button(
                 text  = 'read'
-                press = client->_event( 'BUTTON_POST' ) ).
+                press = client->_event( `BUTTON_POST` ) ).
 
     vbox = lo_box->vbox( ).
 
@@ -245,10 +245,10 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                 tokens           = client->_bind( mt_token )
                 showclearicon    = abap_true
                 value            = `{VALUE}`
-                tokenupdate      = client->_event( 'FILTER_UPDATE1' )
-                submit           = client->_event( 'FILTER_UPDATE' )
+                tokenupdate      = client->_event( `FILTER_UPDATE1` )
+                submit           = client->_event( `FILTER_UPDATE` )
                 id               = `FILTER`
-                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
+                valuehelprequest = client->_event( `FILTER_VALUE_HELP` )
             )->item(
                     key  = `{KEY}`
                     text = `{TEXT}`
@@ -286,7 +286,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
            "   headertext = `Product`
               nodata         = `no conditions defined`
              items           = client->_bind_edit( mt_filter )
-             selectionchange = client->_event( 'SELCHANGE' )
+             selectionchange = client->_event( `SELCHANGE` )
                 )->custom_list_item( ).
 
     DATA(grid) = item->grid( ).
@@ -316,11 +316,11 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         )->toolbar_spacer(
         )->button(
             text  = 'OK'
-            press = client->_event( 'FILTER_VALUE_HELP_OK' )
+            press = client->_event( `FILTER_VALUE_HELP_OK` )
             type  = 'Emphasized'
        )->button(
             text  = 'Cancel'
-            press = client->_event( 'FILTER_VALUE_HELP_CANCEL' ) ).
+            press = client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
 
     client->popup_display( lo_popup->stringify( ) ).
 

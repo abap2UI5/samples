@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'MESSAGE_SUB' ).
+    IF client->check_on_event( `MESSAGE_SUB` ).
       client->message_box_display( `event sub app` ).
     ENDIF.
 

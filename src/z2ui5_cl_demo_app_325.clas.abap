@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
                   width = `50%`
         )->button( text  = 'Copy input'
                    type  = 'Emphasized'
-                   press = client->_event( 'COPY_INPUT' ) ).
+                   press = client->_event( `COPY_INPUT` ) ).
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = 'id_sec2'
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
         )->blocks( )->vbox(
         )->button( text  = 'Copy text area'
                    type  = 'Emphasized'
-                   press = client->_event( 'COPY_TEXT_AREA' )
+                   press = client->_event( `COPY_TEXT_AREA` )
         )->text_area( valueliveupdate = abap_true
                       editable        = abap_true
                       value           = client->_bind_edit( text )

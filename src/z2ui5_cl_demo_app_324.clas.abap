@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
                                     )->page( shownavbutton  = client->check_app_prev_stack( )
                                              navbuttonpress = client->_event_nav_app_leave( )
                                     )->button( text  = 'Call dynpro'
-                                               press = client->_event( 'PRESS' )
+                                               press = client->_event( `PRESS` )
                                     )->stringify( ) ).
         ENDIF.
 

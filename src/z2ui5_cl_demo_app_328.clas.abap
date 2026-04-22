@@ -36,9 +36,9 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
         client->view_model_update( ).
 
 *        IF mt_table->* <> mo_table_obj->mr_data->*.
-*          client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA'  ).
+*          client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA`  ).
 *       ELSE.
-*          client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA'  ).
+*          client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA`  ).
 *        ENDIF.
 
       WHEN 'GO'.
@@ -69,13 +69,13 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
           ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
 
           IF <table> <> <val>.
-            client->message_toast_display( 'Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA' ).
+            client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA` ).
           ELSE.
-            client->message_toast_display( 'Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA' ).
+            client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA` ).
           ENDIF.
 
         ELSE.
-          client->message_toast_display( 'Plases select a Line' ).
+          client->message_toast_display( `Plases select a Line` ).
         ENDIF.
 
     ENDCASE.
@@ -90,14 +90,14 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                                                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->button( text  = 'GO'
-                  press = client->_event( 'GO' )
+                  press = client->_event( `GO` )
                   type  = 'Success' ).
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->table( headertext      = 'Table'
                  mode            = 'MultiSelect'
                  items           = client->_bind_edit( <table> )
-                 selectionchange = client->_event( 'SELECTION_CHANGE' )
+                 selectionchange = client->_event( `SELECTION_CHANGE` )
               )->columns(
                   )->column( )->text( 'id '
               )->get_parent( )->get_parent(

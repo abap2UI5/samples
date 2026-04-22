@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN 'LINE_PRESS'.
-        client->message_toast_display( 'LINE_PRESSED' ).
+        client->message_toast_display( `LINE_PRESSED` ).
 
       WHEN 'DETAIL_POPOVER'.
         DATA(lt_arg) = client->get( )-t_event_arg.

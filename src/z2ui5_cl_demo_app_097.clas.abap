@@ -46,9 +46,9 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
                                 enablegrouping     = abap_false
                                 fixedcolumncount   = '1'
                                 selectionmode      = 'None'
-                                sort               = client->_event( 'SORT' )
-                                filter             = client->_event( 'FILTER' )
-                                customfilter       = client->_event( 'CUSTOMFILTER' ) ).
+                                sort               = client->_event( `SORT` )
+                                filter             = client->_event( `FILTER` )
+                                customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( 'Products' ).
     DATA(lo_columns) = tab->ui_columns( ).
 
@@ -88,13 +88,13 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
           headertext      = 'List Ouput'
           items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
-          selectionchange = client->_event( 'SELCHANGE' )
+          selectionchange = client->_event( `SELCHANGE` )
           )->standard_list_item(
               title       = '{TITLE}'
               description = '{DESCR}'
               icon        = '{ICON}'
               info        = '{INFO}'
-              press       = client->_event( 'TEST' )
+              press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).

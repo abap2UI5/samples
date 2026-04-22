@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
                                )->button(
                                    text  = client->_bind_edit( text )
                                    width = '20%'
-                                   press = client->_event( 'CALL_BOOKING_MASK' ) ).
+                                   press = client->_event( `CALL_BOOKING_MASK` ) ).
             client->view_display( view->stringify( ) ).
             "client->set_app_state_active( ).
             RETURN.
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
-      navbuttonpress = client->_event( 'BACK' )
+      navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       value    = client->_bind_edit( varkey ) ).
     hbox->button(
       text  = 'Next Lock View'
-      press = client->_event( 'NEXT_LOCK' ) ).
+      press = client->_event( `NEXT_LOCK` ) ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

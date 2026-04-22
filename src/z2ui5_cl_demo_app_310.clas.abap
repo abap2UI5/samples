@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                                             '"Marketing" isn’t assigned to this area.' type = 'error' ).
 
       WHEN 'BUTTON_MESSAGE_BOX_INFO'.
-        client->message_box_display( 'Your booking will be reserved for 24 hours.' ).
+        client->message_box_display( `Your booking will be reserved for 24 hours.` ).
 
       WHEN 'BUTTON_MESSAGE_BOX_WARNING'.
         client->message_box_display( text = 'The project schedule was last updated over a year ago.'
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                                      type = 'success' ).
 
       WHEN 'BUTTON_MESSAGE_TOAST'.
-        client->message_toast_display( 'this is a message toast' ).
+        client->message_toast_display( `this is a message toast` ).
 
       WHEN 'BUTTON_MESSAGE_TOAST2'.
         client->message_toast_display( text                    = 'this is a message toast'
@@ -87,45 +87,45 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
             )->simple_form( 'Message Box' )->content( 'form'
                 )->button(
                     text  = 'Confirm'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_CONFIRM' )
+                    press = client->_event( `BUTTON_MESSAGE_BOX_CONFIRM` )
                 )->button(
                     text  = 'Alert'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_ALERT' )
+                    press = client->_event( `BUTTON_MESSAGE_BOX_ALERT` )
                 )->button(
                     text  = 'Error'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_ERROR' )
+                    press = client->_event( `BUTTON_MESSAGE_BOX_ERROR` )
                 )->button(
                     text  = 'Info'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_INFO' )
+                    press = client->_event( `BUTTON_MESSAGE_BOX_INFO` )
                 )->button(
                     text  = 'Warning'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_WARNING' )
+                    press = client->_event( `BUTTON_MESSAGE_BOX_WARNING` )
                 )->button(
                     text  = 'Success'
-                    press = client->_event( 'BUTTON_MESSAGE_BOX_SUCCESS' ) ).
+                    press = client->_event( `BUTTON_MESSAGE_BOX_SUCCESS` ) ).
 
     page->grid( 'L6 M12 S12'
         )->content( 'layout'
             )->simple_form( 'Message Strip' )->content( 'form'
                 )->button(
                     text  = 'success'
-                    press = client->_event( 'BUTTON_MESSAGE_STRIP_SUCCESS' )
+                    press = client->_event( `BUTTON_MESSAGE_STRIP_SUCCESS` )
                 )->button(
                     text  = 'error'
-                    press = client->_event( 'BUTTON_MESSAGE_STRIP_ERROR' )
+                    press = client->_event( `BUTTON_MESSAGE_STRIP_ERROR` )
                 )->button(
                     text  = 'information'
-                    press = client->_event( 'BUTTON_MESSAGE_STRIP_INFO' ) ).
+                    press = client->_event( `BUTTON_MESSAGE_STRIP_INFO` ) ).
 
     page->grid( 'L6 M12 S12'
         )->content( 'layout'
             )->simple_form( 'Display' )->content( 'form'
                 )->button(
                     text  = 'Message Toast'
-                    press = client->_event( 'BUTTON_MESSAGE_TOAST' )
+                    press = client->_event( `BUTTON_MESSAGE_TOAST` )
                )->button(
                     text  = 'Message Toast Customized'
-                    press = client->_event( 'BUTTON_MESSAGE_TOAST2' ) ).
+                    press = client->_event( `BUTTON_MESSAGE_TOAST2` ) ).
 
     client->view_display( view->stringify( ) ).
 

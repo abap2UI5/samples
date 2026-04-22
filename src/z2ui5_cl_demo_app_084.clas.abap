@@ -118,10 +118,10 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      text = 'Success MessageBox'
                                      icon = `sap-icon://accept` ).
       WHEN 'BUTTON_SEND'.
-        client->message_box_display( 'success - values send to the server' ).
+        client->message_box_display( `success - values send to the server` ).
       WHEN 'BUTTON_CLEAR'.
         CLEAR screen.
-        client->message_toast_display( 'View initialized' ).
+        client->message_toast_display( `View initialized` ).
     ENDCASE.
 
   ENDMETHOD.
@@ -184,34 +184,34 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
          )->text( `MessageBox Types`
          )->button(
              text  = 'Confirm'
-             press = client->_event( 'BUTTON_MCONFIRM' )
+             press = client->_event( `BUTTON_MCONFIRM` )
          )->button(
              text  = 'Alert'
-             press = client->_event( 'BUTTON_MALERT' )
+             press = client->_event( `BUTTON_MALERT` )
          )->button(
              text  = 'Error'
-             press = client->_event( 'BUTTON_MERROR' )
+             press = client->_event( `BUTTON_MERROR` )
          )->button(
              text  = 'Information'
-             press = client->_event( 'BUTTON_MINFO' )
+             press = client->_event( `BUTTON_MINFO` )
          )->button(
              text  = 'Warning'
-             press = client->_event( 'BUTTON_MWARNING' )
+             press = client->_event( `BUTTON_MWARNING` )
          )->button(
              text  = 'Success'
-             press = client->_event( 'BUTTON_MSUCCESS' )
+             press = client->_event( `BUTTON_MSUCCESS` )
          )->button(
              text  = 'Custom'
-             press = client->_event( 'BUTTON_MCUSTOM' )
+             press = client->_event( `BUTTON_MCUSTOM` )
          )->toolbar_spacer(
          )->button(
              text  = 'Clear'
-             press = client->_event( 'BUTTON_CLEAR' )
+             press = client->_event( `BUTTON_CLEAR` )
              type  = 'Reject'
              icon  = 'sap-icon://delete'
          )->button(
              text  = 'Send to Server'
-             press = client->_event( 'BUTTON_SEND' )
+             press = client->_event( `BUTTON_SEND` )
              type  = 'Success' ).
 
     view->_generic( name = `script`

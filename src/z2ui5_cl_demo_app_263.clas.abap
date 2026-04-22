@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
@@ -49,14 +49,14 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
                            indicator    = `Down`
                            icon         = `sap-icon://travel-expense`
                              class      = `sapUiSmallMargin`
-                           press        = client->_event( 'press' ) ).
+                           press        = client->_event( `press` ) ).
     page->numeric_content( value        = `11`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                              icon       = `test-resources/sap/m/demokit/sample/NumericContentIcon/images/grass.jpg`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( `press` ) ).
 
     client->view_display( page->stringify( ) ).
 

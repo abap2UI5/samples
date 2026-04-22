@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
       value       = client->_bind_edit( mv_value )
       path        = client->_bind_edit( mv_path )
       placeholder = 'filepath here...'
-      upload      = client->_event( 'UPLOAD' ) ).
+      upload      = client->_event( `UPLOAD` ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
             )->get_parent(
             )->button(
                         text  = 'post'
-                        press = client->_event( 'BUTTON_POST' )
+                        press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
             )->input( value = client->_bind( quantity )
             )->simple_form( title    = 'Form Title'
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                         enabled = abap_false
                     )->button(
                         text  = 'post'
-                        press = client->_event( 'BUTTON_POST' )
+                        press = client->_event( `BUTTON_POST` )
          )->get_root( )->xml_get( ) ).
 
   ENDMETHOD.

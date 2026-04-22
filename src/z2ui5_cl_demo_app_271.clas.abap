@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     page->header_content(
        )->link(
@@ -50,15 +50,15 @@ CLASS z2ui5_cl_demo_app_271 IMPLEMENTATION.
            class       = `sapUiLargeMarginTop sapUiLargeMarginBottom`
            src         = `sap-icon://area-chart`
            description = `Icon`
-           press       = client->_event( 'press' ) )->get_parent(
+           press       = client->_event( `press` ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/ProfileImage_LargeGenTile.png`
               description         = `Profile image`
-              press               = client->_event( 'press' ) )->get_parent(
+              press               = client->_event( `press` ) )->get_parent(
           )->image_content( class = `sapUiLargeMarginTop sapUiLargeMarginBottom`
               src                 = base_url && `/test-resources/sap/m/demokit/sample/ImageContent/images/SAPLogoLargeTile_28px_height.png`
               description         = `Logo`
-              press               = client->_event( 'press' ) ).
+              press               = client->_event( `press` ) ).
 
     client->view_display( page->stringify( ) ).
 

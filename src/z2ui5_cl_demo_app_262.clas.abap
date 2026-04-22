@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
@@ -46,30 +46,30 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
     page->numeric_content( value           = `888.8`
                            scale           = `MM`
                            class           = `sapUiSmallMargin`
-                             press         = client->_event( 'press' )
+                             press         = client->_event( `press` )
                            truncatevalueto = `4` ).
     page->numeric_content( value        = `65.5`
                            scale        = `MM`
                              valuecolor = `Good`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( `press` ) ).
     page->numeric_content( value        = `6666`
                            scale        = `MM`
                              valuecolor = `Critical`
                            indicator    = `Up`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( `press` ) ).
     page->numeric_content( value        = `65.5`
                            scale        = `MMill`
                              valuecolor = `Error`
                            indicator    = `Down`
                            class        = `sapUiSmallMargin`
-                             press      = client->_event( 'press' ) ).
+                             press      = client->_event( `press` ) ).
     page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                         header    = `Country-Specific Profit Margin`
                         subheader = `Expenses`
-                        press     = client->_event( 'press' )
+                        press     = client->_event( `press` )
              )->tile_content( unit   = `EUR`
                               footer = `Current Quarter`
                  )->numeric_content( scale      = `M`

@@ -100,17 +100,17 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
                    )->toolbar_spacer(
                    )->button(
                        text  = 'Delete'
-                       press = client->_event( 'BUTTON_DELETE' )
+                       press = client->_event( `BUTTON_DELETE` )
                        type  = 'Reject'
                        icon  = 'sap-icon://delete'
                    )->button(
                        text  = 'Add'
-                       press = client->_event( 'BUTTON_ADD' )
+                       press = client->_event( `BUTTON_ADD` )
                        type  = 'Default'
                        icon  = 'sap-icon://add'
                    )->button(
                        text  = 'Save'
-                       press = client->_event( 'BUTTON_SAVE' )
+                       press = client->_event( `BUTTON_SAVE` )
                        type  = 'Success' ).
 
     client->view_display( page->get_root( )->xml_get( ) ).

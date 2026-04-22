@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'BUTTON_DOWNLOAD' ).
+    IF client->check_on_event( `BUTTON_DOWNLOAD` ).
       client->follow_up_action( client->_event_client( val = client->cs_event-download_b64_file t_arg = VALUE #( ( file_content_64 ) ( file_name ) ) ) ).
     ENDIF.
 
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
                 width = `15rem`
       )->button( type  = 'Emphasized'
                  text  = 'Open Download Popup'
-                 press = client->_event( 'BUTTON_DOWNLOAD' ) ).
+                 press = client->_event( `BUTTON_DOWNLOAD` ) ).
 
     client->view_display( page->stringify( ) ).
 

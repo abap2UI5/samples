@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
        )->button( id = `button_hint_id`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'CLICK_HINT_ICON' ) ).
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
 
     IF icfactive = abap_false.
       page->message_strip(

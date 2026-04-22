@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
     vbox->_z2ui5( )->multiinput_ext(
                        addedtokens   = client->_bind_edit( mt_tokens_added )
                        removedtokens = client->_bind_edit( mt_tokens_removed )
-                       change        = client->_event( 'UPDATE_TOKENS' )
+                       change        = client->_event( `UPDATE_TOKENS` )
                        multiinputid  = `MultiInput` ).
 
     DATA(tab) = vbox->table(
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
                 id               = `MultiInput`
                 tokens           = client->_bind( mt_token )
                 showclearicon    = abap_true
-                valuehelprequest = client->_event( 'FILTER_VALUE_HELP' )
+                valuehelprequest = client->_event( `FILTER_VALUE_HELP` )
             )->item(
                     key  = `{KEY}`
                     text = `{TEXT}`

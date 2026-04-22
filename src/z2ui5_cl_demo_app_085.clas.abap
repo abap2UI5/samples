@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     DATA(page) = lo_view_nested->object_page_layout(
             showtitleinheadercontent = abap_true
             showeditheaderbutton     = abap_true
-            editheaderbuttonpress    = client->_event( 'EDIT_HEADER_PRESS' )
+            editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
             uppercaseanchorbar       = abap_false ).
 
     DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              type    = 'Transparent'
              enabled = 'true'
              tooltip = 'Goto Supplier'
-             press   = client->_event( 'ONGOTOSUPPLIER' )
+             press   = client->_event( `ONGOTOSUPPLIER` )
          )->overflow_toolbar_button(
              icon    = `sap-icon://exit-full-screen`
              text    = 'Exit Fullscreen Mode'
@@ -130,7 +130,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                         WHEN 'TwoColumnsMidExpanded' THEN 'false'
                                         WHEN 'MidColumnFullScreen'   THEN 'true'
                                          )
-             press   = client->_event( 'ONEXITFULLSCREENMODE' )
+             press   = client->_event( `ONEXITFULLSCREENMODE` )
           )->overflow_toolbar_button(
              icon    = `sap-icon://full-screen`
              text    = 'Enter Fullscreen Mode'
@@ -140,14 +140,14 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                         WHEN 'MidColumnFullScreen' THEN 'false'
                                          )
              tooltip = 'Fullscreen Mode'
-             press   = client->_event( 'ONFULLSCREENMODE' )
+             press   = client->_event( `ONFULLSCREENMODE` )
           )->overflow_toolbar_button(
              icon    = `sap-icon://decline`
              text    = 'Exit Detail Screen'
              type    = 'Transparent'
              enabled = 'true'
              tooltip = 'Close Detail'
-             press   = client->_event( 'ONCLOSEDETAIL' ) ).
+             press   = client->_event( `ONCLOSEDETAIL` ) ).
 
     DATA(header_content) = page->header_content( 'uxap' ).
     header_content->flex_box( wrap = 'Wrap'
@@ -338,13 +338,13 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     tab->header_toolbar( )->overflow_toolbar(
           )->search_field( id     = `SEARCH`
                            width  = '17.5rem'
-                           search = client->_event( 'ONSEARCH' )
-                           change = client->_event( 'ONSEARCH' )
+                           search = client->_event( `ONSEARCH` )
+                           change = client->_event( `ONSEARCH` )
                            value  = client->_bind_edit( mv_search_value )
           )->toolbar_spacer(
           )->overflow_toolbar_button( icon  = 'sap-icon://sort'
                                       type  = 'Transparent'
-                                      press = client->_event( 'ONSORT' ) ).
+                                      press = client->_event( `ONSORT` ) ).
 
     tab->columns(
         )->column( '12em'
@@ -455,7 +455,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       WHEN `UPDATE_DETAIL`.
         view_display_detail( ).
       WHEN 'ONSORT'.
-        client->message_toast_display( 'Sort Entries' ).
+        client->message_toast_display( `Sort Entries` ).
         sort( ).
         READ TABLE mt_table INDEX 1 INTO ls_detail.
         view_display_master( ).
@@ -463,7 +463,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->view_model_update( ).
         client->nest_view_model_update( ).
       WHEN 'ONSEARCH'.
-        client->message_toast_display( 'Search Entries' ).
+        client->message_toast_display( `Search Entries` ).
         z2ui5_set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).

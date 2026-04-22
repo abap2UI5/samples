@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     DATA(table) = page->table( width = 'auto'
                                mode  = 'SingleSelectLeft'
-                               selectionchange  = client->_event( 'SELECTION_CHANGE' )
+                               selectionchange  = client->_event( `SELECTION_CHANGE` )
                                items = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
@@ -186,7 +186,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
+      client->message_toast_display( `ERROR - mo_layout->mr_data->* ne mt_table->*`  ).
     ENDIF.
 
     on_event( client ).

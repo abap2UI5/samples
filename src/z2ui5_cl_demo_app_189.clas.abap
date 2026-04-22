@@ -46,10 +46,10 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
        )->content( 'form'
        )->label( 'One (Press Enter)' )->input( id     = 'IdOne'
                                                value  = client->_bind_edit( one )
-                                               submit = client->_event( 'one_enter' )
+                                               submit = client->_event( `one_enter` )
        )->label( 'Two' )->input( id     = 'IdTwo'
                                  value  = client->_bind_edit( two )
-                                 submit = client->_event( 'two_enter' )
+                                 submit = client->_event( `two_enter` )
        )->label( 'Three' )->input( id    = 'IdThree'
                                    value = client->_bind_edit( three ) ).
 

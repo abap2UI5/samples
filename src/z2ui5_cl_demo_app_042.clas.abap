@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
     DATA(page) = view->object_page_layout(
              showtitleinheadercontent = abap_true
              showeditheaderbutton     = abap_true
-             editheaderbuttonpress    = client->_event( 'EDIT_HEADER_PRESS' )
+             editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
              uppercaseanchorbar       = abap_false ).
 
     DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).

@@ -56,9 +56,9 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->button( text  = 'Display List'
-                           press = client->_event( 'LIST' )
+                           press = client->_event( `LIST` )
                 )->button( text  = 'Display Table'
-                           press = client->_event( 'TABLE' )
+                           press = client->_event( `TABLE` )
                 )->link(
       )->get_parent( ).
 

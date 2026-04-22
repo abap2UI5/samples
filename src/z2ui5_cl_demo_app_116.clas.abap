@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->button(
                     text  = 'OK'
-                    press = client->_event( 'POPOVER_OK' )
+                    press = client->_event( `POPOVER_OK` )
                     type  = 'Emphasized'
            )->get_parent( )->get_parent(
            )->text( 'TEST' ).

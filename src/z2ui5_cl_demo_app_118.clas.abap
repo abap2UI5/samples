@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     DATA(page) = view->_z2ui5( )->title( 'ABAP2UI5 Weird behavior showcase' )->shell(
         )->page(
             title          = 'ABAP2UI5 Weird behavior showcase'
-            navbuttonpress = client->_event( 'BACK' )
+            navbuttonpress = client->_event( `BACK` )
             showheader     = abap_true ).
 
     DATA(tab_ko) = page->table(
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                 )->button(
                     text  = |Go|
                     icon  = 'sap-icon://blur'
-                    press = client->_event( 'ON_BTN_GO' ) ).
+                    press = client->_event( `ON_BTN_GO` ) ).
 
     tab_ko->columns(
             )->column( )->text( 'ID' )->get_parent(

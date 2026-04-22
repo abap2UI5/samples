@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_245 IMPLEMENTATION.
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`
            tooltip   = `Sample information`
-           press     = client->_event( 'POPOVER' ) ).
+           press     = client->_event( `POPOVER` ) ).
 
     page->header_content(
        )->link(
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_245 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( 'POPOVER' ).
+    IF client->check_on_event( `POPOVER` ).
       popover_display( `hint_icon` ).
     ENDIF.
 
