@@ -62,16 +62,16 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
                              items      = client->_bind( t_tab ) ).
 
     tab->columns(
-        )->column( )->text( 'Title' )->get_parent(
-        )->column( )->text( 'Color' )->get_parent(
-        )->column( )->text( 'Info' )->get_parent(
-        )->column( )->text( 'Description' ).
+        )->column( )->text( `Title` )->get_parent(
+        )->column( )->text( `Color` )->get_parent(
+        )->column( )->text( `Info` )->get_parent(
+        )->column( )->text( `Description` ).
 
     tab->items( )->column_list_item( )->cells(
        )->text( '{TITLE}'
        )->text( '{VALUE}'
        )->text( '{INFO}'
-      )->text( '{DESCR}' ).
+      )->text( `{DESCR}` ).
 
     page->footer( )->overflow_toolbar(
          )->button( text  = `Scroll Top`

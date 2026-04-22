@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     page = page->dynamic_page( headerexpanded = abap_true
                                headerpinned   = abap_true ).
 
-    DATA(cont) = page->content( 'f' ).
+    DATA(cont) = page->content( `f` ).
     DATA(tab) = cont->table( id    = `tab`
                              items = client->_bind_edit( val = mt_table ) ).
 

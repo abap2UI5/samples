@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                     press = client->_event( `POPOVER_OK` )
                     type  = `Emphasized`
            )->get_parent( )->get_parent(
-           )->text( 'TEST' ).
+           )->text( `TEST` ).
 
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
@@ -115,9 +115,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
     header_title->expanded_heading(
             )->hbox(
-                )->title( 'PriceList' ).
+                )->title( `PriceList` ).
 
-    DATA(header_content) = page->header_content( 'uxap').
+    DATA(header_content) = page->header_content( `uxap`).
     header_content->block_layout(
       )->block_layout_row(
       )->block_layout_cell( backgroundcolorset   = 'ColorSet10'

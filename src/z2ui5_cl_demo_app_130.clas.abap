@@ -338,7 +338,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
        )->get_parent( ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+        )->content( `layout` ).
 
     grid->simple_form( get_txt( 'BU_DYNID' )
         )->content( 'form'
@@ -371,7 +371,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             showvaluehelp = abap_false ).
 
     DATA(content) = grid->simple_form( get_txt( 'CLASSFEL' )
-         )->content( 'form' ).
+         )->content( `form` ).
 
     IF mt_fields IS NOT INITIAL.
 

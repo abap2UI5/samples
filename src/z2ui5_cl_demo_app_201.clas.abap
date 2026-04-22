@@ -317,7 +317,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
        shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+        )->content( `layout` ).
 
     DATA(input) = grid->simple_form( 'Input'
         )->content( 'form'
@@ -334,13 +334,13 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
                  )->get( ).
 
     input->suggestion_columns(
-        )->column( )->label( 'Name' )->get_parent(
-        )->column( )->label( 'Currency' ).
+        )->column( )->label( `Name` )->get_parent(
+        )->column( )->label( `Currency` ).
 
     input->suggestion_rows(
         )->column_list_item(
             )->label( '{CURRENCYNAME}'
-            )->label( '{CURRENCY}' ).
+            )->label( `{CURRENCY}` ).
 
     page->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).

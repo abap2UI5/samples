@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     lo_view_nested = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view_nested->page( `Nested View` ).
     mo_grid_sub = page->grid( 'L12 M12 S12'
-        )->content( 'layout' ).
+        )->content( `layout` ).
 
   ENDMETHOD.
 

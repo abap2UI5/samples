@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     DATA(content) = popup->dialog( contentwidth = `60%`
           )->simple_form( layout   = `ResponsiveGridLayout`
                           editable = abap_true
-          )->content( 'form' ).
+          )->content( `form` ).
 
     " Gehe über alle Comps wenn wir im Edit sind dann sind keyfelder nicht eingabebereit.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).

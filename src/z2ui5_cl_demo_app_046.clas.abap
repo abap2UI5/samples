@@ -82,19 +82,19 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
         tab->columns(
             )->column(
-                )->text( 'Title' )->get_parent(
+                )->text( `Title` )->get_parent(
             )->column(
-                )->text( 'Descr' )->get_parent(
+                )->text( `Descr` )->get_parent(
             )->column(
-                )->text( 'Icon' )->get_parent(
+                )->text( `Icon` )->get_parent(
              )->column(
-                )->text( 'Info' ).
+                )->text( `Info` ).
 
         tab->items( )->column_list_item( )->cells(
            )->text( '{TITLE}'
            )->text( '{DESCR}'
            )->text( '{ICON}'
-           )->text( '{INFO}' ).
+           )->text( `{INFO}` ).
 
     ENDCASE.
 

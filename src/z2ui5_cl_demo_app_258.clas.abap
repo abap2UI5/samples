@@ -158,23 +158,23 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     CASE selected_menu_entry.
 
       WHEN `Home`.
-        site_content->text( 'Welcome to the Home Page' ).
+        site_content->text( `Welcome to the Home Page` ).
       WHEN `Home1`.
-        site_content->text( 'Welcome to the Home Sub Page 1' ).
+        site_content->text( `Welcome to the Home Sub Page 1` ).
       WHEN `Home2`.
-        site_content->text( 'Welcome to the Home Sub Page 2' ).
+        site_content->text( `Welcome to the Home Sub Page 2` ).
       WHEN `Home3`.
-        site_content->text( 'Welcome to the Home Sub Page 3' ).
+        site_content->text( `Welcome to the Home Sub Page 3` ).
       WHEN `Customers`.
-        site_content->text( 'Welcome to the Customers Page' ).
+        site_content->text( `Welcome to the Customers Page` ).
       WHEN `Suppliers`.
-        site_content->text( 'Welcome to the Suppliers Page' ).
+        site_content->text( `Welcome to the Suppliers Page` ).
       WHEN `Fix1`.
-        site_content->text( 'Welcome to the first fixed Page' ).
+        site_content->text( `Welcome to the first fixed Page` ).
       WHEN `Fix2`.
-        site_content->text( 'Welcome to the second fixed Page' ).
+        site_content->text( `Welcome to the second fixed Page` ).
       WHEN `Fix3`.
-        site_content->text( 'Welcome to the third fixed Page' ).
+        site_content->text( `Welcome to the third fixed Page` ).
     ENDCASE.
 
   ENDMETHOD.

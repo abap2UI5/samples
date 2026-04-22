@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                       type  = `Emphasized`
                 )->get_parent( )->get_parent(
             )->text( 'make an input here:'
-            )->input( 'abcd' ).
+            )->input( `abcd` ).
 
     client->popover_display(
       xml   = view->stringify( )

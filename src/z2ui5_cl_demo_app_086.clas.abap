@@ -33,8 +33,8 @@ CLASS z2ui5_cl_demo_app_086 IMPLEMENTATION.
                navbuttonpress = client->_event_nav_app_leave( )
                shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->grid( 'L6 M12 S12' )->content( 'layout'
-      )->simple_form( 'Supplier' )->content( 'form'
+    page->grid( `L6 M12 S12` )->content( 'layout'
+      )->simple_form( `Supplier` )->content( 'form'
       )->label( 'Value set by previous app'
            )->input( value    = ls_detail_supplier-suppliername
                      editable = 'false' ).

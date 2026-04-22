@@ -66,10 +66,10 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( 'f' )->hbox( )->title( `Table` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( 'f' ).
+    header_title->expanded_content( `f` ).
+    header_title->snapped_content( `f` ).
 
-    DATA(cont) = page->content( 'f' ).
+    DATA(cont) = page->content( `f` ).
 
     DATA(tab) = cont->vbox(
                   )->ui_table( rows                = client->_bind( val = gt_data )

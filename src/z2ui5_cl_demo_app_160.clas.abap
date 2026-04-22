@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     columns->ui_column( width          = `5rem`
                         sortproperty   = 'PL_TOTAL'
-                        filterproperty = 'PL_TOTAL' )->text( 'Column 5' )->ui_template( )->input(
+                        filterproperty = 'PL_TOTAL' )->text( `Column 5` )->ui_template( )->input(
       value           = `{PL_TOTAL}`
       submit          = client->_event( val = 'PL_TOTAL_CHANGE' t_arg = VALUE #(
         ( `${$source>/id}` )

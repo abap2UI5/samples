@@ -197,10 +197,10 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_header_title) = lr_dyn_page->title( ns = `f` )->get( )->dynamic_page_title( ).
 
     " ---------- Set header title text ----------------------------------------------------------------
-    lr_header_title->heading( 'f' )->title( 'abap2UI5 - VizFrame Charts' ).
+    lr_header_title->heading( `f` )->title( `abap2UI5 - VizFrame Charts` ).
 
     " ---------- Get page header area ----------------------------------------------------------------
-    DATA(lr_header) = lr_dyn_page->header( 'f' )->dynamic_page_header( abap_true )->content( 'f' ).
+    DATA(lr_header) = lr_dyn_page->header( `f` )->dynamic_page_header( abap_true )->content( `f` ).
 
     lr_header->button( text    = `back`
                        press   = client->_event_nav_app_leave( )
@@ -225,7 +225,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                        text = `{V}` ).
 
     " ---------- Get page content area ----------------------------------------------------------------
-    DATA(lr_content) = lr_dyn_page->content( 'f' ).
+    DATA(lr_content) = lr_dyn_page->content( `f` ).
 
     " ---------- Set vizframe chart -------------------------------------------------------------------
     DATA(lr_vizframe) = lr_content->viz_frame(

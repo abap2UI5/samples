@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
                                 sort               = client->_event( `SORT` )
                                 filter             = client->_event( `FILTER` )
                                 customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( 'Products' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
     DATA(lo_columns) = tab->ui_columns( ).
 
     lo_columns->ui_column( sortproperty                  = 'TITLE'

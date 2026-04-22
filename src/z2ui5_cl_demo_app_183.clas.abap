@@ -147,22 +147,22 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
     tab->columns(
         )->column( headermenu = `menu`
                    id         = `color_col`
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column( headermenu = `menu`
                    id         = `info_col`
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column( headermenu = `menu`
                    id         = `description_col`
-            )->text( 'Description' )->get_parent(
+            )->text( `Description` )->get_parent(
         )->column( headermenu = `menu`
                    id         = `checkbox_col`
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
         )->column( headermenu = `menu`
                    id         = `counter_col`
-            )->text( 'Counter' )->get_parent(
+            )->text( `Counter` )->get_parent(
         )->column( headermenu = `menu`
                    id         = `chart_col`
-            )->text( 'Radial Micro Chart' ).
+            )->text( `Radial Micro Chart` ).
 
     tab->items( )->column_list_item( )->cells(
        )->text( '{VALUE}'
@@ -170,7 +170,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}'
                     enabled  = abap_false
-       )->text( '{COUNT}' ).
+       )->text( `{COUNT}` ).
 
     client->view_display( view->stringify( ) ).
 

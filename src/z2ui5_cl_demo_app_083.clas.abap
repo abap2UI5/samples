@@ -198,10 +198,10 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(header_title) = page->title( ns = `f`
             )->get( )->dynamic_page_title( ).
 
-    header_title->heading( 'f' )->hbox(
+    header_title->heading( `f` )->hbox(
         )->title( `Select-Option` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( 'f' ).
+    header_title->expanded_content( `f` ).
+    header_title->snapped_content( `f` ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
          )->flex_box( alignitems     = `Start`
@@ -211,7 +211,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     vbox->simple_form( editable = abap_true
             )->content( `form`
                 )->title( 'Table'
-                )->label( 'Name' ).
+                )->label( `Name` ).
 
     vbox->input( client->_bind_edit( mv_name ) ).
 

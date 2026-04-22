@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         TRY.
             DATA(lo_json) = z2ui5_cl_ajson=>parse( lv_json ).
 
-            DATA(l_members) = lo_json->members( '/' ).
+            DATA(l_members) = lo_json->members( `/` ).
 
             LOOP AT l_members INTO DATA(l_member).
               DATA(lv_val) = lo_json->get( '/' && l_member && '/mProperties/text' ).

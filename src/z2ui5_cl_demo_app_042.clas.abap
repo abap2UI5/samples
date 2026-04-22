@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                  text  = `Go Back`
                  press = client->_event_nav_app_leave( ) ).
 
-    DATA(header_content) = page->header_content( 'uxap' ).
+    DATA(header_content) = page->header_content( `uxap` ).
 
     header_content->flex_box( wrap = 'Wrap'
            )->avatar( src         = lcl_help=>get_avatar( )
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( 'goals2'
                           )->label( 'goals2'
                           )->label( 'goals2'
-                          )->label( 'goals2').
+                          )->label( `goals2`).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = `PersonalSection`
@@ -152,7 +152,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                                             title = `Payment information  `
                       )->blocks(
                           )->label( 'Hello! I an abap2UI5 developer'
-                          )->label( 'San Jose, USA' ).
+                          )->label( `San Jose, USA` ).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = `employmentSection`
@@ -181,7 +181,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                           )->label( 'details'
                           )->label( 'details'
                           )->label( 'details'
-                          )->label( 'details' ).
+                          )->label( `details` ).
 
     client->view_display( page->stringify( ) ).
 

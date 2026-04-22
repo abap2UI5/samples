@@ -148,8 +148,8 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( 'f' )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( 'f' ).
-    header_title->snapped_content( 'f' ).
+    header_title->expanded_content( `f` ).
+    header_title->snapped_content( `f` ).
 
     DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
          )->flex_box( alignitems     = `Start`
@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         press = client->_event( `BUTTON_START` )
         type  = `Emphasized` ).
 
-    DATA(cont) = page->content( 'f' ).
+    DATA(cont) = page->content( `f` ).
 
     DATA(tab) = cont->ui_table( rows               = client->_bind( val = mt_table )
                                 editable           = abap_false
@@ -180,9 +180,9 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
                                 sort               = client->_event( `SORT` )
                                 filter             = client->_event( `FILTER` )
                                 customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( 'Products' ).
+    tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
     DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )
+    lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
     lo_columns->ui_column( width                         = `5rem`

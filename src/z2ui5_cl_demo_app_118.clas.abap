@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->_z2ui5( )->title( 'ABAP2UI5 Weird behavior showcase' )->shell(
+    DATA(page) = view->_z2ui5( )->title( `ABAP2UI5 Weird behavior showcase` )->shell(
         )->page(
             title          = `ABAP2UI5 Weird behavior showcase`
             navbuttonpress = client->_event( `BACK` )
@@ -64,10 +64,10 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                     press = client->_event( `ON_BTN_GO` ) ).
 
     tab_ko->columns(
-            )->column( )->text( 'ID' )->get_parent(
-            )->column( )->text( 'Description' )->get_parent(
-            )->column( )->text( 'Date ' )->get_parent(
-            )->column( )->text( 'Time' ).
+            )->column( )->text( `ID` )->get_parent(
+            )->column( )->text( `Description` )->get_parent(
+            )->column( )->text( `Date ` )->get_parent(
+            )->column( )->text( `Time` ).
 
     tab_ko->items(
          )->column_list_item(
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->object_identifier( title = `{ID}` )->get_parent(
                  )->text( '{DESCR}'
                  )->text( '{ADATE}'
-                 )->text( '{ATIME}' ).
+                 )->text( `{ATIME}` ).
 
     DATA(tab_ok) = page->table(
                         mode  = 'MultiSelect'
@@ -86,10 +86,10 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                 )->title( |This table is fine| ).
 
     tab_ok->columns(
-            )->column( )->text( 'ID' )->get_parent(
-            )->column( )->text( 'Description' )->get_parent(
-            )->column( )->text( 'Date ' )->get_parent(
-            )->column( )->text( 'Time' ).
+            )->column( )->text( `ID` )->get_parent(
+            )->column( )->text( `Description` )->get_parent(
+            )->column( )->text( `Date ` )->get_parent(
+            )->column( )->text( `Time` ).
 
     tab_ok->items(
          )->column_list_item(
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->object_identifier( title = `{ID}` )->get_parent(
                  )->text( '{DESCR}'
                  )->text( '{ADATE}'
-                 )->text( '{ATIME}' ).
+                 )->text( `{ATIME}` ).
 
     client->view_display( view->stringify( ) ).
 

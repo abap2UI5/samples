@@ -56,10 +56,10 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     IF mo_view_parent IS NOT BOUND.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( 'Main View' ).
+         )->page( `Main View` ).
 
       mo_view_parent = page->grid( 'L6 M12 S12'
-          )->content( 'layout' ).
+          )->content( `layout` ).
 
       page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(

@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
           )->simple_form( title    = ``
                           layout   = `ResponsiveGridLayout`
                           editable = abap_true
-          )->content( 'form' )->label( 'Test' )->input( 'TEST' ).
+          )->content( `form` )->label( `Test` )->input( `TEST` ).
 
     client->popup_display( popup->stringify( ) ).
 

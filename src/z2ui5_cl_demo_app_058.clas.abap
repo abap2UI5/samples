@@ -274,11 +274,11 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
        )->table(
         client->_bind_edit( ms_layout-t_cols )
         )->columns(
-            )->column( )->text( 'Visible' )->get_parent(
-            )->column( )->text( 'Name' )->get_parent(
-            )->column( )->text( 'Title' )->get_parent(
-            )->column( )->text( 'Editable' )->get_parent(
-            )->column( )->text( 'Length' )->get_parent(
+            )->column( )->text( `Visible` )->get_parent(
+            )->column( )->text( `Name` )->get_parent(
+            )->column( )->text( `Title` )->get_parent(
+            )->column( )->text( `Editable` )->get_parent(
+            )->column( )->text( `Length` )->get_parent(
         )->get_parent(
         )->items( )->column_list_item(
             )->cells(
@@ -318,9 +318,9 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
             mode  = 'SingleSelectLeft'
             items = client->_bind_edit( mt_db_layout )
             )->columns(
-                )->column( )->text( 'Name' )->get_parent(
-                )->column( )->text( 'User' )->get_parent(
-                )->column( )->text( 'Default' )->get_parent(
+                )->column( )->text( `Name` )->get_parent(
+                )->column( )->text( `User` )->get_parent(
+                )->column( )->text( `Default` )->get_parent(
              "   )->column( )->text( 'Description' )->get_parent(
             )->get_parent(
             )->items( )->column_list_item( selected = '{SELKZ}'

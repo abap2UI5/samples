@@ -33,9 +33,9 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
+    DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( 'Tables' )->content( 'form'
+    grid->simple_form( `Tables` )->content( 'form'
         )->label( '01'
         )->button(
             text  = `Show bapiret tab`
@@ -53,13 +53,13 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
             )->table( client->_bind( t_bapiret )
                 )->columns(
                     )->column( '5rem'
-                        )->text( 'Type' )->get_parent(
+                        )->text( `Type` )->get_parent(
                     )->column( '5rem'
-                        )->text( 'Number' )->get_parent(
+                        )->text( `Number` )->get_parent(
                     )->column( '5rem'
-                        )->text( 'ID' )->get_parent(
+                        )->text( `ID` )->get_parent(
                     )->column(
-                        )->text( 'Message' )->get_parent(
+                        )->text( `Message` )->get_parent(
                 )->get_parent(
                 )->items(
                     )->column_list_item(

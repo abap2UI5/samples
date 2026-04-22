@@ -90,15 +90,15 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column(
-            )->text( 'Description' )->get_parent(
+            )->text( `Description` )->get_parent(
         )->column(
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
          )->column(
-            )->text( 'Counter' ).
+            )->text( `Counter` ).
 
     tab->items( )->column_list_item( )->cells(
        )->text( '{VALUE}'
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
        )->text( '{DESCR}'
        )->checkbox( selected = '{CHECKBOX}'
                     enabled  = abap_false
-       )->text( '{COUNT}' ).
+       )->text( `{COUNT}` ).
 
     client->view_display( page->get_root( )->xml_get( ) ).
 

@@ -163,7 +163,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+        )->content( `layout` ).
 
     grid->simple_form( title    = `Input`
                        editable = abap_true

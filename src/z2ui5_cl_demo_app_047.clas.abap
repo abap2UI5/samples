@@ -87,13 +87,13 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'Date' )->get_parent(
+            )->text( `Date` )->get_parent(
         )->column(
-            )->text( 'Time' )->get_parent( ).
+            )->text( `Time` )->get_parent( ).
 
     tab->items( )->column_list_item( )->cells(
        )->text( '{DATE}'
-       )->text( '{TIME}' ).
+       )->text( `{TIME}` ).
 
     client->view_display( page->stringify( ) ).
 

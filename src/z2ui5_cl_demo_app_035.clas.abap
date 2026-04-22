@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                                     editable = abap_true )->content( `form`
          )->label( 'path'
          )->input( client->_bind_edit( mv_path )
-         )->label( 'Option' ).
+         )->label( `Option` ).
 
     lt_types = VALUE z2ui5_if_types=>ty_t_name_value( ).
     lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (

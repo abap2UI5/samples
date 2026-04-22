@@ -42,17 +42,17 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'uuid' )->get_parent(
+            )->text( `uuid` )->get_parent(
         )->column(
-            )->text( 'time' )->get_parent(
+            )->text( `time` )->get_parent(
         )->column(
-            )->text( 'previous' )->get_parent( ).
+            )->text( `previous` )->get_parent( ).
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(
           )->input( '{ID}'
           )->input( '{TIMESTAMPL}'
-          )->input( '{ID_PREV}' ).
+          )->input( `{ID_PREV}` ).
 
     client->view_display( view->stringify( ) ).
 

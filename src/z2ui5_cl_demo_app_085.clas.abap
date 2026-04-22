@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              tooltip = `Close Detail`
              press   = client->_event( `ONCLOSEDETAIL` ) ).
 
-    DATA(header_content) = page->header_content( 'uxap' ).
+    DATA(header_content) = page->header_content( `uxap` ).
     header_content->flex_box( wrap = 'Wrap'
        )->avatar( src         = c_pic_url && ls_detail-pic
                   class       = `sapUiSmallMarginEnd`
@@ -242,7 +242,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
            )->object_page_sub_section( id    = `SupplierSection2`
                                        title = `Payment information  `
                  )->blocks(
-                     )->label( '20 Days Net' ).
+                     )->label( `20 Days Net` ).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = `Others`
@@ -263,7 +263,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                             )->vbox(
                           )->label( 'details'
                           )->label( 'details'
-      )->label( 'details' ).
+      )->label( `details` ).
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = `OtherSuppliers`
@@ -286,19 +286,19 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
               sticky         = 'ColumnHeaders,HeaderToolbar'
       )->columns(
         )->column(
-            )->text( 'Supplier' )->get_parent(
+            )->text( `Supplier` )->get_parent(
         )->column(
-            )->text( 'Country' )->get_parent(
+            )->text( `Country` )->get_parent(
         )->column(
-            )->text( 'City' )->get_parent(
+            )->text( `City` )->get_parent(
              )->get_parent(
       )->items(
         )->column_list_item( type  = `Navigation`
                              press = client->_event( val = `ONPRESSSUPPLIER` t_arg = VALUE #( ( `${SUPPLIERNAME}` ) ) )
            )->cells(
-             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( `{SUPPLIERNAME}` )->get_parent(
              )->text( '{COUNTRY}'
-             )->text( '{CITY}' ).
+             )->text( `{CITY}` ).
 
     check_detail_active = abap_true.
     client->nest_view_display(
@@ -348,20 +348,20 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     tab->columns(
         )->column( '12em'
-            )->text( 'Product' )->get_parent(
+            )->text( `Product` )->get_parent(
         )->column( minscreenwidth = 'Tablet'
                    demandpopin    = abap_true
-            )->text( 'Supplier' )->get_parent(
+            )->text( `Supplier` )->get_parent(
         )->column( minscreenwidth = 'Desktop'
                    demandpopin    = abap_true
                    halign         = 'End'
-            )->text( 'Dimensions' )->get_parent(
+            )->text( `Dimensions` )->get_parent(
         )->column( minscreenwidth = 'Desktop'
                    demandpopin    = abap_true
                    halign         = 'Center'
-            )->text( 'Weight' )->get_parent(
+            )->text( `Weight` )->get_parent(
          )->column( halign = 'End'
-            )->text( 'Price' ).
+            )->text( `Price` ).
 
     tab->items(
         )->column_list_item( type  = `Navigation`
@@ -369,7 +369,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
            )->cells(
              )->object_identifier( text  = `{PRODUCTNAME}`
                                    title = `{PRODUCTID}` )->get_parent(
-             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( `{SUPPLIERNAME}` )->get_parent(
              )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}'
                                unit   = '{UNIT}'

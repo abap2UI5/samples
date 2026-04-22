@@ -59,9 +59,9 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       tab->columns(
         )->column(
-           )->text( 'KEY' )->get_parent(
+           )->text( `KEY` )->get_parent(
         )->column(
-           )->text( 'TEXT' ).
+           )->text( `TEXT` ).
 
       tab->items( )->column_list_item( selected = '{SELKZ}'
         )->cells(

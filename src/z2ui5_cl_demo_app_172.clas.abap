@@ -131,7 +131,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = VALUE #( ( `${INDEX}`) ) ) ).
     columns->ui_column( width          = `8rem`
                         sortproperty   = 'CURRENCY'
-                        filterproperty = 'CURRENCY' )->text( 'Currency Column' )->ui_template( )->text(
+                        filterproperty = 'CURRENCY' )->text( `Currency Column` )->ui_template( )->text(
       `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = 'INPUT1'
-                        filterproperty = 'INPUT1' )->text( 'Input Column' )->ui_template( )->input(
+                        filterproperty = 'INPUT1' )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT1}`
       enabled         = `{BOOL}`
       change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
@@ -172,7 +172,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = 'INPUT3'
-                        filterproperty = 'INPUT3' )->text( 'Input Column' )->ui_template( )->input(
+                        filterproperty = 'INPUT3' )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT3}`
       enabled         = `{BOOL}`
       change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(

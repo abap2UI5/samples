@@ -135,9 +135,9 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
+    DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( 'Inputs' )->content( 'form'
+    grid->simple_form( `Inputs` )->content( 'form'
         )->label( '01'
         )->button(
             text  = `Popup Get Input Values`

@@ -119,17 +119,17 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'Index' )->get_parent(
+            )->text( `Index` )->get_parent(
         )->column(
-            )->text( 'Title' )->get_parent(
+            )->text( `Title` )->get_parent(
         )->column(
-            )->text( 'Color' )->get_parent(
+            )->text( `Color` )->get_parent(
         )->column(
-            )->text( 'Info' )->get_parent(
+            )->text( `Info` )->get_parent(
         )->column(
-            )->text( 'Checkbox' )->get_parent(
+            )->text( `Checkbox` )->get_parent(
         )->column(
-            )->text( 'Description' ).
+            )->text( `Description` ).
 
     tab->items( )->column_list_item( selected = '{SELKZ}'
       )->cells(

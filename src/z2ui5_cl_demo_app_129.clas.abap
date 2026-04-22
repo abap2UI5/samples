@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
               shownavbutton = abap_true ).
 
     DATA(grid) = page->grid( 'L6 M12 S12'
-        )->content( 'layout' ).
+        )->content( `layout` ).
 
     grid = grid->text( client->_bind_edit( val = lv_text view = client->cs_view-main
       ) ).
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
-    popover->text( 'this is popover in middle with timer auto refresh' ).
+    popover->text( `this is popover in middle with timer auto refresh` ).
     client->popover_display( xml   = popover->stringify( )
                              by_id = id ).
 
@@ -164,7 +164,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup( )->dialog( ).
 
-    dialog->text( 'this is popup in middle with timer auto refresh' ).
+    dialog->text( `this is popup in middle with timer auto refresh` ).
     dialog->button( text  = `close`
                     press = client->_event_client( client->cs_event-popup_close ) ).
     client->popup_display( dialog->stringify( ) ).

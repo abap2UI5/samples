@@ -34,8 +34,8 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
                                 shownavbutton  = client->check_app_prev_stack( ) ).
 
     " TODO: variable is assigned but never used (ABAP cleaner)
-    DATA(grid) = page->grid( 'L7 M12 S12' )->content( 'layout'
-        )->simple_form( 'Popups' )->content( 'form'
+    DATA(grid) = page->grid( `L7 M12 S12` )->content( 'layout'
+        )->simple_form( `Popups` )->content( 'form'
             )->label( 'Demo'
             )->button( text  = `Popup to Select`
                        press = client->_event( `BUTTON_POPUP_01` )

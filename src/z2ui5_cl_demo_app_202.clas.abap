@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
     DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = `STEP1`
                                                  validated = abap_true
                                                  nextstep  = 'STEP2' ).
-    lr_wiz_step1->message_strip( 'STEP1' ).
+    lr_wiz_step1->message_strip( `STEP1` ).
 
     DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = `STEP2`
                                                  title           = `STEP2`
@@ -62,18 +62,18 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                                  title     = `STEP2.2`
                                                  validated = abap_true ).
 
-    lr_wiz_step22->message_strip( 'STEP22' ).
+    lr_wiz_step22->message_strip( `STEP22` ).
 
     DATA(lr_wiz_step23) = lr_wizard->wizard_step( id       = `STEP23`
                                                  title     = `STEP2.3`
                                                  validated = abap_true ).
 
-    lr_wiz_step23->message_strip( 'STEP23' ).
+    lr_wiz_step23->message_strip( `STEP23` ).
 
     DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = `STEP3`
                                                  validated = abap_true ).
 
-    lr_wiz_step3->message_strip( 'STEP3' ).
+    lr_wiz_step3->message_strip( `STEP3` ).
 
 *
     client->view_display( lr_view->stringify( ) ).

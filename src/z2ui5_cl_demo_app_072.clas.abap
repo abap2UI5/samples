@@ -117,29 +117,29 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     tab->columns(
         )->column( '12em'
-            )->text( 'Product' )->get_parent(
+            )->text( `Product` )->get_parent(
         )->column( minscreenwidth = 'Tablet'
                    demandpopin    = abap_true
-            )->text( 'Supplier' )->get_parent(
+            )->text( `Supplier` )->get_parent(
         )->column( minscreenwidth = 'Desktop'
                    demandpopin    = abap_true
                    halign         = 'End'
-            )->text( 'Dimensions' )->get_parent(
+            )->text( `Dimensions` )->get_parent(
         )->column( minscreenwidth = 'Desktop'
                    demandpopin    = abap_true
                    halign         = 'Center'
-            )->text( 'Weight' )->get_parent(
+            )->text( `Weight` )->get_parent(
          )->column( halign = 'End'
-            )->text( 'Price' )->get_parent(
+            )->text( `Price` )->get_parent(
          )->column( halign = 'End'
-             )->text( 'Rating' ).
+             )->text( `Rating` ).
 
     tab->items(
         )->column_list_item(
            )->cells(
              )->object_identifier( text  = `{PRODUCTNAME}`
                                    title = `{PRODUCTID}` )->get_parent(
-             )->text( '{SUPPLIERNAME}' )->get_parent(
+             )->text( `{SUPPLIERNAME}` )->get_parent(
              )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
              )->object_number( number = '{MEASURE}'
                                unit   = '{UNIT}'

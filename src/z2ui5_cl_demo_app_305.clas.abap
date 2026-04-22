@@ -66,9 +66,9 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     tab->columns(
         )->column(
-            )->text( 'Title' )->get_parent(
+            )->text( `Title` )->get_parent(
         )->column(
-            )->text( 'Color' )->get_parent( ).
+            )->text( `Color` )->get_parent( ).
 
     tab->items( )->column_list_item(
       )->cells(

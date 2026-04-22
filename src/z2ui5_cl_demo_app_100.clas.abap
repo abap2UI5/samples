@@ -97,14 +97,14 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                     sort               = client->_event( `SORT` )
                                     filter             = client->_event( `FILTER` )
                                     customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( 'Products' )->toolbar_spacer(
+    tab->ui_extension( )->overflow_toolbar( )->title( `Products` )->toolbar_spacer(
       )->variant_management( showexecuteonselection = abap_true
         )->variant_items(
           )->variant_item( key                = `{KEY}`
                            text               = `{TEXT}`
                            executeonselection = abap_true )->get_parent( ).
     DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( '4rem' )->checkbox( selected = client->_bind_edit( lv_selkz )
+    lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
     lo_columns->ui_column( width                         = `5rem`
