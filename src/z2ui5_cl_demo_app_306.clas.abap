@@ -82,8 +82,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                                      deviceid   = client->_bind_edit( device ) ).
 
     DATA(lo_list) = page->list(
-                                " TODO: check spelling: Ouput (typo) -> Output (ABAP cleaner)
-                                headertext      = `List Ouput`
+                                headertext      = `List Output`
                                 items           = client->_bind_edit( mt_picture_out )
                                 mode            = `SingleSelectMaster`
                                 selectionchange = client->_event( `DISPLAY` ) ).

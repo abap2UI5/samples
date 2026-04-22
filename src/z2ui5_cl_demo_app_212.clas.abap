@@ -171,7 +171,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                                width   = `auto`
                                items   = client->_bind_edit( val = <tab> ) ).
 
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(headder) = table->header_toolbar(
                )->overflow_toolbar(
                  )->toolbar_spacer( ).

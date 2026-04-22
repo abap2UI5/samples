@@ -61,8 +61,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     ENDIF.
 
     IF ms_struc IS INITIAL.
-      " TODO: check spelling: inital (typo) -> initial (ABAP cleaner)
-      client->message_toast_display( `ERROR - ms_struc is inital!` ).
+      client->message_toast_display( `ERROR - ms_struc is initial!` ).
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO <row>.

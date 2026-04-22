@@ -40,7 +40,6 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(simple_form) = popup->dialog( title        = `Test`
                                        contentwidth = `60%`
                                        afterclose   = client->_event( `POPUP_CLOSE` )

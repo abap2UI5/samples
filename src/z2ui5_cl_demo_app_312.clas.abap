@@ -253,7 +253,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_dimensions) = lr_flatteneddataset->viz_dimensions( ).
 
     " ---------- Set vizframe dimension ----------------------------------------------------------------
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(lr_dimensions_def) = lr_dimensions->viz_dimension_definition(
 *                                                                       axis  =
 *                                                                       datatype =
@@ -267,7 +266,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_measures) = lr_flatteneddataset->viz_measures( ).
 
     " ---------- Set vizframe measure definition 1 ----------------------------------------------------
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(lr_measures_def1) = lr_measures->viz_measure_definition(
 *                                                                  format =
 *                                                                  group =
@@ -278,7 +276,6 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                                                   value = `{REVENUE}` ).
 
     " ---------- Set vizframe measure definition 2 ----------------------------------------------------
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(lr_measures_def2) = lr_measures->viz_measure_definition(
 *                                                                  format =
 *                                                                  group =
@@ -292,14 +289,12 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_feeds) = lr_vizframe->viz_feeds( ).
 
     " ---------- Set vizframe feed for value axis -----------------------------------------------------
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(lr_lr_feed_item1) = lr_feeds->viz_feed_item( id     = `valueAxisFeed`
                                                       uid    = `valueAxis`
                                                       type   = `Measure`
                                                       values = client->_bind( me->mt_feed_values ) ).
 
     " ---------- Set vizframe feed for category axis --------------------------------------------------
-    " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(lr_lr_feed_item2) = lr_feeds->viz_feed_item( id     = `categoryAxisFeed`
                                                       uid    = `categoryAxis`
                                                       type   = `Dimension`
