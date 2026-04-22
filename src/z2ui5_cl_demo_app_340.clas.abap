@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION PUBLIC.
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_340.
 
   PROTECTED SECTION.
-    METHODS on_init.
     METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
 
@@ -33,11 +32,6 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
       client->popup_destroy( ).
       client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
 
   ENDMETHOD.
 

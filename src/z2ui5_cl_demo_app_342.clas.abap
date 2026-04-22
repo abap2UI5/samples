@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
         !table TYPE string.
 
   PROTECTED SECTION.
-    METHODS on_init.
     METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
 
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
@@ -93,11 +92,6 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
         client->nav_app_leave( ).
 
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
 
   ENDMETHOD.
 

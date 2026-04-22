@@ -73,7 +73,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS view_display_main.
     METHODS popover_display_filter.
-    METHODS z2ui5_set_data.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -323,11 +322,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
             press = client->_event( `FILTER_VALUE_HELP_CANCEL` ) ).
 
     client->popup_display( lo_popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_set_data.
 
   ENDMETHOD.
 

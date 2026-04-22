@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
-    METHODS on_event.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
@@ -61,12 +60,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
 
   ENDMETHOD.
 

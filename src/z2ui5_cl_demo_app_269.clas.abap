@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view.
-    METHODS on_event.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -22,7 +21,6 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
       display_view( ).
     ENDIF.
 
-    on_event( ).
 
   ENDMETHOD.
 
@@ -57,11 +55,6 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
     DATA(xml) = view->stringify( ).
 
     client->view_display( xml ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
 
   ENDMETHOD.
 

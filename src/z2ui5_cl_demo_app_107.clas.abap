@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
     DATA mv_page TYPE string.
 
     METHODS z2ui5_view_display.
-    METHODS on_event.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
@@ -72,12 +71,6 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
 
   ENDMETHOD.
 

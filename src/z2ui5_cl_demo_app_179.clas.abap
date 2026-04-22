@@ -26,7 +26,6 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
-    METHODS on_event.
     METHODS set_mock_data.
   PRIVATE SECTION.
 ENDCLASS.
@@ -260,12 +259,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    on_event( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
 
   ENDMETHOD.
 

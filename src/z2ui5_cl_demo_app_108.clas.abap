@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
     METHODS on_event
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS on_init.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -28,7 +27,6 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      on_init( ).
       view_display( client ).
     ENDIF.
 
@@ -47,11 +45,6 @@ CLASS z2ui5_cl_demo_app_108 IMPLEMENTATION.
         screen = VALUE #( ).
         client->message_toast_display( `View initialized` ).
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
 
   ENDMETHOD.
 
