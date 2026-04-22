@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_350 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA: view_id TYPE i.
+    DATA view_id TYPE i.
     DATA text TYPE string VALUE 'call booking mask'.
     DATA varkey TYPE char120.
 
@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
 
           CASE client->get( )-event.
             WHEN `CALL_BOOKING_MASK`.
-              DATA: lf_key TYPE n LENGTH 4.
+              DATA lf_key TYPE n LENGTH 4.
               DATA(lr_view2) = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
               lr_view2->varkey = '001'.
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               client->set_session_stateful( abap_false ).
               lr_view2 = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
-              DATA: lf_new_varkey TYPE n LENGTH 4.
+              DATA lf_new_varkey TYPE n LENGTH 4.
               lf_new_varkey = varkey+0(4).
               lf_new_varkey = lf_new_varkey + 1.
               lr_view2->varkey = lf_new_varkey+0(4).
