@@ -2,6 +2,7 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA mv_slider_value TYPE i.
 
     TYPES: BEGIN OF ty_shape,

@@ -2,6 +2,7 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA mt_data_tmp TYPE REF TO data.
     DATA mt_data     TYPE REF TO data.
     DATA ms_data_row TYPE REF TO data.

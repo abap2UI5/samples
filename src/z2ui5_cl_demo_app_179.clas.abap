@@ -24,6 +24,7 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS set_view.
     METHODS z2ui5_on_event.
     METHODS set_mock_data.

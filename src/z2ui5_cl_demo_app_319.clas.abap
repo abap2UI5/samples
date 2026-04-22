@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         tokenlongkey TYPE string,
       END OF t_range,
       t_ranges TYPE STANDARD TABLE OF t_range WITH EMPTY KEY.
+
     DATA:
       BEGIN OF m_selection,
         BEGIN OF product_type,
@@ -31,6 +32,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA m_client TYPE REF TO z2ui5_if_client.
+
     METHODS on_init.
     METHODS on_event.
 

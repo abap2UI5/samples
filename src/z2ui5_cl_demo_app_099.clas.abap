@@ -27,6 +27,7 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
       t_tab_group TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY.
     DATA
       t_tab_filter TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY.
+
     DATA mv_sorter_group TYPE string.
     DATA mv_filter TYPE string.
     DATA mv_sort_descending TYPE abap_bool.

@@ -17,6 +17,7 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
       END OF ty_s_tab_02.
     DATA mt_02 TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
     DATA mt_02_display TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
+
     TYPES:
       BEGIN OF ty_s_tab_02_input,
         name  TYPE string,

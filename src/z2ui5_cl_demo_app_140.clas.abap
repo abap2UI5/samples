@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     DATA gt_multi TYPE ty_t_combo.
     DATA gt_sel_multi TYPE ty_t_combo.
     DATA gt_sel_multi2 TYPE string_table.
+
     METHODS ui5_on_init.
     METHODS ui5_on_event.
     METHODS ui5_view_main_display.

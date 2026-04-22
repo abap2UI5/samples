@@ -2,6 +2,7 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA instance_counter TYPE i READ-ONLY.
     DATA session_is_stateful TYPE abap_bool READ-ONLY.
     DATA session_text TYPE string READ-ONLY.

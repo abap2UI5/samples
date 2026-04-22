@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
     DATA speed TYPE string.
     DATA altitudeaccuracy TYPE string.
     DATA accuracy TYPE string.
+
     TYPES:
       BEGIN OF ty_spot,
         tooltip       TYPE string,

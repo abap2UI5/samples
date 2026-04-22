@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
+
     METHODS ui5_display.
     METHODS ui5_event.
     METHODS ui5_callback.

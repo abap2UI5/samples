@@ -10,6 +10,7 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
                    WITH NON-UNIQUE DEFAULT KEY.
 
     INTERFACES z2ui5_if_app.
+
     DATA news_input TYPE string.
     DATA author_input TYPE string.
     DATA news_list TYPE tt_news.

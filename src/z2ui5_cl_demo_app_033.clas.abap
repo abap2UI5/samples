@@ -2,9 +2,11 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
     DATA mv_type TYPE string.
 
     METHODS display_view.
+
     DATA mv_html TYPE string.
 
     DATA client TYPE REF TO z2ui5_if_client.

@@ -4,6 +4,7 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
+
     TYPES:
       BEGIN OF ty_dataset2,
         label                TYPE string,

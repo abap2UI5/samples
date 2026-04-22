@@ -44,6 +44,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS ui5_initialize.
     METHODS add_node
       IMPORTING p_prodh TYPE string.

@@ -25,6 +25,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     DATA mt_groups TYPE tt_items3.
 
     "P13N
+
     TYPES: BEGIN OF t_items22,
              visible TYPE abap_bool,
              name    TYPE string,

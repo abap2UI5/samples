@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION PUBLIC.
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
     DATA mt_comp         TYPE abap_component_tab.
+
     METHODS set_app_data
       IMPORTING !count TYPE string
                 !table TYPE string.

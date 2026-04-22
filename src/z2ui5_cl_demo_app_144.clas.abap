@@ -11,6 +11,7 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS set_view.
 
   PROTECTED SECTION.

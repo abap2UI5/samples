@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
       mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency.
     DATA
       mt_suggestion TYPE STANDARD TABLE OF ty_s_currency.
+
     DATA input TYPE string.
 
   PROTECTED SECTION.

@@ -25,6 +25,7 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
         nodes TYPE STANDARD TABLE OF ty_node2 WITH DEFAULT KEY,
       END OF ty_node1,
       ty_tree TYPE STANDARD TABLE OF ty_node1 WITH DEFAULT KEY.
+
     DATA mt_tree    TYPE ty_tree.
 
     TYPES:

@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
       END OF s_combobox.
     TYPES
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
+
     DATA lv_text TYPE string.
     DATA:
       BEGIN OF screen,

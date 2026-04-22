@@ -9,6 +9,7 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS display_view.
     METHODS on_event.
     METHODS security_check_popup.

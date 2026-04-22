@@ -4,6 +4,7 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS ui5_display.
     METHODS ui5_event.
 

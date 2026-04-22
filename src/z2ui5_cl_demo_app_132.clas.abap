@@ -6,6 +6,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_perc         TYPE string.
+
     METHODS set_app_data
       IMPORTING
         !count TYPE string

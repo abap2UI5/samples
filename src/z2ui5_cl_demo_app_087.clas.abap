@@ -18,6 +18,7 @@ CLASS z2ui5_cl_demo_app_087 DEFINITION PUBLIC.
 
     DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
+
     METHODS refresh_data.
 
   PROTECTED SECTION.
