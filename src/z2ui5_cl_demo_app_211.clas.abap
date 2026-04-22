@@ -39,6 +39,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'ONSELECTICONTABBAR'.
 
@@ -50,6 +51,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
         ENDCASE.
     ENDCASE.
+
   ENDMETHOD.
 
 
@@ -66,6 +68,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
 
   METHOD render_main.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
     DATA(page) = view->page( id             = `page_main`
@@ -96,10 +99,12 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     ENDLOOP.
 
     mo_main_page = lo_items.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -113,6 +118,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
     on_event( ).
 
     render_sub_app( ).
+
   ENDMETHOD.
 
 
@@ -175,6 +181,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
       mv_selectedkey_tmp = mv_selectedkey.
 
     ENDIF.
+
   ENDMETHOD.
 
 ENDCLASS.

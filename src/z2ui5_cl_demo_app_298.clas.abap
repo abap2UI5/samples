@@ -165,6 +165,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
+
     CLEAR selectedproducterrorcollection.
     CLEAR selectedproductwrnngcollection.
     CLEAR selectedproductsccsscollection.

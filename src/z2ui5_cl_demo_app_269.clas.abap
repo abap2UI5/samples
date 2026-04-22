@@ -14,6 +14,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -21,6 +22,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
+
   ENDMETHOD.
 
 
@@ -59,5 +61,6 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
 
 
   METHOD on_event.
+
   ENDMETHOD.
 ENDCLASS.

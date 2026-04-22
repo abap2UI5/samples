@@ -295,6 +295,7 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     DATA lt_range TYPE RANGE OF string.
 
     CASE client->get( )-event.

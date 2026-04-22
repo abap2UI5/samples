@@ -80,6 +80,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
 
       WHEN 'SELECTION_CHANGE'.
@@ -93,6 +94,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
         client->nav_app_leave( ).
 
     ENDCASE.
+
   ENDMETHOD.
 
 
@@ -159,6 +161,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
+
   ENDMETHOD.
 
 

@@ -90,6 +90,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     main_view( client ).
     nest_view( client ).
 

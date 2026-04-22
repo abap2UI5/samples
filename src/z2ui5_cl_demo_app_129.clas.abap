@@ -148,11 +148,13 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_rendering_popover.
+
     DATA(popover) = z2ui5_cl_xml_view=>factory_popup( )->popover( placement = `Top` ).
 
     popover->text( 'this is popover in middle with timer auto refresh' ).
     client->popover_display( xml   = popover->stringify( )
                              by_id = id ).
+
   ENDMETHOD.
 
 

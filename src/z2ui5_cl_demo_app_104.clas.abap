@@ -52,6 +52,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
       CALL METHOD mo_app_sub->('Z2UI5_IF_APP~MAIN') EXPORTING client = client.
 
     ENDIF.
+
   ENDMETHOD.
 
 

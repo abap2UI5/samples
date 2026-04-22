@@ -68,6 +68,7 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
   ENDMETHOD.
 
 
@@ -89,6 +90,7 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
     mt_lanes = VALUE #( ( id = `0` icon = `sap-icon://order-status` label = `Order Processing` position = 0 )
                         ( id = `1` icon = `sap-icon://monitor-payments` label = `Delivery Processing` position = 1 )
                         ( id = `2` icon = `sap-icon://payment-approval` label = `Invoicing` position = 2 ) ).
+
   ENDMETHOD.
 
 

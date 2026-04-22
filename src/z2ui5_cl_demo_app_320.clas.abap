@@ -47,6 +47,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -82,10 +83,12 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
+
   ENDMETHOD.
 
 
   METHOD display_avatar_group_view.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_z2ui5( )->title( `Avatar Group Sample` ).
     view->page( title          = 'abap2UI5 - Sample: Avatar Group'
@@ -136,10 +139,12 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                           fallbackicon = `{FALLBACKICON}`
                                           src          = `{SRC}` ).
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD display_individual_popover.
+
     DATA(individual_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     individual_popover->popover( id             = `individualPopover`
                                  class          = `sapFAvatarGroupPopover`
@@ -171,10 +176,12 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
     client->popover_display( xml   = individual_popover->stringify( )
                              by_id = id ).
+
   ENDMETHOD.
 
 
   METHOD display_group_popover.
+
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
 
     DATA(nav_container) = view->popover( id            = `groupPopover`
@@ -236,10 +243,12 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
 
     client->popover_display( xml   = view->stringify( )
                              by_id = id ).
+
   ENDMETHOD.
 
 
   METHOD on_event.
+
     DATA(lt_arg) = client->get( )-t_event_arg.
     CASE client->get( )-event.
       WHEN `onGroupPress`.
@@ -287,12 +296,15 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         client->follow_up_action( client->_event_client( val   = `POPOVER_NAV_CONTAINER_TO`
                                                          t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ) ).
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD calculate_content_height.
+
     DATA(lv_floor) = floor( ( lines / 2 ) ) * 68 + 48.
     DATA(lv_string) = CONV string( lv_floor ).
     result = |{ condense( lv_string ) }px|.
+
   ENDMETHOD.
 ENDCLASS.

@@ -68,10 +68,12 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
                    enabled = xsdbool( mv_editor IS NOT INITIAL ) ).
 
     client->view_display( page->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -105,5 +107,6 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
       WHEN 'CLEAR'.
         mv_editor = ``.
     ENDCASE.
+
   ENDMETHOD.
 ENDCLASS.

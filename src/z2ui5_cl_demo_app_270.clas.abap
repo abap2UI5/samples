@@ -34,6 +34,7 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->stringify( ) ).
 
     ENDIF.
+
   ENDMETHOD.
 
 ENDCLASS.

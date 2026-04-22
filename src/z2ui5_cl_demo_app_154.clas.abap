@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
   METHOD ui5_event.
+
     TYPES BEGIN OF ty_log_entry.
     TYPES msgnumber TYPE n LENGTH 6.
     TYPES msgty     TYPE c LENGTH 1.

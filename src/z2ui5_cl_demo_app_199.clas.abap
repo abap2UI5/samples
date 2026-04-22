@@ -34,12 +34,15 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
         client->view_model_update( ).
 
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD on_init.
+
     refresh_data( ).
     render_main( ).
+
   ENDMETHOD.
 
 
@@ -85,6 +88,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     me->client = client.
 
@@ -104,6 +108,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
 
   METHOD refresh_data.
+
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
     TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 

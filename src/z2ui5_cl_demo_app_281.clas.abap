@@ -24,6 +24,7 @@ CLASS z2ui5_cl_demo_app_281 IMPLEMENTATION.
 
 
   METHOD display_view.
+
     DATA(css) = `.tileLayout {`    &&
                 `    float: left;` &&
                 `}`.

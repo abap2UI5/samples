@@ -66,6 +66,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 
   METHOD sort.
+
     IF lv_sort_desc = abap_true.
       SORT mt_table BY productid ASCENDING.
       lv_sort_desc = abap_false.
@@ -73,6 +74,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       SORT mt_table BY productid DESCENDING.
       lv_sort_desc = abap_true.
     ENDIF.
+
   ENDMETHOD.
 
 
@@ -307,6 +309,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 
   METHOD view_display_master.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
@@ -397,10 +400,12 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     ENDIF.
 
     z2ui5_on_event( ).
+
   ENDMETHOD.
 
 
   METHOD z2ui5_on_event.
+
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
       WHEN 'ONGOTOSUPPLIER'.
@@ -462,16 +467,19 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->view_model_update( ).
         client->nest_view_model_update( ).
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_on_init.
+
     view_display_master( ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
+
     mt_table = VALUE #(
         ( key = '1' productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30'
           dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
@@ -522,6 +530,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
          ( suppliername = 'Company 12' email = 'company12@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Halle (Saale)' street = 'Marktpl. 1' zipcode = '06108' ) ).
 
     ls_detail = mt_table[ 1 ].
+
   ENDMETHOD.
 
 

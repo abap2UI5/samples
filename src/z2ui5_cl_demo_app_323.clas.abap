@@ -41,6 +41,7 @@ CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
+
   ENDMETHOD.
 
 

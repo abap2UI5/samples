@@ -11,6 +11,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     DATA ls_msg TYPE bapiret2.
 
     IF client->check_on_init( ).

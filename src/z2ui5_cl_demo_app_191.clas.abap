@@ -92,6 +92,7 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
 
 
   METHOD render_sub_app.
+
     FIELD-SYMBOLS <view_display> TYPE any.
 
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
@@ -147,6 +148,7 @@ CLASS z2ui5_cl_demo_app_191 IMPLEMENTATION.
       mv_selectedkey_tmp = mv_selectedkey.
 
     ENDIF.
+
   ENDMETHOD.
 
 

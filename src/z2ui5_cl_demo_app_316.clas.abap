@@ -34,6 +34,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
   METHOD display_view.
+
     url = VALUE #( url        = `http://www.sap.com`
                    new_window = `true` ).
     email = VALUE #( email      = `email@email.com`
@@ -135,18 +136,22 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                                                       ( |${ client->_bind_edit( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD on_event.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     IF client->check_on_init( ).
       display_view( client ).
     ENDIF.
 
     on_event( client ).
+
   ENDMETHOD.
 ENDCLASS.

@@ -31,6 +31,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     IF client->check_on_init( ).
 
       storage_types = VALUE #( ( type = `local` )
@@ -96,5 +97,6 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
         storage-value = stored_value.
         client->view_model_update( ).
     ENDCASE.
+
   ENDMETHOD.
 ENDCLASS.

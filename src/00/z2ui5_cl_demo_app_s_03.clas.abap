@@ -71,6 +71,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
     view->_z2ui5( )->focus( focusid = `inputApp` ).
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 

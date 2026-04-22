@@ -58,16 +58,20 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
       ENDLOOP.
 
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD on_init.
+
     get_data( ).
     render_main( ).
+
   ENDMETHOD.
 
 
   METHOD render_main.
+
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_view IS INITIAL.
@@ -116,10 +120,12 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -129,13 +135,16 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
+
   ENDMETHOD.
 
 
   METHOD set_app_data.
+
     " TODO: parameter COUNT is never used (ABAP cleaner)
 
     mv_table = table.
+
   ENDMETHOD.
 
 
@@ -209,6 +218,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
 
   METHOD get_comp.
+
     DATA index TYPE int4.
 
     TRY.
@@ -241,6 +251,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
+
   ENDMETHOD.
 
 ENDCLASS.

@@ -46,6 +46,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     IF client->check_on_event( 'POST' ).
 
       IF mv_value IS NOT INITIAL.
@@ -59,6 +60,7 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
 
       ENDIF.
     ENDIF.
+
   ENDMETHOD.
 
 

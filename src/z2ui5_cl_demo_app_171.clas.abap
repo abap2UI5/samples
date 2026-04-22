@@ -10,6 +10,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     TRY.
 
         "first app start,
@@ -42,5 +43,6 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
       CATCH cx_root INTO DATA(lx).
         client->message_box_display( lx ).
     ENDTRY.
+
   ENDMETHOD.
 ENDCLASS.

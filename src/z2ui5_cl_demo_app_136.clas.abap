@@ -26,6 +26,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
 
   METHOD ui5_on_event.
+
     TRY.
 
         CASE client->get( )-event.

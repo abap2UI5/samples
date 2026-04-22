@@ -100,6 +100,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client     = client.
 
     IF client->check_on_init( ).
@@ -117,14 +118,17 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     IF client->check_on_event( 'AppSelected' ).
       DATA(ls_client) = client->get( ).
       client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
+
     mt_people = VALUE #(
       ( name = 'Olaf' role = 'Team Member' pic = 'sap-icon://employee'
           appointments = VALUE #(
@@ -142,5 +146,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
           headers = VALUE #(
               ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' type = 'Type11' title = 'Reminder11' tentative = abap_true )
               ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' type = 'Type12' title = 'Reminder21' tentative = abap_false ) ) ) ).
+
   ENDMETHOD.
 ENDCLASS.

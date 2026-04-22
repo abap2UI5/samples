@@ -38,5 +38,6 @@ CLASS z2ui5_cl_demo_app_150 IMPLEMENTATION.
         client->message_box_display( `the result is CANCEL` ).
 
     ENDCASE.
+
   ENDMETHOD.
 ENDCLASS.

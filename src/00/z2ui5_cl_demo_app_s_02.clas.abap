@@ -26,6 +26,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+
     TRY.
 
         IF client->check_on_init( ).
@@ -37,10 +38,12 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
       CATCH cx_root INTO DATA(lx).
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.
+
   ENDMETHOD.
 
 
   METHOD initialize_view.
+
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
@@ -72,10 +75,12 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
       press = client->_event( 'START_SESSION' ) ).
 
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'BACK'.
         set_session_stateful( client   = client
@@ -91,10 +96,12 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
         set_session_stateful( client   = client
                               stateful = abap_true ).
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD set_session_stateful.
+
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
@@ -103,5 +110,6 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
       session_text = 'Session OFF (stateless)'.
     ENDIF.
     client->view_model_update( ).
+
   ENDMETHOD.
 ENDCLASS.

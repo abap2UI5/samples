@@ -52,6 +52,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
 
   METHOD ui5_view_main_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->page( id = `page_main`
@@ -105,10 +106,12 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                                     press                 = client->_event( val = 'ROW_ACTION_ITEM_ADD' t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -117,6 +120,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     ui5_view_main_display( ).
     ui5_on_event( ).
+
   ENDMETHOD.
 ENDCLASS.
 

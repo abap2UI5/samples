@@ -14,6 +14,7 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     IF client->check_on_init( ).
 
       IF client->get( )-check_launchpad_active = abap_false.

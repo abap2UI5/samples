@@ -50,6 +50,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 
 
   METHOD on_init.
+
     " ---------- Set vizframe chart data --------------------------------------------------------------
     mt_data_chart = VALUE #( ( week    = 'Week 1 - 4'
                                revenue = '431000.22'

@@ -37,6 +37,7 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
 
   METHOD on_init.
+
     FIELD-SYMBOLS <input> TYPE any.
     FIELD-SYMBOLS <screen> TYPE ty_s_01.
 

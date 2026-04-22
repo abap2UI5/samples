@@ -84,6 +84,7 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'

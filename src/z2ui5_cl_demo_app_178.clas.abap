@@ -73,6 +73,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
   METHOD ui5_display_view.
+
     DATA(lv_save_state_js) = `function saveState() {` && |\n| &&
                              `  var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
                              `  sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
@@ -105,6 +106,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'
@@ -128,6 +130,7 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
                                           )
                        ) )
              ) ).
+
   ENDMETHOD.
 
 

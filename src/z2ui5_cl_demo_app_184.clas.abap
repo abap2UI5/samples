@@ -36,16 +36,20 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
   METHOD on_event.
+
   ENDMETHOD.
 
 
   METHOD on_init.
+
     get_data( ).
     render_main( ).
+
   ENDMETHOD.
 
 
   METHOD render_main.
+
     FIELD-SYMBOLS <tab> TYPE data.
 
     IF mo_parent_view IS INITIAL.
@@ -88,10 +92,12 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -101,11 +107,14 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
+
   ENDMETHOD.
 
 
   METHOD set_app_data.
+
     mv_table = table.
+
   ENDMETHOD.
 
 
@@ -141,10 +150,12 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ASSIGN mt_table_tmp->* TO <table_tmp>.
 
     <table_tmp> = <table>.
+
   ENDMETHOD.
 
 
   METHOD get_comp.
+
     DATA index TYPE int4.
     TRY.
 
@@ -176,6 +187,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
+
   ENDMETHOD.
 
 ENDCLASS.

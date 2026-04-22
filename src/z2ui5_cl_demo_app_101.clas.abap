@@ -46,6 +46,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     IF client->check_on_event( 'POST' ).
       IF mv_value IS INITIAL.
         RETURN.
@@ -58,6 +59,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
       INSERT ms_feed INTO mt_feed INDEX 1.
       client->view_model_update( ).
     ENDIF.
+
   ENDMETHOD.
 
 
@@ -78,6 +80,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
 
   METHOD z2ui5_view_display.
+
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = lo_view->shell( )->page(

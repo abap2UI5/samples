@@ -286,6 +286,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
 
   METHOD z2ui5_view_settings_popup.
+
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup_settings = popup_settings->view_settings_dialog(

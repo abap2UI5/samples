@@ -49,6 +49,7 @@ CLASS z2ui5_cl_demo_app_261 IMPLEMENTATION.
                        press       = client->_event( 'NEWS_CONTENT_PRESS' ) ).
 
     client->view_display( page->stringify( ) ).
+
   ENDMETHOD.
 
 

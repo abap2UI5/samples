@@ -47,6 +47,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
   METHOD ui5_event.
+
   ENDMETHOD.
 
 
@@ -75,6 +76,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
 
   METHOD get_data.
+
     DATA lr_structdescr TYPE REF TO cl_abap_structdescr.
     DATA lr_tabdescr TYPE REF TO cl_abap_tabledescr.
     FIELD-SYMBOLS <fs_s_head> TYPE any.

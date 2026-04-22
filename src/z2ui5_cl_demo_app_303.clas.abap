@@ -10,6 +10,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(object_page_layout) = view->object_page_layout( showtitleinheadercontent = `Title`
                                                          uppercaseanchorbar       = abap_false ).
@@ -412,5 +413,6 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                             )->text( `No` ).
 
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 ENDCLASS.

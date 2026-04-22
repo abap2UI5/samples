@@ -234,13 +234,17 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
 
   METHOD focus.
+
     client->follow_up_action( `z2ui5.determineFocusId("` && focuscolumn && `", "` && focusrow && `")` ).
+
   ENDMETHOD.
 
 
   METHOD default_focus.
+
     focuscolumn = 'Title'.
     focusrow = '0'.
+
   ENDMETHOD.
 
 ENDCLASS.

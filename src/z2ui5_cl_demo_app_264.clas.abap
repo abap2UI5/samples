@@ -95,6 +95,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     FIELD-SYMBOLS <fs_a_data> TYPE ty_a_data.
 
     me->client = client.

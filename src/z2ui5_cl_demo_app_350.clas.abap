@@ -109,10 +109,12 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
           client->message_box_display( lx ).
       ENDTRY.
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD initialize_view2.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
       title          = `Stateful Application with lock`
@@ -129,6 +131,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       text  = 'Next Lock View'
       press = client->_event( 'NEXT_LOCK' ) ).
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 

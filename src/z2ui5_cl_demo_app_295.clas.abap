@@ -124,5 +124,6 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
                 value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
                                    'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.' )
       ( label = s_text && 'Error'    value_state = 'Error' ) ).
+
   ENDMETHOD.
 ENDCLASS.

@@ -29,6 +29,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
   METHOD get_comp.
+
     DATA index TYPE int4.
 
     TRY.
@@ -66,20 +67,24 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
+
   ENDMETHOD.
 
 
   METHOD on_event.
+
   ENDMETHOD.
 
 
   METHOD on_init.
 
     render_main( ).
+
   ENDMETHOD.
 
 
   METHOD render_main.
+
     IF mo_parent_view IS INITIAL.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -107,10 +112,12 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
+
   ENDMETHOD.
 
 
   METHOD set_app_data.
+
     " TODO: parameter TABLE is never used (ABAP cleaner)
 
     mv_perc = count.
@@ -119,6 +126,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -128,6 +136,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
+
   ENDMETHOD.
 
 ENDCLASS.

@@ -56,6 +56,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     IF client->check_on_event( 'ROW_SELECT' ).
       row_select( ).
     ENDIF.
+
   ENDMETHOD.
 
 
@@ -71,6 +72,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     prefill_popup_values( ls_arg ).
 
     render_popup( ).
+
   ENDMETHOD.
 
 
@@ -98,6 +100,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       ENDIF.
 
     ENDLOOP.
+
   ENDMETHOD.
 
 
@@ -142,6 +145,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
 
   METHOD on_init.
+
     get_data( ).
 
     get_dfies( ).
@@ -149,6 +153,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     init_layout( ).
 
     render_main( ).
+
   ENDMETHOD.
 
 
@@ -192,6 +197,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF client->check_on_init( ).
@@ -283,6 +289,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
+
   ENDMETHOD.
 
 

@@ -35,6 +35,7 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
   METHOD initialize_view.
+
     set_session_stateful( client   = client
                           stateful = abap_true ).
 
@@ -85,10 +86,12 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     vbox->hbox( )->info_label( client->_bind( lock_text ) ).
 
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD on_event.
+
     CASE client->get( )-event.
       WHEN 'BACK'.
         set_session_stateful( client   = client
@@ -111,10 +114,12 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
         ROLLBACK WORK.
         client->message_toast_display( |ROLLBACK WORK done, { lock_counter } locks released. Press 'Refresh lock counter'| ).
     ENDCASE.
+
   ENDMETHOD.
 
 
   METHOD set_session_stateful.
+
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
@@ -123,10 +128,12 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
       session_text = 'Session OFF (stateless)'.
     ENDIF.
     client->view_model_update( ).
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     TRY.
 
         CLEAR error.
@@ -147,6 +154,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
       CATCH cx_root INTO DATA(lx).
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.
+
   ENDMETHOD.
 
 

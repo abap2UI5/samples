@@ -55,6 +55,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
 
   METHOD add_node.
+
     LOOP AT prodh_nodes ASSIGNING FIELD-SYMBOL(<fs1>).
       IF <fs1>-prodh = p_prodh.
         <fs1>-counter = <fs1>-counter + 1.
@@ -76,10 +77,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         ENDLOOP.
       ENDIF.
     ENDLOOP.
+
   ENDMETHOD.
 
 
   METHOD ui5_display_popover.
+
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
                          title     = 'SS' "text-028 "`Stock - Details:`
@@ -96,6 +99,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     client->popover_display( xml   = lo_popover->stringify( )
                              by_id = id ).
+
   ENDMETHOD.
 
 
@@ -173,10 +177,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                                  tooltip   = 'ADD'
                           )->get_parent( )->get_parent( ).
     client->view_display( page->get_root( )->xml_get( ) ).
+
   ENDMETHOD.
 
 
   METHOD ui5_initialize.
+
     prodh_nodes =
       VALUE #( ( text = 'Machines'
                prodh  = '00100'
@@ -203,10 +209,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     gv_user = sy-uname.
     gv_date = sy-datum.
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     DATA lt_event_arg TYPE string_table.
 
     me->client = client.

@@ -50,6 +50,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     mv_html = `<p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&

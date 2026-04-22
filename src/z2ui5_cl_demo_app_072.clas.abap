@@ -45,6 +45,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client     = client.
 
     IF client->check_on_init( ).
@@ -151,6 +152,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
   METHOD z2ui5_set_data.
+
     mt_table = VALUE #(
         ( productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning` )
         ( productid = '2' productname = 'chair' suppliername = 'Company 2'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning` )
@@ -172,6 +174,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
   METHOD set_filter.
+
     z2ui5_set_data( ).
     CASE lv_selectedkey.
       WHEN 'ALL'.
@@ -182,5 +185,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
       WHEN 'OVERWEIGHT'.
         DELETE mt_table WHERE NOT measure > 500.
     ENDCASE.
+
   ENDMETHOD.
 ENDCLASS.

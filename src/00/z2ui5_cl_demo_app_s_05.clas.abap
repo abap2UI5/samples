@@ -48,6 +48,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_event.
+
     DATA: news TYPE t_news.
 
     CASE client->get( )-event.

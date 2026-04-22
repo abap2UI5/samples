@@ -104,5 +104,6 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
                             switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
+
   ENDMETHOD.
 ENDCLASS.

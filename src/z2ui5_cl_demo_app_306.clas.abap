@@ -45,6 +45,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
   METHOD view_display.
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(cont) = view->shell( ).
@@ -101,10 +102,12 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDIF.
 
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
+
     me->client = client.
 
     IF me->z2ui5_if_app~check_initialized = abap_false.
@@ -148,15 +151,19 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDCASE.
 
     rebuild_output( ).
+
   ENDMETHOD.
 
 
   METHOD edit_image.
+
     client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
+
   ENDMETHOD.
 
 
   METHOD rebuild_output.
+
     mt_picture_out = VALUE #( ).
     LOOP AT mt_picture INTO DATA(ls_pic).
       INSERT VALUE #( name      = |picture { sy-tabix }|
@@ -166,10 +173,12 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
                                           THEN abap_true ) )
              INTO TABLE mt_picture_out.
     ENDLOOP.
+
   ENDMETHOD.
 
 
   METHOD ui5_callback.
+
     TRY.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
@@ -185,5 +194,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
       CATCH cx_root.
     ENDTRY.
+
   ENDMETHOD.
 ENDCLASS.

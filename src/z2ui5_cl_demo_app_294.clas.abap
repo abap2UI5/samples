@@ -134,5 +134,6 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
     APPEND VALUE #( label       = s_text && 'Error'
                     value_state = 'Error' ) TO lt_a_data.
+
   ENDMETHOD.
 ENDCLASS.
