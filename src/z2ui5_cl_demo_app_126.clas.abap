@@ -165,7 +165,6 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     ENDIF.
 
-
   ENDMETHOD.
 
 ENDCLASS.

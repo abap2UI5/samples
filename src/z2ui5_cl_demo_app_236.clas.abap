@@ -108,7 +108,6 @@ CLASS z2ui5_cl_demo_app_236 IMPLEMENTATION.
       display_view( client ).
     ENDIF.
 
-
   ENDMETHOD.
 
 ENDCLASS.

@@ -259,7 +259,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-
   ENDMETHOD.
 
 ENDCLASS.
