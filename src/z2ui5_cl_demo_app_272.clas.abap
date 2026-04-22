@@ -22,7 +22,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
-
   METHOD display_view.
 
     " Define the base URL for the server

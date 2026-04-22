@@ -37,7 +37,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
-
   METHOD display_view.
 
     DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(

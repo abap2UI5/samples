@@ -16,7 +16,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_155 IMPLEMENTATION.
 
-
   METHOD ui5_event.
 
     CASE client->get( )-event.

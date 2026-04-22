@@ -22,7 +22,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
 
-
   METHOD display_view.
 
     DATA(css) = `.tileLayout {`    &&

@@ -21,7 +21,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
-
   METHOD display_view.
 
     mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )

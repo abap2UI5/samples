@@ -16,7 +16,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.
 
-
   METHOD get_example_pdf.
 
     result = `JVBERi0xLjMNCiXi48/TDQoNCjEgMCBvYmoNCjw8DQovVHlwZSAvQ2F0YWxvZw0KL091dGxpbmVzIDIgMCBSDQovUGFnZXMgMyAwIFINCj4+DQplbmRv` &&

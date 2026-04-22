@@ -48,7 +48,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
-
   METHOD load_output_table.
 
     DATA ls_output TYPE s_output.

@@ -28,7 +28,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
-
   METHOD refresh_data.
 
     DO 100 TIMES.

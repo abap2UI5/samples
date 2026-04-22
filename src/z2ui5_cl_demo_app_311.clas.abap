@@ -29,7 +29,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_311 IMPLEMENTATION.
 
-
   METHOD popover_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).

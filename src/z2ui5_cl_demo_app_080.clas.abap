@@ -48,7 +48,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
-
   METHOD view_display.
 
     lv_s_date = `2023-04-22T08:15:00`.

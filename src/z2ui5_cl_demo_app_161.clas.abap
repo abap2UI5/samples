@@ -17,7 +17,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
-
   METHOD simple_popup1.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).

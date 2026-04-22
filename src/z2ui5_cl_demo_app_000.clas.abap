@@ -29,7 +29,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
-
   METHOD z2ui5_if_app~main.
 
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.

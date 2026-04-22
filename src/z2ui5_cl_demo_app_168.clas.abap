@@ -20,7 +20,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
-
   METHOD ui5_callback.
 
     TRY.

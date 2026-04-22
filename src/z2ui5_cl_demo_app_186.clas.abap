@@ -18,7 +18,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
-
   METHOD initialize.
 
     file_name = `Default_File_Name.jpg`.

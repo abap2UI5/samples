@@ -24,7 +24,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
 
-
   METHOD ui5_on_event.
 
     TRY.

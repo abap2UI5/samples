@@ -21,7 +21,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
-
   METHOD set_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

@@ -40,7 +40,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
-
   METHOD get_comp.
 
     TRY.

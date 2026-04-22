@@ -51,7 +51,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
-
   METHOD set_selkz.
 
     FIELD-SYMBOLS <ls_table> TYPE ty_s_tab.

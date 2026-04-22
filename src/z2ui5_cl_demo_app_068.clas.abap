@@ -39,7 +39,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
-
   METHOD ui5_display_popup_tree_select.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(

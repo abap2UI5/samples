@@ -37,7 +37,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
 
-
   METHOD view_display_app_01.
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).

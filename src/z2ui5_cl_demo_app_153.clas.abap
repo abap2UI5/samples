@@ -52,7 +52,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
-
   METHOD ui5_display.
 
     client->_bind_edit(

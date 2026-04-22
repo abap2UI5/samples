@@ -29,7 +29,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
 
-
   METHOD xml_parse.
 
     IF mt_pos_xml IS NOT INITIAL.

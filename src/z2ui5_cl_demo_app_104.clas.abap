@@ -42,7 +42,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
-
   METHOD on_event_sub.
 
     IF mo_app_sub IS BOUND.

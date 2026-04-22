@@ -34,7 +34,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
-
   METHOD set_mock_data.
 
     DATA(lv_mock) = `[` && |\n| &&

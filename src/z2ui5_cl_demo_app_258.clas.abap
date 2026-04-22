@@ -25,7 +25,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
-
   METHOD on_event.
 
     "The selected key of the side navigation does not change if the user presses on an menu entry

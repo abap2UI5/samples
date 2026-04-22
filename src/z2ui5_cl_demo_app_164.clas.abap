@@ -28,7 +28,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_164 IMPLEMENTATION.
 
-
   METHOD on_event.
 
     IF client->check_on_event( `BUTTON_START` ).

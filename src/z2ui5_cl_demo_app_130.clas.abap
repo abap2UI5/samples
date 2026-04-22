@@ -141,7 +141,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
-
   METHOD get_fields.
 
     DATA(db_fields) = VALUE ty_t_fieldsdb(

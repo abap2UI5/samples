@@ -25,7 +25,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
-
   METHOD get_js_custom_control.
 
     result = `<html:script>jQuery.sap.declare("z2ui5.MyCC");` && |\n| &&
