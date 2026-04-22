@@ -49,7 +49,6 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
@@ -84,8 +82,6 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( )
             class               = 'sapUiContentPadding' ).
-
-
 
     DATA(gantt) = page->gantt_chart_container(
       )->gantt_chart_with_table( id                 = `gantt`
@@ -116,14 +112,12 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
                 )->task( time = `{= Helper.DateCreateObject(${STARTTIME} ) }`
                 endtime       = `{= Helper.DateCreateObject(${ENDTIME} ) }` ).
 
-
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_set_data.
-
 
     mt_table = VALUE #( children = VALUE #( ( id = `line`
       text                                       = `Level 1`

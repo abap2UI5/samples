@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_s_04 DEFINITION PUBLIC.
     DATA numc              TYPE z2ui5_numc12.
     DATA numc_out          TYPE c LENGTH 12.
 
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

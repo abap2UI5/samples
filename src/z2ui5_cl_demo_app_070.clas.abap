@@ -38,7 +38,6 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_search.
@@ -51,7 +50,6 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
         iv_selkz TYPE abap_bool.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
@@ -230,7 +228,6 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
                           )->get_parent( )->ui_row_action_item( icon  = 'sap-icon://edit'
                                                                 text  = 'Edit'
                                                                 press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
-
 
     client->view_display( view->stringify( ) ).
 

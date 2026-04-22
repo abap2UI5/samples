@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -35,7 +34,6 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC.
   PRIVATE SECTION.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
@@ -89,7 +87,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
        )->button(
            text  = `frontend event`
            press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) ) ).
-
 
     client->nest2_view_display(
       val            = lo_view_nested->stringify( )
@@ -150,7 +147,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
       view_display_master( ).
       view_display_detail( ).
-
 
     ENDIF.
 

@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_071 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
 
 
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
         client->message_toast_display( `SizeLimitUpdated` ).
 
     ENDCASE.
-
 
     DO mv_combo_number TIMES.
       INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE lt_combo.

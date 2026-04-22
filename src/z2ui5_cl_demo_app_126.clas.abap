@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
 
@@ -34,15 +33,12 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 
   METHOD get_comp.
     DATA index TYPE int4.
     TRY.
-
-
 
         TRY.
 

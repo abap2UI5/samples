@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
 
@@ -56,9 +55,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
     page->_z2ui5( )->focus( `input` ).
 
-
     page->_z2ui5( )->dirty( client->_bind( dirty ) ).
-
 
     client->view_display( page->stringify( ) ).
 

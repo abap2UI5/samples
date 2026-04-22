@@ -25,12 +25,9 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
 
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
     METHODS render_main.
-
-
 
     METHODS render_sub_app.
 

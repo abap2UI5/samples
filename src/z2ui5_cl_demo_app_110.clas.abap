@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     DATA product TYPE string.
@@ -11,15 +10,12 @@ CLASS z2ui5_cl_demo_app_110 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS view_display.
 
-
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
@@ -116,7 +112,6 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-
 
   ENDMETHOD.
 ENDCLASS.

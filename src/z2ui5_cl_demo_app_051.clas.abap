@@ -11,8 +11,6 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
         input3 TYPE string,
       END OF screen.
 
-
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +22,6 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
@@ -44,7 +41,6 @@ CLASS z2ui5_cl_demo_app_051 IMPLEMENTATION.
                    labelfor = `input1` ).
     layout->input( id       = `input1`
                    required = abap_true ).
-
 
     layout->label( text     = 'Input bold'
                    labelfor = `input2`

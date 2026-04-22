@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_040 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
 
 

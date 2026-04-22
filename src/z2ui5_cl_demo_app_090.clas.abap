@@ -67,12 +67,10 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-
   PRIVATE SECTION.
     DATA mv_page TYPE string.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
@@ -113,7 +111,6 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
 
   METHOD z2ui5_view_display.
-
 
     client->_bind_edit( val           = mt_columns_p13n
                         custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).

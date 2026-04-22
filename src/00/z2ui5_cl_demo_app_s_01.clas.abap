@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
   METHOD initialize_view.

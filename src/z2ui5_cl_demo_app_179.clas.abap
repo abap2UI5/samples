@@ -34,12 +34,10 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
 
   METHOD set_mock_data.
-
 
     DATA(lv_mock) = `[` && |\n| &&
                     `   {` && |\n| &&
@@ -144,7 +142,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 
   METHOD set_view.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
@@ -179,7 +176,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
 *    result                    =
       ).
 
-
     DATA(gantt_container) = cont->gantt_chart_container( ).
 
 *    gantt_charts
@@ -205,8 +201,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
          `     }` && |\r\n| &&
          `}` ).
 
-
-
     DATA(row_settings) = table->row_settings_template( )->gantt_row_settings( rowid = `{OBJECTID}`
 *                                  shapes1 = `{path: 'TASK', templateShareable:false}`
 *                                  shapes2 = `{path: 'SUBTASK', templateShareable:false}`
@@ -228,7 +222,6 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
         type        = `{RELATIONTYPE}`
         successor   = `{SUCCTASKID}`
         predecessor = `{PREDECTASKID}` ).
-
 
     DATA(columns) = table->ui_columns( ).
     DATA(column) = columns->ui_column(

@@ -26,7 +26,6 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
 
@@ -51,7 +50,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                                              THEN `Multi select`
                                              ELSE `Single select` ) ).
         client->nav_app_call( lo_app ).
-
 
       WHEN 'MULTISELECT_TOGGLE'.
 
@@ -124,7 +122,6 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         ENDIF.
 
         IF mv_multiselect = abap_false.
-
 
           ASSIGN ls_result-row->* TO <row>.
           client->message_box_display( `callback after popup to select: ` && <row>-title ).

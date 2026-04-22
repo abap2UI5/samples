@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC.
 
     DATA mv_value          TYPE string.
 
-
     METHODS get_example_pdf
       RETURNING
         VALUE(result) TYPE string.
@@ -13,7 +12,6 @@ CLASS z2ui5_cl_demo_app_079 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_079 IMPLEMENTATION.

@@ -7,11 +7,9 @@ CLASS z2ui5_cl_demo_app_050 DEFINITION PUBLIC.
     DATA product  TYPE string.
     DATA quantity TYPE string.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.

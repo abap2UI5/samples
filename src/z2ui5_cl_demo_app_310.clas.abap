@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_310 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
 
 
@@ -128,7 +127,6 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                )->button(
                     text  = 'Message Toast Customized'
                     press = client->_event( 'BUTTON_MESSAGE_TOAST2' ) ).
-
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.

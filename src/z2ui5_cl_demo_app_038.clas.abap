@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
 
     DATA t_msg TYPE STANDARD TABLE OF ty_msg WITH EMPTY KEY.
 
-
     METHODS view_display.
     METHODS popup_display.
     METHODS popover_display
@@ -28,7 +27,6 @@ CLASS z2ui5_cl_demo_app_038 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.

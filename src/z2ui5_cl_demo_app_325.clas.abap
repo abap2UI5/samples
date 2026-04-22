@@ -66,7 +66,6 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
     ENDIF.
 
-
     CASE client->get( )-event.
       WHEN 'COPY_INPUT'.
         client->follow_up_action( client->_event_client(

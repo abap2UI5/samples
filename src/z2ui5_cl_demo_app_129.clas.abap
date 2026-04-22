@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -54,7 +53,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
 
@@ -77,7 +75,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'REFRESH'.
         lv_text = lv_text + 10.
-
 
         client->view_model_update( ).
 
@@ -122,8 +119,6 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
     page->_z2ui5( )->timer( finished    = client->_event( 'REFRESH' )
                             checkrepeat = abap_true
                             delayms     = `3000` ).
-
-
 
     page = page->shell(
          )->page(

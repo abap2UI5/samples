@@ -4,8 +4,6 @@ CLASS z2ui5_cl_demo_app_316 DEFINITION PUBLIC.
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
 
-
-
     DATA phone  TYPE string.
     DATA mobile TYPE string.
 

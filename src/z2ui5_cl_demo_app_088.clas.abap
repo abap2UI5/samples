@@ -18,7 +18,6 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
 
@@ -84,7 +83,6 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
                                      )->page(
                                        title = 'third page'
                                        id    = `page3` ).
-
 
     client->view_display( page->stringify( ) ).
 

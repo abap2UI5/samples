@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
 
@@ -44,12 +43,10 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
 
     ms_screen-input = `structure level 01 - working`.
 
-
     CREATE DATA mr_input TYPE string.
     ASSIGN mr_input->* TO <input>.
 
     <input> = `ref data - working`.
-
 
     CREATE DATA mr_screen TYPE ty_s_01.
     ASSIGN mr_screen->* TO <screen>.
@@ -72,7 +69,6 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     FIELD-SYMBOLS <input> TYPE any.
     FIELD-SYMBOLS <screen> TYPE ty_s_01.
     ASSIGN mr_input->* TO <input>.
-
 
     ASSIGN mr_screen->* TO <screen>.
 

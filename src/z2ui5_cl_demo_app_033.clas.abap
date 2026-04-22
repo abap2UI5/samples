@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
         mv_type = client->get( )-event.
 
     ENDCASE.
-
 
     display_view( ).
 

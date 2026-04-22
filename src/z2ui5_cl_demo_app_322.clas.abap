@@ -47,7 +47,6 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
     ENDCASE.
     client->message_toast_display( `data updated` ).
 
-
   ENDMETHOD.
 
 ENDCLASS.

@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_256 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
 
 
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
       `.fixFlexFixedSize .sapMText {`                 &&
                 `    margin-bottom: 1rem;`                      &&
                 `}`.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`

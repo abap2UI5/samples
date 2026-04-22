@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
     DATA file_content_64 TYPE string.
     DATA file_name TYPE string.
@@ -16,7 +15,6 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS render_screen.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
@@ -53,7 +51,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
   METHOD render_screen.
 
     DATA lv_script TYPE string.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

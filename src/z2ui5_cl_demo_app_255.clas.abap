@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_255 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
 
@@ -67,7 +66,6 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
                 `    text-decoration: none;`                     &&
                 `    font-size: 0.875rem;`                       &&
                 `}`.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`

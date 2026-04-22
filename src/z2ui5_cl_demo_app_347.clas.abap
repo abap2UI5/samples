@@ -20,8 +20,6 @@ CLASS z2ui5_cl_demo_app_347 DEFINITION PUBLIC.
         i_page   TYPE REF TO z2ui5_cl_xml_view
         i_client TYPE REF TO z2ui5_if_client.
 
-
-
 ENDCLASS.
 
 
@@ -39,8 +37,6 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
       ui5_view_display( client ).
     ENDIF.
 
-
-
     CASE client->get( )-event.
       WHEN 'GO'.
         DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
@@ -51,7 +47,6 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
@@ -82,8 +77,6 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
 
     xml_table( i_page   = page
                i_client = client ).
-
-
 
     client->view_display( page->stringify( ) ).
 
@@ -133,9 +126,7 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
       INTO CORRESPONDING FIELDS OF TABLE @mt_data
       UP TO 10 ROWS.
 
-
   ENDMETHOD.
-
 
 
 ENDCLASS.

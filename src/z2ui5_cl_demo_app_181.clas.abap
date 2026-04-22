@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
     DATA mv_url TYPE string.
 
@@ -37,7 +36,6 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
 
@@ -59,7 +57,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     mt_cities = VALUE #( ( text = `Berlin` key = `BR` )
                                                                                                        ( text = `London` key = `LN` )
@@ -104,7 +101,6 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                type  = `Emphasized`
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
-
 
     DATA(card_2) = page->card( width = `300px`
                                class = `sapUiMediumMargin`

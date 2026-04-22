@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
 
@@ -109,7 +108,6 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
 
     DATA lv_script TYPE string.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( ns   = `html`
                     name = `style` )->_cc_plain_xml( `.SICursorStyle:hover {` &&
@@ -156,7 +154,6 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
                )->get_parent(
              )->shape_group(
               )->library_shape( shapeid = `{ID}` ).
-
 
     client->view_display( view->stringify( ) ).
 

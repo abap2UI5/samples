@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION PUBLIC.
     DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
     DATA s_text TYPE string.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.

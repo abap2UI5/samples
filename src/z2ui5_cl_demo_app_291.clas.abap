@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA lv_default TYPE string.
     DATA lv_error   TYPE string.
     DATA lv_warning TYPE string.
@@ -26,7 +25,6 @@ CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.

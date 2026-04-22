@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -41,8 +40,6 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
   PRIVATE SECTION.
@@ -51,7 +48,6 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
       IMPORTING
         iv_selkz TYPE abap_bool.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
@@ -128,7 +124,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       navbuttonpress                 = client->_event_nav_app_leave( )
       shownavbutton                  = temp5
       class                          = 'sapUiContentPadding' ).
-
 
     layout = page1->vertical_layout( class = 'sapuicontentpadding'
                                      width = '100%' ).

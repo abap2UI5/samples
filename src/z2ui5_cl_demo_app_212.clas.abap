@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
     DATA mt_dfies             TYPE z2ui5_cl_util_ext=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
 
     METHODS on_event.
@@ -126,8 +125,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-
-
       content->label( `text` ).
 
       content->input( value       = client->_bind_edit( <val> )
@@ -152,8 +149,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD init_layout.
 
-
-
   ENDMETHOD.
 
   METHOD render_main.
@@ -176,8 +171,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     DATA(headder) = table->header_toolbar(
                )->overflow_toolbar(
                  )->toolbar_spacer( ).
-
-
 
     IF mo_parent_view IS INITIAL.
 
@@ -283,8 +276,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD on_after_navigation.
-
-
 
   ENDMETHOD.
 

@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_attributes3,
@@ -46,7 +45,6 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.

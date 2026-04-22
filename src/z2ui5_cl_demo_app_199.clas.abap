@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
     METHODS render_main.
@@ -90,7 +89,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
       on_init( ).
     ENDIF.
 
-
     ASSIGN mt_table->* TO <tab>.
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = 'Frontend Lines <> Backend!'
@@ -98,7 +96,6 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDIF.
 
     on_event( ).
-
 
   ENDMETHOD.
 

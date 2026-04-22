@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_269 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
 
-
     METHODS display_view.
     METHODS on_event.
 

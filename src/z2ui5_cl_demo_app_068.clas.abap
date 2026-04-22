@@ -38,7 +38,6 @@ CLASS z2ui5_cl_demo_app_068 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
 
@@ -109,7 +108,6 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
                                           )
                        ) )
              ) ).
-
 
   ENDMETHOD.
 

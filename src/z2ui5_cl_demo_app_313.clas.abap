@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_313 IMPLEMENTATION.
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
-
       page->smart_filter_bar(
           id             = 'smartFilterBar'
           persistencykey = 'SmartFilterPKey'

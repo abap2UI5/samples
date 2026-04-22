@@ -34,8 +34,6 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
     TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
@@ -46,7 +44,6 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
@@ -73,13 +70,11 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                         ` });` && |\n| &&
                         `}`.
 
-
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->_z2ui5( )->timer( client->_event( `START` )
          )->_generic( ns   = `html`
                       name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
-
 
       z2ui5_on_init( ).
       RETURN.
@@ -220,7 +215,6 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
              text  = 'Send to Server'
              press = client->_event( 'BUTTON_SEND' )
              type  = 'Success' ).
-
 
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `setInputFIlter()` ).

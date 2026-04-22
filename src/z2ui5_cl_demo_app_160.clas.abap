@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
 
@@ -64,7 +63,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
       ls_output-description = 'Test'.
       ls_output-pl_01 = 0.
       ls_output-pl_02 = 0.
-
 
       APPEND ls_output TO mt_output.
 
@@ -107,7 +105,6 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
         )->header_content(
             )->link(
       )->get_parent( ).
-
 
     DATA(table) = page->flex_box( height = '85vh' )->ui_table( alternaterowcolors  = 'true'
                                                                visiblerowcountmode = 'Auto'

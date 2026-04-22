@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS ui5_on_init.
     METHODS ui5_on_event.
 
@@ -26,7 +25,6 @@ CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.

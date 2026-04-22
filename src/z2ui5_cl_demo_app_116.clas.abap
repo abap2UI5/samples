@@ -49,10 +49,8 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
     METHODS add_node
       IMPORTING p_prodh TYPE string.
 
-
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
@@ -105,10 +103,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   METHOD ui5_display_view.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-
 
     DATA(page) = view->object_page_layout(
             showtitleinheadercontent = abap_true
@@ -144,10 +139,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
         )->text( client->_bind( gv_user )
         )->text( client->_bind( gv_date ) ).
 
-
     DATA(sections) = page->sections( ).
-
-
 
     DATA(cont) = sections->object_page_section( titleuppercase = abap_false
                                                 id             = 'Sets'
@@ -248,7 +240,6 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                        name = `script` )->_cc_plain_xml( lv_reset_state_js
           )->stringify( ) ).
     ENDIF.
-
 
     lt_event_arg = client->get( )-t_event_arg.
     CASE client->get( )-event.

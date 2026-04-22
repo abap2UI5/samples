@@ -44,7 +44,6 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
 
   METHOD z2ui5_on_init.
-
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

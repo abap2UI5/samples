@@ -93,7 +93,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->table( headertext      = 'Table'
                  mode            = 'MultiSelect'

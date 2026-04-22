@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -140,9 +139,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
 
-
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
@@ -219,8 +216,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = 'TO'           var = 'E001      ' field = 'PROCTY'     guid = '663192E9D70C1EEE8E87DD8D1EB8C7F5' sign = 'I'   opt = 'EQ' )
       ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' ) ).
 
-
-
     LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
         AND var         = mv_variant.
 
@@ -288,8 +283,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       (   n = `NE`     v = `!(={LOW})` )
       (   n = `<leer>` v = `<leer>` ) ).
 
-
-
   ENDMETHOD.
 
 
@@ -297,8 +290,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     mv_variant     = mv_variant_copy.
     mv_description = mv_description_copy.
-
-
 
   ENDMETHOD.
 
@@ -329,7 +320,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD render_main.
 
-
     IF mo_parent_view IS INITIAL.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -345,8 +335,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
 
     ENDIF.
-
-
 
     page->header_content(
        )->get_parent( ).
@@ -370,7 +358,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             showvaluehelp = abap_false
 *            editable         = abap_false
             enabled       = abap_false ).
-
 
     grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
             )->content( 'form'
@@ -586,7 +573,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD varaint_page.
 
-
     CASE client->get( )-event.
 
       WHEN `INPUT_SCREEN_CHANGE`.
@@ -664,7 +650,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         render_main( ).
       WHEN 'BUTTON_SAVE'.
-
 
       WHEN 'BUTTON_DELETE'.
 

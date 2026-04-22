@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -64,7 +63,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
 
     METHODS sort.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
@@ -266,8 +264,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                           )->label( 'details'
       )->label( 'details' ).
 
-
-
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'OtherSuppliers'
                                    title          = 'Other Supplier'
@@ -303,7 +299,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              )->text( '{COUNTRY}'
              )->text( '{CITY}' ).
 
-
     check_detail_active = abap_true.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -337,7 +332,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 *            growingscrolltoload = abap_true
        items          = client->_bind( mt_table )
        sticky         = 'ColumnHeaders,HeaderToolbar' ).
-
 
     tab->header_toolbar( )->overflow_toolbar(
           )->search_field( id     = `SEARCH`

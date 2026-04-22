@@ -6,14 +6,12 @@ CLASS z2ui5_cl_demo_app_103 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
@@ -37,7 +35,6 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD z2ui5_view_display.
-
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
            )->page(
@@ -64,7 +61,6 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
              )->layout_data( `layout`
                )->splitter_layout_data( size = `auto` )->get_parent( )->get_parent(
              )->panel( headertext = `second pane` ).
-
 
     client->view_display( page->stringify( ) ).
 

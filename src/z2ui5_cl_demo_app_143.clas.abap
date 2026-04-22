@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
 
@@ -68,7 +67,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     header_title->snapped_content( 'f' ).
 
     DATA(cont) = page->content( 'f' ).
-
 
     DATA(tab) = cont->vbox(
                   )->ui_table( rows                = client->_bind( val = gt_data )

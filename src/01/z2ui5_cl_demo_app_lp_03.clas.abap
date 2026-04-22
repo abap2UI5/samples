@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_lp_03 DEFINITION PUBLIC.
 *    DATA product  TYPE string.
 *    DATA quantity TYPE string.
 
-
     DATA:
       BEGIN OF nav_params,
         product  TYPE string,
@@ -17,7 +16,6 @@ CLASS z2ui5_cl_demo_app_lp_03 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.

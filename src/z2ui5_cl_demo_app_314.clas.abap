@@ -74,7 +74,6 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( '{http>INFO}'
          )->text( '{http>DESCR}').
 
-
       tab = page->table(
          items   = `{/BookingSupplement}`
          growing = abap_true ).

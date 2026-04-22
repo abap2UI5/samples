@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     TYPES:
       BEGIN OF ty_s_tab,
         selkz            TYPE abap_bool,
@@ -42,7 +41,6 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
   PRIVATE SECTION.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
@@ -133,7 +131,6 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
          )->flex_box( alignitems     = `Start`
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
-
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
         text  = `Go`

@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 
     DATA mv_scrollupdate TYPE abap_bool.
 
-
     DATA field_01  TYPE string.
     DATA field_02 TYPE string.
     DATA focus_id TYPE string.
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.

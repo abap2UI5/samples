@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_144 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
 
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
                 title          = 'abap2UI5 - Binding Cell Level'
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.

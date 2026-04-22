@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
   METHOD load_output_table.
@@ -81,10 +80,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
 
-
-
       WHEN 'INPUT_CHANGE'.
-
 
         DATA(lv_id_event) = lt_event_arguments[ 1 ].
         lv_tab_index = lt_event_arguments[ 2 ].
@@ -222,7 +218,6 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     READ TABLE output INDEX 1 ASSIGNING <f_output>.
     ASSIGN COMPONENT i_column OF STRUCTURE <f_output> TO <f_input>.
     <f_input> = lv_sum.
-
 
   ENDMETHOD.
 ENDCLASS.

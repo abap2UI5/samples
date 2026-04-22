@@ -4,7 +4,6 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
     DATA mv_url TYPE string.
     DATA mv_check_timer_active TYPE abap_bool.
 
@@ -15,7 +14,6 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
   PRIVATE SECTION.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.

@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
     METHODS view_display.
@@ -34,7 +33,6 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   title       = `{ID}`
                   description = `{NAME}`
                   selected    = `{SELECTED}` ).
-
 
     client->popover_display(
       xml   = view->stringify( )

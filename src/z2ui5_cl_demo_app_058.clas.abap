@@ -85,7 +85,6 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
 
@@ -180,8 +179,6 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
              title                  = 'abap2UI5 - Table Layout Sample'
              navbuttonpress         = client->_event_nav_app_leave( )
              shownavbutton          = client->check_app_prev_stack( ) ).
-
-
 
     DATA(tab) = view->table(
         headertext         = ms_layout-title
@@ -299,15 +296,12 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                     text     = 'Sort'
                     selected = client->_bind( mv_check_sort ) ).
 
-
-
     ro_popup->end_button( )->button(
               text  = 'continue'
               press = client->_event( 'POPUP_FILTER_CONTINUE' )
               type  = 'Emphasized' ).
 
     client->popup_display( ro_popup->get_root( )->xml_get( ) ).
-
 
   ENDMETHOD.
 

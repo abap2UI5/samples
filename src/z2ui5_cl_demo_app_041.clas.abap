@@ -10,8 +10,6 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
         step_val_02 TYPE string VALUE '10',
       END OF screen.
 
-
-
   PROTECTED SECTION.
 
     METHODS display_view
@@ -24,7 +22,6 @@ CLASS z2ui5_cl_demo_app_041 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.

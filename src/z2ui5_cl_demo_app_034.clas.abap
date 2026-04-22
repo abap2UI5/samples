@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_034 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
 

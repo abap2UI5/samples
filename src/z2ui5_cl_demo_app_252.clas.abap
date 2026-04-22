@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_252 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
 
 
@@ -32,7 +31,6 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
             title          = 'abap2UI5 - Sample: Flex Box - Render Type'
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
-
 
     page->header_content(
        )->button( id = `hint_icon`
@@ -79,7 +77,6 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
                                           )->flex_item_data( growfactor = `1` )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
-
 
   ENDMETHOD.
 

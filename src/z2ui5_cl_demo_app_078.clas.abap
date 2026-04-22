@@ -22,7 +22,6 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
 
@@ -74,7 +73,6 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ENDIF.
-
 
     CASE client->get( )-event.
 

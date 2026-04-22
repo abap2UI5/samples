@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_154 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
 
@@ -59,7 +58,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
           ( msgid = 'MSG2' msgno = '002' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '02' ) ).
 
         client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
-
 
       WHEN 'POPUP_EXCEPTION'.
         TRY.

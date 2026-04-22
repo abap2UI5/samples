@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
         name       TYPE string,
       END OF ty_product_collection.
 
-
     DATA editable TYPE abap_bool.
     DATA enabled TYPE abap_bool.
     DATA lt_product_collection  TYPE TABLE OF ty_product_collection.
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.

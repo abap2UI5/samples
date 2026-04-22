@@ -19,11 +19,9 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
-
 
     METHODS view_display.
     METHODS on_event.
@@ -32,7 +30,6 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.

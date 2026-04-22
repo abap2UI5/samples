@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_086 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -22,7 +21,6 @@ CLASS z2ui5_cl_demo_app_086 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_086 IMPLEMENTATION.
 
 
@@ -40,7 +38,6 @@ CLASS z2ui5_cl_demo_app_086 IMPLEMENTATION.
       )->label( 'Value set by previous app'
            )->input( value    = ls_detail_supplier-suppliername
                      editable = 'false' ).
-
 
     client->view_display( view->stringify( ) ).
 

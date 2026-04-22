@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -29,7 +28,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
@@ -40,7 +38,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
@@ -124,8 +121,6 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
       )->_generic( ns   = `html`
                    name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
       )->stringify( ) ).
-
-
 
     DATA(page1) = view->page( id = `page_main`
             title                = 'abap2UI5 - List Report Features'

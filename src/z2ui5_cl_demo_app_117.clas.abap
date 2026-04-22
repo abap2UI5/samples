@@ -101,7 +101,6 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
   METHOD render_sub_app.
     FIELD-SYMBOLS <view_display> TYPE any.
 
-
     READ TABLE mt_t002 REFERENCE INTO DATA(t002)
          WITH KEY id = mv_selectedkey.
 
@@ -140,7 +139,6 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
     ENDCASE.
 
     client->view_model_update( ).
-
 
     ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
 

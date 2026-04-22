@@ -6,7 +6,6 @@ CLASS z2ui5_cl_demo_app_167 DEFINITION PUBLIC.
 
     DATA mv_value TYPE string.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
 
@@ -38,7 +37,6 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     page->button( text  = `EVENT_MODEL_VALUE`
                   press = client->_event( val = `EVENT_MODEL_VALUE` t_arg = VALUE #(
         ( `$` && client->_bind_edit( mv_value ) ) ) ) ).
-
 
     page->button( text  = `SOURCE_PROPERTY_TEXT`
                   press = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = VALUE #(

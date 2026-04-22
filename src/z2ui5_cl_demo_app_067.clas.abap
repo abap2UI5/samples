@@ -7,8 +7,6 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
     DATA currency          TYPE string.
     DATA numeric           TYPE n LENGTH 12.
 
-
-
   PROTECTED SECTION.
 
   PRIVATE SECTION.

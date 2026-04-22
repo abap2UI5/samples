@@ -21,12 +21,10 @@ CLASS z2ui5_cl_demo_app_244 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_244 IMPLEMENTATION.
 
 
   METHOD display_view.
-
 
     DATA(css) = `.sapUiDemoFlexBoxSizeAdjustments .sapMFlexItem {`               &&
                 `    border: 1px dashed #000;`                                   &&

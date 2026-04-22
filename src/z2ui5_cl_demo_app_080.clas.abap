@@ -40,14 +40,12 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS view_display.
     METHODS z2ui5_on_event.
     METHODS z2ui5_set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
@@ -73,7 +71,6 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
                                                           rows              = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
                                                           appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers   = abap_true ).
-
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
     DATA(lo_planningcalendarrow) = lo_rows->planning_calendar_row(

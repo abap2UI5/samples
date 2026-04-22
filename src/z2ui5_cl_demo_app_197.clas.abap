@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
 
 
@@ -98,8 +97,6 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         mt_table = mt_table_full.
         client->view_model_update( ).
       WHEN 'FILTER'.
-
-
 
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].

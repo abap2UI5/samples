@@ -38,15 +38,12 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 
       get_data( ).
 
-
       mo_layout_obj = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( mt_data )
                                                       vis_cols = 5 ).
       mo_layout_obj_2 = z2ui5_cl_demo_app_333=>factory( i_data   = REF #( ms_data )
                                                         vis_cols = 3 ).
       ui5_view_display( client ).
     ENDIF.
-
-
 
     CASE client->get( )-event.
       WHEN 'GO'.
@@ -64,14 +61,10 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
 *      ENDTRY.
 *    ENDIF.
 
-
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
-
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
@@ -88,7 +81,6 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
     IF <val2> <> ms_data.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> ms_data!' ).
     ENDIF.
-
 
     client->view_model_update( ).
 

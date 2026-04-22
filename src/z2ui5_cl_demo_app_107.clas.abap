@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -28,12 +27,10 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-
   PRIVATE SECTION.
     DATA mv_page TYPE string.
 
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.

@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_343 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
 
@@ -97,7 +96,6 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
       CATCH cx_root.
         client->message_box_display( `success - reference not allowed for binding throwed` ).
     ENDTRY.
-
 
     client->view_display( page->stringify( ) ).
 

@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
 
     DATA lt_o_model TYPE TABLE OF ty_name.
 
-
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.
@@ -33,7 +32,6 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.

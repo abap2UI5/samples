@@ -15,12 +15,10 @@ CLASS z2ui5_cl_demo_app_121 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
-
 
     "on init
     IF client->check_on_init( ).
@@ -29,10 +27,8 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         )->_z2ui5( )->timer( client->_event( )
         )->stringify( ) ).
 
-
       RETURN.
     ENDIF.
-
 
     "user command
     CASE client->get( )-event.
@@ -41,7 +37,6 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
         client->message_box_display( `Timer finished!` ).
         RETURN.
     ENDCASE.
-
 
     "render view
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

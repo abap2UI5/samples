@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
 
@@ -43,7 +42,6 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                                  nextstep  = 'STEP2' ).
     lr_wiz_step1->message_strip( 'STEP1' ).
 
-
     DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = 'STEP2'
                                                  title           = `STEP2`
                                                  validated       = abap_true
@@ -59,20 +57,17 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
         text  = `Press Step 2.3`
         press = client->_event( `STEP23` ) ).
 
-
     DATA(lr_wiz_step22) = lr_wizard->wizard_step( id       = `STEP22`
                                                  title     = `STEP2.2`
                                                  validated = abap_true ).
 
     lr_wiz_step22->message_strip( 'STEP22' ).
 
-
     DATA(lr_wiz_step23) = lr_wizard->wizard_step( id       = `STEP23`
                                                  title     = `STEP2.3`
                                                  validated = abap_true ).
 
     lr_wiz_step23->message_strip( 'STEP23' ).
-
 
     DATA(lr_wiz_step3) = lr_wizard->wizard_step( title     = `STEP3`
                                                  validated = abap_true ).
@@ -92,7 +87,6 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
       av_init = 'X'.
       RETURN.
     ENDIF.
-
 
     CASE client->get( )-event.
       WHEN 'STEP22'.

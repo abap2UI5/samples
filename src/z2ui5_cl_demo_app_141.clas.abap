@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
 
     DATA t_bapiret TYPE bapirettab.
 
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS ui5_view_display.
@@ -38,11 +37,9 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
     METHODS ui5_handle_event.
     METHODS ui5_init.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
@@ -128,7 +125,6 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&
                    `};`.
 
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `style`
                     ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
@@ -142,13 +138,11 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     DATA(grid) = page->grid( 'L8 M12 S12' )->content( 'layout' ).
 
-
     grid->simple_form( 'Inputs' )->content( 'form'
         )->label( '01'
         )->button(
             text  = 'Popup Get Input Values'
             press = client->_event( 'POPUP_TO_INPUT' ) ).
-
 
     client->view_display( view->stringify( ) ).
 

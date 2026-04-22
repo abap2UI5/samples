@@ -82,7 +82,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
     DATA(kopf) = REF #( mt_out ).
 
-
     LOOP AT kopf->* ASSIGNING <fs_s_head>.
 
       DATA(lo_new_data) = NEW z2ui5_cl_demo_app_193( ).

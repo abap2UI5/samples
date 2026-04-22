@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_060 DEFINITION PUBLIC.
         currencyshortname TYPE string,
       END OF ty_s_currency.
 
-
     DATA mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency.
     DATA mt_suggestion TYPE STANDARD TABLE OF ty_s_currency.
     DATA input TYPE string.
@@ -21,14 +20,12 @@ CLASS z2ui5_cl_demo_app_060 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-
     METHODS z2ui5_on_event.
     METHODS z2ui5_view_display.
     METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
@@ -290,7 +287,6 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
                       name = `script` )->_cc_plain_xml( lv_script
          )->stringify( ) ).
 
-
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
@@ -308,7 +304,6 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
         z2ui5_view_display( ).
       WHEN 'ON_SUGGEST'.
 
-
         lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
 
         CLEAR mt_suggestion_out.
@@ -316,8 +311,6 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
             WHERE currencyname IN lt_range.
           INSERT ls_sugg INTO TABLE mt_suggestion_out.
         ENDLOOP.
-
-
 
         client->view_model_update( ).
     ENDCASE.

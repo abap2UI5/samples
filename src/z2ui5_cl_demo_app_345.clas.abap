@@ -40,7 +40,6 @@ CLASS z2ui5_cl_demo_app_345 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
 
@@ -114,7 +113,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
                   press = client->_event( 'GO' )
                   type  = 'Success' ).
 
-
     xml_table( i_page = page
       i_client        = client
       i_data          = mt_data1
@@ -173,12 +171,10 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
         client->nav_app_call( app ).
     ENDCASE.
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       render_main( client ).
     ENDIF.
-
 
     IF mo_layout_obj1->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).
@@ -189,7 +185,6 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
     IF <val> <> <table>.
       client->message_toast_display( 'ERROR - mo_layout_obj_2->mr_data  <> mt_data!' ).
     ENDIF.
-
 
   ENDMETHOD.
 ENDCLASS.

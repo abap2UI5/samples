@@ -7,11 +7,9 @@ CLASS z2ui5_cl_demo_app_065 DEFINITION PUBLIC.
     DATA mv_input_main  TYPE string.
     DATA mv_input_nest  TYPE string.
 
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.

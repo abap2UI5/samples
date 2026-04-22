@@ -19,7 +19,6 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-
     METHODS on_init.
     METHODS on_event.
 
@@ -52,7 +51,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ELSE.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
-
 
     ASSIGN mt_table->* TO <tab>.
 
@@ -124,7 +122,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
         CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
 
-
         ASSIGN mt_table->* TO <table>.
 
         SELECT *
@@ -144,8 +141,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
   METHOD get_comp.
     DATA index TYPE int4.
     TRY.
-
-
 
         TRY.
 

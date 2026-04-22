@@ -32,7 +32,6 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
 
@@ -115,7 +114,6 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
         ( value_state = 'Error' ) ).
 
       " Use field symbols to concatenate the string and store it in the label column
-
 
       LOOP AT lt_a_data ASSIGNING <fs_a_data>.
         <fs_a_data>-label = s_text && ` ` && <fs_a_data>-value_state.

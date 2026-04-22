@@ -67,12 +67,10 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 ***      ENDTRY.
 ***    ENDIF.
 
-
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       ui5_view_display( client ).
     ENDIF.
-
 
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( 'ERROR - mo_layout_obj->mr_data is not bound!' ).

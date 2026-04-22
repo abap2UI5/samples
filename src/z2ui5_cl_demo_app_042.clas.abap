@@ -4,12 +4,9 @@ CLASS z2ui5_cl_demo_app_042 DEFINITION PUBLIC.
 
     INTERFACES z2ui5_if_app.
 
-
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
@@ -19,7 +16,6 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
 
     IF client->check_on_init( ).
     ENDIF.
-
 
     CASE client->get( )-event.
 
@@ -33,7 +29,6 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
 
     DATA(page) = view->object_page_layout(
              showtitleinheadercontent = abap_true
@@ -104,7 +99,6 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->label( 'San Jose, USA'
             )->get_parent( ).
 
-
     DATA(sections) = page->sections( ).
 
     sections->object_page_section( titleuppercase = abap_false
@@ -160,7 +154,6 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                       )->blocks(
                           )->label( 'Hello! I an abap2UI5 developer'
                           )->label( 'San Jose, USA' ).
-
 
     sections->object_page_section( titleuppercase = abap_false
                                    id             = 'employmentSection'
