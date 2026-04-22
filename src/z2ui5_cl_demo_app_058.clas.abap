@@ -211,6 +211,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
     LOOP AT ms_layout-t_cols REFERENCE INTO lr_field
           WHERE visible = abap_true.
+
       IF lr_field->editable = abap_true.
         lo_cells->input( `{` && lr_field->name && `}` ).
 

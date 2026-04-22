@@ -119,6 +119,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
         DATA(lv_pos) = CONV i( mt_scroll[ n = `id_page` ]-v ).
         lv_pos = lv_pos - 500.
+
         IF lv_pos < 0.
           lv_pos = 0.
         ENDIF.
@@ -130,6 +131,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
         lv_pos = mt_scroll[ n = `id_page` ]-v.
         lv_pos = lv_pos + 500.
+
         IF lv_pos < 0.
           lv_pos = 0.
         ENDIF.

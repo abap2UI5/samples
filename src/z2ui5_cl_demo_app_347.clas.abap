@@ -56,6 +56,7 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+
     IF <val> <> mt_data.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data <> mt_data!` ).
     ENDIF.

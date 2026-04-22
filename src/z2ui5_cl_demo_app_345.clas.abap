@@ -179,6 +179,7 @@ CLASS z2ui5_cl_demo_app_345 IMPLEMENTATION.
 
     ASSIGN mt_data1->* TO FIELD-SYMBOL(<table>).
     ASSIGN mo_layout_obj1->mr_data->* TO FIELD-SYMBOL(<val>).
+
     IF <val> <> <table>.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.

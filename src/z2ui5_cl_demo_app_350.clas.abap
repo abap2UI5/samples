@@ -69,6 +69,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
                 foreign_lock   = 1
                 system_failure = 2
                 OTHERS         = 3.
+
             IF sy-subrc <> 0.
               client->set_session_stateful( abap_false ).
               client->nav_app_leave( ).

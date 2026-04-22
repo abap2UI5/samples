@@ -46,6 +46,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `POST` ).
+
       IF mv_value IS INITIAL.
         RETURN.
       ENDIF.

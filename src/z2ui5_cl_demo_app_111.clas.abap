@@ -94,6 +94,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
         DATA(lv_index) = 1.
         DO.
           ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+
           IF sy-subrc <> 0.
             EXIT.
           ENDIF.

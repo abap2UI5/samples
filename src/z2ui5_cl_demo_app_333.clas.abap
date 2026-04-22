@@ -66,6 +66,7 @@ CLASS z2ui5_cl_demo_app_333 IMPLEMENTATION.
       APPEND INITIAL LINE TO result->ms_data-t_layout REFERENCE INTO DATA(layout).
 
       layout->name = comp-name.
+
       IF index <= vis_cols.
         layout->visible = abap_true.
       ENDIF.

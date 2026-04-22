@@ -106,6 +106,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
+
     IF stateful = abap_true.
       session_text = `Session ON (stateful)`.
 

@@ -187,6 +187,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
         IF result-check_confirmed = abap_true.
           mv_pic_display = result-image.
           ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+
           IF sy-subrc = 0.
             <picture>-data      = mv_pic_display.
             <picture>-thumbnail = mv_pic_display.

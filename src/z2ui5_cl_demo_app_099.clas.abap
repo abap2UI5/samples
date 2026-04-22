@@ -112,6 +112,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
           DATA(lv_values_len) = strlen( lv_values ) - 1.
           lv_values = lv_values+0(lv_values_len).
           SPLIT lv_values AT ',' INTO TABLE DATA(lt_values) IN CHARACTER MODE.
+
           IF sy-subrc = 0.
             LOOP AT lt_values INTO DATA(lv_val).
               mv_filter = mv_filter && `{path:'` && lv_field && `',operator: 'EQ',value1:'` && lv_val && `'},`.

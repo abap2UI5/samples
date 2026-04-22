@@ -101,18 +101,21 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       WHEN `ROWEDIT`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
+
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
         ENDIF.
       WHEN `ROW_ACTION_ITEM_NAVIGATION`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
+
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
         ENDIF.
       WHEN `ROW_ACTION_ITEM_EDIT`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
+
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_EDIT Row Index { ls_arg } | ).
         ENDIF.
@@ -253,6 +256,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         DATA(lv_index) = 1.
         DO.
           ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+
           IF sy-subrc <> 0.
             EXIT.
           ENDIF.

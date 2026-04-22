@@ -113,6 +113,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
       ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
       ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
+
       IF <value> IS NOT ASSIGNED.
         RETURN.
       ENDIF.

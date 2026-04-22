@@ -29,6 +29,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
         product = lt_params[ n = `PRODUCT` ]-v.
       CATCH cx_root.
     ENDTRY.
+
     IF client->check_on_init( ).
 
       quantity = `500`.

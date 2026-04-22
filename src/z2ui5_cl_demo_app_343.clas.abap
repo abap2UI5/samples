@@ -105,6 +105,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
       get_data( ).
       render_main( client ).
     ENDIF.
+
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
       render_main( client ).

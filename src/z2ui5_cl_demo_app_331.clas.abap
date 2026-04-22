@@ -26,6 +26,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
       mo_table_obj = z2ui5_cl_demo_app_329=>factory( REF #( ms_struc ) ).
       ui5_view_display( client ).
     ENDIF.
+
     IF ms_struc IS INITIAL.
       client->message_toast_display( `ERROR - MS_STRUC is initial!` ).
     ENDIF.
@@ -52,6 +53,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
     ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
     ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
+
     IF <value> IS NOT ASSIGNED.
       RETURN.
     ENDIF.

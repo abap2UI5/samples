@@ -47,12 +47,14 @@ CLASS z2ui5_cl_demo_app_193 IMPLEMENTATION.
   METHOD xml_stringify.
 
     ASSIGN mt_kopf->* TO FIELD-SYMBOL(<head>).
+
     IF sy-subrc = 0.
       mt_kopf_xml = z2ui5_cl_util=>xml_srtti_stringify( <head> ).
       mt_kopf = VALUE #( ).
     ENDIF.
 
     ASSIGN mt_pos->* TO FIELD-SYMBOL(<pos>).
+
     IF sy-subrc = 0.
       mt_pos_xml = z2ui5_cl_util=>xml_srtti_stringify( <pos> ).
       mt_pos = VALUE #( ).

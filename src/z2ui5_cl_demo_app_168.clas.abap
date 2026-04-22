@@ -24,6 +24,7 @@ CLASS z2ui5_cl_demo_app_168 IMPLEMENTATION.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
+
         IF CAST z2ui5_cl_pop_file_dl( lo_prev )->result( ).
           client->message_box_display( `the input is downloaded` ).
         ENDIF.

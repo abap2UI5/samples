@@ -58,6 +58,7 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
+
     IF mo_layout_obj_2->mr_data IS NOT BOUND.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
@@ -65,15 +66,18 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
     IF mt_data IS INITIAL.
       client->message_toast_display( `ERROR - mt_data is INITIAL!` ).
     ENDIF.
+
     IF ms_data IS INITIAL.
       client->message_toast_display( `ERROR - ms_data is INITIAL!` ).
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+
     IF <val> <> mt_data.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
     ASSIGN mo_layout_obj_2->mr_data->* TO FIELD-SYMBOL(<val2>).
+
     IF <val2> <> ms_data.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> ms_data!` ).
     ENDIF.
@@ -169,6 +173,7 @@ CLASS z2ui5_cl_demo_app_349 IMPLEMENTATION.
 
       ASSIGN COMPONENT layout->name OF STRUCTURE ms_data TO FIELD-SYMBOL(<value>).
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
+
       IF <value> IS NOT ASSIGNED.
         RETURN.
       ENDIF.

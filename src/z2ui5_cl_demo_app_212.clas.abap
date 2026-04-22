@@ -128,6 +128,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
       ASSIGN ms_table_row->* TO <row>.
       ASSIGN COMPONENT dfies->fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
+
       IF <val> IS NOT ASSIGNED.
         CONTINUE.
       ENDIF.

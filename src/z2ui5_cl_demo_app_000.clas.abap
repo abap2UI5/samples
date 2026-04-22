@@ -34,6 +34,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.
 
     IF client->get( )-check_on_navigated = abap_true.
+
       IF mt_scroll IS INITIAL.
         mt_scroll = VALUE #( ( n = `page` ) ).
       ENDIF.
@@ -1854,6 +1855,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     DO.
       ASSIGN COMPONENT sy-index OF STRUCTURE ms_check_expanded TO FIELD-SYMBOL(<check>).
+
       IF sy-subrc <> 0.
         EXIT.
       ENDIF.

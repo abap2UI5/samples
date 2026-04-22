@@ -74,18 +74,21 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
     IF mo_layout_obj->mr_data IS NOT BOUND.
       client->message_toast_display( `ERROR - mo_layout_obj->mr_data is not bound!` ).
     ENDIF.
+
     IF mo_layout_obj2->mr_data IS NOT BOUND.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).
+
     IF <val> <> <table>.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> mt_data!` ).
     ENDIF.
 
     ASSIGN mt_data2->* TO FIELD-SYMBOL(<table2>).
     ASSIGN mo_layout_obj2->mr_data->* TO FIELD-SYMBOL(<val2>).
+
     IF <table2> <> <val2>.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> ms_data!` ).
     ENDIF.

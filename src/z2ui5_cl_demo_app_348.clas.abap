@@ -66,6 +66,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO <row>.
+
     IF <row> <> ms_struc.
       client->message_toast_display( `ERROR - mo_layout_obj->mr_data->*  <> ms_struc!` ).
     ENDIF.

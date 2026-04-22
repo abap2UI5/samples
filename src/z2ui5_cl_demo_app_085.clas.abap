@@ -445,6 +445,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         READ TABLE mt_table WITH KEY key = lt_arg[ 1 ] INTO ls_detail.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
         lv_layout = `TwoColumnsMidExpanded`.
+
         IF check_detail_active = abap_false.
           view_display_master( ).
         ENDIF.
@@ -544,6 +545,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         DATA(lv_index) = 1.
         DO.
           ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
+
           IF sy-subrc <> 0.
             EXIT.
           ENDIF.

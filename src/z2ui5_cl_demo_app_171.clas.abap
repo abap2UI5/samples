@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
         ENDIF.
 
         "callback after previous app.
+
         IF client->check_on_navigated( ).
 
           DATA(lo_app_prev) = client->get_app_prev( ).

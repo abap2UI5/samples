@@ -73,6 +73,7 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
 *                          `  jsbarcode-textmargin="0"` && |\n|  &&
 *                          `  jsbarcode-fontoptions="bold">` && |\n|  &&
                           `</svg>` && |\n|.
+
     IF mv_load_lib = abap_true.
       mv_load_lib = abap_false.
       lv_xml = lv_xml && `<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"> </script>`.

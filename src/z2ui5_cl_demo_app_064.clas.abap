@@ -87,6 +87,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       mv_percent = mv_percent + 25.
       mv_check_active = abap_true.
       mv_check_enabled = abap_false.
+
       IF mv_percent > 100.
         mv_percent = 0.
         mv_check_active = abap_false.

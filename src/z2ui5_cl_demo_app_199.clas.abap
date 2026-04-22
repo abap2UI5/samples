@@ -98,6 +98,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
+
     IF mv_counter <> lines( <tab> ) AND mv_counter IS NOT INITIAL.
       client->message_box_display( text = `Frontend Lines <> Backend!`
                                    type = `error` ).

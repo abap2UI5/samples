@@ -129,6 +129,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
             render_main( ).
 
             ASSIGN mo_app->('MO_PARENT_VIEW') TO FIELD-SYMBOL(<view>).
+
             IF <view> IS ASSIGNED.
               <view> = mo_main_page.
             ENDIF.

@@ -21,6 +21,7 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
       ENDIF.
 
       DATA(shell) = z2ui5_cl_xml_view=>factory( )->shell( ).
+
       IF client->get( )-check_launchpad_active = abap_true.
         DATA(page) = shell->page( showheader = abap_false ).
         page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
