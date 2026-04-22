@@ -119,7 +119,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                           editable = abap_true
           )->content( `form` ).
 
-    " Gehe über alle Comps wenn wir im Edit sind dann sind keyfelder nicht eingabebereit.
+    " Walk through all comps — in edit mode the key fields are not editable.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
 
       ASSIGN ms_table_row->* TO <row>.

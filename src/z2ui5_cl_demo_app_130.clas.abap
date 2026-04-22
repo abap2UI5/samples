@@ -612,7 +612,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         READ TABLE mt_fields REFERENCE INTO DATA(lr_field)
           WITH KEY field = mv_activ_elemnt.
 
-        " vorhanden werte übertragen
+        " copy over existing values
         mt_filter = lr_field->t_filter.
 
         render_popup_filter( ).
