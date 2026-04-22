@@ -1,6 +1,4 @@
-CLASS z2ui5_cl_demo_app_s_01 DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
