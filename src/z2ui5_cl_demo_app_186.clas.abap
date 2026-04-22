@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC.
 
     METHODS initialize.
     METHODS on_event.
-    METHODS render_screen.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_screen.
+  METHOD view_display.
 
     DATA lv_script TYPE string.
 
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       initialize( ).
-      render_screen( ).
+      view_display( ).
 
     ENDIF.
 

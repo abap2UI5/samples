@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS initialize.
-    METHODS render_screen.
+    METHODS view_display.
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_screen.
+  METHOD view_display.
 
     DATA lv_script TYPE string.
 
@@ -159,7 +159,7 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       initialize( ).
-      render_screen( ).
+      view_display( ).
 
     ENDIF.
 
