@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP_BAPIRET'.
+      WHEN `POPUP_BAPIRET`.
 
         DATA(lt_msg) = VALUE bapirettab(
             ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
         client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
 
-      WHEN 'POPUP_BALLOG'.
+      WHEN `POPUP_BALLOG`.
 
         lt_bal = VALUE #(
           ( msgid = 'MSG1' msgno = '001' msgty = 'S' time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = '01' )
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
         client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
 
-      WHEN 'POPUP_EXCEPTION'.
+      WHEN `POPUP_EXCEPTION`.
         TRY.
             DATA(lv_dummy) = 1 / 0.
           CATCH cx_root INTO DATA(lx).

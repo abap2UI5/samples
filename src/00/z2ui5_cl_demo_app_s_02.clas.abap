@@ -82,17 +82,17 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
         client->nav_app_leave( ).
-      WHEN 'INCREMENT'.
+      WHEN `INCREMENT`.
         instance_counter = lcl_static_container=>increment( ).
         client->view_model_update( ).
-      WHEN 'END_SESSION'.
+      WHEN `END_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
-      WHEN 'START_SESSION'.
+      WHEN `START_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_true ).
     ENDCASE.

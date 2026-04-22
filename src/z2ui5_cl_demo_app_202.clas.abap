@@ -90,11 +90,11 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'STEP22'.
+      WHEN `STEP22`.
 
         client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
 
-      WHEN 'STEP23'.
+      WHEN `STEP23`.
 
         client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
 

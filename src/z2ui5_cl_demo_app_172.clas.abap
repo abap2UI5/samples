@@ -73,14 +73,14 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'LINK_CLICK'.
+      WHEN `LINK_CLICK`.
 
         lv_tab_index = lt_event_arguments[ 1 ].
 
         CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
         client->message_toast_display( lv_message ).
 
-      WHEN 'INPUT_CHANGE'.
+      WHEN `INPUT_CHANGE`.
 
         DATA(lv_id_event) = lt_event_arguments[ 1 ].
         lv_tab_index = lt_event_arguments[ 2 ].

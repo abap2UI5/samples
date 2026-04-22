@@ -149,21 +149,21 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SEL_CHANGE'.
+      WHEN `SEL_CHANGE`.
         DATA(lt_sel) = mt_tab.
         DELETE lt_sel WHERE selected IS INITIAL.
 
-      WHEN 'POPOVER_LIST'.
+      WHEN `POPOVER_LIST`.
         popover_list_display( `TEST` ).
 
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         popover_display( `TEST` ).
 
-      WHEN 'BUTTON_CONFIRM'.
+      WHEN `BUTTON_CONFIRM`.
         client->message_toast_display( |confirm| ).
         client->popover_destroy( ).
 
-      WHEN 'BUTTON_CANCEL'.
+      WHEN `BUTTON_CANCEL`.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
     ENDCASE.

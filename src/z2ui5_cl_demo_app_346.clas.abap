@@ -195,15 +195,15 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->view_destroy( ).
         client->nav_app_leave( ).
-      WHEN 'FOCUS'.
+      WHEN `FOCUS`.
         focus( ).
-      WHEN 'RESET'.
+      WHEN `RESET`.
         default_focus( ).
         focus( ).
-      WHEN 'ENTER'.
+      WHEN `ENTER`.
         next_focus( ).
         focus( ).
     ENDCASE.

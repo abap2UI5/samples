@@ -163,7 +163,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDCASE.
 
     CASE app-view_main.
-      WHEN 'MAIN'.
+      WHEN `MAIN`.
         z2ui5_on_render_main( ).
     ENDCASE.
 

@@ -42,9 +42,9 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_INT'.
+      WHEN `BUTTON_INT`.
         int_sum = int1 + int2.
-      WHEN 'BUTTON_DEC'.
+      WHEN `BUTTON_DEC`.
         dec_sum = dec1 + dec2.
     ENDCASE.
 

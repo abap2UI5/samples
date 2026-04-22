@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDCASE.
 

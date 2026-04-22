@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
 
         mt_tab = VALUE #( descr = 'this is a description'
              ( zzselkz = mv_preselect title = 'title_01'  value = 'value_01' )
@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
                                              ELSE `Single select` ) ).
         client->nav_app_call( lo_app ).
 
-      WHEN 'MULTISELECT_TOGGLE'.
+      WHEN `MULTISELECT_TOGGLE`.
 
         mv_preselect = COND #( WHEN mv_multiselect = abap_false
                                THEN abap_false

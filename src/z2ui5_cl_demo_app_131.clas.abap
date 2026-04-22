@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'ONSELECTICONTABBAR'.
+      WHEN `ONSELECTICONTABBAR`.
 
         CASE mv_selectedkey.
 

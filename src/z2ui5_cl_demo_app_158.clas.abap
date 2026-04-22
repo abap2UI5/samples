@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_158 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
         DATA(lv_pdf) = get_example_pdf( ).
         DATA(lo_app) = z2ui5_cl_pop_pdf=>factory( lv_pdf ).
         client->nav_app_call( lo_app ).

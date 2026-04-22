@@ -87,10 +87,10 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'LINE_PRESS'.
+      WHEN `LINE_PRESS`.
         client->message_toast_display( `LINE_PRESSED` ).
 
-      WHEN 'DETAIL_POPOVER'.
+      WHEN `DETAIL_POPOVER`.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
         READ TABLE mt_data-nodes INTO DATA(ls_node) WITH KEY id = lt_arg[ 2 ].

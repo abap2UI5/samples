@@ -83,13 +83,13 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SELECTION_CHANGE'.
+      WHEN `SELECTION_CHANGE`.
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                                 io_table  = mt_data
                                 io_layout = mo_lay  ) ).
 
-      WHEN 'BACK'.
+      WHEN `BACK`.
 
         client->nav_app_leave( ).
 

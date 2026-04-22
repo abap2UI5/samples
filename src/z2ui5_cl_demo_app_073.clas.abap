@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_OPEN_NEW_TAB'.
+      WHEN `BUTTON_OPEN_NEW_TAB`.
         mv_check_timer_active = abap_true.
         mv_url = `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123`.
         client->view_model_update( ).

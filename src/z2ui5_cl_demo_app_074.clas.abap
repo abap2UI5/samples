@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
           WHEN 'START' OR 'CHANGE'.
             ui5_view_main_display( ).
 
-          WHEN 'UPLOAD'.
+          WHEN `UPLOAD`.
 
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.

@@ -71,15 +71,15 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'ALL'.
+      WHEN `ALL`.
         z2ui5_view_settings_popup( ).
-      WHEN 'SORT'.
+      WHEN `SORT`.
         z2ui5_view_sort_popup( ).
-      WHEN 'FILTER'.
+      WHEN `FILTER`.
         z2ui5_view_filter_popup( ).
-      WHEN 'GROUP'.
+      WHEN `GROUP`.
         z2ui5_view_group_popup( ).
-      WHEN 'CONFIRM_SORT'.
+      WHEN `CONFIRM_SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
         ENDIF.
 
-      WHEN 'CONFIRM_FILTER'.
+      WHEN `CONFIRM_FILTER`.
         CLEAR mv_filter.
         lt_arg = client->get( )-t_event_arg.
 
@@ -123,7 +123,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
         ENDIF.
 
-      WHEN 'CONFIRM_GROUP'.
+      WHEN `CONFIRM_GROUP`.
         lt_arg = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
@@ -156,7 +156,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
         ENDIF.
 
-      WHEN 'RESET_GROUP'.
+      WHEN `RESET_GROUP`.
     ENDCASE.
 
   ENDMETHOD.

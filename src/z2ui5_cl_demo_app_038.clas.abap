@@ -142,13 +142,13 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'POPOVER_CLOSE'.
+      WHEN `POPOVER_CLOSE`.
         client->popover_destroy( ).
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
         popup_display( ).
-      WHEN 'TEST'.
+      WHEN `TEST`.
         popover_display( `test2` ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         popover_display( `test` ).
     ENDCASE.
 

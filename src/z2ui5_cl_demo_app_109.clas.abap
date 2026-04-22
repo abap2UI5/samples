@@ -126,16 +126,16 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLOSE_POPOVER'.
+      WHEN `CLOSE_POPOVER`.
         client->popover_destroy( ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         popover_display( `TEST` ).
 
-      WHEN 'BUTTON_CONFIRM'.
+      WHEN `BUTTON_CONFIRM`.
         client->message_toast_display( |confirm| ).
         client->popover_destroy( ).
 
-      WHEN 'BUTTON_CANCEL'.
+      WHEN `BUTTON_CANCEL`.
         client->message_toast_display( |cancel| ).
         client->popover_destroy( ).
     ENDCASE.

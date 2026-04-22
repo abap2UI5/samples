@@ -52,10 +52,10 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
 
     CASE app-get-event.
 
-      WHEN 'POST'.
+      WHEN `POST`.
         client->message_toast_display( app-get-t_event_arg[ 1 ] ).
 
-      WHEN 'MYCC'.
+      WHEN `MYCC`.
         client->message_toast_display( `MYCC event ` && mv_value ).
     ENDCASE.
 

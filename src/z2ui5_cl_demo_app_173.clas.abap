@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'CHANGE_FLAG'.
+      WHEN `CHANGE_FLAG`.
 
         view_display( ).
     ENDCASE.

@@ -30,11 +30,11 @@ CLASS z2ui5_cl_demo_app_171 IMPLEMENTATION.
 
         "handle events..
         CASE client->get( )-event.
-          WHEN 'OK'.
+          WHEN `OK`.
             DATA(lt_arg) = client->get_event_arg( ).
             "...
 
-          WHEN 'CANCEL'.
+          WHEN `CANCEL`.
             "...
 
         ENDCASE.

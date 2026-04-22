@@ -54,11 +54,11 @@ CLASS z2ui5_cl_demo_app_087 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SORT_ASCENDING'.
+      WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
 
-      WHEN 'SORT_DESCENDING'.
+      WHEN `SORT_DESCENDING`.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
     ENDCASE.

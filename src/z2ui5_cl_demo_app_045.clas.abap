@@ -46,13 +46,13 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'FLTER_INFO'.
+      WHEN `FLTER_INFO`.
         refresh_data( ).
         IF mv_info_filter <> ''.
           DELETE t_tab WHERE info <> mv_info_filter.
         ENDIF.
 
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         client->message_box_display( `button post was pressed` ).
     ENDCASE.
 

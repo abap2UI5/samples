@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
         ENDIF.
 
         CASE client->get( )-event.
-          WHEN 'PRESS'.
+          WHEN `PRESS`.
             call_dynpro( ).
         ENDCASE.
 

@@ -233,9 +233,9 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN `onPress`.
         client->message_toast_display( `The tile is pressed.` ).
     ENDCASE.
 

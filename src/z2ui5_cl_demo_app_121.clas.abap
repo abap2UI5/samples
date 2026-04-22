@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
     "user command
     CASE client->get( )-event.
 
-      WHEN 'TIMER_FINISHED'.
+      WHEN `TIMER_FINISHED`.
         client->message_box_display( `Timer finished!` ).
         RETURN.
     ENDCASE.

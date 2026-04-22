@@ -35,10 +35,10 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
   METHOD event.
 
     CASE client->get( )-event.
-      WHEN 'TIMER_FINISHED'.
+      WHEN `TIMER_FINISHED`.
 
         client->message_toast_display( `Timer finished` ).
-      WHEN 'INFO_FINISHED'.
+      WHEN `INFO_FINISHED`.
 
         client->message_toast_display( `Frontend finished` ).
     ENDCASE.

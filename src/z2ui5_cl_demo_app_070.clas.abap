@@ -85,32 +85,32 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
         z2ui5_set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
-      WHEN 'SORT'.
+      WHEN `SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
         client->message_toast_display( `Event SORT` ).
-      WHEN 'FILTER'.
+      WHEN `FILTER`.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( `Event FILTER` ).
-      WHEN 'SELKZ'.
+      WHEN `SELKZ`.
         client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
         set_selkz( lv_selkz ).
         client->view_model_update( ).
-      WHEN 'CUSTOMFILTER'.
+      WHEN `CUSTOMFILTER`.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( `Event CUSTOMFILTER` ).
-      WHEN 'ROWEDIT'.
+      WHEN `ROWEDIT`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROWEDIT Row Index { ls_arg } | ).
         ENDIF.
-      WHEN 'ROW_ACTION_ITEM_NAVIGATION'.
+      WHEN `ROW_ACTION_ITEM_NAVIGATION`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.
           client->message_toast_display( |Event ROW_ACTION_ITEM_NAVIGATION Row Index { ls_arg } | ).
         ENDIF.
-      WHEN 'ROW_ACTION_ITEM_EDIT'.
+      WHEN `ROW_ACTION_ITEM_EDIT`.
         lt_arg = client->get( )-t_event_arg.
         READ TABLE lt_arg INTO ls_arg INDEX 1.
         IF sy-subrc = 0.

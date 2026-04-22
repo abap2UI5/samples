@@ -24,9 +24,9 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
   METHOD dispatch.
 
     CASE client->get( )-event.
-      WHEN 'one_enter'.
+      WHEN `one_enter`.
         focus_field = 'IdTwo'.
-      WHEN 'two_enter'.
+      WHEN `two_enter`.
         focus_field = 'IdThree'.
     ENDCASE.
     client->view_model_update( ).

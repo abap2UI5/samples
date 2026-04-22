@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'SELECTION_CHANGE'.
+      WHEN `SELECTION_CHANGE`.
 
         client->view_model_update( ).
 
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 *          client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA`  ).
 *        ENDIF.
 
-      WHEN 'GO'.
+      WHEN `GO`.
 
         ASSIGN mt_table->* TO <tab>.
 

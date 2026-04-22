@@ -251,19 +251,19 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     lt_event_arg = client->get( )-t_event_arg.
     CASE client->get( )-event.
 
-      WHEN 'START'.
+      WHEN `START`.
         ui5_display_view( ).
-      WHEN 'CONTINUE'.
+      WHEN `CONTINUE`.
         client->popup_destroy( ).
 
-      WHEN 'CANCEL'.
+      WHEN `CANCEL`.
         client->popup_destroy( ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         lt_event_arg = client->get( )-t_event_arg.
         DATA(lv_open_by_id) = lt_event_arg[ 1 ].
         ui5_display_popover( lv_open_by_id ).
 
-      WHEN 'ROW_ADD'.
+      WHEN `ROW_ADD`.
         add_node( lt_event_arg[ 1 ] ).
 
         mv_run_js = abap_true.

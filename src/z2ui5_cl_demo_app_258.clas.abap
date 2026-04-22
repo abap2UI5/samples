@@ -33,31 +33,31 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     "but we need it earlier
 
     CASE client->get( )-event.
-      WHEN 'MENU_HOME'.
+      WHEN `MENU_HOME`.
         client->message_toast_display( `Home Button pressed` ).
         selected_menu_entry = 'Home'.
-      WHEN 'MENU_HOME_1'.
+      WHEN `MENU_HOME_1`.
         client->message_toast_display( `Home Sub 1 Button pressed` ).
         selected_menu_entry = 'Home1'.
-      WHEN 'MENU_HOME_2'.
+      WHEN `MENU_HOME_2`.
         client->message_toast_display( `Home Sub 2 Button pressed` ).
         selected_menu_entry = 'Home2'.
-      WHEN 'MENU_HOME_3'.
+      WHEN `MENU_HOME_3`.
         client->message_toast_display( `Home Sub 3 Button pressed` ).
         selected_menu_entry = 'Home3'.
-      WHEN 'MENU_CUSTOMER'.
+      WHEN `MENU_CUSTOMER`.
         client->message_toast_display( `Customer Button pressed` ).
         selected_menu_entry = 'Customers'.
-      WHEN 'MENU_SUPPLIER'.
+      WHEN `MENU_SUPPLIER`.
         client->message_toast_display( `Supplier Button pressed` ).
         selected_menu_entry = 'Suppliers'.
-      WHEN 'MENU_FIX1'.
+      WHEN `MENU_FIX1`.
         client->message_toast_display( `Fixed Button 1 pressed` ).
         selected_menu_entry = 'Fix1'.
-      WHEN 'MENU_FIX2'.
+      WHEN `MENU_FIX2`.
         client->message_toast_display( `Fixed Button 2 pressed` ).
         selected_menu_entry = 'Fix2'.
-      WHEN 'MENU_FIX3'.
+      WHEN `MENU_FIX3`.
         client->message_toast_display( `Fixed Button 3 pressed` ).
         selected_menu_entry = 'Fix3'.
     ENDCASE.
@@ -157,23 +157,23 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     CASE selected_menu_entry.
 
-      WHEN 'Home'.
+      WHEN `Home`.
         site_content->text( 'Welcome to the Home Page' ).
-      WHEN 'Home1'.
+      WHEN `Home1`.
         site_content->text( 'Welcome to the Home Sub Page 1' ).
-      WHEN 'Home2'.
+      WHEN `Home2`.
         site_content->text( 'Welcome to the Home Sub Page 2' ).
-      WHEN 'Home3'.
+      WHEN `Home3`.
         site_content->text( 'Welcome to the Home Sub Page 3' ).
-      WHEN 'Customers'.
+      WHEN `Customers`.
         site_content->text( 'Welcome to the Customers Page' ).
-      WHEN 'Suppliers'.
+      WHEN `Suppliers`.
         site_content->text( 'Welcome to the Suppliers Page' ).
-      WHEN 'Fix1'.
+      WHEN `Fix1`.
         site_content->text( 'Welcome to the first fixed Page' ).
-      WHEN 'Fix2'.
+      WHEN `Fix2`.
         site_content->text( 'Welcome to the second fixed Page' ).
-      WHEN 'Fix3'.
+      WHEN `Fix3`.
         site_content->text( 'Welcome to the third fixed Page' ).
     ENDCASE.
 

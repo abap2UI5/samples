@@ -93,24 +93,24 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
         client->nav_app_leave( ).
-      WHEN 'LOCK'.
+      WHEN `LOCK`.
         lcl_locking=>acquire_lock( ).
         client->message_toast_display( `Lock acquired. Press 'Refresh lock counter'` ).
         client->view_model_update( ).
-      WHEN 'END_SESSION'.
+      WHEN `END_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_false ).
-      WHEN 'START_SESSION'.
+      WHEN `START_SESSION`.
         set_session_stateful( client   = client
                               stateful = abap_true ).
-      WHEN 'REFRESH'.
+      WHEN `REFRESH`.
         update_lock_counter( ).
         client->view_model_update( ).
-      WHEN 'ROLLBACK'.
+      WHEN `ROLLBACK`.
         ROLLBACK WORK.
         client->message_toast_display( |ROLLBACK WORK done, { lock_counter } locks released. Press 'Refresh lock counter'| ).
     ENDCASE.

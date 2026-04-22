@@ -73,15 +73,15 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'REFRESH'.
+      WHEN `REFRESH`.
         lv_text = lv_text + 10.
 
         client->view_model_update( ).
 
-      WHEN 'BUTTON_SEND'.
+      WHEN `BUTTON_SEND`.
 
         z2ui5_on_rendering_popup( client ).
-      WHEN 'BUTTON_POPOVER'.
+      WHEN `BUTTON_POPOVER`.
         z2ui5_on_rendering_popover( client = client
                                     id     = 'ppvr' ).
     ENDCASE.

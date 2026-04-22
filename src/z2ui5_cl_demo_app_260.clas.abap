@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_260 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         popover_display( `hint_icon` ).
     ENDCASE.
 

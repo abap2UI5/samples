@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'ON_SCAN_SUCCESS'.
+      WHEN `ON_SCAN_SUCCESS`.
         client->message_box_display( `Scan finished!`).
         DATA(lt_arg) = client->get( )-t_event_arg.
         mv_scan_input = lt_arg[ 1 ].

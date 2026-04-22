@@ -110,13 +110,13 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
     client->message_toast_display( `server roundtrip` ).
     CASE client->get( )-event.
-      WHEN 'BUTTON_SCROLL_TOP'.
+      WHEN `BUTTON_SCROLL_TOP`.
         CLEAR mt_scroll.
         INSERT VALUE #( n = 'id_page' v = '0' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
-      WHEN 'BUTTON_SCROLL_UP'.
+      WHEN `BUTTON_SCROLL_UP`.
 
         DATA(lv_pos) = CONV i( mt_scroll[ n = 'id_page' ]-v ).
         lv_pos = lv_pos - 500.
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
-      WHEN 'BUTTON_SCROLL_DOWN'.
+      WHEN `BUTTON_SCROLL_DOWN`.
 
         lv_pos = mt_scroll[ n = 'id_page' ]-v.
         lv_pos = lv_pos + 500.
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
-      WHEN 'BUTTON_SCROLL_BOTTOM'.
+      WHEN `BUTTON_SCROLL_BOTTOM`.
         CLEAR mt_scroll.
         INSERT VALUE #( n = 'id_page' v = '99999' ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.

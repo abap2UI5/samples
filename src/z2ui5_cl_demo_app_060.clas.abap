@@ -299,9 +299,9 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
     DATA lt_range TYPE RANGE OF string.
 
     CASE client->get( )-event.
-      WHEN 'START'.
+      WHEN `START`.
         z2ui5_view_display( ).
-      WHEN 'ON_SUGGEST'.
+      WHEN `ON_SUGGEST`.
 
         lt_range = VALUE #( (  sign = 'I' option = 'CP' low = `*` && input && `*` ) ).
 

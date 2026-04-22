@@ -54,24 +54,24 @@ CLASS z2ui5_cl_demo_app_177 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SORT_ASCENDING'.
+      WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
 
-      WHEN 'SORT_DESCENDING'.
+      WHEN `SORT_DESCENDING`.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
 
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         client->message_box_display( `button post was pressed` ).
 
-      WHEN 'MENU_DEFAULT'.
+      WHEN `MENU_DEFAULT`.
         client->message_box_display( `menu default pressed` ).
 
-      WHEN 'MENU_01'.
+      WHEN `MENU_01`.
         client->message_box_display( `menu 01 pressed` ).
 
-      WHEN 'MENU_02'.
+      WHEN `MENU_02`.
         client->message_box_display( `menu 02 pressed` ).
     ENDCASE.
 

@@ -83,9 +83,9 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
-      WHEN 'onPress'.
+      WHEN `onPress`.
         client->message_toast_display( client->get_event_arg( 1 ) && ` marker pressed!` ).
     ENDCASE.
 

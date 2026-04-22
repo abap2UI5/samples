@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'UPDATE_BACKEND'.
+      WHEN `UPDATE_BACKEND`.
 
         LOOP AT mt_tokens_removed INTO DATA(ls_token).
           DELETE mt_token WHERE key = ls_token-key.

@@ -64,14 +64,14 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_POPUP_01'.
+      WHEN `BUTTON_POPUP_01`.
 
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory( i_tab             = mt_table
                                                                i_multiselect     = abap_false
                                                                i_event_confirmed = 'POPUP_CONFIRMED'
                                                                i_event_canceled  = 'POPUP_CANCEL' ) ).
 
-      WHEN 'BUTTON_POPUP_02'.
+      WHEN `BUTTON_POPUP_02`.
 
 *        mo_layout = z2ui5_cl_layo_manager=>factory( control = z2ui5_cl_layo_manager=>m_table
 *                                                    data    = REF #( mt_table )  ).

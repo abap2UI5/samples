@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SET_VIEW'.
+      WHEN `SET_VIEW`.
         display_view( ).
         client->message_toast_display( |{ title } - title changed| ).
     ENDCASE.

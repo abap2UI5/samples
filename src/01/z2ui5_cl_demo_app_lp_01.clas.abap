@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'READ_PARAMS'.
+      WHEN `READ_PARAMS`.
         DATA(lv_text) = `Start Parameter: `.
         DATA(lt_params) = client->get( )-t_comp_params.
         LOOP AT lt_params INTO DATA(ls_param).

@@ -64,15 +64,15 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN `BACK`.
         IF dirty = abap_true.
           security_check_popup( ).
         ELSE.
           client->nav_app_leave( ).
         ENDIF.
-      WHEN 'submit'.
+      WHEN `submit`.
         dirty = xsdbool( text_input IS NOT INITIAL ).
-      WHEN 'reset'.
+      WHEN `reset`.
         CLEAR:
           dirty,
           text_input.

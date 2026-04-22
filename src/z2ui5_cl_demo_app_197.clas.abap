@@ -93,10 +93,10 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'RESET'.
+      WHEN `RESET`.
         mt_table = mt_table_full.
         client->view_model_update( ).
-      WHEN 'FILTER'.
+      WHEN `FILTER`.
 
         DATA(lt_arg) = client->get( )-t_event_arg.
         DATA(lv_json) = lt_arg[ 1 ].

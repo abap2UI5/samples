@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'ROW_NAVIGATE'.
+      WHEN `ROW_NAVIGATE`.
 
         IF client->get_event_arg( 1 ) IS NOT INITIAL.
           mv_layout = `ThreeColumnsEndExpanded`.

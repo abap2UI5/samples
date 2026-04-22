@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     CASE app-get-event.
 
-      WHEN 'BUTTON_START'.
+      WHEN `BUTTON_START`.
         z2ui5_set_data( ).
 
       WHEN `BUTTON_DOWNLOAD`.
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
   METHOD z2ui5_on_render.
 
     CASE app-view_main.
-      WHEN 'MAIN'.
+      WHEN `MAIN`.
         z2ui5_on_render_main( ).
     ENDCASE.
 

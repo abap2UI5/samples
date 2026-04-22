@@ -119,17 +119,17 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
   METHOD ui5_event.
 
     CASE client->get( )-event.
-      WHEN 'GOTO_2ND'.
+      WHEN `GOTO_2ND`.
         simple_popup2( ).
 
-      WHEN 'BTN_OK_2ND'.
+      WHEN `BTN_OK_2ND`.
         client->popup_destroy( ).
         simple_popup1( ).
 
-      WHEN 'BTN_OK_1ND'.
+      WHEN `BTN_OK_1ND`.
         client->popup_destroy( ).
 
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
         simple_popup1( ).
     ENDCASE.
 

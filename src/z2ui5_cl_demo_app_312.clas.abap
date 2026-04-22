@@ -39,9 +39,9 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'EVT_DATA_SELECT'.
+      WHEN `EVT_DATA_SELECT`.
         client->message_toast_display( client->get_event_arg( 1 ) ).
-      WHEN 'EVT_VIZTYPE_CHANGE'.
+      WHEN `EVT_VIZTYPE_CHANGE`.
         ms_screen-viztype = ms_screen-viztypesel.
         on_rendering( ).
     ENDCASE.

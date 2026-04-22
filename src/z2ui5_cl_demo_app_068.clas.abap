@@ -122,14 +122,14 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'POPUP_TREE'.
+      WHEN `POPUP_TREE`.
         ui5_display_popup_tree_select( ).
 
-      WHEN 'CONTINUE'.
+      WHEN `CONTINUE`.
         client->popup_destroy( ).
         client->message_box_display( `Selected entry is set in the backend` ).
 
-      WHEN 'CANCEL'.
+      WHEN `CANCEL`.
         client->popup_destroy( ).
 
     ENDCASE.

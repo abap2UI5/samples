@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_106 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'SERVER'.
+      WHEN `SERVER`.
         client->message_box_display( mv_value ).
     ENDCASE.
 

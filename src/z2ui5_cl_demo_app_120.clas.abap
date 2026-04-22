@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'MAP_CONTAINER_DISPLAY'.
+      WHEN `MAP_CONTAINER_DISPLAY`.
 
         IF longitude IS NOT INITIAL.
           mt_spot = VALUE #( ( pos = longitude && `;` && latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).

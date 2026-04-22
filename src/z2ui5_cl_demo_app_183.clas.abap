@@ -56,20 +56,20 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'GET_OPENED_COL'.
+      WHEN `GET_OPENED_COL`.
         DATA(lt_arg) = client->get( )-t_event_arg.
         RETURN.
 
-      WHEN 'ONSORT'.
+      WHEN `ONSORT`.
         lt_arg = client->get( )-t_event_arg.
 
-      WHEN 'ONGROUP'.
+      WHEN `ONGROUP`.
 
-      WHEN 'SORT_ASCENDING'.
+      WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
 
-      WHEN 'SORT_DESCENDING'.
+      WHEN `SORT_DESCENDING`.
         SORT t_tab BY count DESCENDING.
         client->message_toast_display( `sort descending` ).
     ENDCASE.

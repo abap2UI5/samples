@@ -94,10 +94,10 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'P13N_OPEN'.
+      WHEN `P13N_OPEN`.
         z2ui5_view_p13n( ).
 
-      WHEN 'P13N_POPUP'.
+      WHEN `P13N_POPUP`.
         z2ui5_view_p13n_popup( ).
 
       WHEN 'OK' OR 'CANCEL'.

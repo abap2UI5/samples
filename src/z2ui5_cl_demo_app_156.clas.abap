@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_156 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP'.
+      WHEN `POPUP`.
         DATA(lo_app) = z2ui5_cl_pop_input_val=>factory( text = `Amount of products:` ).
         client->nav_app_call( lo_app ).
     ENDCASE.

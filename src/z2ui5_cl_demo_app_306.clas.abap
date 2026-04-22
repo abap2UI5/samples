@@ -130,7 +130,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'CAPTURE'.
+      WHEN `CAPTURE`.
         INSERT VALUE #( data      = mv_picture_base
                         thumbnail = mv_picture_thumb
                         time      = sy-uzeit ) INTO TABLE mt_picture.
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
         CLEAR mv_picture_thumb.
         client->view_model_update( ).
 
-      WHEN 'DISPLAY'.
+      WHEN `DISPLAY`.
 
         selected_picture = mt_picture_out[ selected = abap_true ].
         mv_pic_display = mt_picture[ selected_picture-id ]-data.
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
         view_display( ).
         RETURN.
 
-      WHEN 'EDIT'.
+      WHEN `EDIT`.
 
         edit_image( ).
     ENDCASE.

@@ -40,11 +40,11 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'GO'.
+      WHEN `GO`.
         DATA(app) = z2ui5_cl_demo_app_336=>factory( ).
         client->nav_app_call( app ).
 
-      WHEN 'GET_DATA'.
+      WHEN `GET_DATA`.
 
         get_data2( ).
 

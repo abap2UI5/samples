@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_MESSAGE_BOX'.
+      WHEN `BUTTON_MESSAGE_BOX`.
         client->message_box_display( `Action of illustrated message` ).
 
       WHEN OTHERS.

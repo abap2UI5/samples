@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
       WHEN `CLEAR`.
 
         CLEAR: news_list.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
 
         popover_display( ).
 

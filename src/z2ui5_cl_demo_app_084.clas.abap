@@ -86,9 +86,9 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
   METHOD z2ui5_on_event.
 
     CASE client->get( )-event.
-      WHEN 'START'.
+      WHEN `START`.
         z2ui5_on_rendering( ).
-      WHEN 'BUTTON_MCUSTOM'.
+      WHEN `BUTTON_MCUSTOM`.
 *        send type = '' is mandatory in order to not break current implementation
         client->message_box_display( type             = ''
                                      text             = 'Custom MessageBox'
@@ -98,28 +98,28 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      emphasizedaction = `First Button`
                                      onclose          = `callMessageToast()`
                                      details          = `<h3>these are details</h3>` ).
-      WHEN 'BUTTON_MCONFIRM'.
+      WHEN `BUTTON_MCONFIRM`.
         client->message_box_display( type = 'confirm'
                                      text = 'Confirm MessageBox' ).
-      WHEN 'BUTTON_MALERT'.
+      WHEN `BUTTON_MALERT`.
         client->message_box_display( type = 'alert'
                                      text = 'Alert MessageBox' ).
-      WHEN 'BUTTON_MERROR'.
+      WHEN `BUTTON_MERROR`.
         client->message_box_display( type = 'error'
                                      text = 'Error MessageBox' ).
-      WHEN 'BUTTON_MINFO'.
+      WHEN `BUTTON_MINFO`.
         client->message_box_display( type = 'information'
                                      text = 'Information MessageBox' ).
-      WHEN 'BUTTON_MWARNING'.
+      WHEN `BUTTON_MWARNING`.
         client->message_box_display( type = 'warning'
                                      text = 'Warning MessageBox' ).
-      WHEN 'BUTTON_MSUCCESS'.
+      WHEN `BUTTON_MSUCCESS`.
         client->message_box_display( type = 'success'
                                      text = 'Success MessageBox'
                                      icon = `sap-icon://accept` ).
-      WHEN 'BUTTON_SEND'.
+      WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values send to the server` ).
-      WHEN 'BUTTON_CLEAR'.
+      WHEN `BUTTON_CLEAR`.
         CLEAR screen.
         client->message_toast_display( `View initialized` ).
     ENDCASE.

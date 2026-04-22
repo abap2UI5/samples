@@ -629,7 +629,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         render_popup_filter( ).
 
-      WHEN 'CALL_POPUP_VARIANT'.
+      WHEN `CALL_POPUP_VARIANT`.
 
         LOOP AT mt_variants REFERENCE INTO DATA(lr_fields).
           APPEND INITIAL LINE TO mt_variants_pop REFERENCE INTO DATA(field).
@@ -638,7 +638,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         render_popup_varaint( client ).
 
-      WHEN 'POPUP_VARIANT_CLOSE'.
+      WHEN `POPUP_VARIANT_CLOSE`.
 
         mv_variant = VALUE #( mt_variants_pop[ selkz = abap_true ]-var OPTIONAL ).
 
@@ -647,23 +647,23 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         get_values( ).
 
         render_main( ).
-      WHEN 'BUTTON_SAVE'.
+      WHEN `BUTTON_SAVE`.
 
-      WHEN 'BUTTON_DELETE'.
+      WHEN `BUTTON_DELETE`.
 
         render_main( ).
 
-      WHEN 'BUTTON_COPY'.
+      WHEN `BUTTON_COPY`.
 
         render_pop_copy( ).
 
         render_main( ).
 
-      WHEN 'POPUP_COPY_EXIT'.
+      WHEN `POPUP_COPY_EXIT`.
 
         client->popup_destroy( ).
 
-      WHEN 'POPUP_COPY_SAVE'.
+      WHEN `POPUP_COPY_SAVE`.
 
         popup_copy_save( ).
 

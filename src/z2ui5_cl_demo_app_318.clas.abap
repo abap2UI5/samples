@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'PDF'.
+      WHEN `PDF`.
 
 *        TRY.
 ** URL
@@ -198,14 +198,14 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 *    WRITE: / e_txt->get_text( ).
 *ENDTRY.
 
-      WHEN 'DB_SAVE'.
+      WHEN `DB_SAVE`.
         client->message_box_display( text = 'Upload successfull. File saved!'
                                      type = 'success' ).
-      WHEN 'EDIT'.
+      WHEN `EDIT`.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).
         client->view_model_update( ).
 
-      WHEN 'CLEAR'.
+      WHEN `CLEAR`.
         mv_editor = ``.
     ENDCASE.
 

@@ -100,9 +100,9 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
-      WHEN 'onPost'.
+      WHEN `onPost`.
         client->message_toast_display( `Posted new feed entry: ` && client->get_event_arg( 1 ) ).
     ENDCASE.
 

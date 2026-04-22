@@ -25,11 +25,11 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLEAR'.
+      WHEN `CLEAR`.
         refresh_data( ).
         client->view_model_update( ).
 
-      WHEN 'ADD'.
+      WHEN `ADD`.
         add_data( ).
         client->view_model_update( ).
 

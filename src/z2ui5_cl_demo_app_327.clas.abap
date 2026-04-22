@@ -88,11 +88,11 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'LOCAL_STORAGE_LOADED'.
+      WHEN `LOCAL_STORAGE_LOADED`.
 *        z2ui5_cl_ajson=>parse( client->get_event_arg( 4 ) )->to_abap( IMPORTING ev_container = storage-value ).
         storage-value = client->get_event_arg( 4 ).
         client->view_model_update( ).
-      WHEN 'GET_STORED_VALUE'.
+      WHEN `GET_STORED_VALUE`.
 *        z2ui5_cl_ajson=>parse( stored_value )->to_abap( IMPORTING ev_container = storage-value ).
         storage-value = stored_value.
         client->view_model_update( ).

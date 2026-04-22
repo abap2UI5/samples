@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
 
     CASE mv_display.
 
-      WHEN 'LIST'.
+      WHEN `LIST`.
         page->list(
             headertext = 'List Control'
             items      = client->_bind( t_tab )
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
                 icon        = '{ICON}'
                 info        = '{INFO}' ).
 
-      WHEN 'TABLE'.
+      WHEN `TABLE`.
 
         DATA(tab) = page->table(
           headertext = 'Table Control'

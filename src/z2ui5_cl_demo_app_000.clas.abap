@@ -42,9 +42,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'expand-all'.
+      WHEN `expand-all`.
         expand_all( ).
-      WHEN 'collapse-all'.
+      WHEN `collapse-all`.
         CLEAR ms_check_expanded.
       WHEN OTHERS.
         TRY.

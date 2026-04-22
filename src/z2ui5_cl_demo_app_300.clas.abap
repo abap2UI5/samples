@@ -378,9 +378,9 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'CLICK_HINT_ICON'.
+      WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
-      WHEN 'handleStatusPressed'.
+      WHEN `handleStatusPressed`.
         client->message_box_display( title   = `Error description`
                                      type    = ``  "Keep this empty to use the custom title instead of the default message type as title
                                      text    = `Product was damaged along transportation.`

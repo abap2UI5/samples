@@ -179,12 +179,12 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     z2ui5_set_data( ).
     CASE lv_selectedkey.
-      WHEN 'ALL'.
-      WHEN 'OK'.
+      WHEN `ALL`.
+      WHEN `OK`.
         DELETE mt_table WHERE NOT measure BETWEEN 0 AND 100.
-      WHEN 'HEAVY'.
+      WHEN `HEAVY`.
         DELETE mt_table WHERE NOT measure BETWEEN 101 AND 500.
-      WHEN 'OVERWEIGHT'.
+      WHEN `OVERWEIGHT`.
         DELETE mt_table WHERE NOT measure > 500.
     ENDCASE.
 

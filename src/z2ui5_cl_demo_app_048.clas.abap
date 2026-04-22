@@ -41,10 +41,10 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'EDIT'.
+      WHEN `EDIT`.
         DATA(lv_row_title) = client->get_event_arg( 1 ).
         client->message_box_display( `EDIT - ` && lv_row_title ).
-      WHEN 'SELCHANGE'.
+      WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
         client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).

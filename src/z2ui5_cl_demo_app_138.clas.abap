@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
         client->message_toast_display( |{ quantity } - send to the server| ).
     ENDCASE.
 

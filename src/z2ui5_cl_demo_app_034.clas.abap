@@ -99,14 +99,14 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP_BAL'.
+      WHEN `POPUP_BAL`.
         mv_popup_name = 'POPUP_BAL'.
     ENDCASE.
 
     view_main( client ).
 
     CASE mv_popup_name.
-      WHEN 'POPUP_BAL'.
+      WHEN `POPUP_BAL`.
         view_popup_bal( client ).
     ENDCASE.
 

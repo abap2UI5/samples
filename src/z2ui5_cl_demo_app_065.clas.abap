@@ -56,16 +56,16 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
       WHEN `TEST`.
         client->message_box_display( `input ` && mv_input_nest ).
 
-      WHEN 'ALL'.
+      WHEN `ALL`.
         client->view_display( lo_view->stringify( ) ).
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
                                    method_insert = 'addContent' ).
 
-      WHEN 'MAIN'.
+      WHEN `MAIN`.
         client->view_display( lo_view->stringify( ) ).
 
-      WHEN 'NEST'.
+      WHEN `NEST`.
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
                                    method_insert = 'addContent' ).

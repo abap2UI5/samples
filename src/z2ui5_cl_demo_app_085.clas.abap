@@ -410,30 +410,30 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
 *    https://sapui5.hana.ondemand.com/sdk/#/topic/3b9f760da5b64adf8db7f95247879086
     CASE client->get( )-event.
-      WHEN 'ONGOTOSUPPLIER'.
+      WHEN `ONGOTOSUPPLIER`.
         DATA(lo_app_next) = NEW z2ui5_cl_demo_app_086( ).
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
-      WHEN 'ONEXITFULLSCREENMODE'.
+      WHEN `ONEXITFULLSCREENMODE`.
         lv_layout = 'TwoColumnsMidExpanded'.
         view_display_master( ).
         view_display_detail( ).
         client->nest_view_model_update( ).
         client->message_toast_display( |Event Close FullScreen Mode | ).
-      WHEN 'ONFULLSCREENMODE'.
+      WHEN `ONFULLSCREENMODE`.
         lv_layout = 'MidColumnFullScreen'.
         view_display_master( ).
         view_display_detail( ).
         client->nest_view_model_update( ).
         client->message_toast_display( |Event FullScreen Detail | ).
-      WHEN 'ONCLOSEDETAIL'.
+      WHEN `ONCLOSEDETAIL`.
         lv_layout = 'OneColumn'.
         view_display_master( ).
         view_display_detail( ).
         check_detail_active = abap_false.
         client->nest_view_model_update( ).
         client->message_toast_display( |Event Close Detail | ).
-      WHEN 'ONPRESSSUPPLIER'.
+      WHEN `ONPRESSSUPPLIER`.
         DATA(lt_arg) = client->get( )-t_event_arg.
         READ TABLE mt_table_supplier WITH KEY suppliername = lt_arg[ 1 ] INTO ls_detail_supplier.
         client->message_toast_display( |Event Press Supplier List Name: { lt_arg[ 1 ] } | ).
@@ -454,7 +454,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->nest_view_model_update( ).
       WHEN `UPDATE_DETAIL`.
         view_display_detail( ).
-      WHEN 'ONSORT'.
+      WHEN `ONSORT`.
         client->message_toast_display( `Sort Entries` ).
         sort( ).
         READ TABLE mt_table INDEX 1 INTO ls_detail.
@@ -462,7 +462,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         view_display_detail( ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
-      WHEN 'ONSEARCH'.
+      WHEN `ONSEARCH`.
         client->message_toast_display( `Search Entries` ).
         z2ui5_set_data( ).
         z2ui5_set_search( ).

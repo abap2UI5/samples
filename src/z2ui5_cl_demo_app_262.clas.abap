@@ -86,9 +86,9 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN 'press'.
+      WHEN `press`.
         client->message_toast_display( `The numeric content is pressed.` ).
-      WHEN 'POPOVER'.
+      WHEN `POPOVER`.
         popover_display( `hint_icon` ).
     ENDCASE.
 
