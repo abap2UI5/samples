@@ -57,7 +57,6 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
   ENDMETHOD.
 
 
-
   METHOD ui5_view_main_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
