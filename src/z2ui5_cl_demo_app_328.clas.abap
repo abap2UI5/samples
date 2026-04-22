@@ -35,12 +35,6 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
         client->view_model_update( ).
 
-*        IF mt_table->* <> mo_table_obj->mr_data->*.
-*          client->message_toast_display( `Error - MT_TABLE <> MO_TABLE_OBJ->MR_TABLE_DATA`  ).
-*       ELSE.
-*          client->message_toast_display( `Success - MT_TABLE = MO_TABLE_OBJ->MR_TABLE_DATA`  ).
-*        ENDIF.
-
       WHEN `GO`.
 
         ASSIGN mt_table->* TO <tab>.

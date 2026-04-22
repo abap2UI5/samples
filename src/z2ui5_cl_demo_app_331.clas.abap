@@ -70,28 +70,8 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
 
   METHOD get_data.
 
-*    DATA selkz TYPE abap_bool.
-*
-*    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( 'Z2UI5_T_01' ).
-*
-*    APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
-*                              ( name = 'SELKZ'
-*                                type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ) TO t_comp.
-*
-*    TRY.
-*
-*        DATA(new_struct_desc) = cl_abap_structdescr=>create( t_comp ).
-*
-*        CREATE DATA ms_struc TYPE HANDLE new_struct_desc.
-*
-*        ASSIGN ms_struc->* TO FIELD-SYMBOL(<struc>).
-
     SELECT SINGLE * FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
-
-*      CATCH cx_root.
-
-*    ENDTRY.
 
   ENDMETHOD.
 
