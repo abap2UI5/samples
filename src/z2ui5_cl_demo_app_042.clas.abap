@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_ROUNDTRIP`.
-        DATA(lv_dummy) = 'user pressed a button, your custom implementation can be called here'.
+        DATA(lv_dummy) = `user pressed a button, your custom implementation can be called here`.
 
       WHEN `BUTTON_MSG_BOX`.
         client->message_box_display(
@@ -75,10 +75,10 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
 
     DATA(header_content) = page->header_content( `uxap` ).
 
-    header_content->flex_box( wrap = 'Wrap'
+    header_content->flex_box( wrap = `Wrap`
            )->avatar( src         = lcl_help=>get_avatar( )
                       class       = `sapUiSmallMarginEnd`
-                      displaysize = 'layout'
+                      displaysize = `layout`
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
                 )->link( text = `+33 6 4512 5158`
                 )->link( text = `email@email.com`
@@ -91,8 +91,8 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->label( 'Hello! I an abap2UI5 developer'
                 )->vbox(
                     )->label( 'Achived goals'
-                    )->progress_indicator( percentvalue = '30%'
-                                           displayvalue = '30%'
+                    )->progress_indicator( percentvalue = `30%`
+                                           displayvalue = `30%`
             )->get_parent( )->get_parent(
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
                 )->label( 'San Jose, USA'

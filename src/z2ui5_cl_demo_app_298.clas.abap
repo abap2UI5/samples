@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectValueState' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectValueState` ).
 
     page_01->page( showheader = abap_false
               )->content(
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Error`
                           valuestatetext = `error value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
+                          )->item( key  = `{PRODUCT_ID}`
                                    text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Warning`
                           valuestatetext = `This is a Level 1 explanation. The items Lorem and Ipsum are not recommended from the system.`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
+                          )->item( key  = `{PRODUCT_ID}`
                                    text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Success`
                           valuestatetext = `success value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
+                          )->item( key  = `{PRODUCT_ID}`
                                    text = `{NAME}`
                       )->get_parent(
                   )->get_parent(
@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                           valuestate     = `Information`
                           valuestatetext = `information value state text`
                           items          = client->_bind( lt_a_products )
-                          )->item( key  = '{PRODUCT_ID}'
+                          )->item( key  = `{PRODUCT_ID}`
                                    text = `{NAME}`
                       )->get_parent(
                   )->get_parent(

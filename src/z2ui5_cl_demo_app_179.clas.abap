@@ -226,7 +226,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
          id = `OBJECTNAME` ).
 
     column->ui_custom_data( )->core_custom_data(
-       key    = 'exportTableColumnConfig'
+       key    = `exportTableColumnConfig`
         value = `{"columnKey": "OBJECTNAME",` && |\r\n| &&
                  '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
                  '    "dataType": "string",' && |\r\n| &&

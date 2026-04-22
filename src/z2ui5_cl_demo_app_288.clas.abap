@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select` ).
 
     DATA(page_02) = page_01->page(
                               showheader = abap_false
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                          forceselection = abap_false
                                          selectedkey    = client->_bind( selected_product )
                                          items          = client->_bind( lt_product_collection )
-                                         )->item( key  = '{PRODUCT_ID}'
+                                         )->item( key  = `{PRODUCT_ID}`
                                                   text = `{NAME}`
                                       )->get_parent(
                                   )->get_parent(
@@ -81,7 +81,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                             forceselection = abap_false
                                             selectedkey    = client->_bind( selected_product2 )
                                             items          = client->_bind( lt_product_collection2 )
-                                            )->item( key  = '{PRODUCT_ID}'
+                                            )->item( key  = `{PRODUCT_ID}`
                                                      text = `{NAME}`
                                       )->get_parent(
                                       )->vbox(
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                               icon            = `sap-icon://filter`
                                               autoadjustwidth = abap_true
                                               items           = client->_bind( lt_product_collection3 )
-                                              )->item( key  = '{PRODUCT_ID}'
+                                              )->item( key  = `{PRODUCT_ID}`
                                                        text = `{NAME}` ).
 
     client->view_display( page_02->stringify( ) ).

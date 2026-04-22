@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `POPUP_TO_INPUT`.
-        ms_popup_input-value1 = 'value1'.
+        ms_popup_input-value1 = `value1`.
         ui5_popup_input( ).
     ENDCASE.
 

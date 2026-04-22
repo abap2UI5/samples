@@ -49,8 +49,8 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages' ).
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -82,8 +82,8 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages' ).
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 

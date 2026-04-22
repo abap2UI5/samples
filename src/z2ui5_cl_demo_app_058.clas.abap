@@ -265,7 +265,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                    selectedkey = client->_bind_edit( ms_layout-selmode )
                    items       = client->_bind( mt_combo )
                    )->item(
-                       key  = '{KEY}'
+                       key  = `{KEY}`
                        text = `{TEXT}` ).
 
     lo_tab->tab(
@@ -315,7 +315,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         )->button( text  = `Save`
                    press = client->_event( `BUTTON_SAVE_LAYOUT` )
         )->table(
-            mode  = 'SingleSelectLeft'
+            mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_db_layout )
             )->columns(
                 )->column( )->text( `Name` )->get_parent(
@@ -323,7 +323,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
                 )->column( )->text( `Default` )->get_parent(
              "   )->column( )->text( 'Description' )->get_parent(
             )->get_parent(
-            )->items( )->column_list_item( selected = '{SELKZ}'
+            )->items( )->column_list_item( selected = `{SELKZ}`
                 )->cells(
                     )->text( '{NAME}'
                     )->text( '{USER}'

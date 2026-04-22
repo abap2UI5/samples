@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               DATA lf_key TYPE n LENGTH 4.
               DATA(lr_view2) = NEW z2ui5_cl_demo_app_350( ).
               lr_view2->view_id = 2.
-              lr_view2->varkey = '001'.
+              lr_view2->varkey = `001`.
               client->nav_app_call( lr_view2 ).
               RETURN.
             WHEN `BACK`.
@@ -59,10 +59,10 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       TRY.
           IF client->check_on_init( ).
 
-            DATA(lv_fm) = 'ENQUEUE_E_TABLE'.
+            DATA(lv_fm) = `ENQUEUE_E_TABLE`.
             CALL FUNCTION lv_fm
               EXPORTING
-                tabname        = 'ZTEST'
+                tabname        = `ZTEST`
                 varkey         = varkey
               EXCEPTIONS
                 foreign_lock   = 1
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       navbuttonpress = client->_event( `BACK` )
       shownavbutton  = client->check_app_prev_stack( ) ).
     DATA(vbox) = page->vbox( ).
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->title(
       'Current Lock Value in Table ZTEST' ).
     hbox->input(

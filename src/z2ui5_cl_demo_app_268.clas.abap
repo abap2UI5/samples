@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_268 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.Icon/sample/sap.ui.core.sample.Icon' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.Icon/sample/sap.ui.core.sample.Icon` ).
 
     page->hbox( class = `sapUiSmallMargin`
            )->icon(

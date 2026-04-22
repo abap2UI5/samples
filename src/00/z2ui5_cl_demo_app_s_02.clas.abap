@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     vbox->info_label( text = client->_bind( session_text ) ).
 
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->label( text  = `press button to increment counter in backend session`
                  class = `sapUiTinyMarginEnd` ).
     hbox->button(
@@ -105,9 +105,9 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
-      session_text = 'Session ON (stateful)'.
+      session_text = `Session ON (stateful)`.
     ELSE.
-      session_text = 'Session OFF (stateless)'.
+      session_text = `Session OFF (stateless)`.
     ENDIF.
     client->view_model_update( ).
 

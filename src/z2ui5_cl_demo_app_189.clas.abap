@@ -25,9 +25,9 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `one_enter`.
-        focus_field = 'IdTwo'.
+        focus_field = `IdTwo`.
       WHEN `two_enter`.
-        focus_field = 'IdThree'.
+        focus_field = `IdThree`.
     ENDCASE.
     client->view_model_update( ).
 
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      focus_field = 'IdOne'.
+      focus_field = `IdOne`.
       render( ).
     ENDIF.
 

@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_086 IMPLEMENTATION.
       )->simple_form( `Supplier` )->content( 'form'
       )->label( 'Value set by previous app'
            )->input( value    = ls_detail_supplier-suppliername
-                     editable = 'false' ).
+                     editable = `false` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -255,7 +255,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         DATA(group_id) = lt_arg[ 1 ].
         group_items = items.
         content_height = calculate_content_height( lines( group_items ) ).
-        content_width = '450px'.
+        content_width = `450px`.
 
         display_group_popover( group_id ).
         client->popover_destroy( ).
@@ -269,7 +269,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         group_items = VALUE ty_items( FOR itm IN items FROM items_displayed + 1
                                       ( itm ) ).
         content_height = calculate_content_height( lines( group_items ) ).
-        content_width = '450px'.
+        content_width = `450px`.
 
         IF overflow_button_pressed = abap_true.
           display_group_popover( item_id ).

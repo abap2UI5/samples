@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 *                       ( id = '2' count = '10' table = 'Z2UI5_T003'  descr = 'Table 01' icon = 'sap-icon://add' )
                        ( id = `3` count = '15' table = 'Z2UI5_T004'  descr = 'Table 02' icon = `sap-icon://accept` ) ).
 
-    mv_selectedkey = '1'.
+    mv_selectedkey = `1`.
 
   ENDMETHOD.
 
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
       DATA(with_icon) = line->icon.
 
       lo_items->icon_tab_filter( icon      = line->icon
-                                 iconcolor = 'Positive'
+                                 iconcolor = `Positive`
                                  count     = line->count
                                  text      = text
                                  key       = line->id

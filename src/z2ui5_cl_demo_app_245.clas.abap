@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_245 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxDirectionOrder' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxDirectionOrder` ).
 
     DATA(layout) = page->vbox(
                           )->panel( headertext = `Reverse, horizontal`

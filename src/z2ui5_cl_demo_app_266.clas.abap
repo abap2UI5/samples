@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton' ).
+           href   = `https://sapui5.hana.ondemand.com/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton` ).
 
     DATA(page_02) = page_01->page(
                               title = `Page`
@@ -127,7 +127,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `onPress`.
-        IF client->get_event_arg( 1 ) = 'X'.
+        IF client->get_event_arg( 1 ) = `X`.
           client->message_toast_display( client->get_event_arg( 2 ) && ` Pressed` ).
         ELSE.
           client->message_toast_display( client->get_event_arg( 2 ) && ` Unpressed` ).

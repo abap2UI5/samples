@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_265 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk#/entity/sap.ui.codeeditor.CodeEditor/sample/sap.ui.codeeditor.sample.CodeEditor' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk#/entity/sap.ui.codeeditor.CodeEditor/sample/sap.ui.codeeditor.sample.CodeEditor` ).
 
     page->code_editor(
              type  = `json`

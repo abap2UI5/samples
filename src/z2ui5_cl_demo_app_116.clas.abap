@@ -120,9 +120,9 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     DATA(header_content) = page->header_content( `uxap`).
     header_content->block_layout(
       )->block_layout_row(
-      )->block_layout_cell( backgroundcolorset   = 'ColorSet10'
-                            backgroundcolorshade = 'ShadeE'
-      )->flex_box( justifycontent = 'SpaceBetween'
+      )->block_layout_cell( backgroundcolorset   = `ColorSet10`
+                            backgroundcolorshade = `ShadeE`
+      )->flex_box( justifycontent = `SpaceBetween`
       )->hbox(
       )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
           )->label( design = `Bold`
@@ -131,7 +131,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
       )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
         )->text( 'Other'
       )->get_parent( )->get_parent(
-      )->hbox( justifycontent = 'End'
+      )->hbox( justifycontent = `End`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
           )->label( design = `Bold`
                     text   = `User:`
@@ -186,24 +186,24 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     prodh_nodes =
       VALUE #( ( text = `Machines`
-               prodh  = '00100'
+               prodh  = `00100`
                nodes  = VALUE #( ( text = `Pumps`
-                                  prodh = '0010000100'
+                                  prodh = `0010000100`
                                   nodes = VALUE #( ( text  = `Pump 001`
-                                                     prodh = '001000010000000100' )
+                                                     prodh = `001000010000000100` )
                                                    ( text  = `Pump 002`
-                                                     prodh = '001000010000000105' )
+                                                     prodh = `001000010000000105` )
                                           )
                        ) )
              )
              ( text  = `Paints`
-               prodh = '00110'
+               prodh = `00110`
                nodes = VALUE #( ( text  = `Gloss paints`
-                                  prodh = '0011000105'
+                                  prodh = `0011000105`
                                   nodes = VALUE #( ( text  = `Paint 001`
-                                                     prodh = '001100010500000100' )
+                                                     prodh = `001100010500000100` )
                                                    ( text  = `Paint 002`
-                                                     prodh = '001100010500000105' )
+                                                     prodh = `001100010500000105` )
                                           )
                        ) )
              ) ).

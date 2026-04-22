@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.TileContent/sample/sap.m.sample.TileContent' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.TileContent/sample/sap.m.sample.TileContent` ).
 
     DATA(layout) = page->grid( containerquery = abap_true
                                class          = `sapUiSmallMarginTop`

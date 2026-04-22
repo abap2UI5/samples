@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_293 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Link/sample/sap.m.sample.Link' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Link/sample/sap.m.sample.Link` ).
 
     page->vertical_layout(
             class = `sapUiContentPadding`

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_055 IMPLEMENTATION.
     DO 100 TIMES.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-        descr = 'this is a description' checkbox = abap_true ).
+        descr = `this is a description` checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 

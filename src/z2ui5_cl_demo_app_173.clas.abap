@@ -88,9 +88,9 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
       mt_data = VALUE #( ( name = `Theo` date = '01.01.2000' age = '5' )
                          ( name = `Lore` date = '01.01.2000' age = '1' ) ).
 
-      mt_layout = VALUE #( ( fname = 'NAME' merge = 'false' visible = 'true' )
-                           ( fname = 'DATE' merge = 'false' visible = 'true' )
-                           ( fname = 'AGE'  merge = 'false' visible = 'false' ) ).
+      mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true` )
+                           ( fname = `DATE` merge = `false` visible = `true` )
+                           ( fname = `AGE`  merge = `false` visible = `false` ) ).
 
       view_display( ).
 

@@ -87,10 +87,10 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
     map->routes( client->_bind( mt_route ) )->route(
       position      = `{POSITION}`
         routetype   = `{ROUTETYPE}`
-        linedash    = '{LINEDASH}'
-        color       = '{COLOR}'
-        colorborder = '{COLORBORDER}'
-      linewidth     = '{LINEWIDTH}'
+        linedash    = `{LINEDASH}`
+        color       = `{COLOR}`
+        colorborder = `{COLORBORDER}`
+      linewidth     = `{LINEWIDTH}`
 *      RECEIVING
 *        result    =
       ).
@@ -99,12 +99,12 @@ CLASS z2ui5_cl_demo_app_123 IMPLEMENTATION.
 *      EXPORTING
 *        id      =
         items   = client->_bind( mt_legend )
-        caption = 'Legend'
+        caption = `Legend`
 *      RECEIVING
 *        result  =
       )->legenditem(
       text    = `{TEXT}`
-        color = '{COLOR}'
+        color = `{COLOR}`
 *      RECEIVING
 *        result =
       ).

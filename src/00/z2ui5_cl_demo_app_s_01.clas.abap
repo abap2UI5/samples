@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     DATA(vbox) = page->vbox( ).
 
-    DATA(hbox) = vbox->hbox( alignitems = 'Center' ).
+    DATA(hbox) = vbox->hbox( alignitems = `Center` ).
 
     hbox->info_label( text = client->_bind( session_text ) ).
 
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
       text  = `Start session again`
       press = client->_event( `START_SESSION` ) ).
 
-    hbox = vbox->hbox( alignitems = 'Center' ).
+    hbox = vbox->hbox( alignitems = `Center` ).
     hbox->label( text  = `press button to create lock entry (SM12) in backend session`
                  class = `sapUiTinyMarginEnd` ).
     hbox->button(
@@ -123,9 +123,9 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
     client->set_session_stateful( stateful ).
     session_is_stateful = stateful.
     IF stateful = abap_true.
-      session_text = 'Session ON (stateful)'.
+      session_text = `Session ON (stateful)`.
     ELSE.
-      session_text = 'Session OFF (stateless)'.
+      session_text = `Session OFF (stateless)`.
     ENDIF.
     client->view_model_update( ).
 

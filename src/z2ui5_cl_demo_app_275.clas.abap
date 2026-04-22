@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_275 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FeedContent/sample/sap.m.sample.FeedContent' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FeedContent/sample/sap.m.sample.FeedContent` ).
 
     page->feed_content(
            contenttext = `@@notify Great outcome of the Presentation today. The new functionality and the new design was well received.`

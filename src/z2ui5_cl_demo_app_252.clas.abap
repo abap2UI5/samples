@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_252 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxRenderType' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxRenderType` ).
 
     DATA(layout) = page->vbox(
                           )->panel( headertext = `Render Type - Div`

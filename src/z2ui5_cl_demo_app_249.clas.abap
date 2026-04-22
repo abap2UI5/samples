@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4` ).
 
     DATA(layout) = page->splitter( height = `500px`
                                    width  = `100%`

@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
 
   METHOD view_display.
 
-    lv_s_date = '2023-04-22T08:15:00'.
+    lv_s_date = `2023-04-22T08:15:00`.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     view->_generic_property( VALUE #( n = `core:require` v = `{Helper:'z2ui5/Util'}` ) ).
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
                                                                   title     = `{TITLE}`
                                                                   text      = `{INFO}`
                                                                   type      = `{TYPE}`
-                                                                  tentative = '{TENTATIVE}' ).
+                                                                  tentative = `{TENTATIVE}` ).
 
     lo_planningcalendarrow->interval_headers( )->calendar_appointment(
                                                                       startdate = `{= Helper.DateCreateObject(${START} ) }`
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
       z2ui5_set_data( ).
     ENDIF.
 
-    IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = 'DISPLAY_VIEW'.
+    IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = `DISPLAY_VIEW`.
       view_display( ).
       RETURN.
     ENDIF.

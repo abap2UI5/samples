@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                                  placeholdersymbol = `_`
                                  placeholder       = `All characters allowed` )->get(
                     )->rules(
-                      )->mask_input_rule( maskformatsymbol = '~'
+                      )->mask_input_rule( maskformatsymbol = `~`
                                           regex            = `[^_]`
                     )->get_parent( )->get_parent( )->get_parent(
                  )->label( `Promo code`

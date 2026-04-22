@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
     mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_DEMO_APP_126`  count = '12' ) ).
 
-    mv_selectedkey = '1'.
+    mv_selectedkey = `1`.
 
   ENDMETHOD.
 

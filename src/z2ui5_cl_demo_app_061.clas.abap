@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( <tab> )
-            mode  = 'MultiSelect'
+            mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'Dynamic typed table'
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
         )->column(
             )->text( `previous` )->get_parent( ).
 
-    tab->items( )->column_list_item( selected = '{SELKZ}'
+    tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->input( '{ID}'
           )->input( '{TIMESTAMPL}'

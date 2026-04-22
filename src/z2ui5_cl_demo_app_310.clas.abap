@@ -46,22 +46,22 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
 
       WHEN `BUTTON_MESSAGE_TOAST2`.
         client->message_toast_display( text                    = `this is a message toast`
-                                       at                      = 'left bottom'
-            offset                                             = '0 -15'
+                                       at                      = `left bottom`
+            offset                                             = `0 -15`
                                        animationtimingfunction = `ease-in`
                                        class                   = `my-style` ).
 
       WHEN `BUTTON_MESSAGE_STRIP_INFO`.
         check_strip_active = abap_true.
-        strip_type = 'Information'.
+        strip_type = `Information`.
 
       WHEN `BUTTON_MESSAGE_STRIP_ERROR`.
         check_strip_active = abap_true.
-        strip_type = 'Error'.
+        strip_type = `Error`.
 
       WHEN `BUTTON_MESSAGE_STRIP_SUCCESS`.
         check_strip_active = abap_true.
-        strip_type = 'Success'.
+        strip_type = `Success`.
     ENDCASE.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

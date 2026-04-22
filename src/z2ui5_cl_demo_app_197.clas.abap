@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
             LOOP AT l_members INTO DATA(l_member).
               DATA(lv_val) = lo_json->get( '/' && l_member && '/mProperties/text' ).
 
-              APPEND VALUE #( sign = 'I' option = 'EQ' low = lv_val ) TO lt_range.
+              APPEND VALUE #( sign = `I` option = `EQ` low = lv_val ) TO lt_range.
 
             ENDLOOP.
 

@@ -18,8 +18,8 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      product  = 'tomato'.
-      quantity = '500'.
+      product  = `tomato`.
+      quantity = `500`.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
                                   enabled = abap_false
                         )->button(
                             text  = `post`
-                            press = client->_event( val = 'BUTTON_POST' )
+                            press = client->_event( val = `BUTTON_POST` )
              )->stringify( ) ).
 
     ENDIF.

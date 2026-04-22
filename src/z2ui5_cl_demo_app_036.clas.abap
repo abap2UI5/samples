@@ -64,8 +64,8 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    app-view_main = 'VIEW_MAIN'.
-    mv_value = 'test'.
+    app-view_main = `VIEW_MAIN`.
+    mv_value = `test`.
 
   ENDMETHOD.
 

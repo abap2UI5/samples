@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
     DO 1000 TIMES.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
         info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-        descr = 'this is a description' checkbox = abap_true ).
+        descr = `this is a description` checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
             growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind( t_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
 
     tab->header_toolbar(
         )->overflow_toolbar(
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}'
+       )->checkbox( selected = `{CHECKBOX}`
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 

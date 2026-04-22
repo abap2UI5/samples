@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
          )->text_area( valueliveupdate = abap_true
                        value           = client->_bind_edit( email-body )
                        growing         = abap_true
-                       growingmaxlines = '7'
+                       growingmaxlines = `7`
                        width           = `100%` ).
 
     email_form->button( text  = `Trigger Email`

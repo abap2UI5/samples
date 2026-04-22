@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectStatus/sample/sap.m.sample.ObjectStatus' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectStatus/sample/sap.m.sample.ObjectStatus` ).
 
     page_01->vertical_layout(
               width = `100%`

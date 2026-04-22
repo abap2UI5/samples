@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
         client->view_display( lo_view->stringify( ) ).
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
-                                   method_insert = 'addContent' ).
+                                   method_insert = `addContent` ).
 
       WHEN `MAIN`.
         client->view_display( lo_view->stringify( ) ).
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
       WHEN `NEST`.
         client->nest_view_display( val           = lo_view_nested->stringify( )
                                    id            = `test`
-                                   method_insert = 'addContent' ).
+                                   method_insert = `addContent` ).
     ENDCASE.
 
   ENDMETHOD.

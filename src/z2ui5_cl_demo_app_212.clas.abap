@@ -174,7 +174,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = 'true'
+    DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind_edit( val = <tab> ) ).
 

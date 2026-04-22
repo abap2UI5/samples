@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 *                            selecteditems = client->_bind_edit( gt_sel_multi )
                                    items = client->_bind_edit( val = gt_multi )
                                    )->item(
-                                      key  = '{KEY}'
+                                      key  = `{KEY}`
                                       text = `{TEXT}`
                                   )->get_parent(
                   )->button(

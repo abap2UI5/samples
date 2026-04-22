@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_267 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MultiInput/sample/sap.m.sample.MultiInputValueStates' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MultiInput/sample/sap.m.sample.MultiInputValueStates` ).
 
     page->vertical_layout(
            class = `sapUiContentPadding`

@@ -211,7 +211,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                     dropposition      = `Between`
                     droplayout        = `Horizontal`
                     drop              = client->_event(
-                        val   = 'onDrop'
+                        val   = `onDrop`
                         t_arg = VALUE #(
                             ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
                             ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
@@ -220,10 +220,10 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
             )->custom_layout( 'f'
                 )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
-            )->grid_list_item( counter   = '{COUNTER}'
-                               highlight = '{HIGHLIGHT}'
+            )->grid_list_item( counter   = `{COUNTER}`
+                               highlight = `{HIGHLIGHT}`
                                type      = `{TYPE}`
-                               unread    = '{UNREAD}'
+                               unread    = `{UNREAD}`
                 )->vbox( height = `100%`
                     )->vbox( `sapUiSmallMargin`
                         )->layout_data(

@@ -42,21 +42,21 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     DATA(tab) = page->ui_table( rows               = client->_bind_edit( val = t_tab2 view = client->cs_view-nested )
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
-                                rowactioncount     = '1'
+                                rowactioncount     = `1`
                                 enablegrouping     = abap_false
-                                fixedcolumncount   = '1'
-                                selectionmode      = 'None'
+                                fixedcolumncount   = `1`
+                                selectionmode      = `None`
                                 sort               = client->_event( `SORT` )
                                 filter             = client->_event( `FILTER` )
                                 customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
     DATA(lo_columns) = tab->ui_columns( ).
 
-    lo_columns->ui_column( sortproperty                  = 'TITLE'
+    lo_columns->ui_column( sortproperty                  = `TITLE`
                                           filterproperty = 'TITLE' )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
-    lo_columns->ui_column( sortproperty   = 'DESCR'
+    lo_columns->ui_column( sortproperty   = `DESCR`
                            filterproperty = 'DESCR' )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
-    lo_columns->ui_column( sortproperty   = 'INFO'
+    lo_columns->ui_column( sortproperty   = `INFO`
                            filterproperty = 'INFO' )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
        )->ui_row_action_item( icon = `sap-icon://delete`
@@ -65,8 +65,8 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `test`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages' ).
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 

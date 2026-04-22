@@ -88,50 +88,50 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
                                          select      = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count   = client->_bind_edit( lv_cnt_total )
                                text    = `Products`
-                               key     = 'ALL'
+                               key     = `ALL`
                                showall = abap_true ).
     lo_items->icon_tab_separator( ).
     lo_items->icon_tab_filter( icon      = `sap-icon://begin`
-                               iconcolor = 'Positive'
+                               iconcolor = `Positive`
                                count     = client->_bind_edit( lv_cnt_pos )
                                text      = `OK`
-                               key       = 'OK' ).
+                               key       = `OK` ).
     lo_items->icon_tab_filter( icon      = `sap-icon://compare`
-                               iconcolor = 'Critical'
+                               iconcolor = `Critical`
                                count     = client->_bind_edit( lv_cnt_heavy )
                                text      = `Heavy`
-                               key       = 'HEAVY' ).
+                               key       = `HEAVY` ).
     lo_items->icon_tab_filter( icon      = `sap-icon://inventory`
-                               iconcolor = 'Negative'
+                               iconcolor = `Negative`
                                count     = client->_bind_edit( lv_cnt_neg )
                                text      = `Overweight`
-                               key       = 'OVERWEIGHT' ).
+                               key       = `OVERWEIGHT` ).
 
     DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true
        )->table(
            inset          = abap_false
-           showseparators = 'Inner'
+           showseparators = `Inner`
            headertext     = `Products`
            items          = client->_bind( mt_table ) ).
 
     tab->columns(
         )->column( '12em'
             )->text( `Product` )->get_parent(
-        )->column( minscreenwidth = 'Tablet'
+        )->column( minscreenwidth = `Tablet`
                    demandpopin    = abap_true
             )->text( `Supplier` )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'End'
+                   halign         = `End`
             )->text( `Dimensions` )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'Center'
+                   halign         = `Center`
             )->text( `Weight` )->get_parent(
-         )->column( halign = 'End'
+         )->column( halign = `End`
             )->text( `Price` )->get_parent(
-         )->column( halign = 'End'
+         )->column( halign = `End`
              )->text( `Rating` ).
 
     tab->items(
@@ -141,8 +141,8 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
                                    title = `{PRODUCTID}` )->get_parent(
              )->text( `{SUPPLIERNAME}` )->get_parent(
              )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
-             )->object_number( number = '{MEASURE}'
-                               unit   = '{UNIT}'
+             )->object_number( number = `{MEASURE}`
+                               unit   = `{UNIT}`
                                state  = `{STATE_MEASURE}`
              )->object_number(
                    state  = `{STATE_PRICE}`

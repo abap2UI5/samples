@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_250 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.OverflowToolbar/sample/sap.m.sample.ToolbarAlignment' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.OverflowToolbar/sample/sap.m.sample.ToolbarAlignment` ).
 
     DATA(page_02) = page_01->page(
                          )->invisible_text( ns   = `core`

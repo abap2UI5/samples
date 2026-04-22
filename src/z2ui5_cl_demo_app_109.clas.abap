@@ -80,19 +80,19 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                   )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
-                                key  = 'Left'
+                                key  = `Left`
                                 icon = `sap-icon://add-favorite`
                                 text = `Left`
                         )->segmented_button_item(
-                                key  = 'Top'
+                                key  = `Top`
                                 icon = `sap-icon://accept`
                                 text = `Top`
                         )->segmented_button_item(
-                                key  = 'Bottom'
+                                key  = `Bottom`
                                 icon = `sap-icon://accept`
                                 text = `Bottom`
                         )->segmented_button_item(
-                                key  = 'Right'
+                                key  = `Right`
                                 icon = `sap-icon://attachment`
                                 text = `Right`
                   )->get_parent( )->get_parent(
@@ -145,9 +145,9 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    mv_placement = 'Left'.
-    product  = 'tomato'.
-    quantity = '500'.
+    mv_placement = `Left`.
+    product  = `tomato`.
+    quantity = `500`.
 
   ENDMETHOD.
 ENDCLASS.

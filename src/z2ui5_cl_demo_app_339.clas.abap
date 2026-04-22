@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     DATA selkz TYPE abap_bool.
 
     IF mv_table IS INITIAL.
-      mv_table = 'Z2UI5_T_01'.
+      mv_table = `Z2UI5_T_01`.
     ENDIF.
 
     TRY.
@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
     DATA(table) = page->table( width = `auto`
-                               mode  = 'SingleSelectLeft'
+                               mode  = `SingleSelectLeft`
                                selectionchange  = client->_event( `SELECTION_CHANGE` )
                                items = client->_bind_edit( val = <table> ) ).
 
@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign   = 'Middle'
+                                       )->column_list_item( valign   = `Middle`
                                                             type     = `Inactive`
                                                             selected = `{SELKZ}` ).
 

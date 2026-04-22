@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
     DATA(lo_box) = page1->vbox( )->text( `Search`
         )->search_field( width      = `17.5rem`
                          livechange = client->_event(
-            val    = 'BUTTON_SEARCH'
+            val    = `BUTTON_SEARCH`
             t_arg  = VALUE #( ( `${$source>/value}` ) )
             s_ctrl = VALUE #( check_allow_multi_req = abap_true ) ) ).
 

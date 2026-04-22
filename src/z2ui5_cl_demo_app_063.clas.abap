@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_063 IMPLEMENTATION.
                 icon  = `sap-icon://cart` )->get(
                 )->custom_data(
                     )->badge_custom_data(
-                        key     = 'badge'
+                        key     = `badge`
                         value   = `23`
                         visible = abap_true ).
 

@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      nav_params-product  = '102343333'.
+      nav_params-product  = `102343333`.
 
       IF client->get( )-check_launchpad_active = abap_false.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).

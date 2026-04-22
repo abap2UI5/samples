@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
+                                       )->column_list_item( valign = `Middle`
                                                             type   = `Inactive` ).
 
     DATA(cells) = column_list_item->cells( ).

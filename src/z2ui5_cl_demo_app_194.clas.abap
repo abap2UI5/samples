@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = 'true'
+    DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind( <tab> )
 *                               headertext = mv_table
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
+                                       )->column_list_item( valign = `Middle`
                                                             type   = `Navigation`
                                        )->cells( ).
 

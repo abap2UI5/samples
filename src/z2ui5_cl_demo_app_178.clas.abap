@@ -52,10 +52,10 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     dialog->tree(
         id    = `tree`
-        mode  = 'SingleSelectMaster'
+        mode  = `SingleSelectMaster`
         items = client->_bind_edit( prodh_nodes )
         )->items(
-            )->standard_tree_item( selected = '{IS_SELECTED}'
+            )->standard_tree_item( selected = `{IS_SELECTED}`
                                    title    = `{TEXT}` ).
 
     dialog->buttons(
@@ -110,24 +110,24 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
 
     prodh_nodes =
       VALUE #( ( text = `Machines`
-               prodh  = '00100'
+               prodh  = `00100`
                nodes  = VALUE #( ( text = `Pumps`
-                                  prodh = '0010000100'
+                                  prodh = `0010000100`
                                   nodes = VALUE #( ( text  = `Pump 001`
-                                                     prodh = '001000010000000100' )
+                                                     prodh = `001000010000000100` )
                                                    ( text  = `Pump 002`
-                                                     prodh = '001000010000000105' )
+                                                     prodh = `001000010000000105` )
                                           )
                        ) )
              )
              ( text  = `Paints`
-               prodh = '00110'
+               prodh = `00110`
                nodes = VALUE #( ( text  = `Gloss paints`
-                                  prodh = '0011000105'
+                                  prodh = `0011000105`
                                   nodes = VALUE #( ( text  = `Paint 001`
-                                                     prodh = '001100010500000100' )
+                                                     prodh = `001100010500000100` )
                                                    ( text  = `Paint 002`
-                                                     prodh = '001100010500000105' )
+                                                     prodh = `001100010500000105` )
                                           )
                        ) )
              ) ).

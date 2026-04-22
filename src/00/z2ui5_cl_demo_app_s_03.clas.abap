@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     SELECT
       SINGLE FROM icfservloc
       FIELDS icfactive
-      WHERE icf_name = 'MIME_DEMO'
+      WHERE icf_name = `MIME_DEMO`
       INTO @DATA(icfactive).
 
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->get( )-event = 'enter'.
+    IF client->get( )-event = `enter`.
       IF magic_key = `abap2UI5`.
         client->follow_up_action( val = `playSuccess()` ).
         message-type = `Success`.

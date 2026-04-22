@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DatePicker/sample/sap.m.sample.DatePickerValueState' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DatePicker/sample/sap.m.sample.DatePickerValueState` ).
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
                      id             = `DP`
                      width          = `100%`
                      valuestate     = `{VALUE_STATE}`
-                     valuestatetext = '{VALUE_STATE_TEXT}' )->get_parent(
+                     valuestatetext = `{VALUE_STATE_TEXT}` )->get_parent(
              )->get_parent( ).
 
     client->view_display( page->stringify( ) ).
@@ -115,25 +115,25 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
     CLEAR s_text.
     CLEAR lt_a_data.
 
-    s_text = 'DatePicker with valueState '.
+    s_text = `DatePicker with valueState `.
 
     " Append entries to the internal table
     APPEND VALUE #( label       = s_text && 'None'
-                    value_state = 'None' ) TO lt_a_data.
+                    value_state = `None` ) TO lt_a_data.
 
     APPEND VALUE #( label       = s_text && 'Information'
-                    value_state = 'Information' ) TO lt_a_data.
+                    value_state = `Information` ) TO lt_a_data.
 
     APPEND VALUE #( label       = s_text && 'Success'
-                    value_state = 'Success' ) TO lt_a_data.
+                    value_state = `Success` ) TO lt_a_data.
 
     APPEND VALUE #( label            = s_text && 'Warning and long valueStateText'
-                    value_state      = 'Warning'
-                    value_state_text = 'Warning message. This is an extra long text used as a warning message. ' &&
+                    value_state      = `Warning`
+                    value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
                                        'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.' ) TO lt_a_data.
 
     APPEND VALUE #( label       = s_text && 'Error'
-                    value_state = 'Error' ) TO lt_a_data.
+                    value_state = `Error` ) TO lt_a_data.
 
   ENDMETHOD.
 ENDCLASS.

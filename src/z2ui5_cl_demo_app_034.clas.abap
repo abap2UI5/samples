@@ -95,12 +95,12 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     ENDIF.
 
-    mv_popup_name = ''.
+    mv_popup_name = ``.
 
     CASE client->get( )-event.
 
       WHEN `POPUP_BAL`.
-        mv_popup_name = 'POPUP_BAL'.
+        mv_popup_name = `POPUP_BAL`.
     ENDCASE.
 
     view_main( client ).

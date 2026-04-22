@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_256 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.FixFlex/sample/sap.ui.layout.sample.FixFlexFixedSize' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.FixFlex/sample/sap.ui.layout.sample.FixFlexFixedSize` ).
 
     DATA(layout) = page->fix_flex( ns             = `layout`
                                    class          = `fixFlexFixedSize`

@@ -131,40 +131,40 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
         )->column(
             )->text( `Description` ).
 
-    tab->items( )->column_list_item( selected = '{SELKZ}'
+    tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->text( '{INDEX}'
           )->input( value  = `{TITLE}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-title
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{VALUE}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-color
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{INFO}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-info
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->checkbox( '{CHECKBOX}'
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-checkbox
                      writetodom = abap_true
           )->get_parent( )->get_parent(
           )->input( value  = `{DESCRIPTION}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
-                     key        = 'ColumnId'
+                     key        = `ColumnId`
                      value      = c_id-description
                      writetodom = abap_true ).
 
@@ -227,7 +227,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
       IF line_exists( t_tab[ focusrow + 2 ] ).
         focusrow = condense( CONV i( focusrow + 1 ) ).
       ELSE.
-        focusrow = '0'.
+        focusrow = `0`.
       ENDIF.
     ENDIF.
 
@@ -243,8 +243,8 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD default_focus.
 
-    focuscolumn = 'Title'.
-    focusrow = '0'.
+    focuscolumn = `Title`.
+    focusrow = `0`.
 
   ENDMETHOD.
 

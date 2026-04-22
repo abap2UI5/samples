@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( )
                              class          = `sapUiContentPadding` ).
-    DATA(table) = page->table( growing = 'true'
+    DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind_edit( <tab> ) ).
 
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = 'Middle'
+                                       )->column_list_item( valign = `Middle`
                                                             type   = `Navigation`
                                        )->cells( ).
 

@@ -145,19 +145,19 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_fields.
 
     DATA(db_fields) = VALUE ty_t_fieldsdb(
-      ( screen_name = 'INV'        field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'LAGP'       field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'LAGP'       field = 'LGPLA'   field_doma = '/SCWM/DE_LGPLA' )
-      ( screen_name = 'LAGP'       field = 'LGTYP'   field_doma = '/SCWM/DE_LGTYP' )
-      ( screen_name = 'QUAN'       field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'QUAN'       field = 'LGPLA'   field_doma = '/SCWM/DE_LGPLA' )
-      ( screen_name = 'QUAN'       field = 'MATNR'   field_doma = '/SCWM/DE_MATNR' )
-      ( screen_name = 'QUAN'       field = 'OWNER'   field_doma = '/SCWM/DE_OWNER' )
-      ( screen_name = 'TO'         field = 'LGNUM'   field_doma = '/SCWM/LGNUM' )
-      ( screen_name = 'TO'         field = 'MATNR'   field_doma = '/SCWM/DE_MATNR' )
-      ( screen_name = 'TO'         field = 'PROCTY'  field_doma = '/SCWM/DE_PROCTY' )
-      ( screen_name = 'TO'         field = 'TOSTAT'  field_doma = '/SCWM/DE_TOSTAT' )
-      ( screen_name = 'TO'         field = 'VLPLA'   field_doma = '/SCWM/LTAP_VLPLA' ) ).
+      ( screen_name = `INV`        field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `LAGP`       field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `LAGP`       field = `LGPLA`   field_doma = `/SCWM/DE_LGPLA` )
+      ( screen_name = `LAGP`       field = `LGTYP`   field_doma = `/SCWM/DE_LGTYP` )
+      ( screen_name = `QUAN`       field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `QUAN`       field = `LGPLA`   field_doma = `/SCWM/DE_LGPLA` )
+      ( screen_name = `QUAN`       field = `MATNR`   field_doma = `/SCWM/DE_MATNR` )
+      ( screen_name = `QUAN`       field = `OWNER`   field_doma = `/SCWM/DE_OWNER` )
+      ( screen_name = `TO`         field = `LGNUM`   field_doma = `/SCWM/LGNUM` )
+      ( screen_name = `TO`         field = `MATNR`   field_doma = `/SCWM/DE_MATNR` )
+      ( screen_name = `TO`         field = `PROCTY`  field_doma = `/SCWM/DE_PROCTY` )
+      ( screen_name = `TO`         field = `TOSTAT`  field_doma = `/SCWM/DE_TOSTAT` )
+      ( screen_name = `TO`         field = `VLPLA`   field_doma = `/SCWM/LTAP_VLPLA` ) ).
 
     CLEAR mt_fields.
     LOOP AT db_fields REFERENCE INTO DATA(lr_fields) WHERE screen_name = mv_screen.
@@ -172,14 +172,14 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
   METHOD get_txt.
 
-    result = 'Text'.
+    result = `Text`.
 
   ENDMETHOD.
 
 
   METHOD get_txt_l.
 
-    result = 'Text'.
+    result = `Text`.
 
   ENDMETHOD.
 
@@ -187,9 +187,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_values.
 
     DATA(l_variants) = VALUE ty_t_variants(
-      ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123' )
-      ( screen_name = 'TO'          var = 'E001'       descr = '123' )
-      ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
+      ( screen_name = `QUAN`        var = `E001 - ALL` descr = `123` )
+      ( screen_name = `TO`          var = `E001`       descr = `123` )
+      ( screen_name = `TO`          var = `E001 - All` descr = `123` ) ).
 
     DATA var TYPE ty_t_variants.
     DATA var_val TYPE ty_t_var_val.
@@ -201,17 +201,17 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(var_vall_all) = VALUE ty_t_var_val(
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E001 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8CC06B0F98CD81A3' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'MATNR'      guid = '663192E9D70C1EEE8CD4E9389CB11403' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'LTAP'         var = 'E002 - All' field = 'TOSTAT'     guid = '663192E9D70C1EEE8CC06BC66AD581A3' sign = 'I'   opt = 'NE' )
-      ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGNUM'      guid = '663192E9D70C1EEE90CEE2FA658C51EE' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'QUAN'         var = 'E001 - ALL' field = 'LGPLA'      guid = '663192E9D70C1EEE90CEEF4750FD91EE' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001      ' field = 'LGNUM'      guid = '663192E9D70C1EEE8E87DE5FF8CC512A' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001      ' field = 'PROCTY'     guid = '663192E9D70C1EEE8E87DD8D1EB8C7F5' sign = 'I'   opt = 'EQ' )
-      ( screen_name = 'TO'           var = 'E001 - All' field = 'LGNUM'      guid = '663192E9D70C1EEE8E86552847635198' sign = 'I'   opt = 'EQ' ) ).
+      ( screen_name = `LTAP`         var = `E001 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8CC06B0F98CD81A3` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E001 - All` field = `MATNR`      guid = `663192E9D70C1EEE8CD4E9389CB11403` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E001 - All` field = `TOSTAT`     guid = `663192E9D70C1EEE8CC06BC66AD581A3` sign = `I`   opt = `NE` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8CC06B0F98CD81A3` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `MATNR`      guid = `663192E9D70C1EEE8CD4E9389CB11403` sign = `I`   opt = `EQ` )
+      ( screen_name = `LTAP`         var = `E002 - All` field = `TOSTAT`     guid = `663192E9D70C1EEE8CC06BC66AD581A3` sign = `I`   opt = `NE` )
+      ( screen_name = `QUAN`         var = `E001 - ALL` field = `LGNUM`      guid = `663192E9D70C1EEE90CEE2FA658C51EE` sign = `I`   opt = `EQ` )
+      ( screen_name = `QUAN`         var = `E001 - ALL` field = `LGPLA`      guid = `663192E9D70C1EEE90CEEF4750FD91EE` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001      ` field = `LGNUM`      guid = `663192E9D70C1EEE8E87DE5FF8CC512A` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001      ` field = `PROCTY`     guid = `663192E9D70C1EEE8E87DD8D1EB8C7F5` sign = `I`   opt = `EQ` )
+      ( screen_name = `TO`           var = `E001 - All` field = `LGNUM`      guid = `663192E9D70C1EEE8E86552847635198` sign = `I`   opt = `EQ` ) ).
 
     LOOP AT var_vall_all INTO DATA(b) WHERE screen_name = mv_screen
         AND var         = mv_variant.
@@ -245,9 +245,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD get_variants.
 
     mt_variants = VALUE #(
-      ( screen_name = 'QUAN'        var = 'E001 - ALL' descr = '123' )
-      ( screen_name = 'TO'          var = 'E001'       descr = '123' )
-      ( screen_name = 'TO'          var = 'E001 - All' descr = '123' ) ).
+      ( screen_name = `QUAN`        var = `E001 - ALL` descr = `123` )
+      ( screen_name = `TO`          var = `E001`       descr = `123` )
+      ( screen_name = `TO`          var = `E001 - All` descr = `123` ) ).
 
   ENDMETHOD.
 
@@ -262,11 +262,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
   METHOD on_init.
 
     mt_screens = VALUE #(
-      ( screen_name = 'INV'      descr = '123' )
-      ( screen_name = 'LAGP'     descr = '123' )
-      ( screen_name = 'PO'       descr = '123' )
-      ( screen_name = 'QUAN'     descr = '123' )
-      ( screen_name = 'TO'       descr = '123' ) ).
+      ( screen_name = `INV`      descr = `123` )
+      ( screen_name = `LAGP`     descr = `123` )
+      ( screen_name = `PO`       descr = `123` )
+      ( screen_name = `QUAN`     descr = `123` )
+      ( screen_name = `TO`       descr = `123` ) ).
 
     render_main( ).
 
@@ -348,7 +348,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
              items       = client->_bind_edit( mt_screens )
              selectedkey = client->_bind_edit( mv_screen )
                  )->item(
-                     key  = '{SCREEN_NAME}'
+                     key  = `{SCREEN_NAME}`
                      text = `{SCREEN_NAME} - {DESCR}`
          )->get_parent( )->label( get_txt( 'DESCR_40' )
             )->input(
@@ -385,7 +385,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                    tokens           = client->_bind( val = lr_tab->t_token tab = mt_fields tab_index = lv_tabix )
                    showclearicon    = abap_true
                    id               = lr_tab->field
-                   valuehelprequest = client->_event( val = 'CALL_POPUP_FILTER' t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
+                   valuehelprequest = client->_event( val = `CALL_POPUP_FILTER` t_arg = VALUE #( ( CONV #( lr_tab->field ) ) ) )
                )->item(
                        key  = `{KEY}`
                        text = `{TEXT}`
@@ -439,7 +439,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       title         = get_txt_l( '/SCWM/DE_TW_COND_CHECK_COND' ) ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
-                                 justifycontent = 'SpaceBetween' ).
+                                 justifycontent = `SpaceBetween` ).
 
     DATA(item) = vbox->list(
       nodata          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
@@ -453,7 +453,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key  = '{N}'
+                     key  = `{N}`
                      text = `{N}`
              )->get_parent(
              )->input( `{LOW}`
@@ -490,7 +490,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     popup->dialog( title        = get_txt( '/SCWM/WB_VARIANT' )
                    contentwidth = `30%`
       )->table(
-            mode  = 'SingleSelectLeft'
+            mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_variants_pop )
         )->columns(
             )->column( '20rem'
@@ -499,7 +499,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                 )->text( get_txt( 'DESCR_40' )
         )->get_parent( )->get_parent(
         )->items(
-            )->column_list_item( selected = '{SELKZ}'
+            )->column_list_item( selected = `{SELKZ}`
                 )->cells(
                     )->text( '{VAR}'
                     )->text( '{DESCR}'

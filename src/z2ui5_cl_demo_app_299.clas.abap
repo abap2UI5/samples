@@ -51,14 +51,14 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithWrappedItemText' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithWrappedItemText` ).
 
     page_01->select(
                 width         = `300px`
                 wrapitemstext = abap_true
                 class         = `sapUiLargeMargin`
                 items         = client->_bind( lt_product_collection )
-                )->item( key  = '{PRODUCT_ID}'
+                )->item( key  = `{PRODUCT_ID}`
                          text = `{NAME}`
              )->get_parent(
              )->select(
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
                 wrapitemstext = abap_true
                 class         = `sapUiLargeMargin`
                 items         = client->_bind( lt_product_collection2 )
-                )->item( key  = '{PRODUCT_ID}'
+                )->item( key  = `{PRODUCT_ID}`
                          text = `{NAME}`
              )->get_parent( ).
 

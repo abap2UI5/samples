@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              icon    = `sap-icon://supplier`
              text    = `Supplier Detail`
              type    = `Transparent`
-             enabled = 'true'
+             enabled = `true`
              tooltip = `Goto Supplier`
              press   = client->_event( `ONGOTOSUPPLIER` )
          )->overflow_toolbar_button(
@@ -145,15 +145,15 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              icon    = `sap-icon://decline`
              text    = `Exit Detail Screen`
              type    = `Transparent`
-             enabled = 'true'
+             enabled = `true`
              tooltip = `Close Detail`
              press   = client->_event( `ONCLOSEDETAIL` ) ).
 
     DATA(header_content) = page->header_content( `uxap` ).
-    header_content->flex_box( wrap = 'Wrap'
+    header_content->flex_box( wrap = `Wrap`
        )->avatar( src         = c_pic_url && ls_detail-pic
                   class       = `sapUiSmallMarginEnd`
-                  displaysize = 'layout'
+                  displaysize = `layout`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
             )->label( 'Dimension'
             )->label( 'Weight'
@@ -171,13 +171,13 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
             )->vbox(
             )->rating_indicator( class       = `sapUiSmallMarginBottom`
                                  value       = ls_detail-rating
-                                 maxvalue    = '6'
-                                 displayonly = 'true'
+                                 maxvalue    = `6`
+                                 displayonly = `true`
             )->get_parent(
             )->progress_indicator( percentvalue = ls_detail-process
                                    displayvalue = |{ ls_detail-process } %|
                                    state        = ls_detail-state_price
-                                   showvalue    = 'true'
+                                   showvalue    = `true`
         )->get_parent( )->get_parent(
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
             )->label( 'Supplier'
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                       )->vbox(
                           )->text_area( rows     = `10`
                                         value    = `Text`
-                                        editable = 'false'
+                                        editable = `false`
                                         width    = `100%`
             )->get_parent( )->get_parent( )->get_parent(
             )->object_page_sub_section( id    = `SectionDescription2`
@@ -277,13 +277,13 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                             vertical = abap_true
           )->table(
               inset          = abap_false
-              showseparators = 'Inner'
+              showseparators = `Inner`
               headertext     = `Suppliers`
 *                   growing             = abap_true
 *                   growingthreshold    = '20'
 *                   growingscrolltoload = abap_true
               items          = client->_bind( mt_table_supplier )
-              sticky         = 'ColumnHeaders,HeaderToolbar'
+              sticky         = `ColumnHeaders,HeaderToolbar`
       )->columns(
         )->column(
             )->text( `Supplier` )->get_parent(
@@ -304,8 +304,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
       id             = `Detail`
-      method_insert  = 'addMidColumnPage'
-      method_destroy = 'removeAllMidColumnPages' ).
+      method_insert  = `addMidColumnPage`
+      method_destroy = `removeAllMidColumnPages` ).
 
   ENDMETHOD.
 
@@ -327,13 +327,13 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                              vertical = abap_true
       )->table(
        inset          = abap_false
-       showseparators = 'Inner'
+       showseparators = `Inner`
        headertext     = `Products`
 *            growing             = abap_true
 *            growingthreshold    = '20'
 *            growingscrolltoload = abap_true
        items          = client->_bind( mt_table )
-       sticky         = 'ColumnHeaders,HeaderToolbar' ).
+       sticky         = `ColumnHeaders,HeaderToolbar` ).
 
     tab->header_toolbar( )->overflow_toolbar(
           )->search_field( id     = `SEARCH`
@@ -349,18 +349,18 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     tab->columns(
         )->column( '12em'
             )->text( `Product` )->get_parent(
-        )->column( minscreenwidth = 'Tablet'
+        )->column( minscreenwidth = `Tablet`
                    demandpopin    = abap_true
             )->text( `Supplier` )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'End'
+                   halign         = `End`
             )->text( `Dimensions` )->get_parent(
-        )->column( minscreenwidth = 'Desktop'
+        )->column( minscreenwidth = `Desktop`
                    demandpopin    = abap_true
-                   halign         = 'Center'
+                   halign         = `Center`
             )->text( `Weight` )->get_parent(
-         )->column( halign = 'End'
+         )->column( halign = `End`
             )->text( `Price` ).
 
     tab->items(
@@ -371,10 +371,10 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                    title = `{PRODUCTID}` )->get_parent(
              )->text( `{SUPPLIERNAME}` )->get_parent(
              )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
-             )->object_number( number = '{MEASURE}'
-                               unit   = '{UNIT}'
+             )->object_number( number = `{MEASURE}`
+                               unit   = `{UNIT}`
                                state  = `{STATE_MEASURE}`
-             )->object_number( "number = '{MEASURE}' unit =  '{UNIT}'
+             )->object_number( "number = `{MEASURE}` unit =  `{UNIT}`
                    state  = `{STATE_PRICE}`
                    number = `{ parts: [ { path : 'PRICE' } , { path : 'WAERS' } ] } ` ",  type: 'sap.ui.model.type.Currency , formatOptions: { currencyCode : false } } `
               ).
@@ -415,19 +415,19 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         lo_app_next->ls_detail_supplier = ls_detail_supplier.
         client->nav_app_call( lo_app_next ).
       WHEN `ONEXITFULLSCREENMODE`.
-        lv_layout = 'TwoColumnsMidExpanded'.
+        lv_layout = `TwoColumnsMidExpanded`.
         view_display_master( ).
         view_display_detail( ).
         client->nest_view_model_update( ).
         client->message_toast_display( |Event Close FullScreen Mode | ).
       WHEN `ONFULLSCREENMODE`.
-        lv_layout = 'MidColumnFullScreen'.
+        lv_layout = `MidColumnFullScreen`.
         view_display_master( ).
         view_display_detail( ).
         client->nest_view_model_update( ).
         client->message_toast_display( |Event FullScreen Detail | ).
       WHEN `ONCLOSEDETAIL`.
-        lv_layout = 'OneColumn'.
+        lv_layout = `OneColumn`.
         view_display_master( ).
         view_display_detail( ).
         check_detail_active = abap_false.
@@ -445,7 +445,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->message_toast_display( |Event Press Master - Product Id { lt_arg[ 1 ] } | ).
         READ TABLE mt_table WITH KEY key = lt_arg[ 1 ] INTO ls_detail.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
-        lv_layout = 'TwoColumnsMidExpanded'.
+        lv_layout = `TwoColumnsMidExpanded`.
         IF check_detail_active = abap_false.
           view_display_master( ).
         ENDIF.
@@ -485,51 +485,51 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     mt_table = VALUE #(
         ( key = '1' productid = '1' productname = 'table' suppliername = 'Company 1' width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
-          pic = 'HT-1010.jpg' rating = '0' process = '0' )
+          pic = `HT-1010.jpg` rating = `0` process = `0` )
         ( key = '2' productid = '2' productname = 'chair' suppliername = 'Company 2'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` state_measure = `Error`
-          pic = 'HT-2001.jpg' rating = '1'  process = '10' )
+          pic = `HT-2001.jpg` rating = `1`  process = `10` )
         ( key = '3' productid = '3' productname = 'sofa'  suppliername = 'Company 3'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` state_measure = `Warning`
-          pic = 'HT-1251.jpg' rating = '2'  process = '15' )
+          pic = `HT-1251.jpg` rating = `2`  process = `15` )
         ( key = '4' productid = '4' productname = 'computer' suppliername = 'Company 4'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` state_measure = `Success`
-          pic = 'HT-6100.jpg' rating = '3'  process = '38' )
+          pic = `HT-6100.jpg` rating = `3`  process = `38` )
         ( key = '5' productid = '5' productname = 'printer' suppliername = 'Company 5'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` state_measure = `Warning`
-          pic = 'HT-1000.jpg' rating = '4'  process = '66' )
+          pic = `HT-1000.jpg` rating = `4`  process = `66` )
         ( key = '6' productid = '6' productname = 'table2'  suppliername = 'Company 6'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`
-          pic = 'HT-1137.jpg' rating = '2'  process = '91' )
+          pic = `HT-1137.jpg` rating = `2`  process = `91` )
         ( key = '7' productid = '7' productname = 'table3'  suppliername = 'Company 7'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Warning`
-          pic = 'HT-7000.jpg' rating = '6' process = '5' )
+          pic = `HT-7000.jpg` rating = `6` process = `5` )
         ( key = '8' productid = '8' productname = 'table4'  suppliername = 'Company 8'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Warning` state_measure = `Error`
-          pic = 'HT-9997.jpg' rating = '0' process = '75' )
+          pic = `HT-9997.jpg` rating = `0` process = `75` )
         ( key = '9' productid = '9' productname = 'table5'  suppliername = 'Company 9'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Information` state_measure = `Success`
-          pic = 'HT-7020.jpg' rating = '1'  process = '81' )
+          pic = `HT-7020.jpg` rating = `1`  process = `81` )
         ( key = '10' productid = '10' productname = 'table6'  suppliername = 'Company 10'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`
-          pic = 'HT-1023.jpg' rating = '4'  process = '24' )
+          pic = `HT-1023.jpg` rating = `4`  process = `24` )
         ( key = '11' productid = '11' productname = 'table7'  suppliername = 'Company 11'  width = `10` depth = '20' height = `30`
           dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Information` state_measure = `Success`
-          pic = 'HT-1085.jpg' rating = '5'  process = '46' ) ).
+          pic = `HT-1085.jpg` rating = `5`  process = `46` ) ).
 *Rungestraße 79-78, 18055 RostockMarktstraße, 03046 CottbusMarktpl. 1, 06108 Halle (Saale)
     mt_table_supplier = VALUE #(
-         ( suppliername = 'Company 1' email = 'company1@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Dresden' street = 'Neumarkt' zipcode = '01067' )
-         ( suppliername = 'Company 2' email = 'company2@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Erfurt' street = 'Domplatz' zipcode = '99084' )
-         ( suppliername = 'Company 3' email = 'company3@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Suhl' street = 'Carl-Fiedler-Straße 58' zipcode = '98527' )
-         ( suppliername = 'Company 4' email = 'company4@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Hildburgheusen' street = 'Markt' zipcode = '98646' )
-         ( suppliername = 'Company 5' email = 'company5@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Sonneberg' street = 'Beethovenstraße 10' zipcode = '96515' )
-         ( suppliername = 'Company 6' email = 'company6@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Meiningen' street = 'Schloßplatz 1' zipcode = '98617' )
-         ( suppliername = 'Company 7' email = 'company7@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Leipzig' street = 'Pfaffendorfer Str. 29' zipcode = '04105' )
-         ( suppliername = 'Company 8' email = 'company8@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Magdeburg' street = 'Am Dom 1' zipcode = '39104' )
-         ( suppliername = 'Company 9' email = 'company9@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Schwerin' street = 'Lennéstraße 1' zipcode = '19053' )
-         ( suppliername = 'Company 10' email = 'company10@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Rostock' street = 'Rungestraße 79-78' zipcode = '18055' )
-         ( suppliername = 'Company 11' email = 'company11@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Cottbus' street = 'Marktstraße' zipcode = '03046' )
-         ( suppliername = 'Company 12' email = 'company12@sap.com' phone = '+49 1234567890' country = 'Germany' city = 'Halle (Saale)' street = 'Marktpl. 1' zipcode = '06108' ) ).
+         ( suppliername = `Company 1` email = `company1@sap.com` phone = `+49 1234567890` country = `Germany` city = `Dresden` street = `Neumarkt` zipcode = `01067` )
+         ( suppliername = `Company 2` email = `company2@sap.com` phone = `+49 1234567890` country = `Germany` city = `Erfurt` street = `Domplatz` zipcode = `99084` )
+         ( suppliername = `Company 3` email = `company3@sap.com` phone = `+49 1234567890` country = `Germany` city = `Suhl` street = `Carl-Fiedler-Straße 58` zipcode = `98527` )
+         ( suppliername = `Company 4` email = `company4@sap.com` phone = `+49 1234567890` country = `Germany` city = `Hildburgheusen` street = `Markt` zipcode = `98646` )
+         ( suppliername = `Company 5` email = `company5@sap.com` phone = `+49 1234567890` country = `Germany` city = `Sonneberg` street = `Beethovenstraße 10` zipcode = `96515` )
+         ( suppliername = `Company 6` email = `company6@sap.com` phone = `+49 1234567890` country = `Germany` city = `Meiningen` street = `Schloßplatz 1` zipcode = `98617` )
+         ( suppliername = `Company 7` email = `company7@sap.com` phone = `+49 1234567890` country = `Germany` city = `Leipzig` street = `Pfaffendorfer Str. 29` zipcode = `04105` )
+         ( suppliername = `Company 8` email = `company8@sap.com` phone = `+49 1234567890` country = `Germany` city = `Magdeburg` street = `Am Dom 1` zipcode = `39104` )
+         ( suppliername = `Company 9` email = `company9@sap.com` phone = `+49 1234567890` country = `Germany` city = `Schwerin` street = `Lennéstraße 1` zipcode = `19053` )
+         ( suppliername = `Company 10` email = `company10@sap.com` phone = `+49 1234567890` country = `Germany` city = `Rostock` street = `Rungestraße 79-78` zipcode = `18055` )
+         ( suppliername = `Company 11` email = `company11@sap.com` phone = `+49 1234567890` country = `Germany` city = `Cottbus` street = `Marktstraße` zipcode = `03046` )
+         ( suppliername = `Company 12` email = `company12@sap.com` phone = `+49 1234567890` country = `Germany` city = `Halle (Saale)` street = `Marktpl. 1` zipcode = `06108` ) ).
 
     ls_detail = mt_table[ 1 ].
 

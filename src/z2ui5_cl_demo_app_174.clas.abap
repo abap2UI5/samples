@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `POPUP`.
-        mt_tab = VALUE #( descr = 'this is a description'
+        mt_tab = VALUE #( descr = `this is a description`
              ( zzselkz = mv_preselect title = `title_01`  value = `value_01` )
              ( zzselkz = mv_preselect title = `title_02`  value = `value_02` )
              ( zzselkz = mv_preselect title = `title_03`  value = `value_03` )
@@ -66,8 +66,8 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory(
                            i_tab             = mt_tab
                            i_multiselect     = mv_multiselect
-                           i_event_confirmed = 'POPUP_CONFIRMED'
-                           i_event_canceled  = 'POPUP_CANCEL'
+                           i_event_confirmed = `POPUP_CONFIRMED`
+                           i_event_canceled  = `POPUP_CANCEL`
           ) ).
 
       WHEN `POPUP_CANCELED`.
@@ -81,7 +81,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
           client->message_box_display( `callback after popup to select: ` && lt3[ 1 ]-title ).
         ELSE.
           client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab   = lt3
-                                                             i_title = 'Selected rows' ) ).
+                                                             i_title = `Selected rows` ) ).
         ENDIF.
 
       WHEN `MULTISELECT_TOGGLE`.

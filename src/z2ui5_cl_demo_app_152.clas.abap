@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
       WHEN `POPUP`.
 
-        mt_tab = VALUE #( descr = 'this is a description'
+        mt_tab = VALUE #( descr = `this is a description`
              ( zzselkz = mv_preselect title = `title_01`  value = `value_01` )
              ( zzselkz = mv_preselect title = `title_02`  value = `value_02` )
              ( zzselkz = mv_preselect title = `title_03`  value = `value_03` )
@@ -131,7 +131,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
           ASSIGN ls_result-table->* TO FIELD-SYMBOL(<table>).
           client->nav_app_call( z2ui5_cl_pop_table=>factory(
                                     i_tab   = <table>
-                                    i_title = 'Selected rows' ) ).
+                                    i_title = `Selected rows` ) ).
 
         ENDIF.
 

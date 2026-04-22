@@ -276,7 +276,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         title       = `Define Conditons - Product` ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
-                                 justifycontent = 'SpaceBetween' ).
+                                 justifycontent = `SpaceBetween` ).
 
     DATA(pan)  = vbox->panel(
          expandable = abap_false
@@ -295,7 +295,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                  selectedkey = `{OPTION}`
                  items       = client->_bind_edit( mt_mapping )
              )->item(
-                     key  = '{N}'
+                     key  = `{N}`
                      text = `{N}`
              )->get_parent(
              )->input( `{LOW}`

@@ -43,10 +43,10 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
 
     " of course this makes no sense in abap2UI5.
     " It's just to provoke "Sending of dynpro SAPLSPO1 0500 not possible" error.
-    DATA(fm) = 'POPUP_TO_CONFIRM'.
+    DATA(fm) = `POPUP_TO_CONFIRM`.
     CALL FUNCTION fm
       EXPORTING
-        text_question  = 'Test'
+        text_question  = `Test`
       EXCEPTIONS
         text_not_found = 1
         OTHERS         = 2.

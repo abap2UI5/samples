@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
           setupdate = client->_bind_edit( mv_scrollupdate )
           items     = client->_bind_edit( mt_scroll ) ).
 
-    DATA(tab) = page->table( sticky     = 'ColumnHeaders,HeaderToolbar'
+    DATA(tab) = page->table( sticky     = `ColumnHeaders,HeaderToolbar`
                              headertext = `Table with some entries`
                              items      = client->_bind( t_tab ) ).
 
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     selstart = `3`.
     selend = `7`.
 
-    INSERT VALUE #( n = 'id_page' ) INTO TABLE mt_scroll.
+    INSERT VALUE #( n = `id_page` ) INTO TABLE mt_scroll.
     display_view( client ).
 
   ENDMETHOD.
@@ -112,35 +112,35 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `BUTTON_SCROLL_TOP`.
         CLEAR mt_scroll.
-        INSERT VALUE #( n = 'id_page' v = '0' ) INTO TABLE mt_scroll.
+        INSERT VALUE #( n = `id_page` v = `0` ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
       WHEN `BUTTON_SCROLL_UP`.
 
-        DATA(lv_pos) = CONV i( mt_scroll[ n = 'id_page' ]-v ).
+        DATA(lv_pos) = CONV i( mt_scroll[ n = `id_page` ]-v ).
         lv_pos = lv_pos - 500.
         IF lv_pos < 0.
           lv_pos = 0.
         ENDIF.
-        mt_scroll[ n = 'id_page' ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
+        mt_scroll[ n = `id_page` ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
       WHEN `BUTTON_SCROLL_DOWN`.
 
-        lv_pos = mt_scroll[ n = 'id_page' ]-v.
+        lv_pos = mt_scroll[ n = `id_page` ]-v.
         lv_pos = lv_pos + 500.
         IF lv_pos < 0.
           lv_pos = 0.
         ENDIF.
-        mt_scroll[ n = 'id_page' ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
+        mt_scroll[ n = `id_page` ]-v = shift_left( shift_right( CONV string( lv_pos ) ) ).
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 
       WHEN `BUTTON_SCROLL_BOTTOM`.
         CLEAR mt_scroll.
-        INSERT VALUE #( n = 'id_page' v = '99999' ) INTO TABLE mt_scroll.
+        INSERT VALUE #( n = `id_page` v = `99999` ) INTO TABLE mt_scroll.
         mv_scrollupdate = abap_true.
         client->view_model_update( ).
 

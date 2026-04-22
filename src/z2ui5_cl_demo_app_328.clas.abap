@@ -95,14 +95,14 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
     page->table( headertext      = `Table`
-                 mode            = 'MultiSelect'
+                 mode            = `MultiSelect`
                  items           = client->_bind_edit( <table> )
                  selectionchange = client->_event( `SELECTION_CHANGE` )
               )->columns(
                   )->column( )->text( 'id '
               )->get_parent( )->get_parent(
               )->items(
-                  )->column_list_item( selected = '{SELKZ}'
+                  )->column_list_item( selected = `{SELKZ}`
                       )->cells(
                           )->text( `{ID}` ).
 

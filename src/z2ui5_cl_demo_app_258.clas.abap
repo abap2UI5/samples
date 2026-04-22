@@ -35,31 +35,31 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `MENU_HOME`.
         client->message_toast_display( `Home Button pressed` ).
-        selected_menu_entry = 'Home'.
+        selected_menu_entry = `Home`.
       WHEN `MENU_HOME_1`.
         client->message_toast_display( `Home Sub 1 Button pressed` ).
-        selected_menu_entry = 'Home1'.
+        selected_menu_entry = `Home1`.
       WHEN `MENU_HOME_2`.
         client->message_toast_display( `Home Sub 2 Button pressed` ).
-        selected_menu_entry = 'Home2'.
+        selected_menu_entry = `Home2`.
       WHEN `MENU_HOME_3`.
         client->message_toast_display( `Home Sub 3 Button pressed` ).
-        selected_menu_entry = 'Home3'.
+        selected_menu_entry = `Home3`.
       WHEN `MENU_CUSTOMER`.
         client->message_toast_display( `Customer Button pressed` ).
-        selected_menu_entry = 'Customers'.
+        selected_menu_entry = `Customers`.
       WHEN `MENU_SUPPLIER`.
         client->message_toast_display( `Supplier Button pressed` ).
-        selected_menu_entry = 'Suppliers'.
+        selected_menu_entry = `Suppliers`.
       WHEN `MENU_FIX1`.
         client->message_toast_display( `Fixed Button 1 pressed` ).
-        selected_menu_entry = 'Fix1'.
+        selected_menu_entry = `Fix1`.
       WHEN `MENU_FIX2`.
         client->message_toast_display( `Fixed Button 2 pressed` ).
-        selected_menu_entry = 'Fix2'.
+        selected_menu_entry = `Fix2`.
       WHEN `MENU_FIX3`.
         client->message_toast_display( `Fixed Button 3 pressed` ).
-        selected_menu_entry = 'Fix3'.
+        selected_menu_entry = `Fix3`.
     ENDCASE.
 
   ENDMETHOD.
@@ -83,11 +83,11 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     DATA(content) = page->flex_box( width      = `100%`
                                     height     = `90%`
-                                    alignitems = 'Start' ).
+                                    alignitems = `Start` ).
 
     DATA(navlist) = content->flex_box( width     = `100%`
                                        height    = `100%`
-                                       direction = 'Column' )->layout_data( )->flex_item_data( growfactor = '1'
+                                       direction = `Column` )->layout_data( )->flex_item_data( growfactor = `1`
       basesize                                                                                            = '0' )->get_parent( )->side_navigation( id                                           = `sideNavigation`
                                                                                                                                                                                     class       = `sapUiTinyMarginTop`
                                                                                                                                                                                     selectedkey = client->_bind( selected_menu_entry )
@@ -98,51 +98,51 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     navlist->navigation_list_item( text   = `Home`
                                    icon   = `sap-icon://home`
                                    select = client->_event( `MENU_HOME` )
-                                   key    = 'Home'
+                                   key    = `Home`
       )->get_child( )->navigation_list_item( text   = `Home Sub 1`
                                              select = client->_event( `MENU_HOME_1` )
-                                             key    = 'Home1'
+                                             key    = `Home1`
       )->navigation_list_item( text   = `Home Sub 2`
                                select = client->_event( `MENU_HOME_2` )
-                               key    = 'Home2'
+                               key    = `Home2`
       )->navigation_list_item( text   = `Home Sub 3`
                                select = client->_event( `MENU_HOME_3` )
-                               key    = 'Home3' ).
+                               key    = `Home3` ).
 
     navlist->navigation_list_item( text   = `Customers`
                                    icon   = `sap-icon://customer`
                                    select = client->_event( `MENU_CUSTOMER` )
-                                   key    = 'Customers' ).
+                                   key    = `Customers` ).
     navlist->navigation_list_item( text   = `Suppliers`
                                    icon   = `sap-icon://supplier`
                                    select = client->_event( `MENU_SUPPLIER` )
-                                   key    = 'Suppliers' ).
+                                   key    = `Suppliers` ).
 
     "This part of the menu is fixed and always visible
     navlist->get_parent( )->fixed_item( )->navigation_list(
       )->navigation_list_item( text   = `Fixed Entry 1`
                                icon   = `sap-icon://heart`
                                select = client->_event( `MENU_FIX1` )
-                               key    = 'Fix1'
+                               key    = `Fix1`
       )->navigation_list_item( text   = `Fixed Entry 2`
                                icon   = `sap-icon://flight`
                                select = client->_event( `MENU_FIX2` )
-                               key    = 'Fix2'
+                               key    = `Fix2`
       )->navigation_list_item( text   = `Fixed Entry 3`
                                icon   = `sap-icon://email-read`
                                select = client->_event( `MENU_FIX3` )
-                               key    = 'Fix3'
+                               key    = `Fix3`
       )->navigation_list_item( text = `Link`
                                icon = `sap-icon://chain-link`
-                               href = 'https://github.com/abap2UI5/abap2UI5' ).
+                               href = `https://github.com/abap2UI5/abap2UI5` ).
 
     DATA(site_content) = content->flex_box( id               = `site_content`
                                             class            = `sapUiTinyMarginTop sapUiTinyMarginBegin`
                                             width            = `100%`
                                             height           = `100%`
                                             backgrounddesign = `Solid`
-      alignitems                                             = 'Center'
-                                            justifycontent   = 'Center' )->layout_data( )->flex_item_data( growfactor     = '4'
+      alignitems                                             = `Center`
+                                            justifycontent   = `Center` )->layout_data( )->flex_item_data( growfactor     = `4`
                                                                                                          backgrounddesign = `Solid` )->get_parent( ).
 
     "Render content depending on the current site
@@ -185,7 +185,7 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      selected_menu_entry = 'Home'.
+      selected_menu_entry = `Home`.
     ENDIF.
 
     on_event( client ).

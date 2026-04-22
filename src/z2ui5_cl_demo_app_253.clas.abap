@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_253 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxCols' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxCols` ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding equalColumns`
                                           width = `100%`

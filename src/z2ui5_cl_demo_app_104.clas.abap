@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           headertext      = `List Ouput`
           items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
-          selectionchange = client->_event( val = 'SELCHANGE' )
+          selectionchange = client->_event( val = `SELCHANGE` )
           )->standard_list_item(
               title       = `{TITLE}`
               description = `{DESCR}`
@@ -148,8 +148,8 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         client->nest_view_display(
           val            = lo_view_nested->stringify( )
           id             = `test`
-          method_insert  = 'addMidColumnPage'
-          method_destroy = 'removeAllMidColumnPages' ).
+          method_insert  = `addMidColumnPage`
+          method_destroy = `removeAllMidColumnPages` ).
     ENDCASE.
 
     on_event_sub( ).

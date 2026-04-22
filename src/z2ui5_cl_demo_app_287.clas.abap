@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemWrapping' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemWrapping` ).
 
     page->list(
            id         = `myList`
@@ -66,12 +66,12 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
                    description   = `{DESC}`
                    icon          = `{ICON}`
                    iconinset     = abap_false
-                   highlight     = '{HIGHLIGHT}'
+                   highlight     = `{HIGHLIGHT}`
                    info          = `{INFO}`
                    infostate     = `{HIGHLIGHT}`
                    type          = `Detail`
                    wrapping      = abap_true
-                   wrapcharlimit = '{WRAPCHARLIMIT}' ).
+                   wrapcharlimit = `{WRAPCHARLIMIT}` ).
 
     client->view_display( page->stringify( ) ).
 

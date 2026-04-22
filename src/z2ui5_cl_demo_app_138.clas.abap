@@ -40,8 +40,8 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val  = 'tomato'.
-      quantity = '500'.
+      ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val  = `tomato`.
+      quantity = `500`.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display( view->shell(

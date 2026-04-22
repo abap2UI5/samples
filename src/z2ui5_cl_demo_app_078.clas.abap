@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       DATA(tab) = view->table(
         items = client->_bind_edit( mt_token )
-        mode  = 'MultiSelect' ).
+        mode  = `MultiSelect` ).
 
       tab->columns(
         )->column(
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
         )->column(
            )->text( `TEXT` ).
 
-      tab->items( )->column_list_item( selected = '{SELKZ}'
+      tab->items( )->column_list_item( selected = `{SELKZ}`
         )->cells(
             )->input( value   = `{KEY}`
                       enabled = `{EDITABLE}`

@@ -40,13 +40,13 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
                                        enablebranching = abap_true ).
     DATA(lr_wiz_step1) = lr_wizard->wizard_step( title     = `STEP1`
                                                  validated = abap_true
-                                                 nextstep  = 'STEP2' ).
+                                                 nextstep  = `STEP2` ).
     lr_wiz_step1->message_strip( `STEP1` ).
 
     DATA(lr_wiz_step2) = lr_wizard->wizard_step( id              = `STEP2`
                                                  title           = `STEP2`
                                                  validated       = abap_true
-                                                 subsequentsteps = 'STEP22, STEP23' ).
+                                                 subsequentsteps = `STEP22, STEP23` ).
 
     lr_wiz_step2->message_strip( `STEP2` ).
     lr_wiz_step2->button(
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
     IF av_init = abap_false.
       display_view( client ).
-      av_init = 'X'.
+      av_init = `X`.
       RETURN.
     ENDIF.
 

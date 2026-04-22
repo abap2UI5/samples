@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
         DATA ls_row TYPE ty_row.
         ls_row-count = sy-index.
         ls_row-value = `red`.
-        ls_row-descr = 'this is a description'.
+        ls_row-descr = `this is a description`.
         ls_row-checkbox = abap_true.
         ls_row-valuecolor = `Good`.
         INSERT ls_row INTO TABLE t_tab.

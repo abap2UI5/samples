@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectMarker/sample/sap.m.sample.ObjectMarker' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectMarker/sample/sap.m.sample.ObjectMarker` ).
 
     page->table( id = `idProductsTable`
            items    = client->_bind( lt_a_data )
@@ -69,10 +69,10 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                    text = `{PRODUCT}` )->get_parent(
                )->object_marker(
                    type           = `{TYPE}`
-                   additionalinfo = '{ADDITIONALINFO}' )->get_parent(
+                   additionalinfo = `{ADDITIONALINFO}` )->get_parent(
                )->object_marker(
                    type           = `{TYPE}`
-                   additionalinfo = '{ADDITIONALINFO}'
+                   additionalinfo = `{ADDITIONALINFO}`
                    press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
 
     client->view_display( page->stringify( ) ).

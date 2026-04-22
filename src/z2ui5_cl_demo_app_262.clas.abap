@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_262 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentDifColors' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentDifColors` ).
 
     page->numeric_content( value           = `888.8`
                            scale           = `MM`

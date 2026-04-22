@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemInfoStateInverted' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemInfoStateInverted` ).
 
     page->list(
            id         = `myList`
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
                    description       = `{DESC}`
                    icon              = `{ICON}`
                    iconinset         = abap_false
-                   highlight         = '{HIGHLIGHT}'
+                   highlight         = `{HIGHLIGHT}`
                    info              = `{INFO}`
                    infostate         = `{HIGHLIGHT}`
                    infostateinverted = abap_true ).

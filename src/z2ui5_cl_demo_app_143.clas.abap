@@ -43,11 +43,11 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
   METHOD ui5_on_init.
 
     gt_data = VALUE ty_t_data(
-      ( field1 = '21' field2 = 'T1' field3 = 'TEXT1' )
-      ( field1 = '22' field2 = 'T1' field3 = 'TEXT1' )
-      ( field1 = '23' field2 = 'T2' field3 = 'TEXT1' )
-      ( field1 = '24' field2 = 'T2' field3 = 'TEXT2' )
-      ( field1 = '25' field2 = 'T3' field3 = 'TEXT2' ) ).
+      ( field1 = `21` field2 = `T1` field3 = `TEXT1` )
+      ( field1 = `22` field2 = `T1` field3 = `TEXT1` )
+      ( field1 = `23` field2 = `T2` field3 = `TEXT1` )
+      ( field1 = `24` field2 = `T2` field3 = `TEXT2` )
+      ( field1 = `25` field2 = `T3` field3 = `TEXT2` ) ).
 
   ENDMETHOD.
 
@@ -77,27 +77,27 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 enablecellfilter   = abap_true
-                                rowactioncount     = '1'
-                                visiblerowcount    = '7'
+                                rowactioncount     = `1`
+                                visiblerowcount    = `7`
                                 enablegrouping     = abap_false
-                                fixedcolumncount   = '1'
-                                selectionmode      = 'None'
+                                fixedcolumncount   = `1`
+                                selectionmode      = `None`
                          )->ui_columns(
-                              )->ui_column( sortproperty   = 'FIELD1'
-                                            filterproperty = 'FIELD1'
-                                            autoresizable  = 'true'
+                              )->ui_column( sortproperty   = `FIELD1`
+                                            filterproperty = `FIELD1`
+                                            autoresizable  = `true`
                                              )->text( `Field1`
                                               )->ui_template( )->text( `{FIELD1}`
                                )->get_parent( )->get_parent(
-                               )->ui_column( sortproperty   = 'FIELD2'
-                                             filterproperty = 'FIELD2'
-                                             autoresizable  = 'true'
+                               )->ui_column( sortproperty   = `FIELD2`
+                                             filterproperty = `FIELD2`
+                                             autoresizable  = `true`
                                               )->text( `Field2`
                                                )->ui_template( )->text( `{FIELD2}`
                                )->get_parent( )->get_parent(
-                               )->ui_column( sortproperty   = 'FIELD3'
-                                             filterproperty = 'FIELD3'
-                                             autoresizable  = 'true'
+                               )->ui_column( sortproperty   = `FIELD3`
+                                             filterproperty = `FIELD3`
+                                             autoresizable  = `true`
                                               )->text( `Field3`
                                                )->ui_template( )->text( `{FIELD3}`
                          )->get_parent( )->get_parent( )->get_parent(

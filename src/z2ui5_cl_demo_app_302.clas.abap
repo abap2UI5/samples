@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectAttributeInTable' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectAttributeInTable` ).
 
     page->table( id = `idProductsTable`
            items    = client->_bind( lt_a_data )
@@ -115,16 +115,16 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
       display_view( client ).
 
       lt_a_data = VALUE #(
-        ( product = 'Power Projector 4713'    supplier = 'Robert Brown Entertainment' )
-        ( product = 'HT-1022'                 supplier = 'Pear Computing Services' )
-        ( product = 'Ergo Screen E-III'       supplier = 'DelBont Industries' )
-        ( product = 'Gladiator MX'            supplier = 'Asia High tech' )
-        ( product = 'Hurricane GX'            supplier = 'Telecomunicaciones Star' )
-        ( product = 'Notebook Basic 17'       supplier = 'Pear Computing Services' )
-        ( product = 'ITelO Vault SAT'         supplier = 'New Line Design' )
-        ( product = 'Hurricane GX'            supplier = 'Robert Brown Entertainment' )
-        ( product = 'Webcam'                  supplier = 'Getränkegroßhandel Janssen' )
-        ( product = 'Deskjet Super Highspeed' supplier = 'Vente Et Réparation de Ordinateur' ) ).
+        ( product = `Power Projector 4713`    supplier = `Robert Brown Entertainment` )
+        ( product = `HT-1022`                 supplier = `Pear Computing Services` )
+        ( product = `Ergo Screen E-III`       supplier = `DelBont Industries` )
+        ( product = `Gladiator MX`            supplier = `Asia High tech` )
+        ( product = `Hurricane GX`            supplier = `Telecomunicaciones Star` )
+        ( product = `Notebook Basic 17`       supplier = `Pear Computing Services` )
+        ( product = `ITelO Vault SAT`         supplier = `New Line Design` )
+        ( product = `Hurricane GX`            supplier = `Robert Brown Entertainment` )
+        ( product = `Webcam`                  supplier = `Getränkegroßhandel Janssen` )
+        ( product = `Deskjet Super Highspeed` supplier = `Vente Et Réparation de Ordinateur` ) ).
     ENDIF.
 
     on_event( client ).

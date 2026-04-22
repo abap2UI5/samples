@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SearchField/sample/sap.m.sample.SearchField' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SearchField/sample/sap.m.sample.SearchField` ).
 
     page_01->page( showheader = abap_false
               )->sub_header(

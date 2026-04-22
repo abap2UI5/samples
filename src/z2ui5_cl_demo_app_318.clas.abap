@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
 
     temp3->suggestion_items(
                 )->list_item( text           = `{N}`
-                              additionaltext = '{V}' ).
+                              additionaltext = `{V}` ).
 
     temp->label( '' )->button( text = `Download`
                     press           = client->_event( `DB_LOAD` )
@@ -77,8 +77,8 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      mv_path = '../../demo/text'.
-      mv_type = 'plain_text'.
+      mv_path = `../../demo/text`.
+      mv_type = `plain_text`.
       view_display( ).
     ENDIF.
 

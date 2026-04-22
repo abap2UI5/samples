@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
       ls_row-count = sy-index.
       ls_row-value = `red`.
 *        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
-      ls_row-descr = 'this is a description'.
+      ls_row-descr = `this is a description`.
       ls_row-checkbox = abap_true.
 *        percentage = COND #( WHEN sy-index <= 100 THEN sy-index ELSE '100' )
       ls_row-valuecolor = `Good`.
@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
             growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind_edit( t_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
 
     tab->header_toolbar(
         )->toolbar(
@@ -100,11 +100,11 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
             )->segmented_button( mv_key
                 )->items(
                     )->segmented_button_item(
-                        key  = 'BLUE'
+                        key  = `BLUE`
                         icon = `sap-icon://accept`
                         text = `blue`
                     )->segmented_button_item(
-                        key  = 'GREEN'
+                        key  = `GREEN`
                         icon = `sap-icon://add-favorite`
                         text = `green`
             )->get_parent( )->get_parent(
@@ -168,7 +168,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{INFO}'
        )->text( '{DESCR}'
-       )->checkbox( selected = '{CHECKBOX}'
+       )->checkbox( selected = `{CHECKBOX}`
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 

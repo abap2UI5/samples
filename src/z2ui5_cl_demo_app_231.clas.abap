@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelection' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelection` ).
 
     DATA(vbox) = page->vbox( ).
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
                  labelfor = `DRS1`
        )->date_range_selection(
             id              = `DRS1`
-            displayformat   = 'yyyy/MM/dd'
+            displayformat   = `yyyy/MM/dd`
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS2` ) ) )
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs1-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs1-end ) && ') }' ).
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
        )->date_range_selection(
             id              = `DRS4`
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS4` ) ) )
-            displayformat   = 'MM/yyyy'
+            displayformat   = `MM/yyyy`
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs4-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs4-end ) && ') }' ).
 
@@ -103,12 +103,12 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
        )->date_range_selection(
             id              = `DRS5`
             change          = client->_event( val = 'handleChange' t_arg = VALUE #( ( `DRS5` ) ) )
-            displayformat   = 'yyyy'
+            displayformat   = `yyyy`
             datevalue       = `{= Helper.DateCreateObject($` && client->_bind( drs5-start ) && ') }'
             seconddatevalue = `{= Helper.DateCreateObject($` && client->_bind( drs5-end ) && ') }' ).
 
     vbox->label( text     = `Change event`
-                 labelfor = 'TextEvent' ).
+                 labelfor = `TextEvent` ).
     vbox->text( id   = `TextEvent`
                 text = client->_bind_edit( text ) ).
 
@@ -119,20 +119,20 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
   METHOD initialize.
 
-    drs1-start = '20140202'.
-    drs1-end   = '20140217'.
+    drs1-start = `20140202`.
+    drs1-end   = `20140217`.
 
-    drs2-start = '20160216'.
-    drs2-end   = '20160218'.
+    drs2-start = `20160216`.
+    drs2-end   = `20160218`.
 
-    drs3-start = '20140202'.
-    drs3-end   = '20140217'.
+    drs3-start = `20140202`.
+    drs3-end   = `20140217`.
 
-    drs4-start = '20190401'.
-    drs4-end   = '20191001'.
+    drs4-start = `20190401`.
+    drs4-end   = `20191001`.
 
-    drs5-start = '20150101'.
-    drs5-end   = '20191001'.
+    drs5-start = `20150101`.
+    drs5-end   = `20191001`.
 
   ENDMETHOD.
 

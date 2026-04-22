@@ -68,8 +68,8 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
 
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory( i_tab             = mt_table
                                                                i_multiselect     = abap_false
-                                                               i_event_confirmed = 'POPUP_CONFIRMED'
-                                                               i_event_canceled  = 'POPUP_CANCEL' ) ).
+                                                               i_event_confirmed = `POPUP_CONFIRMED`
+                                                               i_event_canceled  = `POPUP_CANCEL` ) ).
 
       WHEN `BUTTON_POPUP_02`.
 

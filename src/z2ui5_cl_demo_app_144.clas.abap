@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
-            mode  = 'MultiSelect'
+            mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'title of the table'
@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
       )->columns(
         )->column( )->text( `Title` )->get_parent(
         )->column( )->text( `Value` )->get_parent( )->get_parent(
-      )->items( )->column_list_item( selected = '{SELKZ}'
+      )->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->input( '{TITLE}'
           )->input( `{VALUE}` ).

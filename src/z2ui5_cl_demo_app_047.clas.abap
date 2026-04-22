@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
             growingthreshold    = `20`
             growingscrolltoload = abap_true
             items               = client->_bind_edit( mt_tab )
-            sticky              = 'ColumnHeaders,HeaderToolbar' ).
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
 
     tab->columns(
         )->column(

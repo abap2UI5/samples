@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Breadcrumbs/sample/sap.m.sample.BreadcrumbsWithCurrentPageLink' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Breadcrumbs/sample/sap.m.sample.BreadcrumbsWithCurrentPageLink` ).
 
     page->vertical_layout(
             class = `sapUiContentPadding`
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
           )->select( class         = `sapUiSmallMarginBegin`
                        id          = `idSeparatorSelect`
                        selectedkey = `{/selected}`
-                       change      = 'onChange'
+                       change      = `onChange`
                         )->item( key  = `Slash`
                                  text = `Slash`
                         )->item( key  = `BackSlash`

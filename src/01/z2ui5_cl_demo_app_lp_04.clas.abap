@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
     ENDTRY.
     IF client->check_on_init( ).
 
-      quantity = '500'.
+      quantity = `500`.
 
       client->view_display( view->shell(
             )->page(

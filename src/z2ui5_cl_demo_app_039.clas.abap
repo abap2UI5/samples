@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    mv_value  = '200'.
+    mv_value  = `200`.
 
   ENDMETHOD.
 

@@ -26,8 +26,8 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
                                      size          = `L`
 *                                   height        =
 *                                   width         =
-                                     total         = '10'
-                                     totallabel    = '11'
+                                     total         = `10`
+                                     totallabel    = `11`
 *                                   aligncontent  =
 *                                   hideonnodata  =
 *                                   formattedlabel =
@@ -38,9 +38,9 @@ CLASS z2ui5_cl_demo_app_308 IMPLEMENTATION.
 *                                   result        =
         )->harveyballmicrochartitem(
 *                                 id            =
-                                   color         = 'Good'
-                                   fraction      = '8'
-                                   fractionscale = 'Mrd'
+                                   color         = `Good`
+                                   fraction      = `8`
+                                   fractionscale = `Mrd`
 *                                 class         =
 *  RECEIVING
 *                                 result        =

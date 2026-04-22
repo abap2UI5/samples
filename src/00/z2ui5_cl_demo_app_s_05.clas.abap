@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
     SELECT
       SINGLE FROM icfservloc
       FIELDS icfactive
-      WHERE icf_name = 'Z2UI5_SAMPLE'
+      WHERE icf_name = `Z2UI5_SAMPLE`
       INTO @DATA(icfactive).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

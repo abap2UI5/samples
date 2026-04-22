@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
   METHOD z2ui5_on_init.
 
     mv_counter = 1.
-    mv_key = 'VIEW_REFRESH'.
+    mv_key = `VIEW_REFRESH`.
     t_tab = VALUE #(
             ( title = `entry` && mv_counter  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
 
@@ -91,11 +91,11 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     page->segmented_button( client->_bind_edit( mv_key )
         )->items(
             )->segmented_button_item(
-                key  = 'VIEW_REFRESH'
+                key  = `VIEW_REFRESH`
 *                icon = 'sap-icon://accept'
                 text = `Old (rerender View)`
             )->segmented_button_item(
-                key  = 'MODEL_ONLY'
+                key  = `MODEL_ONLY`
 *                icon = 'sap-icon://add-favorite'
                 text = `New (update only Model)` ).
 

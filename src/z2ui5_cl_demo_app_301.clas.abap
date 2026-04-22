@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ExpandableText/sample/sap.m.sample.ExpandableText' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ExpandableText/sample/sap.m.sample.ExpandableText` ).
 
     page_01->table( mode       = `MultiSelect`
                  items         = client->_bind( lt_o_data )
@@ -138,30 +138,30 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
         attribute_1   = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `  &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2   = 'Attribute related to label'
-        status        = 'Some status'
-        overflow_mode = 'InPlace' )
+        attribute_2   = `Attribute related to label`
+        status        = `Some status`
+        overflow_mode = `InPlace` )
       ( name          = `Product 2`
         attribute_1   = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `      &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2   = 'Attribute related to label'
-        status        = 'Some status'
-        overflow_mode = 'Popover' )
+        attribute_2   = `Attribute related to label`
+        status        = `Some status`
+        overflow_mode = `Popover` )
       ( name          = `Product 3`
         attribute_1   = `The full text is displayed in place. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `  &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2   = 'Attribute related to label'
-        status        = 'Some status'
-        overflow_mode = 'InPlace' )
+        attribute_2   = `Attribute related to label`
+        status        = `Some status`
+        overflow_mode = `InPlace` )
       ( name          = `Product 4`
         attribute_1   = `The full text is displayed in a popover. Lorem ipsum dolor sit amet, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                       `At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore `      &&
                       `et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr`
-        attribute_2   = 'Attribute related to label'
-        status        = 'Some status'
-        overflow_mode = 'Popover' ) ).
+        attribute_2   = `Attribute related to label`
+        status        = `Some status`
+        overflow_mode = `Popover` ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -93,13 +93,13 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     screen = VALUE #(
         check_is_active = abap_true
-        colour          = 'BLUE'
-        combo_key       = 'GRAY'
-        segment_key     = 'GREEN'
-        date            = '07.12.22'
-        date_time       = '23.12.2022, 19:27:20'
-        time_start      = '05:24:00'
-        time_end        = '17:23:57').
+        colour          = `BLUE`
+        combo_key       = `GRAY`
+        segment_key     = `GREEN`
+        date            = `07.12.22`
+        date_time       = `23.12.2022, 19:27:20`
+        time_start      = `05:24:00`
+        time_end        = `17:23:57`).
 
     mt_suggestion = VALUE #(
         ( descr = 'Green'  value = `GREEN` )

@@ -18,8 +18,8 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      numeric = '000000000012'.
-      amount = '123456789.123'.
+      numeric = `000000000012`.
+      amount = `123456789.123`.
       currency = `USD`.
 
     ENDIF.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->title( 'Input'
          )->label( 'Documentation'
          )->link( text = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
-                  href = 'https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency'
+                  href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
          )->label( 'One field'
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
       )->title( 'Input'
       )->label( 'Documentation'
       )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-         href       = 'https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue'
+         href       = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
       )->label( 'Numeric'
       )->input( client->_bind_edit( val = numeric )
 

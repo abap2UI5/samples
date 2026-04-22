@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithIcons' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectWithIcons` ).
 
     page_01->page(
                 showheader = abap_false
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
                           selectedkey    = client->_bind( selected_product )
                           items          = client->_bind( lt_product_collection )
                           )->item(
-                          )->list_item( key  = '{PRODUCT_ID}'
+                          )->list_item( key  = `{PRODUCT_ID}`
                                         text = `{NAME}`
                                         icon = `{ICON}`
                         )->get_parent(

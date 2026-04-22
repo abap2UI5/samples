@@ -30,38 +30,38 @@ CLASS z2ui5_cl_demo_app_062 IMPLEMENTATION.
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
     layout->generic_tag(
-            arialabelledby = 'genericTagLabel'
+            arialabelledby = `genericTagLabel`
             text           = `Project Cost`
             design         = `StatusIconHidden`
-            status         = 'Error'
+            status         = `Error`
             class          = `sapUiSmallMarginBottom`
         )->object_number(
             state      = `Error`
-            emphasized = 'false'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            emphasized = `false`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     layout->generic_tag(
-        arialabelledby = 'genericTagLabel'
+        arialabelledby = `genericTagLabel`
         text           = `Project Cost`
         design         = `StatusIconHidden`
-        status         = 'Success'
+        status         = `Success`
         class          = `sapUiSmallMarginBottom`
         )->object_number(
             state      = `Success`
-            emphasized = 'false'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            emphasized = `false`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     layout->generic_tag(
-        arialabelledby = 'genericTagLabel'
+        arialabelledby = `genericTagLabel`
         text           = `Input`
         design         = `StatusIconHidden`
         class          = `sapUiSmallMarginBottom`
         )->object_number(
-            emphasized = 'true'
-            number     = '3.5M'
-            unit       = 'EUR' ).
+            emphasized = `true`
+            number     = `3.5M`
+            unit       = `EUR` ).
 
     client->view_display( page->stringify( ) ).
 

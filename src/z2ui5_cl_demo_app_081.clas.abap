@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
               )->list(
                 items           = client->_bind_edit( mt_tab )
 *                selectionchange = client->_event( 'SEL_CHANGE' t_arg = VALUE #( ( `${$parameters>/listItem}` ) ) )
-                selectionchange = client->_event( val = 'SEL_CHANGE' )
+                selectionchange = client->_event( val = `SEL_CHANGE` )
                 mode            = `SingleSelectMaster`
                  )->standard_list_item(
                   title       = `{ID}`
@@ -98,24 +98,24 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->title( 'Input'
                   )->label( 'Link'
                   )->link( text = `Documentation UI5 Popover Control`
-                           href = 'https://openui5.hana.ondemand.com/entity/sap.m.Popover'
+                           href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
                   )->label( 'placement'
                   )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
-                                key  = 'Left'
+                                key  = `Left`
                                 icon = `sap-icon://add-favorite`
                                 text = `Left`
                         )->segmented_button_item(
-                                key  = 'Top'
+                                key  = `Top`
                                 icon = `sap-icon://accept`
                                 text = `Top`
                         )->segmented_button_item(
-                                key  = 'Bottom'
+                                key  = `Bottom`
                                 icon = `sap-icon://accept`
                                 text = `Bottom`
                         )->segmented_button_item(
-                                key  = 'Right'
+                                key  = `Right`
                                 icon = `sap-icon://attachment`
                                 text = `Right`
                   )->get_parent( )->get_parent(
@@ -173,9 +173,9 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
   METHOD z2ui5_on_init.
 
-    mv_placement = 'Left'.
-    product  = 'tomato'.
-    quantity = '500'.
+    mv_placement = `Left`.
+    product  = `tomato`.
+    quantity = `500`.
 
     mt_tab = VALUE #(
                       ( id = `1` name = `name1` )

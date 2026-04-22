@@ -42,16 +42,16 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
       ls_output-index = sy-index.
       ls_output-text = `Text`.
-      ls_output-link = 'Link'.
-      ls_output-currency = '123.45'.
-      ls_output-waers = 'EUR'.
+      ls_output-link = `Link`.
+      ls_output-currency = `123.45`.
+      ls_output-waers = `EUR`.
 
       IF sy-index = 1.
         ls_output-bool = abap_false.
-        ls_output-percent1 = '100.00'.
+        ls_output-percent1 = `100.00`.
       ELSE.
         ls_output-bool = abap_true.
-        ls_output-percent1 = '10.00'.
+        ls_output-percent1 = `10.00`.
       ENDIF.
 
       APPEND ls_output TO output.
@@ -115,36 +115,36 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
                     ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
     DATA(table) = page->ui_table( id                  = `tab`
-                                  alternaterowcolors  = 'true'
-                                  visiblerowcountmode = 'Auto'
-         fixedrowcount                                = '1'
-                                  selectionmode       = 'None'
+                                  alternaterowcolors  = `true`
+                                  visiblerowcountmode = `Auto`
+         fixedrowcount                                = `1`
+                                  selectionmode       = `None`
                                   rows                = client->_bind_edit( val = output ) ).
     DATA(columns) = table->ui_columns( ).
 
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'TEXT'
+                        sortproperty   = `TEXT`
                         filterproperty = 'TEXT' )->text( 'Text Column' )->ui_template( )->text( `{TEXT}` ).
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'LINK'
+                        sortproperty   = `LINK`
                         filterproperty = 'LINK' )->text( 'Link Column' )->ui_template( )->link( text = `{LINK}`
       press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = VALUE #( ( `${INDEX}`) ) ) ).
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'CURRENCY'
+                        sortproperty   = `CURRENCY`
                         filterproperty = 'CURRENCY' )->text( `Currency Column` )->ui_template( )->text(
       `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'PERCENT1'
+                        sortproperty   = `PERCENT1`
                         filterproperty = 'PERCENT1' )->text( 'Percentage' )->ui_template( )->text( `{PERCENT1} %` ).
 
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'INPUT1'
+                        sortproperty   = `INPUT1`
                         filterproperty = 'INPUT1' )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT1}`
       enabled         = `{BOOL}`
-      change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
+      change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` ) "Access the id of the HTML element
         ( `${INDEX}` ) "Access the value of the index column of the row where the user made a change
         ( `$event.oSource.oParent.sId` ) "Access the id of the parent element
@@ -153,13 +153,13 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       type            = `Number` ).
 
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'INPUT2'
-                        filterproperty = 'INPUT2' )->text( 'Input Column'
+                        sortproperty   = `INPUT2`
+                        filterproperty = `INPUT2` )->text( 'Input Column'
       )->ui_template(
       )->input(
       value     = `{INPUT2}`
       enabled   = `{BOOL}`
-      change    = client->_event( val = 'INPUT_CHANGE'
+      change    = client->_event( val = `INPUT_CHANGE`
         t_arg                         = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
@@ -171,11 +171,11 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
        type     = `Number` ).
 
     columns->ui_column( width          = `8rem`
-                        sortproperty   = 'INPUT3'
+                        sortproperty   = `INPUT3`
                         filterproperty = 'INPUT3' )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT3}`
       enabled         = `{BOOL}`
-      change          = client->_event( val = 'INPUT_CHANGE' t_arg = VALUE #(
+      change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
         ( `$event.oSource.oParent.sId` )

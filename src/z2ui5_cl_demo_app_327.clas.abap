@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                                ( type = `session` ) ).
       storage = VALUE #( type   = `local`
                          prefix = `prefix1`
-                         key    = 'key1'
+                         key    = `key1`
 *                         value  = VALUE #( field1 = 1
 *                         field2 = 'textfld1' )
                                            ).
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
                       )->select( forceselection = abap_true
                                  selectedkey    = client->_bind_edit( storage-type )
                                  items          = client->_bind( storage_types )
-                          )->item( key  = '{TYPE}'
+                          )->item( key  = `{TYPE}`
                                    text = `{TYPE}`
                           )->get_parent(
                 )->label( 'Prefix'

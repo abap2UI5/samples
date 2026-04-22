@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      product  = 'tomato'.
-      quantity = '500'.
+      product  = `tomato`.
+      quantity = `500`.
     ENDIF.
 
     CASE client->get( )-event.

@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = 'https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StepInput/sample/sap.m.sample.StepInputValueState' ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StepInput/sample/sap.m.sample.StepInputValueState` ).
 
     page->flex_box( items     = client->_bind( lt_a_data )
                     direction = `Column`
@@ -104,14 +104,14 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
     IF client->check_on_init( ).
       display_view( client ).
 
-      s_text = 'StepInput with valueState '.
+      s_text = `StepInput with valueState `.
 
       lt_a_data = VALUE #(
-        ( value_state = 'None' )
-        ( value_state = 'Information' )
-        ( value_state = 'Success' )
-        ( value_state = 'Warning' )
-        ( value_state = 'Error' ) ).
+        ( value_state = `None` )
+        ( value_state = `Information` )
+        ( value_state = `Success` )
+        ( value_state = `Warning` )
+        ( value_state = `Error` ) ).
 
       " Use field symbols to concatenate the string and store it in the label column
 

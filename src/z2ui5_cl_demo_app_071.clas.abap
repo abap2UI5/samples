@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                         )->get_parent( )->get_parent(
                      )->button(
                          text  = `Press 2x update`
-                         press = client->_event( val = 'UPDATE' )
+                         press = client->_event( val = `UPDATE` )
         )->stringify( ) ).
 
   ENDMETHOD.

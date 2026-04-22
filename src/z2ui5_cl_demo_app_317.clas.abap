@@ -141,7 +141,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
         )->standard_tree_item( title = `{TEXT}`
         )->get(
           )->custom_data(
-              )->core_custom_data( key   = 'ID'
+              )->core_custom_data( key   = `ID`
                                    value = `{ID}`).
 
     tree->drag_drop_config( `` )->drag_drop_info(
@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       targetaggregation = `items`
       dragstart         = `Horizontal`
       drop              = client->_event(
-                              val   = 'onDrop'
+                              val   = `onDrop`
                               t_arg = VALUE #(
                            ( `${$parameters>/draggedControl/mAggregations/customData/0/mProperties/value}` )
                            ( `${$parameters>/droppedControl/mAggregations/customData/0/mProperties/value}` )

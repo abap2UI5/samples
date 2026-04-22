@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     DATA(tab) = page->table(
             items = client->_bind_edit( t_tab )
-            mode  = 'MultiSelect'
+            mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( 'change cell color'
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
         )->text( '{TITLE}'
           )->get(
             )->custom_data(
-              )->core_custom_data( key        = 'color'
+              )->core_custom_data( key        = `color`
                                    value      = `{VALUE}`
                                    writetodom = abap_true
             )->get_parent(
