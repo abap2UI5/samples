@@ -42,6 +42,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     DATA mt_table_supplier TYPE ty_t_table_supplier.
     DATA mv_search_value TYPE string.
     DATA ls_detail TYPE ty_s_tab.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -51,6 +52,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS z2ui5_on_event.
     METHODS z2ui5_on_init.
     METHODS z2ui5_set_search.
+
   PRIVATE SECTION.
     DATA lv_layout TYPE string.
     DATA lv_sort_desc TYPE abap_bool VALUE abap_true.

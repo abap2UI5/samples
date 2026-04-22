@@ -40,6 +40,7 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

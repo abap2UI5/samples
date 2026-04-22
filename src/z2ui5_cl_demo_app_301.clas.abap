@@ -13,6 +13,7 @@ CLASS z2ui5_cl_demo_app_301 DEFINITION PUBLIC.
       END OF ty_product.
 
     DATA lt_o_data TYPE TABLE OF ty_product.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

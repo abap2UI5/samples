@@ -32,6 +32,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
       END OF screen.
     DATA
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
+
   PROTECTED SECTION.
     METHODS z2ui5_on_rendering
       IMPORTING
@@ -47,6 +48,7 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
       IMPORTING
         id     TYPE string
         client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

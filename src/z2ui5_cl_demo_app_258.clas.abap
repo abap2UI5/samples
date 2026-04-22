@@ -3,6 +3,7 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA selected_menu_entry TYPE string.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -17,6 +18,7 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC.
       !client       TYPE REF TO z2ui5_if_client
       CHANGING
       !site_content TYPE REF TO z2ui5_cl_xml_view.
+
   PRIVATE SECTION.
 ENDCLASS.
 

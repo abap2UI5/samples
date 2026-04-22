@@ -18,6 +18,7 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     METHODS ui5_on_init.
     METHODS ui5_on_event.
     METHODS ui5_view_main_display.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

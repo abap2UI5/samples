@@ -90,6 +90,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     DATA mv_description_copy TYPE string.
     DATA mv_variant_copy TYPE string.
     DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view.
+
   PROTECTED SECTION.
     METHODS on_init.
 

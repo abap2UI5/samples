@@ -39,6 +39,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
     DATA selected_picture TYPE ty_picture.
     DATA client           TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

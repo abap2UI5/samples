@@ -2,6 +2,7 @@ CLASS z2ui5_cl_demo_app_261 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -14,6 +15,7 @@ CLASS z2ui5_cl_demo_app_261 DEFINITION PUBLIC.
     METHODS popover_display
       IMPORTING
         id TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 

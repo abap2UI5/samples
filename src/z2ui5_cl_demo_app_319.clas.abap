@@ -28,10 +28,12 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
           ranges         TYPE t_ranges,
         END OF product_type,
       END OF m_selection.
+
   PROTECTED SECTION.
     DATA m_client TYPE REF TO z2ui5_if_client.
     METHODS on_init.
     METHODS on_event.
+
   PRIVATE SECTION.
 ENDCLASS.
 

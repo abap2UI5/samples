@@ -14,6 +14,7 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
     DATA
       mt_items TYPE TABLE OF ty_items WITH DEFAULT KEY.
     DATA mv_file_raw TYPE string.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

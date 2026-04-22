@@ -13,6 +13,7 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
     METHODS display_view
       CHANGING
         !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

@@ -16,6 +16,7 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
     DATA
       mt_suggestion TYPE STANDARD TABLE OF ty_s_currency.
     DATA input TYPE string.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

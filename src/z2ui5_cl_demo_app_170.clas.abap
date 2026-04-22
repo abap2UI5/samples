@@ -10,6 +10,7 @@ CLASS z2ui5_cl_demo_app_170 DEFINITION PUBLIC.
     METHODS ui5_event.
     METHODS simple_popup1.
     METHODS simple_popup2.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

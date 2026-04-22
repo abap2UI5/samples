@@ -33,6 +33,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
     DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
     DATA lv_selkz TYPE abap_bool.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

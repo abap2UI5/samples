@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_086 DEFINITION PUBLIC.
       END OF ty_s_tab_supplier.
 
     DATA ls_detail_supplier TYPE ty_s_tab_supplier.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

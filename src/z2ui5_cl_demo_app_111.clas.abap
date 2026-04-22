@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
     DATA mv_create_by TYPE string.
     DATA mv_storage_location TYPE string.
     DATA mv_quantity TYPE string.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

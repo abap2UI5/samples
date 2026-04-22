@@ -5,6 +5,7 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC.
     DATA file_content_64 TYPE string.
     DATA file_name TYPE string.
     DATA mime_type TYPE string.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

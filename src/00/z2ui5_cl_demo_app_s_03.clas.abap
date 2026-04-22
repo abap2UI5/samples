@@ -7,6 +7,7 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
             text TYPE string VALUE IS INITIAL,
             type TYPE string VALUE 'None',
           END OF message.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
