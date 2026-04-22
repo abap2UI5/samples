@@ -11,11 +11,12 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC.
       focus_field TYPE string.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS render.
     METHODS dispatch.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

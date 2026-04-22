@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
     DATA session_text TYPE string READ-ONLY.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     METHODS initialize_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -21,6 +20,8 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
       IMPORTING
         client   TYPE REF TO z2ui5_if_client
         stateful TYPE abap_bool.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

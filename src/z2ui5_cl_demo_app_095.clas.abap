@@ -33,8 +33,9 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
     METHODS on_event_sub.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

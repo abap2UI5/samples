@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
       END OF c_msg.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     CLASS-METHODS:
       get_producer
         RETURNING
@@ -32,6 +31,8 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
           i_message TYPE string
         RAISING
           cx_amc_error.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

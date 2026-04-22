@@ -11,12 +11,13 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
     DATA mt_shapes TYPE TABLE OF ty_shape.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS initialize.
     METHODS on_event.
     METHODS render_screen.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

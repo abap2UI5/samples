@@ -28,8 +28,9 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
     METHODS view_build.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

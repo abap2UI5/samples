@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
       END OF error.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     METHODS initialize_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
@@ -29,6 +28,8 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
         stateful TYPE abap_bool.
 
     METHODS update_lock_counter.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

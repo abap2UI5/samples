@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_344 DEFINITION PUBLIC.
         !client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     METHODS xml_table
       IMPORTING
         i_page   TYPE REF TO z2ui5_cl_xml_view
@@ -30,6 +29,8 @@ CLASS z2ui5_cl_demo_app_344 DEFINITION PUBLIC.
         iv_tabname    TYPE string
       RETURNING
         VALUE(result) TYPE abap_component_tab.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
       text    TYPE string.
 
   PROTECTED SECTION.
-  PRIVATE SECTION.
     METHODS:
       display_view
         IMPORTING
@@ -29,6 +28,8 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
       on_event
         IMPORTING
           client TYPE REF TO z2ui5_if_client.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 
