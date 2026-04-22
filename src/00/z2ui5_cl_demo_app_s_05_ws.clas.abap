@@ -18,17 +18,16 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
     METHODS if_apc_wsp_extension~on_start REDEFINITION.
     METHODS if_apc_wsp_extension~on_close REDEFINITION.
   PROTECTED SECTION.
-    CLASS-METHODS:
-      get_producer
-        RETURNING
-          VALUE(producer) TYPE REF TO if_amc_message_producer_text
-        RAISING
-          cx_amc_error,
-      send
-        IMPORTING
-          i_message TYPE string
-        RAISING
-          cx_amc_error.
+    CLASS-METHODS get_producer
+      RETURNING
+        VALUE(producer) TYPE REF TO if_amc_message_producer_text
+      RAISING
+        cx_amc_error.
+    CLASS-METHODS send
+      IMPORTING
+        i_message TYPE string
+      RAISING
+        cx_amc_error.
   PRIVATE SECTION.
 ENDCLASS.
 
