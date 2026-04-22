@@ -5,7 +5,6 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
 
     DATA mv_view_display TYPE abap_bool.
     DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
-    DATA mv_init         TYPE abap_bool.
     DATA mv_table        TYPE string.
 
     DATA mt_data_tmp    TYPE REF TO data.
@@ -174,11 +173,9 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF mv_init IS INITIAL.
-      mv_init = abap_true.
+    IF client->check_on_init( ).
 
       get_data( ).
-
       render_main( client ).
 
     ENDIF.
