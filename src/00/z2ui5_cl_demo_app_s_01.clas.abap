@@ -139,7 +139,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
     TRY.
 
-        CLEAR error.
+        error = VALUE #( ).
 
         IF client->check_on_init( ).
           update_lock_counter( ).

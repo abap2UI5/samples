@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
         ENDIF.
 
       WHEN `CONFIRM_FILTER`.
-        CLEAR mv_filter.
+        mv_filter = VALUE #( ).
         lt_arg = client->get( )-t_event_arg.
 
         IF lt_arg IS NOT INITIAL.
@@ -153,7 +153,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
               SORT t_tab BY (group_field) ASCENDING.
             ENDIF.
 
-            CLEAR mv_sorter_group.
+            mv_sorter_group = VALUE #( ).
           ENDIF.
 
           z2ui5_view_display( ).

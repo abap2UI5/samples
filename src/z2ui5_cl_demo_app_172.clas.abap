@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
   METHOD load_output_table.
 
     DATA ls_output TYPE ty_output.
-    CLEAR output.
+    output = VALUE #( ).
 
     DO 11 TIMES.
 

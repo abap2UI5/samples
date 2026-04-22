@@ -112,7 +112,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         ENDIF.
 
       WHEN `FILTER_VALUE_HELP_OK`.
-        CLEAR ms_filter-product.
+        ms_filter-product = VALUE #( ).
         LOOP AT mt_filter REFERENCE INTO DATA(lr_filter).
           INSERT VALUE #(
               sign   = `I`

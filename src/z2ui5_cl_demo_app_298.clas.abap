@@ -164,10 +164,10 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD z2ui5_set_data.
 
-    CLEAR selectedproducterrorcollection.
-    CLEAR selectedproductwrnngcollection.
-    CLEAR selectedproductsccsscollection.
-    CLEAR selectedproductinforcollection.
+    selectedproducterrorcollection = VALUE #( ).
+    selectedproductwrnngcollection = VALUE #( ).
+    selectedproductsccsscollection = VALUE #( ).
+    selectedproductinforcollection = VALUE #( ).
     lt_a_products = VALUE #( ).
 
     selectedproducterrorcollection  = `HT-998`.

@@ -134,8 +134,8 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
         INSERT VALUE #( data      = mv_picture_base
                         thumbnail = mv_picture_thumb
                         time      = sy-uzeit ) INTO TABLE mt_picture.
-        CLEAR mv_picture_base.
-        CLEAR mv_picture_thumb.
+        mv_picture_base = VALUE #( ).
+        mv_picture_thumb = VALUE #( ).
         client->view_model_update( ).
 
       WHEN `DISPLAY`.

@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     ENDTRY.
 
     IF confirm_leave = abap_true.
-      CLEAR dirty.
+      dirty = VALUE #( ).
       client->nav_app_leave( ).
     ENDIF.
 

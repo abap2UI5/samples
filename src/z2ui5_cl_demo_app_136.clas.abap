@@ -45,8 +45,8 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
             ui5_view_main_display( ).
 
-            CLEAR mv_value.
-            CLEAR mv_path.
+            mv_value = VALUE #( ).
+            mv_path = VALUE #( ).
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).

@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp5 TYPE abap_bool.
     DATA layout TYPE REF TO z2ui5_cl_xml_view.
-    CLEAR temp1.
+    temp1 = VALUE #( ).
 
     mv_check_enabled = abap_true.
     view = z2ui5_cl_xml_view=>factory( ).

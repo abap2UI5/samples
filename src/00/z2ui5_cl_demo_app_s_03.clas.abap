@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
         message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.
-      CLEAR magic_key.
+      magic_key = VALUE #( ).
       client->view_model_update( ).
     ENDIF.
 

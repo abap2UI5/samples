@@ -569,8 +569,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         get_fields( ).
 
-        CLEAR mv_variant.
-        CLEAR mv_description.
+        mv_variant = VALUE #( ).
+        mv_description = VALUE #( ).
 
         get_variants( ).
 
