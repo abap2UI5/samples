@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     DATA(vbox) = page->vbox( ).
     DATA(hbox) = vbox->hbox( alignitems = `Center` ).
     hbox->title(
-      'Current Lock Value in Table ZTEST' ).
+      `Current Lock Value in Table ZTEST` ).
     hbox->input(
       editable = abap_false
       value    = client->_bind_edit( varkey ) ).

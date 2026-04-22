@@ -63,12 +63,12 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( selkz = abap_false row_id = '1' product = 'table'    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = 'ST' price = '1000.50' waers = 'EUR' process = '10'  process_state = 'None' )
-        ( selkz = abap_false row_id = '2' product = 'chair'    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = 'ST' price = '2000.55' waers = 'USD' process = '20' process_state = 'Warning' )
-        ( selkz = abap_false row_id = '3' product = 'sofa'     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = 'ST' price = '3000.11' waers = 'CNY' process = '30' process_state = 'Success' )
-        ( selkz = abap_false row_id = '4' product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = 'ST' price = '4000.88' waers = 'USD' process = '40' process_state = 'Information' )
-        ( selkz = abap_false row_id = '5' product = 'printer'  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = 'ST' price = '5000.47' waers = 'EUR' process = '70' process_state = 'Warning' )
-        ( selkz = abap_false row_id = '6' product = 'table2'   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = 'ST' price = '6000.33' waers = 'GBP' process = '90'  process_state = 'Error' ) ).
+        ( selkz = abap_false row_id = `1` product = `table`    create_date = `01.01.2023` create_by = `Olaf` storage_location = `AREA_001` quantity = 400  meins = `ST` price = `1000.50` waers = `EUR` process = `10`  process_state = `None` )
+        ( selkz = abap_false row_id = `2` product = `chair`    create_date = `01.01.2022` create_by = `Karlo` storage_location = `AREA_001` quantity = 123   meins = `ST` price = `2000.55` waers = `USD` process = `20` process_state = `Warning` )
+        ( selkz = abap_false row_id = `3` product = `sofa`     create_date = `01.05.2021` create_by = `Elin` storage_location = `AREA_002` quantity = 700   meins = `ST` price = `3000.11` waers = `CNY` process = `30` process_state = `Success` )
+        ( selkz = abap_false row_id = `4` product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_002` quantity = 200  meins = `ST` price = `4000.88` waers = `USD` process = `40` process_state = `Information` )
+        ( selkz = abap_false row_id = `5` product = `printer`  create_date = `01.01.2023` create_by = `Renate` storage_location = `AREA_003` quantity = 90   meins = `ST` price = `5000.47` waers = `EUR` process = `70` process_state = `Warning` )
+        ( selkz = abap_false row_id = `6` product = `table2`   create_date = `01.01.2023` create_by = `Angela` storage_location = `AREA_003` quantity = 110  meins = `ST` price = `6000.33` waers = `GBP` process = `90`  process_state = `Error` ) ).
 
   ENDMETHOD.
 
@@ -108,10 +108,10 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
     lo_columns->ui_column( width                         = `5rem`
                            sortproperty                  = `ROW_ID`
-                                          filterproperty = 'ROW_ID' )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
+                                          filterproperty = `ROW_ID` )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PROCESS`
-                           filterproperty = 'PROCESS' )->text( `Process Indicator`
+                           filterproperty = `PROCESS` )->text( `Process Indicator`
       )->ui_template( )->progress_indicator( class        = `sapUiSmallMarginBottom`
                                              percentvalue = `{PROCESS}`
                                              displayvalue = `{PROCESS} %`
@@ -119,33 +119,33 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
                                              state        = `{PROCESS_STATE}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PRODUCT`
-                           filterproperty = 'PRODUCT' )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
+                           filterproperty = `PRODUCT` )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
                                                                                                           editable = abap_false ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `CREATE_DATE`
-                           filterproperty = 'CREATE_DATE' )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
+                           filterproperty = `CREATE_DATE` )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `CREATE_BY`
-                           filterproperty = 'CREATE_BY' )->text( `Name` )->ui_template( )->text( `{CREATE_BY}` ).
+                           filterproperty = `CREATE_BY` )->text( `Name` )->ui_template( )->text( `{CREATE_BY}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `STORAGE_LOCATION`
-                           filterproperty = 'STORAGE_LOCATION' )->text( `Location` )->ui_template( )->text( `{STORAGE_LOCATION}` ).
+                           filterproperty = `STORAGE_LOCATION` )->text( `Location` )->ui_template( )->text( `{STORAGE_LOCATION}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `QUANTITY`
-                           filterproperty = 'QUANTITY' )->text( `Quantity` )->ui_template( )->text( `{QUANTITY}` ).
+                           filterproperty = `QUANTITY` )->text( `Quantity` )->ui_template( )->text( `{QUANTITY}` ).
     lo_columns->ui_column( width          = `6rem`
                            sortproperty   = `MEINS`
-                           filterproperty = 'MEINS' )->text( `Unit` )->ui_template( )->text( `{MEINS}` ).
+                           filterproperty = `MEINS` )->text( `Unit` )->ui_template( )->text( `{MEINS}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PRICE`
-                           filterproperty = 'PRICE' )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
+                           filterproperty = `PRICE` )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
                                                                                                          currency = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
       )->ui_row_action_item( type = `Navigation`
-                           press  = client->_event( val = 'ROW_ACTION_ITEM_NAVIGATION' t_arg = VALUE #( ( `${ROW_ID}` ) ) )
+                           press  = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
                           )->get_parent( )->ui_row_action_item( icon  = `sap-icon://edit`
                                                                 text  = `Edit`
-                                                                press = client->_event( val = 'ROW_ACTION_ITEM_EDIT' t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+                                                                press = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 *
 
     client->view_display( view->stringify( ) ).

@@ -114,16 +114,16 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
       display_view( client ).
 
       lt_a_data = VALUE #(
-        ( product = 'Power Projector 4713'    type = `Locked` )
-        ( product = 'Power Projector 4713'    type = `LockedBy` additionalinfo = 'John Doe' )
-        ( product = 'Power Projector 4713'    type = `LockedBy` )
-        ( product = 'Gladiator MX'            type = `Draft` )
-        ( product = 'Hurricane GX'            type = `Unsaved` )
-        ( product = 'Hurricane GX'            type = `UnsavedBy` additionalinfo = 'John Doe' )
-        ( product = 'Hurricane GX'            type = `UnsavedBy` )
-        ( product = 'Hurricane GX'            type = `Unsaved` )
-        ( product = 'Webcam'                  type = `Favorite` )
-        ( product = 'Deskjet Super Highspeed' type = `Flagged` ) ).
+        ( product = `Power Projector 4713`    type = `Locked` )
+        ( product = `Power Projector 4713`    type = `LockedBy` additionalinfo = `John Doe` )
+        ( product = `Power Projector 4713`    type = `LockedBy` )
+        ( product = `Gladiator MX`            type = `Draft` )
+        ( product = `Hurricane GX`            type = `Unsaved` )
+        ( product = `Hurricane GX`            type = `UnsavedBy` additionalinfo = `John Doe` )
+        ( product = `Hurricane GX`            type = `UnsavedBy` )
+        ( product = `Hurricane GX`            type = `Unsaved` )
+        ( product = `Webcam`                  type = `Favorite` )
+        ( product = `Deskjet Super Highspeed` type = `Flagged` ) ).
 
     ENDIF.
 

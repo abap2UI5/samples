@@ -31,12 +31,12 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
       mv_display = `LIST`.
 
       t_tab = VALUE #(
-        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Peter`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Peter`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Peter`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Peter`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Peter`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
     ELSE.
 

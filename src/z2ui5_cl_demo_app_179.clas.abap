@@ -227,9 +227,9 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     column->ui_custom_data( )->core_custom_data(
        key    = `exportTableColumnConfig`
         value = `{"columnKey": "OBJECTNAME",` && |\r\n| &&
-                 '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
-                 '    "dataType": "string",' && |\r\n| &&
-                 '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n| &&
+                 `    "leadingProperty":"OBJECTNAME",` && |\r\n| &&
+                 `    "dataType": "string",` && |\r\n| &&
+                 `    "hierarchyNodeLevel": "HierarchyNodeLevel",` && |\r\n| &&
                  `    "wrap": true}`
       ).
 

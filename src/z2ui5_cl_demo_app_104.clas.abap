@@ -45,9 +45,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     IF mo_app_sub IS BOUND.
 
-      ASSIGN mo_app_sub->('MO_VIEW_PARENT') TO FIELD-SYMBOL(<fs>).
+      ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
       <fs> = mo_grid_sub.
-      CALL METHOD mo_app_sub->('Z2UI5_IF_APP~MAIN') EXPORTING client = client.
+      CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
     ENDIF.
 
@@ -59,9 +59,9 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     classname = to_upper( classname ).
     CREATE OBJECT mo_app_sub TYPE (classname).
 
-    ASSIGN mo_app_sub->('MO_VIEW_PARENT') TO FIELD-SYMBOL(<fs>).
+    ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
     <fs> = mo_grid_sub.
-    CALL METHOD mo_app_sub->('Z2UI5_IF_APP~MAIN') EXPORTING client = client.
+    CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
   ENDMETHOD.
 
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
     lo_view_nested = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = lo_view_nested->page( `Nested View` ).
-    mo_grid_sub = page->grid( 'L12 M12 S12'
+    mo_grid_sub = page->grid( `L12 M12 S12`
         )->content( `layout` ).
 
   ENDMETHOD.
@@ -114,8 +114,8 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = `Class 1`  info = `z2ui5_cl_demo_app_105`   descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `Class 2`  info = `z2ui5_cl_demo_app_112` descr = 'this is a description' icon = `sap-icon://account` ) ).
+        ( title = `Class 1`  info = `z2ui5_cl_demo_app_105`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `Class 2`  info = `z2ui5_cl_demo_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
 
       mv_layout = `OneColumn`.
       view_display_master( ).

@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
                 )->list_item( text           = `{N}`
                               additionaltext = `{V}` ).
 
-    temp->label( '' )->button( text = `Download`
+    temp->label( `` )->button( text = `Download`
                     press           = client->_event( `DB_LOAD` )
                     icon            = `sap-icon://download-from-cloud` ).
 

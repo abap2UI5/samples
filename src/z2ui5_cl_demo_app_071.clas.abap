@@ -54,7 +54,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
                      )->input( value = client->_bind_edit( mv_combo_number )
                      )->label( `demo`
                      )->combobox( items = client->_bind( lt_combo )
-                        )->item( key = '{KEY}' text = `{TEXT}`
+                        )->item( key = `{KEY}` text = `{TEXT}`
                         )->get_parent( )->get_parent(
                      )->button(
                          text  = `Press 2x update`

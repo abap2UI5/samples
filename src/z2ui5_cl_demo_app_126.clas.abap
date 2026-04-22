@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
 *    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
 *                                          width = `100%` ).
-    page->label( 'ProgressIndicator'
+    page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`
                                showvalue    = abap_true

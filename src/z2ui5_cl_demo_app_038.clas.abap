@@ -130,10 +130,10 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_msg = VALUE #(
-          ( description = `descr` subtitle = `subtitle` title = `title` type = `Error`     group = 'group 01' )
-          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = 'group 01' )
-          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = 'group 02' )
-          ( description = `descr` subtitle = `subtitle` title = `title` type = `Success` group = 'group 03' ) ).
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Error`     group = `group 01` )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = `group 01` )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Information` group = `group 02` )
+          ( description = `descr` subtitle = `subtitle` title = `title` type = `Success` group = `group 03` ) ).
 
       view_display( ).
 

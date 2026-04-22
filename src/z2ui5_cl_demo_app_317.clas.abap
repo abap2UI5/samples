@@ -52,14 +52,14 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       mt_node = VALUE #(
-          ( id   = `01` id_parent = ''   text = `Machines` )
-          ( id   = `03` id_parent = '01' text = `Pumps` )
-          ( id   = `04` id_parent = '03' text = `Pump 001` )
-          ( id   = `05` id_parent = '03' text = `Pump 002` )
-          ( id   = `02` id_parent = ''   text = `Paints` )
-          ( id   = `06` id_parent = '02' text = `Gloss paints` )
-          ( id   = `07` id_parent = '06' text = `Paint 001` )
-          ( id   = `08` id_parent = '06' text = `Paint 002` ) ).
+          ( id   = `01` id_parent = ``   text = `Machines` )
+          ( id   = `03` id_parent = `01` text = `Pumps` )
+          ( id   = `04` id_parent = `03` text = `Pump 001` )
+          ( id   = `05` id_parent = `03` text = `Pump 002` )
+          ( id   = `02` id_parent = ``   text = `Paints` )
+          ( id   = `06` id_parent = `02` text = `Gloss paints` )
+          ( id   = `07` id_parent = `06` text = `Paint 001` )
+          ( id   = `08` id_parent = `06` text = `Paint 002` ) ).
 
       build_tree( ).
       display_view( client ).

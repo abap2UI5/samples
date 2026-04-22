@@ -102,12 +102,12 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
         time_end        = `17:23:57`).
 
     mt_suggestion = VALUE #(
-        ( descr = 'Green'  value = `GREEN` )
-        ( descr = 'Blue'   value = `BLUE` )
-        ( descr = 'Black'  value = `BLACK` )
-        ( descr = 'Grey'   value = `GREY` )
-        ( descr = 'Blue2'  value = `BLUE2` )
-        ( descr = 'Blue3'  value = `BLUE3` ) ).
+        ( descr = `Green`  value = `GREEN` )
+        ( descr = `Blue`   value = `BLUE` )
+        ( descr = `Black`  value = `BLACK` )
+        ( descr = `Grey`   value = `GREY` )
+        ( descr = `Blue2`  value = `BLUE2` )
+        ( descr = `Blue3`  value = `BLUE3` ) ).
 
   ENDMETHOD.
 
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
+    DATA(grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
     grid = grid->text( client->_bind_edit( val = lv_text view = client->cs_view-main
@@ -137,7 +137,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
          )->button(
              id    = `ppvr`
              text  = `Open Popover`
-             press = client->_event( val = 'BUTTON_POPOVER' t_arg = VALUE #( ( `${$source>/sId}` ) ) )
+             press = client->_event( val = `BUTTON_POPOVER` t_arg = VALUE #( ( `${$source>/sId}` ) ) )
              type  = `Ghost`
          )->button(
              text  = `Open Popup`

@@ -57,8 +57,8 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
 
     i_client->_bind( mt_layout ).
 
-    mt_data = VALUE #( ( name = `Theo` date = '01.01.2000' age = '5' )
-                       ( name = `Lore` date = '01.01.2000' age = '1' ) ).
+    mt_data = VALUE #( ( name = `Theo` date = `01.01.2000` age = `5` )
+                       ( name = `Lore` date = `01.01.2000` age = `1` ) ).
 
     mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true`  binding = `{NAME}` )
                          ( fname = `DATE` merge = `false` visible = `true`  binding = `{DATE}` )

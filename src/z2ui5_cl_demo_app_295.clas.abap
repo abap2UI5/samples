@@ -115,13 +115,13 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     " Append entries to the internal table
     lt_a_data = VALUE #(
-      ( label = s_text && 'None'        value_state = `None` )
-      ( label = s_text && 'Information' value_state = `Information` )
-      ( label = s_text && 'Success'     value_state = `Success` )
-      ( label = s_text && 'Warning and long valueStateText' value_state = `Warning`
+      ( label = s_text && `None`        value_state = `None` )
+      ( label = s_text && `Information` value_state = `Information` )
+      ( label = s_text && `Success`     value_state = `Success` )
+      ( label = s_text && `Warning and long valueStateText` value_state = `Warning`
                 value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
-                                   'It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.' )
-      ( label = s_text && 'Error'    value_state = `Error` ) ).
+                                   `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` )
+      ( label = s_text && `Error`    value_state = `Error` ) ).
 
   ENDMETHOD.
 

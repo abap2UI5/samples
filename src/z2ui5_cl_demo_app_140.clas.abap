@@ -44,11 +44,11 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
   METHOD ui5_on_init.
 
     gt_multi = VALUE ty_t_combo(
-      ( key = 'A01' text = `T1` )
-      ( key = 'A02' text = `T2` )
-      ( key = 'A03' text = `T3` )
-      ( key = 'A04' text = `T4` )
-      ( key = 'A05' text = `T5` ) ).
+      ( key = `A01` text = `T1` )
+      ( key = `A02` text = `T2` )
+      ( key = `A03` text = `T3` )
+      ( key = `A04` text = `T4` )
+      ( key = `A05` text = `T5` ) ).
 
     gt_sel_multi2 = VALUE #( ( `A01` ) ).
 

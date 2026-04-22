@@ -57,12 +57,12 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
   METHOD ui5_init.
 
     t_bapiret = VALUE #(
-      ( message = 'An empty Report field causes an empty XML Message to be sent' type = `E` id = `MSG1` number = '001' )
-      ( message = 'Check was executed for wrong Scenario' type = `E` id = `MSG1` number = '002' )
-      ( message = 'Request was handled without errors' type = `S` id = `MSG1` number = '003' )
-      ( message = 'product activated' type = `S` id = `MSG4` number = '375' )
-      ( message = 'check the input values' type = `W` id = `MSG2` number = '375' )
-      ( message = 'product already in use' type = `I` id = `MSG2` number = '375' ) ).
+      ( message = `An empty Report field causes an empty XML Message to be sent` type = `E` id = `MSG1` number = `001` )
+      ( message = `Check was executed for wrong Scenario` type = `E` id = `MSG1` number = `002` )
+      ( message = `Request was handled without errors` type = `S` id = `MSG1` number = `003` )
+      ( message = `product activated` type = `S` id = `MSG4` number = `375` )
+      ( message = `check the input values` type = `W` id = `MSG2` number = `375` )
+      ( message = `product already in use` type = `I` id = `MSG2` number = `375` ) ).
 
   ENDMETHOD.
 
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
 
-    grid->simple_form( `Inputs` )->content( 'form'
+    grid->simple_form( `Inputs` )->content( `form`
         )->label( `01`
         )->button(
             text  = `Popup Get Input Values`

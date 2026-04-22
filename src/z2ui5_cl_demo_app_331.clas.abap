@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_331 IMPLEMENTATION.
                               )->content( `form` ).
 
     ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
-    ASSIGN COMPONENT 'ID' OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
+    ASSIGN COMPONENT `ID` OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
 
     IF <value> IS NOT ASSIGNED.
       RETURN.

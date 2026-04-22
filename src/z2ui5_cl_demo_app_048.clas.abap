@@ -29,12 +29,12 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = `entry_01`   info = `Information`   descr = 'this is a description1 1234567890 1234567890'  icon = `sap-icon://badge`      highlight = 'Information' wrapcharlimit = '100' )
-        ( title = `entry_02`  info = `Success`        descr = 'this is a description2 1234567890 1234567890'  icon = `sap-icon://favorite`   highlight = 'Success'  wrapcharlimit = '10')
-        ( title = `entry_03`  info = `Warning`        descr = 'this is a description3 1234567890 1234567890'  icon = `sap-icon://employee`   highlight = 'Warning'  wrapcharlimit = '100')
-        ( title = `entry_04`  info = `Error`          descr = 'this is a description4 1234567890 1234567890'  icon = `sap-icon://accept`     highlight = 'Error'  wrapcharlimit = '10' )
-        ( title = `entry_05`  info = `None`           descr = 'this is a description5 1234567890 1234567890'  icon = `sap-icon://activities` highlight = 'None'  wrapcharlimit = '10')
-        ( title = `entry_06`  info = `Information`    descr = 'this is a description6 1234567890 1234567890'  icon = `sap-icon://account`    highlight = 'Information'   wrapcharlimit = '100' ) ).
+        ( title = `entry_01`   info = `Information`   descr = `this is a description1 1234567890 1234567890`  icon = `sap-icon://badge`      highlight = `Information` wrapcharlimit = `100` )
+        ( title = `entry_02`  info = `Success`        descr = `this is a description2 1234567890 1234567890`  icon = `sap-icon://favorite`   highlight = `Success`  wrapcharlimit = `10`)
+        ( title = `entry_03`  info = `Warning`        descr = `this is a description3 1234567890 1234567890`  icon = `sap-icon://employee`   highlight = `Warning`  wrapcharlimit = `100`)
+        ( title = `entry_04`  info = `Error`          descr = `this is a description4 1234567890 1234567890`  icon = `sap-icon://accept`     highlight = `Error`  wrapcharlimit = `10` )
+        ( title = `entry_05`  info = `None`           descr = `this is a description5 1234567890 1234567890`  icon = `sap-icon://activities` highlight = `None`  wrapcharlimit = `10`)
+        ( title = `entry_06`  info = `Information`    descr = `this is a description6 1234567890 1234567890`  icon = `sap-icon://account`    highlight = `Information`   wrapcharlimit = `100` ) ).
 
     ENDIF.
 
@@ -63,19 +63,19 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
       )->_generic(
          name      = `StandardListItem`
             t_prop = VALUE #(
-                ( n = `title`       v = '{TITLE}' )
-                ( n = `description` v = '{DESCR}' )
-                ( n = `icon`        v = '{ICON}' )
-                ( n = `iconInset`   v = 'false' )
-                ( n = `highlight`   v = '{HIGHLIGHT}' )
-                ( n = `info`        v = '{INFO}' )
-                ( n = `infoState`   v = '{HIGHLIGHT}' )
-               ( n = `infoStateInverted`   v = 'true' )
-              ( n = 'type'      v = `Detail` )
-              ( n = 'wrapping'      v = `true` )
-              ( n = 'wrapCharLimit'      v = `{WRAPCHARLIMIT}` )
-              ( n = 'selected'    v = `{SELECTED}` )
-              ( n = 'detailPress'      v = client->_event( val = 'EDIT' t_arg = VALUE #( ( `${TITLE}` )
+                ( n = `title`       v = `{TITLE}` )
+                ( n = `description` v = `{DESCR}` )
+                ( n = `icon`        v = `{ICON}` )
+                ( n = `iconInset`   v = `false` )
+                ( n = `highlight`   v = `{HIGHLIGHT}` )
+                ( n = `info`        v = `{INFO}` )
+                ( n = `infoState`   v = `{HIGHLIGHT}` )
+               ( n = `infoStateInverted`   v = `true` )
+              ( n = `type`      v = `Detail` )
+              ( n = `wrapping`      v = `true` )
+              ( n = `wrapCharLimit`      v = `{WRAPCHARLIMIT}` )
+              ( n = `selected`    v = `{SELECTED}` )
+              ( n = `detailPress`      v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
                                                                                          ( `${DESCR}` )
                                                                                          ( `${ICON}` )
                                                                                          ( `${HIGHLIGHT}` )

@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD on_init.
 
-    mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_DEMO_APP_126`  count = '12' ) ).
+    mt_t002 = VALUE #( ( id = `1` class = `Z2UI5_CL_DEMO_APP_126`  count = `12` ) ).
 
     mv_selectedkey = `1`.
 
@@ -122,19 +122,19 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
         ENDIF.
         TRY.
 
-            CALL METHOD mo_app->('SET_APP_DATA')
+            CALL METHOD mo_app->(`SET_APP_DATA`)
               EXPORTING
                 data = t002->count.
 
             render_main( ).
 
-            ASSIGN mo_app->('MO_PARENT_VIEW') TO FIELD-SYMBOL(<view>).
+            ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
 
             IF <view> IS ASSIGNED.
               <view> = mo_main_page.
             ENDIF.
 
-            CALL METHOD mo_app->('Z2UI5_IF_APP~MAIN')
+            CALL METHOD mo_app->(`Z2UI5_IF_APP~MAIN`)
               EXPORTING
                 client = client.
 
@@ -146,7 +146,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
     client->view_model_update( ).
 
-    ASSIGN mo_app->('MV_VIEW_DISPLAY') TO <view_display>.
+    ASSIGN mo_app->(`MV_VIEW_DISPLAY`) TO <view_display>.
 
     IF <view_display> = abap_true.
       <view_display> = abap_false.

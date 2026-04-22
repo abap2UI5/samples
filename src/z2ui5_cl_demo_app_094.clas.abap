@@ -75,13 +75,13 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     page = z2ui5_cl_xml_view=>factory( )->shell(
           )->page( `test` ).
 
-    DATA(o_grid) = page->grid( 'L6 M12 S12'
+    DATA(o_grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(content) = o_grid->simple_form( 'Input'
+    DATA(content) = o_grid->simple_form( `Input`
           )->content( `form` ).
 
-    content->label( 'structure level 01'
+    content->label( `structure level 01`
       )->input( client->_bind_edit( ms_screen-input )
       )->label( `ref data`
       )->input( client->_bind_edit( <input> )

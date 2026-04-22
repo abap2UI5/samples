@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                       )->input( client->_bind_edit( mv_scan_type )
                       )->label( `scanner`
                       )->barcode_scanner_button(
-                        scansuccess = client->_event( val = 'ON_SCAN_SUCCESS' t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
+                        scansuccess = client->_event( val = `ON_SCAN_SUCCESS` t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )
                         dialogtitle = `Barcode Scanner`
            )->stringify( ) ).
 

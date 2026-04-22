@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     DATA(navlist) = content->flex_box( width     = `100%`
                                        height    = `100%`
                                        direction = `Column` )->layout_data( )->flex_item_data( growfactor = `1`
-      basesize                                                                                            = '0' )->get_parent( )->side_navigation( id                                           = `sideNavigation`
+      basesize                                                                                            = `0` )->get_parent( )->side_navigation( id                                           = `sideNavigation`
                                                                                                                                                                                     class       = `sapUiTinyMarginTop`
                                                                                                                                                                                     selectedkey = client->_bind( selected_menu_entry )
       )->navigation_list( ).

@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
 
       WHEN `BUTTON_MESSAGE_BOX_ERROR`.
         client->message_box_display( text                                                   = `Select a team in the "Development" area.` && cl_abap_char_utilities=>cr_lf &&
-                                            '"Marketing" isn’t assigned to this area.' type = `error` ).
+                                            `"Marketing" isn’t assigned to this area.` type = `error` ).
 
       WHEN `BUTTON_MESSAGE_BOX_INFO`.
         client->message_box_display( `Your booking will be reserved for 24 hours.` ).
@@ -81,9 +81,9 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                            type = strip_type ).
     ENDIF.
 
-    page->grid( 'L6 M12 S12'
+    page->grid( `L6 M12 S12`
         )->content( `layout`
-            )->simple_form( `Message Box` )->content( 'form'
+            )->simple_form( `Message Box` )->content( `form`
                 )->button(
                     text  = `Confirm`
                     press = client->_event( `BUTTON_MESSAGE_BOX_CONFIRM` )
@@ -103,9 +103,9 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                     text  = `Success`
                     press = client->_event( `BUTTON_MESSAGE_BOX_SUCCESS` ) ).
 
-    page->grid( 'L6 M12 S12'
+    page->grid( `L6 M12 S12`
         )->content( `layout`
-            )->simple_form( `Message Strip` )->content( 'form'
+            )->simple_form( `Message Strip` )->content( `form`
                 )->button(
                     text  = `success`
                     press = client->_event( `BUTTON_MESSAGE_STRIP_SUCCESS` )
@@ -116,9 +116,9 @@ CLASS z2ui5_cl_demo_app_310 IMPLEMENTATION.
                     text  = `information`
                     press = client->_event( `BUTTON_MESSAGE_STRIP_INFO` ) ).
 
-    page->grid( 'L6 M12 S12'
+    page->grid( `L6 M12 S12`
         )->content( `layout`
-            )->simple_form( `Display` )->content( 'form'
+            )->simple_form( `Display` )->content( `form`
                 )->button(
                     text  = `Message Toast`
                     press = client->_event( `BUTTON_MESSAGE_TOAST` )

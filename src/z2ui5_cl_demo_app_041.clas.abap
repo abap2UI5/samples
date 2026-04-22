@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_041 IMPLEMENTATION.
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
-    layout->label( 'StepInput'
+    layout->label( `StepInput`
         )->step_input(
             value = client->_bind_edit( screen-step_val_01 )
             step  = `2`

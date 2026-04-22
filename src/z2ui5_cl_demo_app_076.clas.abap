@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_076 IMPLEMENTATION.
       )->gantt_table(
         )->tree_table( rows = `{path: '` && client->_bind( val = mt_table path = abap_true ) && `', parameters: {arrayNames: ['CHILDREN'],numberOfExpandedLevels: 1}}`
           )->tree_columns(
-            )->tree_column( 'Col 1' )->tree_template( )->text( `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
+            )->tree_column( `Col 1` )->tree_template( )->text( `{TEXT}` )->get_parent( )->get_parent( )->get_parent(
 *            )->tree_column( label = 'Col 1' template = 'text' )->get_parent( )->get_parent(
           )->row_settings_template(
             )->gantt_row_settings( rowid   = `{ID}`

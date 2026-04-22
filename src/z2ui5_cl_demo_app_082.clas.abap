@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
 
     IF client->check_on_event( `TIMER_FINISHED` ).
       mv_counter = mv_counter + 1.
-      INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
+      INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
       client->view_model_update( ).
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
     mv_counter = 1.
 
     t_tab = VALUE #(
-            ( title = `entry` && mv_counter  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
+            ( title = `entry` && mv_counter  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
   ENDMETHOD.
 

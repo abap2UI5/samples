@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
   METHOD display_view.
 
-    DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = 'this is a description' ).
+    DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = `this is a description` ).
     DO 100 TIMES.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.

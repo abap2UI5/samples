@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
     header_title->snapped_title_on_mobile(
         )->title( `Object Page Header with Header Container` ).
 
-    header_title->actions( 'uxap'
+    header_title->actions( `uxap`
         )->button( text = `Edit`
                    type = `Emphasized`
         )->button( text = `Delete`
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     text    = `Share`
                                     tooltip = `action` ).
 
-    DATA(header_content) = object_page_layout->header_content( 'uxap'
+    DATA(header_content) = object_page_layout->header_content( `uxap`
         )->header_container_control( id           = `headerContainer`
                                      scrollstep   = `200`
                                      showdividers = abap_false ).

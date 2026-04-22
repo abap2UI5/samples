@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     DO 1000 TIMES.
       DATA(ls_row) = VALUE ty_row( count = sy-index  value = `red`
-        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )
+        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
         descr = `this is a description` checkbox = abap_true ).
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
       WHEN `FLTER_INFO`.
         refresh_data( ).
 
-        IF mv_info_filter <> ''.
+        IF mv_info_filter <> ``.
           DELETE t_tab WHERE info <> mv_info_filter.
         ENDIF.
 

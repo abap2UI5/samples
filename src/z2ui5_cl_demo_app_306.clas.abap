@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
        )->combobox( id          = `ComboFacingMode`
                     selectedkey = client->_bind_edit( facing_mode )
                     items       = |\{path:'{ client->_bind_edit( val  = facing_modes
-                                                                 path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+                                                                 path = abap_true ) }`, sorter: \{ path: `TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
            id          = `ComboDevice`
            selectedkey = client->_bind_edit( device )
            items       = |\{path:'{ client->_bind_edit( val  = devices
-                                                        path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+                                                        path = abap_true ) }`, sorter: \{ path: `TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 

@@ -28,14 +28,14 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
       header_title->expanded_heading( )->hbox( )->title( text     = `Test`
                                                          wrapping = abap_true ).
-      header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text     = 'Test'
+      header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text     = `Test`
                                                                                   wrapping = abap_true ).
 
       DATA(sections) = page->sections( ).
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = `id_sec1`
-                                     title          = '...' )->heading( `uxap`
+                                     title          = `...` )->heading( `uxap`
         )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_input`
                                                                     title = `Input field`
         )->blocks( )->vbox(
@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = `id_sec2`
-                                     title          = '...' )->heading( `uxap`
+                                     title          = `...` )->heading( `uxap`
         )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_text_area`
                                                                     title = `Text area`
         )->blocks( )->vbox(

@@ -205,7 +205,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(lo_cells) = tab->items( )->column_list_item(
-        press    = client->_event( val = 'DETAIL' t_arg = VALUE #( ( `${UUID}` ) ) )
+        press    = client->_event( val = `DETAIL` t_arg = VALUE #( ( `${UUID}` ) ) )
         selected = `{SELKZ}`
       )->cells( ).
 
@@ -243,10 +243,10 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     DATA(lo_tab) = ro_popup->tab_container( ).
 
     mt_combo = VALUE ty_t_combo(
-                       ( key = 'None'  text = `None` )
-                       ( key = 'SingleSelect' text = `SingleSelect` )
-                       ( key = 'SingleSelectLeft' text = `SingleSelectLeft` )
-                       ( key = 'MultiSelect'  text = `MultiSelect` ) ).
+                       ( key = `None`  text = `None` )
+                       ( key = `SingleSelect` text = `SingleSelect` )
+                       ( key = `SingleSelectLeft` text = `SingleSelectLeft` )
+                       ( key = `MultiSelect`  text = `MultiSelect` ) ).
 
     lo_tab->tab( text     = `Table`
                  selected = client->_bind_edit( mv_check_table )
@@ -346,12 +346,12 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( product = 'table'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair'    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'sofa'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'computer' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'oven'     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'table2'   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
+        ( product = `table`    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair`    create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `sofa`     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `computer` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `oven`     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `table2`   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
   ENDMETHOD.
 

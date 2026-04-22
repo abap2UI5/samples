@@ -177,22 +177,22 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     " Populate the internal table
     lt_a_products = VALUE #(
-      ( product_id = 'HT-998'  name = `Notebook Basic 11` )
-      ( product_id = 'HT-999'  name = `Notebook Basic 13` )
-      ( product_id = 'HT-1000' name = `Notebook Basic 15` )
-      ( product_id = 'HT-1001' name = `Notebook Basic 17` )
-      ( product_id = 'HT-1002' name = `Notebook Basic 18` )
-      ( product_id = 'HT-1003' name = `Notebook Basic 19` )
-      ( product_id = 'HT-1007' name = `ITelO Vault` )
-      ( product_id = 'HT-1008' name = `Notebook Professional 11` )
-      ( product_id = 'HT-1009' name = `Notebook Professional 13` )
-      ( product_id = 'HT-1010' name = `Notebook Professional 15` )
-      ( product_id = 'HT-1011' name = `Notebook Professional 17` )
-      ( product_id = 'HT-1012' name = `Notebook Professional 19` )
-      ( product_id = 'HT-1020' name = `ITelO Vault Net` )
-      ( product_id = 'HT-1021' name = `ITelO Vault SAT` )
-      ( product_id = 'HT-1022' name = `Comfort Easy` )
-      ( product_id = 'HT-1023' name = `Comfort Senior` ) ).
+      ( product_id = `HT-998`  name = `Notebook Basic 11` )
+      ( product_id = `HT-999`  name = `Notebook Basic 13` )
+      ( product_id = `HT-1000` name = `Notebook Basic 15` )
+      ( product_id = `HT-1001` name = `Notebook Basic 17` )
+      ( product_id = `HT-1002` name = `Notebook Basic 18` )
+      ( product_id = `HT-1003` name = `Notebook Basic 19` )
+      ( product_id = `HT-1007` name = `ITelO Vault` )
+      ( product_id = `HT-1008` name = `Notebook Professional 11` )
+      ( product_id = `HT-1009` name = `Notebook Professional 13` )
+      ( product_id = `HT-1010` name = `Notebook Professional 15` )
+      ( product_id = `HT-1011` name = `Notebook Professional 17` )
+      ( product_id = `HT-1012` name = `Notebook Professional 19` )
+      ( product_id = `HT-1020` name = `ITelO Vault Net` )
+      ( product_id = `HT-1021` name = `ITelO Vault SAT` )
+      ( product_id = `HT-1022` name = `Comfort Easy` )
+      ( product_id = `HT-1023` name = `Comfort Senior` ) ).
     SORT lt_a_products BY name.
 
   ENDMETHOD.

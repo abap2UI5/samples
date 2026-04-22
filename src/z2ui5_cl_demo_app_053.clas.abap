@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN `BUTTON_SEARCH` OR 'BUTTON_START'.
+      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).
@@ -106,12 +106,12 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
   METHOD set_data.
 
     mt_table = VALUE #(
-        ( product = 'table' create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = 'chair' create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = 'sofa' create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = 'computer' create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = 'printer' create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = 'table2' create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
+        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
+        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
+        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
+        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
+        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
 

@@ -106,11 +106,11 @@ CLASS z2ui5_cl_demo_app_286 IMPLEMENTATION.
       display_view( client ).
 
       lt_o_model = VALUE #(
-        ( title = `Title text` desc = 'Description text' icon = `sap-icon://favorite`  highlight = 'Success'     info = `Completed` )
-        ( title = `Title text` desc = 'Description text' icon = `sap-icon://employee` highlight = 'Error'       info = `Incomplete` )
-        ( title = `Title text`                           icon = `sap-icon://accept`   highlight = 'Information' info = `Information` )
-        ( title = `Title text`                           icon = `sap-icon://activities` highlight = 'None'      info = `None` )
-        ( title = `Title text` desc = 'Description text' icon = `sap-icon://badge`    highlight = 'Warning'     info = `Warning` ) ).
+        ( title = `Title text` desc = `Description text` icon = `sap-icon://favorite`  highlight = `Success`     info = `Completed` )
+        ( title = `Title text` desc = `Description text` icon = `sap-icon://employee` highlight = `Error`       info = `Incomplete` )
+        ( title = `Title text`                           icon = `sap-icon://accept`   highlight = `Information` info = `Information` )
+        ( title = `Title text`                           icon = `sap-icon://activities` highlight = `None`      info = `None` )
+        ( title = `Title text` desc = `Description text` icon = `sap-icon://badge`    highlight = `Warning`     info = `Warning` ) ).
     ENDIF.
 
     on_event( client ).

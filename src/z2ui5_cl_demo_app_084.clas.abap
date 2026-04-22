@@ -138,12 +138,12 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
         time_end        = `17:23:57` ).
 
     mt_suggestion = VALUE #(
-        ( descr = 'Green'  value = `GREEN` )
-        ( descr = 'Blue'   value = `BLUE` )
-        ( descr = 'Black'  value = `BLACK` )
-        ( descr = 'Gray'   value = `GRAY` )
-        ( descr = 'Blue2'  value = `BLUE2` )
-        ( descr = 'Blue3'  value = `BLUE3` ) ).
+        ( descr = `Green`  value = `GREEN` )
+        ( descr = `Blue`   value = `BLUE` )
+        ( descr = `Black`  value = `BLACK` )
+        ( descr = `Gray`   value = `GRAY` )
+        ( descr = `Blue2`  value = `BLUE2` )
+        ( descr = `Blue3`  value = `BLUE3` ) ).
 
   ENDMETHOD.
 
@@ -160,7 +160,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
+    DATA(grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
     grid->simple_form( title    = `Input`

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
         CASE client->get( )-event.
 
-          WHEN `START` OR 'CHANGE'.
+          WHEN `START` OR `CHANGE`.
             ui5_view_main_display( ).
 
           WHEN `UPLOAD`.

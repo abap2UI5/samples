@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
 
     DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( lv_selectedkey )
-                                         select      = client->_event( val = 'OnSelectIconTabBar' t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
+                                         select      = client->_event( val = `OnSelectIconTabBar` t_arg = VALUE #( ( `${LV_SELECTEDKEY}` ) ) ) )->items( ).
     lo_items->icon_tab_filter( count   = client->_bind_edit( lv_cnt_total )
                                text    = `Products`
                                key     = `ALL`
@@ -156,15 +156,15 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( productid = '1' productname = 'table' suppliername = 'Company 1' width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` rating = '0' state_measure = `Warning` )
-        ( productid = '2' productname = 'chair' suppliername = 'Company 2'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` rating = '1'  state_measure = `Warning` )
-        ( productid = '3' productname = 'sofa'  suppliername = 'Company 3'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` rating = '2'  state_measure =
+        ( productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30` dimunit = `CM` measure = 100  unit = `ST` price = `1000.50` waers = `EUR`  state_price = `Success` rating = `0` state_measure = `Warning` )
+        ( productid = `2` productname = `chair` suppliername = `Company 2`  width = `10` depth = `20` height = `30` dimunit = `CM` measure = 123   unit = `ST` price = `2000.55` waers = `USD` state_price = `Error` rating = `1`  state_measure = `Warning` )
+        ( productid = `3` productname = `sofa`  suppliername = `Company 3`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 700   unit = `ST` price = `3000.11` waers = `CNY` state_price = `Success` rating = `2`  state_measure =
       `Warning` )
-        ( productid = '4' productname = 'computer' suppliername = 'Company 4'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` rating = '3'  state_measure =
+        ( productid = `4` productname = `computer` suppliername = `Company 4`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 200  unit = `ST` price = `4000.88` waers = `USD` state_price = `Success` rating = `3`  state_measure =
       `Success` )
-        ( productid = '5' productname = 'printer' suppliername = 'Company 5'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` rating = '4'  state_measure =
+        ( productid = `5` productname = `printer` suppliername = `Company 5`  width = `10` depth = `20` height = `30` dimunit = `CM` measure  = 90   unit = `ST` price = `5000.47` waers = `EUR` state_price = `Error` rating = `4`  state_measure =
       `Warning` )
-        ( productid = '6' productname = 'table2'  suppliername = 'Company 6'  width = '10' depth = '20' height = '30' dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` rating = '5' state_measure =
+        ( productid = `6` productname = `table2`  suppliername = `Company 6`  width = `10` depth = `20` height = `30` dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Success` rating = `5` state_measure =
       `Information` ) ).
 
     lv_cnt_total = lines( mt_table ).

@@ -51,14 +51,14 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     DATA(lo_columns) = tab->ui_columns( ).
 
     lo_columns->ui_column( sortproperty                  = `TITLE`
-                                          filterproperty = 'TITLE' )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
+                                          filterproperty = `TITLE` )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
     lo_columns->ui_column( sortproperty   = `DESCR`
-                           filterproperty = 'DESCR' )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
+                           filterproperty = `DESCR` )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
     lo_columns->ui_column( sortproperty   = `INFO`
-                           filterproperty = 'INFO' )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
+                           filterproperty = `INFO` )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
        )->ui_row_action_item( icon = `sap-icon://delete`
-                           press   = client->_event( val = 'ROW_DELETE' t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                           press   = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -107,12 +107,12 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
+        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
       mv_layout = `OneColumn`.
 

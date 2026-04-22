@@ -336,7 +336,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     page->header_content(
        )->get_parent( ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
+    DATA(grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
     grid->simple_form( get_txt( `BU_DYNID` )

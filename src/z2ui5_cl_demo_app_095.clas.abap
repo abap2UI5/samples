@@ -85,17 +85,17 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
             navbuttonpress  = client->_event_nav_app_leave( )
               shownavbutton = abap_true ).
 
-    DATA(o_grid) = page->grid( 'L6 M12 S12'
+    DATA(o_grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(content) = o_grid->simple_form( 'Input'
+    DATA(content) = o_grid->simple_form( `Input`
           )->content( `form` ).
-    content->label( 'main app'
+    content->label( `main app`
       )->input(
           value  = client->_bind_edit( ms_screen-input )
           submit = client->_event( `INPUT` ) ).
 
-    mo_grid_sub = page->grid( 'L12 M12 S12'
+    mo_grid_sub = page->grid( `L12 M12 S12`
         )->content( `layout` ).
 
     page->footer( )->overflow_toolbar(

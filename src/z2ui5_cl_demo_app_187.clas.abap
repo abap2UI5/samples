@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_187 IMPLEMENTATION.
 
       WHEN `BAPIRET`.
 
-        ls_msg = VALUE #( id = `NET` number = '001' ).
+        ls_msg = VALUE #( id = `NET` number = `001` ).
         client->message_box_display( ls_msg ).
 
       WHEN `CX_ROOT`.

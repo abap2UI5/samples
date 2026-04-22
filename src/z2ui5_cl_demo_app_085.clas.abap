@@ -126,8 +126,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              type    = `Transparent`
              tooltip = `Close Fullscreen Mode`
              enabled = SWITCH string( lv_layout
-                                        WHEN `TwoColumnsMidExpanded` THEN 'false'
-                                        WHEN `MidColumnFullScreen`   THEN 'true'
+                                        WHEN `TwoColumnsMidExpanded` THEN `false`
+                                        WHEN `MidColumnFullScreen`   THEN `true`
                                          )
              press   = client->_event( `ONEXITFULLSCREENMODE` )
           )->overflow_toolbar_button(
@@ -135,8 +135,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              text    = `Enter Fullscreen Mode`
              type    = `Transparent`
              enabled = SWITCH string( lv_layout
-                                        WHEN `TwoColumnsMidExpanded` THEN 'true'
-                                        WHEN `MidColumnFullScreen` THEN 'false'
+                                        WHEN `TwoColumnsMidExpanded` THEN `true`
+                                        WHEN `MidColumnFullScreen` THEN `false`
                                          )
              tooltip = `Fullscreen Mode`
              press   = client->_event( `ONFULLSCREENMODE` )
@@ -483,38 +483,38 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_table = VALUE #(
-        ( key = '1' productid = '1' productname = 'table' suppliername = 'Company 1' width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 100  unit = 'ST' price = '1000.50' waers = 'EUR'  state_price = `Success` state_measure = `Warning`
+        ( key = `1` productid = `1` productname = `table` suppliername = `Company 1` width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 100  unit = `ST` price = `1000.50` waers = `EUR`  state_price = `Success` state_measure = `Warning`
           pic = `HT-1010.jpg` rating = `0` process = `0` )
-        ( key = '2' productid = '2' productname = 'chair' suppliername = 'Company 2'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 123   unit = 'ST' price = '2000.55' waers = 'USD' state_price = `Error` state_measure = `Error`
+        ( key = `2` productid = `2` productname = `chair` suppliername = `Company 2`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 123   unit = `ST` price = `2000.55` waers = `USD` state_price = `Error` state_measure = `Error`
           pic = `HT-2001.jpg` rating = `1`  process = `10` )
-        ( key = '3' productid = '3' productname = 'sofa'  suppliername = 'Company 3'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure  = 700   unit = 'ST' price = '3000.11' waers = 'CNY' state_price = `Success` state_measure = `Warning`
+        ( key = `3` productid = `3` productname = `sofa`  suppliername = `Company 3`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure  = 700   unit = `ST` price = `3000.11` waers = `CNY` state_price = `Success` state_measure = `Warning`
           pic = `HT-1251.jpg` rating = `2`  process = `15` )
-        ( key = '4' productid = '4' productname = 'computer' suppliername = 'Company 4'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure  = 200  unit = 'ST' price = '4000.88' waers = 'USD' state_price = `Success` state_measure = `Success`
+        ( key = `4` productid = `4` productname = `computer` suppliername = `Company 4`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure  = 200  unit = `ST` price = `4000.88` waers = `USD` state_price = `Success` state_measure = `Success`
           pic = `HT-6100.jpg` rating = `3`  process = `38` )
-        ( key = '5' productid = '5' productname = 'printer' suppliername = 'Company 5'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure  = 90   unit = 'ST' price = '5000.47' waers = 'EUR' state_price = `Error` state_measure = `Warning`
+        ( key = `5` productid = `5` productname = `printer` suppliername = `Company 5`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure  = 90   unit = `ST` price = `5000.47` waers = `EUR` state_price = `Error` state_measure = `Warning`
           pic = `HT-1000.jpg` rating = `4`  process = `66` )
-        ( key = '6' productid = '6' productname = 'table2'  suppliername = 'Company 6'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`
+        ( key = `6` productid = `6` productname = `table2`  suppliername = `Company 6`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Success` state_measure = `Information`
           pic = `HT-1137.jpg` rating = `2`  process = `91` )
-        ( key = '7' productid = '7' productname = 'table3'  suppliername = 'Company 7'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Warning`
+        ( key = `7` productid = `7` productname = `table3`  suppliername = `Company 7`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Success` state_measure = `Warning`
           pic = `HT-7000.jpg` rating = `6` process = `5` )
-        ( key = '8' productid = '8' productname = 'table4'  suppliername = 'Company 8'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Warning` state_measure = `Error`
+        ( key = `8` productid = `8` productname = `table4`  suppliername = `Company 8`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Warning` state_measure = `Error`
           pic = `HT-9997.jpg` rating = `0` process = `75` )
-        ( key = '9' productid = '9' productname = 'table5'  suppliername = 'Company 9'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Information` state_measure = `Success`
+        ( key = `9` productid = `9` productname = `table5`  suppliername = `Company 9`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Information` state_measure = `Success`
           pic = `HT-7020.jpg` rating = `1`  process = `81` )
-        ( key = '10' productid = '10' productname = 'table6'  suppliername = 'Company 10'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Success` state_measure = `Information`
+        ( key = `10` productid = `10` productname = `table6`  suppliername = `Company 10`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Success` state_measure = `Information`
           pic = `HT-1023.jpg` rating = `4`  process = `24` )
-        ( key = '11' productid = '11' productname = 'table7'  suppliername = 'Company 11'  width = `10` depth = '20' height = `30`
-          dimunit = 'CM' measure = 600  unit = 'ST' price = '6000.33' waers = 'GBP' state_price = `Information` state_measure = `Success`
+        ( key = `11` productid = `11` productname = `table7`  suppliername = `Company 11`  width = `10` depth = `20` height = `30`
+          dimunit = `CM` measure = 600  unit = `ST` price = `6000.33` waers = `GBP` state_price = `Information` state_measure = `Success`
           pic = `HT-1085.jpg` rating = `5`  process = `46` ) ).
 *Rungestraße 79-78, 18055 RostockMarktstraße, 03046 CottbusMarktpl. 1, 06108 Halle (Saale)
     mt_table_supplier = VALUE #(

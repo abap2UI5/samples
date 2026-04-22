@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
     header_title->snapped_title_on_mobile(
                   )->title( `Robot Arm Series 9` ).
 
-    header_title->actions( 'uxap'
+    header_title->actions( `uxap`
                   )->button( text = `Edit`
                              type = `Emphasized`
                   )->button( text = `Delete`

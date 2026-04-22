@@ -88,7 +88,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
-                         title     = 'SS' "text-028 "`Stock - Details:`
+                         title     = `SS` "text-028 "`Stock - Details:`
                                                          "&& '-' && gv_matnr  "contentwidth = `32%`
             )->footer(
              )->overflow_toolbar(
@@ -171,12 +171,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                           )->tree_column( `Counter`
                           )->tree_template(
                            )->link( text    = `{COUNTER}`
-                                      press = client->_event( val = 'POPOVER' t_arg = VALUE #( ( `${$source>/id}` ) ) )
+                                      press = client->_event( val = `POPOVER` t_arg = VALUE #( ( `${$source>/id}` ) ) )
       )->get_parent( )->get_parent(
                           )->tree_column( `ADD`
                           )->tree_template(
                            )->button( icon = `sap-icon://add`
-                                 press     = client->_event( val = 'ROW_ADD' t_arg = VALUE #( ( `${PRODH}` ) ) )
+                                 press     = client->_event( val = `ROW_ADD` t_arg = VALUE #( ( `${PRODH}` ) ) )
                                  tooltip   = `ADD`
                           )->get_parent( )->get_parent( ).
     client->view_display( page->get_root( )->xml_get( ) ).

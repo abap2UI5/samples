@@ -125,24 +125,24 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `TEXT`
-                        filterproperty = 'TEXT' )->text( 'Text Column' )->ui_template( )->text( `{TEXT}` ).
+                        filterproperty = `TEXT` )->text( `Text Column` )->ui_template( )->text( `{TEXT}` ).
     columns->ui_column( width          = `8rem`
                         sortproperty   = `LINK`
-                        filterproperty = 'LINK' )->text( 'Link Column' )->ui_template( )->link( text = `{LINK}`
-      press                                                                                                 = client->_event( val = 'LINK_CLICK' t_arg = VALUE #( ( `${INDEX}`) ) ) ).
+                        filterproperty = `LINK` )->text( `Link Column` )->ui_template( )->link( text = `{LINK}`
+      press                                                                                                 = client->_event( val = `LINK_CLICK` t_arg = VALUE #( ( `${INDEX}`) ) ) ).
     columns->ui_column( width          = `8rem`
                         sortproperty   = `CURRENCY`
-                        filterproperty = 'CURRENCY' )->text( `Currency Column` )->ui_template( )->text(
+                        filterproperty = `CURRENCY` )->text( `Currency Column` )->ui_template( )->text(
       `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
     "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `PERCENT1`
-                        filterproperty = 'PERCENT1' )->text( 'Percentage' )->ui_template( )->text( `{PERCENT1} %` ).
+                        filterproperty = `PERCENT1` )->text( `Percentage` )->ui_template( )->text( `{PERCENT1} %` ).
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `INPUT1`
-                        filterproperty = 'INPUT1' )->text( `Input Column` )->ui_template( )->input(
+                        filterproperty = `INPUT1` )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT1}`
       enabled         = `{BOOL}`
       change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
@@ -155,7 +155,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `INPUT2`
-                        filterproperty = `INPUT2` )->text( 'Input Column'
+                        filterproperty = `INPUT2` )->text( `Input Column`
       )->ui_template(
       )->input(
       value     = `{INPUT2}`
@@ -173,7 +173,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `INPUT3`
-                        filterproperty = 'INPUT3' )->text( `Input Column` )->ui_template( )->input(
+                        filterproperty = `INPUT3` )->text( `Input Column` )->ui_template( )->input(
       value           = `{INPUT3}`
       enabled         = `{BOOL}`
       change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(

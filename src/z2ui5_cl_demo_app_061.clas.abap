@@ -67,16 +67,16 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      CREATE DATA t_tab TYPE STANDARD TABLE OF ('Z2UI5_T_01').
+      CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
 
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = '2023234243'  id_prev = 'previous' )
+      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
           INTO TABLE <tab>.
 
     ENDIF.

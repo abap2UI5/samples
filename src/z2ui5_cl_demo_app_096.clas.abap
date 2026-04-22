@@ -58,7 +58,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( `Main View` ).
 
-      mo_view_parent = page->grid( 'L6 M12 S12'
+      mo_view_parent = page->grid( `L6 M12 S12`
           )->content( `layout` ).
 
       page->footer( )->overflow_toolbar(

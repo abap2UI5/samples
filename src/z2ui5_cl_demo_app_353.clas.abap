@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
                                 )->content( `form` ).
 
-    form->label( 'device_browser'
+    form->label( `device_browser`
                           )->input( client->_bind_edit( device_os )
                           )->label( `device_systemtype`
 

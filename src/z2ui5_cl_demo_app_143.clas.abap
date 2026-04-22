@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     page1->_z2ui5( )->uitableext( `Table1` ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( 'f' )->hbox( )->title( `Table` ).
+    header_title->heading( `f` )->hbox( )->title( `Table` ).
     header_title->expanded_content( `f` ).
     header_title->snapped_content( `f` ).
 
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                               )->ui_row_action_template( )->ui_row_action(
                               )->ui_row_action_item( icon = `sap-icon://add`
                                                      text = `Add`
-                                    press                 = client->_event( val = 'ROW_ACTION_ITEM_ADD' t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
+                                    press                 = client->_event( val = `ROW_ACTION_ITEM_ADD` t_arg = VALUE #( ( `${MATNR}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 

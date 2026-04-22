@@ -63,9 +63,9 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     DATA(lo_vbox) = page->vbox( `sapUiSmallMargin` ).
 
     DATA(lo_planningcalendar) = lo_vbox->planning_calendar(
-                                                          startdate         = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && ') }'
+                                                          startdate         = `{= Helper.DateCreateObject($` && client->_bind( lv_s_date ) && `) }`
                                                           rows              = `{path: '` && client->_bind( val = mt_people path = abap_true ) && `'}`
-                                                          appointmentselect = client->_event( val = 'AppSelected' t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
+                                                          appointmentselect = client->_event( val = `AppSelected` t_arg = VALUE #( ( `${$parameters>/appointment/mProperties/title}`) ) )
                                                           showweeknumbers   = abap_true ).
 
     DATA(lo_rows) = lo_planningcalendar->rows( ).
@@ -128,22 +128,22 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     mt_people = VALUE #(
-      ( name = `Olaf` role = 'Team Member' pic = 'sap-icon://employee'
+      ( name = `Olaf` role = `Team Member` pic = `sap-icon://employee`
           appointments = VALUE #(
-          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = `Mittag1` type = `Type01` title = `App1` tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = `Mittag2` type = `Type02` title = `App2` tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = `Mittag3` type = `Type03` title = `App3` tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
+          ( start = `2023-04-22T08:15:00` end = `2023-04-23T08:15:00` info = `Mittag1` type = `Type01` title = `App1` tentative = abap_false pic = `sap-icon://sap-ui5` )
+          ( start = `2023-04-25T10:30:00` end = `2023-04-26T11:30:00` info = `Mittag2` type = `Type02` title = `App2` tentative = abap_false pic = `sap-icon://sap-ui5` )
+          ( start = `2023-04-10T10:30:00` end = `2023-04-11T11:30:00` info = `Mittag3` type = `Type03` title = `App3` tentative = abap_false pic = `sap-icon://sap-ui5` ) )
           headers = VALUE #(
-              ( start = '2020-04-22T08:15:00' end = '2020-04-23T08:15:00' type = `Type11` title = `Reminder1` tentative = abap_true )
-              ( start = '2020-04-25T10:30:00' end = '2020-04-26T11:30:00' type = `Type12` title = `Reminder2` tentative = abap_false ) ) )
-      ( name = `Stefanie` role = 'Team Member' pic = 'sap-icon://employee'
+              ( start = `2020-04-22T08:15:00` end = `2020-04-23T08:15:00` type = `Type11` title = `Reminder1` tentative = abap_true )
+              ( start = `2020-04-25T10:30:00` end = `2020-04-26T11:30:00` type = `Type12` title = `Reminder2` tentative = abap_false ) ) )
+      ( name = `Stefanie` role = `Team Member` pic = `sap-icon://employee`
           appointments = VALUE #(
-          ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' info = `Mittag11` type = `Type11` title = `App11` tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' info = `Mittag21` type = `Type12` title = `App12` tentative = abap_false pic = 'sap-icon://sap-ui5' )
-          ( start = '2023-04-10T10:30:00' end = '2023-04-11T11:30:00' info = `Mittag31` type = `Type13` title = `App13` tentative = abap_false pic = 'sap-icon://sap-ui5' ) )
+          ( start = `2023-04-22T08:15:00` end = `2023-04-23T08:15:00` info = `Mittag11` type = `Type11` title = `App11` tentative = abap_false pic = `sap-icon://sap-ui5` )
+          ( start = `2023-04-25T10:30:00` end = `2023-04-26T11:30:00` info = `Mittag21` type = `Type12` title = `App12` tentative = abap_false pic = `sap-icon://sap-ui5` )
+          ( start = `2023-04-10T10:30:00` end = `2023-04-11T11:30:00` info = `Mittag31` type = `Type13` title = `App13` tentative = abap_false pic = `sap-icon://sap-ui5` ) )
           headers = VALUE #(
-              ( start = '2023-04-22T08:15:00' end = '2023-04-23T08:15:00' type = `Type11` title = `Reminder11` tentative = abap_true )
-              ( start = '2023-04-25T10:30:00' end = '2023-04-26T11:30:00' type = `Type12` title = `Reminder21` tentative = abap_false ) ) ) ).
+              ( start = `2023-04-22T08:15:00` end = `2023-04-23T08:15:00` type = `Type11` title = `Reminder11` tentative = abap_true )
+              ( start = `2023-04-25T10:30:00` end = `2023-04-26T11:30:00` type = `Type12` title = `Reminder21` tentative = abap_false ) ) ) ).
 
   ENDMETHOD.
 

@@ -105,13 +105,13 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
         IF lt_arg IS NOT INITIAL.
 
           DATA(filter_string) = lt_arg[ 1 ].
-          SPLIT filter_string AT ':' INTO DATA(lv_dummy) filter_string.
+          SPLIT filter_string AT `:` INTO DATA(lv_dummy) filter_string.
           CONDENSE filter_string NO-GAPS.
           SPLIT filter_string AT `(` INTO DATA(lv_field) DATA(lv_values).
           TRANSLATE lv_field TO UPPER CASE.
           DATA(lv_values_len) = strlen( lv_values ) - 1.
           lv_values = lv_values+0(lv_values_len).
-          SPLIT lv_values AT ',' INTO TABLE DATA(lt_values) IN CHARACTER MODE.
+          SPLIT lv_values AT `,` INTO TABLE DATA(lt_values) IN CHARACTER MODE.
 
           IF sy-subrc = 0.
             LOOP AT lt_values INTO DATA(lv_val).
@@ -169,12 +169,12 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   METHOD z2ui5_set_data.
 
     t_tab = VALUE #(
-      ( title = `row_01`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-      ( title = `row_02`  info = `incompleted` descr = 'this is a description' icon = `sap-icon://account` )
-      ( title = `row_03`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-      ( title = `row_04`  info = `working`     descr = 'this is a description' icon = `sap-icon://account` )
-      ( title = `row_05`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` )
-      ( title = `row_06`  info = `completed`   descr = 'this is a description' icon = `sap-icon://account` ) ).
+      ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+      ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
     t_tab_group = VALUE #(
        ( text = `Title`       key = `title` )
