@@ -167,7 +167,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
               ENDIF.
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+          CATCH cx_root.
 
         ENDTRY.
 
