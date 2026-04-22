@@ -446,7 +446,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         READ TABLE mt_table_supplier WITH KEY suppliername = ls_detail-suppliername INTO ls_detail_supplier.
         lv_layout = `TwoColumnsMidExpanded`.
 
-        IF check_detail_active IS INITIAL.
+        IF check_detail_active = abap_false.
           view_display_master( ).
         ENDIF.
         view_display_detail( ).

@@ -118,12 +118,12 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
         DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
 
-        IF ls_result-check_confirmed IS INITIAL.
+        IF ls_result-check_confirmed = abap_false.
           client->message_box_display( `Popup was cancelled` ).
           RETURN.
         ENDIF.
 
-        IF mv_multiselect IS INITIAL.
+        IF mv_multiselect = abap_false.
 
           ASSIGN ls_result-row->* TO <row>.
           client->message_box_display( `callback after popup to select: ` && <row>-title ).

@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
 
             LOOP AT comp INTO DATA(com).
 
-              IF com-as_include IS INITIAL.
+              IF com-as_include = abap_false.
                 APPEND com TO result.
 
               ENDIF.

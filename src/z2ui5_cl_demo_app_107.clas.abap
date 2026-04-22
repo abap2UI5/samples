@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_107 IMPLEMENTATION.
 
     me->client = client.
 
-    IF check_load_cc IS INITIAL.
+    IF check_load_cc = abap_false.
       check_load_cc = abap_true.
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
