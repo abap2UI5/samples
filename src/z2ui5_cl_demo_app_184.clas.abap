@@ -85,7 +85,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ENDLOOP.
 
     IF mo_parent_view IS INITIAL.
-
       client->view_display( page->get_root( )->xml_get( ) ).
 
     ELSE.
@@ -102,7 +101,6 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-
       on_init( ).
 
     ENDIF.

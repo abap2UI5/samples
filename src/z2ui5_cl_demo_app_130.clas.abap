@@ -420,7 +420,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                      enabled = mv_button_active ).
 
     IF mo_parent_view IS INITIAL.
-
       client->view_display( page->get_root( )->xml_get( ) ).
 
     ENDIF.

@@ -185,7 +185,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
                  )->toolbar_spacer( ).
 
     IF mo_parent_view IS INITIAL.
-
       client->view_display( page->get_root( )->xml_get( ) ).
 
     ELSE.
@@ -202,7 +201,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-
       on_init( ).
 
     ENDIF.

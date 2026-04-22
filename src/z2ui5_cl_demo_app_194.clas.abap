@@ -114,7 +114,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
                                     type  = `Success` ).
 
     IF mo_parent_view IS INITIAL.
-
       client->view_display( page->get_root( )->xml_get( ) ).
 
     ELSE.
@@ -131,7 +130,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-
       on_init( ).
 
     ENDIF.

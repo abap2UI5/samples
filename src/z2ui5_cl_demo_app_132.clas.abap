@@ -48,7 +48,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
             LOOP AT comp INTO DATA(com).
 
               IF com-as_include = abap_false.
-
                 APPEND com TO result.
 
               ENDIF.
@@ -86,7 +85,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
   METHOD render_main.
 
     IF mo_parent_view IS INITIAL.
-
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
     ELSE.
@@ -104,7 +102,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
                                state        = `Success` ).
 
     IF mo_parent_view IS INITIAL.
-
       client->view_display( page->get_root( )->xml_get( ) ).
 
     ELSE.
@@ -130,7 +127,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-
       on_init( ).
 
     ENDIF.

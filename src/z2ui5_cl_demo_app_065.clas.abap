@@ -45,7 +45,6 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
               )->input( client->_bind_edit( mv_input_nest ) ).
 
     IF client->check_on_init( ).
-
       client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
