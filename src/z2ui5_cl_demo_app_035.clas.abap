@@ -87,11 +87,11 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
       WHEN `DB_LOAD`.
 
         mv_editor = COND #(
-            WHEN mv_path CS 'abap' THEN lcl_file_api=>read_abap( )
-            WHEN mv_path CS 'json' THEN lcl_file_api=>read_json( )
-            WHEN mv_path CS 'yaml' THEN lcl_file_api=>read_yaml( )
-            WHEN mv_path CS 'text' THEN lcl_file_api=>read_text( )
-            WHEN mv_path CS 'js'   THEN lcl_file_api=>read_js( ) ).
+            WHEN mv_path CS `abap` THEN lcl_file_api=>read_abap( )
+            WHEN mv_path CS `json` THEN lcl_file_api=>read_json( )
+            WHEN mv_path CS `yaml` THEN lcl_file_api=>read_yaml( )
+            WHEN mv_path CS `text` THEN lcl_file_api=>read_text( )
+            WHEN mv_path CS `js`   THEN lcl_file_api=>read_js( ) ).
 
         client->message_toast_display( `Download successfull` ).
 

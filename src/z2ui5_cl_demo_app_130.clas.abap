@@ -324,7 +324,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
                )->page(
-                  title          = get_txt( '/SCWM/DE_TW_COND_CHECK_SELECT' )
+                  title          = get_txt( `/SCWM/DE_TW_COND_CHECK_SELECT` )
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -340,9 +340,9 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     DATA(grid) = page->grid( 'L6 M12 S12'
         )->content( `layout` ).
 
-    grid->simple_form( get_txt( 'BU_DYNID' )
+    grid->simple_form( get_txt( `BU_DYNID` )
         )->content( `form`
-            )->label( get_txt( 'BU_DYNID' )
+            )->label( get_txt( `BU_DYNID` )
              )->combobox(
              change      = client->_event( `INPUT_SCREEN_CHANGE` )
              items       = client->_bind_edit( mt_screens )
@@ -350,27 +350,27 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                  )->item(
                      key  = `{SCREEN_NAME}`
                      text = `{SCREEN_NAME} - {DESCR}`
-         )->get_parent( )->label( get_txt( 'DESCR_40' )
+         )->get_parent( )->label( get_txt( `DESCR_40` )
             )->input(
             value         = client->_bind_edit( mv_screen_descr )
             showvaluehelp = abap_false
 *            editable         = abap_false
             enabled       = abap_false ).
 
-    grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
+    grid->simple_form( get_txt( `/SCWM/WB_VARIANT` )
             )->content( `form`
-                )->label( get_txt( '/SCWM/WB_VARIANT' )
+                )->label( get_txt( `/SCWM/WB_VARIANT` )
             )->input(
             value            = client->_bind_edit( mv_variant )
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `CALL_POPUP_VARIANT` )
             submit           = client->_event( `INPUT_VARIANT_CHANGE` )
-            )->label( get_txt( 'DESCR_40' )
+            )->label( get_txt( `DESCR_40` )
             )->input(
             value         = client->_bind_edit( mv_description )
             showvaluehelp = abap_false ).
 
-    DATA(content) = grid->simple_form( get_txt( 'CLASSFEL' )
+    DATA(content) = grid->simple_form( get_txt( `CLASSFEL` )
          )->content( `form` ).
 
     IF mt_fields IS NOT INITIAL.
@@ -404,18 +404,18 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     page->footer( )->overflow_toolbar(
                  )->toolbar_spacer(
                  )->button(
-                     text    = get_txt( '/SCWM/DE_HUDEL' )
+                     text    = get_txt( `/SCWM/DE_HUDEL` )
                      press   = client->_event( `BUTTON_DELETE` )
                      type    = `Reject`
                      icon    = `sap-icon://delete`
                      enabled = mv_button_active
                  )->button(
-                     text    = get_txt( 'B_KOPIE' )
+                     text    = get_txt( `B_KOPIE` )
                      press   = client->_event( `BUTTON_COPY` )
                      type    = `Default`
                      enabled = mv_button_active
                   )->button(
-                     text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
+                     text    = get_txt( `/SCWM/DE_LM_LOGSAVE` )
                      press   = client->_event( `BUTTON_SAVE` )
                      type    = `Success`
                      enabled = mv_button_active ).
@@ -436,13 +436,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-      title         = get_txt_l( '/SCWM/DE_TW_COND_CHECK_COND' ) ).
+      title         = get_txt_l( `/SCWM/DE_TW_COND_CHECK_COND` ) ).
 
     DATA(vbox) = lo_popup->vbox( height         = `100%`
                                  justifycontent = `SpaceBetween` ).
 
     DATA(item) = vbox->list(
-      nodata          = get_txt( '/SCWM/DE_IND_BIN_EMPTY' )
+      nodata          = get_txt( `/SCWM/DE_IND_BIN_EMPTY` )
       items           = client->_bind_edit( mt_filter )
       selectionchange = client->_event( `SELCHANGE` )
                         )->custom_list_item( ).
@@ -465,16 +465,16 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
              t_arg                                 = VALUE #( ( `${KEY}` ) ) ) ).
 
     lo_popup->footer( )->overflow_toolbar(
-        )->button( text = get_txt( 'FC_DELALL' )
+        )->button( text = get_txt( `FC_DELALL` )
                   icon  = `sap-icon://delete`
                   type  = `Transparent`
                   press = client->_event( `POPUP_FILTER_DELETE_ALL` )
-        )->button( text  = get_txt( 'RSLPO_GUI_ADDPART' )
+        )->button( text  = get_txt( `RSLPO_GUI_ADDPART` )
                    icon  = `sap-icon://add`
                    press = client->_event( `POPUP_FILTER_ADD` )
         )->toolbar_spacer(
         )->button(
-            text  = get_txt( 'MSSRCF_ACTION' )
+            text  = get_txt( `MSSRCF_ACTION` )
             press = client->_event( `POPUP_FILTER_OK` )
             type  = `Emphasized` ).
 
@@ -487,16 +487,16 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup->dialog( title        = get_txt( '/SCWM/WB_VARIANT' )
+    popup->dialog( title        = get_txt( `/SCWM/WB_VARIANT` )
                    contentwidth = `30%`
       )->table(
             mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_variants_pop )
         )->columns(
             )->column( `20rem`
-                )->text( get_txt( '/SCWM/WB_VARIANT' ) )->get_parent(
+                )->text( get_txt( `/SCWM/WB_VARIANT` ) )->get_parent(
             )->column(
-                )->text( get_txt( 'DESCR_40' )
+                )->text( get_txt( `DESCR_40` )
         )->get_parent( )->get_parent(
         )->items(
             )->column_list_item( selected = `{SELKZ}`
@@ -508,7 +508,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
-                text  = get_txt( 'MSSRCF_ACTION' )
+                text  = get_txt( `MSSRCF_ACTION` )
                 press = client->_event( `POPUP_VARIANT_CLOSE` )
                 type  = `Emphasized` ).
     client->popup_display( popup->stringify( ) ).
@@ -523,15 +523,15 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup = lo_popup->dialog(
       contentheight = `50%`
       contentwidth  = `50%`
-      title         = get_txt( '/SCWM/DE_COPY_NUMBER' ) ).
+      title         = get_txt( `/SCWM/DE_COPY_NUMBER` ) ).
 
-    lo_popup->simple_form( get_txt( '/SCWM/WB_VARIANT' )
+    lo_popup->simple_form( get_txt( `/SCWM/WB_VARIANT` )
                )->content( `form`
-                   )->label( get_txt( '/SCWM/WB_VARIANT' )
+                   )->label( get_txt( `/SCWM/WB_VARIANT` )
                )->input(
                value         = client->_bind_edit( mv_variant_copy )
                showvaluehelp = abap_false
-               )->label( get_txt( 'DESCR_40' )
+               )->label( get_txt( `DESCR_40` )
                )->input(
                value         = client->_bind_edit( mv_description_copy )
                showvaluehelp = abap_false ).
@@ -539,11 +539,11 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
     lo_popup->footer( )->overflow_toolbar(
         )->toolbar_spacer(
         )->button(
-            text  = get_txt( 'XEXIT' )
+            text  = get_txt( `XEXIT` )
             press = client->_event( `POPUP_COPY_EXIT` )
             type  = `Reject`
        )->button(
-            text    = get_txt( '/SCWM/DE_LM_LOGSAVE' )
+            text    = get_txt( `/SCWM/DE_LM_LOGSAVE` )
             press   = client->_event( `POPUP_COPY_SAVE` )
             type    = `Emphasized`
             enabled = `{= ${MV_VARIANT_COPY} !== "" }`
