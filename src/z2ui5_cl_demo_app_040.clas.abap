@@ -10,7 +10,6 @@ CLASS z2ui5_cl_demo_app_040 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF app,
-        check_initialized TYPE abap_bool,
         view_main         TYPE string,
         view_popup        TYPE string,
         get               TYPE z2ui5_if_types=>ty_s_get,
