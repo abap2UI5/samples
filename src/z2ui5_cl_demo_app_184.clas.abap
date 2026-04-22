@@ -162,7 +162,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
             DATA(comp) = structdesc->get_components( ).
 
             LOOP AT comp INTO DATA(com).
-              IF com-as_include = abap_false.
+              IF com-as_include IS INITIAL.
                 APPEND com TO result.
               ENDIF.
             ENDLOOP.

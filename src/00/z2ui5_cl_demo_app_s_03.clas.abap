@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
     DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
 
-    IF icfactive = abap_false.
+    IF icfactive IS INITIAL.
       vbox->message_strip(
           text    = `ICF Service '/SAP/PUBLIC/BC/ABAP/mime_demo' is not active. Sounds will not play. Please activate the ICF service first.`
           type    = `Warning`

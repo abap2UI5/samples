@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
            tooltip   = `Sample information`
            press     = client->_event( `CLICK_HINT_ICON` ) ).
 
-    IF icfactive = abap_false.
+    IF icfactive IS INITIAL.
       page->message_strip(
           text    = `ICF Service '/sap/bc/apc/sap/z2ui5_sample' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
           type    = `Warning`

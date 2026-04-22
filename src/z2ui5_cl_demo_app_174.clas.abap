@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         ASSIGN lr->* TO FIELD-SYMBOL(<t>).
         DATA(lt3) = CONV ty_tab( <t> ).
 
-        IF mv_multiselect = abap_false.
+        IF mv_multiselect IS INITIAL.
           client->message_box_display( `callback after popup to select: ` && lt3[ 1 ]-title ).
 
         ELSE.
