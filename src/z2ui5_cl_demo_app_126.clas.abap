@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
 
     METHODS on_init.
 
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS get_data.
 
@@ -113,12 +113,12 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
   METHOD on_init.
 
     get_data( ).
-    render_main( ).
+    view_display( ).
 
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).

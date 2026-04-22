@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS render_sub_app.
 
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
 
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
 
       on_init( ).
 
-      render_main( ).
+      view_display( ).
 
     ENDIF.
 
@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
             CALL METHOD mo_app->(`SET_APP_DATA`)
               EXPORTING table = t002->table.
 
-            render_main( ).
+            view_display( ).
 
             ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
 

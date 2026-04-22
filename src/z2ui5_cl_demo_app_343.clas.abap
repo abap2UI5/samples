@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_343 DEFINITION PUBLIC.
 
     METHODS get_data.
 
-    METHODS render_main
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
                                                                 navbuttonpress = client->_event_nav_app_leave( )
@@ -103,12 +103,12 @@ CLASS z2ui5_cl_demo_app_343 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       get_data( ).
-      render_main( client ).
+      view_display( client ).
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true
         AND client->check_on_init( )          = abap_false.
-      render_main( client ).
+      view_display( client ).
     ENDIF.
 
   ENDMETHOD.

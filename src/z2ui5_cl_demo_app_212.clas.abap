@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS on_event.
 
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS get_data.
 
@@ -149,12 +149,12 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     get_dfies( ).
 
 
-    render_main( ).
+    view_display( ).
 
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     FIELD-SYMBOLS <tab> TYPE data.
 

@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     METHODS on_event    IMPORTING client TYPE REF TO z2ui5_if_client.
-    METHODS render_main IMPORTING client TYPE REF TO z2ui5_if_client.
+    METHODS view_display IMPORTING client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      render_main( client ).
+      view_display( client ).
 
     ENDIF.
 

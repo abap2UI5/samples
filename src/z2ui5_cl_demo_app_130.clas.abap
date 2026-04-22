@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 
     METHODS on_init.
 
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS render_popup_filter.
 
@@ -258,7 +258,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = `QUAN`     descr = `123` )
       ( screen_name = `TO`       descr = `123` ) ).
 
-    render_main( ).
+    view_display( ).
 
     mt_mapping = VALUE #(
       (   n = `EQ`     v = `={LOW}` )
@@ -299,14 +299,14 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       client->popup_destroy( ).
 
-      render_main( ).
+      view_display( ).
 
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     IF mo_parent_view IS INITIAL.
 
@@ -572,13 +572,13 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         get_variants( ).
 
-        render_main( ).
+        view_display( ).
 
       WHEN `INPUT_VARIANT_CHANGE`.
 
         get_values( ).
 
-        render_main( ).
+        view_display( ).
 
       WHEN `POPUP_FILTER_OK`.
 
@@ -634,18 +634,18 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
         get_values( ).
 
-        render_main( ).
+        view_display( ).
       WHEN `BUTTON_SAVE`.
 
       WHEN `BUTTON_DELETE`.
 
-        render_main( ).
+        view_display( ).
 
       WHEN `BUTTON_COPY`.
 
         render_pop_copy( ).
 
-        render_main( ).
+        view_display( ).
 
       WHEN `POPUP_COPY_EXIT`.
 

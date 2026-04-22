@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
   PROTECTED SECTION.
     METHODS on_event    IMPORTING client TYPE REF TO z2ui5_if_client.
 
-    METHODS render_main IMPORTING client TYPE REF TO z2ui5_if_client.
+    METHODS view_display IMPORTING client TYPE REF TO z2ui5_if_client.
     METHODS get_data.
 
     METHODS get_comp
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -166,7 +166,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       get_data( ).
-      render_main( client ).
+      view_display( client ).
 
     ENDIF.
 

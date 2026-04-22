@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS refresh_data.
     METHODS add_data.
@@ -42,12 +42,12 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
   METHOD on_init.
 
     refresh_data( ).
-    render_main( ).
+    view_display( ).
 
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

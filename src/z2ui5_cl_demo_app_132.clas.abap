@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS get_comp
       RETURNING
@@ -69,7 +69,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      render_main( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

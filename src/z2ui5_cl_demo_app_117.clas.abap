@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_117 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS render_main.
+    METHODS view_display.
 
     METHODS render_sub_app.
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD render_main.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page( id             = `page_main`
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       on_init( ).
-      render_main( ).
+      view_display( ).
     ENDIF.
 
     on_event( ).
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
               EXPORTING
                 data = t002->count.
 
-            render_main( ).
+            view_display( ).
 
             ASSIGN mo_app->(`MO_PARENT_VIEW`) TO FIELD-SYMBOL(<view>).
 
