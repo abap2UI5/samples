@@ -135,7 +135,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
   PRIVATE SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
-
 ENDCLASS.
 
 

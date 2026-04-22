@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_344 DEFINITION PUBLIC.
         iv_tabname    TYPE string
       RETURNING
         VALUE(result) TYPE abap_component_tab.
-
 ENDCLASS.
 
 

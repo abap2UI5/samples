@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
     DATA mv_page TYPE string.
-
 ENDCLASS.
 
 

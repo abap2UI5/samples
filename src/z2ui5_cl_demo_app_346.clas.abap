@@ -37,7 +37,6 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     METHODS next_focus.
     METHODS focus.
     METHODS default_focus.
-
 ENDCLASS.
 
 

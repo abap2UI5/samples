@@ -29,7 +29,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
         stateful TYPE abap_bool.
 
     METHODS update_lock_counter.
-
 ENDCLASS.
 
 

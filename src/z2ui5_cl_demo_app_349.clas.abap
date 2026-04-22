@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_349 DEFINITION PUBLIC.
       IMPORTING
         i_page   TYPE REF TO z2ui5_cl_xml_view
         i_client TYPE REF TO z2ui5_if_client.
-
 ENDCLASS.
 
 

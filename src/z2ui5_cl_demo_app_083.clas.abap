@@ -74,7 +74,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
     DATA mt_cols TYPE string_table.
-
 ENDCLASS.
 
 

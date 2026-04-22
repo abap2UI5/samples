@@ -46,7 +46,6 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
   PRIVATE SECTION.
     METHODS get_dfies.
-
 ENDCLASS.
 
 

@@ -26,7 +26,6 @@ CLASS z2ui5_cl_demo_app_353 DEFINITION PUBLIC.
 
     METHODS render.
     METHODS event.
-
 ENDCLASS.
 
 

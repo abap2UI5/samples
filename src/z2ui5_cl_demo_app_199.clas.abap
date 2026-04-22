@@ -17,7 +17,6 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
   PRIVATE SECTION.
     METHODS refresh_data.
     METHODS add_data.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.

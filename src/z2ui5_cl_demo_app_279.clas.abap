@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS security_check_popup.
     METHODS ui5_callback.
-
 ENDCLASS.
 
 

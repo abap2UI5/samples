@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
           i_message TYPE string
         RAISING
           cx_amc_error.
-
 ENDCLASS.
 
 

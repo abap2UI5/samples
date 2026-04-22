@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
   PROTECTED SECTION.
   PRIVATE SECTION.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
-
 ENDCLASS.
 
 

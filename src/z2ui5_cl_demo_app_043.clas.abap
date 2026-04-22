@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_043 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_043 IMPLEMENTATION.

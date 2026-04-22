@@ -45,7 +45,6 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
     METHODS set_selkz
       IMPORTING
         iv_selkz TYPE abap_bool.
-
 ENDCLASS.
 
 

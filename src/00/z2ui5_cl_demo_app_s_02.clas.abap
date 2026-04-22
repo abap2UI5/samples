@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
       IMPORTING
         client   TYPE REF TO z2ui5_if_client
         stateful TYPE abap_bool.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.

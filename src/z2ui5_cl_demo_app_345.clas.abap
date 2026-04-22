@@ -35,7 +35,6 @@ CLASS z2ui5_cl_demo_app_345 DEFINITION PUBLIC.
     METHODS get_comp
       RETURNING
         VALUE(result) TYPE abap_component_tab.
-
 ENDCLASS.
 
 
