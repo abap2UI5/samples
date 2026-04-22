@@ -26,7 +26,7 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
   METHOD display_view.
 
     " Define the base URL for the server
-    DATA base_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/'.
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(

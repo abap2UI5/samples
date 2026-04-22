@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
     DATA magic_key TYPE string.
     DATA: BEGIN OF message,
             text TYPE string VALUE IS INITIAL,
-            type TYPE string VALUE 'None',
+            type TYPE string VALUE `None`,
           END OF message.
 
   PROTECTED SECTION.

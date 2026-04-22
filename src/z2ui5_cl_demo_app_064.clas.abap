@@ -29,8 +29,8 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
     DATA mv_check_active TYPE abap_bool.
     DATA:
       BEGIN OF screen,
-        progress_value TYPE string VALUE '0',
-        display_value  TYPE string VALUE '',
+        progress_value TYPE string VALUE `0`,
+        display_value  TYPE string VALUE ``,
       END OF screen.
 
     DATA mv_percent TYPE i.

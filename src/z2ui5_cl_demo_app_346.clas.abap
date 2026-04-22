@@ -27,12 +27,12 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
   PRIVATE SECTION.
     CONSTANTS:
       BEGIN OF c_id,
-        index       TYPE string VALUE 'Index',
-        title       TYPE string VALUE 'Title',
-        color       TYPE string VALUE 'Color',
-        info        TYPE string VALUE 'Info',
-        checkbox    TYPE string VALUE 'Checkbox',
-        description TYPE string VALUE 'Description',
+        index       TYPE string VALUE `Index`,
+        title       TYPE string VALUE `Title`,
+        color       TYPE string VALUE `Color`,
+        info        TYPE string VALUE `Info`,
+        checkbox    TYPE string VALUE `Checkbox`,
+        description TYPE string VALUE `Description`,
       END OF c_id.
 
     METHODS next_focus.
