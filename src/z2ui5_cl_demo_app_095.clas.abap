@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     mo_app_sub->mo_view_parent = mo_grid_sub.
     mo_app_sub->z2ui5_if_app~main( client ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
       on_init_sub( ).
-      client->view_display( page->get_root( )->xml_get( ) ).
+      client->view_display( page->stringify( ) ).
       RETURN.
     ENDIF.
 

@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                     enabled  = abap_false
        )->text( `{COUNT}` ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 

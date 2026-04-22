@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
                        press = client->_event( `BUTTON_SAVE` )
                        type  = `Success` ).
 
-    client->view_display( page->get_root( )->xml_get( ) ).
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
