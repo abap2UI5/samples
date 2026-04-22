@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_316 DEFINITION PUBLIC.
           END OF url.
 
   PROTECTED SECTION.
-    METHODS display_view
+    METHODS view_display
       IMPORTING !client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
@@ -30,7 +30,7 @@ ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
-  METHOD display_view.
+  METHOD view_display.
 
     url = VALUE #( url        = `http://www.sap.com`
                    new_window = `true` ).
@@ -140,7 +140,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
     ENDIF.
 
   ENDMETHOD.

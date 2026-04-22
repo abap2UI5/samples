@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_134 DEFINITION PUBLIC.
     DATA mt_scroll TYPE z2ui5_if_types=>ty_t_name_value.
 
   PROTECTED SECTION.
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
@@ -38,7 +38,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = `this is a description` ).
     DO 100 TIMES.
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
     selend = `7`.
 
     INSERT VALUE #( n = `id_page` ) INTO TABLE mt_scroll.
-    display_view( client ).
+    view_display( client ).
 
   ENDMETHOD.
 

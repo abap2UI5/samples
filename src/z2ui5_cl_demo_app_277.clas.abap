@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_277 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
@@ -22,7 +22,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     " Define the base URL for the server
     DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
@@ -262,7 +262,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
     ENDIF.
 
     on_event( client ).

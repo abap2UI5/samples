@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_s_04 DEFINITION PUBLIC.
 
     METHODS set_data.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         !client TYPE REF TO z2ui5_if_client.
 
@@ -27,14 +27,14 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
       set_data( ).
     ENDIF.
 
   ENDMETHOD.
 
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

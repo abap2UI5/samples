@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view.
+    METHODS view_display.
     METHODS on_event.
     METHODS security_check_popup.
     METHODS on_navigation.
@@ -20,7 +20,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory(
                    )->shell(
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     on_event( ).
 
     IF client->check_on_init( ).
-      display_view( ).
+      view_display( ).
 
     ELSE.
       client->view_model_update( ).

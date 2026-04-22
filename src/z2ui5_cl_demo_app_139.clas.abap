@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_139 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -22,21 +22,21 @@ CLASS z2ui5_cl_demo_app_139 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       search = client->get( )-s_config-search && `my_search_string`.
-      display_view( ).
+      view_display( ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `SET_VIEW`.
-        display_view( ).
+        view_display( ).
         client->message_toast_display( |{ search } - title changed| ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

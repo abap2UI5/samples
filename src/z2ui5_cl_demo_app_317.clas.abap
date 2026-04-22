@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
     DATA mt_node TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY.
   PROTECTED SECTION.
     METHODS build_tree.
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
   PRIVATE SECTION.
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
           ( id   = `08` id_parent = `06` text = `Paint 002` ) ).
 
       build_tree( ).
-      display_view( client ).
+      view_display( client ).
 
     ENDIF.
 
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       WHEN `onDrop`.
         mt_node[ id = client->get_event_arg( 1 ) ]-id_parent = client->get_event_arg( 2 ).
         build_tree( ).
-        display_view( client ).
+        view_display( client ).
     ENDCASE.
 
   ENDMETHOD.
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
 

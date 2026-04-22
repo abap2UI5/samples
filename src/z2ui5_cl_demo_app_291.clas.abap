@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
@@ -27,7 +27,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -114,7 +114,7 @@ CLASS z2ui5_cl_demo_app_291 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
 
       lv_default = `Default <em>(Information)</em> with default icon and <strong>close button</strong>:`.
       lv_error   = `<strong>Error</strong> with link to ` && `<a target="_blank" href="http://www.sap.com">SAP Homepage</a> <em>(For more info)</em>`.

@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     METHODS:
-      display_view
+      view_display
         IMPORTING
           client TYPE REF TO z2ui5_if_client,
       initialize,
@@ -35,7 +35,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -161,7 +161,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       initialize( ).
-      display_view( client ).
+      view_display( client ).
 
     ELSE.
       client->view_model_update( ).

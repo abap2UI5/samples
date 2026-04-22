@@ -5,7 +5,7 @@ CLASS z2ui5_cl_demo_app_352 DEFINITION PUBLIC.
 
     DATA input TYPE string.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
@@ -23,14 +23,14 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
     ENDIF.
     on_event( client ).
 
   ENDMETHOD.
 
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 

@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_105 DEFINITION PUBLIC.
     DATA mr_data TYPE REF TO data.
 
     METHODS on_event.
-    METHODS display_view
+    METHODS view_display
       CHANGING
         !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
 
@@ -20,7 +20,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     mo_view_parent->input( value       = client->_bind_edit( mv_class_1 )
                            placeholder = `Input From Class 1` ).
@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( ).
+      view_display( ).
     ELSE.
       on_event( ).
     ENDIF.

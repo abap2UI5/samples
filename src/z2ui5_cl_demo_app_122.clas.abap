@@ -20,7 +20,7 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -28,7 +28,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( ).
+      view_display( ).
     ENDIF.
 
   ENDMETHOD.

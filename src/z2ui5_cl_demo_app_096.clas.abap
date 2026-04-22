@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
 
-    METHODS display_view
+    METHODS view_display
       CHANGING xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
   METHOD on_init.
 
     mv_descr = `data sub app`.
-    display_view( ).
+    view_display( ).
 
   ENDMETHOD.
 
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD display_view.
+  METHOD view_display.
 
     IF mo_view_parent IS NOT BOUND.
 

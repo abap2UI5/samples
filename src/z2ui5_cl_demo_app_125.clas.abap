@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_125 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -17,7 +17,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -46,14 +46,14 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
     IF client->check_on_init( ).
       title = `my title`.
 
-      display_view( ).
+      view_display( ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `SET_VIEW`.
-        display_view( ).
+        view_display( ).
         client->message_toast_display( |{ title } - title changed| ).
     ENDCASE.
 

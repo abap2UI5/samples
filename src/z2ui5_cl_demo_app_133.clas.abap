@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
     DATA update_focus TYPE abap_bool.
 
   PROTECTED SECTION.
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS init
@@ -24,7 +24,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     client->view_display( view->shell(
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     field_02 = `this is another text`.
     selstart = `3`.
     selend = `7`.
-    display_view( client ).
+    view_display( client ).
 
   ENDMETHOD.
 

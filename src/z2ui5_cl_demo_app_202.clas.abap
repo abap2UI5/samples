@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_202 DEFINITION PUBLIC.
     DATA av_init TYPE abap_bool.
 
   PROTECTED SECTION.
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
@@ -17,7 +17,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_202 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF av_init = abap_false.
-      display_view( client ).
+      view_display( client ).
       av_init = `X`.
       RETURN.
     ENDIF.

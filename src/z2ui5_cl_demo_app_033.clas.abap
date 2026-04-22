@@ -9,7 +9,7 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view.
+    METHODS view_display.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -17,7 +17,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       mv_type = `sapIllus-NoActivities`.
-      display_view( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
 
     ENDCASE.
 
-    display_view( ).
+    view_display( ).
 
   ENDMETHOD.
 

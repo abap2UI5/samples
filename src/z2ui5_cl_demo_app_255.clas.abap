@@ -6,7 +6,7 @@ CLASS z2ui5_cl_demo_app_255 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
@@ -22,7 +22,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(css) = `.navigationExamples .code {`                    &&
                 `    margin: 0 5%;`                              &&
@@ -151,7 +151,7 @@ CLASS z2ui5_cl_demo_app_255 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
     ENDIF.
 
     on_event( client ).

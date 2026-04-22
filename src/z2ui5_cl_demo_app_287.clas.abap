@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
     METHODS on_event
@@ -33,7 +33,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
 
-  METHOD display_view.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      display_view( client ).
+      view_display( client ).
 
       lt_o_model = VALUE #(
         ( title     = `wrapCharLimit is set to Default. Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
