@@ -73,10 +73,9 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
          )->stringify( ) ).
 
       on_init( ).
-      RETURN.
+    ELSE.
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 

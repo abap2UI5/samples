@@ -197,10 +197,9 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
       load_output_table( ).
       render_main_screen( ).
-      RETURN.
+    ELSE.
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 

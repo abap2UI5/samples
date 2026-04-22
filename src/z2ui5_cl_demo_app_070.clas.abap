@@ -69,10 +69,9 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       on_init( ).
-      RETURN.
+    ELSE.
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 

@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  is not bound!` ).
     ENDIF.
 
-    IF mo_layout_obj_2->ms_data-guid EQ mo_layout_obj->ms_data-guid.
+    IF mo_layout_obj_2->ms_data-guid = mo_layout_obj->ms_data-guid.
       client->message_toast_display( `ERROR - GUIDS!` ).
     ENDIF.
 

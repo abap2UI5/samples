@@ -24,10 +24,9 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
     IF client->check_on_init( ).
       mv_page = `page1`.
       view_display( ).
-      RETURN.
+    ELSE.
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
 
