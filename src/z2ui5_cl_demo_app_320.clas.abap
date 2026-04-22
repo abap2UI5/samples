@@ -84,6 +84,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
+
   METHOD display_avatar_group_view.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_z2ui5( )->title( `Avatar Group Sample` ).
@@ -137,6 +138,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD display_individual_popover.
     DATA(individual_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     individual_popover->popover( id             = `individualPopover`
@@ -170,6 +172,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
     client->popover_display( xml   = individual_popover->stringify( )
                              by_id = id ).
   ENDMETHOD.
+
 
   METHOD display_group_popover.
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -235,6 +238,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                              by_id = id ).
   ENDMETHOD.
 
+
   METHOD on_event.
     DATA(lt_arg) = client->get( )-t_event_arg.
     CASE client->get( )-event.
@@ -284,6 +288,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                                          t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ) ).
     ENDCASE.
   ENDMETHOD.
+
 
   METHOD calculate_content_height.
     DATA(lv_floor) = floor( ( lines / 2 ) ) * 68 + 48.

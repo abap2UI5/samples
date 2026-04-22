@@ -111,6 +111,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD initialize_view2.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(

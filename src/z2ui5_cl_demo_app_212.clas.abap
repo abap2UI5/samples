@@ -58,6 +58,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD row_select.
 
     DATA(lt_arg) = client->get( )-t_event_arg.
@@ -71,6 +72,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     render_popup( ).
   ENDMETHOD.
+
 
   METHOD prefill_popup_values.
 
@@ -98,11 +100,13 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
+
   METHOD get_dfies.
 
     mt_dfies = z2ui5_cl_util_ext=>rtti_get_t_dfies_by_table_name( mv_table ).
 
   ENDMETHOD.
+
 
   METHOD render_popup.
 
@@ -136,6 +140,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
     get_data( ).
 
@@ -146,9 +151,11 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     render_main( ).
   ENDMETHOD.
 
+
   METHOD init_layout.
 
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -183,6 +190,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
     me->client = client.
 
@@ -198,11 +206,13 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD set_app_data.
 
     mv_table = table.
 
   ENDMETHOD.
+
 
   METHOD get_data.
 
@@ -239,6 +249,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD get_comp.
 
     DATA index TYPE int4.
@@ -273,6 +284,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       CATCH cx_root.
     ENDTRY.
   ENDMETHOD.
+
 
   METHOD on_after_navigation.
 

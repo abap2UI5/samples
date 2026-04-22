@@ -30,6 +30,7 @@ CLASS z2ui5_cl_demo_app_117 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   METHOD on_event.
@@ -49,6 +50,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
     mt_t002 = VALUE #( ( id = '1' class = 'Z2UI5_CL_DEMO_APP_126'  count = '12' ) ).
@@ -56,6 +58,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
     mv_selectedkey = '1'.
 
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -82,6 +85,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -96,6 +100,7 @@ CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.
     render_sub_app( ).
 
   ENDMETHOD.
+
 
   METHOD render_sub_app.
     FIELD-SYMBOLS <view_display> TYPE any.

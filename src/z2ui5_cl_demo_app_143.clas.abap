@@ -38,6 +38,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD ui5_on_init.
 
     gt_data = VALUE ty_t_data(
@@ -48,6 +49,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
       ( field1 = '25' field2 = 'T3' field3 = 'TEXT2' ) ).
 
   ENDMETHOD.
+
 
   METHOD ui5_view_main_display.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -104,6 +106,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
     me->client = client.

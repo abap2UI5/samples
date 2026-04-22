@@ -258,6 +258,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD init_data_set.
 
     mt_columns = VALUE #( ( columnkey = `productId` text = `Product ID` )

@@ -83,6 +83,7 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD ui5_view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
@@ -129,12 +130,14 @@ CLASS z2ui5_cl_demo_app_335 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD get_data.
 
     SELECT SINGLE * FROM z2ui5_t_01
       INTO CORRESPONDING FIELDS OF @ms_struc.
 
   ENDMETHOD.
+
 
   METHOD get_data_2.
 

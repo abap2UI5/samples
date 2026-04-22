@@ -50,6 +50,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
     on_event( client ).
   ENDMETHOD.
 
+
   METHOD initialization.
     items = VALUE #(
         ( title     = `Box title 1`
@@ -182,6 +183,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
           type      = `Navigation` ) ).
   ENDMETHOD.
 
+
   METHOD display_view.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -230,6 +232,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
+
 
   METHOD on_event.
     IF client->check_on_event( 'onDrop' ).

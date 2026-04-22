@@ -38,6 +38,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD ui5_on_init.
 
     gt_multi = VALUE ty_t_combo(
@@ -81,6 +82,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
     me->client = client.

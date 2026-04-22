@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
+
   METHOD display_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -55,6 +56,7 @@ CLASS z2ui5_cl_demo_app_269 IMPLEMENTATION.
     client->view_display( xml ).
 
   ENDMETHOD.
+
 
   METHOD on_event.
   ENDMETHOD.

@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
     METHODS add_data.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   METHOD on_event.
@@ -35,10 +36,12 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
+
   METHOD on_init.
     refresh_data( ).
     render_main( ).
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -80,6 +83,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
     FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
     me->client = client.
@@ -97,6 +101,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 
   METHOD refresh_data.
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
@@ -118,6 +123,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
+
 
   METHOD add_data.
 

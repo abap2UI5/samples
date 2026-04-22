@@ -47,6 +47,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD render.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
@@ -90,6 +91,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 

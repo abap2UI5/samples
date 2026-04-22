@@ -137,8 +137,10 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD on_event.
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
     IF client->check_on_init( ).

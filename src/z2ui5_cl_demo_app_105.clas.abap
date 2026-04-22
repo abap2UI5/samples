@@ -28,6 +28,7 @@ CLASS z2ui5_cl_demo_app_105 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_event.
 
     IF client->check_on_event( 'MESSAGE_SUB' ).

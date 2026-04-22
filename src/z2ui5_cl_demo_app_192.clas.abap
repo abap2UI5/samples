@@ -43,10 +43,12 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
   METHOD ui5_event.
   ENDMETHOD.
+
 
   METHOD ui5_display.
 
@@ -60,6 +62,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
 
     xml_parse( ).
@@ -69,6 +72,7 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
     xml_stringify( ).
 
   ENDMETHOD.
+
 
   METHOD get_data.
     DATA lr_structdescr TYPE REF TO cl_abap_structdescr.

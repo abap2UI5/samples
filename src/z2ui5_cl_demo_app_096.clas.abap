@@ -32,12 +32,14 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
 
     mv_descr = `data sub app`.
     display_view( ).
 
   ENDMETHOD.
+
 
   METHOD on_event.
 
@@ -46,6 +48,7 @@ CLASS z2ui5_cl_demo_app_096 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 
   METHOD display_view.
 

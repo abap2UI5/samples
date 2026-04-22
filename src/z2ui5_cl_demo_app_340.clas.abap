@@ -33,9 +33,11 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD on_init.
 
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -53,6 +55,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -76,6 +79,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 
   METHOD factory.
 

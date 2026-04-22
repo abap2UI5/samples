@@ -252,6 +252,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
 
     me->client = client.
@@ -304,6 +305,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_view_display.
 

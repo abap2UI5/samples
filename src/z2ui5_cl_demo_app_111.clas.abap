@@ -208,6 +208,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD get_custom_js.
 
     result  = `sap.z2ui5.InitSvm = () => {` && |\n| &&

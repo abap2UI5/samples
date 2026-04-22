@@ -22,6 +22,7 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
         stateful TYPE abap_bool.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -37,6 +38,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.
   ENDMETHOD.
+
 
   METHOD initialize_view.
     set_session_stateful( client   = client
@@ -72,6 +74,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD on_event.
     CASE client->get( )-event.
       WHEN 'BACK'.
@@ -89,6 +92,7 @@ CLASS z2ui5_cl_demo_app_s_02 IMPLEMENTATION.
                               stateful = abap_true ).
     ENDCASE.
   ENDMETHOD.
+
 
   METHOD set_session_stateful.
     client->set_session_stateful( stateful ).

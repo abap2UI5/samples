@@ -54,6 +54,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD ui5_view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = 'RTTI IV'
@@ -96,6 +97,7 @@ CLASS z2ui5_cl_demo_app_334 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD get_data.
 

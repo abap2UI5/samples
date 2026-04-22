@@ -48,6 +48,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_init.
     " ---------- Set vizframe chart data --------------------------------------------------------------
     mt_data_chart = VALUE #( ( week    = 'Week 1 - 4'
@@ -183,6 +184,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_rendering.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( )->shell( ).
@@ -304,6 +306,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     client->view_display( lr_view->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 

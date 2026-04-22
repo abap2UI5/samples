@@ -70,6 +70,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
     me->client = client.
 

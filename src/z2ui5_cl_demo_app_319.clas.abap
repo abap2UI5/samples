@@ -35,6 +35,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
@@ -49,6 +50,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 
   METHOD on_init.
 
@@ -80,6 +82,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
        switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value` ).
 
   ENDMETHOD.
+
 
   METHOD on_event.
 

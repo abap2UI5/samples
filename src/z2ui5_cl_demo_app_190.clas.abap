@@ -28,6 +28,7 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION PUBLIC.
       RETURNING VALUE(result) TYPE abap_component_tab.
 ENDCLASS.
 
+
 CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
   METHOD on_event.
@@ -35,10 +36,12 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     FIELD-SYMBOLS <row> TYPE any.
   ENDMETHOD.
 
+
   METHOD on_init.
     get_data( ).
     render_main( ).
   ENDMETHOD.
+
 
   METHOD render_main.
     FIELD-SYMBOLS <tab> TYPE data.
@@ -91,6 +94,7 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     ENDIF.
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
     me->client = client.
 
@@ -102,11 +106,13 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
     on_event( ).
   ENDMETHOD.
 
+
   METHOD set_app_data.
     " TODO: parameter COUNT is never used (ABAP cleaner)
 
     mv_table = table.
   ENDMETHOD.
+
 
   METHOD get_data.
 

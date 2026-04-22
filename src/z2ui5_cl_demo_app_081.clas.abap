@@ -61,6 +61,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD popover_list_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
@@ -127,6 +128,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 

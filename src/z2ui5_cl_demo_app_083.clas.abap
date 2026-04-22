@@ -180,6 +180,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD z2ui5_on_render_main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).

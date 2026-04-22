@@ -103,6 +103,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 
+
   METHOD z2ui5_if_app~main.
     me->client = client.
 
@@ -149,9 +150,11 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     rebuild_output( ).
   ENDMETHOD.
 
+
   METHOD edit_image.
     client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
   ENDMETHOD.
+
 
   METHOD rebuild_output.
     mt_picture_out = VALUE #( ).
@@ -164,6 +167,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
              INTO TABLE mt_picture_out.
     ENDLOOP.
   ENDMETHOD.
+
 
   METHOD ui5_callback.
     TRY.
