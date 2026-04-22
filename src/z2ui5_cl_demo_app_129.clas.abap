@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -34,7 +33,6 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
     DATA
       mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
   PROTECTED SECTION.
-
     METHODS z2ui5_on_rendering
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_348 DEFINITION PUBLIC.
         !client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
     METHODS xml_form
       IMPORTING

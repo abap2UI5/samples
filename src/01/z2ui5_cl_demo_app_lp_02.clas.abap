@@ -6,7 +6,6 @@ CLASS z2ui5_cl_demo_app_lp_02 DEFINITION PUBLIC.
     DATA mv_title          TYPE string VALUE `my title`.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES children_array TYPE STANDARD TABLE OF int4 WITH NON-UNIQUE KEY table_line.
@@ -38,7 +37,6 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
     DATA mt_lanes TYPE tt_lanes5.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS z2ui5_set_data.
@@ -46,7 +44,6 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
     METHODS z2ui5_on_event.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 

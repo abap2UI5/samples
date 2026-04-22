@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_336 DEFINITION PUBLIC.
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_336.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
 ENDCLASS.
 

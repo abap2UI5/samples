@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -92,7 +91,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     DATA mv_variant_copy TYPE string.
     DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view.
   PROTECTED SECTION.
-
     METHODS on_init.
 
     METHODS on_event.
@@ -135,7 +133,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     METHODS varaint_page.
 
   PRIVATE SECTION.
-
     DATA client            TYPE REF TO z2ui5_if_client.
     DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
 

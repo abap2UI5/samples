@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA mv_path TYPE string.
@@ -11,7 +10,6 @@ CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
     DATA mv_check_download TYPE abap_bool.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS ui5_on_event.

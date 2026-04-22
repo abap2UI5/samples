@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
     DATA magic_key TYPE string.
     DATA: BEGIN OF message,
@@ -10,7 +9,6 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
           END OF message.
   PROTECTED SECTION.
   PRIVATE SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS view_display.
     METHODS on_event.

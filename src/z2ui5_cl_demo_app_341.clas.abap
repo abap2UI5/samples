@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
     DATA mt_table TYPE ty_t_table.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
 ENDCLASS.
 

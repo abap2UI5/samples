@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -25,7 +24,6 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
     DATA mv_storage_location TYPE string.
     DATA mv_quantity TYPE string.
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS z2ui5_on_event.

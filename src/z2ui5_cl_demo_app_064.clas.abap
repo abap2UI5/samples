@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -37,13 +36,11 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
     DATA mv_percent TYPE i.
     DATA mv_check_enabled TYPE abap_bool.
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS z2ui5_on_init.
     METHODS z2ui5_on_event.
   PRIVATE SECTION.
-
     METHODS set_selkz
       IMPORTING
         iv_selkz TYPE abap_bool.

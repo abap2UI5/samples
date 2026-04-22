@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA:
@@ -12,7 +11,6 @@ CLASS z2ui5_cl_demo_app_051 DEFINITION PUBLIC.
       END OF screen.
 
   PROTECTED SECTION.
-
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

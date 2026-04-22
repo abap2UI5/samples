@@ -13,9 +13,7 @@ CLASS z2ui5_cl_demo_app_035 DEFINITION PUBLIC.
     METHODS view_display.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
-
 ENDCLASS.
 
 

@@ -2,7 +2,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
   INHERITING FROM cl_apc_wsp_ext_stateless_base.
 
   PUBLIC SECTION.
-
     CLASS-METHODS: get_active_connections
       RETURNING
         VALUE(result) TYPE i.
@@ -21,7 +20,6 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
       END OF c_msg.
 
   PRIVATE SECTION.
-
     CLASS-METHODS:
       get_producer
         RETURNING

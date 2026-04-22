@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA:
@@ -11,7 +10,6 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
         input3 TYPE string,
       END OF screen.
   PROTECTED SECTION.
-
     METHODS z2ui5_on_rendering
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

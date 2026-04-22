@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
 *https://github.com/abap2UI5/abap2UI5/issues/988#issuecomment-1978738754
 
     INTERFACES z2ui5_if_app.
@@ -24,7 +23,6 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
     DATA mt_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS set_view.
     METHODS z2ui5_on_event.

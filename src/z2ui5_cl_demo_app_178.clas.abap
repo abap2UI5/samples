@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -30,7 +29,6 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC.
     DATA prodh_nodes TYPE ty_prodh_nodes.
     METHODS ui5_display_view.
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
     METHODS ui5_initialize.
     METHODS ui5_display_popup_tree_select.

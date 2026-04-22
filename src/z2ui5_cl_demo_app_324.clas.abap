@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_324 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES if_serializable_object.
     INTERFACES z2ui5_if_app.
   PROTECTED SECTION.

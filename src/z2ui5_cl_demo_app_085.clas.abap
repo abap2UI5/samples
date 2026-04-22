@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -44,7 +43,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     DATA mv_search_value TYPE string.
     DATA ls_detail TYPE ty_s_tab.
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
@@ -54,7 +52,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS z2ui5_on_init.
     METHODS z2ui5_set_search.
   PRIVATE SECTION.
-
     DATA lv_layout TYPE string.
     DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
     DATA c_pic_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/'.

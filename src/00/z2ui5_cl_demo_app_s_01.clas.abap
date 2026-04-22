@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA lock_counter TYPE i READ-ONLY.
@@ -16,7 +15,6 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-
     METHODS initialize_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -14,7 +13,6 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
     DATA lt_a_data TYPE TABLE OF ty_product.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view

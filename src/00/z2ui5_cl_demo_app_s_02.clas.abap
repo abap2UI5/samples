@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_s_02 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
-
     METHODS initialize_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

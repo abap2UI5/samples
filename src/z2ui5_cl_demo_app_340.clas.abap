@@ -21,7 +21,6 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION PUBLIC.
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 

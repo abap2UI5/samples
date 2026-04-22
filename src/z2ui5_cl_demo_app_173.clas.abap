@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_173 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -27,7 +26,6 @@ CLASS z2ui5_cl_demo_app_173 DEFINITION PUBLIC.
     METHODS view_display.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.

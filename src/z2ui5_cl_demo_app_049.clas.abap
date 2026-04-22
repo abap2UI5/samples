@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_049 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -18,7 +17,6 @@ CLASS z2ui5_cl_demo_app_049 DEFINITION PUBLIC.
     DATA mv_key TYPE string.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS z2ui5_on_init.

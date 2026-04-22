@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_117 DEFINITION PUBLIC.
     METHODS render_sub_app.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_117 IMPLEMENTATION.

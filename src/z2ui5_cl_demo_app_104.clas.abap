@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA mo_app_sub TYPE REF TO object.
@@ -30,7 +29,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display_master.
@@ -39,7 +37,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     METHODS on_init_sub.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 

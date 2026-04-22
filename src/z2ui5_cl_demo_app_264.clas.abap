@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -15,7 +14,6 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
     DATA ls_a_data TYPE ty_a_data.
     DATA s_text TYPE string.
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view

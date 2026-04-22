@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_items2,
@@ -53,7 +52,6 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     DATA mt_groups_p13n TYPE tt_items33.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA check_view_loaded TYPE abap_bool.

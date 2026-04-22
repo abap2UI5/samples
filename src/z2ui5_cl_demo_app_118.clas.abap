@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_118 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF s_row,

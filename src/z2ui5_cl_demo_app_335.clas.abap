@@ -14,7 +14,6 @@ CLASS z2ui5_cl_demo_app_335 DEFINITION PUBLIC.
         !client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
-
   PRIVATE SECTION.
     METHODS get_data_2.
 ENDCLASS.

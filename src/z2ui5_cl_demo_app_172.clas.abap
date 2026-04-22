@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -20,7 +19,6 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
     DATA output TYPE STANDARD TABLE OF ty_output.
     DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
-
     METHODS load_output_table.
     METHODS on_event.
     METHODS render_main_screen.

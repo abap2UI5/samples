@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA lv_default TYPE string.
@@ -10,7 +9,6 @@ CLASS z2ui5_cl_demo_app_291 DEFINITION PUBLIC.
     DATA lv_success TYPE string.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS display_view

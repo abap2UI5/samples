@@ -1,10 +1,8 @@
 CLASS z2ui5_cl_demo_app_230 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
   PROTECTED SECTION.
-
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.

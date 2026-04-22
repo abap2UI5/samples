@@ -1,13 +1,11 @@
 CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     DATA mv_value TYPE string.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA mv_load_cc    TYPE abap_bool.

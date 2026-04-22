@@ -13,9 +13,7 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     METHODS view_display.
     DATA: lt_types2 TYPE z2ui5_if_types=>ty_t_name_value.
   PROTECTED SECTION.
-
   PRIVATE SECTION.
-
 ENDCLASS.
 
 

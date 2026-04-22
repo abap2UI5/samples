@@ -1,7 +1,6 @@
 CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     TYPES:
       BEGIN OF t_news,
         text   TYPE string,
@@ -24,7 +23,6 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
     METHODS popover_display.
 
   PRIVATE SECTION.
-
 ENDCLASS.
 
 
