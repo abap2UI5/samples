@@ -1,6 +1,8 @@
 CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
     TYPES:
       BEGIN OF t_news,
         text   TYPE string,
@@ -9,20 +11,16 @@ CLASS z2ui5_cl_demo_app_s_05 DEFINITION PUBLIC.
       tt_news TYPE STANDARD TABLE OF t_news
                    WITH NON-UNIQUE DEFAULT KEY.
 
-    INTERFACES z2ui5_if_app.
-
     DATA news_input TYPE string.
     DATA author_input TYPE string.
     DATA news_list TYPE tt_news.
     DATA connections TYPE int8.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
     METHODS popover_display.
-
   PRIVATE SECTION.
 ENDCLASS.
 

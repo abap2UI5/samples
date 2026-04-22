@@ -20,10 +20,6 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
            END OF t_items3.
     TYPES tt_items3 TYPE STANDARD TABLE OF t_items3 WITH DEFAULT KEY.
 
-    DATA mt_columns TYPE tt_items2.
-    DATA mt_columns1 TYPE tt_items2.
-    DATA mt_groups TYPE tt_items3.
-
     "P13N
 
     TYPES: BEGIN OF t_items22,
@@ -48,14 +44,19 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
            END OF t_items33.
     TYPES tt_items33 TYPE STANDARD TABLE OF t_items33 WITH DEFAULT KEY.
 
+    DATA mt_columns TYPE tt_items2.
+    DATA mt_columns1 TYPE tt_items2.
+    DATA mt_groups TYPE tt_items3.
+
     DATA mt_columns_p13n TYPE tt_items22.
     DATA mt_sort_p13n TYPE tt_items32.
     DATA mt_groups_p13n TYPE tt_items33.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA check_view_loaded TYPE abap_bool.
+
+    DATA mv_page TYPE string.
 
     METHODS z2ui5_view_display.
     METHODS z2ui5_view_p13n.
@@ -65,9 +66,6 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
-
-    DATA mv_page TYPE string.
-
   PRIVATE SECTION.
 ENDCLASS.
 

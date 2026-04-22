@@ -3,6 +3,13 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    DATA text          TYPE string.
+    DATA cancel_text   TYPE string.
+    DATA cancel_event  TYPE string.
+    DATA confirm_text  TYPE string.
+    DATA confirm_event TYPE string.
+    DATA event         TYPE string.
+
     CLASS-METHODS factory
       IMPORTING
         i_text          TYPE string
@@ -12,14 +19,6 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
         i_confirm_event TYPE string
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
-
-    DATA text          TYPE string.
-    DATA cancel_text   TYPE string.
-    DATA cancel_event  TYPE string.
-    DATA confirm_text  TYPE string.
-    DATA confirm_event TYPE string.
-    DATA event         TYPE string.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

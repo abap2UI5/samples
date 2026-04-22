@@ -3,8 +3,6 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     TYPES:
       BEGIN OF ty_s_table,
         value TYPE string,
@@ -12,13 +10,15 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
       END OF ty_s_table.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_table WITH EMPTY KEY.
 
-    DATA mo_layout1 TYPE REF TO z2ui5_cl_demo_app_333.
-*    DATA mo_layout   type ref to z2ui5_cl_layo_manager .
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_view_display.
+    DATA mo_layout1 TYPE REF TO z2ui5_cl_demo_app_333.
 
     DATA mt_table TYPE ty_t_table.
 
+*    DATA mo_layout   type ref to z2ui5_cl_layo_manager .
+
+    METHODS ui5_view_display.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

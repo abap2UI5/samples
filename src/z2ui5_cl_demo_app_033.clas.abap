@@ -5,12 +5,11 @@ CLASS z2ui5_cl_demo_app_033 DEFINITION PUBLIC.
 
     DATA mv_type TYPE string.
 
-    METHODS display_view.
-
     DATA mv_html TYPE string.
 
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS display_view.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

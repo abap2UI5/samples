@@ -19,16 +19,14 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
 
     DATA mt_tokens_added TYPE z2ui5_cl_util=>ty_t_token.
     DATA mt_tokens_removed TYPE z2ui5_cl_util=>ty_t_token.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
 
     METHODS on_event.
     METHODS view_display.
     METHODS set_data.
-
-    DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
-
   PRIVATE SECTION.
 ENDCLASS.
 

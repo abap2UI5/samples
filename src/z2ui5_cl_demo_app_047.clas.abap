@@ -3,6 +3,12 @@ CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    TYPES:
+      BEGIN OF ty_s_row,
+        date TYPE d,
+        time TYPE t,
+      END OF ty_s_row.
+
     DATA int1    TYPE i.
     DATA int2    TYPE i.
     DATA int_sum TYPE i.
@@ -14,13 +20,7 @@ CLASS z2ui5_cl_demo_app_047 DEFINITION PUBLIC.
     DATA date    TYPE d.
     DATA time    TYPE t.
 
-    TYPES:
-      BEGIN OF ty_s_row,
-        date TYPE d,
-        time TYPE t,
-      END OF ty_s_row.
     DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

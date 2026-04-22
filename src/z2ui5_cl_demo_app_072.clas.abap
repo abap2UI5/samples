@@ -23,16 +23,15 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     TYPES
       ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
+    CONSTANTS c_lcb TYPE string VALUE `{` ##NO_TEXT.
+    CONSTANTS c_rcb TYPE string VALUE `}` ##NO_TEXT.
+
     DATA mt_table TYPE ty_t_table.
     DATA lv_cnt_total TYPE i.
     DATA lv_cnt_pos TYPE i.
     DATA lv_cnt_heavy TYPE i.
     DATA lv_cnt_neg TYPE i.
     DATA lv_selectedkey TYPE string.
-
-    CONSTANTS c_lcb TYPE string VALUE `{` ##NO_TEXT.
-    CONSTANTS c_rcb TYPE string VALUE `}` ##NO_TEXT.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -41,7 +40,6 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     METHODS z2ui5_set_data.
 
     METHODS set_filter.
-
   PRIVATE SECTION.
 ENDCLASS.
 

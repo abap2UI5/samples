@@ -3,8 +3,6 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     TYPES:
       BEGIN OF ty_dataset2,
         label                TYPE string,
@@ -39,12 +37,14 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
       BEGIN OF ty_chart,
         data TYPE ty_data,
       END OF ty_chart.
+
+    DATA client TYPE REF TO z2ui5_if_client.
+
     DATA ms_struc TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
 
     METHODS ui5_display.
     METHODS ui5_event.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

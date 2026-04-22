@@ -7,14 +7,13 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_descr       TYPE string.
 
+    DATA mr_data TYPE REF TO data.
+
     METHODS on_init.
     METHODS on_event.
 
-    DATA mr_data TYPE REF TO data.
-
     METHODS display_view
       CHANGING xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
-
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

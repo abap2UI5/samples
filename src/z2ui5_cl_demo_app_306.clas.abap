@@ -32,13 +32,13 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
     DATA devices          TYPE tt_combo.
 
   PROTECTED SECTION.
+    DATA selected_picture TYPE ty_picture.
+    DATA client           TYPE REF TO z2ui5_if_client.
+
     METHODS view_display.
     METHODS edit_image.
     METHODS ui5_callback.
     METHODS rebuild_output.
-
-    DATA selected_picture TYPE ty_picture.
-    DATA client           TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.

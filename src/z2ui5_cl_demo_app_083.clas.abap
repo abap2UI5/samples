@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
       BEGIN OF ty_s_tab_01,
         screen_name TYPE string,
       END OF ty_s_tab_01.
-    DATA mt_01 TYPE STANDARD TABLE OF ty_s_tab_01 WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_tab_02,
@@ -15,15 +14,12 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
         field       TYPE string,
         field_doma  TYPE string,
       END OF ty_s_tab_02.
-    DATA mt_02 TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
-    DATA mt_02_display TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_tab_02_input,
         name  TYPE string,
         value TYPE string,
       END OF ty_s_tab_02_input.
-    DATA mt_tab_02_input TYPE STANDARD TABLE OF ty_s_tab_02_input WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_filter_pop,
@@ -32,7 +28,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
         high   TYPE string,
         key    TYPE string,
       END OF ty_s_filter_pop.
-    DATA mt_filter TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_token,
@@ -43,34 +38,42 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
         editable TYPE abap_bool,
       END OF ty_s_token.
 
-    DATA mv_value       TYPE string.
-    DATA mv_value2      TYPE string.
-    DATA mt_token       TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
-
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
-
     TYPES ty_t_range TYPE RANGE OF string.
     TYPES ty_s_range TYPE LINE OF ty_t_range.
     TYPES:
       BEGIN OF ty_s_filter,
         product TYPE ty_t_range,
       END OF ty_s_filter.
+
+    DATA mt_01 TYPE STANDARD TABLE OF ty_s_tab_01 WITH EMPTY KEY.
+
+    DATA mt_02 TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
+    DATA mt_02_display TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
+
+    DATA mt_tab_02_input TYPE STANDARD TABLE OF ty_s_tab_02_input WITH EMPTY KEY.
+
+    DATA mt_filter TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY.
+
+    DATA mv_value       TYPE string.
+    DATA mv_value2      TYPE string.
+    DATA mt_token       TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
+
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
+
     DATA ms_filter TYPE ty_s_filter.
     DATA mv_name TYPE string.
 
     DATA mt_table TYPE REF TO data.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA mt_cols TYPE string_table.
 
     METHODS on_init.
     METHODS on_event.
     METHODS view_display_main.
     METHODS popover_display_filter.
     METHODS z2ui5_set_data.
-
-    DATA mt_cols TYPE string_table.
-
   PRIVATE SECTION.
 ENDCLASS.
 

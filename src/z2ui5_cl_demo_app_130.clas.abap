@@ -91,8 +91,10 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
     DATA mv_description_copy TYPE string.
     DATA mv_variant_copy TYPE string.
     DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view.
-
   PROTECTED SECTION.
+    DATA client            TYPE REF TO z2ui5_if_client.
+    DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
+
     METHODS on_init.
 
     METHODS on_event.
@@ -133,10 +135,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
       RETURNING VALUE(result) TYPE string.
 
     METHODS varaint_page.
-
-    DATA client            TYPE REF TO z2ui5_if_client.
-    DATA mt_fields         TYPE STANDARD TABLE OF ty_s_fields WITH EMPTY KEY.
-
   PRIVATE SECTION.
 ENDCLASS.
 

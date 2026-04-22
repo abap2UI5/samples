@@ -15,20 +15,18 @@ CLASS z2ui5_cl_demo_app_107 DEFINITION PUBLIC.
       mt_items TYPE TABLE OF ty_items WITH DEFAULT KEY.
 
     DATA mv_file_raw TYPE string.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA check_load_cc TYPE abap_bool.
+
+    DATA mv_page TYPE string.
 
     METHODS z2ui5_view_display.
     METHODS on_event.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
-
-    DATA mv_page TYPE string.
-
   PRIVATE SECTION.
 ENDCLASS.
 

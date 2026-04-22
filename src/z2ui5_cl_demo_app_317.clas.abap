@@ -26,22 +26,21 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
       END OF ty_node1,
       ty_tree TYPE STANDARD TABLE OF ty_node1 WITH DEFAULT KEY.
 
-    DATA mt_tree    TYPE ty_tree.
-
     TYPES:
       BEGIN OF ty_s_node,
         id        TYPE string,
         id_parent TYPE string,
         text      TYPE string,
       END OF ty_s_node.
-    DATA mt_node TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY.
 
+    DATA mt_tree    TYPE ty_tree.
+
+    DATA mt_node TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY.
   PROTECTED SECTION.
     METHODS build_tree.
     METHODS display_view
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-
   PRIVATE SECTION.
 ENDCLASS.
 

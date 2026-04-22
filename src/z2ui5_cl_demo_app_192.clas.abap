@@ -3,8 +3,6 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     TYPES: BEGIN OF ty_s_key_value,
              fname   TYPE string,
              value   TYPE string,
@@ -20,8 +18,6 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
            END OF ty_s_merged_data,
            ty_t_merged_data TYPE STANDARD TABLE OF ty_s_merged_data WITH EMPTY KEY.
 
-    DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH EMPTY KEY.
-
     TYPES:
       BEGIN OF ty_s_out,
         aa TYPE string,
@@ -30,16 +26,18 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
       END OF ty_s_out,
       ty_t_out TYPE STANDARD TABLE OF ty_s_out WITH EMPTY KEY.
 
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA mt_new_data2 TYPE STANDARD TABLE OF REF TO z2ui5_cl_demo_app_193 WITH EMPTY KEY.
+
     DATA mt_out TYPE ty_t_out.
 
     METHODS ui5_display.
     METHODS ui5_event.
-
   PROTECTED SECTION.
     METHODS get_data.
     METHODS xml_parse.
     METHODS xml_stringify.
-
   PRIVATE SECTION.
 ENDCLASS.
 

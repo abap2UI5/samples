@@ -4,15 +4,13 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_selected_key TYPE string.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS z2ui5_view_display.
-    METHODS on_event.
-
     DATA mv_page TYPE string.
 
+    METHODS z2ui5_view_display.
+    METHODS on_event.
   PRIVATE SECTION.
 ENDCLASS.
 

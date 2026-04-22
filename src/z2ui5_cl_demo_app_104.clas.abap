@@ -3,9 +3,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mo_app_sub TYPE REF TO object.
-    DATA classname TYPE string.
-
     TYPES:
       BEGIN OF ty_row,
         title    TYPE string,
@@ -16,6 +13,9 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
         selected TYPE abap_bool,
         checkbox TYPE abap_bool,
       END OF ty_row.
+
+    DATA mo_app_sub TYPE REF TO object.
+    DATA classname TYPE string.
 
     DATA
       t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
@@ -28,7 +28,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     DATA mv_check_enabled_02 TYPE abap_bool.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -36,7 +35,6 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     METHODS view_display_detail.
     METHODS on_event_sub.
     METHODS on_init_sub.
-
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -42,9 +42,14 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     DATA mt_table_supplier TYPE ty_t_table_supplier.
     DATA mv_search_value TYPE string.
     DATA ls_detail TYPE ty_s_tab.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA lv_layout TYPE string.
+    DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
+    DATA c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
+    DATA ls_detail_supplier TYPE ty_s_tab_supplier.
+    DATA check_detail_active TYPE abap_bool.
 
     METHODS view_display_master.
     METHODS view_display_detail.
@@ -53,14 +58,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS z2ui5_set_search.
 
-    DATA lv_layout TYPE string.
-    DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
-    DATA c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
-    DATA ls_detail_supplier TYPE ty_s_tab_supplier.
-    DATA check_detail_active TYPE abap_bool.
-
     METHODS sort.
-
   PRIVATE SECTION.
 ENDCLASS.
 

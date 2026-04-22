@@ -3,18 +3,18 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA product  TYPE string.
-    DATA quantity TYPE string.
-    DATA mv_placement TYPE string.
-
     TYPES:
       BEGIN OF ty_tab,
         selected TYPE abap_bool,
         id       TYPE string,
         name     TYPE string,
       END OF ty_tab.
-    DATA mt_tab TYPE STANDARD TABLE OF ty_tab WITH EMPTY KEY.
 
+    DATA product  TYPE string.
+    DATA quantity TYPE string.
+    DATA mv_placement TYPE string.
+
+    DATA mt_tab TYPE STANDARD TABLE OF ty_tab WITH EMPTY KEY.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -27,7 +27,6 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
     METHODS popover_list_display
       IMPORTING
         id TYPE string.
-
   PRIVATE SECTION.
 ENDCLASS.
 

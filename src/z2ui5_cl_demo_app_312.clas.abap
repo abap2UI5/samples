@@ -10,27 +10,27 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION PUBLIC.
         cost    TYPE string,
       END OF ts_data_chart.
     TYPES tt_data_chart TYPE STANDARD TABLE OF ts_data_chart WITH DEFAULT KEY.
-    DATA mt_data_chart     TYPE tt_data_chart.
 
     TYPES:
       BEGIN OF ts_screen,
         viztype    TYPE string,
         viztypesel TYPE string,
       END OF ts_screen.
+
+    DATA mt_data_chart     TYPE tt_data_chart.
+
     DATA ms_screen         TYPE ts_screen.
 
     DATA mv_prop           TYPE string.
     DATA mt_feed_values    TYPE TABLE OF string.
 
     DATA mt_viztypes       TYPE z2ui5_if_types=>ty_t_name_value..
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_rendering.
     METHODS on_event.
     METHODS on_init.
-
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -13,16 +13,12 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
         info        TYPE string,
         checkbox    TYPE abap_bool,
       END OF ty_row.
+
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA focuscolumn TYPE string.
     DATA focusrow TYPE string.
     DATA focusid TYPE string READ-ONLY.
-
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
-
-    METHODS set_view.
-
     CONSTANTS:
       BEGIN OF c_id,
         index       TYPE string VALUE `Index`,
@@ -33,10 +29,13 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
         description TYPE string VALUE `Description`,
       END OF c_id.
 
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS set_view.
+
     METHODS next_focus.
     METHODS focus.
     METHODS default_focus.
-
   PRIVATE SECTION.
 ENDCLASS.
 

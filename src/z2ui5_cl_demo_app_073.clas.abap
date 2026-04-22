@@ -6,10 +6,9 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
     DATA mv_url TYPE string.
     DATA mv_check_timer_active TYPE abap_bool.
 
-    METHODS display_view.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS display_view.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

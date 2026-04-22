@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
         key           TYPE string,
         icon          TYPE string,
       END OF ty_spot.
-    DATA mt_spot TYPE TABLE OF ty_spot.
 
     TYPES:
       BEGIN OF ty_route,
@@ -25,15 +24,17 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
         linewidth   TYPE string,
       END OF ty_route.
 
-    DATA
-      mt_route TYPE TABLE OF ty_route.
-
     TYPES: BEGIN OF ty_s_legend,
              text  TYPE string,
              color TYPE string,
            END OF ty_s_legend.
-    DATA mt_legend TYPE TABLE OF ty_s_legend.
 
+    DATA mt_spot TYPE TABLE OF ty_spot.
+
+    DATA
+      mt_route TYPE TABLE OF ty_route.
+
+    DATA mt_legend TYPE TABLE OF ty_s_legend.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

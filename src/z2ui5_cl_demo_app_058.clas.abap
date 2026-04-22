@@ -28,16 +28,6 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
         default TYPE abap_bool,
         data    TYPE string,
       END OF ty_s_db_layout.
-    DATA mt_db_layout TYPE STANDARD TABLE OF ty_s_db_layout.
-
-    DATA:
-      BEGIN OF ms_layout,
-        check_zebra   TYPE abap_bool,
-        title         TYPE string,
-        sticky_header TYPE string,
-        selmode       TYPE string,
-        t_cols        TYPE STANDARD TABLE OF ty_s_cols,
-      END OF ms_layout.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -50,6 +40,17 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
       END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
+    DATA mt_db_layout TYPE STANDARD TABLE OF ty_s_db_layout.
+
+    DATA:
+      BEGIN OF ms_layout,
+        check_zebra   TYPE abap_bool,
+        title         TYPE string,
+        sticky_header TYPE string,
+        selmode       TYPE string,
+        t_cols        TYPE STANDARD TABLE OF ty_s_cols,
+      END OF ms_layout.
+
     DATA mv_check_table TYPE abap_bool.
 
     DATA mv_check_columns TYPE abap_bool.
@@ -59,7 +60,6 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
     DATA mv_check_sort TYPE abap_bool.
 
     DATA mt_combo TYPE ty_t_combo.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA:
@@ -77,7 +77,6 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
     METHODS z2ui5_set_data.
     METHODS popup_display_view.
     METHODS popup_display_save.
-
   PRIVATE SECTION.
 ENDCLASS.
 

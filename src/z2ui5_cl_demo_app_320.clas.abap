@@ -3,8 +3,6 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA viewportpercentwidth TYPE i VALUE 100.
-
     TYPES: BEGIN OF ty_item,
              id           TYPE string,
              initials     TYPE string,
@@ -19,12 +17,13 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
            END OF ty_item.
     TYPES ty_items TYPE STANDARD TABLE OF ty_item WITH DEFAULT KEY.
 
+    DATA viewportpercentwidth TYPE i VALUE 100.
+
     DATA item           TYPE ty_item.
     DATA items          TYPE ty_items.
     DATA group_items    TYPE ty_items.
     DATA content_height TYPE string.
     DATA content_width  TYPE string.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -41,7 +40,6 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
     METHODS calculate_content_height
       IMPORTING !lines        TYPE i
       RETURNING VALUE(result) TYPE string.
-
   PRIVATE SECTION.
 ENDCLASS.
 

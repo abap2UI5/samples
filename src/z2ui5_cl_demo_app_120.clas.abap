@@ -3,13 +3,6 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA longitude TYPE string.
-    DATA latitude TYPE string.
-    DATA altitude TYPE string.
-    DATA speed TYPE string.
-    DATA altitudeaccuracy TYPE string.
-    DATA accuracy TYPE string.
-
     TYPES:
       BEGIN OF ty_spot,
         tooltip       TYPE string,
@@ -20,8 +13,15 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
         key           TYPE string,
         icon          TYPE string,
       END OF ty_spot.
-    DATA mt_spot TYPE TABLE OF ty_spot.
 
+    DATA longitude TYPE string.
+    DATA latitude TYPE string.
+    DATA altitude TYPE string.
+    DATA speed TYPE string.
+    DATA altitudeaccuracy TYPE string.
+    DATA accuracy TYPE string.
+
+    DATA mt_spot TYPE TABLE OF ty_spot.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
