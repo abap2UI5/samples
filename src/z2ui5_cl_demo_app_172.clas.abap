@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
     METHODS render_main_screen.
     METHODS calculate_sum
       IMPORTING
-        !i_column TYPE string.
+        i_column TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.

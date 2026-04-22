@@ -17,8 +17,8 @@ CLASS z2ui5_cl_demo_app_340 DEFINITION PUBLIC.
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_340.
 
   PROTECTED SECTION.
-    METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
-    METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
+    METHODS on_event    IMPORTING client TYPE REF TO z2ui5_if_client.
+    METHODS render_main IMPORTING client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.

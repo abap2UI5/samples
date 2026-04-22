@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
     DATA mt_table_del    TYPE REF TO data.
 
     METHODS set_app_data
-      IMPORTING !data TYPE string.
+      IMPORTING data TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.

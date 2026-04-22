@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
     METHODS view_display.
     METHODS popover_display
       IMPORTING
-        !id TYPE string.
+        id TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

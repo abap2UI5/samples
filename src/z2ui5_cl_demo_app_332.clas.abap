@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_332 DEFINITION PUBLIC.
 
     METHODS view_display
       IMPORTING
-        !client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

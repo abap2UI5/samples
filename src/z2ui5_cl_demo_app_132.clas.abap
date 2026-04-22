@@ -9,8 +9,8 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !count TYPE string
-        !table TYPE string.
+        count TYPE string
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA mv_table             TYPE string.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS prefill_popup_values
       IMPORTING
-        !index TYPE string.
+        index TYPE string.
 
     METHODS render_popup.
 

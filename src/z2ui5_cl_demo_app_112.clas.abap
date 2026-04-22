@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS view_display
       CHANGING
-        !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
+        xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

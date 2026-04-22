@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_345 DEFINITION PUBLIC.
 
     METHODS render_main
       IMPORTING
-        !client TYPE REF TO z2ui5_if_client.
+        client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
     METHODS xml_table

@@ -30,15 +30,15 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
     METHODS display_avatar_group_view.
 
     METHODS display_individual_popover
-      IMPORTING !id TYPE string.
+      IMPORTING id TYPE string.
 
     METHODS display_group_popover
-      IMPORTING !id TYPE string.
+      IMPORTING id TYPE string.
 
     METHODS on_event.
 
     METHODS calculate_content_height
-      IMPORTING !lines        TYPE i
+      IMPORTING lines        TYPE i
       RETURNING VALUE(result) TYPE string.
   PRIVATE SECTION.
 ENDCLASS.

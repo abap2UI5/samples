@@ -11,8 +11,8 @@ CLASS z2ui5_cl_demo_app_190 DEFINITION PUBLIC.
     DATA mt_comp         TYPE abap_component_tab.
 
     METHODS set_app_data
-      IMPORTING !count TYPE string
-                !table TYPE string.
+      IMPORTING count TYPE string
+                table TYPE string.
 
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.

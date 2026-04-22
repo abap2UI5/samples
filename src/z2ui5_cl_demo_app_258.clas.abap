@@ -10,15 +10,15 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC.
 
     METHODS on_event
       IMPORTING
-      !client TYPE REF TO z2ui5_if_client.
+      client TYPE REF TO z2ui5_if_client.
     METHODS render_main_view
       IMPORTING
-      !client TYPE REF TO z2ui5_if_client.
+      client TYPE REF TO z2ui5_if_client.
     METHODS render_site_content
       IMPORTING
-      !client       TYPE REF TO z2ui5_if_client
+      client       TYPE REF TO z2ui5_if_client
       CHANGING
-      !site_content TYPE REF TO z2ui5_cl_xml_view.
+      site_content TYPE REF TO z2ui5_cl_xml_view.
 
   PRIVATE SECTION.
 ENDCLASS.

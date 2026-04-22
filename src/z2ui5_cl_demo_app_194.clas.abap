@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION PUBLIC.
 
     METHODS set_app_data
       IMPORTING
-        !table TYPE string.
+        table TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
