@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_currency,
@@ -10,13 +10,13 @@ CLASS z2ui5_cl_demo_app_201 DEFINITION PUBLIC.
         currency          TYPE string,
         currencyname      TYPE string,
         currencyshortname TYPE string,
-      END OF ty_s_currency .
+      END OF ty_s_currency.
 
     DATA
-      mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency .
+      mt_suggestion_out TYPE STANDARD TABLE OF ty_s_currency.
     DATA
-      mt_suggestion TYPE STANDARD TABLE OF ty_s_currency .
-    DATA input TYPE string .
+      mt_suggestion TYPE STANDARD TABLE OF ty_s_currency.
+    DATA input TYPE string.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

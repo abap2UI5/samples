@@ -20,27 +20,27 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
         state_price   TYPE string,
         state_measure TYPE string,
         rating        TYPE string,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_cnt_total TYPE i .
-    DATA lv_cnt_pos TYPE i .
-    DATA lv_cnt_heavy TYPE i .
-    DATA lv_cnt_neg TYPE i .
-    DATA lv_selectedkey TYPE string .
+    DATA mt_table TYPE ty_t_table.
+    DATA lv_cnt_total TYPE i.
+    DATA lv_cnt_pos TYPE i.
+    DATA lv_cnt_heavy TYPE i.
+    DATA lv_cnt_neg TYPE i.
+    DATA lv_selectedkey TYPE string.
     CONSTANTS c_lcb TYPE string VALUE '{' ##NO_TEXT.
     CONSTANTS c_rcb TYPE string VALUE '}' ##NO_TEXT.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
-    METHODS z2ui5_on_init .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_set_data .
+    DATA client TYPE REF TO z2ui5_if_client.
+    METHODS z2ui5_on_init.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_set_data.
   PRIVATE SECTION.
 
-    METHODS set_filter .
+    METHODS set_filter.
 ENDCLASS.
 
 

@@ -3,8 +3,8 @@ CLASS z2ui5_cl_demo_app_106 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
-    DATA mv_value TYPE string .
+    INTERFACES z2ui5_if_app.
+    DATA mv_value TYPE string.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

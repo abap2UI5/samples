@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
         selected         TYPE abap_bool,
         process          TYPE string,
         process_state    TYPE string,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     TYPES:
@@ -28,12 +28,12 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
-      END OF ty_s_filter_pop .
+      END OF ty_s_filter_pop.
 
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA mv_search_value TYPE string.
+    DATA mt_table TYPE ty_t_table.
+    DATA lv_selkz TYPE abap_bool.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

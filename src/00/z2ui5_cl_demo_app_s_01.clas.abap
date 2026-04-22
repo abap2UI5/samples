@@ -2,12 +2,12 @@ CLASS z2ui5_cl_demo_app_s_01 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
-    DATA lock_counter TYPE i READ-ONLY .
-    DATA session_is_stateful TYPE abap_bool READ-ONLY .
-    DATA session_text TYPE string READ-ONLY .
-    DATA lock_text TYPE string READ-ONLY .
+    DATA lock_counter TYPE i READ-ONLY.
+    DATA session_is_stateful TYPE abap_bool READ-ONLY.
+    DATA session_text TYPE string READ-ONLY.
+    DATA lock_text TYPE string READ-ONLY.
     DATA:
       BEGIN OF error READ-ONLY,
         text TYPE string,

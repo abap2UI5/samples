@@ -2,23 +2,23 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
-    DATA selected_menu_entry TYPE string .
+    INTERFACES z2ui5_if_app.
+    DATA selected_menu_entry TYPE string.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event
       IMPORTING
-      !client TYPE REF TO z2ui5_if_client .
+      !client TYPE REF TO z2ui5_if_client.
     METHODS render_main_view
       IMPORTING
-      !client TYPE REF TO z2ui5_if_client .
+      !client TYPE REF TO z2ui5_if_client.
     METHODS render_site_content
       IMPORTING
       !client       TYPE REF TO z2ui5_if_client
       CHANGING
-      !site_content TYPE REF TO z2ui5_cl_xml_view .
+      !site_content TYPE REF TO z2ui5_cl_xml_view.
   PRIVATE SECTION.
 ENDCLASS.
 

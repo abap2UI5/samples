@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
@@ -10,7 +10,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
         text        TYPE string,
         counter     TYPE i,
         prodh       TYPE string,
-      END OF ty_prodh_node_level3 .
+      END OF ty_prodh_node_level3.
     TYPES:
       BEGIN OF ty_prodh_node_level2,
         is_selected TYPE abap_bool,
@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
         counter     TYPE i,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level2 .
+      END OF ty_prodh_node_level2.
     TYPES:
       BEGIN OF ty_prodh_node_level1,
         is_selected TYPE abap_bool,
@@ -26,22 +26,22 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
         counter     TYPE i,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level1 .
+      END OF ty_prodh_node_level1.
     TYPES
-      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
     TYPES
       ty_prin_nodes TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY.
 
-    DATA prodh_nodes TYPE ty_prodh_nodes .
+    DATA prodh_nodes TYPE ty_prodh_nodes.
     DATA gv_user TYPE c LENGTH 12.
     DATA gv_date TYPE d.
 
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
-    METHODS ui5_display_view .
+    METHODS ui5_display_view.
     METHODS ui5_display_popover
       IMPORTING
-        !id TYPE string .
+        !id TYPE string.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

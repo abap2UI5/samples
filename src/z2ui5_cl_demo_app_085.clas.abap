@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
         pic           TYPE string,
         rating        TYPE string,
         process       TYPE string,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES:
       BEGIN OF ty_s_tab_supplier,
         suppliername TYPE string,
@@ -34,35 +34,35 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
         city         TYPE string,
         street       TYPE string,
         country      TYPE string,
-      END OF ty_s_tab_supplier .
+      END OF ty_s_tab_supplier.
     TYPES
-      ty_t_table          TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+      ty_t_table          TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
     TYPES
-      ty_t_table_supplier TYPE STANDARD TABLE OF ty_s_tab_supplier WITH EMPTY KEY .
+      ty_t_table_supplier TYPE STANDARD TABLE OF ty_s_tab_supplier WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table .
-    DATA mt_table_supplier TYPE ty_t_table_supplier .
+    DATA mt_table TYPE ty_t_table.
+    DATA mt_table_supplier TYPE ty_t_table_supplier.
     DATA mv_search_value TYPE string.
-    DATA ls_detail TYPE ty_s_tab .
+    DATA ls_detail TYPE ty_s_tab.
   PROTECTED SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS view_display_master .
-    METHODS view_display_detail .
-    METHODS z2ui5_set_data .
-    METHODS z2ui5_on_event .
-    METHODS z2ui5_on_init .
+    METHODS view_display_master.
+    METHODS view_display_detail.
+    METHODS z2ui5_set_data.
+    METHODS z2ui5_on_event.
+    METHODS z2ui5_on_init.
     METHODS z2ui5_set_search.
   PRIVATE SECTION.
 
-    DATA lv_layout TYPE string .
+    DATA lv_layout TYPE string.
     DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
     DATA c_pic_url TYPE string VALUE 'https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/'.
-    DATA ls_detail_supplier TYPE ty_s_tab_supplier .
+    DATA ls_detail_supplier TYPE ty_s_tab_supplier.
     DATA check_detail_active TYPE abap_bool.
 
-    METHODS sort .
+    METHODS sort.
 ENDCLASS.
 
 

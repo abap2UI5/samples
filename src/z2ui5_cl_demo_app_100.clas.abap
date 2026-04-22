@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -19,11 +19,11 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
         selected         TYPE abap_bool,
         process          TYPE string,
         process_state    TYPE string,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
+    DATA mt_table TYPE ty_t_table.
+    DATA lv_selkz TYPE abap_bool.
 
   PROTECTED SECTION.
 

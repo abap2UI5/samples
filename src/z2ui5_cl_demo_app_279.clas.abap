@@ -2,9 +2,9 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
-    DATA text_input TYPE string .
+    DATA text_input TYPE string.
     DATA dirty TYPE abap_bool.
 
   PRIVATE SECTION.

@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES: BEGIN OF t_attributes3,
              label TYPE i,
@@ -32,10 +32,10 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
              nodes TYPE tt_nodes2,
              lines TYPE tt_lines4,
            END OF t_json1.
-    DATA mt_data TYPE t_json1 .
+    DATA mt_data TYPE t_json1.
 
-    METHODS on_event .
-    METHODS view_display .
+    METHODS on_event.
+    METHODS view_display.
     METHODS detail_popover
       IMPORTING
         id   TYPE string

@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
 
     TYPES:
@@ -13,12 +13,12 @@ CLASS z2ui5_cl_demo_app_057 DEFINITION PUBLIC.
         create_by        TYPE string,
         storage_location TYPE string,
         quantity         TYPE i,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table .
-    DATA mv_check_download TYPE abap_bool .
+    DATA mt_table TYPE ty_t_table.
+    DATA mv_check_download TYPE abap_bool.
 
   PROTECTED SECTION.
 

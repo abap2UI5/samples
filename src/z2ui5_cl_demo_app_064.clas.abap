@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -13,21 +13,21 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
         connid    TYPE string,
         fldate    TYPE string,
         planetype TYPE string,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY .
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_filter_pop,
         option TYPE string,
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
-      END OF ty_s_filter_pop .
+      END OF ty_s_filter_pop.
 
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA lv_selkz TYPE abap_bool .
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA mv_search_value TYPE string.
+    DATA mt_table TYPE ty_t_table.
+    DATA lv_selkz TYPE abap_bool.
     DATA mv_check_active TYPE abap_bool.
     DATA:
       BEGIN OF screen,

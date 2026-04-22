@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_row,
@@ -14,16 +14,16 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC.
         info     TYPE string,
         selected TYPE abap_bool,
         checkbox TYPE abap_bool,
-      END OF ty_row .
+      END OF ty_row.
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
+      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA
-      t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
-    DATA mv_layout TYPE string .
-    DATA mv_title TYPE string .
+      t_tab2 TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mv_layout TYPE string.
+    DATA mv_title TYPE string.
     DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
-    DATA mv_check_enabled_02 TYPE abap_bool .
+    DATA mv_check_enabled_02 TYPE abap_bool.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

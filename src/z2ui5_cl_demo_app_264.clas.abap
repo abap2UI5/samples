@@ -2,18 +2,18 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_a_data,
            label       TYPE string,
            value_state TYPE string,
-         END OF ty_a_data .
+         END OF ty_a_data.
 
     DATA
-      lt_a_data TYPE STANDARD TABLE OF ty_a_data .
-    DATA ls_a_data TYPE ty_a_data .
-    DATA s_text TYPE string .
+      lt_a_data TYPE STANDARD TABLE OF ty_a_data.
+    DATA ls_a_data TYPE ty_a_data.
+    DATA s_text TYPE string.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

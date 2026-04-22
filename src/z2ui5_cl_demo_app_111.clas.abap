@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -13,18 +13,18 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
         create_by        TYPE string,
         storage_location TYPE string,
         quantity         TYPE i,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mv_search_value TYPE string .
-    DATA mt_table TYPE ty_t_table .
-    DATA mv_key TYPE string .
-    DATA mv_product TYPE string .
-    DATA mv_create_date TYPE string .
-    DATA mv_create_by TYPE string .
-    DATA mv_storage_location TYPE string .
-    DATA mv_quantity TYPE string .
+    DATA mv_search_value TYPE string.
+    DATA mt_table TYPE ty_t_table.
+    DATA mv_key TYPE string.
+    DATA mv_product TYPE string.
+    DATA mv_create_date TYPE string.
+    DATA mv_create_by TYPE string.
+    DATA mv_storage_location TYPE string.
+    DATA mv_quantity TYPE string.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

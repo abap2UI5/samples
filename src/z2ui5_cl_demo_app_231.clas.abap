@@ -2,13 +2,13 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF t_drs,
         start TYPE d,
         end   TYPE d,
-      END OF t_drs .
+      END OF t_drs.
 
     DATA:
       drs1    TYPE t_drs,

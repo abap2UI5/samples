@@ -2,21 +2,21 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF t_data,
         field1 TYPE string,
         field2 TYPE string,
         field3 TYPE string,
-      END OF t_data .
+      END OF t_data.
     TYPES ty_t_data TYPE STANDARD TABLE OF t_data WITH EMPTY KEY.
 
     DATA gt_data TYPE ty_t_data.
-    DATA client TYPE REF TO z2ui5_if_client .
-    METHODS ui5_on_init .
-    METHODS ui5_on_event .
-    METHODS ui5_view_main_display .
+    DATA client TYPE REF TO z2ui5_if_client.
+    METHODS ui5_on_init.
+    METHODS ui5_on_event.
+    METHODS ui5_view_main_display.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

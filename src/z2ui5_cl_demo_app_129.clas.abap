@@ -3,20 +3,20 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF s_suggestion_items,
         value TYPE string,
         descr TYPE string,
-      END OF s_suggestion_items .
+      END OF s_suggestion_items.
     TYPES:
       BEGIN OF s_combobox,
         key  TYPE string,
         text TYPE string,
-      END OF s_combobox .
+      END OF s_combobox.
     TYPES
-      ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY .
+      ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
     DATA lv_text TYPE string.
     DATA:
       BEGIN OF screen,
@@ -31,9 +31,9 @@ CLASS z2ui5_cl_demo_app_129 DEFINITION PUBLIC.
         time_end        TYPE string,
         check_switch_01 TYPE abap_bool VALUE abap_false,
         check_switch_02 TYPE abap_bool VALUE abap_false,
-      END OF screen .
+      END OF screen.
     DATA
-      mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY .
+      mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering

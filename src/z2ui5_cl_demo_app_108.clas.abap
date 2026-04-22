@@ -3,14 +3,14 @@ CLASS z2ui5_cl_demo_app_108 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA:
       BEGIN OF screen,
         input1 TYPE string,
         input2 TYPE string,
         input3 TYPE string,
-      END OF screen .
+      END OF screen.
   PROTECTED SECTION.
 
     METHODS z2ui5_on_rendering

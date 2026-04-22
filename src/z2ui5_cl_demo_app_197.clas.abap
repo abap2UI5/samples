@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -12,19 +12,19 @@ CLASS z2ui5_cl_demo_app_197 DEFINITION PUBLIC.
         create_by        TYPE string,
         storage_location TYPE string,
         quantity         TYPE i,
-      END OF ty_s_tab .
+      END OF ty_s_tab.
     TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY .
+      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-    DATA mt_table TYPE ty_t_table .
-    DATA mt_table_full TYPE ty_t_table .
-    DATA mt_table_products TYPE ty_t_table .
-    DATA client TYPE REF TO z2ui5_if_client .
-    DATA mv_check_popover TYPE abap_bool .
-    DATA mv_product TYPE string .
+    DATA mt_table TYPE ty_t_table.
+    DATA mt_table_full TYPE ty_t_table.
+    DATA mt_table_products TYPE ty_t_table.
+    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mv_check_popover TYPE abap_bool.
+    DATA mv_product TYPE string.
 
-    METHODS z2ui5_set_data .
-    METHODS view_display .
+    METHODS z2ui5_set_data.
+    METHODS view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

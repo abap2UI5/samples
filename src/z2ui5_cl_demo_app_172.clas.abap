@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_output,
@@ -16,17 +16,17 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
         input3   TYPE i,
         bool     TYPE abap_bool,
         waers    TYPE waers,
-      END OF ty_output .
+      END OF ty_output.
     DATA output TYPE STANDARD TABLE OF ty_output.
     DATA client TYPE REF TO z2ui5_if_client.
   PROTECTED SECTION.
 
-    METHODS load_output_table .
-    METHODS on_event .
-    METHODS render_main_screen .
+    METHODS load_output_table.
+    METHODS on_event.
+    METHODS render_main_screen.
     METHODS calculate_sum
       IMPORTING
-        !i_column TYPE string .
+        !i_column TYPE string.
   PRIVATE SECTION.
 ENDCLASS.
 

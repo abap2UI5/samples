@@ -14,15 +14,15 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
         checkbox   TYPE abap_bool,
         percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
-      END OF ty_row .
+      END OF ty_row.
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY .
-    DATA check_ui5 TYPE abap_bool .
-    DATA mv_key TYPE string .
+      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA check_ui5 TYPE abap_bool.
+    DATA mv_key TYPE string.
     DATA sortorder TYPE string VALUE `None`.
 
-    METHODS refresh_data .
+    METHODS refresh_data.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

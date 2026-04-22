@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     DATA ui5_version TYPE string.
     DATA ui5_theme TYPE string.

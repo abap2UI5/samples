@@ -2,23 +2,23 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF s_combobox,
         key  TYPE string,
         text TYPE string,
-      END OF s_combobox .
+      END OF s_combobox.
     TYPES
-      ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY .
+      ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA gt_multi TYPE ty_t_combo.
     DATA gt_sel_multi TYPE ty_t_combo.
     DATA gt_sel_multi2 TYPE string_table.
-    METHODS ui5_on_init .
-    METHODS ui5_on_event .
-    METHODS ui5_view_main_display .
+    METHODS ui5_on_init.
+    METHODS ui5_on_event.
+    METHODS ui5_view_main_display.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

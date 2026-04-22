@@ -3,18 +3,18 @@ CLASS z2ui5_cl_demo_app_186 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
-    DATA file_content_64 TYPE string .
-    DATA file_name TYPE string .
-    DATA mime_type TYPE string .
+    INTERFACES z2ui5_if_app.
+    DATA file_content_64 TYPE string.
+    DATA file_name TYPE string.
+    DATA mime_type TYPE string.
   PROTECTED SECTION.
   PRIVATE SECTION.
 
-    DATA client TYPE REF TO z2ui5_if_client .
+    DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS initialize .
-    METHODS on_event .
-    METHODS render_screen .
+    METHODS initialize.
+    METHODS on_event.
+    METHODS render_screen.
 ENDCLASS.
 
 

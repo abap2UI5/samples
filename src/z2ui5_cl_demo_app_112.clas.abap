@@ -3,18 +3,18 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client .
-    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view .
-    DATA mv_class_2 TYPE string .
-    DATA mr_data TYPE REF TO data .
+    DATA client TYPE REF TO z2ui5_if_client.
+    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA mv_class_2 TYPE string.
+    DATA mr_data TYPE REF TO data.
 
-    METHODS on_init .
-    METHODS on_event .
+    METHODS on_init.
+    METHODS on_event.
     METHODS display_view
       CHANGING
-        !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL .
+        !xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
   PROTECTED SECTION.
   PRIVATE SECTION.
 

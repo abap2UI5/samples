@@ -3,8 +3,8 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
-    DATA mv_url TYPE string .
+    INTERFACES z2ui5_if_app.
+    DATA mv_url TYPE string.
 
     TYPES:
       BEGIN OF ty_cities,
@@ -27,8 +27,8 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
     TYPES t_product_items TYPE STANDARD TABLE OF ty_product_items WITH DEFAULT KEY.
     DATA mt_products TYPE t_product_items.
 
-    METHODS on_event .
-    METHODS view_display .
+    METHODS on_event.
+    METHODS view_display.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

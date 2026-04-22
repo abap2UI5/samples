@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_spot,
@@ -26,10 +26,10 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
         color       TYPE string,
         colorborder TYPE string,
         linewidth   TYPE string,
-      END OF ty_route .
+      END OF ty_route.
 
     DATA
-      mt_route TYPE TABLE OF ty_route .
+      mt_route TYPE TABLE OF ty_route.
 
     TYPES: BEGIN OF ty_s_legend,
              text  TYPE string,

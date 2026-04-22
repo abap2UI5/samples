@@ -3,33 +3,33 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-      END OF ty_prodh_node_level3 .
+      END OF ty_prodh_node_level3.
     TYPES:
       BEGIN OF ty_prodh_node_level2,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level2 .
+      END OF ty_prodh_node_level2.
     TYPES:
       BEGIN OF ty_prodh_node_level1,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level1 .
+      END OF ty_prodh_node_level1.
     TYPES
-      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY .
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
 
-    DATA prodh_nodes TYPE ty_prodh_nodes .
-    METHODS ui5_display_view .
+    DATA prodh_nodes TYPE ty_prodh_nodes.
+    METHODS ui5_display_view.
   PROTECTED SECTION.
 
     DATA client TYPE REF TO z2ui5_if_client.

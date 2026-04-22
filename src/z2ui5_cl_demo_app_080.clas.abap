@@ -2,7 +2,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_appointments,
@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
         info      TYPE string,
         pic       TYPE string,
         tentative TYPE abap_bool,
-      END OF ty_s_appointments .
+      END OF ty_s_appointments.
     TYPES:
       BEGIN OF ty_s_headers,
         start     TYPE string,
@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
         info      TYPE string,
         pic       TYPE string,
         tentative TYPE abap_bool,
-      END OF ty_s_headers .
+      END OF ty_s_headers.
     TYPES:
       BEGIN OF ty_s_people,
         name         TYPE string,
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
         role         TYPE string,
         appointments TYPE TABLE OF ty_s_appointments WITH NON-UNIQUE DEFAULT KEY,
         headers      TYPE TABLE OF ty_s_headers      WITH NON-UNIQUE DEFAULT KEY,
-      END OF ty_s_people .
+      END OF ty_s_people.
 
     DATA mt_people TYPE STANDARD TABLE OF ty_s_people.
     DATA lv_s_date TYPE string.

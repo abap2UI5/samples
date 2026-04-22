@@ -3,7 +3,7 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
   PUBLIC SECTION.
 
 
-    INTERFACES z2ui5_if_app .
+    INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_token,
@@ -12,36 +12,36 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
         visible  TYPE abap_bool,
         selkz    TYPE abap_bool,
         editable TYPE abap_bool,
-      END OF ty_s_token .
+      END OF ty_s_token.
     TYPES
-      ty_t_token TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY .
+      ty_t_token TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     TYPES
-      ty_t_range    TYPE RANGE OF string .
+      ty_t_range    TYPE RANGE OF string.
     TYPES
-      ty_s_range    TYPE LINE OF ty_t_range .
+      ty_s_range    TYPE LINE OF ty_t_range.
     TYPES:
       BEGIN OF ty_s_filter_pop,
         option TYPE string,
         low    TYPE string,
         high   TYPE string,
         key    TYPE string,
-      END OF ty_s_filter_pop .
+      END OF ty_s_filter_pop.
     TYPES
-      ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
+      ty_t_filter_pop TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY.
     TYPES:
       BEGIN OF ty_s_fieldsdb,
         screen_name TYPE string,
         field       TYPE string,
         field_doma  TYPE string,
-      END OF ty_s_fieldsdb .
+      END OF ty_s_fieldsdb.
     TYPES
-      ty_t_fieldsdb TYPE STANDARD TABLE OF ty_s_fieldsdb WITH DEFAULT KEY .
+      ty_t_fieldsdb TYPE STANDARD TABLE OF ty_s_fieldsdb WITH DEFAULT KEY.
     TYPES
       BEGIN OF ty_s_fields.
         INCLUDE TYPE ty_s_fieldsdb.
     TYPES: t_token  TYPE ty_t_token,
           t_filter TYPE ty_t_filter_pop,
-          END OF ty_s_fields .
+          END OF ty_s_fields.
     TYPES:
       BEGIN OF ty_s_var_val,
         screen_name TYPE string,
@@ -52,46 +52,46 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
         opt         TYPE string,
         low         TYPE string,
         high        TYPE string,
-      END OF ty_s_var_val .
+      END OF ty_s_var_val.
     TYPES
-      ty_t_var_val TYPE STANDARD TABLE OF ty_s_var_val WITH DEFAULT KEY .
+      ty_t_var_val TYPE STANDARD TABLE OF ty_s_var_val WITH DEFAULT KEY.
     TYPES:
       BEGIN OF ty_s_variants,
         screen_name TYPE string,
         var         TYPE string,
         descr       TYPE string,
-      END OF ty_s_variants .
+      END OF ty_s_variants.
     TYPES
-      ty_t_variants TYPE STANDARD TABLE OF ty_s_variants WITH DEFAULT KEY .
+      ty_t_variants TYPE STANDARD TABLE OF ty_s_variants WITH DEFAULT KEY.
     TYPES
       BEGIN OF ty_s_var_pop.
         INCLUDE TYPE ty_s_variants.
     TYPES: selkz TYPE abap_bool,
-          END OF ty_s_var_pop .
+          END OF ty_s_var_pop.
     TYPES:
       BEGIN OF ty_s_screens,
         screen_name TYPE string,
         descr       TYPE string,
-      END OF ty_s_screens .
+      END OF ty_s_screens.
 
     DATA
-      mt_filter       TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY .
-    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value .
+      mt_filter       TYPE STANDARD TABLE OF ty_s_filter_pop WITH EMPTY KEY.
+    DATA mt_mapping TYPE z2ui5_if_types=>ty_t_name_value.
     DATA
-      mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY .
+      mt_screens      TYPE STANDARD TABLE OF ty_s_screens WITH EMPTY KEY.
     DATA
-      mt_variants     TYPE STANDARD TABLE OF ty_s_variants WITH EMPTY KEY .
+      mt_variants     TYPE STANDARD TABLE OF ty_s_variants WITH EMPTY KEY.
     DATA
-      mt_variants_pop TYPE STANDARD TABLE OF ty_s_var_pop WITH EMPTY KEY .
-    DATA mv_activ_elemnt TYPE string .
-    DATA mv_screen TYPE string .
-    DATA mv_button_active TYPE abap_bool .
-    DATA mv_description TYPE string .
-    DATA mv_screen_descr TYPE string .
-    DATA mv_variant TYPE string .
-    DATA mv_description_copy TYPE string .
-    DATA mv_variant_copy TYPE string .
-    DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view .
+      mt_variants_pop TYPE STANDARD TABLE OF ty_s_var_pop WITH EMPTY KEY.
+    DATA mv_activ_elemnt TYPE string.
+    DATA mv_screen TYPE string.
+    DATA mv_button_active TYPE abap_bool.
+    DATA mv_description TYPE string.
+    DATA mv_screen_descr TYPE string.
+    DATA mv_variant TYPE string.
+    DATA mv_description_copy TYPE string.
+    DATA mv_variant_copy TYPE string.
+    DATA mo_parent_view TYPE REF TO z2ui5_cl_xml_view.
   PROTECTED SECTION.
 
     METHODS on_init.
