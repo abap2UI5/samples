@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_112 DEFINITION PUBLIC.
     DATA mv_class_2 TYPE string.
     DATA mr_data TYPE REF TO data.
 
-    METHODS on_init.
     METHODS on_event.
     METHODS display_view
       CHANGING
@@ -38,19 +37,12 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
-
-    display_view( ).
-
-  ENDMETHOD.
-
-
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
+      display_view( ).
       RETURN.
     ENDIF.
 

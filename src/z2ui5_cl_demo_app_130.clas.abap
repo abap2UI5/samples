@@ -97,7 +97,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 
     METHODS on_init.
 
-    METHODS on_event.
 
     METHODS render_main.
 
@@ -247,13 +246,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       ( screen_name = `QUAN`        var = `E001 - ALL` descr = `123` )
       ( screen_name = `TO`          var = `E001`       descr = `123` )
       ( screen_name = `TO`          var = `E001 - All` descr = `123` ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    varaint_page( ).
 
   ENDMETHOD.
 
@@ -684,7 +676,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     ENDIF.
 
-    on_event( ).
+    varaint_page( ).
 
     mv_button_active = xsdbool( mv_screen IS NOT INITIAL AND mv_variant IS NOT INITIAL ).
 

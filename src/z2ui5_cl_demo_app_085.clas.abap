@@ -55,7 +55,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS view_display_detail.
     METHODS z2ui5_set_data.
     METHODS on_event.
-    METHODS on_init.
     METHODS z2ui5_set_search.
 
     METHODS sort.
@@ -390,7 +389,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     IF client->check_on_init( ).
       z2ui5_set_data( ).
       sort( ).
-      on_init( ).
+      view_display_master( ).
       RETURN.
     ENDIF.
 
@@ -469,13 +468,6 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
         client->view_model_update( ).
         client->nest_view_model_update( ).
     ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD on_init.
-
-    view_display_master( ).
 
   ENDMETHOD.
 

@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_132 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
     METHODS on_event.
 
     METHODS render_main.
@@ -77,13 +76,6 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_init.
-
-    render_main( ).
-
-  ENDMETHOD.
-
-
   METHOD render_main.
 
     IF mo_parent_view IS INITIAL.
@@ -129,8 +121,7 @@ CLASS z2ui5_cl_demo_app_132 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      on_init( ).
-
+      render_main( ).
     ENDIF.
 
     on_event( ).

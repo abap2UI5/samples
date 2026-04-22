@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
 
     METHODS ui5_view_main_display.
 
-    METHODS ui5_view_init_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -57,12 +56,6 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
-  METHOD ui5_view_init_display.
-
-    ui5_view_main_display( ).
-
-  ENDMETHOD.
 
 
   METHOD ui5_view_main_display.
@@ -115,7 +108,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_view_init_display( ).
+      ui5_view_main_display( ).
       RETURN.
     ENDIF.
 
