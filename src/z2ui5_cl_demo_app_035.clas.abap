@@ -94,12 +94,12 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
             WHEN mv_path CS `text` THEN lcl_file_api=>read_text( )
             WHEN mv_path CS `js`   THEN lcl_file_api=>read_js( ) ).
 
-        client->message_toast_display( `Download successfull` ).
+        client->message_toast_display( `Download successful` ).
 
         client->view_model_update( ).
 
       WHEN `DB_SAVE`.
-        client->message_box_display( text = `Upload successfull. File saved!`
+        client->message_box_display( text = `Upload successful. File saved!`
                                      type = `success` ).
       WHEN `EDIT`.
         mv_check_editable = xsdbool( mv_check_editable = abap_false ).

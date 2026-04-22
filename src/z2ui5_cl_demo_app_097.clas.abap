@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     DATA(lr_list) = lr_master->list(
-          headertext      = `List Ouput`
+          headertext      = `List Output`
           items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( `SELCHANGE` )

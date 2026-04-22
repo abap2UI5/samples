@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_347 IMPLEMENTATION.
     ENDIF.
 
     IF mt_data IS INITIAL.
-      client->message_toast_display( `ERROR - mt_data is inital!` ).
+      client->message_toast_display( `ERROR - mt_data is initial!` ).
     ENDIF.
 
     ASSIGN mo_layout_obj->mr_data->* TO FIELD-SYMBOL(<val>).

@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
     DATA(cont) = page->content( `f` ).
 
     cont->list(
-        headertext = `List Ouput`
+        headertext = `List Output`
         items      = client->_bind( t_tab )
         )->standard_list_item(
             title       = `{TITLE}`

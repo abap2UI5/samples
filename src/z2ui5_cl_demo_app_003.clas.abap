@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
               shownavbutton  = client->check_app_prev_stack( ) ).
 
       page->list(
-          headertext      = `List Ouput`
+          headertext      = `List Output`
           items           = client->_bind_edit( t_tab )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( `SELCHANGE` )
