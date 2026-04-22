@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_063 DEFINITION PUBLIC.
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 

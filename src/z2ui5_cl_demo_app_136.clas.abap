@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_136 DEFINITION PUBLIC.
 
     METHODS view_display.
 
-
   PRIVATE SECTION.
 ENDCLASS.
 
