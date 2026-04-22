@@ -25,7 +25,6 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION PUBLIC.
 
     METHODS render_main.
 
-  PRIVATE SECTION.
     METHODS get_data.
 
     METHODS get_comp
@@ -33,6 +32,8 @@ CLASS z2ui5_cl_demo_app_194 DEFINITION PUBLIC.
         VALUE(result) TYPE abap_component_tab.
 
     METHODS get_fixval.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

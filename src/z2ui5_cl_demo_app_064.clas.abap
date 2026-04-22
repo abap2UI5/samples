@@ -42,10 +42,11 @@ CLASS z2ui5_cl_demo_app_064 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
 
-  PRIVATE SECTION.
     METHODS set_selkz
       IMPORTING
         iv_selkz TYPE abap_bool.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

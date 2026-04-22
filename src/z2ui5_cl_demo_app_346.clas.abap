@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
 
     METHODS set_view.
 
-  PRIVATE SECTION.
     CONSTANTS:
       BEGIN OF c_id,
         index       TYPE string VALUE `Index`,
@@ -37,6 +36,8 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     METHODS next_focus.
     METHODS focus.
     METHODS default_focus.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

@@ -44,8 +44,9 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
 
     METHODS render_popup.
 
-  PRIVATE SECTION.
     METHODS get_dfies.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

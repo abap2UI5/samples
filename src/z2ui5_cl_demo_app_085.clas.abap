@@ -53,7 +53,6 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS z2ui5_set_search.
 
-  PRIVATE SECTION.
     DATA lv_layout TYPE string.
     DATA lv_sort_desc TYPE abap_bool VALUE abap_true.
     DATA c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
@@ -61,6 +60,8 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     DATA check_detail_active TYPE abap_bool.
 
     METHODS sort.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

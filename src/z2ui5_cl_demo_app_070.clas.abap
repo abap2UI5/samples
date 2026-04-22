@@ -42,10 +42,11 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
     METHODS z2ui5_set_search.
     METHODS z2ui5_set_data.
 
-  PRIVATE SECTION.
     METHODS set_selkz
       IMPORTING
         iv_selkz TYPE abap_bool.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

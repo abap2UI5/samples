@@ -38,10 +38,11 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
 
     METHODS on_event.
 
-  PRIVATE SECTION.
     METHODS calculate_content_height
       IMPORTING !lines        TYPE i
       RETURNING VALUE(result) TYPE string.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

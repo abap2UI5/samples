@@ -14,9 +14,10 @@ CLASS z2ui5_cl_demo_app_199 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS render_main.
 
-  PRIVATE SECTION.
     METHODS refresh_data.
     METHODS add_data.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

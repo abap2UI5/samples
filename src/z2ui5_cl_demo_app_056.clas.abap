@@ -27,8 +27,9 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     METHODS view_display.
     METHODS set_data.
 
-  PRIVATE SECTION.
     DATA mt_range TYPE z2ui5_cl_pop_get_range=>ty_s_result-t_range.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

@@ -69,8 +69,9 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     METHODS popover_display_filter.
     METHODS z2ui5_set_data.
 
-  PRIVATE SECTION.
     DATA mt_cols TYPE string_table.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

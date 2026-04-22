@@ -11,8 +11,9 @@ CLASS z2ui5_cl_demo_app_088 DEFINITION PUBLIC.
     METHODS z2ui5_view_display.
     METHODS on_event.
 
-  PRIVATE SECTION.
     DATA mv_page TYPE string.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

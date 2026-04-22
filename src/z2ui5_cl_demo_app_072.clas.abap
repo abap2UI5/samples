@@ -40,8 +40,9 @@ CLASS z2ui5_cl_demo_app_072 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS z2ui5_set_data.
 
-  PRIVATE SECTION.
     METHODS set_filter.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 

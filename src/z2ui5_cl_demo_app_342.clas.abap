@@ -23,10 +23,11 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
     METHODS get_data.
 
-  PRIVATE SECTION.
     METHODS get_comp
       RETURNING
         VALUE(result) TYPE abap_component_tab.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 
