@@ -39,10 +39,10 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
 
     METHODS set_data.
     METHODS view_display.
-    METHODS z2ui5_view_sort_popup.
-    METHODS z2ui5_view_filter_popup.
-    METHODS z2ui5_view_group_popup.
-    METHODS z2ui5_view_settings_popup.
+    METHODS view_display_sort_popup.
+    METHODS view_display_filter_popup.
+    METHODS view_display_group_popup.
+    METHODS view_display_settings_popup.
     METHODS on_event.
 
   PRIVATE SECTION.
@@ -72,13 +72,13 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `ALL`.
-        z2ui5_view_settings_popup( ).
+        view_display_settings_popup( ).
       WHEN `SORT`.
-        z2ui5_view_sort_popup( ).
+        view_display_sort_popup( ).
       WHEN `FILTER`.
-        z2ui5_view_filter_popup( ).
+        view_display_filter_popup( ).
       WHEN `GROUP`.
-        z2ui5_view_group_popup( ).
+        view_display_group_popup( ).
       WHEN `CONFIRM_SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
 
@@ -249,7 +249,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_filter_popup.
+  METHOD view_display_filter_popup.
 
     DATA(popup_filter) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -272,7 +272,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_group_popup.
+  METHOD view_display_group_popup.
 
     DATA(popup_group) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -290,7 +290,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_settings_popup.
+  METHOD view_display_settings_popup.
 
     DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -320,7 +320,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_sort_popup.
+  METHOD view_display_sort_popup.
 
     DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
 

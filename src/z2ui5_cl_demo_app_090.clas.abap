@@ -59,8 +59,8 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     DATA mv_page TYPE string.
 
     METHODS view_display.
-    METHODS z2ui5_view_p13n.
-    METHODS z2ui5_view_p13n_popup.
+    METHODS view_display_p13n.
+    METHODS view_display_p13n_popup.
     METHODS on_event.
     METHODS init_data_set.
     METHODS get_custom_js
@@ -96,10 +96,10 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `P13N_OPEN`.
-        z2ui5_view_p13n( ).
+        view_display_p13n( ).
 
       WHEN `P13N_POPUP`.
-        z2ui5_view_p13n_popup( ).
+        view_display_p13n_popup( ).
 
       WHEN `OK` OR `CANCEL`.
         client->popup_destroy( ).
@@ -175,7 +175,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_p13n.
+  METHOD view_display_p13n.
 
     DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -221,7 +221,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_p13n_popup.
+  METHOD view_display_p13n_popup.
 
     DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
 

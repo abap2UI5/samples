@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_279 DEFINITION PUBLIC.
     METHODS display_view.
     METHODS on_event.
     METHODS security_check_popup.
-    METHODS ui5_callback.
+    METHODS on_navigation.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     me->client = client.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_callback( ).
+      on_navigation( ).
     ENDIF.
 
     on_event( ).
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_callback.
+  METHOD on_navigation.
 
     TRY.
         DATA(prev) = client->get_app( client->get( )-s_draft-id_prev_app ).

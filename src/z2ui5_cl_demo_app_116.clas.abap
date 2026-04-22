@@ -37,15 +37,15 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
 
     DATA mv_run_js TYPE abap_bool VALUE abap_false.
 
-    METHODS ui5_display_view.
-    METHODS ui5_display_popover
+    METHODS view_display.
+    METHODS popover_display
       IMPORTING
         !id TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_initialize.
+    METHODS on_init.
     METHODS add_node
       IMPORTING p_prodh TYPE string.
 
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display_popover.
+  METHOD popover_display.
 
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
     lo_popover->popover( placement = `Right`
@@ -106,7 +106,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display_view.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -184,7 +184,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_initialize.
+  METHOD on_init.
 
     prodh_nodes =
       VALUE #( ( text = `Machines`
@@ -223,7 +223,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_initialize( ).
+      on_init( ).
 
       DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&
                          `  var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
@@ -254,7 +254,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `START`.
-        ui5_display_view( ).
+        view_display( ).
       WHEN `CONTINUE`.
         client->popup_destroy( ).
 
@@ -263,7 +263,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
       WHEN `POPOVER`.
         lt_event_arg = client->get( )-t_event_arg.
         DATA(lv_open_by_id) = lt_event_arg[ 1 ].
-        ui5_display_popover( lv_open_by_id ).
+        popover_display( lv_open_by_id ).
 
       WHEN `ROW_ADD`.
         add_node( lt_event_arg[ 1 ] ).

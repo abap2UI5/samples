@@ -7,7 +7,7 @@ CLASS z2ui5_cl_demo_app_149 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS on_event.
-    METHODS ui5_callback.
+    METHODS on_navigation.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -16,7 +16,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
 
-  METHOD ui5_callback.
+  METHOD on_navigation.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_149 IMPLEMENTATION.
 
     IF client->get( )-check_on_navigated = abap_true.
       view_display( ).
-      ui5_callback( ).
+      on_navigation( ).
       RETURN.
     ENDIF.
 

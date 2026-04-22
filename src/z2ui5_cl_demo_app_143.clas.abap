@@ -14,9 +14,9 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC.
     DATA gt_data TYPE ty_t_data.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_on_init.
+    METHODS on_init.
     METHODS on_event.
-    METHODS ui5_view_main_display.
+    METHODS view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_on_init.
+  METHOD on_init.
 
     gt_data = VALUE ty_t_data(
       ( field1 = `21` field2 = `T1` field3 = `TEXT1` )
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_main_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -116,10 +116,10 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
-    ui5_view_main_display( ).
+    view_display( ).
     on_event( ).
 
   ENDMETHOD.

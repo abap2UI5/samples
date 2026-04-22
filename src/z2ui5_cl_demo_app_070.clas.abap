@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_070 DEFINITION PUBLIC.
 
     METHODS on_init.
     METHODS on_event.
-    METHODS z2ui5_set_search.
+    METHODS set_search.
     METHODS set_data.
 
     METHODS set_selkz
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         client->message_toast_display( `Search Entries` ).
         set_data( ).
-        z2ui5_set_search( ).
+        set_search( ).
         client->view_model_update( ).
       WHEN `SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
@@ -247,7 +247,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

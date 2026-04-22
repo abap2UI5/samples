@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS on_event.
-    METHODS ui5_callback.
+    METHODS on_navigation.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         view_display( ).
 
       ELSE.
-        ui5_callback( ).
+        on_navigation( ).
       ENDIF.
       RETURN.
     ENDIF.
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_callback.
+  METHOD on_navigation.
 
     FIELD-SYMBOLS <row> TYPE ty_row.
 

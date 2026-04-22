@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_037 DEFINITION PUBLIC.
       RETURNING
         VALUE(result) TYPE string.
 
-    METHODS z2ui5_load_cc.
+    METHODS load_cc.
     METHODS on_event.
     METHODS view_display.
 
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_load_cc.
+  METHOD load_cc.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
          )->_generic( ns   = `html`
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
 
       WHEN `LOAD_CC`.
         mv_load_cc = abap_true.
-        z2ui5_load_cc( ).
+        load_cc( ).
         client->message_box_display( `Custom Control loaded ` ).
 
       WHEN `DISPLAY_CC`.

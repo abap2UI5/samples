@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
 
     METHODS set_data.
     METHODS view_display.
-    METHODS z2ui5_view_vm_popup.
+    METHODS view_display_vm_popup.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -145,7 +145,7 @@ CLASS z2ui5_cl_demo_app_100 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_view_vm_popup.
+  METHOD view_display_vm_popup.
 
     DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
     client->popup_display( popup_sort->stringify( ) ).

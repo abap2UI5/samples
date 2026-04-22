@@ -25,15 +25,15 @@ CLASS z2ui5_cl_demo_app_068 DEFINITION PUBLIC.
 
     DATA prodh_nodes    TYPE ty_prodh_nodes.
 
-    METHODS ui5_display_view
+    METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS ui5_initialize.
-    METHODS ui5_display_popup_tree_select.
+    METHODS on_init.
+    METHODS popup_display_tree_select.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -41,7 +41,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
-  METHOD ui5_display_popup_tree_select.
+  METHOD popup_display_tree_select.
 
     DATA(dialog) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( title         = `Choose Product here...`
@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_display_view.
+  METHOD view_display.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_initialize.
+  METHOD on_init.
 
     prodh_nodes =
       VALUE #( ( text = `Machines`
@@ -118,13 +118,13 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_initialize( ).
-      ui5_display_view( client ).
+      on_init( ).
+      view_display( client ).
     ENDIF.
 
     CASE client->get( )-event.
       WHEN `POPUP_TREE`.
-        ui5_display_popup_tree_select( ).
+        popup_display_tree_select( ).
 
       WHEN `CONTINUE`.
         client->popup_destroy( ).

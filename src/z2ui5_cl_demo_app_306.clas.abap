@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS edit_image.
-    METHODS ui5_callback.
+    METHODS on_navigation.
     METHODS rebuild_output.
 
   PRIVATE SECTION.
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
        )->combobox( id          = `ComboFacingMode`
                     selectedkey = client->_bind_edit( facing_mode )
                     items       = |\{path:'{ client->_bind_edit( val  = facing_modes
-                                                                 path = abap_true ) }`, sorter: \{ path: `TEXT' \} \}|
+                                                                 path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
            id          = `ComboDevice`
            selectedkey = client->_bind_edit( device )
            items       = |\{path:'{ client->_bind_edit( val  = devices
-                                                        path = abap_true ) }`, sorter: \{ path: `TEXT' \} \}|
+                                                        path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
@@ -122,7 +122,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_callback( ).
+      on_navigation( ).
       rebuild_output( ).
       view_display( ).
       RETURN.
@@ -178,7 +178,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_callback.
+  METHOD on_navigation.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).

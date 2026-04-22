@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
-    METHODS z2ui5_set_search.
+    METHODS set_search.
     METHODS set_data.
     METHODS view_display.
     METHODS get_custom_js
@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_075 DEFINITION PUBLIC.
 
     METHODS on_event.
 
-    METHODS ui5_view_main_display.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
         CASE client->get( )-event.
 
           WHEN `START` OR `CHANGE`.
-            ui5_view_main_display( ).
+            view_display( ).
 
           WHEN `UPLOAD`.
 
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
 
             client->message_box_display( `CSV loaded to table` ).
 
-            ui5_view_main_display( ).
+            view_display( ).
 
             mv_value = VALUE #( ).
             mv_path = VALUE #( ).
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_main_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
@@ -92,12 +92,12 @@ CLASS z2ui5_cl_demo_app_075 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_view_main_display( ).
+      view_display( ).
       RETURN.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
-      ui5_view_main_display( ).
+      view_display( ).
     ENDIF.
 
     on_event( ).

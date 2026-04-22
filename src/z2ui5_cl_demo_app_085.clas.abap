@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS view_display_detail.
     METHODS set_data.
     METHODS on_event.
-    METHODS z2ui5_set_search.
+    METHODS set_search.
 
     METHODS sort.
   PRIVATE SECTION.
@@ -464,7 +464,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       WHEN `ONSEARCH`.
         client->message_toast_display( `Search Entries` ).
         set_data( ).
-        z2ui5_set_search( ).
+        set_search( ).
         client->view_model_update( ).
         client->nest_view_model_update( ).
     ENDCASE.
@@ -528,7 +528,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_set_search.
+  METHOD set_search.
 
     IF mv_search_value IS NOT INITIAL.
 

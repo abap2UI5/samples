@@ -31,9 +31,9 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS ui5_popup_input.
-    METHODS ui5_handle_event.
-    METHODS ui5_init.
+    METHODS popup_display.
+    METHODS on_event.
+    METHODS on_init.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -42,19 +42,19 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
-  METHOD ui5_handle_event.
+  METHOD on_event.
 
     CASE client->get( )-event.
 
       WHEN `POPUP_TO_INPUT`.
         ms_popup_input-value1 = `value1`.
-        ui5_popup_input( ).
+        popup_display( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD ui5_init.
+  METHOD on_init.
 
     t_bapiret = VALUE #(
       ( message = `An empty Report field causes an empty XML Message to be sent` type = `E` id = `MSG1` number = `001` )
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_popup_input.
+  METHOD popup_display.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
       view_display( ).
     ENDIF.
 
-    ui5_handle_event( ).
+    on_event( ).
 
   ENDMETHOD.
 

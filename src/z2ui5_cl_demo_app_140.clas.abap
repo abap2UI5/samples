@@ -16,9 +16,9 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     DATA gt_sel_multi TYPE ty_t_combo.
     DATA gt_sel_multi2 TYPE string_table.
 
-    METHODS ui5_on_init.
+    METHODS on_init.
     METHODS on_event.
-    METHODS ui5_view_main_display.
+    METHODS view_display.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_on_init.
+  METHOD on_init.
 
     gt_multi = VALUE ty_t_combo(
       ( key = `A01` text = `T1` )
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD ui5_view_main_display.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -91,10 +91,10 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      ui5_on_init( ).
+      on_init( ).
     ENDIF.
 
-    ui5_view_main_display( ).
+    view_display( ).
     on_event( ).
 
   ENDMETHOD.
