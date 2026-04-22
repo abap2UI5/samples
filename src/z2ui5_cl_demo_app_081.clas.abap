@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
         id       TYPE string,
         name     TYPE string,
       END OF ty_tab.
-
     DATA mt_tab TYPE STANDARD TABLE OF ty_tab WITH EMPTY KEY.
 
   PROTECTED SECTION.

@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_286 DEFINITION PUBLIC.
         highlight TYPE string,
         info      TYPE string,
       END OF ty_name.
-
     DATA lt_o_model TYPE TABLE OF ty_name.
 
   PROTECTED SECTION.

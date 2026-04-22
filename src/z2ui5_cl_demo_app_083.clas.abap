@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
       BEGIN OF ty_s_tab_01,
         screen_name TYPE string,
       END OF ty_s_tab_01.
-
     DATA mt_01 TYPE STANDARD TABLE OF ty_s_tab_01 WITH EMPTY KEY.
 
     TYPES:
@@ -16,7 +15,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
         field       TYPE string,
         field_doma  TYPE string,
       END OF ty_s_tab_02.
-
     DATA mt_02 TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
     DATA mt_02_display TYPE STANDARD TABLE OF ty_s_tab_02 WITH EMPTY KEY.
     TYPES:
@@ -24,7 +22,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
         name  TYPE string,
         value TYPE string,
       END OF ty_s_tab_02_input.
-
     DATA mt_tab_02_input TYPE STANDARD TABLE OF ty_s_tab_02_input WITH EMPTY KEY.
 
     TYPES:
@@ -57,7 +54,6 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
       BEGIN OF ty_s_filter,
         product TYPE ty_t_range,
       END OF ty_s_filter.
-
     DATA ms_filter TYPE ty_s_filter.
     DATA mv_name TYPE string.
 

@@ -16,7 +16,6 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
           END OF ty_s_03,
         END OF ty_s_02,
       END OF ty_s_01.
-
     DATA ms_screen TYPE ty_s_01.
     DATA mr_input  TYPE REF TO data.
     DATA mr_screen TYPE REF TO data.

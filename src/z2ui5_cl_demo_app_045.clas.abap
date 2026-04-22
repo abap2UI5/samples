@@ -12,7 +12,6 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_row.
-
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA mv_info_filter TYPE string.

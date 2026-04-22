@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_101 DEFINITION PUBLIC.
         date      TYPE string,
         text      TYPE string,
       END OF ty_feed.
-
     DATA mt_feed TYPE TABLE OF ty_feed.
     DATA ms_feed TYPE ty_feed.
     DATA mv_value TYPE string.

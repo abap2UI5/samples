@@ -13,7 +13,6 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
         datetime  TYPE string,
         text      TYPE string,
       END OF ty_feed.
-
     DATA mt_feed TYPE TABLE OF ty_feed.
     DATA ms_feed TYPE ty_feed.
 

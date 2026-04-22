@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_298 DEFINITION PUBLIC.
         product_id TYPE string,
         name       TYPE string,
       END OF ty_product_collection.
-
     DATA lt_a_products TYPE TABLE OF ty_product_collection.
     DATA selectedproducterrorcollection TYPE string.
     DATA selectedproductwrnngcollection TYPE string.

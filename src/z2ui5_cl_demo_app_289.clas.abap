@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
         type           TYPE string,
         additionalinfo TYPE string,
       END OF ty_product.
-
     DATA lt_a_data TYPE TABLE OF ty_product.
 
   PROTECTED SECTION.

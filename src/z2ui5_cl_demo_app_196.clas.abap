@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
     TYPES: BEGIN OF ty_shape,
        id TYPE string,
       END OF ty_shape.
-
     DATA mt_shapes TYPE TABLE OF ty_shape.
 
   PROTECTED SECTION.

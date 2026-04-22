@@ -31,7 +31,6 @@ CLASS z2ui5_cl_demo_app_080 DEFINITION PUBLIC.
         appointments TYPE TABLE OF ty_s_appointments WITH NON-UNIQUE DEFAULT KEY,
         headers      TYPE TABLE OF ty_s_headers      WITH NON-UNIQUE DEFAULT KEY,
       END OF ty_s_people.
-
     DATA mt_people TYPE STANDARD TABLE OF ty_s_people.
     DATA lv_s_date TYPE string.
 
