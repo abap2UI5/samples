@@ -220,8 +220,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
     LOOP AT mt_fields REFERENCE INTO DATA(field).
 
-      CLEAR field->t_filter.
-      CLEAR field->t_token.
+      field->t_filter = VALUE #( ).
+      field->t_token = VALUE #( ).
 
       LOOP AT var_val REFERENCE INTO DATA(val)
           WHERE field = field->field.
@@ -302,7 +302,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
 
       lr_field->t_filter = mt_filter.
 
-      CLEAR lr_field->t_token.
+      lr_field->t_token = VALUE #( ).
 
       set_token( CHANGING field = lr_field ).
 
