@@ -97,7 +97,6 @@ CLASS z2ui5_cl_demo_app_130 DEFINITION PUBLIC.
 
     METHODS on_init.
 
-
     METHODS render_main.
 
     METHODS render_popup_filter.
