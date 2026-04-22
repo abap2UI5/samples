@@ -73,6 +73,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
          )->stringify( ) ).
 
       on_init( ).
+
     ELSE.
       on_event( ).
     ENDIF.

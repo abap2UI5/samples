@@ -85,6 +85,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( ).
+
     ELSE.
       on_event( ).
     ENDIF.

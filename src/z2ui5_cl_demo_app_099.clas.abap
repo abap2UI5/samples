@@ -60,6 +60,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
       set_data( ).
 
       view_display( ).
+
     ELSE.
       on_event( ).
     ENDIF.
