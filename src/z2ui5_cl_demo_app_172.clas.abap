@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
         lv_tab_index = lt_event_arguments[ 1 ].
 
-        CONCATENATE 'Link in row' lv_tab_index 'clicked' INTO lv_message SEPARATED BY space.
+        lv_message = |Link in row { lv_tab_index } clicked|.
         client->message_toast_display( lv_message ).
 
       WHEN `INPUT_CHANGE`.
