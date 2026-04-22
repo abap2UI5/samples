@@ -23,7 +23,6 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
     DATA mt_picture       TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
     DATA mt_picture_out   TYPE STANDARD TABLE OF ty_picture WITH EMPTY KEY.
     DATA mv_pic_display   TYPE string.
-    DATA mv_check_init    TYPE abap_bool.
     DATA mv_picture_base  TYPE string.
     DATA mv_picture_thumb TYPE string.
     DATA facing_mode      TYPE string.
