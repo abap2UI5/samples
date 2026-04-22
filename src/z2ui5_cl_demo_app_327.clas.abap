@@ -23,6 +23,9 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC.
     DATA storage       TYPE ty_storage.
     DATA stored_value  TYPE string.
     DATA storage_types TYPE STANDARD TABLE OF ty_storage_type.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 

@@ -32,6 +32,9 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC.
 
     METHODS on_event
       IMPORTING !client TYPE REF TO z2ui5_if_client.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 

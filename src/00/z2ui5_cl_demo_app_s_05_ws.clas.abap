@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
         __closed__         TYPE string VALUE `__CLOSED__` ##NO_TEXT,
       END OF c_msg.
 
+  PROTECTED SECTION.
   PRIVATE SECTION.
     CLASS-METHODS:
       get_producer

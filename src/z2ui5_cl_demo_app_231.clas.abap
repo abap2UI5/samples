@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
       maxdate TYPE d VALUE '20161231',
       text    TYPE string.
 
+  PROTECTED SECTION.
   PRIVATE SECTION.
     METHODS:
       display_view

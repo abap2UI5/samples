@@ -21,6 +21,7 @@ CLASS z2ui5_cl_demo_app_353 DEFINITION PUBLIC.
     DATA device_height     TYPE string.
     DATA device_width      TYPE string.
 
+  PROTECTED SECTION.
   PRIVATE SECTION.
     DATA client      TYPE REF TO z2ui5_if_client.
 

@@ -32,6 +32,7 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
     DATA m_client TYPE REF TO z2ui5_if_client.
     METHODS on_init.
     METHODS on_event.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
