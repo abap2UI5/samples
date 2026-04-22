@@ -39,7 +39,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_068 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
 
   METHOD ui5_display_popup_tree_select.
