@@ -14,10 +14,9 @@ CLASS z2ui5_cl_demo_app_s_05_ws DEFINITION PUBLIC
       RETURNING
         VALUE(result) TYPE i.
 
-    METHODS:
-      if_apc_wsp_extension~on_message REDEFINITION,
-      if_apc_wsp_extension~on_start REDEFINITION,
-      if_apc_wsp_extension~on_close REDEFINITION.
+    METHODS if_apc_wsp_extension~on_message REDEFINITION.
+    METHODS if_apc_wsp_extension~on_start REDEFINITION.
+    METHODS if_apc_wsp_extension~on_close REDEFINITION.
   PROTECTED SECTION.
     CLASS-METHODS:
       get_producer

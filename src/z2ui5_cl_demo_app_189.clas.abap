@@ -3,11 +3,10 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA:
-      one         TYPE string,
-      two         TYPE string,
-      three       TYPE string,
-      focus_field TYPE string.
+    DATA one         TYPE string.
+    DATA two         TYPE string.
+    DATA three       TYPE string.
+    DATA focus_field TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

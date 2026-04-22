@@ -66,9 +66,9 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA: lt_event_arguments TYPE string_table,
-          lv_tab_index       TYPE string,
-          lv_message         TYPE string.
+    DATA lt_event_arguments TYPE string_table.
+    DATA lv_tab_index       TYPE string.
+    DATA lv_message         TYPE string.
 
     lt_event_arguments = client->get( )-t_event_arg.
 

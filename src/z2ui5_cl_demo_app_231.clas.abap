@@ -9,25 +9,23 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
         end   TYPE d,
       END OF t_drs.
 
-    DATA:
-      drs1    TYPE t_drs,
-      drs2    TYPE t_drs,
-      drs3    TYPE t_drs,
-      drs4    TYPE t_drs,
-      drs5    TYPE t_drs,
-      mindate TYPE d VALUE `20160101`,
-      maxdate TYPE d VALUE `20161231`,
-      text    TYPE string.
+    DATA drs1    TYPE t_drs.
+    DATA drs2    TYPE t_drs.
+    DATA drs3    TYPE t_drs.
+    DATA drs4    TYPE t_drs.
+    DATA drs5    TYPE t_drs.
+    DATA mindate TYPE d VALUE `20160101`.
+    DATA maxdate TYPE d VALUE `20161231`.
+    DATA text    TYPE string.
 
   PROTECTED SECTION.
-    METHODS:
-      view_display
-        IMPORTING
-          client TYPE REF TO z2ui5_if_client,
-      initialize,
-      on_event
-        IMPORTING
-          client TYPE REF TO z2ui5_if_client.
+    METHODS view_display
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS initialize.
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
 
   PRIVATE SECTION.
 ENDCLASS.
