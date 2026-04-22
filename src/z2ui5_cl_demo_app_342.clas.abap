@@ -102,7 +102,6 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
 
     ELSE.
-
       page = mo_parent_view->get( `Page` ).
 
     ENDIF.
@@ -148,7 +147,6 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
       client->view_display( page->stringify( ) ).
 
     ELSE.
-
       mv_view_display = abap_true.
 
     ENDIF.

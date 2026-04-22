@@ -94,7 +94,6 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
       client->view_display( page->stringify( ) ).
 
     ELSE.
-
       mv_view_display = abap_true.
 
     ENDIF.

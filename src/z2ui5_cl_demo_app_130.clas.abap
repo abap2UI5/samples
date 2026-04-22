@@ -319,7 +319,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
     ELSE.
-
       page = mo_parent_view->get( `Page` ).
 
     ENDIF.

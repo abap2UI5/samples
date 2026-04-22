@@ -54,7 +54,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
           CONTINUE.
 
         ELSE.
-
           client->_bind( <val> ).
 
         ENDIF.
@@ -120,7 +119,6 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
       client->view_display( page->stringify( ) ).
 
     ELSE.
-
       mv_view_display = abap_true.
 
     ENDIF.
