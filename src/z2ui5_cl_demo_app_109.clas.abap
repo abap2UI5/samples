@@ -73,10 +73,10 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
               title          = `abap2UI5 - Popover Quickview Examples`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( 'QuickView Popover'
-              )->content( 'form'
-                  )->title( 'QuickView Popover'
-                  )->label( 'placement'
+          )->simple_form( `QuickView Popover`
+              )->content( `form`
+                  )->title( `QuickView Popover`
+                  )->label( `placement`
                   )->segmented_button( client->_bind_edit( mv_placement )
                         )->items(
                         )->segmented_button_item(
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
                                 icon = `sap-icon://attachment`
                                 text = `Right`
                   )->get_parent( )->get_parent(
-                    )->label( 'popover'
+                    )->label( `popover`
                     )->button(
                         text  = `show`
                         press = client->_event( `POPOVER` )

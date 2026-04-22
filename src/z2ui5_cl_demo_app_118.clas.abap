@@ -73,8 +73,8 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
          )->column_list_item(
              )->cells(
                  )->object_identifier( title = `{ID}` )->get_parent(
-                 )->text( '{DESCR}'
-                 )->text( '{ADATE}'
+                 )->text( `{DESCR}`
+                 )->text( `{ADATE}`
                  )->text( `{ATIME}` ).
 
     DATA(tab_ok) = page->table(
@@ -95,8 +95,8 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
          )->column_list_item(
              )->cells(
                  )->object_identifier( title = `{ID}` )->get_parent(
-                 )->text( '{DESCR}'
-                 )->text( '{ADATE}'
+                 )->text( `{DESCR}`
+                 )->text( `{ADATE}`
                  )->text( `{ATIME}` ).
 
     client->view_display( view->stringify( ) ).

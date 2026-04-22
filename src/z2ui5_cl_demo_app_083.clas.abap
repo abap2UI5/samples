@@ -210,7 +210,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
     DATA(vbox) = lo_box->vbox( ).
     vbox->simple_form( editable = abap_true
             )->content( `form`
-                )->title( 'Table'
+                )->title( `Table`
                 )->label( `Name` ).
 
     vbox->input( client->_bind_edit( mv_name ) ).

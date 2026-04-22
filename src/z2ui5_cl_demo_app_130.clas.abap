@@ -341,7 +341,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->content( `layout` ).
 
     grid->simple_form( get_txt( 'BU_DYNID' )
-        )->content( 'form'
+        )->content( `form`
             )->label( get_txt( 'BU_DYNID' )
              )->combobox(
              change      = client->_event( `INPUT_SCREEN_CHANGE` )
@@ -358,7 +358,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             enabled       = abap_false ).
 
     grid->simple_form( get_txt( '/SCWM/WB_VARIANT' )
-            )->content( 'form'
+            )->content( `form`
                 )->label( get_txt( '/SCWM/WB_VARIANT' )
             )->input(
             value            = client->_bind_edit( mv_variant )
@@ -493,7 +493,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
             mode  = `SingleSelectLeft`
             items = client->_bind_edit( mt_variants_pop )
         )->columns(
-            )->column( '20rem'
+            )->column( `20rem`
                 )->text( get_txt( '/SCWM/WB_VARIANT' ) )->get_parent(
             )->column(
                 )->text( get_txt( 'DESCR_40' )
@@ -501,8 +501,8 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         )->items(
             )->column_list_item( selected = `{SELKZ}`
                 )->cells(
-                    )->text( '{VAR}'
-                    )->text( '{DESCR}'
+                    )->text( `{VAR}`
+                    )->text( `{DESCR}`
       )->get_parent( )->get_parent( )->get_parent( )->get_parent(
       )->footer(
         )->overflow_toolbar(
@@ -526,7 +526,7 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
       title         = get_txt( '/SCWM/DE_COPY_NUMBER' ) ).
 
     lo_popup->simple_form( get_txt( '/SCWM/WB_VARIANT' )
-               )->content( 'form'
+               )->content( `form`
                    )->label( get_txt( '/SCWM/WB_VARIANT' )
                )->input(
                value         = client->_bind_edit( mv_variant_copy )

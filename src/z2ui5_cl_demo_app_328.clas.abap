@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
                  items           = client->_bind_edit( <table> )
                  selectionchange = client->_event( `SELECTION_CHANGE` )
               )->columns(
-                  )->column( )->text( 'id '
+                  )->column( )->text( `id `
               )->get_parent( )->get_parent(
               )->items(
                   )->column_list_item( selected = `{SELKZ}`

@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                     text   = `Something:`
       )->get_parent(
       )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-        )->text( 'Other'
+        )->text( `Other`
       )->get_parent( )->get_parent(
       )->hbox( justifycontent = `End`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
@@ -158,20 +158,20 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
                          rows            = `{path:'` && client->_bind( val = prodh_nodes path = abap_true ) && `', parameters: {arrayNames:['NODES']}}`
                          toggleopenstate = `saveState()`
                          )->tree_columns(
-                          )->tree_column( 'Label'
+                          )->tree_column( `Label`
                           )->tree_template(
                            )->text( `{TEXT}`
                           )->get_parent( )->get_parent(
-                          )->tree_column( 'PRODH'
+                          )->tree_column( `PRODH`
                           )->tree_template(
                            )->text( `{PRODH}`
                           )->get_parent( )->get_parent(
-                          )->tree_column( 'Counter'
+                          )->tree_column( `Counter`
                           )->tree_template(
                            )->link( text    = `{COUNTER}`
                                       press = client->_event( val = 'POPOVER' t_arg = VALUE #( ( `${$source>/id}` ) ) )
       )->get_parent( )->get_parent(
-                          )->tree_column( 'ADD'
+                          )->tree_column( `ADD`
                           )->tree_template(
                            )->button( icon = `sap-icon://add`
                                  press     = client->_event( val = 'ROW_ADD' t_arg = VALUE #( ( `${PRODH}` ) ) )

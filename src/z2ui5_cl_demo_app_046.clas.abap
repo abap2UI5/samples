@@ -91,9 +91,9 @@ CLASS z2ui5_cl_demo_app_046 IMPLEMENTATION.
                 )->text( `Info` ).
 
         tab->items( )->column_list_item( )->cells(
-           )->text( '{TITLE}'
-           )->text( '{DESCR}'
-           )->text( '{ICON}'
+           )->text( `{TITLE}`
+           )->text( `{DESCR}`
+           )->text( `{ICON}`
            )->text( `{INFO}` ).
 
     ENDCASE.

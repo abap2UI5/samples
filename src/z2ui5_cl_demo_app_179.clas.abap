@@ -231,7 +231,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                  '    "leadingProperty":"OBJECTNAME",' && |\r\n| &&
                  '    "dataType": "string",' && |\r\n| &&
                  '    "hierarchyNodeLevel": "HierarchyNodeLevel",' && |\r\n| &&
-                 '    "wrap": true}'
+                 `    "wrap": true}`
       ).
 
     column->text( `Object Name` ).

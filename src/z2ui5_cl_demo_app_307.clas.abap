@@ -217,7 +217,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                             ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
                             ( `${$parameters>/dropPosition}` ) ) )
             )->get_parent(
-            )->custom_layout( 'f'
+            )->custom_layout( `f`
                 )->grid_box_layout( boxminwidth = `17rem`
             )->get_parent(
             )->grid_list_item( counter   = `{COUNTER}`

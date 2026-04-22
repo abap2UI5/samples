@@ -127,8 +127,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              type    = `Transparent`
              tooltip = `Close Fullscreen Mode`
              enabled = SWITCH string( lv_layout
-                                        WHEN 'TwoColumnsMidExpanded' THEN 'false'
-                                        WHEN 'MidColumnFullScreen'   THEN 'true'
+                                        WHEN `TwoColumnsMidExpanded` THEN 'false'
+                                        WHEN `MidColumnFullScreen`   THEN 'true'
                                          )
              press   = client->_event( `ONEXITFULLSCREENMODE` )
           )->overflow_toolbar_button(
@@ -136,8 +136,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              text    = `Enter Fullscreen Mode`
              type    = `Transparent`
              enabled = SWITCH string( lv_layout
-                                        WHEN 'TwoColumnsMidExpanded' THEN 'true'
-                                        WHEN 'MidColumnFullScreen' THEN 'false'
+                                        WHEN `TwoColumnsMidExpanded` THEN 'true'
+                                        WHEN `MidColumnFullScreen` THEN 'false'
                                          )
              tooltip = `Fullscreen Mode`
              press   = client->_event( `ONFULLSCREENMODE` )
@@ -155,11 +155,11 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                   class       = `sapUiSmallMarginEnd`
                   displaysize = `layout`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-            )->label( 'Dimension'
-            )->label( 'Weight'
-            )->label( 'Price'
-            )->label( 'Rating'
-            )->label( 'Achived goals'
+            )->label( `Dimension`
+            )->label( `Weight`
+            )->label( `Price`
+            )->label( `Rating`
+            )->label( `Achived goals`
         )->get_parent(
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
             )->text( | { ls_detail-width } x { ls_detail-depth } x { ls_detail-height } { ls_detail-dimunit }|
@@ -180,12 +180,12 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                    showvalue    = `true`
         )->get_parent( )->get_parent(
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-            )->label( 'Supplier'
-            )->label( 'Country'
-            )->label( 'City'
-            )->label( 'Street'
-            )->label( 'Mail'
-            )->label( 'Phone'
+            )->label( `Supplier`
+            )->label( `Country`
+            )->label( `City`
+            )->label( `Street`
+            )->label( `Mail`
+            )->label( `Phone`
         )->get_parent(
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
             )->label( ls_detail_supplier-suppliername
@@ -254,15 +254,15 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                      title = `Information`
                 )->blocks(
                    )->vbox(
-                   )->label( 'info'
-                   )->label( 'info'
+                   )->label( `info`
+                   )->label( `info`
                 )->get_parent( )->get_parent( )->get_parent(
                       )->object_page_sub_section( id    = `Others2`
                                                   title = `Details `
                       )->blocks(
                             )->vbox(
-                          )->label( 'details'
-                          )->label( 'details'
+                          )->label( `details`
+                          )->label( `details`
       )->label( `details` ).
 
     sections->object_page_section( titleuppercase = abap_false
@@ -297,7 +297,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                              press = client->_event( val = `ONPRESSSUPPLIER` t_arg = VALUE #( ( `${SUPPLIERNAME}` ) ) )
            )->cells(
              )->text( `{SUPPLIERNAME}` )->get_parent(
-             )->text( '{COUNTRY}'
+             )->text( `{COUNTRY}`
              )->text( `{CITY}` ).
 
     check_detail_active = abap_true.
@@ -347,7 +347,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                                       press = client->_event( `ONSORT` ) ).
 
     tab->columns(
-        )->column( '12em'
+        )->column( `12em`
             )->text( `Product` )->get_parent(
         )->column( minscreenwidth = `Tablet`
                    demandpopin    = abap_true
@@ -370,7 +370,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
              )->object_identifier( text  = `{PRODUCTNAME}`
                                    title = `{PRODUCTID}` )->get_parent(
              )->text( `{SUPPLIERNAME}` )->get_parent(
-             )->text( '{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}'
+             )->text( `{WIDTH} x {DEPTH} x {HEIGHT} {DIMUNIT}`
              )->object_number( number = `{MEASURE}`
                                unit   = `{UNIT}`
                                state  = `{STATE_MEASURE}`

@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
                           )->input( client->_bind_edit( device_os )
                           )->label( `device_systemtype`
 
-                         )->label( 'Cursor here -> '
+                         )->label( `Cursor here -> `
                          )->input( id    = `IdOne`
                                    type  = ``
                                    value = client->_bind_edit( one ) ).

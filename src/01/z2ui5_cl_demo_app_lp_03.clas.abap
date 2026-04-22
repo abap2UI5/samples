@@ -47,7 +47,7 @@ CLASS z2ui5_cl_demo_app_lp_03 IMPLEMENTATION.
                 )->get_parent(
                 )->simple_form( title    = `App 127`
                                 editable = abap_true
-                    )->content( 'form'
+                    )->content( `form`
                         )->label( `Product`
                         )->input( client->_bind_edit( nav_params-product )
                         )->button( text  = `BACK`

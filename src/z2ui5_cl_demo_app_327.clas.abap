@@ -52,19 +52,19 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
 
         )->simple_form( title    = `Local/Session Storage`
                         editable = abap_true
-            )->content( 'form'
-                )->label( 'Type'
+            )->content( `form`
+                )->label( `Type`
                       )->select( forceselection = abap_true
                                  selectedkey    = client->_bind_edit( storage-type )
                                  items          = client->_bind( storage_types )
                           )->item( key  = `{TYPE}`
                                    text = `{TYPE}`
                           )->get_parent(
-                )->label( 'Prefix'
+                )->label( `Prefix`
                 )->input( client->_bind_edit( storage-prefix )
-                )->label( 'Key'
+                )->label( `Key`
                 )->input( client->_bind_edit( storage-key )
-                )->label( 'Value'
+                )->label( `Value`
                 )->input( client->_bind_edit( storage-value )
                 )->button( text  = `store`
                            press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data

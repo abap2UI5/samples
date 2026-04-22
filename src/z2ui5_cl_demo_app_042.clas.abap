@@ -84,18 +84,18 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->link( text = `email@email.com`
             )->get_parent(
             )->horizontal_layout( class = `sapUiSmallMarginBeginEnd`
-                )->label( 'Hello! I an abap2UI5 developer'
-                )->label( 'San Jose, USA'
+                )->label( `Hello! I an abap2UI5 developer`
+                )->label( `San Jose, USA`
             )->get_parent(
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-                )->label( 'Hello! I an abap2UI5 developer'
+                )->label( `Hello! I an abap2UI5 developer`
                 )->vbox(
-                    )->label( 'Achived goals'
+                    )->label( `Achived goals`
                     )->progress_indicator( percentvalue = `30%`
                                            displayvalue = `30%`
             )->get_parent( )->get_parent(
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-                )->label( 'San Jose, USA'
+                )->label( `San Jose, USA`
             )->get_parent( ).
 
     DATA(sections) = page->sections( ).
@@ -104,35 +104,35 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                                    id             = `goalsSectionSS1`
                                    title          = `2014 Goals Plan`
             )->heading( `uxap`
-                )->message_strip( 'this is a message strip'
+                )->message_strip( `this is a message strip`
             )->get_parent(
             )->sub_sections(
                 )->object_page_sub_section( id    = `goalssubSectionSS1`
                                             title = `goals1`
                     )->blocks(
                           )->vbox(
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
-                          )->label( 'goals1'
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
+                          )->label( `goals1`
           )->get_parent( )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = `goalsSectionWS1`
                                             title = `goals2`
                       )->blocks(
                             )->vbox(
-                          )->label( 'goals2'
-                          )->label( 'goals2'
-                          )->label( 'goals2'
-                          )->label( 'goals2'
-                          )->label( 'goals2'
-                          )->label( 'goals2'
-                          )->label( 'goals2'
+                          )->label( `goals2`
+                          )->label( `goals2`
+                          )->label( `goals2`
+                          )->label( `goals2`
+                          )->label( `goals2`
+                          )->label( `goals2`
+                          )->label( `goals2`
                           )->label( `goals2`).
 
     sections->object_page_section( titleuppercase = abap_false
@@ -145,13 +145,13 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->object_page_sub_section( id    = `personalSectionSS1`
                                             title = `Connect`
                     )->blocks(
-                          )->label( 'telefon'
-                          )->label( 'email'
+                          )->label( `telefon`
+                          )->label( `email`
                 )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = `personalSectionWS2`
                                             title = `Payment information  `
                       )->blocks(
-                          )->label( 'Hello! I an abap2UI5 developer'
+                          )->label( `Hello! I an abap2UI5 developer`
                           )->label( `San Jose, USA` ).
 
     sections->object_page_section( titleuppercase = abap_false
@@ -164,23 +164,23 @@ CLASS z2ui5_cl_demo_app_042 IMPLEMENTATION.
                 )->object_page_sub_section( id    = `empSectionSS1`
                                             title = `Job information`
                     )->blocks(
-                          )->label( 'info'
-                          )->label( 'info'
-                          )->label( 'info'
-                          )->label( 'info'
-                          )->label( 'info'
+                          )->label( `info`
+                          )->label( `info`
+                          )->label( `info`
+                          )->label( `info`
+                          )->label( `info`
                 )->get_parent( )->get_parent(
                 )->object_page_sub_section( id    = `empSectionWS2`
                                             title = `Employee Details `
                       )->blocks(
                             )->vbox(
-                          )->label( 'details'
-                          )->label( 'details'
-                          )->label( 'details'
-                          )->label( 'details'
-                          )->label( 'details'
-                          )->label( 'details'
-                          )->label( 'details'
+                          )->label( `details`
+                          )->label( `details`
+                          )->label( `details`
+                          )->label( `details`
+                          )->label( `details`
+                          )->label( `details`
+                          )->label( `details`
                           )->label( `details` ).
 
     client->view_display( page->stringify( ) ).

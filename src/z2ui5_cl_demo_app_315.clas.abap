@@ -36,9 +36,9 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-        )->text( '{TRAVEL>Currency}'
-        )->text( '{TRAVEL>Currency_Text}'
-        )->text( '{TRAVEL>Decimals}'
+        )->text( `{TRAVEL>Currency}`
+        )->text( `{TRAVEL>Currency_Text}`
+        )->text( `{TRAVEL>Decimals}`
         )->text( `{TRAVEL>CurrencyISOCode}` ).
 
       tab = page->table(
@@ -55,9 +55,9 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         )->column( )->text( `CountryCode` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-        )->text( '{FLIGHT>AirportID}'
-        )->text( '{FLIGHT>Name}'
-        )->text( '{FLIGHT>City}'
+        )->text( `{FLIGHT>AirportID}`
+        )->text( `{FLIGHT>Name}`
+        )->text( `{FLIGHT>City}`
         )->text( `{FLIGHT>CountryCode}` ).
 
       client->view_display( val                       = view->stringify( )

@@ -48,8 +48,8 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             speed            = client->_bind_edit( speed )
                   )->simple_form( title    = `Geolocation`
                                   editable = abap_true
-                      )->content( 'form'
-                          )->label( 'Longitude'
+                      )->content( `form`
+                          )->label( `Longitude`
                           )->input( client->_bind_edit( longitude )
                           )->label( `Latitude`
                           )->input( client->_bind_edit( latitude )
@@ -93,8 +93,8 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                             speed            = client->_bind_edit( speed )
                   )->simple_form( title    = `Geolocation`
                                   editable = abap_true
-                      )->content( 'form'
-                          )->label( 'Longitude'
+                      )->content( `form`
+                          )->label( `Longitude`
                           )->input( client->_bind_edit( longitude )
                           )->label( `Latitude`
                           )->input( client->_bind_edit( latitude )

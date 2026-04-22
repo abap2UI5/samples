@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
               shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->simple_form(
-       )->content( 'form'
+       )->content( `form`
        )->label( 'One (Press Enter)' )->input( id     = `IdOne`
                                                value  = client->_bind_edit( one )
                                                submit = client->_event( `one_enter` )

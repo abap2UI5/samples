@@ -167,8 +167,8 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
 
     grid->simple_form( title    = `Input`
                        editable = abap_true
-        )->content( 'form'
-            )->label( 'Input with suggestion items'
+        )->content( `form`
+            )->label( `Input with suggestion items`
             )->input(
                     id              = `suggInput`
                     value           = client->_bind_edit( screen-colour )

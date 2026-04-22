@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
 
         CASE client->get( )-event.
 
-          WHEN 'START' OR 'CHANGE'.
+          WHEN `START` OR 'CHANGE'.
             ui5_view_main_display( ).
 
           WHEN `UPLOAD`.
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
               COND #( WHEN mv_check_edit = abap_true THEN client->_bind_edit( <tab> ) ELSE client->_bind_edit( <tab> ) )
           )->header_toolbar(
               )->overflow_toolbar(
-                  )->title( 'CSV Content'
+                  )->title( `CSV Content`
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
 

@@ -42,14 +42,14 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'title of the table'
+                )->title( `title of the table`
         )->get_parent( )->get_parent(
       )->columns(
         )->column( )->text( `Title` )->get_parent(
         )->column( )->text( `Value` )->get_parent( )->get_parent(
       )->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->input( '{TITLE}'
+          )->input( `{TITLE}`
           )->input( `{VALUE}` ).
 
     page->input( client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).

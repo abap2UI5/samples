@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
 
     tab->header_toolbar(
         )->toolbar(
-            )->title( 'title of the table'
+            )->title( `title of the table`
             )->button(
                 text  = `letf side button`
                 icon  = `sap-icon://account`
@@ -165,9 +165,9 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
             )->text( `Radial Micro Chart` ).
 
     tab->items( )->column_list_item( )->cells(
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
-       )->text( '{DESCR}'
+       )->text( `{VALUE}`
+       )->text( `{INFO}`
+       )->text( `{DESCR}`
        )->checkbox( selected = `{CHECKBOX}`
                     enabled  = abap_false
        )->text( `{COUNT}` ).

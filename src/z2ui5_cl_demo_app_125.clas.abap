@@ -29,9 +29,9 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
                  shownavbutton  = client->check_app_prev_stack( )
              )->simple_form( title    = `Form Title`
                              editable = abap_true
-                 )->content( 'form'
-                     )->title( 'Input'
-                     )->label( 'title'
+                 )->content( `form`
+                     )->title( `Input`
+                     )->label( `title`
                      )->input( client->_bind_edit( title ) ).
 
     client->view_display( tmp->stringify( ) ).

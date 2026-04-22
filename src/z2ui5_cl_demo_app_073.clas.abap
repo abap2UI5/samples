@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                                                          t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
               )->simple_form( title    = `Form Title`
                               editable = abap_true
-                  )->content( 'form'
+                  )->content( `form`
                       )->button(
                           text  = `open new tab`
                           press = client->_event( val = `BUTTON_OPEN_NEW_TAB` )

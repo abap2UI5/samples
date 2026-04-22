@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
                     shownavbutton  = client->check_app_prev_stack( )
                )->simple_form( title    = `Form Title`
                                editable = abap_true
-                    )->content( 'form'
+                    )->content( `form`
                   )->multi_combobox(
 *                            name = 'Multi'
                            name          = `MultiComboBox`

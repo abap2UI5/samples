@@ -22,9 +22,9 @@ CLASS z2ui5_cl_demo_app_322 IMPLEMENTATION.
                      navbuttonpress = client->_event_client( `HISTORY_BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title = `Form Title` editable = abap_true
-                     )->content( 'form'
-                         )->title( 'Input'
-                         )->label( 'quantity'
+                     )->content( `form`
+                         )->title( `Input`
+                         )->label( `quantity`
                          )->input( client->_bind_edit( mv_quantity )
                          )->button(
                              text  = `post`

@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     DATA(temp) = page->simple_form( title    = `File`
                                     editable = abap_true )->content( `form`
-         )->label( 'path'
+         )->label( `path`
          )->input( client->_bind_edit( mv_path )
          )->label( `Option` ).
 

@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
+      WHEN `BUTTON_SEARCH` OR 'BUTTON_START'.
         client->view_model_update( ).
     ENDCASE.
 

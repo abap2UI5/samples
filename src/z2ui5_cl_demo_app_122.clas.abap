@@ -52,8 +52,8 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
                                         device_width      = client->_bind_edit( device_width )
               )->simple_form( title    = `Information`
                               editable = abap_true
-                  )->content( 'form'
-                      )->label( 'device_browser'
+                  )->content( `form`
+                      )->label( `device_browser`
                       )->input( client->_bind_edit( device_browser )
                       )->label( `device_os`
                       )->input( client->_bind_edit( device_os )

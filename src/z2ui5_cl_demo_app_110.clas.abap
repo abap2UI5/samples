@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                           layout   = `ColumnLayout`
                           editable = abap_true
 *              )->content( 'form'
-                  )->label( 'Unique ID'
+                  )->label( `Unique ID`
                   )->mask_input( mask              = `~~~~~~~~~~`
                                  placeholdersymbol = `_`
                                  placeholder       = `All characters allowed` )->get(

@@ -55,25 +55,25 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
                 shownavbutton  = client->check_app_prev_stack( ) ).
     page->simple_form( title    = `Integer and Decimals`
                        editable = abap_true
-             )->content( 'form'
-                 )->title( 'Input'
-                 )->label( 'integer'
+             )->content( `form`
+                 )->title( `Input`
+                 )->label( `integer`
                  )->input( client->_bind_edit( int1 )
                  )->input( client->_bind_edit( int2 )
                  )->input( enabled = abap_false
                            value   = client->_bind_edit( int_sum )
                  )->button( text  = `calc sum`
                             press = client->_event( `BUTTON_INT` )
-                 )->label( 'decimals'
+                 )->label( `decimals`
                  )->input( client->_bind_edit( dec1 )
                  )->input( client->_bind_edit( dec2 )
                  )->input( enabled = abap_false
                            value   = client->_bind_edit( dec_sum )
                  )->button( text  = `calc sum`
                             press = client->_event( `BUTTON_DEC` )
-                 )->label( 'date'
+                 )->label( `date`
                  )->input( client->_bind_edit( date )
-                 )->label( 'time'
+                 )->label( `time`
                  )->input( client->_bind_edit( time ) ).
 
     DATA(tab) = page->scroll_container( height   = `70%`
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_047 IMPLEMENTATION.
             )->text( `Time` )->get_parent( ).
 
     tab->items( )->column_list_item( )->cells(
-       )->text( '{DATE}'
+       )->text( `{DATE}`
        )->text( `{TIME}` ).
 
     client->view_display( page->stringify( ) ).

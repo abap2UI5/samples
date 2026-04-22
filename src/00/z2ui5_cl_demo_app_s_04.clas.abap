@@ -50,9 +50,9 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
                     shownavbutton  = client->check_app_prev_stack( )
         )->simple_form( title    = `Form Title`
                         editable = abap_true
-                   )->content( 'form'
-                       )->title( 'Conversion'
-                       )->label( 'Numeric'
+                   )->content( `form`
+                       )->title( `Conversion`
+                       )->label( `Numeric`
                        )->input( value   = client->_bind_edit( numc_out )
                                  enabled = abap_false
                        )->label( `Unit`

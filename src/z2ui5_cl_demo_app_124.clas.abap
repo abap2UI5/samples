@@ -36,8 +36,8 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                   shownavbutton  = client->check_app_prev_stack( )
               )->simple_form( title    = `Information`
                               editable = abap_true
-                  )->content( 'form'
-                      )->label( 'mv_scan_input'
+                  )->content( `form`
+                      )->label( `mv_scan_input`
                       )->input( client->_bind_edit( mv_scan_input )
                       )->label( `mv_scan_type`
                       )->input( client->_bind_edit( mv_scan_type )

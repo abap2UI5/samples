@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'change cell color'
+                )->title( `change cell color`
         )->get_parent( )->get_parent( ).
 
     tab->columns(
@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
 
     tab->items( )->column_list_item(
       )->cells(
-        )->text( '{TITLE}'
+        )->text( `{TITLE}`
           )->get(
             )->custom_data(
               )->core_custom_data( key        = `color`

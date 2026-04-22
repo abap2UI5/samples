@@ -67,9 +67,9 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     page->simple_form( title    = `Form Title`
                        editable = abap_true
-                )->content( 'form'
-                    )->title( 'Filter'
-                    )->label( 'info'
+                )->content( `form`
+                    )->title( `Filter`
+                    )->label( `info`
                     )->input( client->_bind( mv_info_filter )
                     )->button(
                         text  = `filter`
@@ -101,9 +101,9 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
             )->text( `Counter` ).
 
     tab->items( )->column_list_item( )->cells(
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
-       )->text( '{DESCR}'
+       )->text( `{VALUE}`
+       )->text( `{INFO}`
+       )->text( `{DESCR}`
        )->checkbox( selected = `{CHECKBOX}`
                     enabled  = abap_false
        )->text( `{COUNT}` ).

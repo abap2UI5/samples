@@ -253,14 +253,14 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     lo_tab->tab( text     = `Table`
                  selected = client->_bind_edit( mv_check_table )
        )->simple_form( editable = abap_true
-           )->content( 'form'
-               )->label( 'zebra mode'
+           )->content( `form`
+               )->label( `zebra mode`
                )->checkbox( client->_bind( ms_layout-check_zebra )
-               )->label( 'sticky header'
+               )->label( `sticky header`
                )->input( client->_bind( ms_layout-sticky_header )
                )->label( `Title`
                )->input( client->_bind( ms_layout-title )
-               )->label( 'sel mode'
+               )->label( `sel mode`
                )->combobox(
                    selectedkey = client->_bind_edit( ms_layout-selmode )
                    items       = client->_bind( mt_combo )
@@ -282,11 +282,11 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
         )->get_parent(
         )->items( )->column_list_item(
             )->cells(
-                )->checkbox( '{VISIBLE}'
-                )->text( '{NAME}'
-                )->input( '{TITLE}'
-                  )->checkbox( '{EDITABLE}'
-                  )->input( '{LENGTH}'
+                )->checkbox( `{VISIBLE}`
+                )->text( `{NAME}`
+                )->input( `{TITLE}`
+                  )->checkbox( `{EDITABLE}`
+                  )->input( `{LENGTH}`
          "       )->text( '{DESCR}'
       )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent( ).
 
@@ -325,9 +325,9 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
             )->get_parent(
             )->items( )->column_list_item( selected = `{SELKZ}`
                 )->cells(
-                    )->text( '{NAME}'
-                    )->text( '{USER}'
-                    )->text( '{DEFAULT}'
+                    )->text( `{NAME}`
+                    )->text( `{USER}`
+                    )->text( `{DEFAULT}`
         )->get_parent( )->get_parent( )->get_parent( )->get_parent(
         )->footer( )->overflow_toolbar(
             )->toolbar_spacer(

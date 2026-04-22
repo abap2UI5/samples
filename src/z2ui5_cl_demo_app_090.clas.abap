@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       WHEN `P13N_POPUP`.
         z2ui5_view_p13n_popup( ).
 
-      WHEN 'OK' OR 'CANCEL'.
+      WHEN `OK` OR 'CANCEL'.
         client->popup_destroy( ).
     ENDCASE.
 

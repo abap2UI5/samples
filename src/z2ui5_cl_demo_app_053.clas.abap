@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN 'BUTTON_SEARCH' OR 'BUTTON_START'.
+      WHEN `BUTTON_SEARCH` OR 'BUTTON_START'.
         set_data( ).
         z2ui5_set_search( ).
         client->view_model_update( ).

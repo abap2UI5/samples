@@ -83,9 +83,9 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                )->label( text = `Input1`
                          id   = `lbl1`
                )->input( client->_bind_edit( ms_popup_input-value1 )
-               )->label( 'Input2'
+               )->label( `Input2`
                )->input( client->_bind_edit( ms_popup_input-value2 )
-               )->label( 'Checkbox'
+               )->label( `Checkbox`
                )->checkbox(
                    selected = client->_bind_edit( ms_popup_input-check_is_active )
                    text     = `this is a checkbox`
@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
     DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
 
     grid->simple_form( `Inputs` )->content( 'form'
-        )->label( '01'
+        )->label( `01`
         )->button(
             text  = `Popup Get Input Values`
             press = client->_event( `POPUP_TO_INPUT` ) ).

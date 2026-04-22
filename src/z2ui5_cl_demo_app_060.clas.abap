@@ -328,8 +328,8 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
         )->content( `layout` ).
 
     DATA(input) = grid->simple_form( 'Input'
-        )->content( 'form'
-            )->label( 'Input with value help'
+        )->content( `form`
+            )->label( `Input with value help`
             )->input(
                     id                           = `suggInput`
                     value                        = client->_bind_edit( input )
@@ -347,7 +347,7 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
     input->suggestion_rows(
         )->column_list_item(
-            )->label( '{CURRENCYNAME}'
+            )->label( `{CURRENCYNAME}`
             )->label( `{CURRENCY}` ).
 
     page->_generic( name = `script`

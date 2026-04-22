@@ -68,9 +68,9 @@ CLASS z2ui5_cl_demo_app_134 IMPLEMENTATION.
         )->column( )->text( `Description` ).
 
     tab->items( )->column_list_item( )->cells(
-       )->text( '{TITLE}'
-       )->text( '{VALUE}'
-       )->text( '{INFO}'
+       )->text( `{TITLE}`
+       )->text( `{VALUE}`
+       )->text( `{INFO}`
       )->text( `{DESCR}` ).
 
     page->footer( )->overflow_toolbar(

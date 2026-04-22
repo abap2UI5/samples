@@ -71,8 +71,8 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
               )->text( `Description` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-         )->text( '{http>VALUE}'
-         )->text( '{http>INFO}'
+         )->text( `{http>VALUE}`
+         )->text( `{http>INFO}`
          )->text( `{http>DESCR}`).
 
       tab = page->table(
@@ -93,12 +93,12 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
           )->column( )->text( `CurrencyCode` )->get_parent( ).
 
       tab->items( )->column_list_item( )->cells(
-         )->text( '{TravelID}'
-         )->text( '{BookingID}'
-         )->text( '{BookingSupplementID}'
-         )->text( '{SupplementID}'
-         )->text( '{SupplementText}'
-         )->text( '{Price}'
+         )->text( `{TravelID}`
+         )->text( `{BookingID}`
+         )->text( `{BookingSupplementID}`
+         )->text( `{SupplementID}`
+         )->text( `{SupplementText}`
+         )->text( `{Price}`
          )->text( `{CurrencyCode}` ).
 
       client->view_display( val                       = view->stringify( )

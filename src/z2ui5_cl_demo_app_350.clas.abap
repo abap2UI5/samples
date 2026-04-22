@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
             DATA(page) = view->shell( )->page(
               `Startview` ).
             page->simple_form(
-                  )->content( 'form'
+                  )->content( `form`
                                )->button(
                                    text  = client->_bind_edit( text )
                                    width = `20%`

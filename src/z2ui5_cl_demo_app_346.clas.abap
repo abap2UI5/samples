@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->text( '{INDEX}'
+          )->text( `{INDEX}`
           )->input( value  = `{TITLE}`
                     submit = client->_event( `ENTER` )
           )->get( )->custom_data( )->core_custom_data(
@@ -155,7 +155,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                      value      = c_id-info
                      writetodom = abap_true
           )->get_parent( )->get_parent(
-          )->checkbox( '{CHECKBOX}'
+          )->checkbox( `{CHECKBOX}`
           )->get( )->custom_data( )->core_custom_data(
                      key        = `ColumnId`
                      value      = c_id-checkbox

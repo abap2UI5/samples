@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
 
       client->view_display( page->simple_form( title    = `Set Launchpad Title Dynamically`
                                                editable = abap_true
-                     )->content( 'form'
+                     )->content( `form`
                          )->label( ``
                          )->input( client->_bind_edit( mv_title )
                          )->label( ``

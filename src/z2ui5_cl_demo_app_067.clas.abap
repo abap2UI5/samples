@@ -30,18 +30,18 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     page->simple_form( title    = `Currency`
                        editable = abap_true
-      )->content( 'form'
-         )->title( 'Input'
-         )->label( 'Documentation'
+      )->content( `form`
+         )->title( `Input`
+         )->label( `Documentation`
          )->link( text = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
                   href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
-         )->label( 'One field'
+         )->label( `One field`
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
-         )->label( 'Two field'
+         )->label( `Two field`
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
@@ -52,19 +52,19 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
-         )->label( 'Default'
+         )->label( `Default`
          )->text(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
-         )->label( 'preserveDecimals:false'
+         )->label( `preserveDecimals:false`
          )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }', '| && client->_bind_edit(
                                                                                        val  = currency
                                                                                        path = abap_true ) &&
                      |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
-         )->label( 'currencyCode:false'
+         )->label( `currencyCode:false`
          )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }', '| && client->_bind_edit(
                                                                                        val  = currency
@@ -82,18 +82,18 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
-         )->label( 'event'
+         )->label( `event`
          )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
 
     page->simple_form( title    = `No Zeros`
                        editable = abap_true
-      )->content( 'form'
-      )->title( 'Input'
-      )->label( 'Documentation'
+      )->content( `form`
+      )->title( `Input`
+      )->label( `Documentation`
       )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
          href       = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-      )->label( 'Numeric'
+      )->label( `Numeric`
       )->input( client->_bind_edit( val = numeric )
 
       )->label( `Without leading Zeros`

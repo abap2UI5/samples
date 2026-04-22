@@ -47,9 +47,9 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                       shownavbutton  = client->check_app_prev_stack( )
                       )->_z2ui5( )->focus( `ZINPUT`
       )->simple_form( editable = abap_true
-                 )->content( 'form'
-                     )->title( 'Keyboard on/off'
-                     )->label( 'Input'
+                 )->content( `form`
+                     )->title( `Keyboard on/off`
+                     )->label( `Input`
                      )->input( id               = `ZINPUT`
                                value            = client->_bind_edit( input )
                                showvaluehelp    = abap_true

@@ -40,13 +40,13 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
                                 setupdate      = client->_bind_edit( update_focus )
               )->simple_form( title    = `Focus & Cursor`
                               editable = abap_true
-                  )->content( 'form'
-                      )->title( 'Input'
-                      )->label( 'Sel_Start'
+                  )->content( `form`
+                      )->title( `Input`
+                      )->label( `Sel_Start`
                       )->input( value = client->_bind_edit( selstart )
-                      )->label( 'Sel_End'
+                      )->label( `Sel_End`
                       )->input( value = client->_bind_edit( selend )
-                      )->label( 'field_01'
+                      )->label( `field_01`
                       )->input( value = client->_bind_edit( field_01 )
                                 id    = `BUTTON01`
                       )->button( text  = `focus here`
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BUTTON01' OR 'BUTTON02'.
+      WHEN `BUTTON01` OR 'BUTTON02'.
         update_focus = abap_true.
         focus_id = client->get( )-event.
         client->view_model_update( ).

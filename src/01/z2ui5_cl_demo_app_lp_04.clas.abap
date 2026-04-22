@@ -48,9 +48,9 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
                 )->get_parent(
                 )->simple_form( title    = `App 128`
                                 editable = abap_true
-                    )->content( 'form'
-                        )->title( 'Input'
-                        )->label( 'product nav param'
+                    )->content( `form`
+                        )->title( `Input`
+                        )->label( `product nav param`
                         )->input( client->_bind_edit( product )
                         )->label( `CHECK_LAUNCHPAD_ACTIVE`
                         )->input( check_launchpad_active

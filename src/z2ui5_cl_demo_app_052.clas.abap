@@ -43,12 +43,12 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
                          title        = `abap2UI5 - Popover - ` && mv_product
                          contentwidth = `50%`
       )->simple_form( editable = abap_true
-      )->content( 'form'
-          )->label( 'Product'
+      )->content( `form`
+          )->label( `Product`
           )->text( mv_product
-          )->label( 'info2'
+          )->label( `info2`
           )->text( `this is a text`
-          )->label( 'info3'
+          )->label( `info3`
           )->text( `this is a text`
           )->text( `this is a text`
         )->get_parent( )->get_parent(

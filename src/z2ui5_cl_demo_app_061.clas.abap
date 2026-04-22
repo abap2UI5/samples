@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
-                )->title( 'Dynamic typed table'
+                )->title( `Dynamic typed table`
                 )->toolbar_spacer(
                 )->button(
                     text  = `server <-> client`
@@ -50,8 +50,8 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
 
     tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
-          )->input( '{ID}'
-          )->input( '{TIMESTAMPL}'
+          )->input( `{ID}`
+          )->input( `{TIMESTAMPL}`
           )->input( `{ID_PREV}` ).
 
     client->view_display( view->stringify( ) ).

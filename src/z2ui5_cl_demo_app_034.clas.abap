@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
     DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
 
     grid->simple_form( `Tables` )->content( 'form'
-        )->label( '01'
+        )->label( `01`
         )->button(
             text  = `Show bapiret tab`
             press = client->_event( `POPUP_BAL` ) ).
@@ -49,14 +49,14 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
   METHOD view_popup_bal.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
-        )->dialog( 'abap2ui5 - Popup Message Log'
+        )->dialog( `abap2ui5 - Popup Message Log`
             )->table( client->_bind( t_bapiret )
                 )->columns(
-                    )->column( '5rem'
+                    )->column( `5rem`
                         )->text( `Type` )->get_parent(
-                    )->column( '5rem'
+                    )->column( `5rem`
                         )->text( `Number` )->get_parent(
-                    )->column( '5rem'
+                    )->column( `5rem`
                         )->text( `ID` )->get_parent(
                     )->column(
                         )->text( `Message` )->get_parent(
@@ -64,10 +64,10 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
                 )->items(
                     )->column_list_item(
                         )->cells(
-                            )->text( '{TYPE}'
-                            )->text( '{NUMBER}'
-                            )->text( '{ID}'
-                            )->text( '{MESSAGE}'
+                            )->text( `{TYPE}`
+                            )->text( `{NUMBER}`
+                            )->text( `{ID}`
+                            )->text( `{MESSAGE}`
             )->get_parent( )->get_parent( )->get_parent( )->get_parent(
             )->footer( )->overflow_toolbar(
                 )->toolbar_spacer(

@@ -36,10 +36,10 @@ CLASS z2ui5_cl_demo_app_341 IMPLEMENTATION.
     " TODO: variable is assigned but never used (ABAP cleaner)
     DATA(grid) = page->grid( `L7 M12 S12` )->content( 'layout'
         )->simple_form( `Popups` )->content( 'form'
-            )->label( 'Demo'
+            )->label( `Demo`
             )->button( text  = `Popup to Select`
                        press = client->_event( `BUTTON_POPUP_01` )
-            )->label( 'Demo'
+            )->label( `Demo`
             )->button( text  = `other Popup`
                        press = client->_event( `BUTTON_POPUP_02` ) ).
 

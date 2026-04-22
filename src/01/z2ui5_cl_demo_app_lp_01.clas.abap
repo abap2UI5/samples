@@ -21,7 +21,7 @@ CLASS z2ui5_cl_demo_app_lp_01 IMPLEMENTATION.
       DATA(page) = view->shell( )->page( showheader = abap_false ).
       client->view_display( page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
                                                editable = abap_true
-                     )->content( 'form'
+                     )->content( `form`
                          )->label( ``
                          )->button( text  = `Read Parameters`
                                     press = client->_event( `READ_PARAMS` )

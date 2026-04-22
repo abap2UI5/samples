@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
                                         delayms  = `2000`
               )->simple_form( title    = `Timer Interval 2000 ms`
                               editable = abap_true
-                  )->content( 'form'
+                  )->content( `form`
            )->stringify( ) ).
 
   ENDMETHOD.
