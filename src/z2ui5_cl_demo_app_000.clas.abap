@@ -238,6 +238,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
+    panel->generic_tile( header    = `System Logout`
+                         subheader = `Trigger SYSTEM_LOGOUT client event`
+                         press     = client->_event( `z2ui5_cl_demo_app_361` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `Messages` ).
