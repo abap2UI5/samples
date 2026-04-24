@@ -10,16 +10,17 @@ CLASS z2ui5_cl_demo_app_339 DEFINITION PUBLIC.
     DATA mt_table_tmp    TYPE REF TO data.
     DATA mt_table        TYPE REF TO data.
 
-    DATA mo_layout   TYPE REF TO z2ui5_cl_demo_app_333.
+    DATA mo_layout       TYPE REF TO z2ui5_cl_demo_app_333.
 
     METHODS set_app_data
       IMPORTING
-        table TYPE string.
+        !table TYPE string.
 
   PROTECTED SECTION.
-    METHODS on_event    IMPORTING client TYPE REF TO z2ui5_if_client.
+    DATA mv_init TYPE abap_bool.
 
-    METHODS view_display IMPORTING client TYPE REF TO z2ui5_if_client.
+    METHODS on_event     IMPORTING !client TYPE REF TO z2ui5_if_client.
+    METHODS view_display IMPORTING !client TYPE REF TO z2ui5_if_client.
     METHODS get_data.
 
     METHODS get_comp
@@ -76,16 +77,14 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD on_event.
 
     CASE client->get( )-event.
 
       WHEN `SELECTION_CHANGE`.
 
-        client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
-                                io_table  = mt_table
-                                io_layout = mo_layout  ) ).
+        client->nav_app_call( z2ui5_cl_demo_app_340=>factory( io_table  = mt_table
+                                                              io_layout = mo_layout  ) ).
 
       WHEN `BACK`.
 
@@ -94,7 +93,6 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
-
 
   METHOD view_display.
 
@@ -107,13 +105,13 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ENDIF.
 
     mo_layout = z2ui5_cl_demo_app_333=>factory( i_data   = mt_table
-                                                    vis_cols = 5 ).
+                                                vis_cols = 5 ).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width = `auto`
-                               mode  = `SingleSelectLeft`
-                               selectionchange  = client->_event( `SELECTION_CHANGE` )
-                               items = client->_bind_edit( val = <table> ) ).
+    DATA(table) = page->table( width           = `auto`
+                               mode            = `SingleSelectLeft`
+                               selectionchange = client->_event( `SELECTION_CHANGE` )
+                               items           = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 
@@ -152,17 +150,16 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   ENDMETHOD.
 
-
   METHOD set_app_data.
 
     mv_table = table.
 
   ENDMETHOD.
 
-
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF mv_init = abap_false.
+      mv_init = abap_true.
 
       get_data( ).
       view_display( client ).
@@ -179,7 +176,6 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
-
 
   METHOD get_data.
 
