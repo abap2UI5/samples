@@ -12,10 +12,11 @@ CLASS z2ui5_cl_demo_app_354 DEFINITION PUBLIC.
       END OF ty_s_file.
     DATA t_files TYPE STANDARD TABLE OF ty_s_file WITH EMPTY KEY.
 
-    DATA filedata  TYPE string.
-    DATA filename  TYPE string.
-    DATA mediatype TYPE string.
-    DATA filesize  TYPE string.
+    DATA filedata        TYPE string.
+    DATA filename        TYPE string.
+    DATA mediatype       TYPE string.
+    DATA filesize        TYPE string.
+    DATA removedfilename TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -36,12 +37,14 @@ CLASS z2ui5_cl_demo_app_354 IMPLEMENTATION.
           class          = `sapUiContentPadding` ).
 
       page->_z2ui5( )->uploadset_ext(
-          uploadsetid = `myUploadSet`
-          filedata    = client->_bind_edit( filedata )
-          filename    = client->_bind_edit( filename )
-          mediatype   = client->_bind_edit( mediatype )
-          filesize    = client->_bind_edit( filesize )
-          change      = client->_event( `FILE_ADDED` ) ).
+          uploadsetid     = `myUploadSet`
+          filedata        = client->_bind_edit( filedata )
+          filename        = client->_bind_edit( filename )
+          mediatype       = client->_bind_edit( mediatype )
+          filesize        = client->_bind_edit( filesize )
+          removedfilename = client->_bind_edit( removedfilename )
+          change          = client->_event( `FILE_ADDED` )
+          remove          = client->_event( `FILE_REMOVED` ) ).
 
       page->upload_set(
               id            = `myUploadSet`
@@ -68,6 +71,13 @@ CLASS z2ui5_cl_demo_app_354 IMPLEMENTATION.
       filename  = ``.
       mediatype = ``.
       filesize  = ``.
+
+      client->view_model_update( ).
+
+    ELSEIF client->check_on_event( `FILE_REMOVED` ).
+
+      DELETE t_files WHERE filename = removedfilename.
+      removedfilename = ``.
 
       client->view_model_update( ).
 
