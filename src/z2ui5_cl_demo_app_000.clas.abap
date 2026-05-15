@@ -1793,12 +1793,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Upload Set`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_107` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Upload Set Custom Control`
-                         subheader = ``
                          press     = client->_event( `z2ui5_cl_demo_app_354` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
