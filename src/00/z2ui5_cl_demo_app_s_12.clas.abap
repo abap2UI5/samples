@@ -161,13 +161,14 @@ CLASS z2ui5_cl_demo_app_s_12 IMPLEMENTATION.
 
     ENDIF.
 
-   "don't do that, just demo
-   " UPDATE vbak
-   "   SET auart = @auart,
-   "       aedat = @sy-datum,
-   "       UPD_TMSTMP = @sy-uzeit
-   "   WHERE vbeln = @vbeln.
-   " COMMIT WORK.
+    "don't do that, just demo
+    "GET TIME STAMP FIELD DATA(now).
+    "UPDATE vbak
+    "  SET auart = @auart,
+    "      aedat = @sy-datum,
+    "      UPD_TMSTMP = @now
+    "  WHERE vbeln = @vbeln.
+    "COMMIT WORK.
 
     CALL FUNCTION 'DEQUEUE_EVVBAK'
       EXPORTING

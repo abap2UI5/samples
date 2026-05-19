@@ -110,10 +110,11 @@ CLASS z2ui5_cl_demo_app_s_11 IMPLEMENTATION.
   METHOD on_event_save.
 
     "don't do that, just demo
+    "GET TIME STAMP FIELD DATA(now).
     "UPDATE vbak
     "  SET auart = @auart,
     "      aedat = @sy-datum,
-    "      UPD_TMSTMP = @sy-uzeit
+    "      UPD_TMSTMP = @now
     "  WHERE vbeln = @vbeln.
     "COMMIT WORK.
 
