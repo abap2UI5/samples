@@ -52,72 +52,45 @@ CLASS z2ui5_cl_demo_app_355 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_util_xml=>factory( ).
-    DATA(root) = view->__( n = `View` ns = `mvc`
-        p = VALUE #( ( n = `displayBlock` v = abap_true )
-                     ( n = `height`       v = `100%` )
-                     ( n = `xmlns`        v = `sap.m` )
-                     ( n = `xmlns:core`   v = `sap.ui.core` )
-                     ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
+    DATA(xml) =
+      |<mvc:View displayBlock="true" height="100%" xmlns="sap.m" | &&
+      |xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc">| &&
+      |<Shell>| &&
+      |<Page title="abap2UI5 - InputListItem"| &&
+      | showNavButton="{ client->check_app_prev_stack( ) }"| &&
+      | navButtonPress="{ client->_event_nav_app_leave( ) }">| &&
+      |<headerContent>| &&
+      |<Link href="https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem"| &&
+      | target="_blank" text="UI5 Demo Kit"/>| &&
+      |</headerContent>| &&
+      |<List headerText="Input">| &&
+      |<InputListItem label="WLAN">| &&
+      |<Switch state="{ client->_bind_edit( wlan ) }"/></InputListItem>| &&
+      |<InputListItem label="Flight Mode">| &&
+      |<CheckBox selected="{ client->_bind_edit( flight ) }"/></InputListItem>| &&
+      |<InputListItem label="High Performance">| &&
+      |<RadioButton groupName="GroupPerf" selected="{ client->_bind_edit( high_perf ) }"/></InputListItem>| &&
+      |<InputListItem label="Battery Saving">| &&
+      |<RadioButton groupName="GroupPerf" selected="{ client->_bind_edit( battery ) }"/></InputListItem>| &&
+      |<InputListItem label="Price (EUR)">| &&
+      |<Input placeholder="Price" type="Number" value="{ client->_bind_edit( price ) }"/></InputListItem>| &&
+      |<InputListItem label="Address">| &&
+      |<Input placeholder="Address" value="{ client->_bind_edit( address ) }"/></InputListItem>| &&
+      |<InputListItem label="Country">| &&
+      |<Select selectedKey="{ client->_bind_edit( country ) }">| &&
+      |<core:Item key="GR" text="Greece"/>| &&
+      |<core:Item key="MX" text="Mexico"/>| &&
+      |<core:Item key="NO" text="Norway"/>| &&
+      |<core:Item key="NZ" text="New Zealand"/>| &&
+      |<core:Item key="NL" text="Netherlands"/>| &&
+      |</Select></InputListItem>| &&
+      |<InputListItem label="Volume">| &&
+      |<HBox justifyContent="End">| &&
+      |<Slider max="10" min="0" value="{ client->_bind_edit( volume ) }" width="200px"/>| &&
+      |</HBox></InputListItem>| &&
+      |</List></Page></Shell></mvc:View>|.
 
-    DATA(page) = root->__( `Shell`
-       )->__( n = `Page`
-              p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                           ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                           ( n = `title`          v = `abap2UI5 - InputListItem` ) ) ).
-
-    page->__( `headerContent`
-       )->_( n = `Link`
-             p = VALUE #( ( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` )
-                          ( n = `target` v = `_blank` )
-                          ( n = `text`   v = `UI5 Demo Kit` ) ) ).
-
-    DATA(list) = page->__( n = `List` a = `headerText` v = `Input` ).
-
-    list->__( n = `InputListItem` a = `label` v = `WLAN`
-       )->_( n = `Switch` a = `state` v = client->_bind_edit( wlan ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Flight Mode`
-       )->_( n = `CheckBox` a = `selected` v = client->_bind_edit( flight ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `High Performance`
-       )->_( n = `RadioButton`
-             p = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                          ( n = `selected`  v = client->_bind_edit( high_perf ) ) ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Battery Saving`
-       )->_( n = `RadioButton`
-             p = VALUE #( ( n = `groupName` v = `GroupPerf` )
-                          ( n = `selected`  v = client->_bind_edit( battery ) ) ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Price (EUR)`
-       )->_( n = `Input`
-             p = VALUE #( ( n = `placeholder` v = `Price` )
-                          ( n = `type`        v = `Number` )
-                          ( n = `value`       v = client->_bind_edit( price ) ) ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Address`
-       )->_( n = `Input`
-             p = VALUE #( ( n = `placeholder` v = `Address` )
-                          ( n = `value`       v = client->_bind_edit( address ) ) ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Country`
-       )->__( n = `Select` a = `selectedKey` v = client->_bind_edit( country )
-           )->_( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `GR` ) ( n = `text` v = `Greece` ) )
-           )->_( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `MX` ) ( n = `text` v = `Mexico` ) )
-           )->_( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NO` ) ( n = `text` v = `Norway` ) )
-           )->_( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NZ` ) ( n = `text` v = `New Zealand` ) )
-           )->_( n = `Item` ns = `core` p = VALUE #( ( n = `key` v = `NL` ) ( n = `text` v = `Netherlands` ) ) ).
-
-    list->__( n = `InputListItem` a = `label` v = `Volume`
-       )->__( n = `HBox` a = `justifyContent` v = `End`
-           )->_( n = `Slider`
-                 p = VALUE #( ( n = `max`   v = `10` )
-                              ( n = `min`   v = `0` )
-                              ( n = `value` v = client->_bind_edit( volume ) )
-                              ( n = `width` v = `200px` ) ) ).
-
-    client->view_display( view->stringify( ) ).
+    client->view_display( xml ).
 
   ENDMETHOD.
 
