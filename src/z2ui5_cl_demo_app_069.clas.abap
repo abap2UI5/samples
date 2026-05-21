@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
           shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(lr_master) = page->flexible_column_layout( layout = `TwoColumnsBeginExpanded`
-                                                    id     =`test` )->begin_column_pages( ).
+                                                    id     = `test` )->begin_column_pages( ).
 
     lr_master->tree( client->_bind( mt_tree ) )->items(
         )->standard_tree_item(

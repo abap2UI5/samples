@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
             shownavbutton = abap_true ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
-                                                     id     =`test` ).
+                                                     id     = `test` ).
 
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
