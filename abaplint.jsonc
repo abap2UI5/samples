@@ -2,8 +2,7 @@
   "global": {
     "files": "/src/**/*.*",
     "noIssues": [
-      "/src/00",
-      "/src/99"
+      "/src/00"
     ]
   },
   "dependencies": [
@@ -15,8 +14,7 @@
     {
       "url": "https://github.com/abap2UI5/abap2UI5",
       "folder": "/abap2UI5",
-      "files": "/src/**/*.*",
-      "branch": "claude/js-samples-frontend-events-ZXpXJ"
+      "files": "/src/**/*.*"
     }
   ],
   "syntax": {
