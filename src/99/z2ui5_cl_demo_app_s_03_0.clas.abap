@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
                         |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3").play(); \}|
                      && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
 
-    DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
+    DATA(vbox) = view->page( `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
 
     IF icfactive = abap_false.
       vbox->message_strip(
