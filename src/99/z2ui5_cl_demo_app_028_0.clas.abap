@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_028_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -14,7 +14,8 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
       END OF ty_s_row.
     DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA counter TYPE i.
+    DATA counter      TYPE i.
+    DATA check_active TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -22,13 +23,12 @@ CLASS z2ui5_cl_demo_app_028 DEFINITION PUBLIC.
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
-    METHODS start_timer.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_028_0 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -47,15 +47,14 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD on_init.
 
-    counter = 1.
+    counter      = 1.
+    check_active = abap_true.
 
     t_tab = VALUE #(
         ( title = |entry{ counter }|
           info  = `completed`
           descr = `this is a description`
           icon  = `sap-icon://account` ) ).
-
-    start_timer( ).
 
   ENDMETHOD.
 
@@ -70,10 +69,11 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
         icon  = `sap-icon://account` )
       INTO TABLE t_tab.
 
-    IF counter < 3.
-      start_timer( ).
-    ELSE.
+    IF counter = 3.
+
+      check_active = abap_false.
       client->message_toast_display( `timer deactivated` ).
+
     ENDIF.
 
     client->view_model_update( ).
@@ -81,19 +81,14 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD start_timer.
-
-    client->follow_up_action(
-        client->_event_client(
-            val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ) ).
-
-  ENDMETHOD.
-
-
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    view->_z2ui5( )->timer(
+        finished    = client->_event( `TIMER_FINISHED` )
+        delayms     = `2000`
+        checkactive = client->_bind( check_active ) ).
 
     DATA(page) = view->shell(
         )->page(

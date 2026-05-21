@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_346_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -16,8 +16,8 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
 
     DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA focuscolumn TYPE string.
-    DATA focusrow    TYPE string.
-
+    DATA focusrow TYPE string.
+    DATA focusid TYPE string READ-ONLY.
   PROTECTED SECTION.
     CONSTANTS:
       BEGIN OF c_id,
@@ -32,19 +32,56 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
+
     METHODS next_focus.
     METHODS focus.
     METHODS default_focus.
-
   PRIVATE SECTION.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_346_0 IMPLEMENTATION.
 
   METHOD set_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `window.addEventListener('focus', function(e) {`
+                                                && `  try {`
+                                                && `    const focusCtrlId = sap.ui.getCore().getCurrentFocusedControlId(); `
+                                                && `    if (!focusCtrlId) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const customData = sap.ui.core.Element.getElementById(focusCtrlId).getCustomData()[0];`
+                                                && `    if (!customData) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const column = customData.getProperty("value");`
+                                                && `    if (!column) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const m = focusCtrlId.match(/(\d+$)/);`
+                                                && `    const model = z2ui5.oView.getModel() ;`
+                                                && `    model.setProperty("/FOCUSID",focusCtrlId);`
+                                                && `    model.setProperty("/XX/FOCUSCOLUMN",column);`
+                                                && `    model.setProperty("/XX/FOCUSROW",m[1]);`
+                                                && `  } catch(e){}`
+                                                && `}, true);`
+                                                && ``
+                                                && `z2ui5.determineFocusId = (column, row) => { `
+                                                && `  try {`
+                                                && `    const selector = "td:has([data-columnid='" + column + "']) > div";`
+                                                && `    const id = document.querySelectorAll(selector)[row].id;`
+                                                && `    z2ui5.oView.getModel().setProperty("/FOCUSID",id);`
+                                                && `    const element = sap.ui.core.Element.getElementById(id);`
+                                                && `    if (!element) {`
+                                                && `      return;`
+                                                && `    }`
+                                                && `    const focus = element.getFocusInfo();`
+                                                && `    element.applyFocusInfo(focus);`
+                                                && `  } catch(e){}`
+                                                && `}` ).
 
     DATA(page) = view->shell(
         )->page(
@@ -74,39 +111,60 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                 )->button(
                     text  = `Reset Focus`
                     press = client->_event( `RESET` )
+                )->title( client->_bind( focusid )
                 )->toolbar_spacer(
         )->get_parent( )->get_parent( ).
 
     tab->columns(
-        )->column( id = c_id-index
+        )->column(
             )->text( `Index` )->get_parent(
-        )->column( id = c_id-title
+        )->column(
             )->text( `Title` )->get_parent(
-        )->column( id = c_id-color
+        )->column(
             )->text( `Color` )->get_parent(
-        )->column( id = c_id-info
+        )->column(
             )->text( `Info` )->get_parent(
-        )->column( id = c_id-checkbox
+        )->column(
             )->text( `Checkbox` )->get_parent(
-        )->column( id = c_id-description
+        )->column(
             )->text( `Description` ).
 
     tab->items( )->column_list_item( selected = `{SELKZ}`
       )->cells(
           )->text( `{INDEX}`
-          )->input(
-              value  = `{TITLE}`
-              submit = client->_event( `ENTER` )
-          )->input(
-              value  = `{VALUE}`
-              submit = client->_event( `ENTER` )
-          )->input(
-              value  = `{INFO}`
-              submit = client->_event( `ENTER` )
+          )->input( value  = `{TITLE}`
+                    submit = client->_event( `ENTER` )
+          )->get( )->custom_data( )->core_custom_data(
+                     key        = `ColumnId`
+                     value      = c_id-title
+                     writetodom = abap_true
+          )->get_parent( )->get_parent(
+          )->input( value  = `{VALUE}`
+                    submit = client->_event( `ENTER` )
+          )->get( )->custom_data( )->core_custom_data(
+                     key        = `ColumnId`
+                     value      = c_id-color
+                     writetodom = abap_true
+          )->get_parent( )->get_parent(
+          )->input( value  = `{INFO}`
+                    submit = client->_event( `ENTER` )
+          )->get( )->custom_data( )->core_custom_data(
+                     key        = `ColumnId`
+                     value      = c_id-info
+                     writetodom = abap_true
+          )->get_parent( )->get_parent(
           )->checkbox( `{CHECKBOX}`
-          )->input(
-              value  = `{DESCRIPTION}`
-              submit = client->_event( `ENTER` ) ).
+          )->get( )->custom_data( )->core_custom_data(
+                     key        = `ColumnId`
+                     value      = c_id-checkbox
+                     writetodom = abap_true
+          )->get_parent( )->get_parent(
+          )->input( value  = `{DESCRIPTION}`
+                    submit = client->_event( `ENTER` )
+          )->get( )->custom_data( )->core_custom_data(
+                     key        = `ColumnId`
+                     value      = c_id-description
+                     writetodom = abap_true ).
 
     client->view_display( view->stringify( ) ).
     focus( ).
@@ -178,10 +236,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD focus.
 
-    client->follow_up_action(
-        client->_event_client(
-            val   = z2ui5_if_client=>cs_event-set_focus_cell
-            t_arg = VALUE #( ( focuscolumn ) ( focusrow ) ) ) ).
+    client->follow_up_action( `z2ui5.determineFocusId("` && focuscolumn && `", "` && focusrow && `")` ).
 
   ENDMETHOD.
 

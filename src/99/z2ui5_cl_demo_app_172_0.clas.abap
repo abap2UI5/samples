@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_172_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_172_0 IMPLEMENTATION.
 
   METHOD load_output_table.
 
@@ -58,6 +58,8 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       APPEND ls_output TO output.
 
     ENDDO.
+
+    "Calculate percentages of the total line from user input
 
   ENDMETHOD.
 
@@ -90,8 +92,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         calculate_sum( lv_column ).
     ENDCASE.
 
-    client->follow_up_action(
-        client->_event_client( z2ui5_if_client=>cs_event-keyboard_keep_open ) ).
+    client->follow_up_action( `sap.z2ui5.afterBE()` ).
     client->view_model_update( ).
 
   ENDMETHOD.
@@ -110,6 +111,9 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         )->header_content(
         )->link(
         )->get_parent( ).
+
+    page->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
     DATA(table) = page->ui_table( id                  = `tab`
                                   alternaterowcolors  = `true`
@@ -130,6 +134,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
                         sortproperty   = `CURRENCY`
                         filterproperty = `CURRENCY` )->text( `Currency Column` )->ui_template( )->text(
       `{ parts: [ 'CURRENCY', 'WAERS'],  type: 'sap.ui.model.type.Currency', formatOptions: { currencyCode: false } }` ).
+    "Formatting of currency is language dependant, f.e. add the parameter &sap-language=DE o your URL to move the euro sign behind the number
 
     columns->ui_column( width          = `8rem`
                         sortproperty   = `PERCENT1`
@@ -141,10 +146,10 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
       value           = `{INPUT1}`
       enabled         = `{BOOL}`
       change          = client->_event( val = `INPUT_CHANGE` t_arg = VALUE #(
-        ( `${$source>/id}` )
-        ( `${INDEX}` )
-        ( `$event.oSource.oParent.sId` )
-        ( `INPUT1` )
+        ( `${$source>/id}` ) "Access the id of the HTML element
+        ( `${INDEX}` ) "Access the value of the index column of the row where the user made a change
+        ( `$event.oSource.oParent.sId` ) "Access the id of the parent element
+        ( `INPUT1` ) "Pass the column name as simple string to the event
          ) ) editable = abap_true
       type            = `Number` ).
 

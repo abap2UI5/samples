@@ -1,0 +1,73 @@
+CLASS z2ui5_cl_demo_app_352_0 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA input TYPE string.
+
+    METHODS view_display
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_demo_app_352_0 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+      view_display( client ).
+    ENDIF.
+    on_event( client ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = (id , mode) => { ` &&
+                       `debugger;` &&
+                        `var input = z2ui5.oView.byId(id).getDomRef();` &&
+                        `input = input.childNodes[0].childNodes[0];` &&
+                        `input.setAttribute("inputmode" , mode);` &&
+                        ` alert("inputmode changed to" + mode); }` ).
+
+    DATA(page) = view->shell(
+             )->page( title          = `abap2UI5 - Softkeyboard on/off`
+                      navbuttonpress = client->_event_nav_app_leave( )
+                      shownavbutton  = client->check_app_prev_stack( )
+                      )->_z2ui5( )->focus( `ZINPUT`
+      )->simple_form( editable = abap_true
+                 )->content( `form`
+                     )->title( `Keyboard on/off`
+                     )->label( `Input`
+                     )->input( id               = `ZINPUT`
+                               value            = client->_bind_edit( input )
+                               showvaluehelp    = abap_true
+                               valuehelprequest = client->_event( `CALL_KEYBOARD` )
+                               valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `CALL_KEYBOARD` ).
+      client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
+    ENDIF.
+
+  ENDMETHOD.
+
+ENDCLASS.

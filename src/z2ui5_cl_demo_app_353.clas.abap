@@ -3,28 +3,21 @@ CLASS z2ui5_cl_demo_app_353 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA one               TYPE string.
-    DATA focus_field       TYPE string.
-    DATA mv_check_active   TYPE abap_bool.
-    DATA ui5_version       TYPE string.
-    DATA ui5_theme         TYPE string.
-    DATA ui5_gav           TYPE string.
+    DATA one              TYPE string.
+    DATA ui5_version      TYPE string.
+    DATA ui5_theme        TYPE string.
     DATA device_systemtype TYPE string.
-    DATA device_os         TYPE string.
-    DATA device_browser    TYPE string.
-
-    DATA device_phone      TYPE abap_bool.
-    DATA device_desktop    TYPE abap_bool.
-    DATA device_tablet     TYPE abap_bool.
-    DATA device_combi      TYPE abap_bool.
-    DATA device_height     TYPE string.
-    DATA device_width      TYPE string.
+    DATA device_os        TYPE string.
+    DATA device_browser   TYPE string.
+    DATA device_height    TYPE string.
+    DATA device_width     TYPE string.
 
   PROTECTED SECTION.
-    DATA client      TYPE REF TO z2ui5_if_client.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS render.
-    METHODS event.
+    METHODS read_device_info.
+    METHODS start_timer.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -32,18 +25,27 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
-  METHOD event.
+  METHOD read_device_info.
 
-    CASE client->get( )-event.
-      WHEN `TIMER_FINISHED`.
+    DATA(ls_get) = client->get( ).
 
-        client->message_toast_display( `Timer finished` ).
-      WHEN `INFO_FINISHED`.
+    device_browser    = ls_get-s_device-browser-name.
+    device_os         = ls_get-s_device-os-name.
+    device_systemtype = ls_get-s_device-system.
+    device_height     = CONV string( ls_get-s_device-resize-height ).
+    device_width      = CONV string( ls_get-s_device-resize-width ).
+    ui5_version       = ls_get-s_ui5_version-version.
+    ui5_theme         = ls_get-s_ui5_version-theme.
 
-        client->message_toast_display( `Frontend finished` ).
-    ENDCASE.
+  ENDMETHOD.
 
-    client->view_model_update( ).
+
+  METHOD start_timer.
+
+    client->follow_up_action(
+        client->_event_client(
+            val   = z2ui5_if_client=>cs_event-start_timer
+            t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `4000` ) ) ) ).
 
   ENDMETHOD.
 
@@ -51,42 +53,32 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
   METHOD render.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page( title          = `abap2UI5 - Multiple Timers`
-                   navbuttonpress = client->_event_nav_app_leave( )
-                   shownavbutton  = client->check_app_prev_stack( ) ).
+          )->page(
+              title          = `abap2UI5 - Multiple Timers`
+              navbuttonpress = client->_event_nav_app_leave( )
+              shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->_z2ui5( )->timer( finished    = client->_event( `TIMER_FINISHED` )
-                            delayms     = `4000`
-                            checkactive = client->_bind( mv_check_active ) ).
-
-    page->_z2ui5( )->info_frontend( finished          = client->_event( `INFO_FINISHED` )
-                                    device_browser    = client->_bind_edit( device_browser )
-                                    device_os         = client->_bind_edit( device_os )
-                                    device_systemtype = client->_bind_edit( device_systemtype )
-                                    ui5_gav           = client->_bind_edit( ui5_gav )
-                                    ui5_theme         = client->_bind_edit( ui5_theme )
-                                    ui5_version       = client->_bind_edit( ui5_version )
-                                    device_phone      = client->_bind_edit( device_phone )
-                                    device_desktop    = client->_bind_edit( device_desktop )
-                                    device_tablet     = client->_bind_edit( device_tablet )
-                                    device_combi      = client->_bind_edit( device_combi )
-                                    device_height     = client->_bind_edit( device_height )
-                                    device_width      = client->_bind_edit( device_width ) ).
-
-    DATA(form) = page->_z2ui5( )->focus( client->_bind( focus_field )
-
-          )->simple_form( editable = abap_true
-
-                                )->content( `form` ).
+    DATA(form) = page->simple_form(
+                      editable = abap_true
+                 )->content( `form` ).
 
     form->label( `device_browser`
-                          )->input( client->_bind_edit( device_os )
-                          )->label( `device_systemtype`
-
-                         )->label( `Cursor here -> `
-                         )->input( id    = `IdOne`
-                                   type  = ``
-                                   value = client->_bind_edit( one ) ).
+        )->input( client->_bind_edit( device_browser )
+        )->label( `device_os`
+        )->input( client->_bind_edit( device_os )
+        )->label( `device_systemtype`
+        )->input( client->_bind_edit( device_systemtype )
+        )->label( `device_height`
+        )->input( client->_bind_edit( device_height )
+        )->label( `device_width`
+        )->input( client->_bind_edit( device_width )
+        )->label( `ui5_version`
+        )->input( client->_bind_edit( ui5_version )
+        )->label( `ui5_theme`
+        )->input( client->_bind_edit( ui5_theme )
+        )->label( `Cursor here ->` )->input(
+            id    = `IdOne`
+            value = client->_bind_edit( one ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -98,12 +90,20 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      focus_field = `IdOne`.
-      mv_check_active = abap_true.
+      read_device_info( ).
       render( ).
+      start_timer( ).
+      client->follow_up_action(
+          client->_event_client(
+              val   = z2ui5_if_client=>cs_event-set_focus
+              t_arg = VALUE #( ( `IdOne` ) ) ) ).
     ENDIF.
 
-    event( ).
+    IF client->check_on_event( `TIMER_FINISHED` ).
+      client->message_toast_display( `Timer finished` ).
+      start_timer( ).
+      client->view_model_update( ).
+    ENDIF.
 
   ENDMETHOD.
 
