@@ -34,8 +34,8 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
     device_systemtype = ls_get-s_device-system.
     device_height     = CONV string( ls_get-s_device-resize-height ).
     device_width      = CONV string( ls_get-s_device-resize-width ).
-    ui5_version       = ls_get-s_ui5_version-version.
-    ui5_theme         = ls_get-s_ui5_version-theme.
+    ui5_version       = ls_get-s_ui5-version.
+    ui5_theme         = ls_get-s_ui5-theme.
 
   ENDMETHOD.
 

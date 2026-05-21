@@ -54,10 +54,10 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     device_touch           = ls_get-s_device-support-touch.
     device_pointer         = ls_get-s_device-support-pointer.
     device_retina          = ls_get-s_device-support-retina.
-    ui5_version            = ls_get-s_ui5_version-version.
-    ui5_theme              = ls_get-s_ui5_version-theme.
-    ui5_gav                = ls_get-s_ui5_version-gav.
-    ui5_build_timestamp    = ls_get-s_ui5_version-build_timestamp.
+    ui5_version            = ls_get-s_ui5-version.
+    ui5_theme              = ls_get-s_ui5-theme.
+    ui5_gav                = ls_get-s_ui5-gav.
+    ui5_build_timestamp    = ls_get-s_ui5-build_timestamp.
 
   ENDMETHOD.
 
