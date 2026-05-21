@@ -1,11 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_125</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_125_0</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>basic - set title</DESCRIPT>
+    <DESCRIPT>basic - title</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
