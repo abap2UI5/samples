@@ -38,12 +38,6 @@ CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    SELECT
-      SINGLE FROM icfservloc
-      FIELDS icfactive
-      WHERE icf_name = `MIME_DEMO`
-      INTO @DATA(icfactive).
-
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
     " They are NOT meant to use in production.
     view->_generic( name = `script`
@@ -51,20 +45,13 @@ CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
                         |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3").play(); \}|
                      && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
 
-    DATA(vbox) = view->page( `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
-
-    IF icfactive = abap_false.
-      vbox->message_strip(
-          text    = `ICF Service '/SAP/PUBLIC/BC/ABAP/mime_demo' is not active. Sounds will not play. Please activate the ICF service first.`
-          type    = `Warning`
-          visible = abap_true ).
-    ENDIF.
+    DATA(vbox) = view->page( `Play success and error sounds` )->vbox( `sapUiSmallMargin` ).
 
     vbox->message_strip(
         text    = client->_bind( message-text )
         type    = client->_bind( message-type )
         visible = `{= !!$` && client->_bind( message-text ) && ` }` ).
-    vbox->text( text = `The magic key is: abap2UI5` ).
+    vbox->text( `The magic key is: abap2UI5` ).
     vbox->input( id          = `inputApp`
                  value       = client->_bind_edit( magic_key )
                  placeholder = `Enter magic key`
@@ -73,7 +60,7 @@ CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
                   type  = `accept`
                   press = client->_event( `enter` ) ).
 
-    view->_z2ui5( )->focus( focusid = `inputApp` ).
+    view->_z2ui5( )->focus( `inputApp` ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
