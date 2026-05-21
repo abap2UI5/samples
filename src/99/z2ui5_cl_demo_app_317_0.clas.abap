@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_317_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_317_0 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -69,10 +69,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `expand`.
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-expand_to_level
-                t_arg = VALUE #( ( `tree` ) ( `10` ) ) ) ).
+        client->follow_up_action( `debugger; z2ui5.oView.byId( 'tree' ).expandToLevel(10);`).
 
       WHEN `onDrop`.
         mt_node[ id = client->get_event_arg( 1 ) ]-id_parent = client->get_event_arg( 2 ).
@@ -133,6 +130,11 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
 
+    page->_generic( name = `script`
+                    ns   = `html`
+        )->_cc_plain_xml(
+          |function myFunction() \{ z2ui5.oView.byId(`tree`).expandToLevel(5); \}| ).
+
     DATA(tree) = page->tree( items = client->_bind( mt_tree )
                              id    = `tree` ).
     tree->items(
@@ -153,10 +155,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
                            ( `${$parameters>/droppedControl/mAggregations/customData/0/mProperties/value}` )
       ) ) ).
 
-    client->follow_up_action(
-        client->_event_client(
-            val   = z2ui5_if_client=>cs_event-expand_to_level
-            t_arg = VALUE #( ( `tree` ) ( `5` ) ) ) ).
+    client->follow_up_action( `myFunction()` ).
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.

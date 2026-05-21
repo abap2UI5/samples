@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_s_03_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_s_03 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -46,6 +46,11 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
 
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
     " They are NOT meant to use in production.
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml(
+                        |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3").play(); \}|
+                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
+
     DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
 
     IF icfactive = abap_false.
@@ -79,18 +84,12 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     IF client->get( )-event = `enter`.
 
       IF magic_key = `abap2UI5`.
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-play_audio
-                t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3` ) ) ) ).
+        client->follow_up_action( `playSuccess()` ).
         message-type = `Success`.
         message-text = `Hooray!`.
 
       ELSE.
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-play_audio
-                t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3` ) ) ) ).
+        client->follow_up_action( `playError()` ).
         message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.

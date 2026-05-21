@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_309_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -15,15 +15,13 @@ CLASS z2ui5_cl_demo_app_309 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_309_0 IMPLEMENTATION.
 
   METHOD on_event.
 
     IF client->check_on_event( `CUSTOM_JS_FROM_EB` ).
-      client->follow_up_action(
-          client->_event_client(
-              val   = z2ui5_if_client=>cs_event-z2ui5
-              t_arg = VALUE #( ( `afterBE` ) ) ) ).
+*        client->follow_up_action( val = `sap.z2ui5.afterBE()` ).
+      client->follow_up_action( `alert("afterBE triggered !!");` ).
     ENDIF.
 
   ENDMETHOD.

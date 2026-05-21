@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_116_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_116_0 IMPLEMENTATION.
 
   METHOD add_node.
 
@@ -225,12 +225,12 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
 
-      DATA(lv_save_state_js) = `sap.z2ui5.saveState = function() {` && |\n| &&
+      DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&
                          `  var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
                          `  sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                          ` }; `.
 
-      DATA(lv_reset_state_js) = `sap.z2ui5.setState = function() {` && |\n| &&
+      DATA(lv_reset_state_js) = `function setState() {debugger;` && |\n| &&
                                 ` var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
                                 ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
                                 `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
@@ -272,10 +272,7 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
         client->view_model_update( ).
 
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-z2ui5
-                t_arg = VALUE #( ( `setState` ) ) ) ).
+        client->follow_up_action( `setState();` ).
 
     ENDCASE.
 
