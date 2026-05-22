@@ -871,7 +871,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `ui.Table III`
                          subheader = `Focus Handling`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_172` )
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_172_0` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
