@@ -5,16 +5,14 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 
     DATA:
       BEGIN OF ms_check_expanded,
-        basics          TYPE abap_bool,
-        more            TYPE abap_bool,
-        features        TYPE abap_bool,
-        extensions      TYPE abap_bool,
-        demos           TYPE abap_bool,
-        custom_controls TYPE abap_bool,
-        input           TYPE abap_bool,
-        popups          TYPE abap_bool,
-        version         TYPE abap_bool,
-        built_in        TYPE abap_bool,
+        basics     TYPE abap_bool,
+        input      TYPE abap_bool,
+        more       TYPE abap_bool,
+        popups     TYPE abap_bool,
+        features   TYPE abap_bool,
+        extensions TYPE abap_bool,
+        demos      TYPE abap_bool,
+        version    TYPE abap_bool,
       END OF ms_check_expanded.
 
     DATA mt_scroll     TYPE z2ui5_if_types=>ty_t_name_value.
