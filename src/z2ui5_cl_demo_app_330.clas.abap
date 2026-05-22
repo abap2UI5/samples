@@ -26,7 +26,11 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->object_page_layout( uppercaseanchorbar = abap_false ).
+    DATA(object_page_layout) = view->shell(
+        )->page( title          = `Robot Arm Series 9`
+                 navbuttonpress = client->_event_nav_app_leave( )
+                 shownavbutton  = client->check_app_prev_stack( )
+            )->object_page_layout( uppercaseanchorbar = abap_false ).
 
     DATA(header_title) = object_page_layout->header_title(
         )->object_page_dyn_header_title( ).

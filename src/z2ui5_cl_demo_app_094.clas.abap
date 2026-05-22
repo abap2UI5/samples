@@ -73,7 +73,9 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
     ASSIGN mr_screen->* TO <screen>.
 
     page = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page( `test` ).
+          )->page( title          = `test`
+                   navbuttonpress = client->_event_nav_app_leave( )
+                   shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(o_grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).

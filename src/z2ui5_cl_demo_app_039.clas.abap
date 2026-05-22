@@ -47,6 +47,8 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
 
     IF client->check_on_event( `POPUP` ).
       client->message_box_display( `Event raised value:` && mv_value ).
+    ELSEIF client->check_on_event( `BACK` ).
+      client->nav_app_leave( ).
     ENDIF.
 
   ENDMETHOD.
@@ -64,6 +66,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
     DATA(lv_xml) = `<mvc:View` && |\n| &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n| &&
+                        `       <Page title="Extension - import xml view 2" showNavButton="true" navButtonPress="` && client->_event( `BACK` ) && `">` && |\n| &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="-1"/>` && |\n| &&
@@ -139,6 +142,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
                         `           <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/ProfileImage_LargeGenTile.png" />` && |\n| &&
                         `       </TileContent>` && |\n| &&
                         `   </GenericTile>` && |\n| &&
+                        `       </Page>` && |\n| &&
                         `</mvc:View>`.
 
     client->view_display( lv_xml ).

@@ -18,10 +18,14 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->object_page_layout(
-            showtitleinheadercontent = abap_true
-            showeditheaderbutton     = abap_true
-            uppercaseanchorbar       = abap_false ).
+      DATA(page) = view->shell(
+          )->page( title          = `Clipboard`
+                   navbuttonpress = client->_event_nav_app_leave( )
+                   shownavbutton  = client->check_app_prev_stack( )
+              )->object_page_layout(
+                  showtitleinheadercontent = abap_true
+                  showeditheaderbutton     = abap_true
+                  uppercaseanchorbar       = abap_false ).
 
       DATA(header_title) = page->header_title(
          )->object_page_dyn_header_title( ).
@@ -63,7 +67,7 @@ CLASS z2ui5_cl_demo_app_325 IMPLEMENTATION.
                       rows            = `15`
                       id              = `text_id` ).
 
-      client->view_display( page->stringify( ) ).
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 

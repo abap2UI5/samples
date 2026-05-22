@@ -58,7 +58,9 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     DATA(page1) = view->page( id = `page_main`
             title                = `Table Filters Reset after view Update`
-            class                = `sapUiContentPadding` ).
+            class                = `sapUiContentPadding`
+            navbuttonpress       = client->_event_nav_app_leave( )
+            shownavbutton        = client->check_app_prev_stack( ) ).
 
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).

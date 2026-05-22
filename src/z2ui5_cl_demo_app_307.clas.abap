@@ -194,7 +194,12 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
 
-    view->panel( id               = `panelForGridList`
+    DATA(page) = view->shell(
+        )->page( title          = `Grid List with Drag and Drop`
+                 navbuttonpress = client->_event_nav_app_leave( )
+                 shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->panel( id               = `panelForGridList`
                  backgrounddesign = `Transparent`
         )->header_toolbar(
             )->toolbar( height = `3rem`
