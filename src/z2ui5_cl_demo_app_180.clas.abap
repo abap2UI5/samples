@@ -22,7 +22,9 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
     IF client->check_on_event( `CALL_EF` ).
       mv_url = `https://www.google.com`.
       client->view_model_update( ).
-      client->follow_up_action( client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) ) ).
+      client->action(
+          val   = client->cs_event-open_new_tab
+          t_arg = VALUE #( ( mv_url ) ) ).
     ENDIF.
 
   ENDMETHOD.

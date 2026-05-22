@@ -20,10 +20,9 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `CUSTOM_JS_FROM_EB` ).
-      client->follow_up_action(
-          client->_event_client(
-              val   = z2ui5_if_client=>cs_event-z2ui5
-              t_arg = VALUE #( ( `afterBE` ) ) ) ).
+      client->action(
+          val   = z2ui5_if_client=>cs_event-z2ui5
+          t_arg = VALUE #( ( `afterBE` ) ) ).
     ENDIF.
 
   ENDMETHOD.

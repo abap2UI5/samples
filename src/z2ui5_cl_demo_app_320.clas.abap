@@ -286,15 +286,17 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_width = `250px`.
 
         client->popover_model_update( ).
-        client->follow_up_action( client->_event_client( val   = `POPOVER_NAV_CONTAINER_TO`
-                                                         t_arg = VALUE #( ( `navContainer` ) ( `detail` ) ) ) ).
+        client->action(
+            val   = `POPOVER_NAV_CONTAINER_TO`
+            t_arg = VALUE #( ( `navContainer` ) ( `detail` ) ) ).
       WHEN `onNavBack`.
         content_height = calculate_content_height( lines( group_items ) ).
         content_width = `450px`.
 
         client->popover_model_update( ).
-        client->follow_up_action( client->_event_client( val   = `POPOVER_NAV_CONTAINER_TO`
-                                                         t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ) ).
+        client->action(
+            val   = `POPOVER_NAV_CONTAINER_TO`
+            t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ).
     ENDCASE.
 
   ENDMETHOD.

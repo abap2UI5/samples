@@ -62,17 +62,15 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
       client->view_display( val                       = view->stringify( )
                             switch_default_model_path = `` ).
 
-      client->follow_up_action( client->_event_client(
-        val   = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = VALUE #(
-        ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).
+      client->action(
+          val   = z2ui5_if_client=>cs_event-set_odata_model
+          t_arg = VALUE #( ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
+                           ( `TRAVEL` ) ) ).
 
-      client->follow_up_action( client->_event_client(
-        val   = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = VALUE #(
-        ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
-        ( `FLIGHT` ) ) ) ).
+      client->action(
+          val   = z2ui5_if_client=>cs_event-set_odata_model
+          t_arg = VALUE #( ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
+                           ( `FLIGHT` ) ) ).
 
     ENDIF.
 

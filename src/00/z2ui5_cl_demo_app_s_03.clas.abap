@@ -79,18 +79,16 @@ CLASS z2ui5_cl_demo_app_s_03 IMPLEMENTATION.
     IF client->get( )-event = `enter`.
 
       IF magic_key = `abap2UI5`.
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-play_audio
-                t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3` ) ) ) ).
+        client->action(
+            val   = z2ui5_if_client=>cs_event-play_audio
+            t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3` ) ) ).
         message-type = `Success`.
         message-text = `Hooray!`.
 
       ELSE.
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-play_audio
-                t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3` ) ) ) ).
+        client->action(
+            val   = z2ui5_if_client=>cs_event-play_audio
+            t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3` ) ) ).
         message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.

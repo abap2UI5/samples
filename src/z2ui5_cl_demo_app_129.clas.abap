@@ -75,10 +75,9 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
       WHEN `REFRESH`.
         lv_text = lv_text + 10.
 
-        client->follow_up_action(
-            client->_event_client(
-                val   = z2ui5_if_client=>cs_event-start_timer
-                t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ) ).
+        client->action(
+            val   = z2ui5_if_client=>cs_event-start_timer
+            t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ).
 
         client->view_model_update( ).
 
@@ -145,10 +144,9 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
-    client->follow_up_action(
-        client->_event_client(
-            val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ) ).
+    client->action(
+        val   = z2ui5_if_client=>cs_event-start_timer
+        t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ).
 
   ENDMETHOD.
 
