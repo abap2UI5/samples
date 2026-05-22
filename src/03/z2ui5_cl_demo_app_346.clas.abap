@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_346_0 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_346_0 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_346_0 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD set_view.
 

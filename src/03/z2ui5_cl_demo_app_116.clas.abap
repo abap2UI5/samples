@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_116_0 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_116 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_116_0 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_116_0 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
 
   METHOD add_node.
 
