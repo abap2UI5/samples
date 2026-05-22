@@ -1709,25 +1709,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Focus`
                          subheader = `Editable & focus edit controls`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_346_0` )
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_346` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `ui.Table III`
                          subheader = `Focus Handling`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_172_0` )
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_172` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tree Table III`
                          subheader = `Keep expanded state normal`
-                         press     = client->_event( `z2ui5_cl_demo_app_116_0` )
+                         press     = client->_event( `z2ui5_cl_demo_app_116` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tree Table IV`
                          subheader = `Drag & Drop`
-                         press     = client->_event( `z2ui5_cl_demo_app_317_0` )
+                         press     = client->_event( `z2ui5_cl_demo_app_317` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
