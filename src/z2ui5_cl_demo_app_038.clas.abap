@@ -58,7 +58,9 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
     popup = popup->dialog(
           title         = `Messages`
           contentheight = `50%`
-          contentwidth  = `50%` ).
+          contentwidth  = `50%`
+                     verticalscrolling = abap_false
+                           afterclose        = client->_event_client( client->cs_event-popup_close ) ).
 
     popup->message_view(
             items      = client->_bind( t_msg
@@ -71,15 +73,24 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
             description = `{DESCRIPTION}`
             groupname   = `{GROUP}` ).
 
-    popup->footer( )->overflow_toolbar(
-      )->toolbar_spacer(
+  popup->buttons(
       )->button(
-          id    = `test2`
-          text  = `test`
-          press = client->_event( `TEST` )
-      )->button(
-          text  = `close`
-          press = client->_event_client( client->cs_event-popup_close ) ).
+         id    = `test2`
+         text  = `test`
+         press = client->_event( `TEST` )
+  )->button( text  = `Continue`
+                               press = client->_event_client( client->cs_event-popup_close )
+                               type  = `Emphasized` ).
+
+*    popup->footer( )->overflow_toolbar(
+*      )->toolbar_spacer(
+*      )->button(
+*          id    = `test2`
+*          text  = `test`
+*          press = client->_event( `TEST` )
+*      )->button(
+*          text  = `close`
+*          press = client->_event_client( client->cs_event-popup_close ) ).
 
     client->popup_display( popup->stringify( ) ).
 
