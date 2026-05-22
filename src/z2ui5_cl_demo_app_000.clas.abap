@@ -15,7 +15,6 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         popups          TYPE abap_bool,
         version         TYPE abap_bool,
         built_in        TYPE abap_bool,
-        experimental    TYPE abap_bool,
       END OF ms_check_expanded.
 
     DATA mt_scroll     TYPE z2ui5_if_types=>ty_t_name_value.
@@ -1708,6 +1707,30 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          headertext = `Work in Progress` ).
     panel->message_strip( `Give it a try....` ).
 
+    panel->generic_tile( header    = `Focus`
+                         subheader = `Editable & focus edit controls`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_346_0` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `ui.Table III`
+                         subheader = `Focus Handling`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_172_0` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Tree Table III`
+                         subheader = `Keep expanded state normal`
+                         press     = client->_event( `z2ui5_cl_demo_app_116_0` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Tree Table IV`
+                         subheader = `Drag & Drop`
+                         press     = client->_event( `z2ui5_cl_demo_app_317_0` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
     panel->generic_tile( header    = `Gantt Chart with Relationships`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_179` )
@@ -1791,34 +1814,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          press     = client->_event( `z2ui5_cl_demo_app_353` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-experimental )
-                         headertext = `Experimental` ).
-
-    page->generic_tile( header    = `Focus`
-                        subheader = `Editable & focus edit controls`
-                        press     = client->_event( `Z2UI5_CL_DEMO_APP_346_0` )
-                        mode      = `LineMode`
-                        class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    page->generic_tile( header    = `ui.Table III`
-                        subheader = `Focus Handling`
-                        press     = client->_event( `Z2UI5_CL_DEMO_APP_172_0` )
-                        mode      = `LineMode`
-                        class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    page->generic_tile( header    = `Tree Table III`
-                        subheader = `Keep expanded state normal`
-                        press     = client->_event( `z2ui5_cl_demo_app_116_0` )
-                        mode      = `LineMode`
-                        class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    page->generic_tile( header    = `Tree Table IV`
-                        subheader = `Drag & Drop`
-                        press     = client->_event( `z2ui5_cl_demo_app_317_0` )
-                        mode      = `LineMode`
-                        class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     client->view_display( page->stringify( ) ).
 
