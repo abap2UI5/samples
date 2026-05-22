@@ -1,4 +1,4 @@
-[![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg?branch=702)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml)
+[![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml)
 [![ABAP_STANDARD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
 [![ABAP_CLOUD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml)
 <br>
