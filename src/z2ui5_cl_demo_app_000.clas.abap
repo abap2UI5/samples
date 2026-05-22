@@ -194,10 +194,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header = `Scrolling`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_134` )
-                         mode   = `LineMode`
-                         class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+    panel->generic_tile( header    = `Scroll to position`
+                         subheader = `client->action( SCROLL_TO )`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_362` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Scroll into view`
+                         subheader = `client->action( SCROLL_INTO_VIEW )`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_363` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `History`
                          press  = client->_event( `Z2UI5_CL_DEMO_APP_139` )
