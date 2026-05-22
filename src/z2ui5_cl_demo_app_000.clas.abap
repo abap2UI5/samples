@@ -943,7 +943,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Tree Table III`
                          subheader = `Keep expanded state normal`
-                         press     = client->_event( `z2ui5_cl_demo_app_116` )
+                         press     = client->_event( `z2ui5_cl_demo_app_116_0` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
