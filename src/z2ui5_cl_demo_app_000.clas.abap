@@ -670,12 +670,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `Input with Suggestion`
-                         subheader = `Create Suggestion Table on the Server`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_060` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel->generic_tile( header    = `Multi Input`
                          subheader = `Token & Range Handling`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_078` )
@@ -920,12 +914,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile( header    = `Tree Table I`
                          subheader = `Popup Select Entry`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_068` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Tree Table II`
-                         subheader = `Keep expanded state popup`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_178` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1373,15 +1361,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
-                         headertext = `JS` ).
-
-    panel->generic_tile( header = `Follow Up Action with JS Function`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_309` )
-                         mode   = `LineMode`
-                         class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel = page->panel( expandable = abap_false
-                         expanded   = abap_true
                          headertext = `CSS` ).
 
     panel->generic_tile( header = `Messages with Styles I`
@@ -1394,12 +1373,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `Messages with Styles III`
-                         subheader = `More...`
-                         press     = client->_event( `z2ui5_cl_demo_app_084` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `General` ).
@@ -1410,39 +1383,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `Custom Control`
-                         subheader = `Integrate your own JS Custom Control`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_037` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel->generic_tile( header    = `Change CSS`
                          subheader = `Send your own CSS to the frontend`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_050` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `HTML, JS, CSS`
-                         subheader = `Display normal HTML without UI5`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_032` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Canvas & SVG`
-                         subheader = `Integrate more HTML5 functionalities`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_036` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Ext. Library`
-                         subheader = `Load external JS libraries`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_040` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Custom Function`
-                         subheader = `Call imported function`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_093` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1812,6 +1755,73 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     panel->generic_tile( header    = `Multi Timer Test`
                          subheader = ``
                          press     = client->_event( `z2ui5_cl_demo_app_353` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+
+    panel->generic_tile( header    = `HTML, JS, CSS`
+                         subheader = `Display normal HTML without UI5`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_032` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Canvas & SVG`
+                         subheader = `Integrate more HTML5 functionalities`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_036` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Custom Control`
+                         subheader = `Integrate your own JS Custom Control`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_037` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Ext. Library`
+                         subheader = `Load external JS libraries`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_040` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Input with Suggestion`
+                         subheader = `Create Suggestion Table on the Server`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_060` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Messages with Styles III`
+                         subheader = `More...`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_084` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Custom Function`
+                         subheader = `Call imported function`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_093` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Custom Function in Popup`
+                         subheader = ``
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_141` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Tree Table II`
+                         subheader = `Keep expanded state popup`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_178` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Suggestion with CC Filtering`
+                         subheader = ``
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_201` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
+    panel->generic_tile( header    = `Follow Up Action with JS Function`
+                         subheader = ``
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_309` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
