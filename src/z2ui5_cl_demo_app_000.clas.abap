@@ -949,7 +949,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Tree Table IV`
                          subheader = `Drag & Drop`
-                         press     = client->_event( `z2ui5_cl_demo_app_317` )
+                         press     = client->_event( `z2ui5_cl_demo_app_317_0` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
