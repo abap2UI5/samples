@@ -1769,42 +1769,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `locks 1 - native editing`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_07` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `locks 2 - enqueue at save`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_08` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `locks 3 - optimistic locking`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_09` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `locks 4 - optimistic + enqueue at save`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_10` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `locks 5 - stateful`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_11` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `locks 6 - soft lock (advisory only)`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_S_12` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel = page->panel( expandable = abap_false
                          expanded   = abap_true
                          headertext = `Launchpad / Learning Path (pkg 01)` ).
