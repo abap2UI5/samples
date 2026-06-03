@@ -916,6 +916,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
+    panel->generic_tile( header    = `Tree Table II`
+                         subheader = `Checkbox Binding per Node`
+                         press     = client->_event( `Z2UI5_CL_DEMO_APP_364` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-popups )
                          headertext = `Popups & Popovers` ).
