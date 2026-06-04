@@ -2056,12 +2056,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `more - cl_demo_output`
-                         subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_115` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel->generic_tile( header    = `view - new parser with cc`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_136` )
