@@ -1056,6 +1056,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
+    panel->generic_tile( header    = `Popup Display CL_DEMO_OUTPUT`
+                         subheader = ``
+                         press     = client->_event( `z2ui5_cl_demo_app_365` )
+                         mode      = `LineMode`
+                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
+
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-features )
                          headertext = `More Controls` ).
