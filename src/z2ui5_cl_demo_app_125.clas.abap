@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( `SET_TITLE` ).
 
-      client->action(
+      client->action->gen(
           val   = z2ui5_if_client=>cs_event-set_title
           t_arg = VALUE #( ( title ) ) ).
 

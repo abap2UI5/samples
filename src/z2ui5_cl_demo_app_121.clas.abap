@@ -28,7 +28,7 @@ CLASS z2ui5_cl_demo_app_121 IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
-      client->action(
+      client->action->gen(
           val   = z2ui5_if_client=>cs_event-start_timer
           t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
 

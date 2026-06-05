@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    client->action(
+    client->action->gen(
         val   = z2ui5_if_client=>cs_event-scroll_into_view
         t_arg = VALUE #( ( target ) ( behavior ) ( block ) ) ).
 

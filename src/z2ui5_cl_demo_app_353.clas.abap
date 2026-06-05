@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
 
   METHOD start_timer.
 
-    client->action(
+    client->action->gen(
         val   = z2ui5_if_client=>cs_event-start_timer
         t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `4000` ) ) ).
 
@@ -92,7 +92,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
       read_device_info( ).
       render( ).
       start_timer( ).
-      client->action(
+      client->action->gen(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `IdOne` ) ) ).
     ENDIF.

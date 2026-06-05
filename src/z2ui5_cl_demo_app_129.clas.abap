@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
       WHEN `REFRESH`.
         lv_text = lv_text + 10.
 
-        client->action(
+        client->action->gen(
             val   = z2ui5_if_client=>cs_event-start_timer
             t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ).
 
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_demo_app_129 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
-    client->action(
+    client->action->gen(
         val   = z2ui5_if_client=>cs_event-start_timer
         t_arg = VALUE #( ( client->_event( `REFRESH` ) ) ( `3000` ) ) ).
 

@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_POST`.
-        client->action( z2ui5_if_client=>cs_event-clipboard_app_state ).
+        client->action->gen( z2ui5_if_client=>cs_event-clipboard_app_state ).
         client->message_toast_display( `clipboard copied` ).
 
       WHEN `BACK`.

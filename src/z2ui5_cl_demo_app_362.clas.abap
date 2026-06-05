@@ -59,20 +59,20 @@ CLASS z2ui5_cl_demo_app_362 IMPLEMENTATION.
     " behavior is one of: "auto" (default, instant), "smooth", "instant".
     CASE client->get( )-event.
       WHEN `SCROLL_TOP`.
-        client->action(
+        client->action->gen(
             val   = z2ui5_if_client=>cs_event-scroll_to
             t_arg = VALUE #( ( `id_page` ) ( `0` ) ( `0` ) ( `smooth` ) ) ).
       WHEN `SCROLL_MIDDLE`.
-        client->action(
+        client->action->gen(
             val   = z2ui5_if_client=>cs_event-scroll_to
             t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ( `smooth` ) ) ).
       WHEN `SCROLL_BOTTOM`.
-        client->action(
+        client->action->gen(
             val   = z2ui5_if_client=>cs_event-scroll_to
             t_arg = VALUE #( ( `id_page` ) ( `99999` ) ( `0` ) ( `smooth` ) ) ).
       WHEN `SCROLL_JUMP`.
         " Same target as middle but without smooth - instant snap.
-        client->action(
+        client->action->gen(
             val   = z2ui5_if_client=>cs_event-scroll_to
             t_arg = VALUE #( ( `id_page` ) ( `1500` ) ( `0` ) ) ).
       WHEN `REFRESH`.
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_362 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->action(
+    client->action->gen(
         val   = z2ui5_if_client=>cs_event-scroll_to
         t_arg = VALUE #( ( scroll-id )
                          ( |{ scroll-y }| )

@@ -286,7 +286,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_width = `250px`.
 
         client->popover_model_update( ).
-        client->action(
+        client->action->gen(
             val   = `POPOVER_NAV_CONTAINER_TO`
             t_arg = VALUE #( ( `navContainer` ) ( `detail` ) ) ).
       WHEN `onNavBack`.
@@ -294,7 +294,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_width = `450px`.
 
         client->popover_model_update( ).
-        client->action(
+        client->action->gen(
             val   = `POPOVER_NAV_CONTAINER_TO`
             t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ).
     ENDCASE.
