@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->_z2ui5( )->title( `ABAP2UI5 Weird behavior showcase` )->shell(
+    DATA(page) = view->shell(
         )->page(
             title          = `ABAP2UI5 Weird behavior showcase`
             navbuttonpress = client->_event( `BACK` )
@@ -99,6 +99,10 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
                  )->text( `{ATIME}` ).
 
     client->view_display( view->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `ABAP2UI5 Weird behavior showcase` ) ) ).
 
   ENDMETHOD.
 

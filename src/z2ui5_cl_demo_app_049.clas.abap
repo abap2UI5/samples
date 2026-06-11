@@ -60,6 +60,9 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
       ENDDO.
 
+      client->action->gen(
+          val   = z2ui5_if_client=>cs_event-start_timer
+          t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
       client->view_model_update( ).
     ENDIF.
 
@@ -79,9 +82,6 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-    lo_view->_z2ui5( )->timer( finished    = client->_event( `TIMER_FINISHED` )
-                               delayms     = `2000`
-                               checkrepeat = abap_true ).
     DATA(page) = lo_view->shell( )->page(
              title          = `abap2UI5 - CL_GUI_TIMER - Monitor`
              navbuttonpress = client->_event_nav_app_leave( )
@@ -108,6 +108,10 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
              info        = `{INFO}` ).
 
     client->view_display( lo_view->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-start_timer
+        t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
 
   ENDMETHOD.
 

@@ -3,9 +3,6 @@ CLASS z2ui5_cl_demo_app_073 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_url TYPE string.
-    DATA mv_check_timer_active TYPE abap_bool.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
@@ -25,10 +22,6 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
                   title          = `abap2UI5 - First Example`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
-             )->_z2ui5( )->timer(
-                  checkactive = client->_bind( mv_check_timer_active )
-                  finished    = client->_event_client( val     = client->cs_event-open_new_tab
-                                                         t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
               )->simple_form( title    = `Form Title`
                               editable = abap_true
                   )->content( `form`
@@ -45,16 +38,15 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
-      mv_check_timer_active = abap_false.
       view_display( ).
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `BUTTON_OPEN_NEW_TAB`.
-        mv_check_timer_active = abap_true.
-        mv_url = `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123`.
-        client->view_model_update( ).
+        client->action->gen(
+            val   = z2ui5_if_client=>cs_event-open_new_tab
+            t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123` ) ) ).
     ENDCASE.
 
   ENDMETHOD.

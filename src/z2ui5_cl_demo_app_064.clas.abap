@@ -96,6 +96,13 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
       client->message_toast_display( `loaded` ).
       WAIT UP TO 2 SECONDS.
+
+      IF mv_check_active = abap_true.
+        client->action->gen(
+            val   = z2ui5_if_client=>cs_event-start_timer
+            t_arg = VALUE #( ( client->_event( `LOAD` ) ) ( `0` ) ) ).
+      ENDIF.
+
       client->view_model_update( ).
 
     ENDIF.
@@ -114,10 +121,6 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     mv_check_enabled = abap_true.
     view = z2ui5_cl_xml_view=>factory( ).
-
-    view->_z2ui5( )->timer(
-        finished    = client->_event( `LOAD` )
-        checkactive = client->_bind( mv_check_active ) ).
 
     temp5 = client->check_app_prev_stack( ).
     page1 = view->shell( )->page( id = `page_main`

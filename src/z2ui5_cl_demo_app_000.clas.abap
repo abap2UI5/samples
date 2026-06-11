@@ -15,8 +15,12 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
         version    TYPE abap_bool,
       END OF ms_check_expanded.
 
-    DATA mt_scroll     TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA mv_set_scroll TYPE abap_bool.
+    DATA:
+      BEGIN OF s_scroll,
+        id TYPE string,
+        x  TYPE i,
+        y  TYPE i,
+      END OF s_scroll.
 
     METHODS expand_all.
 
@@ -31,12 +35,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.
 
-    IF client->get( )-check_on_navigated = abap_true.
-
-      IF mt_scroll IS INITIAL.
-        mt_scroll = VALUE #( ( n = `page` ) ).
-      ENDIF.
-      mv_set_scroll = abap_true.
+    IF client->get( )-check_on_navigated = abap_true AND s_scroll-id IS NOT INITIAL.
+      client->action->gen(
+          val   = z2ui5_if_client=>cs_event-scroll_to
+          t_arg = VALUE #( ( s_scroll-id )
+                           ( |{ s_scroll-y }| )
+                           ( |{ s_scroll-x }| ) ) ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -49,6 +53,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
             DATA(lv_classname) = to_upper( client->get( )-event ).
             DATA li_app TYPE REF TO z2ui5_if_app.
             CREATE OBJECT li_app TYPE (lv_classname).
+            s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
             client->nav_app_call( li_app ).
             RETURN.
           CATCH cx_root.
@@ -68,11 +73,10 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->get_parent( ).
 
     IF client->get( )-check_launchpad_active = abap_true.
-      page->_z2ui5( )->lp_title( c_title ).
+      client->action->gen(
+          val   = z2ui5_if_client=>cs_event-set_title_launchpad
+          t_arg = VALUE #( ( c_title ) ) ).
     ENDIF.
-
-    page->_z2ui5( )->scrolling( setupdate = client->_bind_edit( mv_set_scroll )
-                                items     = client->_bind_edit( mt_scroll ) ).
 
 *    page = page->grid( `L12 M12 S12`
 *         )->content( `layout` ).

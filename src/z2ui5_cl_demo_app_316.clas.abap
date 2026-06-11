@@ -40,7 +40,6 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      new_window = `true` ).
 
     DATA(page) = z2ui5_cl_xml_view=>factory(
-        )->_z2ui5( )->title( `URL Helper Sample`
         )->shell(
             )->page( title          = `abap2UI5 - Sample: URL Helper`
                      navbuttonpress = client->_event_nav_app_leave( )
@@ -133,6 +132,10 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                                                                       ( |${ client->_bind_edit( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `URL Helper Sample` ) ) ).
 
   ENDMETHOD.
 

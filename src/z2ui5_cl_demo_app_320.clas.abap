@@ -89,7 +89,6 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
   METHOD display_avatar_group_view.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_z2ui5( )->title( `Avatar Group Sample` ).
     view->page( title          = `abap2UI5 - Sample: Avatar Group`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )
@@ -138,6 +137,10 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                           fallbackicon = `{FALLBACKICON}`
                                           src          = `{SRC}` ).
     client->view_display( view->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `Avatar Group Sample` ) ) ).
 
   ENDMETHOD.
 

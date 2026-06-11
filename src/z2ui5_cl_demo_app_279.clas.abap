@@ -53,11 +53,13 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       class   = `sapUiSmallMarginBegin`
       visible = client->_bind( dirty ) ).
 
-    page->_z2ui5( )->focus( `input` ).
-
     page->_z2ui5( )->dirty( client->_bind( dirty ) ).
 
     client->view_display( page->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-set_focus
+        t_arg = VALUE #( ( `input` ) ) ).
 
   ENDMETHOD.
 

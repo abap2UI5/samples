@@ -192,8 +192,6 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->_z2ui5( )->title( `Grid List with Drag and Drop` ).
-
     DATA(page) = view->shell(
         )->page( title          = `Grid List with Drag and Drop`
                  navbuttonpress = client->_event_nav_app_leave( )
@@ -241,6 +239,10 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                                   wrapping = abap_true ).
 
     client->view_display( view->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `Grid List with Drag and Drop` ) ) ).
 
   ENDMETHOD.
 

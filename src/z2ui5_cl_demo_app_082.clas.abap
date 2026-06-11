@@ -51,6 +51,9 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
       INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
+      client->action->gen(
+          val   = z2ui5_if_client=>cs_event-start_timer
+          t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
       client->view_model_update( ).
     ENDIF.
 
@@ -71,10 +74,6 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
 
     DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
 
-    lo_view->_z2ui5( )->timer( finished    = client->_event( `TIMER_FINISHED` )
-                               delayms     = `2000`
-                               checkrepeat = abap_true ).
-
     DATA(page) = lo_view->shell( )->page(
              title          = `abap2UI5 - Roundtrip Speed Test`
              navbuttonpress = client->_event_nav_app_leave( )
@@ -90,6 +89,10 @@ CLASS z2ui5_cl_demo_app_082 IMPLEMENTATION.
              info        = `{INFO}` ).
 
     client->view_display( lo_view->stringify( ) ).
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-start_timer
+        t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
 
   ENDMETHOD.
 
