@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         count      TYPE i,
         value      TYPE string,
         descr      TYPE string,
@@ -13,10 +13,10 @@ CLASS z2ui5_cl_demo_app_183 DEFINITION PUBLIC.
         checkbox   TYPE abap_bool,
         percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
-      END OF ty_row.
+      END OF ty_s_row.
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
     DATA check_ui5 TYPE abap_bool.
     DATA mv_key TYPE string.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_183 IMPLEMENTATION.
   METHOD refresh_data.
 
     DO 100 TIMES.
-      DATA ls_row TYPE ty_row.
+      DATA ls_row TYPE ty_s_row.
       ls_row-count = sy-index.
       ls_row-value = `red`.
 *        info = COND #( WHEN sy-index < 50 THEN 'completed' ELSE 'uncompleted' )

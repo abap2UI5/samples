@@ -187,14 +187,14 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
   METHOD get_fixval.
 
     TYPES:
-      BEGIN OF fixvalue,
+      BEGIN OF ty_s_fixvalue,
         low        TYPE string,
         high       TYPE string,
         option     TYPE string,
         ddlanguage TYPE string,
         ddtext     TYPE string,
-      END OF fixvalue.
-    TYPES fixvalues TYPE STANDARD TABLE OF fixvalue WITH DEFAULT KEY.
+      END OF ty_s_fixvalue.
+    TYPES fixvalues TYPE STANDARD TABLE OF ty_s_fixvalue WITH DEFAULT KEY.
 
     DATA comp        TYPE cl_abap_structdescr=>component_table.
     DATA lt_fixval   TYPE fixvalues.

@@ -4,14 +4,14 @@ CLASS z2ui5_cl_demo_app_301 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_product,
+      BEGIN OF ty_s_product,
         name          TYPE string,
         attribute_1   TYPE string,
         attribute_2   TYPE string,
         status        TYPE string,
         overflow_mode TYPE string,
-      END OF ty_product.
-    DATA lt_o_data TYPE TABLE OF ty_product.
+      END OF ty_s_product.
+    DATA lt_o_data TYPE TABLE OF ty_s_product.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

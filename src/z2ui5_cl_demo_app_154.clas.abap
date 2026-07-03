@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
 
   METHOD on_event.
 
-    TYPES BEGIN OF ty_log_entry.
+    TYPES BEGIN OF ty_s_log_entry.
     TYPES msgnumber TYPE n LENGTH 6.
     TYPES msgty     TYPE c LENGTH 1.
     TYPES msgid     TYPE c LENGTH 20.
@@ -38,8 +38,8 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
     TYPES context   TYPE c LENGTH 255.
     TYPES params    TYPE c LENGTH 255.
     TYPES msg_txt   TYPE string.
-    TYPES END OF ty_log_entry.
-    DATA lt_bal TYPE STANDARD TABLE OF ty_log_entry WITH EMPTY KEY.
+    TYPES END OF ty_s_log_entry.
+    DATA lt_bal TYPE STANDARD TABLE OF ty_s_log_entry WITH EMPTY KEY.
 
     CASE client->get( )-event.
 

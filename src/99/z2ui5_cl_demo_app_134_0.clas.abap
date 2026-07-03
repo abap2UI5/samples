@@ -4,13 +4,13 @@ CLASS z2ui5_cl_demo_app_134_0 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         title TYPE string,
         value TYPE string,
         descr TYPE string,
         info  TYPE string,
-      END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      END OF ty_s_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
     DATA mv_scrollupdate TYPE abap_bool.
 
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_demo_app_134_0 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(ls_row) = VALUE ty_row( title = `Peter`  value = `red` info = `completed`  descr = `this is a description` ).
+    DATA(ls_row) = VALUE ty_s_row( title = `Peter`  value = `red` info = `completed`  descr = `this is a description` ).
     DO 100 TIMES.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.

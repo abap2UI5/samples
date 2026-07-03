@@ -4,24 +4,24 @@ CLASS z2ui5_cl_demo_app_166 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_struc_incl,
+      BEGIN OF ty_s_struc_incl,
         incl_title  TYPE string,
         incl_value  TYPE string,
         incl_value2 TYPE string,
-      END OF ty_struc_incl.
+      END OF ty_s_struc_incl.
 
     TYPES:
-      BEGIN OF ty_struc,
+      BEGIN OF ty_s_struc,
         title  TYPE string,
         value  TYPE string,
         value2 TYPE string,
-      END OF ty_struc.
-    DATA ms_struc TYPE ty_struc.
+      END OF ty_s_struc.
+    DATA ms_struc TYPE ty_s_struc.
 
     DATA
       BEGIN OF ms_struc2.
-        INCLUDE TYPE ty_struc.
-        INCLUDE TYPE ty_struc_incl.
+        INCLUDE TYPE ty_s_struc.
+        INCLUDE TYPE ty_s_struc_incl.
     DATA END OF ms_struc2.
 
     METHODS set_view.

@@ -4,11 +4,11 @@ CLASS z2ui5_cl_demo_app_305 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         title TYPE string,
         value TYPE string,
-      END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      END OF ty_s_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

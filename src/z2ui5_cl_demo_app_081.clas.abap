@@ -4,17 +4,17 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_tab,
+      BEGIN OF ty_s_tab,
         selected TYPE abap_bool,
         id       TYPE string,
         name     TYPE string,
-      END OF ty_tab.
+      END OF ty_s_tab.
 
     DATA product  TYPE string.
     DATA quantity TYPE string.
     DATA mv_placement TYPE string.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_tab WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

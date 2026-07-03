@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         selkz    TYPE abap_bool,
         title    TYPE string,
         value    TYPE string,
@@ -12,8 +12,8 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
         icon     TYPE string,
         info     TYPE string,
         checkbox TYPE abap_bool,
-      END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      END OF ty_s_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
     DATA mv_textarea TYPE string.
     DATA mv_stretch_active TYPE abap_bool.

@@ -4,14 +4,14 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         zzselkz TYPE abap_bool,
         title   TYPE string,
         value   TYPE string,
         descr   TYPE string,
-      END OF ty_row.
+      END OF ty_s_row.
 
-    DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
 
@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
 
   METHOD on_navigation.
 
-    FIELD-SYMBOLS <row> TYPE ty_row.
+    FIELD-SYMBOLS <row> TYPE ty_s_row.
 
     TRY.
         DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).

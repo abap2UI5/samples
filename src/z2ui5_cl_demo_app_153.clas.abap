@@ -4,17 +4,17 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_dataset2,
+      BEGIN OF ty_s_dataset2,
         label                TYPE string,
         data                 TYPE string_table,
         border_width         TYPE i,
         border_radius        TYPE i,
         border_skipped       TYPE abap_bool,
         border_skipped_xfeld TYPE abap_bool,
-      END OF ty_dataset2.
+      END OF ty_s_dataset2.
 
     TYPES:
-      BEGIN OF ty_dataset,
+      BEGIN OF ty_s_dataset,
         label          TYPE string,
         type           TYPE string,
         data           TYPE string_table,
@@ -23,23 +23,23 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
         border_radius  TYPE i,
         border_skipped TYPE abap_bool,
         show_line      TYPE abap_bool,
-        lvl2           TYPE ty_dataset2,
-      END OF ty_dataset.
-    TYPES ty_datasets TYPE STANDARD TABLE OF ty_dataset WITH DEFAULT KEY.
+        lvl2           TYPE ty_s_dataset2,
+      END OF ty_s_dataset.
+    TYPES ty_datasets TYPE STANDARD TABLE OF ty_s_dataset WITH DEFAULT KEY.
 
     TYPES:
-      BEGIN OF ty_data,
+      BEGIN OF ty_s_data,
         labels   TYPE string_table,
         datasets TYPE ty_datasets,
-      END OF ty_data.
+      END OF ty_s_data.
 
     TYPES:
-      BEGIN OF ty_chart,
-        data TYPE ty_data,
-      END OF ty_chart.
+      BEGIN OF ty_s_chart,
+        data TYPE ty_s_data,
+      END OF ty_s_chart.
 
-    DATA ms_struc TYPE ty_chart.
-    DATA ms_struc2 TYPE ty_chart.
+    DATA ms_struc TYPE ty_s_chart.
+    DATA ms_struc2 TYPE ty_s_chart.
 
     METHODS view_display.
     METHODS on_event.
@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
       ms_struc-data-labels = VALUE #( ( `Jan` ) ( `Feb` ) ( `Mar` ) ( `Apr` ) ( `May` ) ( `Jun` ) ).
 
-      DATA ls_dataset TYPE ty_dataset.
+      DATA ls_dataset TYPE ty_s_dataset.
       ls_dataset = VALUE #( ).
       ls_dataset-label = `Fully Rounded`.
       ls_dataset-border_width = 2.

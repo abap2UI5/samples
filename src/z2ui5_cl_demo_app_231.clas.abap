@@ -4,16 +4,16 @@ CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF t_drs,
+      BEGIN OF ty_s_drs,
         start TYPE d,
         end   TYPE d,
-      END OF t_drs.
+      END OF ty_s_drs.
 
-    DATA drs1    TYPE t_drs.
-    DATA drs2    TYPE t_drs.
-    DATA drs3    TYPE t_drs.
-    DATA drs4    TYPE t_drs.
-    DATA drs5    TYPE t_drs.
+    DATA drs1    TYPE ty_s_drs.
+    DATA drs2    TYPE ty_s_drs.
+    DATA drs3    TYPE ty_s_drs.
+    DATA drs4    TYPE ty_s_drs.
+    DATA drs5    TYPE ty_s_drs.
     DATA mindate TYPE d VALUE `20160101`.
     DATA maxdate TYPE d VALUE `20161231`.
     DATA text    TYPE string.
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
 
       ASSIGN me->(source) TO FIELD-SYMBOL(<drs>).
 
-      DATA(drs) = CORRESPONDING t_drs( <drs> ).
+      DATA(drs) = CORRESPONDING ty_s_drs( <drs> ).
 
       text = |Id: { source }\n|
           && |From: { drs-start }\n|

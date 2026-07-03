@@ -3,26 +3,26 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF ty_value,
+    TYPES: BEGIN OF ty_s_value,
              field1 TYPE i,
              field2 TYPE string,
-           END OF ty_value.
+           END OF ty_s_value.
 
-    TYPES: BEGIN OF ty_storage,
+    TYPES: BEGIN OF ty_s_storage,
              type   TYPE string,
              prefix TYPE string,
              key    TYPE string,
              value  TYPE string,
-*             value  TYPE ty_value,
-           END OF ty_storage.
+*             value  TYPE ty_s_value,
+           END OF ty_s_storage.
 
-    TYPES: BEGIN OF ty_storage_type,
+    TYPES: BEGIN OF ty_s_storage_type,
              type TYPE string,
-           END OF ty_storage_type.
+           END OF ty_s_storage_type.
 
-    DATA storage       TYPE ty_storage.
+    DATA storage       TYPE ty_s_storage.
     DATA stored_value  TYPE string.
-    DATA storage_types TYPE STANDARD TABLE OF ty_storage_type.
+    DATA storage_types TYPE STANDARD TABLE OF ty_s_storage_type.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         index       TYPE i,
         title       TYPE string,
         value       TYPE string,
@@ -12,9 +12,9 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
         icon        TYPE string,
         info        TYPE string,
         checkbox    TYPE abap_bool,
-      END OF ty_row.
+      END OF ty_s_row.
 
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA focuscolumn TYPE string.
     DATA focusrow TYPE string.
     DATA focusid TYPE string READ-ONLY.

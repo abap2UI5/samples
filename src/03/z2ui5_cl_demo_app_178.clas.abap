@@ -4,27 +4,27 @@ CLASS z2ui5_cl_demo_app_178 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_prodh_node_level3,
+      BEGIN OF ty_s_prodh_node_level3,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-      END OF ty_prodh_node_level3.
+      END OF ty_s_prodh_node_level3.
     TYPES:
-      BEGIN OF ty_prodh_node_level2,
+      BEGIN OF ty_s_prodh_node_level2,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level2.
+        nodes       TYPE STANDARD TABLE OF ty_s_prodh_node_level3 WITH DEFAULT KEY,
+      END OF ty_s_prodh_node_level2.
     TYPES:
-      BEGIN OF ty_prodh_node_level1,
+      BEGIN OF ty_s_prodh_node_level1,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level1.
+        nodes       TYPE STANDARD TABLE OF ty_s_prodh_node_level2 WITH DEFAULT KEY,
+      END OF ty_s_prodh_node_level1.
     TYPES
-      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_s_prodh_node_level1 WITH DEFAULT KEY.
 
     DATA prodh_nodes TYPE ty_prodh_nodes.
 

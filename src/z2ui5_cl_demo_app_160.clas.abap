@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF s_output,
+      BEGIN OF ty_s_output,
         index          TYPE i,
         set_sk         TYPE c LENGTH 10,
         matnr          TYPE matnr,
@@ -33,8 +33,8 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC.
         is_q04_prev    TYPE i,
         pl_q04         TYPE i,
         per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
-      END OF s_output.
-    DATA mt_output TYPE STANDARD TABLE OF s_output.
+      END OF ty_s_output.
+    DATA mt_output TYPE STANDARD TABLE OF ty_s_output.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
   METHOD load_output_table.
 
-    DATA ls_output TYPE s_output.
+    DATA ls_output TYPE ty_s_output.
     mt_output = VALUE #( ).
 
     DO 10 TIMES.

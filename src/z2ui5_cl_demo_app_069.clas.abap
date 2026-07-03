@@ -4,21 +4,21 @@ CLASS z2ui5_cl_demo_app_069 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_t_tree3,
+      BEGIN OF ty_s_tree3,
         is_selected TYPE abap_bool,
         text        TYPE string,
-      END OF ty_t_tree3,
-      BEGIN OF ty_t_tree2,
+      END OF ty_s_tree3,
+      BEGIN OF ty_s_tree2,
         is_selected TYPE abap_bool,
         text        TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_t_tree3 WITH DEFAULT KEY,
-      END OF ty_t_tree2,
-      BEGIN OF ty_t_tree1,
+        nodes       TYPE STANDARD TABLE OF ty_s_tree3 WITH DEFAULT KEY,
+      END OF ty_s_tree2,
+      BEGIN OF ty_s_tree1,
         is_selected TYPE abap_bool,
         text        TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_t_tree2 WITH DEFAULT KEY,
-      END OF ty_t_tree1,
-      ty_t_tree TYPE STANDARD TABLE OF ty_t_tree1 WITH DEFAULT KEY.
+        nodes       TYPE STANDARD TABLE OF ty_s_tree2 WITH DEFAULT KEY,
+      END OF ty_s_tree1,
+      ty_t_tree TYPE STANDARD TABLE OF ty_s_tree1 WITH DEFAULT KEY.
 
     DATA mt_tree TYPE ty_t_tree.
     DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.

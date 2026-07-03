@@ -4,14 +4,14 @@ CLASS z2ui5_cl_demo_app_264 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_a_data,
+      BEGIN OF ty_s_a_data,
            label       TYPE string,
            value_state TYPE string,
-         END OF ty_a_data.
+         END OF ty_s_a_data.
 
     DATA
-      lt_a_data TYPE STANDARD TABLE OF ty_a_data.
-    DATA ls_a_data TYPE ty_a_data.
+      lt_a_data TYPE STANDARD TABLE OF ty_s_a_data.
+    DATA ls_a_data TYPE ty_s_a_data.
     DATA s_text TYPE string.
 
   PROTECTED SECTION.
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_264 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    FIELD-SYMBOLS <fs_a_data> TYPE ty_a_data.
+    FIELD-SYMBOLS <fs_a_data> TYPE ty_s_a_data.
 
     me->client = client.
 

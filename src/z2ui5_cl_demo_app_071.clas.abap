@@ -4,14 +4,14 @@ CLASS z2ui5_cl_demo_app_071 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF s_combobox,
+      BEGIN OF ty_s_combobox,
         key  TYPE string,
         text TYPE string,
-      END OF s_combobox.
+      END OF ty_s_combobox.
 
     DATA mv_set_size_limit TYPE i VALUE 100.
     DATA mv_combo_number TYPE i VALUE 105.
-    DATA t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
+    DATA t_combo TYPE STANDARD TABLE OF ty_s_combobox WITH EMPTY KEY.
 
   PROTECTED SECTION.
   PRIVATE SECTION.

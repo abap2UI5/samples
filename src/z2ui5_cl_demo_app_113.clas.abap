@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_feed,
+      BEGIN OF ty_s_feed,
         author    TYPE string,
         title     TYPE string,
         authorpic TYPE string,
@@ -12,9 +12,9 @@ CLASS z2ui5_cl_demo_app_113 DEFINITION PUBLIC.
         date      TYPE string,
         datetime  TYPE string,
         text      TYPE string,
-      END OF ty_feed.
-    DATA mt_feed TYPE TABLE OF ty_feed.
-    DATA ms_feed TYPE ty_feed.
+      END OF ty_s_feed.
+    DATA mt_feed TYPE TABLE OF ty_s_feed.
+    DATA ms_feed TYPE ty_s_feed.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

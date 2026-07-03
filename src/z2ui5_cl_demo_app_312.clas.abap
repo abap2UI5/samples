@@ -4,22 +4,22 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ts_data_chart,
+      BEGIN OF ty_s_data_chart,
         week    TYPE string,
         revenue TYPE string,
         cost    TYPE string,
-      END OF ts_data_chart.
-    TYPES tt_data_chart TYPE STANDARD TABLE OF ts_data_chart WITH DEFAULT KEY.
+      END OF ty_s_data_chart.
+    TYPES tt_data_chart TYPE STANDARD TABLE OF ty_s_data_chart WITH DEFAULT KEY.
 
     TYPES:
-      BEGIN OF ts_screen,
+      BEGIN OF ty_s_screen,
         viztype    TYPE string,
         viztypesel TYPE string,
-      END OF ts_screen.
+      END OF ty_s_screen.
 
     DATA mt_data_chart     TYPE tt_data_chart.
 
-    DATA ms_screen         TYPE ts_screen.
+    DATA ms_screen         TYPE ty_s_screen.
 
     DATA mv_prop           TYPE string.
     DATA mt_feed_values    TYPE TABLE OF string.

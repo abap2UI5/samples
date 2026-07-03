@@ -4,15 +4,15 @@ CLASS z2ui5_cl_demo_app_114 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_feed,
+      BEGIN OF ty_s_feed,
         author    TYPE string,
         authorpic TYPE string,
         type      TYPE string,
         date      TYPE string,
         text      TYPE string,
-      END OF ty_feed.
-    DATA mt_feed TYPE TABLE OF ty_feed.
-    DATA ms_feed TYPE ty_feed.
+      END OF ty_s_feed.
+    DATA mt_feed TYPE TABLE OF ty_s_feed.
+    DATA ms_feed TYPE ty_s_feed.
     DATA mv_value TYPE string.
 
   PROTECTED SECTION.

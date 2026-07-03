@@ -4,15 +4,15 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_name,
+      BEGIN OF ty_s_name,
         title         TYPE string,
         desc          TYPE string,
         icon          TYPE string,
         highlight     TYPE string,
         info          TYPE string,
         wrapcharlimit TYPE i,
-      END OF ty_name.
-    DATA lt_o_model TYPE TABLE OF ty_name.
+      END OF ty_s_name.
+    DATA lt_o_model TYPE TABLE OF ty_s_name.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF t_data,
+      BEGIN OF ty_s_data,
         field1 TYPE string,
         field2 TYPE string,
         field3 TYPE string,
-      END OF t_data.
-    TYPES ty_t_data TYPE STANDARD TABLE OF t_data WITH EMPTY KEY.
+      END OF ty_s_data.
+    TYPES ty_t_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
 
     DATA gt_data TYPE ty_t_data.
 

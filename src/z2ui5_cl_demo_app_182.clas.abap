@@ -3,12 +3,12 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF t_attributes3,
+    TYPES: BEGIN OF ty_s_attributes3,
              label TYPE i,
              value TYPE string,
-           END OF t_attributes3.
-    TYPES tt_attributes3 TYPE STANDARD TABLE OF t_attributes3 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_nodes2,
+           END OF ty_s_attributes3.
+    TYPES tt_attributes3 TYPE STANDARD TABLE OF ty_s_attributes3 WITH DEFAULT KEY.
+    TYPES: BEGIN OF ty_s_nodes2,
              id         TYPE string,
              title      TYPE string,
              src        TYPE string,
@@ -19,25 +19,25 @@ CLASS z2ui5_cl_demo_app_182 DEFINITION PUBLIC.
              position   TYPE string,
              email      TYPE string,
              phone      TYPE string,
-           END OF t_nodes2.
-    TYPES: BEGIN OF t_lines4,
+           END OF ty_s_nodes2.
+    TYPES: BEGIN OF ty_s_lines4,
              from TYPE string,
              to   TYPE string,
-           END OF t_lines4.
-    TYPES tt_nodes2 TYPE STANDARD TABLE OF t_nodes2 WITH DEFAULT KEY.
-    TYPES tt_lines4 TYPE STANDARD TABLE OF t_lines4 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_json1,
+           END OF ty_s_lines4.
+    TYPES tt_nodes2 TYPE STANDARD TABLE OF ty_s_nodes2 WITH DEFAULT KEY.
+    TYPES tt_lines4 TYPE STANDARD TABLE OF ty_s_lines4 WITH DEFAULT KEY.
+    TYPES: BEGIN OF ty_s_json1,
              nodes TYPE tt_nodes2,
              lines TYPE tt_lines4,
-           END OF t_json1.
-    DATA mt_data TYPE t_json1.
+           END OF ty_s_json1.
+    DATA mt_data TYPE ty_s_json1.
 
     METHODS on_event.
     METHODS view_display.
     METHODS detail_popover
       IMPORTING
         id   TYPE string
-        node TYPE t_nodes2.
+        node TYPE ty_s_nodes2.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

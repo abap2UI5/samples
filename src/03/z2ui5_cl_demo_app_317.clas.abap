@@ -4,27 +4,27 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_node4,
+      BEGIN OF ty_s_node4,
         id   TYPE string,
         text TYPE string,
 *        nodes TYPE STANDARD TABLE OF ty_node5 WITH DEFAULT KEY,
-      END OF ty_node4,
-      BEGIN OF ty_node3,
+      END OF ty_s_node4,
+      BEGIN OF ty_s_node3,
         id    TYPE string,
         text  TYPE string,
-        nodes TYPE STANDARD TABLE OF ty_node4 WITH DEFAULT KEY,
-      END OF ty_node3,
-      BEGIN OF ty_node2,
+        nodes TYPE STANDARD TABLE OF ty_s_node4 WITH DEFAULT KEY,
+      END OF ty_s_node3,
+      BEGIN OF ty_s_node2,
         id    TYPE string,
         text  TYPE string,
-        nodes TYPE STANDARD TABLE OF ty_node3 WITH DEFAULT KEY,
-      END OF ty_node2,
-      BEGIN OF ty_node1,
+        nodes TYPE STANDARD TABLE OF ty_s_node3 WITH DEFAULT KEY,
+      END OF ty_s_node2,
+      BEGIN OF ty_s_node1,
         id    TYPE string,
         text  TYPE string,
-        nodes TYPE STANDARD TABLE OF ty_node2 WITH DEFAULT KEY,
-      END OF ty_node1,
-      ty_tree TYPE STANDARD TABLE OF ty_node1 WITH DEFAULT KEY.
+        nodes TYPE STANDARD TABLE OF ty_s_node2 WITH DEFAULT KEY,
+      END OF ty_s_node1,
+      ty_tree TYPE STANDARD TABLE OF ty_s_node1 WITH DEFAULT KEY.
 
     TYPES:
       BEGIN OF ty_s_node,
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     mt_tree = VALUE #( ).
     LOOP AT mt_node INTO DATA(ls_node) WHERE id_parent IS INITIAL.
 
-      DATA(ls_root) = CORRESPONDING ty_node1( ls_node ).
+      DATA(ls_root) = CORRESPONDING ty_s_node1( ls_node ).
       INSERT ls_root INTO TABLE mt_tree.
 
     ENDLOOP.
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
     LOOP AT mt_tree REFERENCE INTO DATA(lr_node).
 
       LOOP AT mt_node INTO ls_node WHERE id_parent = lr_node->id.
-        DATA(ls_root2) = CORRESPONDING ty_node2( ls_node ).
+        DATA(ls_root2) = CORRESPONDING ty_s_node2( ls_node ).
         INSERT ls_root2 INTO TABLE lr_node->nodes.
       ENDLOOP.
 
@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
       LOOP AT lr_node->nodes REFERENCE INTO DATA(lr_node2).
 
         LOOP AT mt_node INTO ls_node WHERE id_parent = lr_node2->id.
-          DATA(ls_root3) = CORRESPONDING ty_node3( ls_node ).
+          DATA(ls_root3) = CORRESPONDING ty_s_node3( ls_node ).
           INSERT ls_root3 INTO TABLE lr_node2->nodes.
         ENDLOOP.
 
@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
         LOOP AT lr_node2->nodes REFERENCE INTO DATA(lr_node3).
 
           LOOP AT mt_node INTO ls_node WHERE id_parent = lr_node3->id.
-            DATA(ls_root4) = CORRESPONDING ty_node4( ls_node ).
+            DATA(ls_root4) = CORRESPONDING ty_s_node4( ls_node ).
             INSERT ls_root4 INTO TABLE lr_node3->nodes.
           ENDLOOP.
 

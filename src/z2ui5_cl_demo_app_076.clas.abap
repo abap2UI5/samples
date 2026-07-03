@@ -3,39 +3,39 @@ CLASS z2ui5_cl_demo_app_076 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF t_subtask5,
+    TYPES: BEGIN OF ty_s_subtask5,
              id        TYPE string,
              starttime TYPE string,
              endtime   TYPE string,
-           END OF t_subtask5.
-    TYPES tt_subtask5 TYPE STANDARD TABLE OF t_subtask5 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_task3,
+           END OF ty_s_subtask5.
+    TYPES tt_subtask5 TYPE STANDARD TABLE OF ty_s_subtask5 WITH DEFAULT KEY.
+    TYPES: BEGIN OF ty_s_task3,
              id        TYPE string,
              starttime TYPE string,
              endtime   TYPE string,
-           END OF t_task3.
-    TYPES: BEGIN OF t_children4,
+           END OF ty_s_task3.
+    TYPES: BEGIN OF ty_s_children4,
              id      TYPE string,
              text    TYPE string,
              subtask TYPE tt_subtask5,
-           END OF t_children4.
-    TYPES tt_task3 TYPE STANDARD TABLE OF t_task3 WITH DEFAULT KEY.
-    TYPES tt_children4 TYPE STANDARD TABLE OF t_children4 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_children2,
+           END OF ty_s_children4.
+    TYPES tt_task3 TYPE STANDARD TABLE OF ty_s_task3 WITH DEFAULT KEY.
+    TYPES tt_children4 TYPE STANDARD TABLE OF ty_s_children4 WITH DEFAULT KEY.
+    TYPES: BEGIN OF ty_s_children2,
              id       TYPE string,
              text     TYPE string,
              task     TYPE tt_task3,
              children TYPE tt_children4,
-           END OF t_children2.
-    TYPES tt_children2 TYPE STANDARD TABLE OF t_children2 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_root6,
+           END OF ty_s_children2.
+    TYPES tt_children2 TYPE STANDARD TABLE OF ty_s_children2 WITH DEFAULT KEY.
+    TYPES: BEGIN OF ty_s_root6,
              children TYPE tt_children2,
-           END OF t_root6.
-    TYPES: BEGIN OF t_json1,
-             root TYPE t_root6,
-           END OF t_json1.
+           END OF ty_s_root6.
+    TYPES: BEGIN OF ty_s_json1,
+             root TYPE ty_s_root6,
+           END OF ty_s_json1.
 
-    DATA mt_table TYPE t_root6.
+    DATA mt_table TYPE ty_s_root6.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -4,7 +4,7 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_spot,
+      BEGIN OF ty_s_spot,
         tooltip       TYPE string,
         type          TYPE string,
         pos           TYPE string,
@@ -12,27 +12,27 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
         contentoffset TYPE string,
         key           TYPE string,
         icon          TYPE string,
-      END OF ty_spot.
+      END OF ty_s_spot.
 
     TYPES:
-      BEGIN OF ty_route,
+      BEGIN OF ty_s_route,
         position    TYPE string,
         routetype   TYPE string,
         linedash    TYPE string,
         color       TYPE string,
         colorborder TYPE string,
         linewidth   TYPE string,
-      END OF ty_route.
+      END OF ty_s_route.
 
     TYPES: BEGIN OF ty_s_legend,
              text  TYPE string,
              color TYPE string,
            END OF ty_s_legend.
 
-    DATA mt_spot TYPE TABLE OF ty_spot.
+    DATA mt_spot TYPE TABLE OF ty_s_spot.
 
     DATA
-      mt_route TYPE TABLE OF ty_route.
+      mt_route TYPE TABLE OF ty_s_route.
 
     DATA mt_legend TYPE TABLE OF ty_s_legend.
 

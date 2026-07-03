@@ -4,13 +4,13 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF t_token,
+      BEGIN OF ty_s_token,
         key  TYPE string,
         text TYPE string,
-      END OF t_token,
-      t_tokens TYPE STANDARD TABLE OF t_token WITH EMPTY KEY.
+      END OF ty_s_token,
+      t_tokens TYPE STANDARD TABLE OF ty_s_token WITH EMPTY KEY.
     TYPES:
-      BEGIN OF t_range,
+      BEGIN OF ty_s_range,
         exclude      TYPE abap_bool,
         operation    TYPE string,
         value1       TYPE string,
@@ -18,8 +18,8 @@ CLASS z2ui5_cl_demo_app_319 DEFINITION PUBLIC.
         keyfield     TYPE string,
         tokentext    TYPE string,
         tokenlongkey TYPE string,
-      END OF t_range,
-      t_ranges TYPE STANDARD TABLE OF t_range WITH EMPTY KEY.
+      END OF ty_s_range,
+      t_ranges TYPE STANDARD TABLE OF ty_s_range WITH EMPTY KEY.
 
     DATA:
       BEGIN OF m_selection,

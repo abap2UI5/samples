@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_058 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF s_combobox,
+      BEGIN OF ty_s_combobox,
         key  TYPE string,
         text TYPE string,
-      END OF s_combobox.
+      END OF ty_s_combobox.
 
-    TYPES ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
+    TYPES ty_t_combo TYPE STANDARD TABLE OF ty_s_combobox WITH EMPTY KEY.
 
     TYPES:
       BEGIN OF ty_s_cols,

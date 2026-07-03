@@ -4,12 +4,12 @@ CLASS z2ui5_cl_demo_app_294 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_a_data,
+      BEGIN OF ty_s_a_data,
         label            TYPE string,
         value_state      TYPE string,
         value_state_text TYPE string,
-      END OF ty_a_data.
-    DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
+      END OF ty_s_a_data.
+    DATA lt_a_data TYPE STANDARD TABLE OF ty_s_a_data.
     DATA s_text TYPE string.
 
   PROTECTED SECTION.

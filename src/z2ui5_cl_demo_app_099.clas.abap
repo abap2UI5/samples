@@ -4,29 +4,29 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_row,
+      BEGIN OF ty_s_row,
         title    TYPE string,
         value    TYPE string,
         descr    TYPE string,
         icon     TYPE string,
         info     TYPE string,
         selected TYPE abap_bool,
-      END OF ty_row.
+      END OF ty_s_row.
     TYPES:
-      BEGIN OF ty_sort,
+      BEGIN OF ty_s_sort,
         text     TYPE string,
         key      TYPE string,
         selected TYPE abap_bool,
-      END OF ty_sort.
+      END OF ty_s_sort.
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
     DATA
-      t_tab_sort TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY.
+      t_tab_sort TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
     DATA
-      t_tab_group TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY.
+      t_tab_group TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
     DATA
-      t_tab_filter TYPE STANDARD TABLE OF ty_sort WITH EMPTY KEY.
+      t_tab_filter TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
 
     DATA mv_sorter_group TYPE string.
     DATA mv_filter TYPE string.

@@ -6,13 +6,13 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
     TYPES children_array TYPE STANDARD TABLE OF int4 WITH NON-UNIQUE KEY table_line.
     TYPES texts_array TYPE STANDARD TABLE OF string WITH NON-UNIQUE KEY table_line.
 
-    TYPES: BEGIN OF t_children3,
+    TYPES: BEGIN OF ty_s_children3,
              children TYPE i,
-           END OF t_children3.
+           END OF ty_s_children3.
     TYPES t_texts4 TYPE string.
-    TYPES tt_children3 TYPE STANDARD TABLE OF t_children3 WITH DEFAULT KEY.
+    TYPES tt_children3 TYPE STANDARD TABLE OF ty_s_children3 WITH DEFAULT KEY.
     TYPES tt_texts4 TYPE STANDARD TABLE OF t_texts4 WITH DEFAULT KEY.
-    TYPES: BEGIN OF t_nodes2,
+    TYPES: BEGIN OF ty_s_nodes2,
              id                TYPE string,
              lane              TYPE string,
              title             TYPE string,
@@ -23,15 +23,15 @@ CLASS z2ui5_cl_demo_app_091 DEFINITION PUBLIC.
              focused           TYPE abap_bool,
              highlighted       TYPE abap_bool,
              texts             TYPE texts_array,
-           END OF t_nodes2.
-    TYPES: BEGIN OF t_lanes5,
+           END OF ty_s_nodes2.
+    TYPES: BEGIN OF ty_s_lanes5,
              id       TYPE string,
              icon     TYPE string,
              label    TYPE string,
              position TYPE i,
-           END OF t_lanes5.
-    TYPES tt_nodes2 TYPE STANDARD TABLE OF t_nodes2 WITH DEFAULT KEY.
-    TYPES tt_lanes5 TYPE STANDARD TABLE OF t_lanes5 WITH DEFAULT KEY.
+           END OF ty_s_lanes5.
+    TYPES tt_nodes2 TYPE STANDARD TABLE OF ty_s_nodes2 WITH DEFAULT KEY.
+    TYPES tt_lanes5 TYPE STANDARD TABLE OF ty_s_lanes5 WITH DEFAULT KEY.
 
     DATA mt_nodes TYPE tt_nodes2.
     DATA mt_lanes TYPE tt_lanes5.

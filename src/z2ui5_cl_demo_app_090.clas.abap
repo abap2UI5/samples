@@ -3,46 +3,46 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF t_items2,
+    TYPES: BEGIN OF ty_s_items2,
              columnkey TYPE string,
              text      TYPE string,
              visible   TYPE abap_bool,
              index     TYPE i,
-           END OF t_items2.
-    TYPES tt_items2 TYPE STANDARD TABLE OF t_items2 WITH DEFAULT KEY.
+           END OF ty_s_items2.
+    TYPES tt_items2 TYPE STANDARD TABLE OF ty_s_items2 WITH DEFAULT KEY.
 
-    TYPES: BEGIN OF t_items3,
+    TYPES: BEGIN OF ty_s_items3,
              columnkey     TYPE string,
              operation     TYPE string,
              showifgrouped TYPE abap_bool,
              key           TYPE string,
              text          TYPE string,
-           END OF t_items3.
-    TYPES tt_items3 TYPE STANDARD TABLE OF t_items3 WITH DEFAULT KEY.
+           END OF ty_s_items3.
+    TYPES tt_items3 TYPE STANDARD TABLE OF ty_s_items3 WITH DEFAULT KEY.
 
     "P13N
 
-    TYPES: BEGIN OF t_items22,
+    TYPES: BEGIN OF ty_s_items22,
              visible TYPE abap_bool,
              name    TYPE string,
              label   TYPE string,
-           END OF t_items22.
-    TYPES tt_items22 TYPE STANDARD TABLE OF t_items22 WITH DEFAULT KEY.
+           END OF ty_s_items22.
+    TYPES tt_items22 TYPE STANDARD TABLE OF ty_s_items22 WITH DEFAULT KEY.
 
-    TYPES: BEGIN OF t_items32,
+    TYPES: BEGIN OF ty_s_items32,
              sorted     TYPE abap_bool,
              name       TYPE string,
              label      TYPE string,
              descending TYPE abap_bool,
-           END OF t_items32.
-    TYPES tt_items32 TYPE STANDARD TABLE OF t_items32 WITH DEFAULT KEY.
+           END OF ty_s_items32.
+    TYPES tt_items32 TYPE STANDARD TABLE OF ty_s_items32 WITH DEFAULT KEY.
 
-    TYPES: BEGIN OF t_items33,
+    TYPES: BEGIN OF ty_s_items33,
              grouped TYPE abap_bool,
              name    TYPE string,
              label   TYPE string,
-           END OF t_items33.
-    TYPES tt_items33 TYPE STANDARD TABLE OF t_items33 WITH DEFAULT KEY.
+           END OF ty_s_items33.
+    TYPES tt_items33 TYPE STANDARD TABLE OF ty_s_items33 WITH DEFAULT KEY.
 
     DATA mt_columns TYPE tt_items2.
     DATA mt_columns1 TYPE tt_items2.
