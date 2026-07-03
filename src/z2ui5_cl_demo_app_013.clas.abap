@@ -60,17 +60,17 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
                             selectionchanged = client->_event( `DONUT_CHANGED` )
                     )->segments( ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind( sel4 )
+        selected       = client->_bind_edit( sel4 )
         label          = `Impl. Phase`
         value          = `40.0`
         displayedvalue = `40.0%` ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind( sel5 )
+        selected       = client->_bind_edit( sel5 )
         label          = `Design Phase`
         value          = `21.5`
         displayedvalue = `21.5%` ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind( sel6 )
+        selected       = client->_bind_edit( sel6 )
         label          = `Test Phase`
         value          = `38.5`
         displayedvalue = `38.5%` ).

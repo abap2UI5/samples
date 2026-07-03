@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                       )->select(
                                          forceselection = abap_false
-                                         selectedkey    = client->_bind( selected_product )
+                                         selectedkey    = client->_bind_edit( selected_product )
                                          items          = client->_bind( lt_product_collection )
                                          )->item( key  = `{PRODUCT_ID}`
                                                   text = `{NAME}`
@@ -75,10 +75,10 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                               )->content(
                                   )->hbox( justifycontent = `SpaceAround`
                                       )->select(
-                                            enabled        = client->_bind( enabled )
-                                            editable       = client->_bind( editable )
+                                            enabled        = client->_bind_edit( enabled )
+                                            editable       = client->_bind_edit( editable )
                                             forceselection = abap_false
-                                            selectedkey    = client->_bind( selected_product2 )
+                                            selectedkey    = client->_bind_edit( selected_product2 )
                                             items          = client->_bind( lt_product_collection2 )
                                             )->item( key  = `{PRODUCT_ID}`
                                                      text = `{NAME}`
@@ -88,13 +88,13 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                               )->label( text  = `Enabled:`
                                                         class = `sapUiTinyMarginEnd`
                                               )->switch( type  = `AcceptReject`
-                                                         state = client->_bind( enabled )
+                                                         state = client->_bind_edit( enabled )
                                           )->get_parent(
                                           )->hbox( alignitems = `Center`
                                               )->label( text  = `Editable:`
                                                         class = `sapUiTinyMarginEnd`
                                               )->switch( type  = `AcceptReject`
-                                                         state = client->_bind( editable )
+                                                         state = client->_bind_edit( editable )
                                           )->get_parent(
                                       )->get_parent(
                                   )->get_parent(
@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
                                       )->toolbar_spacer(
                                           )->select(
                                               forceselection  = abap_false
-                                              selectedkey     = client->_bind( selected_product3 )
+                                              selectedkey     = client->_bind_edit( selected_product3 )
                                               type            = `IconOnly`
                                               icon            = `sap-icon://filter`
                                               autoadjustwidth = abap_true

@@ -60,29 +60,29 @@ CLASS z2ui5_cl_demo_app_014 IMPLEMENTATION.
             succeedingpoint  = `89`
         )->points( ).
     point->interact_line_chart_point(
-        selected       = client->_bind( sel7 )
+        selected       = client->_bind_edit( sel7 )
         label          = `May`
         value          = `33.1`
         secondarylabel = `Q2` ).
     point->interact_line_chart_point(
-        selected = client->_bind( sel8 )
+        selected = client->_bind_edit( sel8 )
         label    = `June`
         value    = `12` ).
     point->interact_line_chart_point(
-        selected       = client->_bind( sel9 )
+        selected       = client->_bind_edit( sel9 )
         label          = `July`
         value          = `51.4`
         secondarylabel = `Q3` ).
     point->interact_line_chart_point(
-        selected = client->_bind( sel10 )
+        selected = client->_bind_edit( sel10 )
         label    = `Aug`
         value    = `52` ).
     point->interact_line_chart_point(
-        selected = client->_bind( sel11 )
+        selected = client->_bind_edit( sel11 )
         label    = `Sep`
         value    = `69.9` ).
     point->interact_line_chart_point(
-        selected       = client->_bind( sel12 )
+        selected       = client->_bind_edit( sel12 )
         label          = `Oct`
         value          = `0.9`
         secondarylabel = `Q4` ).

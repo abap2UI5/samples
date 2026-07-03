@@ -57,15 +57,15 @@ CLASS z2ui5_cl_demo_app_016 IMPLEMENTATION.
                 displayedbars    = `4`
             )->bars( ).
     bar->interact_bar_chart_bar(
-        selected = client->_bind( sel1 )
+        selected = client->_bind_edit( sel1 )
         label    = `Product 1`
         value    = `10` ).
     bar->interact_bar_chart_bar(
-        selected = client->_bind( sel2 )
+        selected = client->_bind_edit( sel2 )
         label    = `Product 2`
         value    = `20` ).
     bar->interact_bar_chart_bar(
-        selected = client->_bind( sel3 )
+        selected = client->_bind_edit( sel3 )
         label    = `Product 3`
         value    = `70` ).
 
