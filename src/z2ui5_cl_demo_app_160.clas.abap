@@ -182,7 +182,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
                         filterproperty = `IS_Q01_PREV` )->text( `Column 16` )->ui_template( )->text( `{IS_Q01_PREV}` ).
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_Q01`
-                        filterproperty = `PL_Q01` )->text( `Column 17` )->ui_template( )->text( `{PL_Q01}` ). "Nicht editierbar, da im Detail geplant
+                        filterproperty = `PL_Q01` )->text( `Column 17` )->ui_template( )->text( `{PL_Q01}` ). "Not editable, because it is planned at detail level
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_q01`
                         filterproperty = `per_cent_q01` )->text( `Column 18` )->ui_template( )->text( `{per_cent_q01} %` ).

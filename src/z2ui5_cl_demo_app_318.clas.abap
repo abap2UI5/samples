@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_318 IMPLEMENTATION.
     mv_editor = `<html> ` && |\n| &&
                 `    <body> ` && |\n| &&
                 `        <h1> Hi there 👋</h1>` && |\n| &&
-                `        <p>This example was rendered by providing HTML code to the API. You can also tell the API to convert from a URL. Just remove the html parameter and add the url paramter.</p>` && |\n| &&
+                `        <p>This example was rendered by providing HTML code to the API. You can also tell the API to convert from a URL. Just remove the html parameter and add the url parameter.</p>` && |\n| &&
                 `    </body> ` && |\n| &&
                 `</html>`.
 

@@ -194,7 +194,7 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `RTTI - Struc wit Cell Binding`
+    panel->generic_tile( header    = `RTTI - Struc with Cell Binding`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_332` )
                          mode      = `LineMode`

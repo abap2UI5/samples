@@ -1633,12 +1633,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Model XVI`
-                         subheader = `Check Error Sruc with Ref`
+                         subheader = `Check Error Struc with Ref`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_348` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
     panel->generic_tile( header    = `Model XVII`
-                         subheader = `Check Error Tabel and Sruc with Ref`
+                         subheader = `Check Error Table and Struc with Ref`
                          press     = client->_event( `z2ui5_cl_demo_app_349` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).

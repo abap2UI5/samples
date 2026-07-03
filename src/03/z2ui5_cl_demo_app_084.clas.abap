@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
                                      text = `Success MessageBox`
                                      icon = `sap-icon://accept` ).
       WHEN `BUTTON_SEND`.
-        client->message_box_display( `success - values send to the server` ).
+        client->message_box_display( `success - values sent to the server` ).
       WHEN `BUTTON_CLEAR`.
         screen = VALUE #( ).
         client->message_toast_display( `View initialized` ).

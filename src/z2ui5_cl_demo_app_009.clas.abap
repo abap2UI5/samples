@@ -145,7 +145,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
         ENDIF.
       WHEN `BUTTON_SEND`.
-        client->message_box_display( `success - values send to the server` ).
+        client->message_box_display( `success - values sent to the server` ).
       WHEN `BUTTON_CLEAR`.
         s_screen = VALUE #( ).
         client->message_box_display( `View initialized` ).
