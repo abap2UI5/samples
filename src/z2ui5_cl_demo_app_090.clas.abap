@@ -193,8 +193,8 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
 *     ( n = `title`   v = `Columns` )
 *     ( n = `visible` v = `true` )
 *     ( n = `type`    v = `Columns` )
-      ( n = `items`   v = `{path:'` && client->_bind_edit( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` )
-      ( n = `columnsItems`   v = `{path:'` && client->_bind_edit( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
+      ( n = `items`   v = |\{path:'{ client->_bind_edit( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| )
+      ( n = `columnsItems`   v = |\{path:'{ client->_bind_edit( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| ) )
       )->items(
          )->_generic( name = `P13nItem`
            t_prop          = VALUE #( ( n = `columnKey` v = `{columnkey}` )
@@ -205,7 +205,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
                                   ( n = `visible`   v = `{visible}` )
                                    ( n = `index`    v = `{index}` ) ) )->get_parent( )->get_parent( )->get_parent(
       )->_generic( name = `P13nGroupPanel`
-           t_prop       = VALUE #( ( n = `groupItems` v = `{path:'` && client->_bind_edit( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) && `'}` ) )
+           t_prop       = VALUE #( ( n = `groupItems` v = |\{path:'{ client->_bind_edit( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| ) )
       )->items(
       )->_generic( name = `P13nItem`
            t_prop       = VALUE #( ( n = `columnKey` v = `{columnkey}` )

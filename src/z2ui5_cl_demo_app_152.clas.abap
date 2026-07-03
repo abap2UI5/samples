@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         IF mv_multiselect = abap_false.
 
           ASSIGN ls_result-row->* TO <row>.
-          client->message_box_display( `callback after popup to select: ` && <row>-title ).
+          client->message_box_display( |callback after popup to select: { <row>-title }| ).
 
         ELSE.
 

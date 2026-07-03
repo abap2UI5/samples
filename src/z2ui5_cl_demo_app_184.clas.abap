@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
                                        )->cells( ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = `{` && comp-name && `}` ).
+      cells->object_identifier( text = |\{{ comp-name }\}| ).
     ENDLOOP.
 
     IF mo_parent_view IS INITIAL.
