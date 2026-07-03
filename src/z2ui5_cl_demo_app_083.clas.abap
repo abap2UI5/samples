@@ -64,6 +64,7 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     DATA mv_name TYPE string.
 
     DATA mt_table TYPE REF TO data.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -73,6 +74,7 @@ CLASS z2ui5_cl_demo_app_083 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS view_display_main.
     METHODS popover_display_filter.
+
   PRIVATE SECTION.
 ENDCLASS.
 

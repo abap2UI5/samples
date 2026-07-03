@@ -35,7 +35,6 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
 
-
   METHOD on_init.
 
     get_data( ).

@@ -112,11 +112,10 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
   METHOD refresh_data.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
-    TYPES ty_t_01 TYPE STANDARD TABLE OF z2ui5_t_01.
 
     TRY.
 
-        CREATE DATA mt_table TYPE ty_t_01.
+        CREATE DATA mt_table TYPE STANDARD TABLE OF z2ui5_t_01.
         ASSIGN mt_table->* TO <table>.
         mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <table> ).
 

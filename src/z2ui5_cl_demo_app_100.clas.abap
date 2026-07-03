@@ -19,9 +19,7 @@ CLASS z2ui5_cl_demo_app_100 DEFINITION PUBLIC.
         process          TYPE string,
         process_state    TYPE string,
       END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
-
-    DATA mt_table TYPE ty_t_table.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
     DATA lv_selkz TYPE abap_bool.
 
   PROTECTED SECTION.

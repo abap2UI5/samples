@@ -20,9 +20,7 @@ CLASS z2ui5_cl_demo_app_364 DEFINITION PUBLIC.
         validated TYPE abap_bool,
         nodes     TYPE STANDARD TABLE OF ty_s_node WITH DEFAULT KEY,
       END OF ty_s_tree.
-    TYPES ty_t_tree TYPE STANDARD TABLE OF ty_s_tree WITH DEFAULT KEY.
-
-    DATA t_tree TYPE ty_t_tree.
+    DATA t_tree TYPE STANDARD TABLE OF ty_s_tree WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -22,6 +22,7 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
     DATA accuracy TYPE string.
 
     DATA mt_spot TYPE TABLE OF ty_spot.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

@@ -24,6 +24,7 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
     DATA group_items    TYPE ty_items.
     DATA content_height TYPE string.
     DATA content_width  TYPE string.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -40,6 +41,7 @@ CLASS z2ui5_cl_demo_app_320 DEFINITION PUBLIC.
     METHODS calculate_content_height
       IMPORTING lines        TYPE i
       RETURNING VALUE(result) TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 

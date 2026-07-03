@@ -13,10 +13,8 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
         quantity         TYPE i,
       END OF ty_s_tab.
 
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
-
     DATA mv_search_value TYPE string.
-    DATA mt_table TYPE ty_t_table.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

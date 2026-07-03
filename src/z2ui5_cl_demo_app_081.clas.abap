@@ -15,6 +15,7 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
     DATA mv_placement TYPE string.
 
     DATA mt_tab TYPE STANDARD TABLE OF ty_tab WITH EMPTY KEY.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -27,6 +28,7 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
     METHODS popover_list_display
       IMPORTING
         id TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 

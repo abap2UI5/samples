@@ -36,11 +36,13 @@ CLASS z2ui5_cl_demo_app_317 DEFINITION PUBLIC.
     DATA mt_tree    TYPE ty_tree.
 
     DATA mt_node TYPE STANDARD TABLE OF ty_s_node WITH EMPTY KEY.
+
   PROTECTED SECTION.
     METHODS build_tree.
     METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

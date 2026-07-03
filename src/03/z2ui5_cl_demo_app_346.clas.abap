@@ -18,6 +18,7 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     DATA focuscolumn TYPE string.
     DATA focusrow TYPE string.
     DATA focusid TYPE string READ-ONLY.
+
   PROTECTED SECTION.
     CONSTANTS:
       BEGIN OF c_id,
@@ -36,6 +37,7 @@ CLASS z2ui5_cl_demo_app_346 DEFINITION PUBLIC.
     METHODS next_focus.
     METHODS focus.
     METHODS default_focus.
+
   PRIVATE SECTION.
 ENDCLASS.
 

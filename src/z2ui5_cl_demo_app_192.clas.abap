@@ -33,16 +33,17 @@ CLASS z2ui5_cl_demo_app_192 DEFINITION PUBLIC.
     DATA mt_out TYPE ty_t_out.
 
     METHODS view_display.
+
   PROTECTED SECTION.
     METHODS get_data.
     METHODS xml_parse.
     METHODS xml_stringify.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
-
 
   METHOD view_display.
 

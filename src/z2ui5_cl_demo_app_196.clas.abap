@@ -10,11 +10,13 @@ CLASS z2ui5_cl_demo_app_196 DEFINITION PUBLIC.
     DATA mv_slider_value TYPE i.
 
     DATA mt_shapes TYPE TABLE OF ty_shape.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS initialize.
     METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 

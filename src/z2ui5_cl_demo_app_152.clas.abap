@@ -20,6 +20,7 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     METHODS view_display.
     METHODS on_event.
     METHODS on_navigation.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

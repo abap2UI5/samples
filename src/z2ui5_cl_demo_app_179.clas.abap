@@ -22,11 +22,13 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
     DATA zoomlevel TYPE i.
 
     DATA mt_data TYPE STANDARD TABLE OF ty_s_data WITH EMPTY KEY.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS set_view.
     METHODS set_mock_data.
+
   PRIVATE SECTION.
 ENDCLASS.
 

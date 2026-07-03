@@ -44,6 +44,7 @@ CLASS z2ui5_cl_demo_app_333 DEFINITION PUBLIC.
         vis_cols      TYPE int4
       RETURNING
         VALUE(result) TYPE REF TO z2ui5_cl_demo_app_333.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

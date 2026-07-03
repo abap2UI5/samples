@@ -51,6 +51,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     DATA mt_columns_p13n TYPE tt_items22.
     DATA mt_sort_p13n TYPE tt_items32.
     DATA mt_groups_p13n TYPE tt_items33.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -66,6 +67,7 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
     METHODS get_custom_js
       RETURNING
         VALUE(result) TYPE string.
+
   PRIVATE SECTION.
 ENDCLASS.
 

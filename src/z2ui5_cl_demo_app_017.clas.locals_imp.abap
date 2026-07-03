@@ -4,7 +4,11 @@ CLASS lcl_help DEFINITION.
     CLASS-METHODS get_avatar
       RETURNING
         VALUE(result) TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
+
 
 CLASS lcl_help IMPLEMENTATION.
 

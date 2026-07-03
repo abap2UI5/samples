@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_362 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS view_display.
     METHODS restore_scroll.
+
   PRIVATE SECTION.
 ENDCLASS.
 

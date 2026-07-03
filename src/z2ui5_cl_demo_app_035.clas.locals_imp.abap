@@ -1,7 +1,6 @@
 CLASS lcl_file_api DEFINITION.
 
   PUBLIC SECTION.
-
     CLASS-METHODS read_abap
       RETURNING
         VALUE(r_result) TYPE string.
@@ -18,21 +17,12 @@ CLASS lcl_file_api DEFINITION.
       RETURNING
         VALUE(r_result) TYPE string.
 
-    TYPES:
-      BEGIN OF ty_s_suggest,
-        name  TYPE string,
-        value TYPE string,
-      END OF ty_s_suggest.
-    TYPES ty_t_suggest TYPE STANDARD TABLE OF ty_s_suggest WITH EMPTY KEY.
-
   PROTECTED SECTION.
-
   PRIVATE SECTION.
-
 ENDCLASS.
 
-CLASS lcl_file_api IMPLEMENTATION.
 
+CLASS lcl_file_api IMPLEMENTATION.
 
   METHOD read_abap.
 

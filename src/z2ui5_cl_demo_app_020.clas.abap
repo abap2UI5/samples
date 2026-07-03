@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_020 DEFINITION PUBLIC.
         i_confirm_event TYPE string
       RETURNING
         VALUE(result)   TYPE REF TO z2ui5_cl_demo_app_020.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

@@ -12,9 +12,7 @@ CLASS z2ui5_cl_demo_app_164 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-    TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
-
-    DATA mt_table TYPE ty_t_table.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.

@@ -28,6 +28,7 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     DATA mv_check_enabled_02 TYPE abap_bool.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
     DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -35,6 +36,7 @@ CLASS z2ui5_cl_demo_app_104 DEFINITION PUBLIC.
     METHODS view_display_detail.
     METHODS on_event_sub.
     METHODS on_init_sub.
+
   PRIVATE SECTION.
 ENDCLASS.
 

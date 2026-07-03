@@ -13,11 +13,10 @@ CLASS z2ui5_cl_demo_app_211 DEFINITION PUBLIC.
         descr TYPE string,
         class TYPE string,
       END OF ty_s_t002.
-    TYPES ty_t_t002 TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
 
     DATA mv_selectedkey     TYPE string.
     DATA mv_selectedkey_tmp TYPE string.
-    DATA mt_t002            TYPE ty_t_t002.
+    DATA mt_t002            TYPE STANDARD TABLE OF ty_s_t002 WITH DEFAULT KEY.
     DATA mo_app             TYPE REF TO object.
 
   PROTECTED SECTION.

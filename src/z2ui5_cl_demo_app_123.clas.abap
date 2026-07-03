@@ -35,6 +35,7 @@ CLASS z2ui5_cl_demo_app_123 DEFINITION PUBLIC.
       mt_route TYPE TABLE OF ty_route.
 
     DATA mt_legend TYPE TABLE OF ty_s_legend.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

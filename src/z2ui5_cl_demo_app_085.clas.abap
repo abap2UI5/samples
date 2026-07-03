@@ -42,6 +42,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     DATA mt_table_supplier TYPE ty_t_table_supplier.
     DATA mv_search_value TYPE string.
     DATA ls_detail TYPE ty_s_tab.
+
   PROTECTED SECTION.
     CONSTANTS c_pic_url TYPE string VALUE `https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/documentation/sdk/images/`.
 
@@ -59,6 +60,7 @@ CLASS z2ui5_cl_demo_app_085 DEFINITION PUBLIC.
     METHODS set_search.
 
     METHODS sort.
+
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -19,6 +19,7 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
 *    DATA mo_layout   type ref to z2ui5_cl_layo_manager .
 
     METHODS view_display.
+
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.

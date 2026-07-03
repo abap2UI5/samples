@@ -25,12 +25,14 @@ CLASS z2ui5_cl_demo_app_312 DEFINITION PUBLIC.
     DATA mt_feed_values    TYPE TABLE OF string.
 
     DATA mt_viztypes       TYPE z2ui5_if_types=>ty_t_name_value..
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_rendering.
     METHODS on_event.
     METHODS on_init.
+
   PRIVATE SECTION.
 ENDCLASS.
 

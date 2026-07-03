@@ -30,8 +30,10 @@ CLASS z2ui5_cl_demo_app_181 DEFINITION PUBLIC.
 
     METHODS on_event.
     METHODS view_display.
+
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 
