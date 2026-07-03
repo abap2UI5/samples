@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
           ASSIGN COMPONENT `SELKZ` OF STRUCTURE <line> TO FIELD-SYMBOL(<selkz>).
 
-          IF <selkz> IS NOT ASSIGNED.
+          IF sy-subrc <> 0.
             CONTINUE.
           ENDIF.
 

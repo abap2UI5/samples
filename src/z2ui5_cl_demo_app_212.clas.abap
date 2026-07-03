@@ -89,12 +89,19 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
     LOOP AT mt_dfies INTO DATA(dfies).
 
       ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<value_tab>).
+
+      IF sy-subrc <> 0.
+        CONTINUE.
+      ENDIF.
+
       ASSIGN ms_table_row->* TO <table_row>.
       ASSIGN COMPONENT dfies-fieldname OF STRUCTURE <table_row> TO FIELD-SYMBOL(<value_struc>).
 
-      IF <value_tab> IS ASSIGNED AND <value_struc> IS ASSIGNED.
-        <value_struc> = <value_tab>.
+      IF sy-subrc <> 0.
+        CONTINUE.
       ENDIF.
+
+      <value_struc> = <value_tab>.
 
     ENDLOOP.
 
@@ -125,7 +132,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
       ASSIGN ms_table_row->* TO <row>.
       ASSIGN COMPONENT dfies->fieldname OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
 
-      IF <val> IS NOT ASSIGNED.
+      IF sy-subrc <> 0.
         CONTINUE.
       ENDIF.
 

@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_194 IMPLEMENTATION.
         ASSIGN ms_table_row->* TO <row>.
         ASSIGN COMPONENT comp->name OF STRUCTURE <row> TO FIELD-SYMBOL(<val>).
 
-        IF <val> IS NOT ASSIGNED.
+        IF sy-subrc <> 0.
           CONTINUE.
 
         ELSE.

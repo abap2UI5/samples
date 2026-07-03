@@ -150,7 +150,7 @@ CLASS z2ui5_cl_demo_app_348 IMPLEMENTATION.
 
       ASSIGN COMPONENT <layout>-name OF STRUCTURE <data> TO <value>.
 
-      IF <value> IS NOT ASSIGNED.
+      IF sy-subrc <> 0.
         RETURN.
       ENDIF.
 

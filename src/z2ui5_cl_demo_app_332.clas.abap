@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_332 IMPLEMENTATION.
       ASSIGN COMPONENT layout->name OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
       " assign component layout->name of structure ms_struc to field-symbol(<value>).
 
-      IF <value> IS NOT ASSIGNED.
+      IF sy-subrc <> 0.
         RETURN.
       ENDIF.
 
