@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `ABAP2UI5 Weird behavior showcase`
+            title          = `abap2UI5 - Weird Behavior Showcase`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             showheader     = abap_true ).
@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     client->action->gen(
         val   = z2ui5_if_client=>cs_event-set_title
-        t_arg = VALUE #( ( `ABAP2UI5 Weird behavior showcase` ) ) ).
+        t_arg = VALUE #( ( `abap2UI5 - Weird Behavior Showcase` ) ) ).
 
   ENDMETHOD.
 

@@ -97,7 +97,6 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
       view_display( ).
 

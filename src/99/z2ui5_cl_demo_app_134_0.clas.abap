@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_134_0 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
     DATA(page) = view->page(
         id             = `id_page`
-        title          = `abap2ui5 - Scrolling (use Chrome to avoid incompatibilities)`
+        title          = `abap2UI5 - Scrolling (use Chrome to avoid incompatibilities)`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 

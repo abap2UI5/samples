@@ -321,7 +321,7 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          expanded   = abap_true
                          headertext = `Browser Actions` ).
 
-    panel->generic_tile( header    = `basic- timer`
+    panel->generic_tile( header    = `basic - timer`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_028` )
                          mode      = `LineMode`
@@ -1578,7 +1578,7 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `wizard - nextStep &  subseequentStetps`
+    panel->generic_tile( header    = `wizard - nextStep & subsequentSteps`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_202` )
                          mode      = `LineMode`
