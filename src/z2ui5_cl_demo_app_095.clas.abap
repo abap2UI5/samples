@@ -123,6 +123,7 @@ CLASS z2ui5_cl_demo_app_095 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       on_init( ).
       on_init_sub( ).
       client->view_display( page->stringify( ) ).

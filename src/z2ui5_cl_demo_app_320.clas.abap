@@ -279,6 +279,7 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
           display_group_popover( item_id ).
 
         ELSE.
+
           item = VALUE #( items[ item_table_index + 1 ] OPTIONAL ).
           display_individual_popover( item_id ).
         ENDIF.

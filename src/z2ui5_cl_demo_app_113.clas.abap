@@ -33,6 +33,7 @@ CLASS z2ui5_cl_demo_app_113 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       set_data( ).
       view_display( ).
       RETURN.

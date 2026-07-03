@@ -98,6 +98,7 @@ CLASS z2ui5_cl_demo_app_353 IMPLEMENTATION.
     ENDIF.
 
     IF client->check_on_event( `TIMER_FINISHED` ).
+
       client->message_toast_display( `Timer finished` ).
       start_timer( ).
       client->view_model_update( ).

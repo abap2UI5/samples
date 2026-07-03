@@ -98,6 +98,7 @@ CLASS z2ui5_cl_demo_app_353_0 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       focus_field = `IdOne`.
       mv_check_active = abap_true.
       render( ).

@@ -74,6 +74,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
       lv_sort_desc = abap_false.
 
     ELSE.
+
       SORT mt_table BY productid DESCENDING.
       lv_sort_desc = abap_true.
     ENDIF.
@@ -390,6 +391,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       set_data( ).
       sort( ).
       view_display_master( ).
@@ -397,6 +399,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
+
       view_display_master( ).
       view_display_detail( ).
       RETURN.

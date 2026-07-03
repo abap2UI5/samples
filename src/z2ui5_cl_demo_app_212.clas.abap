@@ -155,7 +155,6 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     get_dfies( ).
 
-
     view_display( ).
 
   ENDMETHOD.

@@ -107,6 +107,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true OR client->get( )-event = `DISPLAY_VIEW`.
+
       view_display( ).
       RETURN.
     ENDIF.
@@ -119,6 +120,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `AppSelected` ).
+
       DATA(ls_client) = client->get( ).
       client->message_toast_display( |Event AppSelected with appointment { ls_client-t_event_arg[ 1 ] }| ).
     ENDIF.

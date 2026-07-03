@@ -120,6 +120,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
+
       on_navigation( ).
       rebuild_output( ).
       view_display( ).
@@ -187,6 +188,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
           ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
 
           IF sy-subrc = 0.
+
             <picture>-data      = mv_pic_display.
             <picture>-thumbnail = mv_pic_display.
           ENDIF.

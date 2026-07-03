@@ -78,6 +78,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       mv_path = `../../demo/text`.
       mv_type = `plain_text`.
       view_display( ).

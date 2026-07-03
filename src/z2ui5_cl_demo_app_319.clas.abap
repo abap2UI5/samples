@@ -47,6 +47,7 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     m_client = client.
 
     IF m_client->check_on_init( ).
+
       on_init( ).
       RETURN.
     ENDIF.

@@ -62,6 +62,7 @@ CLASS z2ui5_cl_demo_app_033 IMPLEMENTATION.
       `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
 
     IF client->check_on_init( ).
+
       mv_type = `sapIllus-NoActivities`.
       view_display( ).
       RETURN.

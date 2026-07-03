@@ -116,7 +116,6 @@ CLASS z2ui5_cl_demo_app_190 IMPLEMENTATION.
 
   METHOD set_app_data.
 
-
     mv_table = table.
 
   ENDMETHOD.

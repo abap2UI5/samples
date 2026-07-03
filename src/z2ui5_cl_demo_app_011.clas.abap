@@ -127,6 +127,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
       client->view_model_update( ).
 
     ELSEIF client->check_on_event( `BUTTON_ADD` ).
+
       INSERT VALUE #( ) INTO TABLE t_tab.
       client->view_model_update( ).
     ENDIF.

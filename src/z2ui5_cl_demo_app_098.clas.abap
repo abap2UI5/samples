@@ -153,6 +153,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
       WHEN `ROW_NAVIGATE`.
 
         IF client->get_event_arg( 1 ) IS NOT INITIAL.
+
           mv_layout = `ThreeColumnsEndExpanded`.
           mv_title = client->get_event_arg( 1 ).
         ENDIF.

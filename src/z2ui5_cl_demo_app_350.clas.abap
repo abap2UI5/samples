@@ -75,6 +75,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
               client->nav_app_leave( ).
 
             ELSE.
+
               client->set_session_stateful( ).
               initialize_view2( client ).
             ENDIF.

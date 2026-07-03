@@ -46,12 +46,14 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     me->client     = client.
 
     IF client->check_on_init( ).
+
       set_data( ).
       client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
       RETURN.
     ENDIF.
 
     IF client->get( )-check_on_navigated = abap_true.
+
       view_display( ).
       RETURN.
     ENDIF.

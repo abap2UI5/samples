@@ -96,6 +96,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       view_display( client ).
       set_data( ).
     ENDIF.

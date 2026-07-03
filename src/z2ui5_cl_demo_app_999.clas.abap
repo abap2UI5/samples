@@ -72,7 +72,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
     DATA(page2) = page.
     DATA panel TYPE REF TO z2ui5_cl_xml_view.
 
-
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-getting_started )
                          headertext = `1. Getting Started` ).
@@ -136,7 +135,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_104` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-binding )
@@ -233,7 +231,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_336` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-events )
@@ -404,7 +401,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_353` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-input )
@@ -741,7 +737,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_067` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-display )
@@ -1309,7 +1304,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-layouts )
                          headertext = `6. Layouts` ).
@@ -1642,7 +1636,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-popups )
                          headertext = `7. Popups, Dialogs & Messages` ).
@@ -1879,7 +1872,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-files )
                          headertext = `8. Files & I/O` ).
@@ -1929,7 +1921,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_354` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-advanced )
@@ -2002,7 +1993,6 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_306` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
 
     page = page2->panel( expandable = abap_true
                          expanded   = client->_bind_edit( ms_check_expanded-experimental )

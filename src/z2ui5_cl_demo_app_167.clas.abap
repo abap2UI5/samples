@@ -61,6 +61,7 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       mv_value = `my value`.
       set_view( ).
     ENDIF.

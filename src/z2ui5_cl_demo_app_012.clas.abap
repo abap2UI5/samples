@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
   METHOD on_navigation.
 
     IF check_popup = abap_true.
+
       check_popup = abap_false.
       DATA(app) = CAST z2ui5_cl_demo_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
       client->message_toast_display( |{ app->event } pressed| ).

@@ -60,7 +60,6 @@ CLASS z2ui5_cl_demo_app_361 IMPLEMENTATION.
                                                 t_arg = value #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) )
                                               ) ) ) ).
 
-
       page->_( n = `Text`
                p = VALUE #( ( n = `class`    v = `sapUiMediumMargin` )
                             ( n = `showIcon` v = abap_true )

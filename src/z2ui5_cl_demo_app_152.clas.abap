@@ -120,6 +120,7 @@ CLASS z2ui5_cl_demo_app_152 IMPLEMENTATION.
         DATA(ls_result) = CAST z2ui5_cl_pop_to_select( lo_prev )->result( ).
 
         IF ls_result-check_confirmed = abap_false.
+
           client->message_box_display( `Popup was cancelled` ).
           RETURN.
         ENDIF.

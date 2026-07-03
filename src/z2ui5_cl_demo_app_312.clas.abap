@@ -220,10 +220,10 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                                          )->filter_control( ).
 
     " ---------- Set combo box input field ------------------------------------------------------------
-    lr_filter->combobox( selectedkey   = client->_bind_edit( me->ms_screen-viztypesel )
+    lr_filter->combobox( selectedkey   = client->_bind_edit( ms_screen-viztypesel )
                          change        = client->_event( `EVT_VIZTYPE_CHANGE` )
                          showclearicon = abap_true
-                         items         = client->_bind( me->mt_viztypes )
+                         items         = client->_bind( mt_viztypes )
                               )->item( key  = `{N}`
                                        text = `{V}` ).
 
@@ -237,7 +237,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
 *                            vizcustomizations =
                             vizproperties = mv_prop
 *                            vizscales     =
-                            viztype       = client->_bind( me->ms_screen-viztype )
+                            viztype       = client->_bind( ms_screen-viztype )
                             height        = `500px`
                             width         = `100%`
 *                            uiconfig      = `{applicationSet:'fiori'}`
@@ -249,7 +249,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_dataset) = lr_vizframe->viz_dataset( ).
 
     " ---------- Set vizframe flattened dataset --------------------------------------------------------
-    DATA(lr_flatteneddataset) = lr_dataset->viz_flattened_dataset( client->_bind( me->mt_data_chart ) ).
+    DATA(lr_flatteneddataset) = lr_dataset->viz_flattened_dataset( client->_bind( mt_data_chart ) ).
 
     " ---------- Set vizframe dimensions ---------------------------------------------------------------
     DATA(lr_dimensions) = lr_flatteneddataset->viz_dimensions( ).
@@ -294,7 +294,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
     DATA(lr_lr_feed_item1) = lr_feeds->viz_feed_item( id     = `valueAxisFeed`
                                                       uid    = `valueAxis`
                                                       type   = `Measure`
-                                                      values = client->_bind( me->mt_feed_values ) ).
+                                                      values = client->_bind( mt_feed_values ) ).
 
     " ---------- Set vizframe feed for category axis --------------------------------------------------
     DATA(lr_lr_feed_item2) = lr_feeds->viz_feed_item( id     = `categoryAxisFeed`

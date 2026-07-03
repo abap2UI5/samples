@@ -112,6 +112,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+
       mt_filter = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
       DELETE mt_filter WHERE name = `SELKZ`.
       view_display( ).
@@ -123,6 +124,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
           DATA(lo_value_help) = CAST z2ui5_cl_pop_get_range_m( client->get_app( client->get( )-s_draft-id_prev_app ) ).
 
           IF lo_value_help->result( )-check_confirmed = abap_true.
+
             mt_filter = lo_value_help->result( )-t_filter.
             set_data( ).
             client->view_model_update( ).
