@@ -322,10 +322,10 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
        navbuttonpress = client->_event_nav_app_leave( )
        shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( 'L6 M12 S12'
+    DATA(grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    DATA(input) = grid->simple_form( 'Input'
+    DATA(input) = grid->simple_form( `Input`
         )->content( `form`
             )->label( `Input with value help`
             )->input(

@@ -1,6 +1,4 @@
-CLASS z2ui5_cl_demo_app_342 DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -40,7 +38,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     DATA selkz TYPE abap_bool.
 
     IF mv_table IS INITIAL.
-      mv_table = 'Z2UI5_T_01'.
+      mv_table = `Z2UI5_T_01`.
     ENDIF.
 
     TRY.
@@ -70,7 +68,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
         ENDTRY.
 
         DATA(component) = VALUE cl_abap_structdescr=>component_table(
-                                    ( name = 'SELKZ'
+                                    ( name = `SELKZ`
                                       type = CAST #( cl_abap_datadescr=>describe_by_data( selkz ) ) ) ).
 
         APPEND LINES OF component TO result.
@@ -83,13 +81,13 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
   METHOD on_event.
     CASE client->get( )-event.
 
-      WHEN 'SELECTION_CHANGE'.
+      WHEN `SELECTION_CHANGE`.
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                                 io_table  = mt_data
                                 io_layout = mo_lay  ) ).
 
-      WHEN 'BACK'.
+      WHEN `BACK`.
 
         client->nav_app_leave( ).
 
@@ -117,9 +115,9 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width = 'auto'
-                               mode  = 'SingleSelectLeft'
-                               selectionchange  = client->_event( 'SELECTION_CHANGE' )
+    DATA(table) = page->table( width = `auto`
+                               mode  = `SingleSelectLeft`
+                               selectionchange  = client->_event( `SELECTION_CHANGE` )
                                items = client->_bind_edit( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
@@ -135,7 +133,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDLOOP.
 
     DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign   = 'Middle'
+                                       )->column_list_item( valign   = `Middle`
                                                             type     = `Inactive`
                                                             selected = `{SELKZ}` ).
 
@@ -181,7 +179,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( 'ERROR - mo_layout->mr_data->* ne mt_table->*'  ).
+      client->message_toast_display( `ERROR - mo_layout->mr_data->* ne mt_table->*` ).
     ENDIF.
 
     on_event( client ).
