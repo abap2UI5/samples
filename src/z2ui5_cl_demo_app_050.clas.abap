@@ -71,13 +71,13 @@ CLASS z2ui5_cl_demo_app_050 IMPLEMENTATION.
                         text  = `post`
                         press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
-            )->input( value = client->_bind( quantity )
+            )->input( value = client->_bind_edit( quantity )
             )->simple_form( title    = `Form Title`
                             editable = abap_true
                 )->content( `form`
                     )->title( `Input`
                     )->label( `quantity`
-                    )->input( value = client->_bind( quantity )
+                    )->input( value = client->_bind_edit( quantity )
                     )->label( `product`
                     )->input(
                         value   = product

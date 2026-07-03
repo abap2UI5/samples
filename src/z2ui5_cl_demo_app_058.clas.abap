@@ -253,11 +253,11 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
        )->simple_form( editable = abap_true
            )->content( `form`
                )->label( `zebra mode`
-               )->checkbox( client->_bind( ms_layout-check_zebra )
+               )->checkbox( client->_bind_edit( ms_layout-check_zebra )
                )->label( `sticky header`
-               )->input( client->_bind( ms_layout-sticky_header )
+               )->input( client->_bind_edit( ms_layout-sticky_header )
                )->label( `Title`
-               )->input( client->_bind( ms_layout-title )
+               )->input( client->_bind_edit( ms_layout-title )
                )->label( `sel mode`
                )->combobox(
                    selectedkey = client->_bind_edit( ms_layout-selmode )

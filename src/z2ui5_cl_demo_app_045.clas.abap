@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                 )->content( `form`
                     )->title( `Filter`
                     )->label( `info`
-                    )->input( client->_bind( mv_info_filter )
+                    )->input( client->_bind_edit( mv_info_filter )
                     )->button(
                         text  = `filter`
                         press = client->_event( `FLTER_INFO` ) ).

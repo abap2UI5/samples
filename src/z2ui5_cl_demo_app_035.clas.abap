@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
 
     page->code_editor( type     = client->_bind_edit( mv_type )
                        editable = client->_bind( mv_check_editable )
-                       value    = client->_bind( mv_editor ) ).
+                       value    = client->_bind_edit( mv_editor ) ).
 
     page->footer( )->overflow_toolbar(
         )->button( text  = `Clear`
