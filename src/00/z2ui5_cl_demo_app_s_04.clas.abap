@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
 
   METHOD set_data.
 
-    unit = `ST`.   " internal ST -> external PC (if logged in in english)
+    unit = `ST`.   " internal ST -> external PC (if logged on in English)
     numc = 10.     " internal 0000000010 -> external 10
 
     TRY.

@@ -237,7 +237,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
     ro_popup->custom_header(
           )->bar(
               )->content_right(
-          )->button( text  = `zurücksetzten`
+          )->button( text  = `Reset`
                      press = client->_event( `BUTTON_INIT` ) ).
 
     DATA(lo_tab) = ro_popup->tab_container( ).

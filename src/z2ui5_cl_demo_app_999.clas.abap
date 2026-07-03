@@ -228,7 +228,7 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `RTTI - With Data Ref´s`
+    panel->generic_tile( header    = `RTTI - With Data Refs`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_336` )
                          mode      = `LineMode`
@@ -1534,7 +1534,7 @@ CLASS z2ui5_cl_demo_app_999 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `App in App -Main App`
+    panel->generic_tile( header    = `App in App - Main App`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_338` )
                          mode      = `LineMode`

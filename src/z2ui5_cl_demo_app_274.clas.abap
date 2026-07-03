@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                    press           = client->_event( `pressOnTileOne` )
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
-                           contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
+                           contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                            subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent(
                )->generic_tile(
                    backgroundimage = base_url && `test-resources/sap/m/demokit/sample/SlideTile/images/NewsImage1.png`
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_274 IMPLEMENTATION.
                    state           = `Failed`
                    )->tile_content( footer = `August 21, 2016`
                        )->news_content(
-                           contenttext = `AP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
+                           contenttext = `AP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                            subheader   = `Today, SAP News` ).
 
     client->view_display( page->stringify( ) ).

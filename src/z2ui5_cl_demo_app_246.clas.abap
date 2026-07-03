@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_246 IMPLEMENTATION.
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
-                                  description = `Suggestions wrap automatically when longer then the dropdown width` ).
+                                  description = `Suggestions wrap automatically when longer than the dropdown width` ).
 
     client->popover_display(
       xml   = view->stringify( )

@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
                state           = `Failed`
            )->tile_content( footer = `August 21, 2016`
              )->news_content(
-                   contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
+                   contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                    subheader   = `Today, SAP News` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
       )->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
                        header = `Feed Tile that shows updates of the last feeds given to a specific topic:`

@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_301 IMPLEMENTATION.
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
-                                  description = `The ExpandableText control can be used to display a larger texts inside a table, list or form.` ).
+                                  description = `The ExpandableText control can be used to display larger texts inside a table, list or form.` ).
 
     client->popover_display(
       xml   = view->stringify( )

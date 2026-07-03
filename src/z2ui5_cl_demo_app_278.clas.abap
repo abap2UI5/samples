@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
                press           = client->_event( `press` )
              )->tile_content( footer = `August 21, 2016`
                )->news_content(
-                   contenttext = `SAP Unveils Powerful New Player Comparision Tool Exclusively on NFL.com`
+                   contenttext = `SAP Unveils Powerful New Player Comparison Tool Exclusively on NFL.com`
                    subheader   = `Today, SAP News` ).
 
     client->view_display( page->stringify( ) ).
