@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
       WHEN `POPUP`.
         app-popup = `TEST`.
       WHEN `DATA`.
-        client->message_box_display( `Event raised value:` && mv_value ).
+        client->message_box_display( |Event raised value: { mv_value }| ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.

@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         client->message_box_display( `Custom Control displayed ` ).
 
       WHEN `MYCC`.
-        client->message_toast_display( `Custom Control input: ` && mv_value ).
+        client->message_toast_display( |Custom Control input: { mv_value }| ).
     ENDCASE.
 
   ENDMETHOD.

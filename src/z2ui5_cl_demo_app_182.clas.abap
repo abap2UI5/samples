@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_182 IMPLEMENTATION.
                   )->quick_view_group_element( label        = `Email`
                                                value        = node-email
                                                type         = `email`
-                                               emailsubject = `Contact` && node-id ).
+                                               emailsubject = |Contact{ node-id }| ).
 
     IF node-team IS NOT INITIAL.
       qv = qv->get_parent( )->get_parent(

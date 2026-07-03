@@ -41,11 +41,11 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `EDIT`.
         DATA(lv_row_title) = client->get_event_arg( 1 ).
-        client->message_box_display( `EDIT - ` && lv_row_title ).
+        client->message_box_display( |EDIT - { lv_row_title }| ).
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
-        client->message_box_display( `SELECTION_CHANGED -` && lt_sel[ 1 ]-title ).
+        client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
     ENDCASE.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(

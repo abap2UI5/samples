@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_174 IMPLEMENTATION.
         DATA(lt3) = CONV ty_tab( <t> ).
 
         IF mv_multiselect = abap_false.
-          client->message_box_display( `callback after popup to select: ` && lt3[ 1 ]-title ).
+          client->message_box_display( |callback after popup to select: { lt3[ 1 ]-title }| ).
 
         ELSE.
           client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab   = lt3

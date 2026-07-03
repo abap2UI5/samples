@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_039 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `POPUP` ).
-      client->message_box_display( `Event raised value:` && mv_value ).
+      client->message_box_display( |Event raised value: { mv_value }| ).
     ELSEIF client->check_on_event( `BACK` ).
       client->nav_app_leave( ).
     ENDIF.
