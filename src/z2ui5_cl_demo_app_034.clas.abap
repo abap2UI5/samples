@@ -111,7 +111,8 @@ CLASS z2ui5_cl_demo_app_034 IMPLEMENTATION.
 
     client->view_display( mv_main_xml ).
     client->popup_display( mv_popup_xml ).
-    CLEAR: mv_main_xml, mv_popup_xml.
+    mv_main_xml  = VALUE #( ).
+    mv_popup_xml = VALUE #( ).
 
   ENDMETHOD.
 

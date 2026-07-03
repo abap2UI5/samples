@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_071 IMPLEMENTATION.
         RETURN.
 
       WHEN `UPDATE_MODEL`.
-        CLEAR lt_combo.
+        lt_combo = VALUE #( ).
         DO mv_combo_number TIMES.
           INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE lt_combo.
         ENDDO.

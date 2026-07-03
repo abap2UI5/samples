@@ -93,7 +93,6 @@ CLASS z2ui5_cl_demo_app_192 IMPLEMENTATION.
       ASSIGN lo_new_data->mt_kopf->* TO <fs_t_head_new>.
 
       APPEND INITIAL LINE TO <fs_t_head_new> ASSIGNING <fs_s_head_new>.
-      CLEAR: <fs_s_head_new>.
       <fs_s_head_new> = <fs_s_head>.
 
     ENDLOOP.

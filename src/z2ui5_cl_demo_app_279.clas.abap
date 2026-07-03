@@ -77,9 +77,8 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
       WHEN `submit`.
         dirty = xsdbool( text_input IS NOT INITIAL ).
       WHEN `reset`.
-        CLEAR:
-          dirty,
-          text_input.
+        dirty      = VALUE #( ).
+        text_input = VALUE #( ).
     ENDCASE.
 
   ENDMETHOD.

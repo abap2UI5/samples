@@ -48,12 +48,10 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA news TYPE t_news.
-
     CASE client->get( )-event.
       WHEN `CLEAR`.
 
-        CLEAR: news_list.
+        news_list = VALUE #( ).
       WHEN `CLICK_HINT_ICON`.
 
         popover_display( ).
