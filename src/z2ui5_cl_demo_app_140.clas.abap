@@ -11,7 +11,6 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     TYPES
       ty_t_combo TYPE STANDARD TABLE OF s_combobox WITH EMPTY KEY.
 
-    DATA client TYPE REF TO z2ui5_if_client.
     DATA gt_multi TYPE ty_t_combo.
     DATA gt_sel_multi TYPE ty_t_combo.
     DATA gt_sel_multi2 TYPE string_table.
@@ -21,6 +20,8 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
     METHODS view_display.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

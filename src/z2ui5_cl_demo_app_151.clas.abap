@@ -3,13 +3,13 @@ CLASS z2ui5_cl_demo_app_151 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     METHODS view_display.
     METHODS on_event.
     METHODS on_navigation.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

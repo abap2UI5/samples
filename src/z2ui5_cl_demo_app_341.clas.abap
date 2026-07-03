@@ -10,8 +10,6 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
       END OF ty_s_table.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_table WITH EMPTY KEY.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     DATA mo_layout1 TYPE REF TO z2ui5_cl_demo_app_333.
 
     DATA mt_table TYPE ty_t_table.
@@ -21,6 +19,8 @@ CLASS z2ui5_cl_demo_app_341 DEFINITION PUBLIC.
     METHODS view_display.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

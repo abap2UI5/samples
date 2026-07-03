@@ -38,8 +38,6 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
         data TYPE ty_data,
       END OF ty_chart.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     DATA ms_struc TYPE ty_chart.
     DATA ms_struc2 TYPE ty_chart.
 
@@ -47,6 +45,8 @@ CLASS z2ui5_cl_demo_app_153 DEFINITION PUBLIC.
     METHODS on_event.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

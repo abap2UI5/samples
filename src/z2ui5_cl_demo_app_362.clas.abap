@@ -91,6 +91,7 @@ CLASS z2ui5_cl_demo_app_362 IMPLEMENTATION.
   METHOD restore_scroll.
 
     DATA(scroll) = client->get( )-s_scroll-main.
+
     IF scroll-id IS INITIAL.
       RETURN.
     ENDIF.

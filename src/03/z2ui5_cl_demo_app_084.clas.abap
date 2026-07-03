@@ -32,9 +32,9 @@ CLASS z2ui5_cl_demo_app_084 DEFINITION PUBLIC.
 
     DATA mt_suggestion TYPE STANDARD TABLE OF s_suggestion_items WITH EMPTY KEY.
 
+  PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-  PROTECTED SECTION.
     METHODS view_display.
     METHODS on_event.
     METHODS on_init.

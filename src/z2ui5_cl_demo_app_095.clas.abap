@@ -20,7 +20,6 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
 
     DATA mo_app_sub TYPE REF TO z2ui5_cl_demo_app_096.
 
-    DATA client      TYPE REF TO z2ui5_if_client.
     DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
 
     DATA mr_input  TYPE REF TO data.
@@ -33,6 +32,7 @@ CLASS z2ui5_cl_demo_app_095 DEFINITION PUBLIC.
     METHODS on_event_sub.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
 
   PRIVATE SECTION.

@@ -3,9 +3,9 @@ CLASS z2ui5_cl_demo_app_365 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+  PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-  PROTECTED SECTION.
     METHODS nav_to_output
       IMPORTING
         as_page TYPE abap_bool.

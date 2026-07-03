@@ -22,12 +22,11 @@ CLASS z2ui5_cl_demo_app_094 DEFINITION PUBLIC.
     DATA mo_app    TYPE REF TO z2ui5_cl_demo_app_094.
     DATA mv_val    TYPE string.
 
-    DATA client      TYPE REF TO z2ui5_if_client.
-
     METHODS on_init.
     METHODS view_build.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
     DATA page TYPE REF TO z2ui5_cl_xml_view.
 
   PRIVATE SECTION.

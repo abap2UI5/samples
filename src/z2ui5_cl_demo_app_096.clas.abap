@@ -3,7 +3,6 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA client TYPE REF TO z2ui5_if_client.
     DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_descr       TYPE string.
 
@@ -16,6 +15,8 @@ CLASS z2ui5_cl_demo_app_096 DEFINITION PUBLIC.
       CHANGING xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

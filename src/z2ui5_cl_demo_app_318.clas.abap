@@ -8,7 +8,6 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     DATA mv_editor         TYPE string.
     DATA mv_check_editable TYPE abap_bool.
 
-    DATA client            TYPE REF TO z2ui5_if_client.
     DATA lt_types TYPE z2ui5_if_types=>ty_t_name_value.
 
     DATA lt_types2 TYPE z2ui5_if_types=>ty_t_name_value.
@@ -16,6 +15,8 @@ CLASS z2ui5_cl_demo_app_318 DEFINITION PUBLIC.
     METHODS view_display.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -21,8 +21,6 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC.
            END OF ty_item.
     TYPES ty_items TYPE STANDARD TABLE OF ty_item WITH DEFAULT KEY.
 
-    DATA client            TYPE REF TO z2ui5_if_client.
-
     DATA items             TYPE ty_items.
 
     METHODS initialization.
@@ -34,6 +32,8 @@ CLASS z2ui5_cl_demo_app_307 DEFINITION PUBLIC.
       IMPORTING client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

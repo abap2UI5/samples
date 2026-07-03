@@ -11,8 +11,6 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
         descr   TYPE string,
       END OF ty_row.
 
-    DATA client TYPE REF TO z2ui5_if_client.
-
     DATA mt_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
     DATA mv_multiselect TYPE abap_bool.
     DATA mv_preselect TYPE abap_bool.
@@ -22,6 +20,8 @@ CLASS z2ui5_cl_demo_app_152 DEFINITION PUBLIC.
     METHODS on_navigation.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

@@ -17,9 +17,10 @@ CLASS z2ui5_cl_demo_app_172 DEFINITION PUBLIC.
         waers    TYPE waers,
       END OF ty_output.
     DATA output TYPE STANDARD TABLE OF ty_output.
-    DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS load_output_table.
     METHODS on_event.
     METHODS render_main_screen.

@@ -12,13 +12,14 @@ CLASS z2ui5_cl_demo_app_143 DEFINITION PUBLIC.
     TYPES ty_t_data TYPE STANDARD TABLE OF t_data WITH EMPTY KEY.
 
     DATA gt_data TYPE ty_t_data.
-    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
     METHODS on_event.
     METHODS view_display.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
   PRIVATE SECTION.
 ENDCLASS.
 

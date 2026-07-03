@@ -35,9 +35,10 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC.
         per_cent_q04   TYPE p LENGTH 2 DECIMALS 1,
       END OF s_output.
     DATA mt_output TYPE STANDARD TABLE OF s_output.
-    DATA client TYPE REF TO z2ui5_if_client.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
     METHODS load_output_table.
     METHODS on_event.
     METHODS render_main_screen.
