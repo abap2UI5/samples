@@ -77,6 +77,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_event.
 
     CASE client->get( )-event.
@@ -93,6 +94,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 
   METHOD view_display.
 
@@ -150,11 +152,13 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD set_app_data.
 
     mv_table = table.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -176,6 +180,7 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
     on_event( client ).
 
   ENDMETHOD.
+
 
   METHOD get_data.
 

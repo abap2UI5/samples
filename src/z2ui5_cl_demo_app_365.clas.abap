@@ -71,19 +71,19 @@ CLASS z2ui5_cl_demo_app_365 IMPLEMENTATION.
     " The popup itself accepts the output generically (TYPE REF TO object).
     DATA output TYPE REF TO object.
 
-    DATA(lv_classname) = 'CL_DEMO_OUTPUT'.
-    CALL METHOD (lv_classname)=>('NEW')
+    DATA(classname) = `CL_DEMO_OUTPUT`.
+    CALL METHOD (classname)=>(`NEW`)
       RECEIVING
         output = output.
-    CALL METHOD output->('WRITE_TEXT')
+    CALL METHOD output->(`WRITE_TEXT`)
       EXPORTING
         text = `The HTML below is produced by the standard SAP class CL_DEMO_OUTPUT` &&
                ` and rendered inside abap2UI5 - either as a popup or as a fullscreen` &&
                ` app with a back button. It contains text, table data and XML.`.
-    CALL METHOD output->('WRITE_DATA')
+    CALL METHOD output->(`WRITE_DATA`)
       EXPORTING
         value = t_carriers.
-    CALL METHOD output->('WRITE_XML')
+    CALL METHOD output->(`WRITE_XML`)
       EXPORTING
         xml = xml.
 

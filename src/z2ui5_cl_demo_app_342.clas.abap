@@ -18,16 +18,16 @@ CLASS z2ui5_cl_demo_app_342 DEFINITION PUBLIC.
         !table TYPE string.
 
   PROTECTED SECTION.
-    METHODS on_init.
     METHODS on_event    IMPORTING !client TYPE REF TO z2ui5_if_client.
 
     METHODS render_main IMPORTING !client TYPE REF TO z2ui5_if_client.
     METHODS get_data.
 
-  PRIVATE SECTION.
     METHODS get_comp
       RETURNING
         VALUE(result) TYPE abap_component_tab.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
             ENDLOOP.
 
-          CATCH cx_root INTO DATA(root). " TODO: variable is assigned but never used (ABAP cleaner)
+          CATCH cx_root.
 
         ENDTRY.
 
@@ -78,25 +78,25 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
 
   ENDMETHOD.
 
+
   METHOD on_event.
+
     CASE client->get( )-event.
 
       WHEN `SELECTION_CHANGE`.
 
         client->nav_app_call( z2ui5_cl_demo_app_340=>factory(
                                 io_table  = mt_data
-                                io_layout = mo_lay  ) ).
+                                io_layout = mo_lay ) ).
 
       WHEN `BACK`.
 
         client->nav_app_leave( ).
 
     ENDCASE.
-  ENDMETHOD.
-
-  METHOD on_init.
 
   ENDMETHOD.
+
 
   METHOD render_main.
 
@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ENDIF.
 
     mo_lay = z2ui5_cl_demo_app_333=>factory( i_data   = mt_data
-                                                    vis_cols = 5 ).
+                                             vis_cols = 5 ).
 
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
@@ -156,13 +156,16 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
       mv_view_display = abap_true.
 
     ENDIF.
+
   ENDMETHOD.
+
 
   METHOD set_app_data.
 
     mv_table = table.
 
   ENDMETHOD.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -179,12 +182,13 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     ASSIGN mt_data->* TO FIELD-SYMBOL(<table>).
 
     IF <data> <> <table>.
-      client->message_toast_display( `ERROR - mo_layout->mr_data->* ne mt_table->*` ).
+      client->message_toast_display( `ERROR - mo_lay->mr_data->* ne mt_data->*` ).
     ENDIF.
 
     on_event( client ).
 
   ENDMETHOD.
+
 
   METHOD get_data.
 

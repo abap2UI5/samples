@@ -146,6 +146,7 @@ CLASS lcl_file_api IMPLEMENTATION.
 
 
   METHOD read_text.
+
     r_result = `TXT test file` && |\n| &&
                `Purpose: Provide example of this file type` && |\n| &&
                `Document file type: TXT` && |\n| &&
@@ -155,7 +156,7 @@ CLASS lcl_file_api IMPLEMENTATION.
                `Example content:` && |\n| &&
                `The names "John Doe" for males, "Jane Doe" or "Jane Roe" for females, or "Jonnie Doe" and "Janie Doe" for children, or just ` &&
                ` "Doe" non-gender-specifically are used as placeholder names for a party whose true identity is unknown or must ` &&
-               `be withheld in a legal action, case, or discussion. The names are also used to refer to acorpse or hospital patient whose ` &&
+               `be withheld in a legal action, case, or discussion. The names are also used to refer to a corpse or hospital patient whose ` &&
                `identity is unknown. This practice is widely used in the United States and Canada, but is rarely used in other ` &&
                `English-speaking countries including the United Kingdom itself, from where the use of "John Doe" in a legal context ` &&
                `originates. The names Joe Bloggs or John Smith are used in the UK instead, as well as in Australia and New Zealand.` &&
@@ -166,6 +167,7 @@ CLASS lcl_file_api IMPLEMENTATION.
                `John Doe, along with a fictional address or other fictional information to provide an example of how to fill in the form` &&
                `. The name is also used frequently in popular culture, for example in the Frank Capra film Meet John Doe. John Doe was ` &&
                `also the name of a 2002 American television series.`.
+
   ENDMETHOD.
 
 ENDCLASS.

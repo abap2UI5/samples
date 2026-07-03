@@ -4,13 +4,12 @@ CLASS z2ui5_cl_demo_app_295 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_a_data,
+      BEGIN OF ty_s_data,
         label            TYPE string,
         value_state      TYPE string,
         value_state_text TYPE string,
-      END OF ty_a_data.
-    DATA lt_a_data TYPE STANDARD TABLE OF ty_a_data.
-    DATA s_text TYPE string.
+      END OF ty_s_data.
+    DATA t_data TYPE STANDARD TABLE OF ty_s_data.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -52,7 +51,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState` ).
 
-    page->flex_box( items     = client->_bind( lt_a_data )
+    page->flex_box( items     = client->_bind( t_data )
                     direction = `Column`
              )->vbox( `sapUiTinyMargin`
                  )->label( `{LABEL}`
@@ -108,20 +107,15 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD set_data.
 
-    s_text = VALUE #( ).
-    lt_a_data = VALUE #( ).
-
-    s_text = `DateRangeSelection with valueState `.
-
-    " Append entries to the internal table
-    lt_a_data = VALUE #(
-      ( label = s_text && `None`        value_state = `None` )
-      ( label = s_text && `Information` value_state = `Information` )
-      ( label = s_text && `Success`     value_state = `Success` )
-      ( label = s_text && `Warning and long valueStateText` value_state = `Warning`
+    DATA(text) = `DateRangeSelection with valueState `.
+    t_data = VALUE #(
+      ( label = |{ text }None|        value_state = `None` )
+      ( label = |{ text }Information| value_state = `Information` )
+      ( label = |{ text }Success|     value_state = `Success` )
+      ( label = |{ text }Warning and long valueStateText| value_state = `Warning`
                 value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
                                    `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` )
-      ( label = s_text && `Error`    value_state = `Error` ) ).
+      ( label = |{ text }Error|    value_state = `Error` ) ).
 
   ENDMETHOD.
 
