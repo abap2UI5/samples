@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `TEST`.
-        client->message_box_display( `input ` && mv_input_nest ).
+        client->message_box_display( |input { mv_input_nest }| ).
 
       WHEN `ALL`.
         client->view_display( lo_view->stringify( ) ).
