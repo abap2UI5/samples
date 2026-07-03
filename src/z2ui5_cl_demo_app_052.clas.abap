@@ -39,7 +39,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
     DATA(lo_popover) = z2ui5_cl_xml_view=>factory_popup( ).
 
     lo_popover->popover( placement    = `Right`
-                         title        = `abap2UI5 - Popover - ` && mv_product
+                         title        = |abap2UI5 - Popover - { mv_product }|
                          contentwidth = `50%`
       )->simple_form( editable = abap_true
       )->content( `form`

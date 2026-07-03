@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
 
       DO 5 TIMES.
         mv_counter = mv_counter + 1.
-        INSERT VALUE #( title = `entry` && mv_counter   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
+        INSERT VALUE #( title = |entry{ mv_counter }|   info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
           INTO TABLE t_tab.
 
       ENDDO.
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_049 IMPLEMENTATION.
     mv_counter = 1.
     mv_key = `VIEW_REFRESH`.
     t_tab = VALUE #(
-            ( title = `entry` && mv_counter  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+            ( title = |entry{ mv_counter }|  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
 
   ENDMETHOD.
 
