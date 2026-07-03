@@ -46,7 +46,8 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             title          = `ABAP2UI5 Weird behavior showcase`
-            navbuttonpress = client->_event( `BACK` )
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( )
             showheader     = abap_true ).
 
     DATA(tab_ko) = page->table(
