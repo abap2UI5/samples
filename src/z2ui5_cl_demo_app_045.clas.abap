@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      WHEN `FLTER_INFO`.
+      WHEN `FILTER_INFO`.
         refresh_data( ).
 
         IF mv_info_filter <> ``.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
                     )->input( client->_bind_edit( mv_info_filter )
                     )->button(
                         text  = `filter`
-                        press = client->_event( `FLTER_INFO` ) ).
+                        press = client->_event( `FILTER_INFO` ) ).
 
     DATA(tab) = page->scroll_container( height   = `70%`
                                         vertical = abap_true

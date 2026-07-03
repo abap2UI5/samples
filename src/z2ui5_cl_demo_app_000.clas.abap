@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
           `hana.ondemand.com/#/controls" style="color:blue; font-weight:600;">SAP UI5 sample page.</a> If you miss a control or find a b` &&
           `ug please create an ` &&
           `<a href="https://github.com/abap2UI5/abap2UI5/issues" style="color:blue; font-weight:600;">issue</a> or send a <a href="https` &&
-          `://github.com/abap2UI5/abap2UI5-samples/pulls" style="color:blue; font-weight:600;">PR</a>` &&
+          `://github.com/abap2UI5/samples/pulls" style="color:blue; font-weight:600;">PR</a>` &&
           `.</p>`  &&
           `<p>Always press CTRL+F12 to see code samples and classname of the app.</p>` ).
 
