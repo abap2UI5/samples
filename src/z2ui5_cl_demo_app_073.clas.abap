@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
     client->view_display( view->shell(
           )->page(
-                  title          = `abap2UI5 - First Example`
+                  title          = `abap2UI5 - Open New Tab`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
               )->simple_form( title    = `Form Title`

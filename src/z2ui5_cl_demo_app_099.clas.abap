@@ -227,7 +227,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
                      tooltip = `Group`
                      press   = client->_event( `GROUP` )
           )->button( icon    = `sap-icon://action-settings`
-                     tooltip = `Group`
+                     tooltip = `Settings`
                      press   = client->_event( `ALL` )
          )->get_parent( )->get_parent(
        )->columns(

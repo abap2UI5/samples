@@ -75,11 +75,11 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                 )->link( text = `email@email.com`
             )->get_parent(
             )->horizontal_layout( class = `sapUiSmallMarginBeginEnd`
-                )->label( `Hello! I an abap2UI5 developer`
+                )->label( `Hello! I am an abap2UI5 developer`
                 )->label( `San Jose, USA`
             )->get_parent(
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
-                )->label( `Hello! I an abap2UI5 developer`
+                )->label( `Hello! I am an abap2UI5 developer`
                 )->vbox(
                     )->label( `Achived goals`
                     )->progress_indicator(
@@ -141,14 +141,14 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                         id    = `personalSectionSS1`
                         title = `Connect`
                     )->blocks(
-                          )->label( `telefon`
+                          )->label( `telephone`
                           )->label( `email`
                 )->get_parent( )->get_parent(
                 )->object_page_sub_section(
                         id    = `personalSectionWS2`
                         title = `Payment information  `
                       )->blocks(
-                          )->label( `Hello! I an abap2UI5 developer`
+                          )->label( `Hello! I am an abap2UI5 developer`
                           )->label( `San Jose, USA` ).
 
     sections->object_page_section(
