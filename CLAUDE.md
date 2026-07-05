@@ -96,7 +96,7 @@ For deeper information about how the abap2UI5 framework works internally — arc
 Every abap2UI5 app implements `z2ui5_if_app` with a single `main()` method. The framework calls `main()` on every roundtrip (HTTP POST). Use the lifecycle checks to react to different situations:
 
 - `client->check_on_init( )` — true on the very first call
-- `client->check_on_navigated( )` — true when returning from a sub-app or popup
+- `client->check_on_navigated( )` — true when returning from a sub-app or popup — re-display the view here (see below)
 - `client->check_on_event( )` — true when a user triggered an event
 
 Always use `ELSEIF` to chain these checks — never separate `IF` blocks:
@@ -109,6 +109,23 @@ ELSEIF client->check_on_event( ).
   ...
 ENDIF.
 ```
+
+### Returning from a sub-app — always re-display the view
+
+When a called sub-app takes over the screen with its own `view_display( )` and later returns via `nav_app_leave( )`, the browser still shows the sub-app's view — the framework does not restore the previous view automatically. All class attributes survive the roundtrip serialization, so there is nothing to re-read: simply call `view_display( )` again in the `check_on_navigated( )` branch. Do **not** call `data_read( )` or similar there.
+
+```abap
+IF client->check_on_init( ).
+  data_read( ).
+  view_display( ).
+ELSEIF client->check_on_navigated( ).
+  view_display( ).
+ELSEIF client->check_on_event( `SAVE` ).
+  data_update( ).
+ENDIF.
+```
+
+`client->view_model_update( )` is only sufficient in the `check_on_navigated( )` branch when the app returns from a popup (`z2ui5_cl_pop_*` / `popup_display`) — in that case the main view stayed on screen and only the model needs a refresh.
 
 ### Event checking — inline vs. CASE
 
@@ -345,6 +362,8 @@ Write everything directly in `main` — no method encapsulation needed. Count on
 
 When the logic no longer fits inside `main`, always extract exactly `on_init` and `on_event` as the first step — never use other method names for this purpose. `main` then becomes a pure dispatcher that calls these two methods. Only add further methods (`view_display`, `data_read`, etc.) when they are actually needed.
 
+In the `check_on_navigated( )` branch the dispatcher calls `view_display( )` directly — the app state survived the serialization, only the view must be re-displayed (see [Returning from a sub-app](#returning-from-a-sub-app--always-re-display-the-view)). Extract a dedicated `on_navigation` method only when the app additionally needs to process results from the called sub-app (via `get_app_prev( )`) before re-displaying.
+
 **Never create a pass-through method with only one statement.** If an extracted method (e.g. `on_init`) would contain only a single call, replace the method call in the dispatcher with that single call directly — and omit the pass-through method entirely. For example, if `on_init` would only call `view_display( )`, write `view_display( )` directly in the `IF client->check_on_init( ).` branch instead.
 
 The following is the **maximum structure**. Only add methods that are actually needed.
@@ -363,7 +382,6 @@ CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
 
     METHODS on_init.        " first call: load data, display view
     METHODS on_event.       " user triggered an event
-    METHODS on_navigation.  " returned from sub-app or popup
     METHODS view_display.   " build and render the view
     METHODS data_read.      " SELECT from database
     METHODS data_update.    " INSERT / UPDATE / DELETE
@@ -379,7 +397,7 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
     ELSEIF client->check_on_navigated( ).
-      on_navigation( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -391,14 +409,6 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
     data_read( ).
     view_display( ).
-
-  ENDMETHOD.
-
-
-  METHOD on_navigation.
-
-    data_read( ).
-    client->view_model_update( ).
 
   ENDMETHOD.
 

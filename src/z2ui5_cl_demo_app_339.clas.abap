@@ -170,6 +170,11 @@ CLASS z2ui5_cl_demo_app_339 IMPLEMENTATION.
 
     ENDIF.
 
+    IF client->get( )-check_on_navigated = abap_true
+        AND client->check_on_init( )          = abap_false.
+      view_display( client ).
+    ENDIF.
+
     ASSIGN mo_layout->mr_data->* TO FIELD-SYMBOL(<data>).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
