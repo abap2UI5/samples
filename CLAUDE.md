@@ -125,7 +125,7 @@ ELSEIF client->check_on_event( `SAVE` ).
 ENDIF.
 ```
 
-`client->view_model_update( )` is only sufficient in the `check_on_navigated( )` branch when the app returns from a popup (`z2ui5_cl_pop_*` / `popup_display`) — in that case the main view stayed on screen and only the model needs a refresh.
+Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. Only as an optional optimization, when the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), a `client->view_model_update( )` is sufficient — never rely on it when a full-screen sub-app can be called.
 
 ### Event checking — inline vs. CASE
 
