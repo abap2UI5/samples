@@ -226,18 +226,18 @@ CLASS z2ui5_cl_demo_app_116 IMPLEMENTATION.
       on_init( ).
 
       DATA(lv_save_state_js) = `function saveState() {debugger;` && |\n| &&
-                         `  var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
-                         `  sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
+                         `  var treeTable = z2ui5.oView.byId("treeTable");` && |\n| &&
+                         `  z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                          ` }; `.
 
       DATA(lv_reset_state_js) = `function setState() {debugger;` && |\n| &&
-                                ` var treeTable = sap.z2ui5.oView.byId("treeTable");` && |\n| &&
-                                ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
-                                `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
+                                ` var treeTable = z2ui5.oView.byId("treeTable");` && |\n| &&
+                                ` if( z2ui5.treeState == undefined ) {` && |\n| &&
+                                `     z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                                 ` } else {` && |\n| &&
-                                `     treeTable.getBinding("rows").setTreeState(sap.z2ui5.treeState);` && |\n| &&
+                                `     treeTable.getBinding("rows").setTreeState(z2ui5.treeState);` && |\n| &&
                                 `     treeTable.getBinding("rows").refresh();` && |\n| &&
-                                `     sap.z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
+                                `     z2ui5.treeState = treeTable.getBinding('rows').getCurrentTreeState();` && |\n| &&
                                 ` };` && |\n| &&
                                 `};`.
 

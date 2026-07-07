@@ -259,7 +259,7 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
 
       DATA(lv_script) = `   debugger;` && |\n| &&
                   `function setInputFIlter(){` && |\n| &&
-                  ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
+                  ` var inp = z2ui5.oView.byId('suggInput');` && |\n| &&
                   ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
         `   var aSplit = sValue.split(" ");` && |\n| &&
                   `   if (aSplit.length > 0) {` && |\n| &&

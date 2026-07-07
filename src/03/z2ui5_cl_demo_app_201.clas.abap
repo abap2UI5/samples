@@ -264,7 +264,7 @@ CLASS z2ui5_cl_demo_app_201 IMPLEMENTATION.
 * ---------- This script will skip the frontend suggestion filtering ------------------------------
       DATA(lv_script) = `   debugger;` && |\n| &&
                   `function setInputFIlter(){` && |\n| &&
-                  ` var inp = sap.z2ui5.oView.byId('suggInput');` && |\n| &&
+                  ` var inp = z2ui5.oView.byId('suggInput');` && |\n| &&
                   ` inp.setFilterFunction(function(sValue, oItem){` && |\n| &&
                   `         return true;` && |\n| &&
                   ` });` && |\n| &&

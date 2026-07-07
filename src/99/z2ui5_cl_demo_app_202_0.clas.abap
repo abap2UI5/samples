@@ -21,11 +21,11 @@ CLASS z2ui5_cl_demo_app_202_0 IMPLEMENTATION.
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
     lr_view->_generic( name = `script`
-                       ns   = `html` )->_cc_plain_xml( `sap.z2ui5.decideNextStep = (stepId, nextStepId) => {debugger;` && |\n| &&
-                                                                     ` var wiz = sap.z2ui5.oView.byId('wiz');` && |\n| &&
-                                                                     ` wiz.discardProgress(sap.z2ui5.oView.byId(stepId));` && |\n| &&
-                                                                     ` var step = sap.z2ui5.oView.byId(stepId);` && |\n| &&
-                                                                     ` var nextStep = sap.z2ui5.oView.byId(nextStepId);` && |\n| &&
+                       ns   = `html` )->_cc_plain_xml( `z2ui5.decideNextStep = (stepId, nextStepId) => {debugger;` && |\n| &&
+                                                                     ` var wiz = z2ui5.oView.byId('wiz');` && |\n| &&
+                                                                     ` wiz.discardProgress(z2ui5.oView.byId(stepId));` && |\n| &&
+                                                                     ` var step = z2ui5.oView.byId(stepId);` && |\n| &&
+                                                                     ` var nextStep = z2ui5.oView.byId(nextStepId);` && |\n| &&
                                                                      ` step.setNextStep(nextStep);` && |\n| &&
                                                                      `}` ).
 
@@ -90,11 +90,11 @@ CLASS z2ui5_cl_demo_app_202_0 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `STEP22`.
 
-        client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
+        client->follow_up_action( 'z2ui5.decideNextStep(`STEP2`,`STEP22`);' ).
 
       WHEN `STEP23`.
 
-        client->follow_up_action( 'sap.z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
+        client->follow_up_action( 'z2ui5.decideNextStep(`STEP2`,`STEP23`);' ).
 
     ENDCASE.
     client->view_model_update( ).

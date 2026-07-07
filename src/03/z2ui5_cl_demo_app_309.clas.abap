@@ -32,7 +32,7 @@ CLASS z2ui5_cl_demo_app_309 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `script`
-                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
+                    ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
 
     DATA(page) = view->shell( )->page(
         title          = `Client->FOLLOW_UP_ACTION use cases`

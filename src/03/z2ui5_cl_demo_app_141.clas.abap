@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     dialog->_generic( name   = `HTML`
                       ns     = `core`
-                      t_prop = VALUE #( ( n = `content` v = `<script> sap.z2ui5.setBlackColor();  </script>` )
+                      t_prop = VALUE #( ( n = `content` v = `<script> z2ui5.setBlackColor();  </script>` )
                                                                    ( n = `preferDOM`  v = `true` )
                                                                   ) )->get_parent( ).
 
@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                 `.lbl-color { color: red !important; font-size: 30px !important; }`.
 
     DATA(script) = `` &&
-                   `sap.z2ui5.setBlackColor = function() {` && |\n| &&
+                   `z2ui5.setBlackColor = function() {` && |\n| &&
                    `  var lbl = sap.ui.getCore().byId('popupId--lbl1');` && |\n| &&
                    `  lbl.setText('changed from js');` && |\n| &&
                    `  lbl.addStyleClass('lbl-color');` && |\n| &&

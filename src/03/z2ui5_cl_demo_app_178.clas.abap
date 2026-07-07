@@ -77,15 +77,15 @@ CLASS z2ui5_cl_demo_app_178 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(lv_save_state_js) = `function saveState() {` && |\n| &&
-                             `  var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
-                             `  sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
+                             `  var treeTable = z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
+                             `  z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
                              ` }; `.
     DATA(lv_reset_state_js) = `function setState() { ` && |\n| &&
-                              ` var treeTable = sap.z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
-                              ` if( sap.z2ui5.treeState == undefined ) {` && |\n| &&
-                              `     sap.z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
+                              ` var treeTable = z2ui5.oViewPopup.Fragment.byId("popupId","tree");` && |\n| &&
+                              ` if( z2ui5.treeState == undefined ) {` && |\n| &&
+                              `     z2ui5.treeState = treeTable.getBinding('items').getCurrentTreeState();` && |\n| &&
                               ` } else {` && |\n| &&
-                              `     treeTable.getBinding("items").setTreeState(sap.z2ui5.treeState);` && |\n| &&
+                              `     treeTable.getBinding("items").setTreeState(z2ui5.treeState);` && |\n| &&
                               `     treeTable.getBinding("items").refresh();` && |\n| &&
                               ` };` && |\n| &&
                               `};`.

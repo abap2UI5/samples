@@ -98,7 +98,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
                           `    <circle id="circle" cx="100" cy="100" r="80" />` && |\n| &&
                           `  </svg>` && |\n| &&
                           `<div>X: <input id="sliderX" type="range" min="1" max="500" value="100" /></div><h1>This is canvas</h1><canvas id="canvas" width="500" height="300"></canvas>` && |\n| &&
-                          `<script> debugger; var canvas = document.getElementById(sap.z2ui5.oView.createId( 'canvas' ));` && |\n| &&
+                          `<script> debugger; var canvas = document.getElementById(z2ui5.oView.createId( 'canvas' ));` && |\n| &&
                           `  if (canvas.getContext){` && |\n| &&
                           `let context = canvas.getContext('2d');` && |\n| &&
                           `context.fillStyle = 'rgb(200,0,0)';` && |\n| &&
@@ -116,7 +116,7 @@ CLASS z2ui5_cl_demo_app_036 IMPLEMENTATION.
                           `    context.fillRect (420, 25, 10, 10);` && |\n| &&
                           `    context.clearRect (385, 60, 50, 10); }  ` && |\n| &&
                           ` function myFunction( ) { alert( 'button pressed' ) }` && |\n| &&
-                          ` function myFunction2( ) { sap.z2ui5.oView.getController().onEvent({ 'EVENT' : 'POST', 'METHOD' : 'UPDATE' }, ` && ` document.getElementById(sap.z2ui5.oView.createId( "input" )).value ` && ` ) }` && |\n| &&
+                          ` function myFunction2( ) { z2ui5.oView.getController().onEvent({ 'EVENT' : 'POST', 'METHOD' : 'UPDATE' }, ` && ` document.getElementById(z2ui5.oView.createId( "input" )).value ` && ` ) }` && |\n| &&
                                                                     `</script> <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/barcodes/JsBarcode.code128.min.js"> </script>` &&
 *                                                    ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind( mv_value ) && `"/>` && |\n|  &&
       `</body>` && |\n| &&

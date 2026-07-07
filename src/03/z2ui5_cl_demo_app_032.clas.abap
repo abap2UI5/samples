@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_032 IMPLEMENTATION.
                           `<h1>My First JavaScript</h1>` && |\n| &&
                           `<button onclick="myFunction()" type="button">send</button>` && |\n| &&
                           `<Input id='input' value='frontend data' /> ` &&
-                          `<script> function myFunction( ) { sap.z2ui5.oView.getController().onEvent({ 'EVENT' : 'POST', 'METHOD' : 'UPDATE' }, document.getElementById(sap.z2ui5.oView.createId( "input" )).value ) } </script>` && |\n| &&
+                          `<script> function myFunction( ) { z2ui5.oView.getController().onEvent({ 'EVENT' : 'POST', 'METHOD' : 'UPDATE' }, document.getElementById(z2ui5.oView.createId( "input" )).value ) } </script>` && |\n| &&
                           `</body>` && |\n| &&
                           `</html> ` && |\n| &&
                             `</mvc:View>`.

@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory(
 *        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
       )->_generic( ns   = `html`
-                   name = `script` )->_cc_plain_xml( `sap.z2ui5.InitSvm();`
+                   name = `script` )->_cc_plain_xml( `z2ui5.InitSvm();`
       )->stringify( ) ).
 
     DATA(page1) = view->page( id = `page_main`
@@ -142,7 +142,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     lo_fb->filter_bar( id             = `fbar`
                        persistencykey = `myPersKey`
                        usetoolbar     = abap_false
-                       search         = `sap.z2ui5.onSearch();`
+                       search         = `z2ui5.onSearch();`
       )->filter_group_items(
         )->filter_group_item( name               = `PRODUCT`
                               label              = `Product`
@@ -152,7 +152,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
             )->input( value           = client->_bind_edit( mv_product )
                       suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
-                      change          = `sap.z2ui5.onChange();`
+                      change          = `z2ui5.onChange();`
               )->get( )->suggestion_items( )->item( text = `{PRODUCT}`
             )->get_parent( )->get_parent( )->get_parent( )->get_parent(
         )->filter_group_item( name               = `CREATE_DATE`
@@ -161,21 +161,21 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                               visibleinfilterbar = abap_true
           )->fb_control(
             )->input( value  = client->_bind_edit( mv_create_date )
-                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `CREATE_BY`
                               label              = `Create By`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
             )->input( value  = client->_bind_edit( mv_create_by )
-                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `STORAGE_LOCATION`
                               label              = `Storage Location`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
             )->input( value  = client->_bind_edit( mv_storage_location )
-                      change = `sap.z2ui5.onChange();` )->get_parent( )->get_parent(
+                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `QUANTITY`
                               label              = `Quantity`
                               groupname          = `group1`
@@ -184,7 +184,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
             )->input( suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
                       value           = client->_bind_edit( mv_quantity )
-                      change          = `sap.z2ui5.onChange($event);`
+                      change          = `z2ui5.onChange($event);`
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
 
@@ -214,8 +214,8 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
   METHOD get_custom_js.
 
-    result  = `sap.z2ui5.InitSvm = () => {` && |\n| &&
-                 ` var oView = sap.z2ui5.oView` && |\n| &&
+    result  = `z2ui5.InitSvm = () => {` && |\n| &&
+                 ` var oView = z2ui5.oView` && |\n| &&
                  ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
                  ` var oFilterBar = oView.byId("fbar");` && |\n| &&
                  ` var aData = _registerFetchData(oFilterBar);` && |\n| &&
@@ -258,8 +258,8 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                  ` }, []);` && |\n| &&
                  ` return aFiltersWithValue;` && |\n| &&
                  `};` && |\n| &&
-                 `sap.z2ui5.onSearch = () => {` && |\n| &&
-                 ` var oView = sap.z2ui5.oView` && |\n| &&
+                 `z2ui5.onSearch = () => {` && |\n| &&
+                 ` var oView = z2ui5.oView` && |\n| &&
                  ` var oFilterBar = oView.byId("fbar");` && |\n| &&
                  ` var oTable = oView.byId("table1");` && |\n| &&
                  ` var aTableFilters = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
@@ -281,8 +281,8 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                  `     }, []);` && |\n| &&
                  `  oTable.getBinding("items").filter(aTableFilters);` && |\n| &&
                  `};` && |\n| &&
-                 `sap.z2ui5.onChange = (oEvent) => {` && |\n| &&
-                 ` var oView = sap.z2ui5.oView` && |\n| &&
+                 `z2ui5.onChange = (oEvent) => {` && |\n| &&
+                 ` var oView = z2ui5.oView` && |\n| &&
                  ` var oFilterBar = oView.byId("fbar");` && |\n| &&
                  ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
                  ` oSmartVariantManagement.currentVariantSetModified(true);` && |\n| &&

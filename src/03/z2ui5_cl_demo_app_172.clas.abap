@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         calculate_sum( lv_column ).
     ENDCASE.
 
-    client->follow_up_action( `sap.z2ui5.afterBE()` ).
+    client->follow_up_action( `z2ui5.afterBE()` ).
     client->view_model_update( ).
 
   ENDMETHOD.
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
         )->get_parent( ).
 
     page->_generic( name = `script`
-                    ns   = `html` )->_cc_plain_xml( `sap.z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
+                    ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
     DATA(table) = page->ui_table( id                  = `tab`
                                   alternaterowcolors  = `true`

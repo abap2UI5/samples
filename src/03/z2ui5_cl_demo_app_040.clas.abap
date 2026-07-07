@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
     ENDIF.
 
     IF mv_barcode IS NOT INITIAL.
-      lv_xml = lv_xml && `<script>  $("#" + sap.z2ui5.oView.createId( 'barcode' ) ).JsBarcode("` && mv_barcode && `") </script>`.
+      lv_xml = lv_xml && `<script>  $("#" + z2ui5.oView.createId( 'barcode' ) ).JsBarcode("` && mv_barcode && `") </script>`.
     ENDIF.
     lv_xml = lv_xml && `</body>` && |\n| &&
            `</html> ` && |\n| &&
