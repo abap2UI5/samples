@@ -29,7 +29,8 @@ src/                                  plain, universally-runnable samples
 └── 01/   extension                   cloud-compatible framework-feature demos
     ├── 01/  built-in custom controls
     ├── 02/  built-in popups          (`z2ui5_cl_pop_*`)
-    └── 03/  generic xml view         (`z2ui5_cl_util_xml`)
+    ├── 03/  generic xml view         (`z2ui5_cl_util_xml`)
+    └── 04/  uncategorized            not yet triaged into a category
 ```
 
 ### What may stay in `src/` root
