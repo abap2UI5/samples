@@ -75,17 +75,22 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     DATA(cont) = page->content( `f` ).
 
-    DATA(tab) = cont->vbox(
-                  )->ui_table( rows                = client->_bind( val = gt_data )
-                               id                  = `Table1`
-                                editable           = abap_false
-                                alternaterowcolors = abap_true
-                                enablecellfilter   = abap_true
-                                rowactioncount     = `1`
-                                visiblerowcount    = `7`
-                                fixedcolumncount   = `1`
-                                selectionmode      = `None`
-                         )->ui_columns(
+    DATA(table) = cont->vbox(
+                  )->ui_table( rows               = client->_bind( val = gt_data )
+                               id                 = `Table1`
+                               editable           = abap_false
+                               alternaterowcolors = abap_true
+                               enablecellfilter   = abap_true
+                               rowactioncount     = `1`
+                               fixedcolumncount   = `1`
+                               selectionmode      = `None` ).
+
+    table->rowmode( `table`
+        )->fixed(
+            ns       = `trm`
+            rowcount = `7` ).
+
+    table->ui_columns(
                               )->ui_column( sortproperty   = `FIELD1`
                                             filterproperty = `FIELD1`
                                             autoresizable  = `true`

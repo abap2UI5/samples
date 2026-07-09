@@ -104,13 +104,17 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
             )->link(
       )->get_parent( ).
 
-    DATA(table) = page->flex_box( height = `85vh` )->ui_table( alternaterowcolors  = `true`
-                                                               visiblerowcountmode = `Auto`
-                                                               fixedrowcount       = `1`
-                                                               selectionmode       = `None`
-                                                               rows                = client->_bind_edit( val = mt_output
+    DATA(table) = page->flex_box( height = `85vh` )->ui_table( alternaterowcolors = `true`
+                                                               selectionmode      = `None`
+                                                               rows               = client->_bind_edit( val = mt_output
 *        compress_mode = z2ui5_if_client=>cs_compress_mode-none
       ) ).
+
+    table->rowmode( `table`
+        )->auto(
+            ns               = `trm`
+            fixedtoprowcount = `1` ).
+
     DATA(columns) = table->ui_columns( ).
 
     columns->ui_column( width          = `5.2rem`

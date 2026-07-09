@@ -117,12 +117,16 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     page->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = () => {  setTimeout( () => { let input = document.activeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0]; input.focus( ); input.select(); } , 100 ); }` ).
 
-    DATA(table) = page->ui_table( id                  = `tab`
-                                  alternaterowcolors  = `true`
-                                  visiblerowcountmode = `Auto`
-         fixedrowcount                                = `1`
-                                  selectionmode       = `None`
-                                  rows                = client->_bind_edit( val = output ) ).
+    DATA(table) = page->ui_table( id                 = `tab`
+                                  alternaterowcolors = `true`
+                                  selectionmode      = `None`
+                                  rows               = client->_bind_edit( val = output ) ).
+
+    table->rowmode( `table`
+        )->auto(
+            ns               = `trm`
+            fixedtoprowcount = `1` ).
+
     DATA(columns) = table->ui_columns( ).
 
     columns->ui_column( width          = `8rem`
