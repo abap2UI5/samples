@@ -83,7 +83,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                                 enablecellfilter   = abap_true
                                 rowactioncount     = `1`
                                 visiblerowcount    = `7`
-                                enablegrouping     = abap_false
                                 fixedcolumncount   = `1`
                                 selectionmode      = `None`
                          )->ui_columns(

@@ -41,7 +41,6 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `1`
-                                enablegrouping     = abap_false
                                 fixedcolumncount   = `1`
                                 selectionmode      = `None`
                                 sort               = client->_event( `SORT` )
