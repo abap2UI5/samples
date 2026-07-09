@@ -33,9 +33,9 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
 
     header_title->snapped_heading(
                 )->flex_box( alignitems = `Center`
-                  )->image(
-                      src   = lcl_help=>get_avatar( )
-                      width = `2rem`
+                  )->icon(
+                      src   = `sap-icon://person-placeholder`
+                      size  = `2rem`
                       class = `sapUiTinyMarginEnd`
                     )->title(
                         text     = `Oblomov Dev`
@@ -67,9 +67,9 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
     DATA(header_content) = page->header_content( `uxap` ).
 
     header_content->flex_box( wrap = `Wrap`
-           )->image(
-               src   = lcl_help=>get_avatar( )
-               width = `5rem`
+           )->icon(
+               src   = `sap-icon://person-placeholder`
+               size  = `5rem`
                class = `sapUiSmallMarginEnd`
             )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
                 )->link( text = `+33 6 4512 5158`
