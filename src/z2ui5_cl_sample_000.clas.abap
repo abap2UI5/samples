@@ -97,12 +97,13 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
         shownavbutton  = client->check_app_prev_stack( ) ).
 
     IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
-      page->header_content(
-          )->toolbar_spacer(
-          )->link(
-              text   = `Open the classic launchpad overview`
-              target = `_blank`
-              href   = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000| ).
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
+      page->message_strip(
+          type                = `Warning`
+          showicon            = abap_true
+          enableformattedtext = abap_true
+          class               = `sapUiSmallMarginBottom`
+          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic launchpad overview.| ).
     ENDIF.
 
     page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
