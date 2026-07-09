@@ -19,6 +19,11 @@ CLASS z2ui5_cl_sample_000 DEFINITION PUBLIC.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
+    METHODS class_exists
+      IMPORTING
+        name          TYPE clike
+      RETURNING
+        VALUE(result) TYPE abap_bool.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -58,25 +63,52 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
 
     page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
 
+    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
+      page->link(
+          text  = `Open the classic launchpad overview`
+          class = `sapUiTinyMarginBegin sapUiTinyMarginBottom`
+          press = client->_event( `Z2UI5_CL_DEMO_APP_000` ) ).
+    ENDIF.
+
     DATA(prev_group) = ``.
-    DATA list        TYPE REF TO z2ui5_cl_xml_view.
 
     LOOP AT get_catalog( ) INTO DATA(tile).
 
       IF tile-group <> prev_group.
-        list       = page->list( headertext = tile-group ).
+        page->title(
+            text  = tile-group
+            level = `H3`
+            class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
         prev_group = tile-group.
       ENDIF.
 
-      list->standard_list_item(
-          title       = tile-header
-          description = tile-sub
-          type        = `Navigation`
-          press       = client->_event( tile-app ) ).
+      page->hbox(
+          alignitems = `Center`
+          class      = `sapUiTinyMarginBegin`
+          )->button(
+              text  = tile-header
+              type  = `Transparent`
+              press = client->_event( tile-app )
+          )->text(
+              text  = tile-sub
+              class = `sapUiSmallMarginBegin` ).
 
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD class_exists.
+
+    TRY.
+        DATA li_app TYPE REF TO z2ui5_if_app.
+        CREATE OBJECT li_app TYPE (name).
+        result = xsdbool( li_app IS BOUND ).
+      CATCH cx_root.
+        result = abap_false.
+    ENDTRY.
 
   ENDMETHOD.
 
