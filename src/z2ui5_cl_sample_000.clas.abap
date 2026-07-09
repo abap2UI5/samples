@@ -106,8 +106,6 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
           text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic launchpad overview.| ).
     ENDIF.
 
-    page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
-
     TYPES:
       BEGIN OF ty_s_ctrl,
         group   TYPE string,
@@ -153,25 +151,23 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
             class = `sapUiTinyMarginEnd` ).
 
         LOOP AT ctrl-t_items INTO DATA(item).
-          row->button(
+          row->link(
               text  = COND #( WHEN item-sub IS NOT INITIAL THEN item-sub ELSE |Sample { sy-tabix }| )
+              class = `sapUiTinyMarginEnd`
               press = client->_event( item-app ) ).
         ENDLOOP.
 
       ELSEIF ctrl-t_items[ 1 ]-sub IS INITIAL.
-        row->button(
+        row->link(
             text  = ctrl-header
-            type  = `Transparent`
             press = client->_event( ctrl-t_items[ 1 ]-app ) ).
 
       ELSE.
-        row->button(
+        row->link(
             text  = ctrl-header
-            type  = `Transparent`
+            class = `sapUiTinyMarginEnd`
             press = client->_event( ctrl-t_items[ 1 ]-app )
-            )->text(
-                text  = ctrl-t_items[ 1 ]-sub
-                class = `sapUiSmallMarginBegin` ).
+            )->text( ctrl-t_items[ 1 ]-sub ).
       ENDIF.
 
     ENDLOOP.
