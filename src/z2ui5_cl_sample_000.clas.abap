@@ -147,14 +147,9 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `Framework` section = `Action` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
       ( group = `Framework` section = `Action` header = `Frontend Infos` sub = `` app = `z2ui5_cl_demo_app_122` )
       ( group = `Framework` section = `Action` header = `Tab Title` sub = `` app = `z2ui5_cl_demo_app_125` )
-      ( group = `Framework` section = `Action` header = `Focus I` sub = `` app = `z2ui5_cl_demo_app_133` )
       ( group = `Framework` section = `Action` header = `File Download` sub = `Download files to the Frontend` app = `z2ui5_cl_demo_app_186` )
-      ( group = `Framework` section = `Action` header = `Focus II` sub = `` app = `z2ui5_cl_demo_app_189` )
       ( group = `Framework` section = `Action` header = `URL Helper` sub = `Trigger a phone's native apps like Email, Telephone and SMS` app = `z2ui5_cl_demo_app_316` )
       ( group = `Framework` section = `Action` header = `Clipboard` sub = `Copy & Paste Text` app = `z2ui5_cl_demo_app_325` )
-      ( group = `Framework` section = `Action` header = `Hide/show Soft Keyboard` sub = `` app = `z2ui5_cl_demo_app_352` )
-      ( group = `Framework` section = `Action` header = `Scroll to position` sub = `client->action->gen( SCROLL_TO )` app = `z2ui5_cl_demo_app_362` )
-      ( group = `Framework` section = `Action` header = `Scroll into view` sub = `client->action->gen( SCROLL_INTO_VIEW )` app = `z2ui5_cl_demo_app_363` )
       ( group = `Controls` section = `` header = `Action List Item` sub = `` app = `z2ui5_cl_demo_app_216` )
       ( group = `Controls` section = `` header = `Bar` sub = `Page, Toolbar & Bar` app = `z2ui5_cl_demo_app_227` )
       ( group = `Controls` section = `` header = `Bar` sub = `Toolbar vs Bar vs OverflowToolbar` app = `z2ui5_cl_demo_app_235` )
@@ -212,7 +207,6 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `Controls` section = `` header = `Multi Combo Box` sub = `Suggestions wrapping` app = `z2ui5_cl_demo_app_233` )
       ( group = `Controls` section = `` header = `Multi Input` sub = `Suggestions wrapping` app = `z2ui5_cl_demo_app_232` )
       ( group = `Controls` section = `` header = `Multi Input` sub = `Value States` app = `z2ui5_cl_demo_app_267` )
-      ( group = `Controls` section = `` header = `Nav Container I` sub = `` app = `z2ui5_cl_demo_app_088` )
       ( group = `Controls` section = `` header = `Nested Splitter Layouts` sub = `7 Areas` app = `z2ui5_cl_demo_app_260` )
       ( group = `Controls` section = `` header = `Nested Views I` sub = `Basic Example` app = `z2ui5_cl_demo_app_065` )
       ( group = `Controls` section = `` header = `Nested Views II` sub = `Head & Item Table` app = `z2ui5_cl_demo_app_097` )
@@ -278,8 +272,7 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `Controls` section = `` header = `ui.Table I` sub = `Simple example` app = `z2ui5_cl_demo_app_070` )
       ( group = `Controls` section = `` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `Controls` section = `` header = `Visualization` sub = `Object Number, Object States & Tab Filter` app = `z2ui5_cl_demo_app_072` )
-      ( group = `Controls` section = `` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` )
-      ( group = `Controls` section = `` header = `Wizard Control II` sub = `Next step & SubSequentStep` app = `z2ui5_cl_demo_app_202` ) ).
+      ( group = `Controls` section = `` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` ) ).
 
   ENDMETHOD.
 
