@@ -79,7 +79,6 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
                  labelfor = `DRS3`
        )->date_range_selection(
             id                    = `DRS3`
-            showcurrentdatebutton = abap_true
             showfooter            = abap_true
             change                = client->_event( val = `handleChange` t_arg = VALUE #( ( `DRS3` ) ) )
             datevalue             = `{= Helper.DateCreateObject($` && client->_bind( drs3-start ) && `) }`

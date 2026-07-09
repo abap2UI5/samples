@@ -374,7 +374,6 @@ CLASS z2ui5_cl_demo_app_130 IMPLEMENTATION.
         content->label( scrtext
           )->multi_input(
                    tokens           = client->_bind( val = lr_tab->t_token tab = mt_fields tab_index = lv_tabix )
-                   showclearicon    = abap_true
                    id               = lr_tab->field
                    valuehelprequest = client->_event( val = `CALL_POPUP_FILTER` t_arg = VALUE #( ( lr_tab->field ) ) )
                )->item(

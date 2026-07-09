@@ -241,7 +241,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
             )->text( `{TITLE}`
             )->text( `{INFO}`
             )->text( `{DESCR}`
-            )->avatar( src = `{ICON}` ).
+            )->icon( src = `{ICON}` ).
 
     client->view_display( view->stringify( ) ).
 

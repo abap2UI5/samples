@@ -61,7 +61,6 @@ CLASS z2ui5_cl_demo_app_251 IMPLEMENTATION.
                    description   = `EUR`
                    width         = `250px`
                    fieldwidth    = `80%`
-                   showclearicon = abap_true
                    class         = `sapUiSmallMarginBottom` ).
 
     layout->input( value       = `007`

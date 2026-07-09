@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
                             class = `sapUiTinyMarginEnd`
                    )->info_label( id          = `il1`
                                   text        = `2`
-                                  rendermode  = `Narrow`
                                   colorscheme = `1` )->get_parent( )->get_parent(
       )->flex_box( direction  = `Row`
                    alignitems = `Start`
@@ -43,7 +42,6 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
                             class = `sapUiTinyMarginEnd`
                    )->info_label( id          = `il2`
                                   text        = `5`
-                                  rendermode  = `Narrow`
                                   colorscheme = `2` )->get_parent( )->get_parent(
       )->flex_box( direction  = `Row`
                    alignitems = `Start`
@@ -52,7 +50,6 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
                             class = `sapUiTinyMarginEnd`
                    )->info_label( id          = `il3`
                                   text        = `12.5`
-                                  rendermode  = `Narrow`
                                   colorscheme = `3` )->get_parent( )->get_parent(
       )->flex_box( direction  = `Row`
                    alignitems = `Start`
@@ -61,7 +58,6 @@ CLASS z2ui5_cl_demo_app_209 IMPLEMENTATION.
                             class = `sapUiTinyMarginEnd`
                    )->info_label( id          = `il4`
                                   text        = `2K`
-                                  rendermode  = `Narrow`
                                   colorscheme = `4` )->get_parent( )->get_parent(
       )->flex_box( direction  = `Row`
                    alignitems = `Start`

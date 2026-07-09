@@ -123,8 +123,6 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
                        header      = `Country-Specific Profit Margin`
                 subheader          = `Expenses`
                        press       = client->_event( `onPress` )
-                       systeminfo  = `system info`
-                       appshortcut = `app shortcut`
          )->tile_content( unit   = `EUR`
                           footer = `Current Quarter`
            )->numeric_content( scale      = `M`
@@ -201,8 +199,6 @@ CLASS z2ui5_cl_demo_app_277 IMPLEMENTATION.
                        header      = `Sales Fulfillment Application Title`
               subheader            = `Subtitle`
                        press       = client->_event( `onPress` )
-                       systeminfo  = `system`
-                       appshortcut = `shortcut`
            )->tile_content( unit   = `EUR`
                             footer = `Current Quarter`
              )->image_content( src = base_url && `sap-icon://home-share` )->get_parent( )->get_parent( )->get_parent(

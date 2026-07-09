@@ -193,8 +193,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
              shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(page) = view->dynamic_page(
-            headerexpanded = abap_true
-            headerpinned   = abap_true ).
+            headerexpanded = abap_true ).
 
     DATA(header_title) = page->title( ns = `f`
             )->get( )->dynamic_page_title( ).
@@ -244,7 +243,6 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                 )->text( `{NAME}`
             )->multi_input(
                 tokens           = client->_bind( mt_token )
-                showclearicon    = abap_true
                 value            = `{VALUE}`
                 tokenupdate      = client->_event( `FILTER_UPDATE1` )
                 submit           = client->_event( `FILTER_UPDATE` )

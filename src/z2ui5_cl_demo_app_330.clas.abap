@@ -40,9 +40,9 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
     header_title->snapped_heading(
                   )->hbox(
-                     )->avatar( src     = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
-                           class        = `sapUiMediumMarginEnd`
-                           displayshape = `Square`
+                     )->image( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
+                               width = `3rem`
+                               class = `sapUiMediumMarginEnd`
                      )->vbox(
                         )->title( `Robot Arm Series 9`
                         )->label( `PO-48865` ).
@@ -63,11 +63,9 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                                                )->flex_box( wrap         = `Wrap`
                                                             fitcontainer = abap_true ).
 
-    header_content->avatar( src          = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
-                            class        = `sapUiMediumMarginEnd`
-                            displayshape = `Square`
-                            displaysize  = `L`
-
+    header_content->image( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/robot.png`
+                           width = `5rem`
+                           class = `sapUiMediumMarginEnd`
                  )->vbox( `sapUiLargeMarginEnd sapUiSmallMarginBottom`
                     )->hbox( class      = `sapUiTinyMarginBottom`
                              rendertype = `Bare`

@@ -29,8 +29,9 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
     header_title->snapped_heading(
         )->hbox(
             )->vbox(
-                )->avatar( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
-                           class = `sapUiSmallMarginEnd`
+                )->image( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
+                          width = `3rem`
+                          class = `sapUiSmallMarginEnd`
             )->vbox(
                 )->title( text     = `Object Page Header with Header Container`
                           wrapping = abap_true
@@ -58,9 +59,9 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                      showdividers = abap_false ).
 
     header_content->hbox( class = `sapUiSmallMarginEnd sapUiSmallMarginBottom`
-        )->avatar( src         = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
-                   class       = `sapUiMediumMarginEnd sapUiSmallMarginBottom`
-                   displaysize = `L`
+        )->image( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/uxap/images/imageID_275314.png`
+                  width = `5rem`
+                  class = `sapUiMediumMarginEnd sapUiSmallMarginBottom`
         )->vbox( `sapUiSmallMarginBottom`
             )->title( class = `sapUiTinyMarginBottom` )->get(
                 )->link( text = `Order Details`

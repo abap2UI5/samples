@@ -83,12 +83,8 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
                                enablecellfilter   = abap_true
                                rowactioncount     = `1`
                                fixedcolumncount   = `1`
+                               visiblerowcount    = `7`
                                selectionmode      = `None` ).
-
-    table->rowmode( `table`
-        )->fixed(
-            ns       = `trm`
-            rowcount = `7` ).
 
     table->ui_columns(
                               )->ui_column( sortproperty   = `FIELD1`

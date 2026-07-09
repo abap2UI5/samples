@@ -55,8 +55,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
                  id               = `ZINPUT`
                  value            = client->_bind_edit( input )
                  showvaluehelp    = abap_true
-                 valuehelprequest = client->_event( `CALL_KEYBOARD` )
-                 valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).
+                 valuehelprequest = client->_event( `CALL_KEYBOARD` ) ).
 
     client->view_display( page->stringify( ) ).
 

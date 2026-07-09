@@ -90,7 +90,8 @@ CLASS z2ui5_cl_demo_app_114 IMPLEMENTATION.
             justifycontent = `Start`
             class          = `sapUiSmallMarginEnd`
             alignitems     = `Center`
-            )->avatar(
+            )->icon(
+                    src   = `sap-icon://person-placeholder`
                     class = `sapUiSmallMarginEnd`
             )->text_area(
                     value       = client->_bind_edit( mv_value )

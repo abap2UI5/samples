@@ -71,8 +71,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
-    page = page->dynamic_page( headerexpanded = abap_true
-                               headerpinned   = abap_true ).
+    page = page->dynamic_page( headerexpanded = abap_true ).
 
     DATA(cont) = page->content( `f` ).
     DATA(tab) = cont->table( id    = `tab`

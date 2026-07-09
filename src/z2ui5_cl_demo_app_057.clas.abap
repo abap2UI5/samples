@@ -114,8 +114,7 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
 
     ENDIF.
 
-    DATA(page) = view->dynamic_page( headerexpanded = abap_true
-                                     headerpinned   = abap_true ).
+    DATA(page) = view->dynamic_page( headerexpanded = abap_true ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( `f` )->hbox( )->title( `Download CSV` ).

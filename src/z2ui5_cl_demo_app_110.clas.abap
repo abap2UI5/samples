@@ -48,7 +48,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                  )->mask_input( mask              = `(999) 999 999999`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter twelve-digit number`
-                                showclearicon     = abap_true )->get(
+                                )->get(
                   )->rules(
                     )->mask_input_rule(
                   )->get_parent( )->get_parent( )->get_parent( )->get_parent(
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                  )->mask_input( mask              = `CCCC-CCCC-CCCC-CCCC-CCCC`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter digits and capital letters`
-                                showclearicon     = abap_true )->get(
+                                )->get(
                   )->rules(
                     )->mask_input_rule( maskformatsymbol = `C`
                                         regex            = `[A-Z0-9]`
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                  )->mask_input( mask              = `SAP-CCCCC-CCCCC`
                                 placeholdersymbol = `_`
                                 placeholder       = `Starts with 'SAP' followed by digits and capital letters`
-                                showclearicon     = abap_true )->get(
+                                )->get(
                   )->rules(
                     )->mask_input_rule( maskformatsymbol = `C`
                                         regex            = `[A-Z0-9]`
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
                  )->mask_input( mask              = `999-99-999-9999-9`
                                 placeholdersymbol = `_`
                                 placeholder       = `Enter thirteen-digit number`
-                                showclearicon     = abap_true )->get(
+                                )->get(
 *                  )->rules(
 *                    )->mask_input_rule(
 *                  )->get_parent( )->get_parent( )->get_parent( )->get_parent( )->get_parent(

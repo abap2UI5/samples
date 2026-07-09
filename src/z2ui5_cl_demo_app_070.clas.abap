@@ -145,8 +145,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
             shownavbutton        = client->check_app_prev_stack( )
             class                = `sapUiContentPadding` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
-                                      headerpinned   = abap_true ).
+    DATA(page) = page1->dynamic_page( headerexpanded = abap_true ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
     header_title->heading( `f` )->hbox( )->title( `Search Field` ).
