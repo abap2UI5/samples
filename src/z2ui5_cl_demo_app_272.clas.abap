@@ -27,42 +27,53 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
     " Define the base URL for the server
     DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = `abap2UI5 - Sample: Object Header - with Circle-shaped Image`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    " sap.m.ObjectHeader is deprecated since 1.42 - use sap.uxap.ObjectPageHeader instead
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    page->header_content(
-       )->button( id = `button_hint_id`
-           icon      = `sap-icon://hint`
-           tooltip   = `Sample information`
-           press     = client->_event( `CLICK_HINT_ICON` ) ).
+    DATA(page) = view->object_page_layout( showtitleinheadercontent = abap_true ).
 
-    page->header_content(
-       )->link(
-           text   = `UI5 Demo Kit`
-           target = `_blank`
-           href   = base_url && `sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderCircleImage` ).
+    DATA(header) = page->header_title(
+        )->object_page_header(
+            objecttitle             = `Denise Smith`
+            objectsubtitle          = `Senior Developer`
+            objectimageuri          = base_url && `test-resources/sap/m/images/Woman_04.png`
+            objectimageshape        = `Circle`
+            objectimagedensityaware = abap_false
+            objectimagealt          = `Denise Smith` ).
 
-    page->object_header(
-           icon             = base_url && `test-resources/sap/m/images/Woman_04.png`
-           icondensityaware = abap_false
-           iconalt          = `Denise Smith`
-           imageshape       = `Circle`
-           responsive       = abap_true
-           title            = `Denise Smith`
-           intro            = `Senior Developer`
-           class            = `sapUiResponsivePadding--header`
-             )->object_attribute( title  = `Email address`
-                                  text   = `DeniseSmith@sap.com`
-                                  active = abap_true
-             )->object_attribute( title = `Office Phone`
-                                  text  = `+33 6 453 564`
-             )->object_attribute( title = `Functional Area`
-                                  text  = `Development` ).
+    header->attributes( `uxap`
+        )->object_attribute(
+            title  = `Email address`
+            text   = `DeniseSmith@sap.com`
+            active = abap_true
+        )->object_attribute(
+            title = `Office Phone`
+            text  = `+33 6 453 564`
+        )->object_attribute(
+            title = `Functional Area`
+            text  = `Development` ).
 
-    client->view_display( page->stringify( ) ).
+    header->actions( `uxap`
+        )->object_page_header_action_btn(
+            icon    = `sap-icon://nav-back`
+            text    = `Go Back`
+            visible = client->check_app_prev_stack( )
+            press   = client->_event_nav_app_leave( ) ).
+
+    page->header_content( `uxap`
+        )->button(
+            id      = `button_hint_id`
+            icon    = `sap-icon://hint`
+            tooltip = `Sample information`
+            press   = client->_event( `CLICK_HINT_ICON` ) ).
+
+    page->header_content( `uxap`
+        )->link(
+            text   = `UI5 Demo Kit`
+            target = `_blank`
+            href   = base_url && `sdk/#/api/sap.uxap.ObjectPageHeader` ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -83,10 +94,9 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
-                                  description = `An Object Header can set shape of the image by using 'imageShape' property.`                      &&
-                                                `The shapes could be Square (by default) and Circle.`                                              &&
-                                                `Note: This example shows the image inside ObjectHeader with the responsive property set to true.` &&
-                                                `On phone in portrait mode, the image is hidden.` ).
+                                  description = `sap.uxap.ObjectPageHeader is the successor of the deprecated sap.m.ObjectHeader. ` &&
+                                                `The image shape is set via the 'objectImageShape' property (Square by default or ` &&
+                                                `Circle). The object attributes are provided through the 'attributes' aggregation.` ).
 
     client->popover_display(
       xml   = view->stringify( )
