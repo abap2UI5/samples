@@ -1224,12 +1224,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `Shell Bar`
-                         subheader = `title mega menu`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_269` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel->generic_tile( header = `Slide Tile`
                          press  = client->_event( `Z2UI5_CL_DEMO_APP_274` )
                          mode   = `LineMode`
