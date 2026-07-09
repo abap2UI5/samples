@@ -8,6 +8,61 @@ abap2UI5 Samples - Collection of demo apps for the abap2UI5 framework.
 
 - **This entire project is in English.** All code, comments, commit messages, PR titles, PR descriptions, and any other text must be written in English.
 
+## Repository Structure
+
+Samples are organised into three areas. **`src/` root** holds the plain,
+universally-runnable demos; everything with a restriction or a special purpose
+lives in a categorised subpackage under `src/00` (restricted) or `src/01`
+(extension).
+
+```
+src/                                  plain, universally-runnable samples
+├── 00/   restricted                  (stripped from the 702 and cloud builds via `rm -r src/00`)
+│   ├── 01/  only non-abap-cloud      needs on-premise-only ABAP (not ABAP Cloud ready)
+│   ├── 02/  only non-openui5         uses SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …)
+│   ├── 03/  only with launchpad      runs only inside the Fiori Launchpad
+│   ├── 04/  only higher UI5 1.71     uses a control/property introduced after UI5 1.71
+│   ├── 05/  only with javascript     needs native JavaScript
+│   ├── 06/  only testing             test/scaffolding apps, not demos
+│   ├── 07/  experimental             work-in-progress / not finished
+│   └── 99/  obsolete                 superseded, or uses a deprecated control
+└── 01/   extension                   cloud-compatible framework-feature demos
+    ├── 01/  built-in custom controls
+    ├── 02/  built-in popups          (`z2ui5_cl_pop_*`)
+    └── 03/  generic xml view         (`z2ui5_cl_util_xml`)
+```
+
+### What may stay in `src/` root
+
+An app belongs in root **only if every one of these is true** — otherwise it
+goes into the matching subpackage above:
+
+1. **Runs with OpenUI5** — no SAPUI5-only controls (→ `00/02`).
+2. **ABAP Cloud ready** — no on-premise-only ABAP (→ `00/01`).
+3. **Standalone** — does not require the Launchpad (→ `00/03`).
+4. **UI5 1.71 baseline** — every control **and** property it uses is available
+   since **UI5 1.71 or earlier** (16 Jan 2020, the LTS baseline). Anything
+   introduced after 1.71 → `00/04`.
+5. **Never deprecated** — no control or property that is deprecated, including
+   in the latest UI5 releases (a deprecated-control app → `00/99`, even when the
+   control itself predates 1.71).
+6. **No native JavaScript** (→ `00/05`).
+7. **Not a test app** (→ `00/06`) and **not experimental / work-in-progress**
+   (→ `00/07`).
+8. **Finished and clean** — fully built and tidy code.
+
+> Points 4 + 5 together: a control/property must be **≤ 1.71 AND not deprecated**
+> to be allowed in root. Being old is not enough (deprecated → `00/99`); being
+> non-deprecated is not enough (post-1.71 → `00/04`).
+
+Framework-feature demos that satisfy 1–8 but exist to showcase a built-in
+custom control, a built-in popup or the generic XML view go under `src/01`
+instead of root.
+
+Class names never encode the folder (abapGit `FOLDER_LOGIC=PREFIX`), so moving a
+sample between packages needs no rename and keeps the `z2ui5_cl_demo_app_000`
+overview links intact.
+
 ## Rules
 
 ### abaplint
