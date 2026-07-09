@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_160</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>ui table - event handling cell level</DESCRIPT>
+    <DESCRIPT>ui.Table II - Events on Cell Level</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

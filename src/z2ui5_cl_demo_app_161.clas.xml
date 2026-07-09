@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_161</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>popup - popup to popup</DESCRIPT>
+    <DESCRIPT>Call Popup in Popup - Backend Popup Stack Handling</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

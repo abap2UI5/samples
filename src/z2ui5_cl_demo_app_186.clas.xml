@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_186</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>download b64</DESCRIPT>
+    <DESCRIPT>File Download - Download files to the Frontend</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

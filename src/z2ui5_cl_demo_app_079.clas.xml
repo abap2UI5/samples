@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_079</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>file - pdf viewer</DESCRIPT>
+    <DESCRIPT>PDF Viewer - Display PDFs via iframe</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_362</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>scroll_to - preserve scroll position</DESCRIPT>
+    <DESCRIPT>Scroll to position - client-&gt;action-&gt;gen( SCROLL_TO )</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

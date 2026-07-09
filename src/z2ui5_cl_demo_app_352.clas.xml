@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_352</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Softkeyboard on/off</DESCRIPT>
+    <DESCRIPT>Hide/show Soft Keyboard</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

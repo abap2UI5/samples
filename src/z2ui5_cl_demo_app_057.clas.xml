@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_057</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>list report - download csv</DESCRIPT>
+    <DESCRIPT>Download CSV - Export Table as CSV</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

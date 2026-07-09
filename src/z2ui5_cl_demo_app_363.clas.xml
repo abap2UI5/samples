@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_363</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>scroll_into_view - jump to control</DESCRIPT>
+    <DESCRIPT>Scroll into view - client-&gt;action-&gt;gen( SCROLL_INTO_VIEW )</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

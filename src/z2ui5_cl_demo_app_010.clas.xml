@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_010</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>basic - layout</DESCRIPT>
+    <DESCRIPT>Header, Footer, Grid - Split view in different areas</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

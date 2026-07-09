@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_031</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>extension - import xml view</DESCRIPT>
+    <DESCRIPT>Import View - Copy &amp; paste views of the UI5 Documentation</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_050</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>more - css</DESCRIPT>
+    <DESCRIPT>Change CSS - Send your own CSS to the frontend</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

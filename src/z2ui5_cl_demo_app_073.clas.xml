@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_073</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>functions - open new tab</DESCRIPT>
+    <DESCRIPT>New Tab - Open an URL in a new tab</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
