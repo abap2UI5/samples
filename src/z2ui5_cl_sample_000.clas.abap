@@ -108,28 +108,71 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
 
     page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
 
-    DATA(prev_group) = ``.
+    TYPES:
+      BEGIN OF ty_s_ctrl,
+        group   TYPE string,
+        header  TYPE string,
+        t_items TYPE ty_t_tile,
+      END OF ty_s_ctrl.
+    DATA t_ctrl TYPE STANDARD TABLE OF ty_s_ctrl WITH DEFAULT KEY.
 
     LOOP AT get_catalog( ) INTO DATA(tile).
 
-      IF tile-group <> prev_group.
-        page->title(
-            text  = tile-group
-            level = `H3`
-            class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
-        prev_group = tile-group.
+      ASSIGN t_ctrl[ group  = tile-group
+                     header = tile-header ] TO FIELD-SYMBOL(<ctrl>).
+      IF sy-subrc <> 0.
+        APPEND VALUE #( group  = tile-group
+                        header = tile-header ) TO t_ctrl ASSIGNING <ctrl>.
       ENDIF.
 
-      page->hbox(
+      APPEND tile TO <ctrl>-t_items.
+
+    ENDLOOP.
+
+    DATA(prev_group) = ``.
+
+    LOOP AT t_ctrl INTO DATA(ctrl).
+
+      IF ctrl-group <> prev_group.
+        page->title(
+            text  = ctrl-group
+            level = `H3`
+            class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+        prev_group = ctrl-group.
+      ENDIF.
+
+      DATA(row) = page->hbox(
           alignitems = `Center`
-          class      = `sapUiTinyMarginBegin`
-          )->button(
-              text  = tile-header
-              type  = `Transparent`
-              press = client->_event( tile-app )
-          )->text(
-              text  = tile-sub
-              class = `sapUiSmallMarginBegin` ).
+          wrap       = `Wrap`
+          class      = `sapUiTinyMarginBegin` ).
+
+      IF lines( ctrl-t_items ) > 1.
+
+        row->text(
+            text  = ctrl-header
+            class = `sapUiTinyMarginEnd` ).
+
+        LOOP AT ctrl-t_items INTO DATA(item).
+          row->button(
+              text  = COND #( WHEN item-sub IS NOT INITIAL THEN item-sub ELSE |Sample { sy-tabix }| )
+              press = client->_event( item-app ) ).
+        ENDLOOP.
+
+      ELSEIF ctrl-t_items[ 1 ]-sub IS INITIAL.
+        row->button(
+            text  = ctrl-header
+            type  = `Transparent`
+            press = client->_event( ctrl-t_items[ 1 ]-app ) ).
+
+      ELSE.
+        row->button(
+            text  = ctrl-header
+            type  = `Transparent`
+            press = client->_event( ctrl-t_items[ 1 ]-app )
+            )->text(
+                text  = ctrl-t_items[ 1 ]-sub
+                class = `sapUiSmallMarginBegin` ).
+      ENDIF.
 
     ENDLOOP.
 
