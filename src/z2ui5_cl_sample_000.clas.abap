@@ -106,37 +106,16 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
           text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic launchpad overview.| ).
     ENDIF.
 
-    TYPES:
-      BEGIN OF ty_s_ctrl,
-        group   TYPE string,
-        header  TYPE string,
-        t_items TYPE ty_t_tile,
-      END OF ty_s_ctrl.
-    DATA t_ctrl TYPE STANDARD TABLE OF ty_s_ctrl WITH DEFAULT KEY.
+    DATA(prev_group) = ``.
 
     LOOP AT get_catalog( ) INTO DATA(tile).
 
-      ASSIGN t_ctrl[ group  = tile-group
-                     header = tile-header ] TO FIELD-SYMBOL(<ctrl>).
-      IF sy-subrc <> 0.
-        APPEND VALUE #( group  = tile-group
-                        header = tile-header ) TO t_ctrl ASSIGNING <ctrl>.
-      ENDIF.
-
-      APPEND tile TO <ctrl>-t_items.
-
-    ENDLOOP.
-
-    DATA(prev_group) = ``.
-
-    LOOP AT t_ctrl INTO DATA(ctrl).
-
-      IF ctrl-group <> prev_group.
+      IF tile-group <> prev_group.
         page->title(
-            text  = ctrl-group
+            text  = tile-group
             level = `H3`
             class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
-        prev_group = ctrl-group.
+        prev_group = tile-group.
       ENDIF.
 
       DATA(row) = page->hbox(
@@ -144,32 +123,17 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
           wrap       = `Wrap`
           class      = `sapUiTinyMarginBegin` ).
 
-      DATA(first) = ctrl-t_items[ 1 ].
-
-      IF lines( ctrl-t_items ) > 1.
-
-        row->text(
-            text  = ctrl-header
-            class = `sapUiTinyMarginEnd` ).
-
-        LOOP AT ctrl-t_items INTO DATA(item).
-          row->link(
-              text  = COND #( WHEN item-sub IS NOT INITIAL THEN item-sub ELSE |Sample { sy-tabix }| )
-              class = `sapUiTinyMarginEnd`
-              press = client->_event( item-app ) ).
-        ENDLOOP.
-
-      ELSEIF first-sub IS INITIAL.
+      IF tile-sub IS INITIAL.
         row->link(
-            text  = ctrl-header
-            press = client->_event( first-app ) ).
+            text  = tile-header
+            press = client->_event( tile-app ) ).
 
       ELSE.
         row->link(
-            text  = ctrl-header
+            text  = tile-header
             class = `sapUiTinyMarginEnd`
-            press = client->_event( first-app )
-            )->text( first-sub ).
+            press = client->_event( tile-app )
+            )->text( tile-sub ).
       ENDIF.
 
     ENDLOOP.
