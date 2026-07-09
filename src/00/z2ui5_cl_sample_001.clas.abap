@@ -93,7 +93,7 @@ CLASS z2ui5_cl_sample_001 IMPLEMENTATION.
 
     DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_000|.
     page->header_content( )->button(
-        text  = `Standard Samples`
+        text  = `Basic Samples`
         icon  = `sap-icon://action`
         press = client->_event_client( val   = client->cs_event-open_new_tab
                                        t_arg = VALUE #( ( url_standard ) ) ) ).

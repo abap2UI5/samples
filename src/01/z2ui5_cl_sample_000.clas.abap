@@ -99,7 +99,7 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
     IF class_exists( `Z2UI5_CL_SAMPLE_001` ) = abap_true.
       DATA(url_restricted) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_001|.
       page->header_content( )->button(
-          text  = `Restricted Samples`
+          text  = `Extended Samples`
           icon  = `sap-icon://action`
           press = client->_event_client( val   = client->cs_event-open_new_tab
                                          t_arg = VALUE #( ( url_restricted ) ) ) ).
