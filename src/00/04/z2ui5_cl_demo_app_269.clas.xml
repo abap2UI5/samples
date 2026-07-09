@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_269</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Shell Bar (since 1.63)</DESCRIPT>
+    <DESCRIPT>Shell Bar (uses deprecated sap.f.Avatar)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
