@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_284</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Flexible sizing - Toolbar</DESCRIPT>
+    <DESCRIPT>obsolete - uses deprecated sap.ui.table.AnalyticalTable</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

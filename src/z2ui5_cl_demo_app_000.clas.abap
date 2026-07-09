@@ -1331,18 +1331,6 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `Page`
-                         subheader = `Flexible sizing - Toolbar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_284` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
-    panel->generic_tile( header    = `Page`
-                         subheader = `Flexible sizing - Icon Tab Bar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_285` )
-                         mode      = `LineMode`
-                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
-
     panel->generic_tile( header    = `Message Strip`
                          subheader = `with enableFormattedText`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_291` )
