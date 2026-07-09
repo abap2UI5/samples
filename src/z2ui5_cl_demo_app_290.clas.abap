@@ -49,7 +49,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                  type       = `Active`
                  press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
                  number     = `87.50`
-                 numberunit = `EUR`
+                 unit       = `EUR`
                )->first_status(
                    )->object_status(
                        text  = `Available`
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                  type       = `Active`
                  press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
                  number     = `235`
-                 numberunit = `EUR`
+                 unit       = `EUR`
                )->first_status(
                    )->object_status(
                        text  = `Out of stock`
@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                  type       = `Active`
                  press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
                  number     = `135`
-                 numberunit = `EUR`
+                 unit       = `EUR`
                )->first_status(
                    )->object_status(
                        text  = `Discontinued`
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
                  type       = `Active`
                  press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
                  number     = `15`
-                 numberunit = `EUR`
+                 unit       = `EUR`
                )->first_status(
                    )->object_status(
                        text = `New`
