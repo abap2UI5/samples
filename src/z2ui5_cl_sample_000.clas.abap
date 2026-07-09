@@ -14,7 +14,15 @@ CLASS z2ui5_cl_sample_000 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+    DATA:
+      BEGIN OF s_scroll,
+        id TYPE string,
+        x  TYPE i,
+        y  TYPE i,
+      END OF s_scroll.
 
+    METHODS on_event.
+    METHODS scroll_restore.
     METHODS view_display.
     METHODS get_catalog
       RETURNING
@@ -34,20 +42,46 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->check_on_event( ).
-
-      TRY.
-          DATA(classname) = to_upper( client->get( )-event ).
-          DATA li_app TYPE REF TO z2ui5_if_app.
-          CREATE OBJECT li_app TYPE (classname).
-          client->nav_app_call( li_app ).
-        CATCH cx_root ##NO_HANDLER.
-      ENDTRY.
-
-    ELSE.
+    IF client->check_on_init( ).
       view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+
+      scroll_restore( ).
+      view_display( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    TRY.
+        DATA(classname) = to_upper( client->get( )-event ).
+        DATA li_app TYPE REF TO z2ui5_if_app.
+        CREATE OBJECT li_app TYPE (classname).
+        s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
+        client->nav_app_call( li_app ).
+      CATCH cx_root ##NO_HANDLER.
+    ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD scroll_restore.
+
+    IF s_scroll-id IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    client->action->gen(
+        val   = z2ui5_if_client=>cs_event-scroll_to
+        t_arg = VALUE #( ( s_scroll-id )
+                         ( |{ s_scroll-y }| )
+                         ( |{ s_scroll-x }| ) ) ).
 
   ENDMETHOD.
 
@@ -57,18 +91,21 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
+        id             = `page`
         title          = `abap2UI5 - Samples`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
-
     IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
-      page->link(
-          text  = `Open the classic launchpad overview`
-          class = `sapUiTinyMarginBegin sapUiTinyMarginBottom`
-          press = client->_event( `Z2UI5_CL_DEMO_APP_000` ) ).
+      page->header_content(
+          )->toolbar_spacer(
+          )->link(
+              text   = `Open the classic launchpad overview`
+              target = `_blank`
+              href   = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000| ).
     ENDIF.
+
+    page->formatted_text( `<p><strong>Explore and copy code samples!</strong> One line per app, grouped by capability.</p>` ).
 
     DATA(prev_group) = ``.
 
