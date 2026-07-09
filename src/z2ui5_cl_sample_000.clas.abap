@@ -96,6 +96,13 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
+    IF class_exists( `Z2UI5_CL_SAMPLE_001` ) = abap_true.
+      page->header_content( )->button(
+          text  = `Restricted Samples`
+          icon  = `sap-icon://nav-forward`
+          press = client->_event( `Z2UI5_CL_SAMPLE_001` ) ).
+    ENDIF.
+
     IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
       DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
       page->message_strip(
