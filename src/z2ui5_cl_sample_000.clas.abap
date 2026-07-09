@@ -144,6 +144,8 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
           wrap       = `Wrap`
           class      = `sapUiTinyMarginBegin` ).
 
+      DATA(first) = ctrl-t_items[ 1 ].
+
       IF lines( ctrl-t_items ) > 1.
 
         row->text(
@@ -157,17 +159,17 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
               press = client->_event( item-app ) ).
         ENDLOOP.
 
-      ELSEIF ctrl-t_items[ 1 ]-sub IS INITIAL.
+      ELSEIF first-sub IS INITIAL.
         row->link(
             text  = ctrl-header
-            press = client->_event( ctrl-t_items[ 1 ]-app ) ).
+            press = client->_event( first-app ) ).
 
       ELSE.
         row->link(
             text  = ctrl-header
             class = `sapUiTinyMarginEnd`
-            press = client->_event( ctrl-t_items[ 1 ]-app )
-            )->text( ctrl-t_items[ 1 ]-sub ).
+            press = client->_event( first-app )
+            )->text( first-sub ).
       ENDIF.
 
     ENDLOOP.
