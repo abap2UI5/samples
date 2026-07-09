@@ -17,4 +17,5 @@ jobs:
         node-version: '16'
 
     - run: npm ci
+    - run: rm -rf src/00
     - run: npm run downport
