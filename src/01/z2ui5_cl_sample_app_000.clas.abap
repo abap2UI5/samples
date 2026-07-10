@@ -235,7 +235,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `framework popups` header = `popup` sub = `popup_to_select` app = `z2ui5_cl_demo_app_152` )
       ( group = `framework popups` header = `popup` sub = `popup_to_select2` app = `z2ui5_cl_demo_app_174` )
       ( group = `controls with action` header = `MessageBox I` sub = `Display different types` app = `z2ui5_cl_demo_app_008` )
-      ( group = `controls with action` header = `MessageBox II` sub = `Ouput different abap types` app = `z2ui5_cl_demo_app_187` )
+      ( group = `controls with action` header = `MessageToast` sub = `Ouput different abap types` app = `z2ui5_cl_demo_app_187` )
       ( group = `controls with action` header = `Nav Container I` sub = `` app = `z2ui5_cl_demo_app_088` )
       ( group = `controls with action` header = `Nested Views I` sub = `Basic Example` app = `z2ui5_cl_demo_app_065` )
       ( group = `controls with action` header = `Nested Views II` sub = `Head & Item Table` app = `z2ui5_cl_demo_app_097` )
