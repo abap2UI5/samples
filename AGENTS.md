@@ -128,8 +128,21 @@ obsolete); `sample_000` links to it via a message strip. Do not extend it.
 
 **Treat the two `get_catalog( )` tables as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
-or move a whole subpackage between `src/00` and `src/01` — you **must**
-regenerate the affected catalog(s) in the same change.
+or move a whole subpackage between `src/00` and `src/01`, or change a class's
+description — you **must** regenerate the affected catalog(s) in the same change.
+
+### Regenerate with the generator
+
+Do not hand-edit the catalogs. Run the generator, which scans the folders and
+class descriptions and rewrites both `get_catalog( )` blocks:
+
+```
+npm run launchpad      # → node scripts/generate-launchpad.js
+npx abaplint           # must report 0 issues
+```
+
+`scripts/generate-launchpad.js` implements every rule below. Edit the script (not
+the generated ABAP) if a rule changes.
 
 ### Tile schema
 
