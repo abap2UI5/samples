@@ -146,6 +146,10 @@ One row per app, all four fields always present:
    mirrors the tree. When inserting a new group, place it at its numeric slot
    (e.g. `uncategorized` = `00/11` goes **after** `only non-openui5-with-cc`
    (`00/10`) and **before** `obsolete` (`00/99`)).
+4b. **Within a group, sort tiles alphabetically by the description text
+   (`sub`)**, case-insensitively. The `sub` field is the sort key — not
+   `header` and not `app`. (Empty `sub` values therefore sort first.) The group
+   order from rule 4 is untouched; only the tiles inside each group are ordered.
 5. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (see the uncategorized move:
    `src/01/07` → `src/00/11` meant lifting the entire `uncategorized` group out
