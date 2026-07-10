@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_SAMPLE_000</CLSNAME>
+    <CLSNAME>Z2UI5_CL_SAMPLE_APP_000</CLSNAME>
     <LANGU>E</LANGU>
     <DESCRIPT>abap2UI5 - Samples Overview (extension)</DESCRIPT>
     <STATE>1</STATE>
