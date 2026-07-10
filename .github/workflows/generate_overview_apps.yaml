@@ -1,4 +1,4 @@
-name: launchpad
+name: generate_overview_apps
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  launchpad:
+  generate_overview_apps:
     if: github.ref == 'refs/heads/standard'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -24,14 +24,21 @@ jobs:
     - run: npm ci
     - run: npm run launchpad
 
+    - name: Stamp last run date into README
+      run: |
+        STAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
+        sed -i "s|<!-- last-run -->.*<!-- /last-run -->|<!-- last-run -->$STAMP<!-- /last-run -->|" README.md
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
-        add-paths: src
-        commit-message: Regenerate launchpad
+        add-paths: |
+          src
+          README.md
+        commit-message: Regenerate overview apps
         author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
         committer: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
-        branch: launchpad/regenerate
+        branch: generate_overview_apps/regenerate
         delete-branch: true
-        title: Regenerate launchpad
-        body: Automated launchpad regeneration.
+        title: Regenerate overview apps
+        body: Automated overview apps regeneration.
