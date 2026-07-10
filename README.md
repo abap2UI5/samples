@@ -4,6 +4,9 @@
 <br>
 [![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
 [![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
+[![generate_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml)
+
+_generate_overview_apps last run: <!-- last-run -->never<!-- /last-run -->_
 
 
 # abap2UI5-samples
