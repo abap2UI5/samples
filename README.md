@@ -16,7 +16,7 @@ Install this repository and try out over 250 samples. This is the easiest way to
 
 [![generate_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml)
 
-The overview apps are generated automatically: _generate_overview_apps last run: <!-- last-run -->never<!-- /last-run -->_
+The overview apps are generated automatically: _generate_overview_apps last run: <!-- last-run -->2026-07-10 13:54 UTC<!-- /last-run -->_
 
 #### Issues
 
