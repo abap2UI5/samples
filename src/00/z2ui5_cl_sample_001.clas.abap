@@ -27,6 +27,11 @@ CLASS z2ui5_cl_sample_001 DEFINITION PUBLIC.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
+    METHODS header_base
+      IMPORTING
+        header        TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -99,8 +104,12 @@ CLASS z2ui5_cl_sample_001 IMPLEMENTATION.
                                        t_arg = VALUE #( ( url_standard ) ) ) ).
 
     DATA(prev_group) = ``.
+    DATA(prev_base) = ``.
 
     LOOP AT get_catalog( ) INTO DATA(tile).
+
+      DATA(base) = header_base( tile-header ).
+      DATA(new_block) = abap_false.
 
       IF tile-group <> prev_group.
         page->title(
@@ -108,12 +117,19 @@ CLASS z2ui5_cl_sample_001 IMPLEMENTATION.
             level = `H3`
             class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
         prev_group = tile-group.
+
+      ELSEIF base <> prev_base.
+        new_block = abap_true.
       ENDIF.
+
+      prev_base = base.
 
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
-          class      = `sapUiTinyMarginBegin` ).
+          class      = COND #( WHEN new_block = abap_true
+                               THEN `sapUiTinyMarginBegin sapUiSmallMarginTop`
+                               ELSE `sapUiTinyMarginBegin` ) ).
 
       IF tile-sub IS INITIAL.
         row->link(
@@ -309,6 +325,24 @@ CLASS z2ui5_cl_sample_001 IMPLEMENTATION.
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.f.Avatar, use sap.m.Avatar` app = `z2ui5_cl_demo_app_269` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_284` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_285` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD header_base.
+
+    result = header.
+    SPLIT header AT ` ` INTO TABLE DATA(words).
+    DATA(n) = lines( words ).
+
+    IF n > 1 AND words[ n ] IS NOT INITIAL AND words[ n ] CO `IVXLCDM`.
+
+      DELETE words INDEX n.
+      result = concat_lines_of(
+          table = words
+          sep   = ` ` ).
+
+    ENDIF.
 
   ENDMETHOD.
 

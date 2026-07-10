@@ -112,6 +112,13 @@ tile. Navigation is by class name: the tile press event is the `app` value,
 missing class — but that is a safety net, **not** a substitute for keeping the
 catalog correct.
 
+Within a group, `view_display( )` also inserts a **blank line between blocks**:
+consecutive tiles whose `header` shares the same base name form one block, and a
+new block (first row gets `sapUiSmallMarginTop`) starts when the base changes.
+The base is the header with a trailing Roman numeral removed (`header_base( )`),
+so `Binding`, `Binding I` … `Binding VIII` render as one block, then a gap, then
+the `Event` block, and so on.
+
 `z2ui5_cl_demo_app_000` is the old "classic" launchpad (now under `00/99`,
 obsolete); `sample_000` links to it via a message strip. Do not extend it.
 

@@ -32,6 +32,11 @@ CLASS z2ui5_cl_sample_000 DEFINITION PUBLIC.
         name          TYPE clike
       RETURNING
         VALUE(result) TYPE abap_bool.
+    METHODS header_base
+      IMPORTING
+        header        TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -116,8 +121,12 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
     ENDIF.
 
     DATA(prev_group) = ``.
+    DATA(prev_base) = ``.
 
     LOOP AT get_catalog( ) INTO DATA(tile).
+
+      DATA(base) = header_base( tile-header ).
+      DATA(new_block) = abap_false.
 
       IF tile-group <> prev_group.
         page->title(
@@ -125,12 +134,19 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
             level = `H3`
             class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
         prev_group = tile-group.
+
+      ELSEIF base <> prev_base.
+        new_block = abap_true.
       ENDIF.
+
+      prev_base = base.
 
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
-          class      = `sapUiTinyMarginBegin` ).
+          class      = COND #( WHEN new_block = abap_true
+                               THEN `sapUiTinyMarginBegin sapUiSmallMarginTop`
+                               ELSE `sapUiTinyMarginBegin` ) ).
 
       IF tile-sub IS INITIAL.
         row->link(
@@ -354,6 +370,24 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `controls` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `controls` header = `Visualization` sub = `Object Number, Object States & Tab Filter` app = `z2ui5_cl_demo_app_072` )
       ( group = `controls` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD header_base.
+
+    result = header.
+    SPLIT header AT ` ` INTO TABLE DATA(words).
+    DATA(n) = lines( words ).
+
+    IF n > 1 AND words[ n ] IS NOT INITIAL AND words[ n ] CO `IVXLCDM`.
+
+      DELETE words INDEX n.
+      result = concat_lines_of(
+          table = words
+          sep   = ` ` ).
+
+    ENDIF.
 
   ENDMETHOD.
 
