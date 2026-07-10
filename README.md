@@ -4,6 +4,8 @@
 <br>
 [![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
 [![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
+<br>
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 # abap2UI5-samples
 
