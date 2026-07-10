@@ -135,9 +135,21 @@ One row per app, all four fields always present:
 | Field    | Meaning / rule |
 |----------|----------------|
 | `group`  | **Exactly** the CTEXT of the subpackage the app physically lives in. Becomes the H3 section title (rendered once, when the group changes). |
-| `header` | Link text shown to the user (a friendly name, or the class name itself for un-triaged apps). |
-| `sub`    | Short description shown next to the link. May be empty (`` `` ``) → then only the link is rendered. |
+| `header` | Link text shown to the user. **Derived from the class short text** (see below). |
+| `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
+
+**`header` and `sub` come from the class, not from hand-written labels.** The
+source of truth is the app class's abapGit short text `<DESCRIPT>` in its
+`*.clas.xml`, written in the format `header - sub`:
+- Split the DESCRIPT on the **first** `` ` - ` `` (space-hyphen-space): the part
+  before is `header`, the part after is `sub` (which may itself contain ` - `).
+- No ` - ` at all → `header` = the whole DESCRIPT, `sub` = empty.
+- Unescape XML entities (`&amp;` → `&`, etc.) when copying into the ABAP literal.
+
+When regenerating, **re-read every class's `<DESCRIPT>`** — the descriptions are
+maintained on the classes and change there, so never carry `header`/`sub` over
+from the old catalog.
 
 ### Generation rules
 
