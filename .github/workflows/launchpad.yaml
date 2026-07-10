@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   launchpad:
@@ -22,14 +23,14 @@ jobs:
     - run: npm ci
     - run: npm run launchpad
 
-    - name: Commit Changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add src
-        if git diff --cached --quiet; then
-          echo "Launchpad already up to date, nothing to commit."
-        else
-          git commit -m "Regenerate launchpad"
-          git push
-        fi
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        add-paths: src
+        commit-message: Regenerate launchpad
+        author: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+        committer: 'github-actions[bot] <github-actions[bot]@users.noreply.github.com>'
+        branch: launchpad/regenerate
+        delete-branch: true
+        title: Regenerate launchpad
+        body: Automated launchpad regeneration.
