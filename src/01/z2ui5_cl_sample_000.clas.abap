@@ -241,6 +241,7 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `controls with action` header = `Nested Views II` sub = `Head & Item Table` app = `z2ui5_cl_demo_app_097` )
       ( group = `controls with action` header = `Nested Views III` sub = `Head & Item Table & Detail` app = `z2ui5_cl_demo_app_098` )
       ( group = `controls with action` header = `Nested Views IV` sub = `Sub-App` app = `z2ui5_cl_demo_app_104` )
+      ( group = `controls with action` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` )
       ( group = `controls with action` header = `Wizard Control II` sub = `Next step & SubSequentStep` app = `z2ui5_cl_demo_app_202` )
       ( group = `controls with cc` header = `CameraSelector` sub = `` app = `z2ui5_cl_demo_app_306` )
       ( group = `controls with cc` header = `Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
@@ -366,8 +367,7 @@ CLASS z2ui5_cl_sample_000 IMPLEMENTATION.
       ( group = `controls` header = `Tree Table II` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `controls` header = `ui.Table I` sub = `Simple example` app = `z2ui5_cl_demo_app_070` )
       ( group = `controls` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
-      ( group = `controls` header = `Visualization` sub = `Object Number, Object States & Tab Filter` app = `z2ui5_cl_demo_app_072` )
-      ( group = `controls` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` ) ).
+      ( group = `controls` header = `Visualization` sub = `Object Number, Object States & Tab Filter` app = `z2ui5_cl_demo_app_072` ) ).
 
   ENDMETHOD.
 
