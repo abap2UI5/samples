@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   launchpad:
+    if: github.ref == 'refs/heads/standard'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
