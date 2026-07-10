@@ -156,7 +156,10 @@ from the old catalog.
 1. **One catalog per area.** Apps in `src/01/**` belong in `sample_000`; apps in
    `src/00/**` belong in `sample_001`. Never list an app in the wrong launchpad.
 2. **Each app appears exactly once**, and every demo app physically present in an
-   area is listed (no missing tiles).
+   area is listed (no missing tiles) — **except hidden helper apps**: a class
+   whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
+   ever called by another app and must **not** get a tile. It stays in the
+   folder (and is checked by abaplint), just not shown in the launchpad.
 3. **`group` == subpackage CTEXT.** If you rename a subpackage's CTEXT, update
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
@@ -165,12 +168,11 @@ from the old catalog.
    mirrors the tree. When inserting a new group, place it at its numeric slot
    (e.g. `uncategorized` = `00/11` goes **after** `only non-openui5-with-cc`
    (`00/10`) and **before** `obsolete` (`00/99`)).
-5. **Within a group, sort tiles alphabetically (case-insensitive) by the
-   description text.** The sort key is `sub`; when `sub` is empty, fall back to
-   `header` (so a tile like `Focus I` with an empty `sub` sorts as `Focus I`,
-   mixed in with the described tiles — never bunched at the top). Tie-break by
-   `header`, then `app`. The group order from rule 4 is untouched; only the
-   tiles inside each group are ordered.
+5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
+   then by `sub`.** Sorting by `header` first keeps numbered series together and
+   in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
+   likewise `Popover I…IV`, `Popup I…III`). The group order from rule 4 is
+   untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (e.g. the uncategorized move
    `src/01/07` → `src/00/11` lifted the entire `uncategorized` group out of
