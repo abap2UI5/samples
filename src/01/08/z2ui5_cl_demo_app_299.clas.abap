@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_299 IMPLEMENTATION.
 
   METHOD set_data.
 
-    lt_product_collection = VALUE #( ).
+    lt_product_collection  = VALUE #( ).
     lt_product_collection2 = VALUE #( ).
 
     " Populating lt_product_collection

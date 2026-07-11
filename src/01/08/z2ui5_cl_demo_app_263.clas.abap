@@ -42,20 +42,20 @@ CLASS z2ui5_cl_demo_app_263 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.NumericContent/sample/sap.m.sample.NumericContentIcon` ).
 
-    page->numeric_content( value        = `65`
-                           scale        = `MM`
-                             valuecolor = `Error`
-                           indicator    = `Down`
-                           icon         = `sap-icon://travel-expense`
-                             class      = `sapUiSmallMargin`
-                           press        = client->_event( `press` ) ).
-    page->numeric_content( value        = `11`
-                           scale        = `MM`
-                             valuecolor = `Critical`
-                           indicator    = `Up`
-                             icon       = `test-resources/sap/m/demokit/sample/NumericContentIcon/images/grass.jpg`
-                           class        = `sapUiSmallMargin`
-                             press      = client->_event( `press` ) ).
+    page->numeric_content( value      = `65`
+                           scale      = `MM`
+                           valuecolor = `Error`
+                           indicator  = `Down`
+                           icon       = `sap-icon://travel-expense`
+                           class      = `sapUiSmallMargin`
+                           press      = client->_event( `press` ) ).
+    page->numeric_content( value      = `11`
+                           scale      = `MM`
+                           valuecolor = `Critical`
+                           indicator  = `Up`
+                           icon       = `test-resources/sap/m/demokit/sample/NumericContentIcon/images/grass.jpg`
+                           class      = `sapUiSmallMargin`
+                           press      = client->_event( `press` ) ).
 
     client->view_display( page->stringify( ) ).
 

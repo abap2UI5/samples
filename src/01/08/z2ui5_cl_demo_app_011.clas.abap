@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_011 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       check_editable_active = abap_false.
-      t_tab = VALUE #(
+      t_tab                 = VALUE #(
           ( title = `entry 01` value = `red`    info = `completed` descr = `this is a description` checkbox = abap_true )
           ( title = `entry 02` value = `blue`   info = `completed` descr = `this is a description` checkbox = abap_true )
           ( title = `entry 03` value = `green`  info = `completed` descr = `this is a description` checkbox = abap_true )

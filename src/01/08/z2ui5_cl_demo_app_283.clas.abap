@@ -48,8 +48,8 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
     page->label( text  = `Without Icon`
                  class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
     page->feed_input(
-          post      = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
-           showicon = abap_false ).
+          post     = client->_event( val = `onPost` t_arg = VALUE #( ( `${$source>/value}` ) ) )
+          showicon = abap_false ).
 
     page->label( text  = `With Icon Placeholder`
                  class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).

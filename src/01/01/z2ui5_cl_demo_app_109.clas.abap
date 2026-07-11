@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_109 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
-
 
   METHOD popover_display.
 
@@ -146,8 +144,9 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
   METHOD on_init.
 
     mv_placement = `Left`.
-    product  = `tomato`.
-    quantity = `500`.
+    product      = `tomato`.
+    quantity     = `500`.
 
   ENDMETHOD.
+
 ENDCLASS.

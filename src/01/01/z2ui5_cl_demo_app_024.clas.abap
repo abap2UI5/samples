@@ -17,9 +17,7 @@ CLASS z2ui5_cl_demo_app_024 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -109,4 +107,5 @@ CLASS z2ui5_cl_demo_app_024 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

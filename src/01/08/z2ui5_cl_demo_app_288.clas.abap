@@ -176,7 +176,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
       SORT lt_product_collection3 BY name.
 
       editable = abap_true.
-      enabled = abap_true.
+      enabled  = abap_true.
 
     ENDIF.
 

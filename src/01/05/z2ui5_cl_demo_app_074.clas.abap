@@ -20,9 +20,7 @@ CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -47,7 +45,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
             view_display( ).
 
             mv_value = VALUE #( ).
-            mv_path = VALUE #( ).
+            mv_path  = VALUE #( ).
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
@@ -120,4 +118,5 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -55,12 +55,12 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    popup = popup->dialog(
-          title         = `Messages`
-          contentheight = `50%`
-          contentwidth  = `50%`
-                     verticalscrolling = abap_false
-                           afterclose        = client->_event_client( client->cs_event-popup_close ) ).
+    popup             = popup->dialog(
+    title             = `Messages`
+    contentheight     = `50%`
+    contentwidth      = `50%`
+    verticalscrolling = abap_false
+    afterclose        = client->_event_client( client->cs_event-popup_close ) ).
 
     popup->message_view(
             items      = client->_bind( t_msg
@@ -92,9 +92,9 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title           = `abap2UI5 - Message View`
-            navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = client->check_app_prev_stack( ) ).
+            title          = `abap2UI5 - Message View`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
     page->button( text  = `Messages in Popup`
                   press = client->_event( `POPUP` ) ).
     page->message_view(

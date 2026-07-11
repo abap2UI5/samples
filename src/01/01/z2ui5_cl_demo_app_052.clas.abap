@@ -30,9 +30,7 @@ CLASS z2ui5_cl_demo_app_052 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
-
 
   METHOD popover_display.
 
@@ -118,7 +116,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
 
       WHEN `POPOVER_DETAIL`.
         mv_check_popover = abap_true.
-        mv_product = client->get_event_arg( 2 ).
+        mv_product       = client->get_event_arg( 2 ).
         popover_display( client->get_event_arg( 1 ) ).
     ENDCASE.
 
@@ -178,4 +176,5 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
         ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

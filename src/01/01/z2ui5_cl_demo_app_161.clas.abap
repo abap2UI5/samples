@@ -15,9 +15,7 @@ CLASS z2ui5_cl_demo_app_161 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
-
 
   METHOD simple_popup1.
 
@@ -112,4 +110,5 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -32,9 +32,7 @@ CLASS z2ui5_cl_demo_app_126 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
-
 
   METHOD get_comp.
 
@@ -165,4 +163,5 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

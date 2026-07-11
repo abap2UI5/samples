@@ -169,7 +169,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     selectedproductwrnngcollection = VALUE #( ).
     selectedproductsccsscollection = VALUE #( ).
     selectedproductinforcollection = VALUE #( ).
-    lt_a_products = VALUE #( ).
+    lt_a_products                  = VALUE #( ).
 
     selectedproducterrorcollection  = `HT-998`.
     selectedproductwrnngcollection  = `HT-999`.

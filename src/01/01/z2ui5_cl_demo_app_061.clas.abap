@@ -14,9 +14,7 @@ CLASS z2ui5_cl_demo_app_061 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
-
 
   METHOD set_view.
 
@@ -84,4 +82,5 @@ CLASS z2ui5_cl_demo_app_061 IMPLEMENTATION.
     set_view( ).
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -32,9 +32,7 @@ CLASS z2ui5_cl_demo_app_131 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -166,4 +164,5 @@ CLASS z2ui5_cl_demo_app_131 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

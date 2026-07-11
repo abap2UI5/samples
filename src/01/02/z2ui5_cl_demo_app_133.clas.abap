@@ -17,9 +17,7 @@ CLASS z2ui5_cl_demo_app_133 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
-
 
   METHOD view_display.
 
@@ -84,4 +82,5 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

@@ -154,7 +154,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
         IF client->get_event_arg( 1 ) IS NOT INITIAL.
 
           mv_layout = `ThreeColumnsEndExpanded`.
-          mv_title = client->get_event_arg( 1 ).
+          mv_title  = client->get_event_arg( 1 ).
         ENDIF.
 
         client->nest_view_model_update( ).

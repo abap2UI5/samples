@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_136 IMPLEMENTATION.
             view_display( ).
 
             mv_value = VALUE #( ).
-            mv_path = VALUE #( ).
+            mv_path  = VALUE #( ).
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).

@@ -185,9 +185,9 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
                                                        enabled  = abap_true
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
-    lo_columns->ui_column( width                         = `5rem`
-                           sortproperty                  = `ROW_ID`
-                                          filterproperty = `ROW_ID` )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
+    lo_columns->ui_column( width          = `5rem`
+                           sortproperty   = `ROW_ID`
+                           filterproperty = `ROW_ID` )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PROCESS`
                            filterproperty = `PROCESS` )->text( `Process Indicator`
@@ -199,7 +199,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PRODUCT`
                            filterproperty = `PRODUCT` )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
-                                                                                                          editable = abap_false ).
+                           editable       = abap_false ).
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `CREATE_DATE`
                            filterproperty = `CREATE_DATE` )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
@@ -218,7 +218,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
     lo_columns->ui_column( width          = `11rem`
                            sortproperty   = `PRICE`
                            filterproperty = `PRICE` )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
-                                                                                                         currency = `{WAERS}` ).
+                           currency       = `{WAERS}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
       )->ui_row_action_item( type = `Navigation`
                            press  = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
@@ -257,7 +257,7 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
           IF sy-subrc <> 0.
             EXIT.
           ENDIF.
-          lv_row = lv_row && <field>.
+          lv_row   = lv_row && <field>.
           lv_index = lv_index + 1.
         ENDDO.
 

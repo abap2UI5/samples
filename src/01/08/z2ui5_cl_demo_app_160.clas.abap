@@ -97,9 +97,9 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     DATA(page) = view->shell(
       )->page(
-        title           = `abap2UI5 - Event on cell level`
-        navbuttonpress  = client->_event_nav_app_leave( )
-          shownavbutton = client->check_app_prev_stack( )
+        title          = `abap2UI5 - Event on cell level`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( )
         )->header_content(
             )->link(
       )->get_parent( ).
@@ -130,8 +130,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_TOTAL`
                         filterproperty = `PL_TOTAL` )->text( `Column 5` )->ui_template( )->input(
-      value           = `{PL_TOTAL}`
-      submit          = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
+                        value          = `{PL_TOTAL}`
+                        submit         = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` )
         ( `${INDEX}` )
 *        ( `$source.oParent.sId` )
@@ -149,8 +149,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_01`
                         filterproperty = `PL_01` )->text( `Column 8` )->ui_template( )->input( value    = `{PL_01}`
-                                                                                                      editable = abap_true
-                                                                                                      type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_01`
                         filterproperty = `per_cent_01` )->text( `Column 9` )->ui_template( )->text( `{per_cent_01} %` ).
@@ -161,8 +161,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_02`
                         filterproperty = `PL_02` )->text( `Column 11` )->ui_template( )->input( value    = `{PL_02}`
-                                                                                                       editable = abap_true
-                                                                                                       type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_02`
                         filterproperty = `per_cent_02` )->text( `Column 12` )->ui_template( )->text( `{per_cent_02} %` ).
@@ -173,8 +173,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_03`
                         filterproperty = `PL_03` )->text( `Column 14` )->ui_template( )->input( value    = `{PL_03}`
-                                                                                                       editable = abap_true
-                                                                                                       type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_03`
                         filterproperty = `per_cent_03` )->text( `Column 15` )->ui_template( )->text( `{per_cent_03} %` ).
@@ -195,8 +195,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_Q02`
                         filterproperty = `PL_Q02` )->text( `Column 20` )->ui_template( )->input( value    = `{PL_Q02}`
-                                                                                                        editable = abap_true
-                                                                                                        type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_q02`
                         filterproperty = `per_cent_q02` )->text( `Column 21` )->ui_template( )->text( `{per_cent_q02} %` ).
@@ -207,8 +207,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_Q03`
                         filterproperty = `PL_Q03` )->text( `Column 23` )->ui_template( )->input( value    = `{PL_Q03}`
-                                                                                                        editable = abap_true
-                                                                                                        type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_q03`
                         filterproperty = `per_cent_q03` )->text( `Column 24` )->ui_template( )->text( `{per_cent_q03} %` ).
@@ -219,8 +219,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_Q04`
                         filterproperty = `PL_Q04` )->text( `Column 26` )->ui_template( )->input( value    = `{PL_Q04}`
-                                                                                                        editable = abap_true
-                                                                                                        type     = `Number` ).
+                        editable       = abap_true
+                        type           = `Number` ).
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_q04`
                         filterproperty = `per_cent_q04` )->text( `Column 27` )->ui_template( )->text( `{per_cent_q04} %` ).

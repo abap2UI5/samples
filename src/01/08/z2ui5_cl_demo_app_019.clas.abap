@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       sel_mode = `None`.
-      t_tab = VALUE #( descr = `this is a description`
+      t_tab    = VALUE #( descr = `this is a description`
           ( title = `title_01` value = `value_01` )
           ( title = `title_02` value = `value_02` )
           ( title = `title_03` value = `value_03` )

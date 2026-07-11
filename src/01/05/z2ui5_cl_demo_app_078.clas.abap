@@ -22,9 +22,7 @@ CLASS z2ui5_cl_demo_app_078 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -32,10 +30,10 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-      view = view->shell( )->page( id = `page_main`
-               title                  = `abap2UI5 - Select-Options`
-               navbuttonpress         = client->_event_nav_app_leave( )
-               shownavbutton          = client->check_app_prev_stack( ) ).
+      view           = view->shell( )->page( id = `page_main`
+      title          = `abap2UI5 - Select-Options`
+      navbuttonpress = client->_event_nav_app_leave( )
+      shownavbutton  = client->check_app_prev_stack( ) ).
 
       view->_z2ui5( )->multiinput_ext(
                             addedtokens   = client->_bind_edit( mt_tokens_added )
@@ -45,7 +43,7 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
 
       view->multi_input(
                             id            = `test`
-                           tokens         = client->_bind_edit( mt_token )
+                            tokens        = client->_bind_edit( mt_token )
                             showclearicon = abap_true
                        )->tokens(
                            )->token( key      = `{KEY}`
@@ -88,9 +86,10 @@ CLASS z2ui5_cl_demo_app_078 IMPLEMENTATION.
         ENDLOOP.
 
         mt_tokens_removed = VALUE #( ).
-        mt_tokens_added = VALUE #( ).
+        mt_tokens_added   = VALUE #( ).
         client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.
+
 ENDCLASS.

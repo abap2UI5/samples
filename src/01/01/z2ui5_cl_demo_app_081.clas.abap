@@ -33,9 +33,7 @@ CLASS z2ui5_cl_demo_app_081 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
-
 
   METHOD popover_display.
 
@@ -174,8 +172,8 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
   METHOD on_init.
 
     mv_placement = `Left`.
-    product  = `tomato`.
-    quantity = `500`.
+    product      = `tomato`.
+    quantity     = `500`.
 
     mt_tab = VALUE #(
                       ( id = `1` name = `name1` )
@@ -184,4 +182,5 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                       ( id = `4` name = `name4` ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

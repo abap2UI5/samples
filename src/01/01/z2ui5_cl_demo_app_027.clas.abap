@@ -21,9 +21,7 @@ CLASS z2ui5_cl_demo_app_027 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -50,8 +48,8 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     DATA bind_input51  TYPE string.
     DATA bind_input52  TYPE string.
 
-    bind_input31 = client->_bind( val = input31 path = abap_true ).
-    bind_input32 = client->_bind( val = input32 path = abap_true ).
+    bind_input31  = client->_bind( val = input31 path = abap_true ).
+    bind_input32  = client->_bind( val = input32 path = abap_true ).
     bind_quantity = client->_bind( val = quantity path = abap_true ).
     bind_input51  = client->_bind( val = input51 path = abap_true ).
     bind_input52  = client->_bind( val = input52 path = abap_true ).
@@ -112,4 +110,5 @@ CLASS z2ui5_cl_demo_app_027 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

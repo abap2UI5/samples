@@ -29,18 +29,16 @@ CLASS z2ui5_cl_demo_app_316 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
-
 
   METHOD view_display.
 
-    url = VALUE #( url        = `http://www.sap.com`
-                   new_window = `true` ).
-    email = VALUE #( email      = `email@email.com`
-                     subject    = `subject`
-                     body       = `body`
-                     new_window = `true` ).
+    url        = VALUE #( url        = `http://www.sap.com`
+    new_window = `true` ).
+    email      = VALUE #( email      = `email@email.com`
+    subject    = `subject`
+    body       = `body`
+    new_window = `true` ).
 
     DATA(page) = z2ui5_cl_xml_view=>factory(
         )->shell(
@@ -89,7 +87,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
 
     email_form->button( text  = `Trigger Email`
                         press = client->_event_client( val   = client->cs_event-urlhelper
-                                                       t_arg = VALUE #( ( `TRIGGER_EMAIL` )
+                        t_arg = VALUE #( ( `TRIGGER_EMAIL` )
                                                                         ( |${ client->_bind_edit( email ) }| ) ) ) ).
 
     DATA(telephone_form) = layout->simple_form( `Trigger Telephone` ).
@@ -104,7 +102,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     telephone_form->button(
         text  = `Trigger Telephone`
         press = client->_event_client( val   = client->cs_event-urlhelper
-                                       t_arg = VALUE #( ( `TRIGGER_TEL` )
+        t_arg = VALUE #( ( `TRIGGER_TEL` )
                                                         ( |${ client->_bind_edit( phone ) }| ) ) ) ).
 
     DATA(mobile_form) = layout->simple_form( `Trigger SMS` ).
@@ -118,7 +116,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                         class       = `sapUiSmallMarginBottom` ).
     mobile_form->button( text  = `Trigger SMS`
                          press = client->_event_client( val   = client->cs_event-urlhelper
-                                                        t_arg = VALUE #( ( `TRIGGER_SMS` )
+                         t_arg = VALUE #( ( `TRIGGER_SMS` )
                                                                          ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
 
     DATA(url_form) = layout->simple_form( `Redirect` ).
@@ -131,7 +129,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      class       = `sapUiSmallMarginBottom` ).
     url_form->button( text  = `Redirect`
                       press = client->_event_client( val   = client->cs_event-urlhelper
-                                                     t_arg = VALUE #( ( `REDIRECT` )
+                      t_arg = VALUE #( ( `REDIRECT` )
                                                                       ( |${ client->_bind_edit( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).
@@ -150,4 +148,5 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

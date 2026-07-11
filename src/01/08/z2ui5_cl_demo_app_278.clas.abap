@@ -49,13 +49,13 @@ CLASS z2ui5_cl_demo_app_278 IMPLEMENTATION.
            target = `_blank`
            href   = base_url && `sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsFeedTile` ).
 
-    page->generic_tile( class  = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
-                        header = `Feed Tile that shows updates of the last feeds given to a specific topic:`
-           frametype           = `TwoByOne`
-                        press  = client->_event( `press` )
+    page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
+                        header    = `Feed Tile that shows updates of the last feeds given to a specific topic:`
+                        frametype = `TwoByOne`
+                        press     = client->_event( `press` )
                )->tile_content( footer = `New Notifications`
                  )->feed_content( contenttext = `@@notify Great outcome of the Presentation today. New functionality well received.`
-                     subheader                = `About 1 minute ago in Computer Market`
+                                  subheader   = `About 1 minute ago in Computer Market`
                                   value       = `352` )->get_parent( )->get_parent( )->get_parent(
       )->slide_tile( class = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
          )->tiles(

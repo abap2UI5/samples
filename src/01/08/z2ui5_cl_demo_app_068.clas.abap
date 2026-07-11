@@ -74,9 +74,9 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title           = `abap2UI5 - Popup Tree select Entry`
-            navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = client->check_app_prev_stack( ) ).
+            title          = `abap2UI5 - Popup Tree select Entry`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
     client->view_display( page->button( text  = `Open Popup here...`
                                         press = client->_event( `POPUP_TREE` ) )->stringify( ) ).
@@ -87,12 +87,12 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
   METHOD on_init.
 
     prodh_nodes =
-      VALUE #( ( text = `Machines`
-               prodh  = `00100`
-               nodes  = VALUE #( ( text = `Pumps`
-                                  prodh = `0010000100`
-                                  nodes = VALUE #( ( text  = `Pump 001`
-                                                     prodh = `001000010000000100` )
+      VALUE #( ( text  = `Machines`
+                 prodh = `00100`
+                 nodes = VALUE #( ( text = `Pumps`
+                 prodh = `0010000100`
+                 nodes = VALUE #( ( text  = `Pump 001`
+                 prodh = `001000010000000100` )
                                                    ( text  = `Pump 002`
                                                      prodh = `001000010000000105` )
                                           )
@@ -101,9 +101,9 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
              ( text  = `Paints`
                prodh = `00110`
                nodes = VALUE #( ( text  = `Gloss paints`
-                                  prodh = `0011000105`
-                                  nodes = VALUE #( ( text  = `Paint 001`
-                                                     prodh = `001100010500000100` )
+               prodh = `0011000105`
+               nodes = VALUE #( ( text  = `Paint 001`
+               prodh = `001100010500000100` )
                                                    ( text  = `Paint 002`
                                                      prodh = `001100010500000105` )
                                           )

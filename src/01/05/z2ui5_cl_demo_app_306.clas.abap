@@ -43,9 +43,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
-
 
   METHOD view_display.
 
@@ -62,7 +60,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
        )->combobox( id          = `ComboFacingMode`
                     selectedkey = client->_bind_edit( facing_mode )
                     items       = |\{path:'{ client->_bind_edit( val  = facing_modes
-                                                                 path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+                    path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
@@ -73,7 +71,7 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
            id          = `ComboDevice`
            selectedkey = client->_bind_edit( device )
            items       = |\{path:'{ client->_bind_edit( val  = devices
-                                                        path = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
+           path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
@@ -133,17 +131,17 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `CAPTURE`.
-        INSERT VALUE #( data      = mv_picture_base
-                        thumbnail = mv_picture_thumb
-                        time      = sy-uzeit ) INTO TABLE mt_picture.
-        mv_picture_base = VALUE #( ).
-        mv_picture_thumb = VALUE #( ).
+        INSERT VALUE #( data             = mv_picture_base
+                        thumbnail        = mv_picture_thumb
+                        time             = sy-uzeit ) INTO TABLE mt_picture.
+                        mv_picture_base  = VALUE #( ).
+                        mv_picture_thumb = VALUE #( ).
         client->view_model_update( ).
 
       WHEN `DISPLAY`.
 
         selected_picture = mt_picture_out[ selected = abap_true ].
-        mv_pic_display = mt_picture[ selected_picture-id ]-data.
+        mv_pic_display   = mt_picture[ selected_picture-id ]-data.
         rebuild_output( ).
         view_display( ).
         RETURN.
@@ -201,4 +199,5 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
+
 ENDCLASS.

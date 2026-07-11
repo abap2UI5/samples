@@ -83,14 +83,14 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     IF client->check_on_event( `LOAD` ).
 
-      mv_percent = mv_percent + 25.
-      mv_check_active = abap_true.
+      mv_percent       = mv_percent + 25.
+      mv_check_active  = abap_true.
       mv_check_enabled = abap_false.
 
       IF mv_percent > 100.
 
-        mv_percent = 0.
-        mv_check_active = abap_false.
+        mv_percent       = 0.
+        mv_check_active  = abap_false.
         mv_check_enabled = abap_true.
       ENDIF.
 
@@ -120,22 +120,22 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     temp1 = VALUE #( ).
 
     mv_check_enabled = abap_true.
-    view = z2ui5_cl_xml_view=>factory( ).
+    view             = z2ui5_cl_xml_view=>factory( ).
 
-    temp5 = client->check_app_prev_stack( ).
-    page1 = view->shell( )->page( id = `page_main`
-      title                          = `abap2UI5 - Progress Bar while Server Request`
-      navbuttonpress                 = client->_event_nav_app_leave( )
-      shownavbutton                  = temp5
-      class                          = `sapUiContentPadding` ).
+    temp5          = client->check_app_prev_stack( ).
+    page1          = view->shell( )->page( id = `page_main`
+    title          = `abap2UI5 - Progress Bar while Server Request`
+    navbuttonpress = client->_event_nav_app_leave( )
+    shownavbutton  = temp5
+    class          = `sapUiContentPadding` ).
 
     layout = page1->vertical_layout( class = `sapuicontentpadding`
-                                     width = `100%` ).
+    width  = `100%` ).
     layout->vbox( )->progress_indicator(
       percentvalue = client->_bind_edit( mv_percent )
       displayvalue = client->_bind_edit( screen-display_value )
       showvalue    = abap_true
-           state   = `Success` ).
+      state        = `Success` ).
 
     layout->button(
         text    = `Load`

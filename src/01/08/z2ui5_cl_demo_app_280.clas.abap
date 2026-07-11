@@ -107,10 +107,10 @@ CLASS z2ui5_cl_demo_app_280 IMPLEMENTATION.
          )->tile_content( unit   = `EUR`
                           footer = `Current Quarter`
            )->content(
-             )->numeric_content( scale     = `M`
-                                 value     = `88`
-                        valuecolor         = `Good`
-                                 indicator = `Up` )->get_parent( )->get_parent( )->get_parent(
+             )->numeric_content( scale      = `M`
+                                 value      = `88`
+                                 valuecolor = `Good`
+                                 indicator  = `Up` )->get_parent( )->get_parent( )->get_parent(
          )->tile_content( unit   = `Unit`
                           footer = `Footer Text`
            )->content(

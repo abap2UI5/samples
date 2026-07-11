@@ -14,9 +14,7 @@ CLASS z2ui5_cl_demo_app_163 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
-
 
   METHOD on_event.
 
@@ -62,10 +60,10 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id = `page_main`
-             title                  = `abap2UI5 - Menu`
-             navbuttonpress         = client->_event_nav_app_leave( )
-             shownavbutton          = client->check_app_prev_stack( ) ).
+    view           = view->shell( )->page( id = `page_main`
+    title          = `abap2UI5 - Menu`
+    navbuttonpress = client->_event_nav_app_leave( )
+    shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(vbox) = view->vbox( ).
 
@@ -90,4 +88,5 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

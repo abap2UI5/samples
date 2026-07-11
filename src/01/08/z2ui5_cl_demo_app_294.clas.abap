@@ -111,7 +111,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD set_data.
 
-    s_text = VALUE #( ).
+    s_text    = VALUE #( ).
     lt_a_data = VALUE #( ).
 
     s_text = `DatePicker with valueState `.

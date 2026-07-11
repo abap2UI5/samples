@@ -33,9 +33,7 @@ CLASS z2ui5_cl_demo_app_122 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
-
 
   METHOD read_frontend_info.
 
@@ -130,4 +128,5 @@ CLASS z2ui5_cl_demo_app_122 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

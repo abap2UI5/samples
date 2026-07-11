@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
             type  = `Active`
             title = `{TEXT}`
             press = client->_event( val = `EVENT_ITEM`
-                t_arg                   = VALUE #( ( `${TEXT}` ) )
+            t_arg = VALUE #( ( `${TEXT}` ) )
                  ) ).
 
     client->view_display( page->stringify( ) ).
@@ -119,13 +119,13 @@ CLASS z2ui5_cl_demo_app_069 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       mt_tree = VALUE #( ( text = `Apps`
-                    nodes       = VALUE #( ( text = `Frontend`
-                                       nodes      = VALUE #( ( text = `App_001` )
+      nodes   = VALUE #( ( text = `Frontend`
+      nodes   = VALUE #( ( text = `App_001` )
                                                         ( text = `App_002` )
                   ) ) ) )
                   ( text  = `Configuration`
                     nodes = VALUE #( ( text  = `User Interface`
-                                       nodes = VALUE #( ( text = `Theme` )
+                    nodes = VALUE #( ( text = `Theme` )
                                                         ( text = `Library` )
                                      ) )
                                      ( text  = `Database`

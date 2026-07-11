@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD set_data.
 
-    selected_product = VALUE #( ).
+    selected_product      = VALUE #( ).
     lt_product_collection = VALUE #( ).
 
     selected_product  = `HT-1001`.

@@ -71,12 +71,12 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
 
   METHOD refresh_data.
 
-    t_tab = VALUE #( FOR i = 1 UNTIL i > 10000 (
-        count      = i
-        value      = `red`
-        descr      = `this is a description`
-        checkbox   = abap_true
-        valuecolor = `Good` ) ).
+    t_tab      = VALUE #( FOR i = 1 UNTIL i > 10000 (
+    count      = i
+    value      = `red`
+    descr      = `this is a description`
+    checkbox   = abap_true
+    valuecolor = `Good` ) ).
 
   ENDMETHOD.
 

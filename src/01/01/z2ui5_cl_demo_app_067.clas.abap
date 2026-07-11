@@ -12,16 +12,14 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
 
-      numeric = `000000000012`.
-      amount = `123456789.123`.
+      numeric  = `000000000012`.
+      amount   = `123456789.123`.
       currency = `USD`.
 
     ENDIF.
@@ -41,49 +39,49 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
          )->label( `Two field`
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
          )->input(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
          )->label( `Default`
          )->text(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
          )->label( `preserveDecimals:false`
          )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }', '| && client->_bind_edit(
-                                                                                       val  = currency
-                                                                                       path = abap_true ) &&
+                                                      val  = currency
+                                                      path = abap_true ) &&
                      |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
          )->label( `currencyCode:false`
          )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }', '| && client->_bind_edit(
-                                                                                       val  = currency
-                                                                                       path = abap_true ) &&
+                                                      val  = currency
+                                                      path = abap_true ) &&
                          |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
          )->label( `style:'short'`
          )->text(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
          )->label( `style:'long'`
          )->text(
              |\{ parts: [ '{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }', '{ client->_bind_edit(
-                                                                               val  = currency
-                                                                               path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
+                                                 val  = currency
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
          )->label( `event`
          )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
@@ -108,4 +106,5 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

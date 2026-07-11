@@ -15,9 +15,7 @@ CLASS z2ui5_cl_demo_app_008 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -68,13 +66,13 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
             class                   = `my-style` ).
       WHEN `BUTTON_MESSAGE_STRIP_INFO`.
         check_strip_active = abap_true.
-        strip_type = `Information`.
+        strip_type         = `Information`.
       WHEN `BUTTON_MESSAGE_STRIP_ERROR`.
         check_strip_active = abap_true.
-        strip_type = `Error`.
+        strip_type         = `Error`.
       WHEN `BUTTON_MESSAGE_STRIP_SUCCESS`.
         check_strip_active = abap_true.
-        strip_type = `Success`.
+        strip_type         = `Success`.
     ENDCASE.
 
     view_display( ).
@@ -151,4 +149,5 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

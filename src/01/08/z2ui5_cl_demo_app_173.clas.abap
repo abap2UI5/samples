@@ -38,11 +38,11 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view = view->shell( )->page( id    = `page_main`
-                                 class = `sapUiContentPadding`
-             title                     = `abap2UI5 - Sample Templating I`
-             navbuttonpress            = client->_event_nav_app_leave( )
-             shownavbutton             = client->check_app_prev_stack( ) ).
+    view           = view->shell( )->page( id    = `page_main`
+    class          = `sapUiContentPadding`
+    title          = `abap2UI5 - Sample Templating I`
+    navbuttonpress = client->_event_nav_app_leave( )
+    shownavbutton  = client->check_app_prev_stack( ) ).
 
     view->table( client->_bind( mt_data )
       )->columns(
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_173 IMPLEMENTATION.
     view->label( `IF Template (with re-rendering)` ).
     view->switch( state  = client->_bind_edit( mv_flag )
                   change = client->_event( `CHANGE_FLAG` ) ).
-    view = view->vbox( ).
+                  view   = view->vbox( ).
 
     view->template_if( `{template>/XX/MV_FLAG}`
       )->template_then(

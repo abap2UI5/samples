@@ -17,9 +17,7 @@ CLASS z2ui5_cl_demo_app_363 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
-
 
   METHOD z2ui5_if_app~main.
 
@@ -44,14 +42,14 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
         target = `bottom_input`.
       WHEN `JUMP_MIDDLE`.
         target = `middle_input`.
-        block = `center`.
+        block  = `center`.
       WHEN `JUMP_TOP`.
         target = `top_input`.
       WHEN `VALIDATE`.
         IF field_02 IS INITIAL.
 
           target = `middle_input`.
-          block = `center`.
+          block  = `center`.
           client->message_toast_display( `Middle field is required` ).
         ELSE.
 
@@ -127,4 +125,5 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+
 ENDCLASS.

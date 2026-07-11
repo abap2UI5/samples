@@ -18,9 +18,7 @@ CLASS z2ui5_cl_demo_app_012 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
-
 
   METHOD on_navigation.
 
@@ -177,4 +175,5 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
     ENDIF.
 
   ENDMETHOD.
+
 ENDCLASS.

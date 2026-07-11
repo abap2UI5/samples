@@ -33,9 +33,7 @@ CLASS z2ui5_cl_demo_app_184 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
-
 
   METHOD on_init.
 
@@ -181,4 +179,5 @@ CLASS z2ui5_cl_demo_app_184 IMPLEMENTATION.
     ENDTRY.
 
   ENDMETHOD.
+
 ENDCLASS.

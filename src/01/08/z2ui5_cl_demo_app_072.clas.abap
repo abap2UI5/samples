@@ -80,11 +80,11 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page( id = `page_main`
-           showheader                     = xsdbool( abap_false = client->get( )-check_launchpad_active )
-            title                         = `abap2UI5 - IconTabBar`
-            navbuttonpress                = client->_event_nav_app_leave( )
-            shownavbutton                 = client->check_app_prev_stack( )
-            class                         = `sapUiContentPadding` ).
+           showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
+           title          = `abap2UI5 - IconTabBar`
+           navbuttonpress = client->_event_nav_app_leave( )
+           shownavbutton  = client->check_app_prev_stack( )
+           class          = `sapUiContentPadding` ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                          selectedkey = client->_bind_edit( lv_selectedkey )
@@ -171,9 +171,9 @@ CLASS z2ui5_cl_demo_app_072 IMPLEMENTATION.
       `Information` ) ).
 
     lv_cnt_total = lines( mt_table ).
-    lv_cnt_pos = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
+    lv_cnt_pos   = REDUCE i( INIT i = 0 FOR wa IN mt_table WHERE ( measure > 0 AND measure <= 100 ) NEXT i = i + 1 ).
     lv_cnt_heavy = REDUCE i( INIT j = 0 FOR wa IN mt_table WHERE ( measure > 100 AND measure <= 500 ) NEXT j = j + 1 ).
-    lv_cnt_neg = REDUCE i( INIT k = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT k = k + 1 ).
+    lv_cnt_neg   = REDUCE i( INIT k = 0 FOR wa IN mt_table WHERE ( measure > 500 ) NEXT k = k + 1 ).
 
   ENDMETHOD.
 
