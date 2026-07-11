@@ -57,7 +57,7 @@ CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
           ( msgid = `MSG1` msgno = `001` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `01` )
           ( msgid = `MSG2` msgno = `002` msgty = `S` time_stmp = z2ui5_cl_util=>time_get_timestampl( ) msgnumber = `02` ) ).
 
-        client->nav_app_call( z2ui5_cl_pop_bal=>factory( lt_bal ) ).
+        client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
 
       WHEN `POPUP_EXCEPTION`.
         TRY.
