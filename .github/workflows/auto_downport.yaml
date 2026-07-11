@@ -26,8 +26,10 @@ jobs:
         cache: 'npm'
 
     - run: npm ci
-    - run: rm -rf src/00
     - run: npm run downport
+
+    - name: Lint downported content
+      run: npx abaplint .github/abaplint/abap_702.jsonc
 
     - name: Commit Changes
       run: |
@@ -36,12 +38,5 @@ jobs:
         git add .
         git commit -m "Downport changes"
 
-    - name: Switch to Branch 702
-      run: git checkout -b 702
-
-    - name: Push Changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: 702
-        force: true
+    - name: Push to branch 702
+      run: git push --force origin HEAD:702

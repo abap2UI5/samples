@@ -26,7 +26,10 @@ jobs:
         cache: 'npm'
 
     - run: npm ci
-    - run: rm -rf src/00 
+    - run: rm -rf src/00
+
+    - name: Lint cloud content
+      run: npx abaplint .github/abaplint/abap_cloud.jsonc
 
     - name: Commit Changes
       run: |
@@ -35,12 +38,5 @@ jobs:
         git add src
         git commit -m "Cloud changes"
 
-    - name: Switch to Branch cloud
-      run: git checkout -b cloud
-
-    - name: Push Changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: cloud
-        force: true
+    - name: Push to branch cloud
+      run: git push --force origin HEAD:cloud
