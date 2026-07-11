@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_038 IMPLEMENTATION.
         )->page(
             title           = `abap2UI5 - Message View`
             navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = abap_true ).
+              shownavbutton = client->check_app_prev_stack( ) ).
     page->button( text  = `Messages in Popup`
                   press = client->_event( `POPUP` ) ).
     page->message_view(

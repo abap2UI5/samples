@@ -96,8 +96,9 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
             text    = `show state`
             tooltip = `show`
         )->button(
-            text  = `Go Back`
-            press = client->_event_nav_app_leave( ) ).
+            text    = `Go Back`
+            press   = client->_event_nav_app_leave( )
+            visible = client->check_app_prev_stack( ) ).
 
     header_title->navigation_actions(
         )->button(

@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
         )->page(
             title           = `abap2UI5 - List`
             navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = abap_true
+              shownavbutton = client->check_app_prev_stack( )
             ).
 
     page->list(

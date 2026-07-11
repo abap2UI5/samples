@@ -33,7 +33,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
            )->page(
               title           = `abap2UI5 - Side Panel Example`
               navbuttonpress  = client->_event_nav_app_leave( )
-                shownavbutton = abap_true ).
+                shownavbutton = client->check_app_prev_stack( ) ).
 
     page->header_content(
          )->link( ).

@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
          )->page(
             title           = `abap2UI5 - Popup Tree select Entry`
             navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = abap_true ).
+              shownavbutton = client->check_app_prev_stack( ) ).
 
     client->view_display( page->button( text  = `Open Popup here...`
                                         press = client->_event( `POPUP_TREE` ) )->stringify( ) ).

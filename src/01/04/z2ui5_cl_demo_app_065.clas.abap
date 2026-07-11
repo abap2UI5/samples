@@ -22,7 +22,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                 title           = `Main View`
                 id              = `test`
                 navbuttonpress  = client->_event_nav_app_leave( )
-                  shownavbutton = abap_true
+                  shownavbutton = client->check_app_prev_stack( )
             )->header_content(
                 )->link(
       )->get_parent( ).

@@ -101,7 +101,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
          showheader       = xsdbool( abap_false = client->get( )-check_launchpad_active )
           title           = `abap2UI5 - Master Detail Page with Nested View`
           navbuttonpress  = client->_event_nav_app_leave( )
-            shownavbutton = abap_true ).
+            shownavbutton = client->check_app_prev_stack( ) ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
                                                      id     = `test` ).
