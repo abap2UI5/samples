@@ -30,7 +30,11 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
     " sap.m.ObjectHeader is deprecated since 1.42 - use sap.uxap.ObjectPageHeader instead
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->object_page_layout( showtitleinheadercontent = abap_true ).
+    DATA(page) = view->shell(
+        )->page( title          = `abap2UI5 - Object Header with Circle-shaped Image`
+                 navbuttonpress = client->_event_nav_app_leave( )
+                 shownavbutton  = client->check_app_prev_stack( )
+        )->object_page_layout( showtitleinheadercontent = abap_true ).
 
     DATA(header) = page->header_title(
         )->object_page_header(
@@ -52,13 +56,6 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
         )->object_attribute(
             title = `Functional Area`
             text  = `Development` ).
-
-    header->actions( `uxap`
-        )->object_page_header_action_btn(
-            icon    = `sap-icon://nav-back`
-            text    = `Go Back`
-            visible = client->check_app_prev_stack( )
-            press   = client->_event_nav_app_leave( ) ).
 
     page->header_content( `uxap`
         )->button(

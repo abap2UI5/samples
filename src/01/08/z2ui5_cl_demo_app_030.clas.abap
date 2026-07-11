@@ -68,7 +68,11 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->dynamic_page( showfooter = abap_true ).
+    DATA(page) = view->shell(
+        )->page( title          = `abap2UI5 - Dynamic Page`
+                 navbuttonpress = client->_event_nav_app_leave( )
+                 shownavbutton  = client->check_app_prev_stack( )
+        )->dynamic_page( showfooter = abap_true ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
 
@@ -94,11 +98,7 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
         )->overflow_toolbar_button(
             icon    = `sap-icon://show`
             text    = `show state`
-            tooltip = `show`
-        )->button(
-            text    = `Go Back`
-            press   = client->_event_nav_app_leave( )
-            visible = client->check_app_prev_stack( ) ).
+            tooltip = `show` ).
 
     header_title->navigation_actions(
         )->button(

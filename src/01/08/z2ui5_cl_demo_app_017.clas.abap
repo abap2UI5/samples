@@ -17,7 +17,11 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->object_page_layout(
+    DATA(page) = view->shell(
+        )->page( title          = `abap2UI5 - Object Page with Avatar`
+                 navbuttonpress = client->_event_nav_app_leave( )
+                 shownavbutton  = client->check_app_prev_stack( )
+        )->object_page_layout(
              showtitleinheadercontent = abap_true
              showeditheaderbutton     = abap_true
              editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
@@ -59,11 +63,7 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
              )->overflow_toolbar_button(
                  icon    = `sap-icon://show`
                  text    = `show state`
-                 tooltip = `show`
-             )->button(
-                 text    = `Go Back`
-                 press   = client->_event_nav_app_leave( )
-                 visible = client->check_app_prev_stack( ) ).
+                 tooltip = `show` ).
 
     DATA(header_content) = page->header_content( `uxap` ).
 

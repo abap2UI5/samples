@@ -80,11 +80,11 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
        )->page(
-          title           = `abap2UI5 - Master Detail Page with Nested View`
-          navbuttonpress  = client->_event_nav_app_leave( )
-            shownavbutton = client->check_app_prev_stack( ) ).
+          title          = `abap2UI5 - Master Detail Page with Nested View`
+          navbuttonpress = client->_event_nav_app_leave( )
+          shownavbutton  = client->check_app_prev_stack( ) ).
 
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
                                                      id     = `test` ).

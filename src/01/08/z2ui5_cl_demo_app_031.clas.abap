@@ -73,10 +73,11 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
     DATA(lv_xml) = `<mvc:View ` && |\n| &&
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n| &&
+                        `   <Shell>` && |\n| &&
+                        `   <Page title="abap2UI5 - Import View" navButtonPress="` && client->_event( `BACK` ) && `" showNavButton="` && z2ui5_cl_util=>boolean_abap_2_json( client->check_app_prev_stack( ) ) && `">` && |\n| &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n| &&
-                        `       <Button text="BACK" type="Emphasized" press="` && client->_event( `BACK`) && `" visible="` && z2ui5_cl_util=>boolean_abap_2_json( client->check_app_prev_stack( ) ) && `"/>` && |\n| &&
                         `   </form:SimpleForm>  ` && |\n| &&
                         `   <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Country-Specific Profit Margin"  press="` && client->_event( `POPUP` ) && `"` && |\n| &&
                         `       frameType="OneByHalf" subheader="Subtitle">` && |\n| &&
@@ -148,6 +149,8 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `           <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/ProfileImage_LargeGenTile.png" />` && |\n| &&
                         `       </TileContent>` && |\n| &&
                         `   </GenericTile>` && |\n| &&
+                        `   </Page>` && |\n| &&
+                        `   </Shell>` && |\n| &&
                         `</mvc:View>`.
 
     client->view_display( lv_xml ).
