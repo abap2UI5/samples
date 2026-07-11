@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
     IF client->check_on_event( `BUTTON_SEARCH` ).
       set_data( ).
-      z2ui5_cl_util=>itab_filter_by_val(
+      z2ui5_cl_sample_context=>itab_filter_by_val(
           EXPORTING
               val = client->get_event_arg( 1 )
           CHANGING

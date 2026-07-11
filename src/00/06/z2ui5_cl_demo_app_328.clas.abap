@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_328 IMPLEMENTATION.
 
     FIELD-SYMBOLS <table> TYPE STANDARD TABLE.
 
-    DATA(t_comp) = z2ui5_cl_util=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
+    DATA(t_comp) = z2ui5_cl_sample_context=>rtti_get_t_attri_by_table_name( `Z2UI5_T_01` ).
 
     APPEND LINES OF VALUE cl_abap_structdescr=>component_table(
                               ( name = `SELKZ`

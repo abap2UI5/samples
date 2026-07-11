@@ -15,10 +15,10 @@ CLASS z2ui5_cl_demo_app_056 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_token TYPE z2ui5_cl_util=>ty_t_token.
+    DATA mt_token TYPE z2ui5_cl_sample_context=>ty_t_token.
 
-    DATA mt_tokens_added TYPE z2ui5_cl_util=>ty_t_token.
-    DATA mt_tokens_removed TYPE z2ui5_cl_util=>ty_t_token.
+    DATA mt_tokens_added TYPE z2ui5_cl_sample_context=>ty_t_token.
+    DATA mt_tokens_removed TYPE z2ui5_cl_sample_context=>ty_t_token.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
         mt_tokens_removed = VALUE #( ).
         mt_tokens_added   = VALUE #( ).
 
-        mt_range = z2ui5_cl_util=>filter_get_range_t_by_token_t( mt_token ).
+        mt_range = z2ui5_cl_sample_context=>filter_get_range_t_by_token_t( mt_token ).
         set_data( ).
         client->view_model_update( ).
 
@@ -165,7 +165,7 @@ CLASS z2ui5_cl_demo_app_056 IMPLEMENTATION.
           ENDIF.
 
           mt_range = lo_value_help->result( )-t_range.
-          mt_token = z2ui5_cl_util=>filter_get_token_t_by_range_t( mt_range ).
+          mt_token = z2ui5_cl_sample_context=>filter_get_token_t_by_range_t( mt_range ).
           set_data( ).
           client->view_model_update( ).
 

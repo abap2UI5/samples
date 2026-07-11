@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
     IF mv_search_value IS NOT INITIAL.
 
-      z2ui5_cl_util=>itab_filter_by_val(
+      z2ui5_cl_sample_context=>itab_filter_by_val(
         EXPORTING
           val = mv_search_value
         CHANGING

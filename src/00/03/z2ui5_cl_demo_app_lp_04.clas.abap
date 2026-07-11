@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    product_url = z2ui5_cl_util=>url_param_get(
+    product_url = z2ui5_cl_sample_context=>url_param_get(
                     val = `product`
                     url = client->get( )-s_config-search ).
     check_launchpad_active = client->get( )-check_launchpad_active.

@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_031 IMPLEMENTATION.
                         `xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc"` && |\n| &&
                         `       xmlns:form="sap.ui.layout.form">` && |\n| &&
                         `   <Shell>` && |\n| &&
-                        `   <Page title="abap2UI5 - Import View" navButtonPress="` && client->_event( `BACK` ) && `" showNavButton="` && z2ui5_cl_util=>boolean_abap_2_json( client->check_app_prev_stack( ) ) && `">` && |\n| &&
+                        `   <Page title="abap2UI5 - Import View" navButtonPress="` && client->_event( `BACK` ) && `" showNavButton="` && z2ui5_cl_sample_context=>boolean_abap_2_json( client->check_app_prev_stack( ) ) && `">` && |\n| &&
                         `       <form:SimpleForm editable="true" width="40rem">` && |\n| &&
                         `       <Label text="Loading time" />` && |\n| &&
                         `       <Input id="loadingMinSeconds" width="8rem" type="Number" description="seconds" value="` && client->_bind( mv_value ) && `"/>` && |\n| &&

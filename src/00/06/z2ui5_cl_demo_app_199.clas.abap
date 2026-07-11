@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
 
         CREATE DATA mt_table TYPE STANDARD TABLE OF z2ui5_t_01.
         ASSIGN mt_table->* TO <table>.
-        mt_comp = z2ui5_cl_util=>rtti_get_t_attri_by_any( <table> ).
+        mt_comp = z2ui5_cl_sample_context=>rtti_get_t_attri_by_any( <table> ).
 
         SELECT id, id_prev FROM z2ui5_t_01
           INTO CORRESPONDING FIELDS OF TABLE @<table>

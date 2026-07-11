@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
       WHEN `POPUP_LAYOUT_LOAD`.
         DATA(ls_layout2) = mt_db_layout[ selkz = abap_true ].
-        z2ui5_cl_util=>xml_parse(
+        z2ui5_cl_sample_context=>xml_parse(
           EXPORTING
             xml  = ls_layout2-data
           IMPORTING
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_058 IMPLEMENTATION.
 
       WHEN `BUTTON_SAVE_LAYOUT`.
         DATA(ls_layout) = VALUE ty_s_db_layout(
-          data = z2ui5_cl_util=>xml_stringify( ms_layout )
+          data = z2ui5_cl_sample_context=>xml_stringify( ms_layout )
           name = mv_layout ).
         INSERT ls_layout INTO TABLE mt_db_layout.
         app-view_popup = `POPUP_SAVE`.

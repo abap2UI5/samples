@@ -104,9 +104,9 @@ CLASS z2ui5_cl_demo_app_057 IMPLEMENTATION.
     IF mv_check_download = abap_true.
       mv_check_download = abap_false.
 
-      DATA(lv_csv) = z2ui5_cl_util=>itab_get_csv_by_itab( mt_table ).
-      DATA(lv_csv_x) = z2ui5_cl_util=>conv_get_xstring_by_string( lv_csv ).
-      DATA(lv_base64) = z2ui5_cl_util=>conv_encode_x_base64( lv_csv_x ).
+      DATA(lv_csv) = z2ui5_cl_sample_context=>itab_get_csv_by_itab( mt_table ).
+      DATA(lv_csv_x) = z2ui5_cl_sample_context=>conv_get_xstring_by_string( lv_csv ).
+      DATA(lv_base64) = z2ui5_cl_sample_context=>conv_encode_x_base64( lv_csv_x ).
 
       view->_generic( ns     = `html`
                       name   = `iframe`

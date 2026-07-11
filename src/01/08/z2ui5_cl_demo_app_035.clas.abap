@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_035 IMPLEMENTATION.
          )->label( `Option` ).
 
     lt_types = VALUE z2ui5_if_types=>ty_t_name_value( ).
-  "  lt_types = VALUE #( FOR row IN z2ui5_cl_util=>source_get_file_types( )  (
+  "  lt_types = VALUE #( FOR row IN z2ui5_cl_sample_context=>source_get_file_types( )  (
   "          n = shift_right( shift_left( row ) )
   "          v = shift_right( shift_left( row ) ) ) ).
 

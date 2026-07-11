@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_162 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
-    DATA mt_filter TYPE z2ui5_cl_util=>ty_t_filter_multi.
+    DATA mt_filter TYPE z2ui5_cl_sample_context=>ty_t_filter_multi.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -55,7 +55,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
         ( product = `oven`     create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
         ( product = `table2`   create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 ) ).
 
-    z2ui5_cl_util=>filter_itab(
+    z2ui5_cl_sample_context=>filter_itab(
       EXPORTING
         filter = mt_filter
       CHANGING
@@ -113,7 +113,7 @@ CLASS z2ui5_cl_demo_app_162 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      mt_filter = z2ui5_cl_util=>filter_get_multi_by_data( mt_table ).
+      mt_filter = z2ui5_cl_sample_context=>filter_get_multi_by_data( mt_table ).
       DELETE mt_filter WHERE name = `SELKZ`.
       view_display( ).
       RETURN.

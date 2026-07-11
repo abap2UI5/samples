@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_340 IMPLEMENTATION.
     result->mo_layout = io_layout.
 
     TRY.
-        DATA(comp) = z2ui5_cl_util=>rtti_get_t_attri_by_any( io_table ).
+        DATA(comp) = z2ui5_cl_sample_context=>rtti_get_t_attri_by_any( io_table ).
       CATCH cx_root.
     ENDTRY.
 

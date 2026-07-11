@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                     `   }` && |\n| &&
                     `]`.
 
-    z2ui5_cl_util=>json_parse(
+    z2ui5_cl_sample_context=>json_parse(
       EXPORTING
         val  = lv_mock
       CHANGING

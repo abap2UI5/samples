@@ -36,10 +36,10 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
             SPLIT mv_value AT `;` INTO DATA(lv_dummy) DATA(lv_data).
             SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-            DATA(lv_data2) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
-            DATA(lv_ready) = z2ui5_cl_util=>conv_get_string_by_xstring( lv_data2 ).
+            DATA(lv_data2) = z2ui5_cl_sample_context=>conv_decode_x_base64( lv_data ).
+            DATA(lv_ready) = z2ui5_cl_sample_context=>conv_get_string_by_xstring( lv_data2 ).
 
-            mr_table = z2ui5_cl_util=>itab_get_itab_by_csv( lv_ready ).
+            mr_table = z2ui5_cl_sample_context=>itab_get_itab_by_csv( lv_ready ).
             client->message_box_display( `CSV loaded to table` ).
 
             view_display( ).
@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
 
-      DATA(lr_fields) = z2ui5_cl_util=>rtti_get_t_attri_by_any( <tab> ).
+      DATA(lr_fields) = z2ui5_cl_sample_context=>rtti_get_t_attri_by_any( <tab> ).
       DATA(lo_cols) = tab->columns( ).
       LOOP AT lr_fields REFERENCE INTO DATA(lr_col).
         lo_cols->column( )->text( lr_col->name ).

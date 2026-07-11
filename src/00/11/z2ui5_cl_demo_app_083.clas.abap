@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA ls_range TYPE z2ui5_cl_util=>ty_s_range.
+    DATA ls_range TYPE z2ui5_cl_sample_context=>ty_s_range.
 
     CASE client->get( )-event.
 
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
       WHEN `FILTER_UPDATE`.
         IF mv_value IS NOT INITIAL.
 
-          ls_range = z2ui5_cl_util=>filter_get_range_by_token( mv_value ).
+          ls_range = z2ui5_cl_sample_context=>filter_get_range_by_token( mv_value ).
           INSERT ls_range INTO TABLE ms_filter-product.
         ENDIF.
 
@@ -126,7 +126,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
         client->popup_destroy( ).
 
       WHEN `POPUP_ADD`.
-        INSERT VALUE #( key = z2ui5_cl_util=>uuid_get_c32( ) ) INTO TABLE mt_filter.
+        INSERT VALUE #( key = z2ui5_cl_sample_context=>uuid_get_c32( ) ) INTO TABLE mt_filter.
         client->popup_model_update( ).
 
       WHEN `POPUP_DELETE`.
@@ -147,7 +147,7 @@ CLASS z2ui5_cl_demo_app_083 IMPLEMENTATION.
                    low    = lr_product->low
                    high   = lr_product->high
                    option = lr_product->option
-                   key    = z2ui5_cl_util=>uuid_get_c32( )
+                   key    = z2ui5_cl_sample_context=>uuid_get_c32( )
             ) INTO TABLE mt_filter.
 
         ENDLOOP.
