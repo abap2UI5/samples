@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SAMPLE_APP_001</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>abap2UI5 - Samples Overview (restricted)</DESCRIPT>
+    <DESCRIPT>abap2UI5 - Samples Overview (extension)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

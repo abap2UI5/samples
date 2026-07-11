@@ -100,8 +100,8 @@ There is **one launchpad per top-level package**, and they cross-link:
 
 | App class                | Lives in | Title                            | Mirrors     | Button → other |
 |--------------------------|----------|----------------------------------|-------------|----------------|
-| `z2ui5_cl_sample_app_000`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_001` |
-| `z2ui5_cl_sample_app_001`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `sample_app_000` |
+| `z2ui5_cl_sample_app_001`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_000` |
+| `z2ui5_cl_sample_app_000`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `sample_app_001` |
 
 Both are identical in shape: a `get_catalog( )` method returning a flat table of
 tiles, and a `view_display( )` that loops the catalog, emitting an H3 section
@@ -120,7 +120,7 @@ so `Binding`, `Binding I` … `Binding VIII` render as one block, then a gap, th
 the `Event` block, and so on.
 
 `z2ui5_cl_demo_app_000` is the old "classic" launchpad (now under `00/99`,
-obsolete); `sample_app_000` links to it via a message strip. Do not extend it.
+obsolete); `sample_app_001` links to it via a message strip. Do not extend it.
 
 ---
 
@@ -173,8 +173,8 @@ from the old catalog.
 
 ### Generation rules
 
-1. **One catalog per area.** Apps in `src/01/**` belong in `sample_app_000`; apps in
-   `src/00/**` belong in `sample_app_001`. Never list an app in the wrong launchpad.
+1. **One catalog per area.** Apps in `src/01/**` belong in `sample_app_001`; apps in
+   `src/00/**` belong in `sample_app_000`. Never list an app in the wrong launchpad.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
@@ -196,7 +196,7 @@ from the old catalog.
 6. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (e.g. the uncategorized move
    `src/01/07` → `src/00/11` lifted the entire `uncategorized` group out of
-   `sample_app_000` and into `sample_app_001`).
+   `sample_app_001` and into `sample_app_000`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
    launchpad, none missing. The safest way to regenerate is to rebuild each
