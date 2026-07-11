@@ -377,7 +377,7 @@ CLASS z2ui5_cl_sample_context DEFINITION
       RETURNING
         VALUE(result) TYPE ty_t_dfies.
 
-  
+
 
     CLASS-METHODS context_check_abap_cloud
       RETURNING
@@ -435,7 +435,7 @@ CLASS z2ui5_cl_sample_context DEFINITION
       RETURNING
         VALUE(result) TYPE ty_t_dfies ##NEEDED.
 
-  
+
 
     CLASS-DATA gv_check_cloud TYPE abap_bool.
 
