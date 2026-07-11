@@ -1,0 +1,108 @@
+CLASS z2ui5_cl_demo_app_367 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+    METHODS on_event.
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_demo_app_367 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      view_display( ).
+
+    ELSE.
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+         )->page(
+            title          = `abap2UI5 - Sample: Grid`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->header_content(
+       )->button( id = `button_hint_id`
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
+
+    page->header_content(
+       )->link(
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Grid` ).
+
+    DATA(grid) = page->grid( `L4 M4 S4` )->content( `layout` ).
+
+    grid->simple_form( `Grid width 33%` )->content( `form`
+        )->button( text = `button`
+        )->text( `text`
+        )->link( text = `link` ).
+
+    grid->simple_form( `Grid width 33%` )->content( `form`
+        )->button( text = `button`
+        )->text( `text`
+        )->link( text = `link` ).
+
+    grid->simple_form( `Grid width 33%` )->content( `form`
+        )->button( text = `button`
+        )->text( `text`
+        )->link( text = `link` ).
+
+    grid = page->grid( `L12 M12 S12` )->content( `layout` ).
+
+    grid->simple_form( `Grid width 100%` )->content( `form`
+        )->button( text = `button`
+        )->text( `text`
+        )->link( text = `link` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
+      popover_display( `button_hint_id` ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
+                                  description = `The grid positions its content in a 12-column flow layout. The span (e.g. L4 M4 S4) controls how many columns each item occupies per screen size.` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+ENDCLASS.

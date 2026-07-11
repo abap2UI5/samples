@@ -279,10 +279,11 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `controls` header = `Formatted Text` sub = `Display HTML` app = `z2ui5_cl_demo_app_015` )
       ( group = `controls` header = `Generic Tag` sub = `Since 1.70` app = `z2ui5_cl_demo_app_062` )
       ( group = `controls` header = `Generic Tag with Different Configurations` sub = `` app = `z2ui5_cl_demo_app_257` )
+      ( group = `controls` header = `Grid` sub = `Split View in different Areas` app = `z2ui5_cl_demo_app_367` )
       ( group = `controls` header = `Grid List` sub = `with Drag&Drop` app = `z2ui5_cl_demo_app_307` )
       ( group = `controls` header = `Header Container` sub = `Vertical Mode` app = `z2ui5_cl_demo_app_280` )
-      ( group = `controls` header = `Header, Footer, Grid` sub = `Split view in different areas` app = `z2ui5_cl_demo_app_010` )
       ( group = `controls` header = `HTML` sub = `` app = `z2ui5_cl_demo_app_242` )
+      ( group = `controls` header = `Icon Tab Bar` sub = `Filter Table with Counts` app = `z2ui5_cl_demo_app_368` )
       ( group = `controls` header = `Icon Tab Bar` sub = `Icons Only` app = `z2ui5_cl_demo_app_221` )
       ( group = `controls` header = `Icon Tab Bar` sub = `Inline Mode` app = `z2ui5_cl_demo_app_223` )
       ( group = `controls` header = `Icon Tab Bar` sub = `Separator` app = `z2ui5_cl_demo_app_225` )
@@ -312,14 +313,17 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `controls` header = `Nested Splitter Layouts` sub = `7 Areas` app = `z2ui5_cl_demo_app_260` )
       ( group = `controls` header = `Object Attribute inside Table` sub = `` app = `z2ui5_cl_demo_app_302` )
       ( group = `controls` header = `Object Header` sub = `with Circle-shaped Image` app = `z2ui5_cl_demo_app_272` )
+      ( group = `controls` header = `Object Identifier` sub = `inside a Table` app = `z2ui5_cl_demo_app_370` )
       ( group = `controls` header = `Object List Item` sub = `markers aggregation` app = `z2ui5_cl_demo_app_290` )
       ( group = `controls` header = `Object Marker in a table` sub = `` app = `z2ui5_cl_demo_app_289` )
+      ( group = `controls` header = `Object Number` sub = `inside a Table` app = `z2ui5_cl_demo_app_369` )
       ( group = `controls` header = `Object Page Header` sub = `with Header Container` app = `z2ui5_cl_demo_app_303` )
       ( group = `controls` header = `Object Page with Avatar` sub = `Since 1.73` app = `z2ui5_cl_demo_app_017` )
       ( group = `controls` header = `Object Status` sub = `` app = `z2ui5_cl_demo_app_300` )
       ( group = `controls` header = `ObjectPage` sub = `with Hidden Section Titles` app = `z2ui5_cl_demo_app_330` )
       ( group = `controls` header = `Overflow Toolbar` sub = `` app = `z2ui5_cl_demo_app_217` )
       ( group = `controls` header = `OverflowToolbar` sub = `Alignment` app = `z2ui5_cl_demo_app_250` )
+      ( group = `controls` header = `Page` sub = `Header, Sub-Header & Footer` app = `z2ui5_cl_demo_app_366` )
       ( group = `controls` header = `Planning Calendar` sub = `` app = `z2ui5_cl_demo_app_080` )
       ( group = `controls` header = `Progress Indicator` sub = `` app = `z2ui5_cl_demo_app_022` )
       ( group = `controls` header = `Radio Button` sub = `` app = `z2ui5_cl_demo_app_207` )
@@ -366,8 +370,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `controls` header = `Tree Table I` sub = `Popup Select Entry` app = `z2ui5_cl_demo_app_068` )
       ( group = `controls` header = `Tree Table II` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `controls` header = `ui.Table I` sub = `Simple example` app = `z2ui5_cl_demo_app_070` )
-      ( group = `controls` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
-      ( group = `controls` header = `Visualization` sub = `Object Number, Object States & Tab Filter` app = `z2ui5_cl_demo_app_072` ) ).
+      ( group = `controls` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` ) ).
 
   ENDMETHOD.
 
