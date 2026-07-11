@@ -1,38 +1,22 @@
 name: auto_cloud
 
+# Rebuilds the cloud branch via auto_branch.yaml: removes the restricted
+# samples (src/00), lints with the cloud config and force-pushes.
+
 on:
   push:
     branches: [standard]
 
+permissions:
+  contents: write
+
+concurrency:
+  group: auto_cloud
+  cancel-in-progress: false
+
 jobs:
   auto_cloud:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v5
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v5
-      with:
-        node-version: '16'
-
-    - run: npm ci
-    - run: rm -rf src/00 
-
-    - name: Commit Changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add src
-        git commit -m "Cloud changes"
-
-    - name: Switch to Branch cloud
-      run: git checkout -b cloud
-
-    - name: Push Changes
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: cloud
-        force: true
+    uses: ./.github/workflows/auto_branch.yaml
+    with:
+      branch: cloud
+      lint_config: .github/abaplint/abap_cloud.jsonc

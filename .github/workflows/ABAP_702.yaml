@@ -6,18 +6,20 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ABAP_702-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ABAP_702:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v6
       with:
-        ref: 702
-    - uses: actions/setup-node@v5
-      with:
-        node-version: 20
+        node-version: '22'
+        cache: 'npm'
     - run: npm ci
-    - run: rm -rf src/00
     - run: npm run downport
     - run: npx abaplint .github/abaplint/abap_702.jsonc
