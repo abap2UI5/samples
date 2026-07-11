@@ -28,6 +28,6 @@
     "buffer": "^6.0.3"
   },
   "dependencies": {
-    "npm-check-updates": "^22.2.2"
+    "npm-check-updates": "^22.2.9"
   }
 }
