@@ -1,0 +1,99 @@
+CLASS z2ui5_cl_demo_app_380 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+    METHODS on_event.
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_demo_app_380 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      view_display( ).
+
+    ELSE.
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+         )->page(
+            title          = `abap2UI5 - Sample: Tab Container`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->header_content(
+       )->button( id = `button_hint_id`
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
+
+    page->header_content(
+       )->link(
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.TabContainer` ).
+
+    DATA(tabs) = page->tab_container( ).
+
+    tabs->tab( text     = `Order 2201`
+               selected = abap_true
+        )->vbox( `sapUiSmallMargin`
+            )->text( `Content of order 2201: 5 items, delivery next week.` ).
+
+    tabs->tab( text = `Order 2202`
+        )->vbox( `sapUiSmallMargin`
+            )->text( `Content of order 2202: 2 items, delivered.` ).
+
+    tabs->tab( text = `Order 2203`
+        )->vbox( `sapUiSmallMargin`
+            )->text( `Content of order 2203: 12 items, in approval.` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `CLICK_HINT_ICON` ).
+      popover_display( `button_hint_id` ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
+                                  description = `The tab container manages several open items in parallel, similar to browser tabs - for example multiple open documents or orders.` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+ENDCLASS.
