@@ -6,6 +6,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ABAP_STANDARD-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ABAP_STANDARD:
     runs-on: ubuntu-latest
