@@ -17,7 +17,7 @@ CLASS z2ui5_cl_demo_app_212 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA mv_table             TYPE string.
     DATA mt_comp              TYPE abap_component_tab.
-    DATA mt_dfies             TYPE z2ui5_cl_util_ext=>ty_t_dfies.
+    DATA mt_dfies             TYPE z2ui5_cl_sample_context=>ty_t_dfies.
     DATA client            TYPE REF TO z2ui5_if_client.
 
     METHODS on_init.
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
   METHOD get_dfies.
 
-    mt_dfies = z2ui5_cl_util_ext=>rtti_get_t_dfies_by_table_name( mv_table ).
+    mt_dfies = z2ui5_cl_sample_context=>rtti_get_t_dfies_by_table_name( mv_table ).
 
   ENDMETHOD.
 

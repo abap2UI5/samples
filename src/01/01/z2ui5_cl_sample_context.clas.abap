@@ -317,6 +317,72 @@ CLASS z2ui5_cl_sample_context DEFINITION
       RETURNING
         VALUE(result) TYPE xstring.
 
+    TYPES:
+      BEGIN OF ty_s_dfies,
+        tabname     TYPE c LENGTH 30,
+        fieldname   TYPE c LENGTH 30,
+        langu       TYPE string,
+        position    TYPE n LENGTH 4,
+        offset      TYPE n LENGTH 6,
+        domname     TYPE c LENGTH 30,
+        rollname    TYPE c LENGTH 30,
+        checktable  TYPE c LENGTH 30,
+        leng        TYPE n LENGTH 6,
+        intlen      TYPE n LENGTH 6,
+        outputlen   TYPE n LENGTH 6,
+        decimals    TYPE n LENGTH 6,
+        datatype    TYPE c LENGTH 4,
+        inttype     TYPE c LENGTH 1,
+        reftable    TYPE c LENGTH 30,
+        reffield    TYPE c LENGTH 30,
+        precfield   TYPE c LENGTH 30,
+        authorid    TYPE c LENGTH 3,
+        memoryid    TYPE c LENGTH 20,
+        logflag     TYPE c LENGTH 1,
+        mask        TYPE c LENGTH 20,
+        masklen     TYPE n LENGTH 4,
+        convexit    TYPE c LENGTH 5,
+        headlen     TYPE n LENGTH 2,
+        scrlen1     TYPE n LENGTH 2,
+        scrlen2     TYPE n LENGTH 2,
+        scrlen3     TYPE n LENGTH 2,
+        fieldtext   TYPE c LENGTH 60,
+        reptext     TYPE c LENGTH 55,
+        scrtext_s   TYPE c LENGTH 10,
+        scrtext_m   TYPE c LENGTH 20,
+        scrtext_l   TYPE c LENGTH 40,
+        keyflag     TYPE c LENGTH 1,
+        lowercase   TYPE c LENGTH 1,
+        mac         TYPE c LENGTH 1,
+        genkey      TYPE c LENGTH 1,
+        noforkey    TYPE c LENGTH 1,
+        valexi      TYPE c LENGTH 1,
+        noauthch    TYPE c LENGTH 1,
+        sign        TYPE c LENGTH 1,
+        dynpfld     TYPE c LENGTH 1,
+        f4availabl  TYPE c LENGTH 1,
+        comptype    TYPE c LENGTH 1,
+        lfieldname  TYPE c LENGTH 132,
+        ltrflddis   TYPE c LENGTH 1,
+        bidictrlc   TYPE c LENGTH 1,
+        outputstyle TYPE n LENGTH 2,
+        nohistory   TYPE c LENGTH 1,
+        ampmformat  TYPE c LENGTH 1,
+      END OF ty_s_dfies,
+      ty_t_dfies TYPE STANDARD TABLE OF ty_s_dfies WITH DEFAULT KEY.
+
+    CLASS-METHODS rtti_get_t_dfies_by_table_name
+      IMPORTING
+        table_name    TYPE string
+      RETURNING
+        VALUE(result) TYPE ty_t_dfies.
+
+  
+
+    CLASS-METHODS context_check_abap_cloud
+      RETURNING
+        VALUE(result) TYPE abap_bool.
+
   PROTECTED SECTION.
 
   PRIVATE SECTION.
@@ -337,6 +403,24 @@ CLASS z2ui5_cl_sample_context DEFINITION
       END OF ty_s_attri_cache.
 
     CLASS-DATA mt_attri_cache TYPE HASHED TABLE OF ty_s_attri_cache WITH UNIQUE KEY absolute_name.
+
+    CLASS-METHODS rtti_get_t_attri_on_prem
+      IMPORTING
+        tabname       TYPE string
+      RETURNING
+        VALUE(result) TYPE ty_t_dfies.
+
+    CLASS-METHODS rtti_get_t_attri_on_cloud
+      IMPORTING
+        tabname       TYPE string
+      RETURNING
+        VALUE(result) TYPE ty_t_dfies ##NEEDED.
+
+  
+
+    CLASS-DATA gv_check_cloud TYPE abap_bool.
+
+    CLASS-DATA gv_check_cloud_cached TYPE abap_bool.
 
 ENDCLASS.
 
@@ -1227,6 +1311,394 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
       CATCH cx_root.
         ASSERT 1 = 0.
     ENDTRY.
+  ENDMETHOD.
+
+
+  METHOD rtti_get_t_attri_on_prem.
+
+    DATA structdescr TYPE REF TO cl_abap_structdescr.
+    DATA dfies       TYPE REF TO data.
+    DATA s_dfies     TYPE ty_s_dfies.
+
+    FIELD-SYMBOLS <dfies> TYPE STANDARD TABLE.
+    FIELD-SYMBOLS <line>  TYPE any.
+
+    DATA temp9           TYPE cl_abap_structdescr=>component_table.
+    DATA comps           LIKE temp9.
+    DATA temp10          TYPE REF TO cl_abap_structdescr.
+    DATA lo_struct       LIKE temp10.
+    DATA new_struct_desc TYPE REF TO cl_abap_structdescr.
+    DATA new_table_desc  TYPE REF TO cl_abap_tabledescr.
+    DATA comp            LIKE LINE OF comps.
+    FIELD-SYMBOLS <value>      TYPE any.
+    FIELD-SYMBOLS <value_dest> TYPE any.
+
+    comps = temp9.
+
+*    TYPES: BEGIN OF ty_s_dfies,
+*             tabname     TYPE c LENGTH 30,
+*             fieldname   TYPE c LENGTH 30,
+*             langu       TYPE c LENGTH 1,
+*             position    TYPE n LENGTH 4,
+*             offset      TYPE n LENGTH 6,
+*             domname     TYPE c LENGTH 30,
+*             rollname    TYPE c LENGTH 30,
+*             checktable  TYPE c LENGTH 30,
+*             leng        TYPE n LENGTH 6,
+*             intlen      TYPE n LENGTH 6,
+*             outputlen   TYPE n LENGTH 6,
+*             decimals    TYPE n LENGTH 6,
+*             datatype    TYPE c LENGTH 4,
+*             inttype     TYPE c LENGTH 1,
+*             reftable    TYPE c LENGTH 30,
+*             reffield    TYPE c LENGTH 30,
+*             precfield   TYPE c LENGTH 30,
+*             authorid    TYPE c LENGTH 3,
+*             memoryid    TYPE c LENGTH 20,
+*             logflag     TYPE c LENGTH 1,
+*             mask        TYPE c LENGTH 20,
+*             masklen     TYPE n LENGTH 4,
+*             convexit    TYPE c LENGTH 5,
+*             headlen     TYPE n LENGTH 2,
+*             scrlen1     TYPE n LENGTH 2,
+*             scrlen2     TYPE n LENGTH 2,
+*             scrlen3     TYPE n LENGTH 2,
+*             fieldtext   TYPE c LENGTH 60,
+*             reptext     TYPE c LENGTH 55,
+*             scrtext_s   TYPE c LENGTH 10,
+*             scrtext_m   TYPE c LENGTH 20,
+*             scrtext_l   TYPE c LENGTH 40,
+*             keyflag     TYPE c LENGTH 1,
+*             lowercase   TYPE c LENGTH 1,
+*             mac         TYPE c LENGTH 1,
+*             genkey      TYPE c LENGTH 1,
+*             noforkey    TYPE c LENGTH 1,
+*             valexi      TYPE c LENGTH 1,
+*             noauthch    TYPE c LENGTH 1,
+*             sign        TYPE c LENGTH 1,
+*             dynpfld     TYPE c LENGTH 1,
+*             f4availabl  TYPE c LENGTH 1,
+*             comptype    TYPE c LENGTH 1,
+*             lfieldname  TYPE c LENGTH 132,
+*             ltrflddis   TYPE c LENGTH 1,
+*             bidictrlc   TYPE c LENGTH 1,
+*             outputstyle TYPE n LENGTH 2,
+*             nohistory   TYPE c LENGTH 1,
+*             ampmformat  TYPE c LENGTH 1,
+*           END OF ty_s_dfies.
+*    temp10 ?= cl_abap_structdescr=>describe_by_name( `TY_S_DFIES` ).
+
+    temp10 ?= cl_abap_structdescr=>describe_by_name( `DFIES` ).
+
+    lo_struct = temp10.
+    comps = lo_struct->get_components( ).
+
+    TRY.
+
+        new_struct_desc = cl_abap_structdescr=>create( comps ).
+
+        new_table_desc = cl_abap_tabledescr=>create( p_line_type  = new_struct_desc
+                                                     p_table_kind = cl_abap_tabledescr=>tablekind_std ).
+
+        CREATE DATA dfies TYPE HANDLE new_table_desc.
+
+        ASSIGN dfies->* TO <dfies>.
+        IF <dfies> IS NOT ASSIGNED.
+          RETURN.
+        ENDIF.
+
+        IF tabname IS INITIAL.
+          RAISE EXCEPTION TYPE z2ui5_cx_util_error
+            EXPORTING
+              val = `RTTI_BY_NAME_TAB_INITIAL`.
+        ENDIF.
+
+        structdescr ?= cl_abap_structdescr=>describe_by_name( tabname ).
+        <dfies> = structdescr->get_ddic_field_list( ).
+
+        LOOP AT <dfies> ASSIGNING <line>.
+
+          LOOP AT comps INTO comp.
+
+            ASSIGN COMPONENT comp-name OF STRUCTURE <line> TO <value>.
+            IF <value> IS NOT ASSIGNED.
+              CONTINUE.
+            ENDIF.
+
+            ASSIGN COMPONENT comp-name OF STRUCTURE s_dfies TO <value_dest>.
+            IF <value_dest> IS NOT ASSIGNED.
+              CONTINUE.
+            ENDIF.
+
+            <value_dest> = <value>.
+
+            UNASSIGN <value>.
+            UNASSIGN <value_dest>.
+
+          ENDLOOP.
+
+          APPEND s_dfies TO result.
+          CLEAR s_dfies.
+
+        ENDLOOP.
+
+      CATCH cx_root ##NO_HANDLER.
+    ENDTRY.
+
+  ENDMETHOD.
+
+  METHOD rtti_get_t_attri_on_cloud.
+
+    DATA obj TYPE REF TO object.
+    DATA lv_tabname TYPE c LENGTH 16.
+    DATA lr_ddfields TYPE REF TO data.
+    TYPES ty_c30 TYPE c LENGTH 30.
+    DATA names TYPE STANDARD TABLE OF ty_c30 WITH EMPTY KEY.
+    FIELD-SYMBOLS <any> TYPE any.
+    FIELD-SYMBOLS <field> TYPE simple.
+    FIELD-SYMBOLS <ddfields> TYPE ANY TABLE.
+
+* convert to correct type,
+    lv_tabname = tabname.
+
+    TRY.
+        TRY.
+            DATA(lv_method2) = `XCO_CP_ABAP_DICTIONARY`.
+            CALL METHOD (lv_method2)=>(`DATABASE_TABLE`)
+              EXPORTING
+                iv_name           = lv_tabname
+              RECEIVING
+                ro_database_table = obj.
+            ASSIGN obj->(`IF_XCO_DATABASE_TABLE~FIELDS->IF_XCO_DBT_FIELDS_FACTORY~KEY`) TO <any>.
+            IF sy-subrc  <> 0.
+* fallback to RTTI, KEY field does not exist in S/4 2020
+              RAISE EXCEPTION TYPE cx_sy_dyn_call_illegal_class.
+            ENDIF.
+            obj = <any>.
+            CALL METHOD obj->(`IF_XCO_DBT_FIELDS~GET_NAMES`)
+              RECEIVING
+                rt_names = names.
+          CATCH cx_sy_dyn_call_illegal_class.
+            DATA(workaround) = `DDFIELDS`.
+            CREATE DATA lr_ddfields TYPE (workaround).
+            ASSIGN lr_ddfields->* TO <ddfields>.
+            ASSERT sy-subrc = 0.
+            <ddfields> = CAST cl_abap_structdescr( cl_abap_typedescr=>describe_by_name(
+              lv_tabname ) )->get_ddic_field_list( ).
+            LOOP AT <ddfields> ASSIGNING <any>.
+              ASSIGN COMPONENT `KEYFLAG` OF STRUCTURE <any> TO <field>.
+              IF sy-subrc <> 0 OR <field> <> abap_true.
+                CONTINUE.
+              ENDIF.
+              ASSIGN COMPONENT `FIELDNAME` OF STRUCTURE <any> TO <field>.
+              ASSERT sy-subrc = 0.
+              APPEND <field> TO names.
+            ENDLOOP.
+        ENDTRY.
+      CATCH cx_root ##NO_HANDLER.
+    ENDTRY.
+
+
+    DATA(lt_comp)  =  rtti_get_t_attri_by_any( tabname ).
+    LOOP AT lt_comp REFERENCE INTO DATA(lr_comp).
+
+      DATA(lv_check_key) = abap_false.
+      IF line_exists( names[ table_line = lr_comp->name ] ).
+        lv_check_key = abap_true.
+      ENDIF.
+
+      INSERT VALUE #(
+          fieldname = lr_comp->name
+          rollname  = lr_comp->name
+          keyflag = lv_check_key
+        scrtext_s =  lr_comp->name
+        scrtext_m =  lr_comp->name
+        scrtext_l =  lr_comp->name
+       ) INTO TABLE result.
+
+    ENDLOOP.
+*            structdescr->
+*        <dfies> = structdescr->get_ddic_field_list( ).
+
+*        LOOP AT <dfies> ASSIGNING <line>.
+*
+*          LOOP AT comps INTO comp.
+*
+*            ASSIGN COMPONENT comp-name OF STRUCTURE <line> TO <value>.
+*            IF <value> IS NOT ASSIGNED.
+*              CONTINUE.
+*            ENDIF.
+*
+*            ASSIGN COMPONENT comp-name OF STRUCTURE s_dfies TO <value_dest>.
+*            IF <value_dest> IS NOT ASSIGNED.
+*              CONTINUE.
+*            ENDIF.
+*
+*            <value_dest> = <value>.
+*
+*            UNASSIGN <value>.
+*            UNASSIGN <value_dest>.
+*
+*          ENDLOOP.
+*
+*          APPEND s_dfies TO result.
+*          CLEAR s_dfies.
+*
+*        ENDLOOP.
+
+
+
+*    DATA db        TYPE REF TO object.
+*    DATA fields    TYPE REF TO object.
+*    DATA r_names   TYPE REF TO data.
+*    DATA t_param   TYPE abap_parmbind_tab.
+*    DATA field     TYPE REF TO object.
+*    DATA content   TYPE REF TO object.
+*    DATA r_content TYPE REF TO data.
+*    DATA type      TYPE REF TO object.
+*    DATA element   TYPE REF TO object.
+*    DATA tab       TYPE c LENGTH 16.
+*
+*    FIELD-SYMBOLS <any>   TYPE any.
+*    FIELD-SYMBOLS <names> TYPE STANDARD TABLE.
+*    FIELD-SYMBOLS <name>  TYPE any.
+*    FIELD-SYMBOLS <fiel>  TYPE REF TO object.
+*
+*    tab = tabname.
+*
+*    CALL METHOD (`XCO_CP_ABAP_DICTIONARY`)=>database_table
+*      EXPORTING
+*        iv_name           = tab
+*      RECEIVING
+*        ro_database_table = db.
+*
+*    ASSIGN db->(`IF_XCO_DATABASE_TABLE~FIELDS->IF_XCO_DBT_FIELDS_FACTORY~ALL`) TO <any>.
+*
+*    IF sy-subrc <> 0.
+*      RETURN.
+*    ENDIF.
+*
+*    fields = <any>.
+*
+*    CREATE DATA r_names TYPE (`SXCO_T_AD_FIELD_NAMES`).
+*    ASSIGN r_names->* TO <Names>.
+*    IF <Names> IS NOT ASSIGNED.
+*      RETURN.
+*    ENDIF.
+*
+*    CALL METHOD fields->(`IF_XCO_DBT_FIELDS~GET_NAMES`)
+*      RECEIVING
+*        rt_names = <Names>.
+*
+*    LOOP AT <Names> ASSIGNING <name>.
+*
+*      CLEAR t_param.
+*
+*      INSERT VALUE #( name  = `IV_NAME`
+*                      kind  = cl_abap_objectdescr=>exporting
+*                      value = REF #( <name> ) ) INTO TABLE t_param.
+*      INSERT VALUE #( name  = `RO_FIELD`
+*                      kind  = cl_abap_objectdescr=>receiving
+*                      value = REF #( field ) ) INTO TABLE t_param.
+*
+*      CALL METHOD db->(`IF_XCO_DATABASE_TABLE~FIELD`)
+*        PARAMETER-TABLE t_param.
+*
+*      ASSIGN t_param[ name = `RO_FIELD` ] TO FIELD-SYMBOL(<line>).
+*      IF <line> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*      ASSIGN <line>-value->* TO <fiel>.
+*      IF <fiel> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*
+*      CALL METHOD <fiel>->(`IF_XCO_DBT_FIELD~CONTENT`)
+*        RECEIVING
+*          ro_content = content.
+*
+*      CREATE DATA r_content TYPE (`IF_XCO_DBT_FIELD_CONTENT=>TS_CONTENT`).
+*      ASSIGN r_content->* TO FIELD-SYMBOL(<Content>) CASTING TYPE (`IF_XCO_DBT_FIELD_CONTENT=>TS_CONTENT`).
+*      IF <content> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*
+*      CALL METHOD content->(`IF_XCO_DBT_FIELD_CONTENT~GET`)
+*        RECEIVING
+*          rs_content = <Content>.
+*
+*      ASSIGN COMPONENT `KEY_INDICATOR` OF STRUCTURE <content> TO FIELD-SYMBOL(<key>).
+*      IF <key> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*      ASSIGN COMPONENT `SHORT_DESCRIPTION` OF STRUCTURE <content> TO FIELD-SYMBOL(<text>).
+*      IF <text> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*      ASSIGN COMPONENT `TYPE` OF STRUCTURE <content> TO FIELD-SYMBOL(<type>).
+*      IF <type> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*
+*      type = <type>.
+*
+*      CALL METHOD type->(`IF_XCO_DBT_FIELD_TYPE~GET_DATA_ELEMENT`)
+*        RECEIVING
+*          ro_data_element = element.
+*
+*      IF <text> IS INITIAL.
+*        <text> = <name>.
+*      ENDIF.
+*
+*      ASSIGN element->(`IF_XCO_AD_OBJECT~NAME`) TO FIELD-SYMBOL(<rname>).
+*      IF <rname> IS NOT ASSIGNED.
+*        CONTINUE.
+*      ENDIF.
+*
+*      IF sy-subrc = 0.
+*        result = VALUE #( BASE result
+*                          ( fieldname = <name> keyflag = <key> tabname = tab scrtext_s = <text> rollname = <rname> ) ).
+*      ELSE.
+*        result = VALUE #( BASE result
+*                          ( fieldname = <name> keyflag = <key> tabname = tab scrtext_s = <text> rollname = <name> ) ).
+*      ENDIF.
+*
+*      UNASSIGN <Content>.
+*      UNASSIGN <key>.
+*      UNASSIGN <Text>.
+*      UNASSIGN <type>.
+*      UNASSIGN <rname>.
+*
+*    ENDLOOP.
+
+  ENDMETHOD.
+
+  METHOD rtti_get_t_dfies_by_table_name.
+
+    IF context_check_abap_cloud( ) IS NOT INITIAL.
+      result = rtti_get_t_attri_on_cloud( table_name ).
+    ELSE.
+      result = rtti_get_t_attri_on_prem( table_name ).
+    ENDIF.
+
+  ENDMETHOD.
+
+  METHOD context_check_abap_cloud.
+
+    IF gv_check_cloud_cached = abap_true.
+      result = gv_check_cloud.
+      RETURN.
+    ENDIF.
+
+    TRY.
+        cl_abap_typedescr=>describe_by_name( `T100` ).
+        gv_check_cloud = abap_false.
+      CATCH cx_root.
+        gv_check_cloud = abap_true.
+    ENDTRY.
+    gv_check_cloud_cached = abap_true.
+    result = gv_check_cloud.
+
   ENDMETHOD.
 
 ENDCLASS.
