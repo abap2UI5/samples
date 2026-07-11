@@ -938,7 +938,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                                IMPORTING ev_container     = data ).
 
       CATCH cx_root INTO DATA(x).
-        RAISE EXCEPTION TYPE z2ui5_cx_util_error
+        RAISE EXCEPTION TYPE z2ui5_cx_sample_error
           EXPORTING
             val = x.
     ENDTRY.
@@ -967,7 +967,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                              EXCEPTIONS type_not_found = 1 ).
 
       CATCH cx_root INTO DATA(x).
-        RAISE EXCEPTION TYPE z2ui5_cx_util_error
+        RAISE EXCEPTION TYPE z2ui5_cx_sample_error
           EXPORTING
             previous = x.
     ENDTRY.
@@ -1159,7 +1159,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
         CATCH cx_root.
 
           DATA(lv_text) = `UNSUPPORTED_FEATURE`.
-          RAISE EXCEPTION TYPE z2ui5_cx_util_error
+          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
             EXPORTING
               val = lv_text.
 
@@ -1180,7 +1180,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
   METHOD rtti_get_t_attri_by_table_name.
 
     IF table_name IS INITIAL.
-      RAISE EXCEPTION TYPE z2ui5_cx_util_error
+      RAISE EXCEPTION TYPE z2ui5_cx_sample_error
         EXPORTING
           val = `TABLE_NAME_INITIAL_ERROR`.
     ENDIF.
@@ -1193,7 +1193,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
             ).
 
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE z2ui5_cx_util_error
+          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
             EXPORTING
               val = |TABLE_NOT_FOUD_NAME___{ table_name }|.
         ENDIF.
@@ -1208,7 +1208,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                                               OTHERS         = 2
             ).
             IF sy-subrc <> 0.
-              RAISE EXCEPTION TYPE z2ui5_cx_util_error
+              RAISE EXCEPTION TYPE z2ui5_cx_sample_error
                 EXPORTING
                   val = |TABLE_NOT_FOUD_NAME___{ table_name }|.
             ENDIF.
@@ -1526,7 +1526,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
         ENDIF.
 
         IF tabname IS INITIAL.
-          RAISE EXCEPTION TYPE z2ui5_cx_util_error
+          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
             EXPORTING
               val = `RTTI_BY_NAME_TAB_INITIAL`.
         ENDIF.

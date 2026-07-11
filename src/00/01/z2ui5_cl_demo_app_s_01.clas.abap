@@ -148,7 +148,7 @@ CLASS z2ui5_cl_demo_app_s_01 IMPLEMENTATION.
 
         TRY.
             on_event( client ).
-          CATCH z2ui5_cx_util_error INTO DATA(x_error).
+          CATCH z2ui5_cx_sample_error INTO DATA(x_error).
             error-text = x_error->get_text( ).
             error-flag = abap_true.
             client->view_model_update( ).
