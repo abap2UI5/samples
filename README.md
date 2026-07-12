@@ -16,7 +16,7 @@ Install this repository and try out over 250 samples. This is the easiest way to
 
 [![generate_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml)
 
-_generate_overview_apps last run: <!-- last-run -->2026-07-11 19:19 UTC<!-- /last-run -->_
+_generate_overview_apps last run: <!-- last-run -->2026-07-12 03:23 UTC<!-- /last-run -->_
 
 #### Issues
 
