@@ -68,7 +68,9 @@ CLASS z2ui5_cl_demo_app_374 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SplitContainer` ).
 
-    DATA(split) = page->split_container( ).
+    " split_container( ) returns the page instead of the new control, the
+    " aggregations below would end up under the page - create it generically
+    DATA(split) = page->_generic( `SplitContainer` ).
 
     split->master_pages(
         )->page( `Master`
