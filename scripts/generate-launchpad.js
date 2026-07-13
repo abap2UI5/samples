@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /*
- * Generates the two launchpad apps' catalogs from the folder tree.
+ * Generates the two overview apps' catalogs from the folder tree.
+ * (These are the sample_app_000/001 index pages, not the Fiori Launchpad
+ * samples in src/00/03.)
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -12,7 +14,7 @@
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
- *      launchpad app of each area (src/01 -> sample_app_001, src/00 -> sample_app_000):
+ *      overview app of each area (src/01 -> sample_app_001, src/00 -> sample_app_000):
  *        - groups in folder-number order
  *        - tiles within a group sorted by header, then sub, then app
  *
@@ -25,7 +27,7 @@ const path = require('path');
 
 const SRC = path.join(__dirname, '..', 'src');
 
-// area (top-level package under src) -> launchpad app file
+// area (top-level package under src) -> overview app file
 const TARGETS = {
   '01': path.join(SRC, '01', 'z2ui5_cl_sample_app_001.clas.abap'),
   '00': path.join(SRC, '00', 'z2ui5_cl_sample_app_000.clas.abap'),

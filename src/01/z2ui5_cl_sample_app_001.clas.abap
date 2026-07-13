@@ -117,7 +117,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
           showicon            = abap_true
           enableformattedtext = abap_true
           class               = `sapUiSmallMarginBottom`
-          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic launchpad overview.| ).
+          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic overview.| ).
     ENDIF.
 
     DATA(prev_group) = ``.

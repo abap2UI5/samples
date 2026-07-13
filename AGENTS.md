@@ -2,7 +2,7 @@
 
 Single source of truth for agents working on **abap2UI5 Samples** — a collection
 of demo apps for the abap2UI5 framework. This file owns everything: the folder
-scheme, the compatibility model, the launchpad generation rules, **and** the
+scheme, the compatibility model, the overview generation rules, **and** the
 ABAP code style / app-structure conventions.
 
 > These instructions OVERRIDE any default behavior and must be followed exactly.
@@ -43,12 +43,12 @@ src/
 ```
 
 Each subpackage's `package.devc.xml` `<CTEXT>` is the human-readable name shown
-above (e.g. `only non-abap-cloud`). **That CTEXT string is also the launchpad
+above (e.g. `only non-abap-cloud`). **That CTEXT string is also the overview
 group name — keep the two identical** (see §4).
 
 > Class names never encode the folder (`FOLDER_LOGIC=PREFIX`). Moving a sample
 > between packages needs **no rename** and keeps navigation intact — but the
-> launchpad catalog must be updated (§4).
+> overview catalog must be updated (§4).
 
 ---
 
@@ -92,9 +92,14 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 ---
 
-## 3. The two launchpad apps
+## 3. The two overview apps
 
-There is **one launchpad per top-level package**, and they cross-link:
+`z2ui5_cl_sample_app_000` and `z2ui5_cl_sample_app_001` are **overview apps** —
+generated index pages that list all samples of an area. They are *not* Fiori
+Launchpad apps; do not confuse them with the launchpad samples in `src/00/03`,
+which are the demos that run inside a real Fiori Launchpad.
+
+There is **one overview app per top-level package**, and they cross-link:
 
 | App class                | Lives in | Title                            | Mirrors     | Button → other |
 |--------------------------|----------|----------------------------------|-------------|----------------|
@@ -117,12 +122,12 @@ The base is the header with a trailing Roman numeral removed (`header_base( )`),
 so `Binding`, `Binding I` … `Binding VIII` render as one block, then a gap, then
 the `Event` block, and so on.
 
-`z2ui5_cl_demo_app_000` is the old "classic" launchpad (now under `00/99`,
+`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_001` links to it via a message strip. Do not extend it.
 
 ---
 
-## 4. The launchpad is ALWAYS (re)generated — schema & rules
+## 4. The overview is ALWAYS (re)generated — schema & rules
 
 **Treat the two `get_catalog( )` tables as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
@@ -172,12 +177,12 @@ from the old catalog.
 ### Generation rules
 
 1. **One catalog per area.** Apps in `src/01/**` belong in `sample_app_001`; apps in
-   `src/00/**` belong in `sample_app_000`. Never list an app in the wrong launchpad.
+   `src/00/**` belong in `sample_app_000`. Never list an app in the wrong overview app.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
    ever called by another app and must **not** get a tile. It stays in the
-   folder (and is checked by abaplint), just not shown in the launchpad.
+   folder (and is checked by abaplint), just not shown in the overview.
 3. **`group` == subpackage CTEXT.** If you rename a subpackage's CTEXT, update
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
@@ -197,7 +202,7 @@ from the old catalog.
    `sample_app_001` and into `sample_app_000`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
-   launchpad, none missing. The safest way to regenerate is to rebuild each
+   overview, none missing. The safest way to regenerate is to rebuild each
    catalog straight from the physical tree (one tile per class, group = its
    folder CTEXT) and carry over the existing `header`/`sub` metadata.
 
@@ -213,21 +218,21 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 
 **Adding a sample**
 1. Create the class; place it in the correct folder per §2.
-2. Add one tile to the matching launchpad catalog (§4), in the right group and
+2. Add one tile to the matching overview catalog (§4), in the right group and
    numeric position, sorted by `sub`.
 3. `abaplint` → 0 issues → commit (English message).
 
 **Moving a sample / subpackage**
 1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
 2. Update the catalog(s): change the tile's `group`, and if it crossed between
-   `src/00` and `src/01`, move the tile to the other launchpad.
+   `src/00` and `src/01`, move the tile to the other overview app.
 3. `abaplint` → 0 issues → commit.
 
 **Before every commit**
 - `abaplint` reports 0 issues (config `abaplint.jsonc`).
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
-- Launchpad catalogs still mirror the folder tree (§4).
+- Overview catalogs still mirror the folder tree (§4).
 
 ---
 
