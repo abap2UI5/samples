@@ -123,7 +123,7 @@ CLASS z2ui5_cl_demo_app_423 IMPLEMENTATION.
         )->combobox( items = client->_bind( t_countries )
             )->item(
                 key  = `{KEY}`
-                text = `{TEXT}` ) ).
+                text = `{TEXT}` ).
 
     client->view_display( page->stringify( ) ).
 

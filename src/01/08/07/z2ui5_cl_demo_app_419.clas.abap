@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_419 IMPLEMENTATION.
                     icon = `sap-icon://flight`
                 )->menu_item(
                     text = `Car rental`
-                    icon = `sap-icon://car-rental` ) ).
+                    icon = `sap-icon://car-rental` ).
 
     client->view_display( page->stringify( ) ).
 

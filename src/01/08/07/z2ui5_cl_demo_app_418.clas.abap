@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_418 IMPLEMENTATION.
                             wrapping = abap_true
                         )->label(
                             text     = `{SUBTITLE}`
-                            wrapping = abap_true ) ).
+                            wrapping = abap_true ).
 
     client->view_display( page->stringify( ) ).
 
