@@ -133,8 +133,26 @@ function rewrite(file, list) {
   // indentation of the tiles = indent of "result" line + 2 spaces
   const indent = ' '.repeat((text.slice(0, open).match(/\n( *)$/) || [, ''])[1].length + 2);
 
-  const rows = list.map(
-    (t) => `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` app = \`${t.app}\` )`);
+  // ABAP sources are limited to 255 characters per line — longer lines break
+  // the abapGit import ("Literals across more than one line are not allowed")
+  const MAX_LINE = 255;
+  const rows = list.map((t) => {
+    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` app = \`${t.app}\` )`;
+    if (one.length <= MAX_LINE) return one;
+    // split the sub literal into && chunks so no line exceeds the limit
+    const subIndent = `${indent}  `;
+    const contIndent = `${subIndent}      `; // aligns under the first chunk's opening backtick
+    const chunkSize = MAX_LINE - contIndent.length - 6;
+    const chunks = [];
+    for (let s = t.sub; s.length; s = s.slice(chunkSize)) chunks.push(s.slice(0, chunkSize));
+    const subLines = chunks.map((c, i) =>
+      `${i === 0 ? `${subIndent}sub = ` : contIndent}\`${c}\`${i < chunks.length - 1 ? ' &&' : ''}`);
+    return [
+      `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
+      ...subLines,
+      `${subIndent}app = \`${t.app}\` )`,
+    ].join('\n');
+  });
   // the last row additionally closes the constructor + statement
   rows[rows.length - 1] += ' ).';
 

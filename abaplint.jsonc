@@ -24,6 +24,9 @@
   "rules": {
     "exporting": true,
     "omit_parameter_name": true,
+    "line_length": {
+      "length": 255
+    },
     "downport": true,
     "begin_end_names": true,
     "check_ddic": true,

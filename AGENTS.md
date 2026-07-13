@@ -284,6 +284,10 @@ must conform to the abapGit file format:
 - **Line endings**: LF (`x0A`) only — never CRLF
 - **Final newline**: every file must end with a single newline character after the last line
 - **Indentation**: 2 spaces — never tabs
+- **Line length**: max **255 characters** per `.abap` source line (hard ABAP
+  limit — longer lines break the abapGit import with "Literals across more
+  than one line are not allowed"; enforced via the abaplint `line_length`
+  rule). Split long string literals into `&&` chunks.
 
 **Always verify consistency for all file types before committing**, not just
 `.abap` files. abaplint covers `.abap` files; for `.xml` and other files, check
