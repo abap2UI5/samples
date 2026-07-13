@@ -307,8 +307,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `uncategorized` header = `demo` sub = `object page` app = `z2ui5_cl_demo_app_042` )
       ( group = `uncategorized` header = `demo` sub = `smallest app` app = `z2ui5_cl_demo_app_044` )
       ( group = `uncategorized` header = `demo` sub = `template` app = `z2ui5_cl_demo_app_018` )
-      ( group = `uncategorized` header = `demo 02` sub = `` app = `z2ui5_cl_demo_app_105` )
-      ( group = `uncategorized` header = `demo 03` sub = `` app = `z2ui5_cl_demo_app_112` )
       ( group = `uncategorized` header = `extension` sub = `import xml view 2` app = `z2ui5_cl_demo_app_039` )
       ( group = `uncategorized` header = `Import View` sub = `Copy & paste views of the UI5 Documentation` app = `z2ui5_cl_demo_app_031` )
       ( group = `uncategorized` header = `list report` sub = `filter` app = `z2ui5_cl_demo_app_083` )

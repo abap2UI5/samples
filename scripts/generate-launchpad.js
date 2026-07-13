@@ -81,9 +81,12 @@ for (const abap of walk(SRC)) {
   const cls = path.basename(abap, '.clas.abap');
   if (!cls.startsWith('z2ui5_cl_demo_app')) continue;
 
-  const rel = path.relative(SRC, abap).split(path.sep); // [ area, subnum, file ]
+  const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
   if (rel.length < 3) continue;
-  const [area, subnum] = rel;
+  const area = rel[0];
+  // full subfolder path ("08" or nested "08/01") so nested subpackages sort
+  // as their own group directly after their parent
+  const subnum = rel.slice(1, -1).join('/');
   if (!(area in tiles)) continue;
 
   const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');

@@ -1,3 +1,4 @@
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.OverflowToolbar/sample/sap.m.sample.ToolbarAlignment
 CLASS z2ui5_cl_demo_app_250 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

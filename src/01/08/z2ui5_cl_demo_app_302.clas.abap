@@ -1,3 +1,4 @@
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectAttributeInTable
 CLASS z2ui5_cl_demo_app_302 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

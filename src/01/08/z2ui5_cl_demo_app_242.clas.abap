@@ -1,3 +1,4 @@
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.HTML/sample/sap.ui.core.sample.Html
 CLASS z2ui5_cl_demo_app_242 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
