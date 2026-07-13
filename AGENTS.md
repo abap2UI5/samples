@@ -120,7 +120,10 @@ consecutive tiles whose `header` shares the same base name form one block, and a
 new block (first row gets `sapUiSmallMarginTop`) starts when the base changes.
 The base is the header with a trailing Roman numeral removed (`header_base( )`),
 so `Binding`, `Binding I` … `Binding VIII` render as one block, then a gap, then
-the `Event` block, and so on.
+the `Event` block, and so on. All links of a block share the same width — the
+longest header in the block plus a small buffer, precomputed by
+`block_lengths( )` — so the `sub` descriptions of a block line up exactly
+underneath each other in one column.
 
 `z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_001` links to it via a message strip. Do not extend it.

@@ -13,6 +13,14 @@ CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
     TYPES ty_t_tile TYPE STANDARD TABLE OF ty_s_tile WITH DEFAULT KEY.
 
   PROTECTED SECTION.
+    TYPES:
+      BEGIN OF ty_s_block,
+        group TYPE string,
+        base  TYPE string,
+        len   TYPE i,
+      END OF ty_s_block.
+    TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH DEFAULT KEY.
+
     DATA client TYPE REF TO z2ui5_if_client.
     DATA:
       BEGIN OF s_scroll,
@@ -27,6 +35,11 @@ CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
+    METHODS block_lengths
+      IMPORTING
+        t_catalog     TYPE ty_t_tile
+      RETURNING
+        VALUE(result) TYPE ty_t_block.
     METHODS header_base
       IMPORTING
         header        TYPE string
@@ -88,6 +101,9 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
 
   METHOD view_display.
 
+    DATA(t_catalog) = get_catalog( ).
+    DATA(t_blocks) = block_lengths( t_catalog ).
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
@@ -106,7 +122,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.
 
-    LOOP AT get_catalog( ) INTO DATA(tile).
+    LOOP AT t_catalog INTO DATA(tile).
 
       DATA(base) = header_base( tile-header ).
       DATA(new_block) = abap_false.
@@ -124,6 +140,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
 
       prev_base = base.
 
+      DATA(width) = |{ t_blocks[ group = tile-group base = base ]-len + 2 }ch|.
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
@@ -134,11 +151,13 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       IF tile-sub IS INITIAL.
         row->link(
             text  = tile-header
+            width = width
             press = client->_event( tile-app ) ).
 
       ELSE.
         row->link(
             text  = tile-header
+            width = width
             class = `sapUiTinyMarginEnd`
             press = client->_event( tile-app )
             )->text( tile-sub ).
@@ -324,6 +343,29 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.f.Avatar, use sap.m.Avatar` app = `z2ui5_cl_demo_app_269` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_284` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_285` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD block_lengths.
+
+    LOOP AT t_catalog INTO DATA(tile).
+
+      DATA(base) = header_base( tile-header ).
+      READ TABLE result ASSIGNING FIELD-SYMBOL(<block>)
+        WITH KEY group = tile-group
+                 base  = base.
+
+      IF sy-subrc <> 0.
+        INSERT VALUE #( group = tile-group
+                        base  = base ) INTO TABLE result ASSIGNING <block>.
+      ENDIF.
+
+      IF strlen( tile-header ) > <block>-len.
+        <block>-len = strlen( tile-header ).
+      ENDIF.
+
+    ENDLOOP.
 
   ENDMETHOD.
 
