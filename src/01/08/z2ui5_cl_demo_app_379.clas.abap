@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/sap/m/images/`.
+    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/`.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -57,28 +57,40 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Image/sample/sap.m.sample.Image` ).
 
-    DATA(vbox) = page->vbox( `sapUiSmallMargin` ).
+    DATA(hbox) = page->vbox( `sapUiSmallMarginTopBottom sapUiLargeMarginBeginEnd`
+        )->hbox( justifycontent = `SpaceBetween` ).
 
-    vbox->label( `Fixed width (150px), with alternative text:` ).
-    vbox->image( src          = base_url && `SAPLogo.jpg`
-                 alt          = `SAP logo`
-                 width        = `150px`
-                 densityaware = abap_false ).
+    hbox->vbox(
+        )->text(
+            text  = `Image:`
+            class = `sapUiSmallMarginBottom`
+        )->image(
+            src   = base_url && `sap/ui/documentation/sdk/images/HT-7777-large.jpg`
+            width = `10em` ).
 
-    vbox->label( text  = `Clickable image with press event:`
-                 class = `sapUiSmallMarginTop` ).
-    vbox->image( src          = base_url && `SAPLogo.jpg`
-                 alt          = `SAP logo (clickable)`
-                 width        = `75px`
-                 densityaware = abap_false
-                 press        = client->_event( `IMAGE_PRESS` ) ).
+    " ariaDetails of the original sample is omitted here (available only since UI5 1.79)
+    hbox->vbox(
+        )->text(
+            text  = `Active state image:`
+            class = `sapUiSmallMarginBottom`
+        )->image(
+            src        = base_url && `sap/ui/documentation/sdk/images/HT-6100-large.jpg`
+            width      = `10em`
+            decorative = abap_false
+            press      = client->_event( `IMAGE_PRESS` ) ).
 
-    vbox->label( text  = `Decorative image (ignored by screen readers):`
-                 class = `sapUiSmallMarginTop` ).
-    vbox->image( src          = base_url && `SAPUI5.png`
-                 decorative   = abap_true
-                 width        = `150px`
-                 densityaware = abap_false ).
+    hbox->vbox(
+        )->text(
+            text  = `Image using SVG format:`
+            class = `sapUiSmallMarginBottom`
+        )->image( src = base_url && `sap/m/demokit/sample/Image/images/sap-logo.svg` ).
+
+    " mode InlineSvg of the original sample is omitted here (available only in newer UI5 versions)
+    hbox->vbox(
+        )->text(
+            text  = `Image displaying inline SVG:`
+            class = `sapUiSmallMarginBottom`
+        )->image( src = base_url && `sap/m/demokit/sample/Image/images/sap-logo.svg` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -89,7 +101,7 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `IMAGE_PRESS`.
-        client->message_toast_display( `Image pressed` ).
+        client->message_toast_display( `The image has been pressed` ).
 
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).

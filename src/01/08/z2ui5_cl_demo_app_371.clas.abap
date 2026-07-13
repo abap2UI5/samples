@@ -36,7 +36,8 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/sap/m/images/demo/nature/`.
+    " Image URLs of the mock model sap/ui/demo/mock/img.json used by the original sample
+    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/sap/ui/documentation/sdk/images/`.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
@@ -56,21 +57,21 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Carousel/sample/sap.m.sample.Carousel` ).
 
-    page->carousel( loop                   = abap_true
-                    height                 = `50%`
-                    pageindicatorplacement = `Bottom`
-        )->image( src          = base_url && `desert.jpg`
-                  alt          = `Desert`
-                  densityaware = abap_false
-        )->image( src          = base_url && `elephant.jpg`
-                  alt          = `Elephant`
-                  densityaware = abap_false
-        )->image( src          = base_url && `fish.jpg`
-                  alt          = `Fish`
-                  densityaware = abap_false
-        )->image( src          = base_url && `forest.jpg`
-                  alt          = `Forest`
-                  densityaware = abap_false ).
+    page->title( id    = `carouselTitle`
+                 class = `sapUiSmallMarginTop`
+                 text  = `Image Gallery Carousel` ).
+
+    " ariaLabelledBy of the original sample is omitted here (available only since UI5 1.125)
+    page->carousel( class = `sapUiContentPadding`
+                    loop  = abap_true
+        )->image( src = base_url && `HT-7777-large.jpg`
+                  alt = `Example picture of speakers`
+        )->image( src = base_url && `HT-6120-large.jpg`
+                  alt = `Example picture of USB flash drive`
+        )->image( src = base_url && `HT-6100-large.jpg`
+                  alt = `Example picture of spotlight`
+        )->image( src = base_url && `screw.jpg`
+                  alt = `Example picture of screw` ).
 
     client->view_display( page->stringify( ) ).
 
