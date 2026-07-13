@@ -7,23 +7,23 @@ CLASS z2ui5_cl_demo_app_101 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_feed,
+      BEGIN OF ty_s_entry,
         author    TYPE string,
         authorpic TYPE string,
         type      TYPE string,
         date      TYPE string,
         text      TYPE string,
-      END OF ty_s_feed.
-    DATA mt_feed TYPE TABLE OF ty_s_feed.
-    DATA ms_feed TYPE ty_s_feed.
-    DATA mv_value TYPE string.
+      END OF ty_s_entry.
+    DATA t_feed TYPE STANDARD TABLE OF ty_s_entry.
+    DATA value TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
+    METHODS on_init.
     METHODS on_event.
-    METHODS set_data.
     METHODS view_display.
+    METHODS set_data.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -35,12 +35,20 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
-      set_data( ).
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
-
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    set_data( ).
+    view_display( ).
 
   ENDMETHOD.
 
@@ -49,68 +57,101 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
 
     IF client->check_on_event( `POST` ).
 
-      IF mv_value IS INITIAL.
+      IF value IS INITIAL.
         RETURN.
       ENDIF.
-      ms_feed = VALUE #( ).
-      ms_feed-author = sy-uname.
-      ms_feed-type = `Respond`.
-      ms_feed-text = mv_value.
-      mv_value = ``.
-      INSERT ms_feed INTO mt_feed INDEX 1.
+
+      " Like the original controller the new entry is posted as Alexandrina Victoria with the current date
+      INSERT VALUE #( author    = `Alexandrina Victoria`
+                      authorpic = `http://upload.wikimedia.org/wikipedia/commons/a/aa/Dronning_victoria.jpg`
+                      type      = `Reply`
+                      date      = |{ sy-datum DATE = ISO } { sy-uzeit TIME = ISO }|
+                      text      = value ) INTO t_feed INDEX 1.
+      value = VALUE #( ).
       client->view_model_update( ).
+
+    ELSEIF client->check_on_event( `SENDER_PRESS` ).
+      client->message_toast_display( |Clicked on Link: { client->get_event_arg( 1 ) }| ).
+
+    ELSEIF client->check_on_event( `ICON_PRESS` ).
+      client->message_toast_display( |Clicked on Image: { client->get_event_arg( 1 ) }| ).
     ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD set_data.
-
-    mt_feed = VALUE #(
-                      ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
-                        text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
-                          `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-                      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
-    DATA(page) = lo_view->shell( )->page(
-             title          = `Feed Input`
-             navbuttonpress = client->_event_nav_app_leave( )
-             shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell( )->page(
+        title          = `abap2UI5 - Sample: Feed`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(fi) = page->vbox(
-      )->feed_input( post                     = client->_event( `POST` )
-                             growing          = abap_true
-                             rows             = `4`
-                             icondensityaware = abap_false
-                             value            = client->_bind_edit( mv_value )
-                             class            = `sapUiSmallMarginTopBottom`
-      )->get_parent( )->get_parent(
-      )->list(
-        items          = client->_bind_edit( mt_feed )
+    page->header_content(
+       )->link(
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FeedListItem/sample/sap.m.sample.Feed` ).
+
+    page->feed_input(
+        post  = client->_event( `POST` )
+        icon  = base_url && `test-resources/sap/m/images/dronning_victoria.jpg`
+        value = client->_bind_edit( value )
+        class = `sapUiSmallMarginTopBottom` ).
+
+    page->list(
         showseparators = `Inner`
-          )->feed_list_item(
+        items          = client->_bind( t_feed )
+        )->feed_list_item(
             sender                   = `{AUTHOR}`
-            senderpress              = client->_event( `SENDER_PRESS` )
-            iconpress                = client->_event( `ICON_PRESS` )
-            icondensityaware         = abap_false
-            showicon                 = abap_false
-            info                     = `Reply`
+            icon                     = `{AUTHORPIC}`
+            senderpress              = client->_event( val   = `SENDER_PRESS`
+                                                       t_arg = VALUE #( ( `${$source>/sender}` ) ) )
+            iconpress                = client->_event( val   = `ICON_PRESS`
+                                                       t_arg = VALUE #( ( `${$source>/sender}` ) ) )
+            info                     = `{TYPE}`
+            timestamp                = `{DATE}`
             text                     = `{TEXT}`
             convertlinkstoanchortags = `All` ).
 
-    client->view_display( lo_view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD set_data.
+
+    DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
+
+    t_feed = VALUE #(
+      ( author    = `Alexandrina Victoria`
+        authorpic = base_url && `test-resources/sap/m/images/dronning_victoria.jpg`
+        type      = `Request`
+        date      = `March 03 2013`
+        text      = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+                    `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+                    ` Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+                    ` Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+                    ` Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+                    ` Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
+      ( author    = `George Washington`
+        authorpic = base_url && `test-resources/sap/m/images/george_washington.jpg`
+        type      = `Reply`
+        date      = `March 04 2013`
+        text      = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore` )
+      ( author    = `Alexandrina Victoria`
+        authorpic = base_url && `test-resources/sap/m/images/dronning_victoria.jpg`
+        type      = `Request`
+        date      = `March 05 2013`
+        text      = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat` )
+      ( author    = `George Washington`
+        authorpic = base_url && `test-resources/sap/m/images/george_washington.jpg`
+        type      = `Rejection`
+        date      = `March 07 2013`
+        text      = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.` ) ).
 
   ENDMETHOD.
 
