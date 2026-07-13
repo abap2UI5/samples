@@ -143,7 +143,7 @@ CLASS z2ui5_cl_demo_app_401 IMPLEMENTATION.
                               items     = client->_bind( t_suppliers )
             )->facet_filter_item( text    = `{TEXT}`
                                   key     = `{TEXT}`
-                                  counter = `{COUNT}` ) ).
+                                  counter = `{COUNT}` ).
 
     " The original controller appends the demo table of sap.m.sample.Table with an adjusted first column
     DATA(tab) = vbox->table( id    = `idProductsTable`
