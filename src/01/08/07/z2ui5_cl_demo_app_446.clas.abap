@@ -42,13 +42,13 @@ CLASS z2ui5_cl_demo_app_446 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.List/sample/sap.m.sample.ListSelection` ).
 
-    DATA(list) = page->list(
+    DATA(product_list) = page->list(
            id                     = `ProductList`
            items                  = client->_bind( t_products )
            mode                   = client->_bind_edit( mode )
            includeiteminselection = abap_true ).
 
-    list->header_toolbar(
+    product_list->header_toolbar(
        )->overflow_toolbar(
            )->title(
                text  = `Products`
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_446 IMPLEMENTATION.
                        text = `Multi Selection` ) ).
 
     " The iconDensityAware property of the original sample is not available in the view API and is omitted here
-    list->items(
+    product_list->items(
        )->standard_list_item(
            title       = `{NAME}`
            description = `{PRODUCT_ID}`
