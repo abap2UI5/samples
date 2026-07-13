@@ -62,13 +62,14 @@ CLASS z2ui5_cl_demo_app_486 IMPLEMENTATION.
                 ` or implement the IShrinkable interface (e.g. Text, Label).`
         class = `sapUiTinyMargin` ).
 
+    " the toolbar style class is not part of the typed view API - added via the generic property helper
     page->toolbar(
             id    = `toolbar1`
-            class = `sapUiMediumMarginTop`
             width = client->_bind( toolbar_width )
+            )->_generic_property( VALUE #( n = `class` v = `sapUiMediumMarginTop` )
             )->label( `I am a text control, so I will shrink whenever the toolbar overflows.`
             )->toolbar_spacer(
-            )->button( `Non-shrinkable button`
+            )->button( text = `Non-shrinkable button`
             )->toolbar_spacer(
             )->search_field(
                 width       = `100%`
@@ -80,8 +81,8 @@ CLASS z2ui5_cl_demo_app_486 IMPLEMENTATION.
 
     page->toolbar(
             id    = `toolbar2`
-            class = `sapUiMediumMarginTop`
             width = client->_bind( toolbar_width )
+            )->_generic_property( VALUE #( n = `class` v = `sapUiMediumMarginTop` )
             )->label( `I am a non-shrinkable text.`
             )->get(
                 )->layout_data( ``
@@ -90,7 +91,7 @@ CLASS z2ui5_cl_demo_app_486 IMPLEMENTATION.
                 )->get_parent(
             )->get_parent(
             )->toolbar_spacer(
-            )->button( `I am a shrinkable button, so I will shrink whenever the toolbar overflows.`
+            )->button( text = `I am a shrinkable button, so I will shrink whenever the toolbar overflows.`
             )->get(
                 )->layout_data( ``
                     )->toolbar_layout_data( shrinkable = abap_true
@@ -109,8 +110,8 @@ CLASS z2ui5_cl_demo_app_486 IMPLEMENTATION.
 
     page->toolbar(
             id    = `toolbar3`
-            class = `sapUiMediumMarginTop`
             width = client->_bind( toolbar_width )
+            )->_generic_property( VALUE #( n = `class` v = `sapUiMediumMarginTop` )
             )->label( `I should not shrink by more than 200px, because I am an important text.`
             )->get(
                 )->layout_data( ``
@@ -121,7 +122,7 @@ CLASS z2ui5_cl_demo_app_486 IMPLEMENTATION.
                 )->get_parent(
             )->get_parent(
             )->toolbar_spacer(
-            )->button( `I cannot be wider than 400px, but I can shrink up to the theme's default minimum width.`
+            )->button( text = `I cannot be wider than 400px, but I can shrink up to the theme's default minimum width.`
             )->get(
                 )->layout_data( ``
                     )->toolbar_layout_data(

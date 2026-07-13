@@ -66,8 +66,13 @@ CLASS z2ui5_cl_demo_app_484 IMPLEMENTATION.
                 id              = `TypeHere`
                 value           = client->_bind_edit( input_value )
                 valueliveupdate = client->_bind_edit( value_live_update )
-                livechange      = client->_event( val   = `LIVE_CHANGE`
-                                                  t_arg = VALUE #( ( `${$parameters>/value}` ) ) )
+            " the liveChange event is not part of the typed view API - added via the generic property helper
+            )->get(
+                )->_generic_property( VALUE #(
+                    n = `liveChange`
+                    v = client->_event( val   = `LIVE_CHANGE`
+                                        t_arg = VALUE #( ( `${$parameters>/value}` ) ) ) )
+            )->get_parent(
             )->label( `input.getValue()`
             )->text(
                 id   = `getValue`

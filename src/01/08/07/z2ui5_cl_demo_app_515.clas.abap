@@ -75,20 +75,20 @@ CLASS z2ui5_cl_demo_app_515 IMPLEMENTATION.
     markers->object_marker( type = `Flagged` ).
     markers->object_marker( type = `Favorite` ).
 
-    DATA(table) = layout->flex_content( `layout`
+    DATA(products_table) = layout->flex_content( `layout`
         )->table(
             id               = `idProductsTable`
             items            = client->_bind( t_products )
             growing          = abap_true
             growingthreshold = `50` ).
 
-    table->header_toolbar(
+    products_table->header_toolbar(
         )->overflow_toolbar(
             )->title(
                 text  = `Products`
                 level = `H2` ).
 
-    table->columns(
+    products_table->columns(
         )->column( `12em`
             )->text( `Product` )->get_parent(
         )->column(
@@ -108,7 +108,7 @@ CLASS z2ui5_cl_demo_app_515 IMPLEMENTATION.
         )->column( halign = `Right`
             )->text( `Price` ).
 
-    table->items(
+    products_table->items(
         )->column_list_item(
             )->cells(
                 )->object_identifier(
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_demo_app_515 IMPLEMENTATION.
                     unit   = `{WEIGHT_UNIT}`
                 )->object_number(
                     number = `{PRICE}`
-                    unit   = `{CURRENCY_CODE}` ) ).
+                    unit   = `{CURRENCY_CODE}` ).
 
     client->view_display( page->stringify( ) ).
 

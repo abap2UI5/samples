@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_498 IMPLEMENTATION.
             )->navigation_list_item( text = `Sub Item 1`
             )->navigation_list_item( text = `Sub Item 2`
             )->navigation_list_item( text = `Sub Item 3`
-            )->navigation_list_item( text = `Sub Item 4` ) ).
+            )->navigation_list_item( text = `Sub Item 4` ).
 
     client->view_display( page->stringify( ) ).
 
