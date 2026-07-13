@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_006 IMPLEMENTATION.
         )->toolbar(
             )->title( `title of the table`
             )->button(
-                text  = `letf side button`
+                text  = `left side button`
                 icon  = `sap-icon://account`
                 press = client->_event( `BUTTON_SORT` )
             )->segmented_button( key

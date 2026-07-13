@@ -133,9 +133,9 @@ CLASS z2ui5_cl_demo_app_070 IMPLEMENTATION.
       (   n = `GE`     v = `>={LOW}` )
       (   n = `CP`     v = `*{LOW}*` )
       (   n = `BT`     v = `{LOW}...{HIGH}` )
-      (   n = `NE`     v = `!(={LOW})` )
-      (   n = `NE`     v = `!(<leer>)` )
-      (   n = `<leer>` v = `<leer>` ) ).
+      (   n = `NE`      v = `!(={LOW})` )
+      (   n = `!<leer>` v = `!(<leer>)` )
+      (   n = `<leer>`  v = `<leer>` ) ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
