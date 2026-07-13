@@ -84,7 +84,9 @@ for (const abap of walk(SRC)) {
   const [area, subnum] = rel;
   if (!(area in tiles)) continue;
 
-  const xml = fs.readFileSync(abap.replace(/\.clas\.abap$/, '.clas.xml'), 'utf8');
+  const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');
+  if (!fs.existsSync(xmlPath)) { console.warn(`skipping ${cls}: no .clas.xml`); continue; }
+  const xml = fs.readFileSync(xmlPath, 'utf8');
   const { header, sub } = splitDescript(tag(xml, 'DESCRIPT') || cls);
 
   if (header.trim().toUpperCase() === 'ZZZ') { hidden++; continue; }
