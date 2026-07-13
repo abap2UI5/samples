@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_446 IMPLEMENTATION.
                        text = `Single Selection (Master)`
                    )->item(
                        key  = `MultiSelect`
-                       text = `Multi Selection` ) ).
+                       text = `Multi Selection` ).
 
     " The iconDensityAware property of the original sample is not available in the view API and is omitted here
     product_list->items(

@@ -1,8 +1,8 @@
 "! Generated port of a UI5 demo kit sample - not yet manually reviewed
-"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectHeaderResponsiveI
-"! This is a responsive Object Header with a Title, 2 Statuses/Attributes rendered next to the title
-"! in a fullScreenOptimized mode (fullScreenOptimized = true).
-CLASS z2ui5_cl_demo_app_459 DEFINITION PUBLIC.
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderResponsiveII
+"! This is a responsive Object Header with a Title, 2 Statuses/Attributes rendered below the title in
+"! a Master/Detail mode (fullScreenOptimized = false).
+CLASS z2ui5_cl_demo_app_464 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -21,14 +21,14 @@ CLASS z2ui5_cl_demo_app_459 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
 
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Sample: Object Header Responsive I`
+            title          = `abap2UI5 - Sample: Object Header Responsive II`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -36,11 +36,11 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
-           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectAttribute/sample/sap.m.sample.ObjectHeaderResponsiveI` ).
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectHeader/sample/sap.m.sample.ObjectHeaderResponsiveII` ).
 
     DATA(header) = page->object_header(
         responsive          = abap_true
-        fullscreenoptimized = abap_true
+        fullscreenoptimized = abap_false
         intro               = `Notebook Basic 15 with 2,80 GHz quad core, 15" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro`
         title               = `Long title truncated to 80 chars on all devices and to 50 chars on phone portrait`
         number              = `956.00`
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
             id          = `itb1`
             selectedkey = `key3`
             uppercase   = abap_true
-            class       = `sapUiResponsivePadding--header sapUiResponsivePadding--content`
+            class       = `sapUiResponsiveContentPadding`
         )->items( ).
 
     items->icon_tab_filter(
