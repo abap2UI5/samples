@@ -10,6 +10,9 @@ CLASS z2ui5_cl_demo_app_372 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS on_event.
+    METHODS file_menu_display
+      IMPORTING
+        menu_button TYPE REF TO z2ui5_cl_xml_view.
     METHODS popover_display
       IMPORTING
         id TYPE string.
@@ -23,11 +26,9 @@ CLASS z2ui5_cl_demo_app_372 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
       view_display( ).
-
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -54,35 +55,82 @@ CLASS z2ui5_cl_demo_app_372 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MenuButton/sample/sap.m.sample.MenuButton` ).
 
-    DATA(vbox) = page->vbox( `sapUiSmallMargin` ).
-
-    vbox->label( `Regular mode - the button only opens the menu:` ).
-    vbox->menu_button( text = `File`
+    " the original attaches the itemSelected event of the menu - here every menu item fires its own press event
+    " the split mode 'Calculator' buttons of the original need nested menu items - not supported by the view API, therefore omitted
+    DATA(toolbar) = page->overflow_toolbar( ).
+    toolbar->toolbar_spacer( ).
+    toolbar->label( `In a toolbar` ).
+    " the original adds custom data to the 'Edit' item - not supported by the view API, therefore omitted
+    toolbar->menu_button( text = `File`
         )->menu(
-            )->menu_item( text  = `New`
-                          icon  = `sap-icon://create`
-                          press = client->_event( val = `MENU_ITEM` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+            )->menu_item( text  = `Edit`
+                          icon  = `sap-icon://edit`
+                          press = client->_event( val = `ITEM_PRESS` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+            )->menu_item( text  = `Save`
+                          icon  = `sap-icon://save`
+                          press = client->_event( val = `ITEM_PRESS` t_arg = VALUE #( ( `${$source>/text}` ) ) )
             )->menu_item( text  = `Open`
                           icon  = `sap-icon://open-folder`
-                          press = client->_event( val = `MENU_ITEM` t_arg = VALUE #( ( `${$source>/text}` ) ) )
-            )->menu_item( text  = `Save`
-                          icon  = `sap-icon://save`
-                          press = client->_event( val = `MENU_ITEM` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+                          press = client->_event( val = `ITEM_PRESS` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+    toolbar->toolbar_spacer( ).
 
-    vbox->label( text  = `Split mode - the button fires a default action, the arrow opens the menu:`
-                 class = `sapUiSmallMarginTop` ).
-    vbox->menu_button( text          = `Save`
+    DATA(vbox) = page->vbox( `sapUiSmallMargin` ).
+
+    vbox->label( `Regular mode button` ).
+    file_menu_display( vbox->menu_button( text = `File` ) ).
+
+    " the beforeMenuOpen event of the original is only available since UI5 1.94, therefore omitted
+    vbox->label( `Split mode button with associated last action` ).
+    file_menu_display( vbox->menu_button( text          = `File Menu`
+                                          buttonmode    = `Split`
+                                          defaultaction = client->_event( `DEFAULT_ACTION` ) ) ).
+
+    vbox->label( `Split mode button with associated last action with initial icon` ).
+    file_menu_display( vbox->menu_button( text          = `File Menu`
+                                          buttonmode    = `Split`
+                                          defaultaction = client->_event( `DEFAULT_ACTION` ) ) ).
+
+    " the useDefaultActionOnly property of the original is not available in the view API, therefore omitted
+    vbox->label( `Split mode button with default action only` ).
+    file_menu_display( vbox->menu_button( text          = `File Menu`
+                                          buttonmode    = `Split`
+                                          defaultaction = client->_event( `DEFAULT_ACTION` ) ) ).
+
+    vbox->label( `Split mode with type Accept and constant default action` ).
+    vbox->menu_button( text          = `Accept`
                        buttonmode    = `Split`
-                       defaultaction = client->_event( `DEFAULT_ACTION` )
+                       type          = `Accept`
+                       defaultaction = client->_event( `DEFAULT_ACTION_ACCEPT` )
         )->menu(
-            )->menu_item( text  = `Save`
-                          icon  = `sap-icon://save`
-                          press = client->_event( val = `MENU_ITEM` t_arg = VALUE #( ( `${$source>/text}` ) ) )
-            )->menu_item( text  = `Save As`
-                          icon  = `sap-icon://duplicate`
-                          press = client->_event( val = `MENU_ITEM` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+            )->menu_item( text  = `Send the response now`
+                          icon  = `sap-icon://response`
+                          press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+            )->menu_item( text  = `Edit the response before sending`
+                          icon  = `sap-icon://edit-outside`
+                          press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+            )->menu_item( text  = `Do not send a response`
+                          icon  = `sap-icon://action`
+                          press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+
+    " the two buttons of the original demonstrating the menuPosition property are omitted - the property is not available in the view API
 
     client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD file_menu_display.
+
+    menu_button->menu(
+        )->menu_item( text  = `Edit`
+                      icon  = `sap-icon://edit`
+                      press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+        )->menu_item( text  = `Save`
+                      icon  = `sap-icon://save`
+                      press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+        )->menu_item( text  = `Open`
+                      icon  = `sap-icon://open-folder`
+                      press = client->_event( val = `MENU_ACTION` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
 
   ENDMETHOD.
 
@@ -90,11 +138,17 @@ CLASS z2ui5_cl_demo_app_372 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN `MENU_ITEM`.
-        client->message_toast_display( |{ client->get_event_arg( 1 ) } selected| ).
+      WHEN `ITEM_PRESS`.
+        client->message_toast_display( |{ client->get_event_arg( 1 ) } Pressed| ).
+
+      WHEN `MENU_ACTION`.
+        client->message_toast_display( |Action triggered on item: { client->get_event_arg( 1 ) }| ).
 
       WHEN `DEFAULT_ACTION`.
-        client->message_toast_display( `Default action pressed` ).
+        client->message_toast_display( `Default action triggered` ).
+
+      WHEN `DEFAULT_ACTION_ACCEPT`.
+        client->message_toast_display( `Accepted` ).
 
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).

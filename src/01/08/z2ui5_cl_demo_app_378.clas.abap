@@ -9,7 +9,6 @@ CLASS z2ui5_cl_demo_app_378 DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS on_event.
     METHODS popover_display
       IMPORTING
         id TYPE string.
@@ -23,12 +22,10 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
       view_display( ).
-
-    ELSE.
-      on_event( ).
+    ELSEIF client->check_on_event( `CLICK_HINT_ICON` ).
+      popover_display( `button_hint_id` ).
     ENDIF.
 
   ENDMETHOD.
@@ -36,10 +33,14 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " the original uses the same Lorem ipsum text for the content of both panels
+    DATA(lorem) = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea t` &&
+      `akimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Lorem ipsum dolor sit amet, consetetur sadips` &&
+      `cing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat`.
+
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Panel`
-            class          = `sapUiContentPadding`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -55,52 +56,29 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Panel/sample/sap.m.sample.Panel` ).
 
-    page->panel( headertext = `Fixed Panel`
-                 class      = `sapUiSmallMarginBottom`
-        )->text( `A basic panel with a header text and content. It cannot be collapsed.` ).
+    " the accessibleRole property of the original is not available in the view API, therefore omitted
+    DATA(panel_picture) = page->panel( width = `auto`
+                                       class = `sapUiResponsiveMargin` ).
+    panel_picture->header_toolbar(
+        )->overflow_toolbar(
+            )->title( `Panel with picture` ).
+    " the original binds the image against the demo kit mock model - here the mock image URL is used directly
+    panel_picture->horizontal_layout(
+        )->image( src   = `https://sapui5.hana.ondemand.com/test-resources/sap/ui/documentation/sdk/images/HT-7777-large.jpg`
+                  width = `10em` ).
+    panel_picture->text( lorem ).
 
-    page->panel( expandable = abap_true
-                 expanded   = abap_true
-                 headertext = `Expandable Panel (initially expanded)`
-                 class      = `sapUiSmallMarginBottom`
-                 expand     = client->_event( val = `EXPAND` t_arg = VALUE #( ( `${$source>/expanded}` ) ) )
-        )->text( `Collapse or expand this panel with the arrow in the header. The expand event is sent to the backend.` ).
-
-    page->panel( expandable = abap_true
-                 expanded   = abap_false
-                 headertext = `Expandable Panel (initially collapsed)`
-                 class      = `sapUiSmallMarginBottom`
-        )->text( `This content is hidden until the panel is expanded.` ).
-
-    DATA(panel) = page->panel( expandable = abap_true
-                               expanded   = abap_true ).
-    panel->header_toolbar(
-        )->toolbar(
-            )->title( `Panel with Header Toolbar`
+    DATA(panel_header) = page->panel( width = `auto`
+                                      class = `sapUiResponsiveMargin` ).
+    panel_header->header_toolbar(
+        )->overflow_toolbar(
+            )->title( `Header`
             )->toolbar_spacer(
-            )->button( icon    = `sap-icon://settings`
-                       type    = `Transparent`
-                       tooltip = `Settings`
-                       press   = client->_event( `SETTINGS` ) ).
-    panel->text( `Instead of a plain header text the panel can host a complete toolbar with actions.` ).
+            )->button( icon = `sap-icon://settings`
+            )->button( icon = `sap-icon://drop-down-list` ).
+    panel_header->text( lorem ).
 
     client->view_display( page->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get( )-event.
-      WHEN `EXPAND`.
-        client->message_toast_display( |Panel expanded: { client->get_event_arg( 1 ) }| ).
-
-      WHEN `SETTINGS`.
-        client->message_toast_display( `Settings pressed` ).
-
-      WHEN `CLICK_HINT_ICON`.
-        popover_display( `button_hint_id` ).
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -112,7 +90,7 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
                                   header      = `Sample information`
-                                  description = `The panel groups content under a header. It can be expandable and its header can be a plain text or a full toolbar.` ).
+                                  description = `Panels are helpful to group custom content. They can be decorated with a plain header text or a complete header toolbar.` ).
 
     client->popover_display(
       xml   = view->stringify( )
