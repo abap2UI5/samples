@@ -17,7 +17,7 @@ CLASS z2ui5_cl_sample_app_001 DEFINITION PUBLIC.
       BEGIN OF ty_s_block,
         group TYPE string,
         base  TYPE string,
-        len   TYPE i,
+        width TYPE i,
       END OF ty_s_block.
     TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH DEFAULT KEY.
 
@@ -40,11 +40,16 @@ CLASS z2ui5_cl_sample_app_001 DEFINITION PUBLIC.
         name          TYPE clike
       RETURNING
         VALUE(result) TYPE abap_bool.
-    METHODS block_lengths
+    METHODS block_widths
       IMPORTING
         t_catalog     TYPE ty_t_tile
       RETURNING
         VALUE(result) TYPE ty_t_block.
+    METHODS header_width
+      IMPORTING
+        header        TYPE string
+      RETURNING
+        VALUE(result) TYPE i.
     METHODS header_base
       IMPORTING
         header        TYPE string
@@ -107,7 +112,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(t_catalog) = get_catalog( ).
-    DATA(t_blocks) = block_lengths( t_catalog ).
+    DATA(t_blocks) = block_widths( t_catalog ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -157,9 +162,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
 
       prev_base = base.
 
-      " CSSSize does not allow the ch unit - approximate 0.6em per character
-      DATA(len) = t_blocks[ group = tile-group base = base ]-len.
-      DATA(width) = |{ ( ( len + 2 ) * 6 + 9 ) DIV 10 }em|.
+      " widest header of the block plus roughly one space, in 1/100 em
+      DATA(tenths) = ( t_blocks[ group = tile-group base = base ]-width + 45 ) DIV 10.
+      DATA(width) = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
@@ -177,7 +182,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         row->link(
             text  = tile-header
             width = width
-            class = `sapUiTinyMarginEnd`
             press = client->_event( tile-app )
             )->text( tile-sub ).
       ENDIF.
@@ -386,7 +390,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD block_lengths.
+  METHOD block_widths.
 
     LOOP AT t_catalog INTO DATA(tile).
 
@@ -400,11 +404,34 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
                         base  = base ) INTO TABLE result ASSIGNING <block>.
       ENDIF.
 
-      IF strlen( tile-header ) > <block>-len.
-        <block>-len = strlen( tile-header ).
+      DATA(width) = header_width( tile-header ).
+
+      IF width > <block>-width.
+        <block>-width = width.
       ENDIF.
 
     ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD header_width.
+
+    " estimated render width in 1/100 em, weighted per character class
+    DATA(off) = 0.
+    WHILE off < strlen( header ).
+
+      DATA(char) = substring( val = header
+                              off = off
+                              len = 1 ).
+      result = result + COND i( WHEN char CA `MW` THEN 95
+                                WHEN char CA `mw` THEN 80
+                                WHEN char CA `ijltfrI. -` THEN 35
+                                WHEN char CA `ABCDEFGHJKLNOPQRSTUVXYZ` THEN 75
+                                ELSE 55 ).
+      off = off + 1.
+
+    ENDWHILE.
 
   ENDMETHOD.
 
