@@ -39,7 +39,6 @@ src/
     ├── 09/  generic xml view             built on z2ui5_cl_util_xml
     ├── 10/  only non-openui5-with-cc     SAPUI5-only control that also needs a custom control
     ├── 11/  uncategorized                not yet triaged into a category
-    ├── 12/  framework popups             demos for the framework popup classes (z2ui5_cl_pop_*)
     └── 99/  obsolete                     superseded, or uses a deprecated control
 ```
 
@@ -82,9 +81,8 @@ The split is driven directly by the CI builds:
   7. Experimental / work-in-progress → `00/07`
   8. Complete multi-feature showcase demo → `00/08`
   9. Built on the generic XML view (`z2ui5_cl_util_xml`) → `00/09`
-  10. Demo for the framework popup classes (`z2ui5_cl_pop_*`) → `00/12`
-  11. Deprecated control/property, or superseded → `00/99`
-  12. Not yet triaged → `00/11` (temporary parking; triage into 01–99 later)
+  10. Deprecated control/property, or superseded → `00/99`
+  11. Not yet triaged → `00/11` (temporary parking; triage into 01–99 later)
 
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
@@ -184,7 +182,7 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/01` → `00/12` → `00/99`; `01/01` → `01/08`) so the on-screen order
+   (`00/01` → `00/11` → `00/99`; `01/01` → `01/08`) so the on-screen order
    mirrors the tree. When inserting a new group, place it at its numeric slot
    (e.g. `uncategorized` = `00/11` goes **after** `only non-openui5-with-cc`
    (`00/10`) and **before** `obsolete` (`00/99`)).
