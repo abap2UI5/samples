@@ -54,7 +54,13 @@ group name — keep the two identical** (see §4).
 Every sample in `01/08` is a faithful rebuild of one specific UI5 demo kit
 sample and carries the demo kit URL as an ABAP Doc line directly above its
 `CLASS ... DEFINITION` (`"! Rebuild of the UI5 demo kit sample: <url>`).
-Demos that have no demo kit original belong in `01/08/01` instead.
+Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
+(e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
+entity is the control from the demo kit URL and the description comes from
+the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
+truncated to the 60-character DESCRIPT limit).
+Demos that have no demo kit original belong in `01/08/01` instead — nested
+subpackages are **not** listed in the overview (§4).
 
 ---
 
@@ -193,15 +199,16 @@ from the old catalog.
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
    ever called by another app and must **not** get a tile. It stays in the
    folder (and is checked by abaplint), just not shown in the overview.
+   Apps in **nested subpackages** (e.g. `01/08/01`) are also not listed —
+   only direct subpackages of `src/00` and `src/01` get tiles.
 3. **`group` == subpackage CTEXT.** If you rename a subpackage's CTEXT, update
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/01` → `00/11` → `00/99`; `01/01` → `01/08` → `01/08/01`) so the
-   on-screen order mirrors the tree; a nested subpackage forms its own group
-   directly after its parent. When inserting a new group, place it at its
-   numeric slot (e.g. `uncategorized` = `00/11` goes **after**
-   `only non-openui5-with-cc` (`00/10`) and **before** `obsolete` (`00/99`)).
+   (`00/01` → `00/11` → `00/99`; `01/01` → `01/08`) so the on-screen order
+   mirrors the tree. When inserting a new group, place it at its numeric slot
+   (e.g. `uncategorized` = `00/11` goes **after** `only non-openui5-with-cc`
+   (`00/10`) and **before** `obsolete` (`00/99`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;

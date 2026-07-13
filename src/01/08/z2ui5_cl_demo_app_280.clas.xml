@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_280</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Header Container - Vertical Mode</DESCRIPT>
+    <DESCRIPT>sap.m.HeaderContainer - The Header Container with a vertical</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

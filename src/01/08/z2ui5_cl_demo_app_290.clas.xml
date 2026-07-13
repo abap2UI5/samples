@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_290</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Object List Item - markers aggregation</DESCRIPT>
+    <DESCRIPT>sap.m.ObjectListItem - This sample shows the different state</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

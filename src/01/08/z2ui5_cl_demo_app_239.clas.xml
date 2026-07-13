@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_239</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Checkbox</DESCRIPT>
+    <DESCRIPT>sap.m.CheckBox - Checkboxes allow users to select a subset o</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_299</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Select - Wrapping text</DESCRIPT>
+    <DESCRIPT>sap.m.Select - Illustrates how the text in items wrap.</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

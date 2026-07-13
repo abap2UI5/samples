@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_298</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Select - Validation states</DESCRIPT>
+    <DESCRIPT>sap.m.Select - Visualizes the validation state of the contro</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

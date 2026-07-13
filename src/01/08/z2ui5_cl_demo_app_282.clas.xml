@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_282</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>InvisibleText</DESCRIPT>
+    <DESCRIPT>sap.ui.core.InvisibleText - Many controls provide the associ</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

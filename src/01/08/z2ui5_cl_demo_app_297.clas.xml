@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_297</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Select - with icons</DESCRIPT>
+    <DESCRIPT>sap.m.Select - Illustrates the usage of a Select with icons</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

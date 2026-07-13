@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_288</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Select</DESCRIPT>
+    <DESCRIPT>sap.m.Select - Illustrates the usage of a Select in header,</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

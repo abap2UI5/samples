@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_240</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Switch</DESCRIPT>
+    <DESCRIPT>sap.m.Switch - "Some say it is only a switch, I say it is on</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

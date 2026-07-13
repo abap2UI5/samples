@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_276</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Tile - Monitor Tile</DESCRIPT>
+    <DESCRIPT>sap.m.GenericTile - Shows Monitor Tile samples that can cont</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

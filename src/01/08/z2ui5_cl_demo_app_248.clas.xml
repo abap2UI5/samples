@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_248</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Splitter Layout - 2 non-resizable areas</DESCRIPT>
+    <DESCRIPT>sap.ui.layout.Splitter - Simple splitter example with two co</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

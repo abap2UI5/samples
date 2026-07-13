@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_260</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Splitter Layout - Nested with 7 Areas</DESCRIPT>
+    <DESCRIPT>sap.ui.layout.Splitter - Nested Splitter example with 7 cont</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
