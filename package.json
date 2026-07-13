@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/abap2UI5/samples#readme",
   "devDependencies": {
-    "@abaplint/cli": "^2.119.64"
+    "@abaplint/cli": "^2.119.66"
   },
   "engines": {
     "node": ">=22"
