@@ -9,7 +9,7 @@
 
 # abap2UI5-samples
 
-Install this repository and try out over 360 samples. This is the easiest way to learn abap2UI5 development. [More information here.](https://abap2ui5.github.io/docs/get_started/samples.html)
+Install this repository and try out over 350 samples. This is the easiest way to learn abap2UI5 development. [More information here.](https://abap2ui5.github.io/docs/get_started/samples.html)
 
 
 #### Overview Apps

@@ -327,7 +327,7 @@ manually or via editor tooling that the above rules are met.
 For deeper information about how the abap2UI5 framework works internally —
 architecture, roundtrip processing, data binding engine, session persistence,
 and core classes — refer to the
-[abap2UI5 repository](https://github.com/abap2UI5/abap2UI5) and its `CLAUDE.md`.
+[abap2UI5 repository](https://github.com/abap2UI5/abap2UI5) and its `AGENTS.md`.
 
 ---
 
