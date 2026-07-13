@@ -59,11 +59,11 @@ CLASS z2ui5_cl_demo_app_529 IMPLEMENTATION.
 
     header_content->vertical_layout(
         )->label( `Article Category`
-        )->object_attribute( `Single Material` ).
+        )->object_attribute( text = `Single Material` ).
 
     header_content->vertical_layout(
         )->label( `Article Type`
-        )->object_attribute( `Trading Goods` ).
+        )->object_attribute( text = `Trading Goods` ).
 
     DATA(sections) = object_page_layout->sections( ).
 
