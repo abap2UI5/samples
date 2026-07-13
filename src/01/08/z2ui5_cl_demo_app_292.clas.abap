@@ -42,13 +42,15 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Breadcrumbs/sample/sap.m.sample.BreadcrumbsWithCurrentPageLink` ).
 
+    " The original sample renders 'Page 6' as a link via the currentLocation
+    " aggregation, which is available only since UI5 1.123 — currentLocationText
+    " is used instead
     page->vertical_layout(
             class = `sapUiContentPadding`
             width = `100%`
            )->title( `Breadcrumbs with current page aggregation set`
            )->breadcrumbs( id                  = `idBreadcrumbs`
-                           separatorstyle      = `{/selected}`
-                           currentlocationtext = `Page 7`
+                           currentlocationtext = `Page 6`
                )->link( text  = `Home`
                         press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
                )->link( text  = `Page 1`
@@ -60,32 +62,7 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
                )->link( text  = `Page 4`
                         press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
                )->link( text  = `Page 5`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
-                   )->link( text  = `Page 6`
-                            press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
-               )->get_parent(
-           )->get_parent( ).
-
-    page->hbox( alignitems = `Center`
-                )->label( labelfor = `idSeparatorSelect`
-                    text           = `Change separator style`
-
-          )->select( class         = `sapUiSmallMarginBegin`
-                       id          = `idSeparatorSelect`
-                       selectedkey = `{/selected}`
-                       change      = `onChange`
-                        )->item( key  = `Slash`
-                                 text = `Slash`
-                        )->item( key  = `BackSlash`
-                                 text = `BackSlash`
-                        )->item( key  = `DoubleSlash`
-                                 text = `DoubleSlash`
-                        )->item( key  = `DoubleBackSlash`
-                                 text = `DoubleBackSlash`
-                        )->item( key  = `GreaterThan`
-                                 text = `GreaterThan`
-                        )->item( key  = `DoubleGreaterThan`
-                                 text = `DoubleGreaterThan` ).
+                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 

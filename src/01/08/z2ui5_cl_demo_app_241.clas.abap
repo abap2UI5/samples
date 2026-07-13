@@ -45,7 +45,8 @@ CLASS z2ui5_cl_demo_app_241 IMPLEMENTATION.
     DATA(layout) = page->grid( containerquery = abap_true
                                class          = `sapUiSmallMarginTop`
                           )->tile_content( footer = `Current Quarter`
-                                           unit   = `EUR` "class = `sapUiSmallMargin`
+                                           unit   = `EUR`
+                                           class  = `sapUiSmallMargin`
                               )->numeric_content( scale      = `M`
                                                   value      = `1.96`
                                                   valuecolor = `Error`

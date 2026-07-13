@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
     page_01->vertical_layout(
               width = `100%`
-               )->block_layout( background = `transparent`
+               )->block_layout(
                    )->block_layout_row(
                        )->block_layout_cell(
                            )->vertical_layout( class = `sapUiContentPadding`
@@ -147,7 +147,7 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
                )->get_parent( ).
     page_01->vertical_layout( class = `sapUiContentPadding`
                               width = `100%`
-               )->block_layout( background = `transparent`
+               )->block_layout(
                    )->block_layout_row(
                        )->block_layout_cell(
                            )->label( text     = `ObjectStatus with different indication states.`

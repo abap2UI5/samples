@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
               )->sub_header(
                   )->toolbar(
                       )->search_field( width  = `100%`
-                                       search = client->_event( `onSearch` )
+                                       search = client->_event( val = `onSearch` t_arg = VALUE #( ( `${$parameters>/searchButtonPressed}` ) ) )
                       )->text( text = `Default Search`
                                id   = `idSearchListToolbar`
                   )->get_parent(
@@ -68,7 +68,10 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `onSearch`.
-        client->message_toast_display( `'search' event fired with 'searchButtonPressed' parameter` ).
+
+        IF client->get_event_arg( 1 ) = `true`.
+          client->message_toast_display( `'search' event fired with 'searchButtonPressed' parameter` ).
+        ENDIF.
     ENDCASE.
 
   ENDMETHOD.

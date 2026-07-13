@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
                     direction = `Column`
              )->vbox( `sapUiTinyMargin`
                  )->label( text     = `{LABEL}`
-                           labelfor = `SI`
+                           labelfor = `DP`
                  )->date_picker(
                      id             = `DP`
                      width          = `100%`

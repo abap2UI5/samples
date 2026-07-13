@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_250 IMPLEMENTATION.
                                  )->button( text = `Centered content`
                                             type = `Accept`
                                  )->toolbar_spacer( )->get_parent(
-          )->message_strip( text  = `Right aligned content.`
+          )->message_strip( text  = `Right Aligned Content.`
                             class = `sapUiTinyMargin`
                          )->overflow_toolbar( class = `sapUiMediumMarginTop`
                              )->toolbar_spacer(

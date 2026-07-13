@@ -43,6 +43,7 @@ CLASS z2ui5_cl_demo_app_239 IMPLEMENTATION.
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.CheckBox/sample/sap.m.sample.CheckBox` ).
 
     DATA(layout) = page->vbox(
+                          )->checkbox(
                           )->checkbox( text     = `Option a`
                                        selected = abap_true
                           )->checkbox( text = `Option b`

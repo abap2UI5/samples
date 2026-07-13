@@ -24,10 +24,6 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(css) = `.tileLayout {`    &&
-                `    float: left;` &&
-                `}`.
-
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Monitor Tile`
@@ -46,23 +42,26 @@ CLASS z2ui5_cl_demo_app_276 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsMonitorTile` ).
 
-    page->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
-                        header    = `Cumulative Totals`
-                        subheader = `Expenses`
-                        press     = client->_event( `press` )
-           )->tile_content( unit   = `Unit`
-                            footer = `Footer Text`
-               )->numeric_content( value      = `1762`
-                                   icon       = `sap-icon://line-charts`
-                                   withmargin = abap_false )->get_parent( )->get_parent( )->get_parent(
-      )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout`
-                       header    = `Cumulative Totals`
-                       subheader = `Expenses`
-                       press     = client->_event( `press` )
-           )->tile_content( unit   = `Unit`
-                            footer = `Footer Text`
-               )->numeric_content( value      = `12`
-                                   withmargin = abap_false ).
+    " The original sample places the tiles side by side by floating them via
+    " custom CSS (.tileLayout) — an HBox achieves the same without native CSS
+    page->hbox( alignitems = `Start`
+        )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop`
+                         header    = `Cumulative Totals`
+                         subheader = `Expenses`
+                         press     = client->_event( `press` )
+            )->tile_content( unit   = `Unit`
+                             footer = `Footer Text`
+                )->numeric_content( value      = `1762`
+                                    icon       = `sap-icon://line-charts`
+                                    withmargin = abap_false )->get_parent( )->get_parent( )->get_parent(
+        )->generic_tile( class     = `sapUiTinyMarginBegin sapUiTinyMarginTop`
+                         header    = `Cumulative Totals`
+                         subheader = `Expenses`
+                         press     = client->_event( `press` )
+            )->tile_content( unit   = `Unit`
+                             footer = `Footer Text`
+                )->numeric_content( value      = `12`
+                                    withmargin = abap_false ).
 
     client->view_display( page->stringify( ) ).
 

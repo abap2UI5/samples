@@ -57,6 +57,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
                  )->label( `{LABEL}`
                  )->date_range_selection(
                      width          = `100%`
+                     delimiter      = `–`
                      valuestate     = `{VALUE_STATE}`
                      valuestatetext = `{VALUE_STATE_TEXT}` )->get_parent(
              )->get_parent( ).

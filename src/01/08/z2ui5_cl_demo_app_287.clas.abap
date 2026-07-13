@@ -13,6 +13,7 @@ CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
         wrapcharlimit TYPE i,
       END OF ty_s_name.
     DATA lt_o_model TYPE TABLE OF ty_s_name.
+    DATA wrapping TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -53,11 +54,21 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemWrapping` ).
 
+    " The 'Toggle Inverted' button, infoIcon and infoStateInverted of the original
+    " sample are omitted here (available only since UI5 1.74 and higher)
     page->list(
-           id         = `myList`
-           mode       = `MultiSelect`
-           headertext = `Wrapping texts`
-           items      = client->_bind( lt_o_model )
+           id    = `myList`
+           mode  = `MultiSelect`
+           items = client->_bind( lt_o_model )
+           )->header_toolbar(
+               )->toolbar(
+                   )->title( `Wrapping texts`
+                   )->toolbar_spacer(
+                   )->toggle_button(
+                       text    = `Toggle Wrapping`
+                       pressed = client->_bind_edit( wrapping )
+               )->get_parent(
+           )->get_parent(
            )->items(
                )->standard_list_item(
                    title         = `{TITLE}`
@@ -68,7 +79,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
                    info          = `{INFO}`
                    infostate     = `{HIGHLIGHT}`
                    type          = `Detail`
-                   wrapping      = abap_true
+                   wrapping      = client->_bind_edit( wrapping )
                    wrapcharlimit = `{WRAPCHARLIMIT}` ).
 
     client->view_display( page->stringify( ) ).
@@ -110,6 +121,16 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
       view_display( client ).
 
       lt_o_model = VALUE #(
+        ( title     = `Short title`
+          icon      = `sap-icon://favorite`
+          highlight = `Success`
+          info      = `Available`
+         )
+        ( title     = `Short title with long info text`
+          icon      = `sap-icon://employee`
+          highlight = `Error`
+          info      = `This is a very long information status text that demonstrates truncation and wrapping behavior`
+         )
         ( title     = `wrapCharLimit is set to Default. Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
                   `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
                   `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
