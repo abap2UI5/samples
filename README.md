@@ -18,6 +18,9 @@ Install this repository and try out over 360 samples. This is the easiest way to
 
 _generate_overview_apps last run: <!-- last-run -->2026-07-12 03:23 UTC<!-- /last-run -->_
 
+#### Dependencies
+* [abap2UI5](https://github.com/abap2UI5/abap2UI5)
+
 #### Issues
 
 For bug reports or feature requests, please open an issue in the [abap2UI5 repository.](https://github.com/abap2UI5/abap2UI5/issues)
