@@ -97,8 +97,10 @@ for (const abap of walk(SRC)) {
   // demo kit rebuilds (AGENTS.md §1) carry the full, untruncated demo kit
   // description as ABAP Doc lines below the URL line — prefer it as sub over
   // the 60-char DESCRIPT
+  // the Rebuild line may be preceded by marker lines (e.g. the generated-port
+  // marker), hence the multiline match
   const doc = fs.readFileSync(abap, 'utf8')
-    .match(/^"! Rebuild of the UI5 demo kit sample: \S+\r?\n((?:"! .*\r?\n)+)/);
+    .match(/^"! Rebuild of the UI5 demo kit sample: \S+\r?\n((?:"! .*\r?\n)+)/m);
   if (doc) {
     sub = doc[1].split(/\r?\n/)
       .map((l) => l.replace(/^"! ?/, '').trim())

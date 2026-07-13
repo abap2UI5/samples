@@ -73,6 +73,12 @@ overview generator prefers those lines as the tile `sub` (§4).
 Demos that have no demo kit original belong in `00/12` (controls - custom)
 instead.
 
+Machine-generated ports that have not been manually reviewed yet live in
+`01/08/07` (controls - generated) and carry the marker line
+`"! Generated port of a UI5 demo kit sample - not yet manually reviewed`
+directly above the `"! Rebuild ...` line. After review, move a sample into
+the library subpackage it belongs to and drop the marker line.
+
 ---
 
 ## 2. Compatibility model — what belongs in `src/01` vs `src/00`
