@@ -22,11 +22,6 @@ CLASS z2ui5_cl_demo_app_517 DEFINITION PUBLIC.
     METHODS view_display
       IMPORTING
         client TYPE REF TO z2ui5_if_client.
-    METHODS grid_person_display
-      IMPORTING
-        grid     TYPE REF TO z2ui5_cl_xml_view
-        client   TYPE REF TO z2ui5_if_client
-        s_person TYPE ty_s_person.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -36,47 +31,27 @@ CLASS z2ui5_cl_demo_app_517 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(grid) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Grid - Info Layout`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    grid->header_content(
+    page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Grid/sample/sap.ui.layout.sample.GridInfo` ).
 
-    DATA(content) = grid->grid(
+    DATA(content) = page->grid(
         class        = `sapUiSmallMarginTop`
         hspacing     = `2`
         default_span = `L6 M6 S10`
         )->content( `layout` ).
 
-    grid_person_display(
-        grid     = content
-        client   = client
-        s_person = s_person1 ).
-    grid_person_display(
-        grid     = content
-        client   = client
-        s_person = s_person2 ).
-    grid_person_display(
-        grid     = content
-        client   = client
-        s_person = s_person3 ).
-
-    client->view_display( grid->get_root( )->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD grid_person_display.
-
     " the wrapper grid_data method does not support the linebreak properties - generic element used
-    grid->image(
-        src   = client->_bind( s_person-pic_url )
+    content->image(
+        src   = client->_bind( s_person1-pic_url )
         width = `100%` )->get(
         )->layout_data(
             )->_generic(
@@ -87,11 +62,49 @@ CLASS z2ui5_cl_demo_app_517 IMPLEMENTATION.
                                   ( n = `linebreakM` v = `true` )
                                   ( n = `linebreakS` v = `true` ) ) ).
 
-    grid->vbox(
+    content->vbox(
         )->text(
-            text  = client->_bind( s_person-name )
+            text  = client->_bind( s_person1-name )
             class = `nameTitle`
-        )->text( client->_bind( s_person-description ) ).
+        )->text( client->_bind( s_person1-description ) ).
+
+    content->image(
+        src   = client->_bind( s_person2-pic_url )
+        width = `100%` )->get(
+        )->layout_data(
+            )->_generic(
+                name   = `GridData`
+                ns     = `layout`
+                t_prop = VALUE #( ( n = `span` v = `L3 M3 S8` )
+                                  ( n = `linebreakL` v = `true` )
+                                  ( n = `linebreakM` v = `true` )
+                                  ( n = `linebreakS` v = `true` ) ) ).
+
+    content->vbox(
+        )->text(
+            text  = client->_bind( s_person2-name )
+            class = `nameTitle`
+        )->text( client->_bind( s_person2-description ) ).
+
+    content->image(
+        src   = client->_bind( s_person3-pic_url )
+        width = `100%` )->get(
+        )->layout_data(
+            )->_generic(
+                name   = `GridData`
+                ns     = `layout`
+                t_prop = VALUE #( ( n = `span` v = `L3 M3 S8` )
+                                  ( n = `linebreakL` v = `true` )
+                                  ( n = `linebreakM` v = `true` )
+                                  ( n = `linebreakS` v = `true` ) ) ).
+
+    content->vbox(
+        )->text(
+            text  = client->_bind( s_person3-name )
+            class = `nameTitle`
+        )->text( client->_bind( s_person3-description ) ).
+
+    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 
