@@ -185,7 +185,7 @@ CLASS z2ui5_cl_demo_app_512 IMPLEMENTATION.
     form_content->label( `Background` ).
 
     " the ariaDescribedBy and ariaLabelledBy associations of the original are omitted
-    form_content->segmented_button( selected_key = client->_bind_edit( selected_background )
+    form_content->segmented_button( client->_bind_edit( selected_background )
         )->items(
             )->segmented_button_item(
                 key  = `Default`
