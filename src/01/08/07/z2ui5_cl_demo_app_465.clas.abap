@@ -34,7 +34,6 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
 
     " data of /ProductCollection/0 of the mock model sap/ui/demo/mock/products.json used by the original sample
     DATA(header) = page->object_header(
-        id               = `oh1`
         responsive       = abap_true
         icon             = `https://sapui5.hana.ondemand.com/test-resources/sap/ui/documentation/sdk/images/HT-6100.jpg`
         iconalt          = `Power Projector 4713`

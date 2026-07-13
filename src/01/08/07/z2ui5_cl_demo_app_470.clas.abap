@@ -97,11 +97,12 @@ CLASS z2ui5_cl_demo_app_470 IMPLEMENTATION.
         )->label( `Label`
         )->text( `Value` ).
 
+    " the width property of sap.m.List is set via a generic property - not part of the typed list method
     sample_page->list(
         headertext       = `A List`
         backgrounddesign = `Translucent`
-        width            = `auto`
-        class            = `sapUiResponsiveMargin` ).
+        class            = `sapUiResponsiveMargin`
+        )->_generic_property( VALUE #( n = `width` v = `auto` ) ).
 
     sample_page->table(
         headertext = `A Table`
