@@ -26,7 +26,14 @@ src/
 │   ├── 01/  framework - basics
 │   ├── 02/  framework - action
 │   ├── 05/  controls - extended
-│   └── 08/  controls              1:1 rebuilds of UI5 demo kit samples
+│   └── 08/  controls              1:1 rebuilds of UI5 demo kit samples, split by library
+│       ├── 00/  controls - sap.m
+│       ├── 01/  controls - sap.uxap
+│       ├── 02/  controls - sap.f
+│       ├── 03/  controls - sap.ui.core
+│       ├── 04/  controls - sap.ui.layout
+│       ├── 05/  controls - sap.tnt
+│       └── 06/  controls - sap.ui.codeeditor
 └── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 01/  only non-abap-cloud          on-premise-only ABAP (not ABAP Cloud ready)
     ├── 02/  only non-openui5             SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …)
@@ -52,8 +59,10 @@ group name — keep the two identical** (see §4).
 > overview catalog must be updated (§4).
 
 Every sample in `01/08` is a faithful rebuild of one specific UI5 demo kit
-sample and carries the demo kit URL as an ABAP Doc line directly above its
-`CLASS ... DEFINITION` (`"! Rebuild of the UI5 demo kit sample: <url>`).
+sample, filed in the subpackage of the library its entity belongs to
+(`01/08/00` = sap.m, `01/08/01` = sap.uxap, …), and carries the demo kit URL
+as an ABAP Doc line directly above its `CLASS ... DEFINITION`
+(`"! Rebuild of the UI5 demo kit sample: <url>`).
 Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
 (e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
 entity is the control from the demo kit URL and the description comes from
@@ -204,16 +213,15 @@ from the old catalog.
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
    ever called by another app and must **not** get a tile. It stays in the
    folder (and is checked by abaplint), just not shown in the overview.
-   Apps in **nested subpackages** (e.g. `01/08/01`) are also not listed —
-   only direct subpackages of `src/00` and `src/01` get tiles.
 3. **`group` == subpackage CTEXT.** If you rename a subpackage's CTEXT, update
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/01` → `00/11` → `00/99`; `01/01` → `01/08`) so the on-screen order
-   mirrors the tree. When inserting a new group, place it at its numeric slot
-   (e.g. `uncategorized` = `00/11` goes **after** `only non-openui5-with-cc`
-   (`00/10`) and **before** `obsolete` (`00/99`)).
+   (`00/01` → `00/12` → `00/99`; `01/01` → `01/08/00` → `01/08/06`) so the
+   on-screen order mirrors the tree; a nested subpackage forms its own group
+   directly after its parent slot. When inserting a new group, place it at its
+   numeric slot (e.g. `uncategorized` = `00/11` goes **after**
+   `only non-openui5-with-cc` (`00/10`) and **before** `obsolete` (`00/99`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
