@@ -1880,7 +1880,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
-    panel->generic_tile( header    = `selscreen - filter bar with variant managment WIP`
+    panel->generic_tile( header    = `selscreen - filter bar with variant management WIP`
                          subheader = ``
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_111` )
                          mode      = `LineMode`

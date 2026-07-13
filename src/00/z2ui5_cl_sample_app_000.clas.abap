@@ -212,7 +212,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only with javascript and css and html` header = `Messages with Styles II` sub = `` app = `z2ui5_cl_demo_app_311` )
       ( group = `only with javascript and css and html` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
       ( group = `only with javascript and css and html` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
-      ( group = `only with javascript and css and html` header = `selscreen` sub = `filter bar with variant managment WIP` app = `z2ui5_cl_demo_app_111` )
+      ( group = `only with javascript and css and html` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `only with javascript and css and html` header = `Softkeyboard on/off` sub = `` app = `z2ui5_cl_demo_app_352_0` )
       ( group = `only with javascript and css and html` header = `tab` sub = `focus edit controls` app = `z2ui5_cl_demo_app_346` )
       ( group = `only with javascript and css and html` header = `Tile` sub = `KPI Tile` app = `z2ui5_cl_demo_app_277` )
