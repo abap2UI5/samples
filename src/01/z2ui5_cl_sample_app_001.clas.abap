@@ -157,7 +157,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
 
       prev_base = base.
 
-      DATA(width) = |{ t_blocks[ group = tile-group base = base ]-len + 2 }ch|.
+      " CSSSize does not allow the ch unit - approximate 0.6em per character
+      DATA(len) = t_blocks[ group = tile-group base = base ]-len.
+      DATA(width) = |{ ( ( len + 2 ) * 6 + 9 ) DIV 10 }em|.
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
