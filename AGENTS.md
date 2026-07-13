@@ -27,7 +27,6 @@ src/
 │   ├── 02/  framework - action
 │   ├── 05/  controls - extended
 │   └── 08/  controls              1:1 rebuilds of UI5 demo kit samples
-│       └── 01/  controls - custom own demos without a demo kit original
 └── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 01/  only non-abap-cloud          on-premise-only ABAP (not ABAP Cloud ready)
     ├── 02/  only non-openui5             SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …)
@@ -40,6 +39,7 @@ src/
     ├── 09/  generic xml view             built on z2ui5_cl_util_xml
     ├── 10/  only non-openui5-with-cc     SAPUI5-only control that also needs a custom control
     ├── 11/  uncategorized                not yet triaged into a category
+    ├── 12/  controls - custom            own control demos without a UI5 demo kit original
     └── 99/  obsolete                     superseded, or uses a deprecated control
 ```
 
@@ -61,8 +61,8 @@ the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
 truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original belong in `01/08/01` instead — nested
-subpackages are **not** listed in the overview (§4).
+Demos that have no demo kit original belong in `00/12` (controls - custom)
+instead.
 
 ---
 
