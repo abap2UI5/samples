@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.CheckBox/sample/sap.m.sample.CheckBox
+"! Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you
+"! should use the Switch control instead.
 CLASS z2ui5_cl_demo_app_239 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

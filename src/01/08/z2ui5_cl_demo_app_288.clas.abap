@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select
+"! Illustrates the usage of a Select in header, footer and content of a page. Note the different
+"! display options.
 CLASS z2ui5_cl_demo_app_288 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

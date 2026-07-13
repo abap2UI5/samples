@@ -1,4 +1,5 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.GenericTile/sample/sap.m.sample.GenericTileAsMonitorTile
+"! Shows Monitor Tile samples that can contain header, subheader, icon, key value, unit, and a footer.
 CLASS z2ui5_cl_demo_app_276 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.SelectValueState
+"! Visualizes the validation state of the control, for example, Error, Warning and Success.
 CLASS z2ui5_cl_demo_app_298 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

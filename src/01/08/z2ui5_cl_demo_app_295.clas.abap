@@ -1,4 +1,5 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelectionValueState
+"! This example shows different DateRangeSelection value states.
 CLASS z2ui5_cl_demo_app_295 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

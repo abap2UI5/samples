@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.DateRangeSelection/sample/sap.m.sample.DateRangeSelection
+"! The Date Range Selection is an extension of the Date Picker Control and enables the user to select
+"! range of dates.
 CLASS z2ui5_cl_demo_app_231 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

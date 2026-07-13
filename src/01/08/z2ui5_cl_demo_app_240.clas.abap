@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Switch/sample/sap.m.sample.Switch
+"! "Some say it is only a switch, I say it is one of the most stylish controls in the universe of
+"! mobile UI controls." (unknown developer)
 CLASS z2ui5_cl_demo_app_240 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

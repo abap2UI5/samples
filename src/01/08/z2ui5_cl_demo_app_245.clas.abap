@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxDirectionOrder
+"! You can influence the direction and order of elements in horizontal and vertical Flex Box controls
+"! with the direction property.
 CLASS z2ui5_cl_demo_app_245 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

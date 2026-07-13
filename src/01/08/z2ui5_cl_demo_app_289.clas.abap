@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectMarker/sample/sap.m.sample.ObjectMarker
+"! The ObjectMarker is a small building block representing an object by an icon or text and icon. Often
+"! it is used in a table.
 CLASS z2ui5_cl_demo_app_289 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

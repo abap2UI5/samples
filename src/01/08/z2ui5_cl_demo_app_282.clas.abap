@@ -1,4 +1,7 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.core.InvisibleText/sample/sap.ui.core.sample.InvisibleText
+"! Many controls provide the associations ariaLabelledBy and ariaDescribedBy for accessibility
+"! purposes. The InvisibleText control can be used by application to provide hidden texts on the UI
+"! which can be referenced via these associations.
 CLASS z2ui5_cl_demo_app_282 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,5 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Breadcrumbs/sample/sap.m.sample.BreadcrumbsWithCurrentPageLink
+"! Breadcrumbs sample with current page set as aggregation, resulting in a link
 CLASS z2ui5_cl_demo_app_292 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

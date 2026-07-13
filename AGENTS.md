@@ -58,7 +58,9 @@ Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
 (e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
 entity is the control from the demo kit URL and the description comes from
 the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
-truncated to the 60-character DESCRIPT limit).
+truncated to the 60-character DESCRIPT limit). The **full, untruncated**
+description is kept as additional ABAP Doc lines below the URL line; the
+overview generator prefers those lines as the tile `sub` (§4).
 Demos that have no demo kit original belong in `01/08/01` instead — nested
 subpackages are **not** listed in the overview (§4).
 
@@ -180,7 +182,10 @@ One row per app, all four fields always present:
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its
-`*.clas.xml`, written in the format `header - sub`:
+`*.clas.xml`, written in the format `header - sub` — except for demo kit
+rebuilds (§1), where the generator overrides `sub` with the full description
+from the ABAP Doc lines below the `"! Rebuild of the UI5 demo kit sample:`
+line:
 - Split the DESCRIPT on the **first** `` ` - ` `` (space-hyphen-space): the part
   before is `header`, the part after is `sub` (which may itself contain ` - `).
 - No ` - ` at all → `header` = the whole DESCRIPT, `sub` = empty.

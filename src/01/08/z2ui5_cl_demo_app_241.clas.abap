@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.TileContent/sample/sap.m.sample.TileContent
+"! Shows the universal container for different content types and context information in the footer
+"! area.
 CLASS z2ui5_cl_demo_app_241 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Button/sample/sap.m.sample.Button
+"! Buttons trigger user actions and come in a variety of shapes and colors. Placing a button on a page
+"! header or footer changes its appearance.
 CLASS z2ui5_cl_demo_app_259 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

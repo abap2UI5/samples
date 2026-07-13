@@ -1,4 +1,6 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectListItem/sample/sap.m.sample.ObjectListItemMarkers
+"! This sample shows the different states of an Object List Item, which can be set using the markers
+"! aggregation.
 CLASS z2ui5_cl_demo_app_290 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

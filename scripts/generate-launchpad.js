@@ -90,7 +90,19 @@ for (const abap of walk(SRC)) {
   const xmlPath = abap.replace(/\.clas\.abap$/, '.clas.xml');
   if (!fs.existsSync(xmlPath)) { console.warn(`skipping ${cls}: no .clas.xml`); continue; }
   const xml = fs.readFileSync(xmlPath, 'utf8');
-  const { header, sub } = splitDescript(tag(xml, 'DESCRIPT') || cls);
+  let { header, sub } = splitDescript(tag(xml, 'DESCRIPT') || cls);
+
+  // demo kit rebuilds (AGENTS.md §1) carry the full, untruncated demo kit
+  // description as ABAP Doc lines below the URL line — prefer it as sub over
+  // the 60-char DESCRIPT
+  const doc = fs.readFileSync(abap, 'utf8')
+    .match(/^"! Rebuild of the UI5 demo kit sample: \S+\r?\n((?:"! .*\r?\n)+)/);
+  if (doc) {
+    sub = doc[1].split(/\r?\n/)
+      .map((l) => l.replace(/^"! ?/, '').trim())
+      .filter(Boolean)
+      .join(' ');
+  }
 
   if (header.trim().toUpperCase() === 'ZZZ') { hidden++; continue; }
   if ((header + sub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);

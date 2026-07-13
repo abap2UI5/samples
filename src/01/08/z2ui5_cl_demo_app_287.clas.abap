@@ -1,4 +1,7 @@
 "! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.StandardListItem/sample/sap.m.sample.StandardListItemWrapping
+"! This sample demonstrates the wrapping behavior of the title text and the description text. In
+"! desktop mode, the character limit is set to 300 characters, whereas in the phone mode, the character
+"! limit is set to 100 characters.
 CLASS z2ui5_cl_demo_app_287 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
