@@ -1,6 +1,8 @@
 name: generate_overview_apps
 
 on:
+  push:
+    branches: [standard]
   workflow_dispatch:
 
 permissions:
