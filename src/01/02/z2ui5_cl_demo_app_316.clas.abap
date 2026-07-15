@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
-    client->follow_up_action(
+    client->action(
         val   = z2ui5_if_client=>cs_event-set_title
         t_arg = VALUE #( ( `URL Helper Sample` ) ) ).
 

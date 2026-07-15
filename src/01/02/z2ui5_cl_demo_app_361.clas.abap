@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_app_361 IMPLEMENTATION.
     ELSE.
 
       IF client->check_on_event( `LOGOUT` ).
-        client->follow_up_action( client->cs_event-system_logout ).
+        client->action( client->cs_event-system_logout ).
       ENDIF.
 
     ENDIF.
