@@ -1,7 +1,3 @@
-"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageBox/sample/sap.m.sample.MessageBox
-"! A message box is a modal dialog for confirmations, information, warnings, errors and success
-"! messages. Configure the title, message and details, then press a button to open the matching
-"! message box type - the custom box additionally offers several actions.
 CLASS z2ui5_cl_demo_app_382 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

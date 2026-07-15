@@ -1,7 +1,3 @@
-"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast
-"! A message toast is a small, non-disruptive popup for success or information messages that
-"! disappears automatically after a couple of seconds. Configure the text, duration, width,
-"! docking position and animation, then press the button to show the toast.
 CLASS z2ui5_cl_demo_app_381 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
