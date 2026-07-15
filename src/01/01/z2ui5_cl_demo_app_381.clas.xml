@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_381</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Messages - Message toast and message box notifications</DESCRIPT>
+    <DESCRIPT>sap.m.MessageToast - A message toast is a small, non-disrupt</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

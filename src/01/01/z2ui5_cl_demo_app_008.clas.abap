@@ -75,6 +75,22 @@ CLASS Z2UI5_CL_DEMO_APP_008 IMPLEMENTATION.
       WHEN `BUTTON_MESSAGE_STRIP_SUCCESS`.
         check_strip_active = abap_true.
         strip_type         = `Success`.
+      WHEN `BUTTON_MESSAGE_BOX_SY`.
+        DATA(ls_msg_sy) = z2ui5_cl_sample_context=>msg_get_by_msg(
+            id = `NET`
+            no = `001` ).
+        client->message_box_display( ls_msg_sy ).
+      WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
+        DATA(ls_msg_bapiret) = VALUE bapiret2(
+            id     = `NET`
+            number = `001` ).
+        client->message_box_display( ls_msg_bapiret ).
+      WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
+        TRY.
+            DATA(lv_val) = 1 / 0.
+          CATCH cx_root INTO DATA(lx).
+            client->message_box_display( lx ).
+        ENDTRY.
     ENDCASE.
 
     view_display( ).
@@ -147,6 +163,20 @@ CLASS Z2UI5_CL_DEMO_APP_008 IMPLEMENTATION.
                 )->button(
                     text  = `Message Toast Customized`
                     press = client->_event( `BUTTON_MESSAGE_TOAST2` ) ).
+
+    page->grid( `L6 M12 S12`
+        )->content( `layout`
+            )->simple_form( `Message Box from ABAP Object`
+                )->content( `form`
+                )->button(
+                    text  = `SY Message`
+                    press = client->_event( `BUTTON_MESSAGE_BOX_SY` )
+                )->button(
+                    text  = `BAPIRET2`
+                    press = client->_event( `BUTTON_MESSAGE_BOX_BAPIRET` )
+                )->button(
+                    text  = `CX_ROOT`
+                    press = client->_event( `BUTTON_MESSAGE_BOX_CX_ROOT` ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -218,9 +218,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Event I` sub = `Handle events & change the view` app = `z2ui5_cl_demo_app_004` )
       ( group = `framework - basics` header = `Event II` sub = `Additional Infos with t_args` app = `z2ui5_cl_demo_app_167` )
       ( group = `framework - basics` header = `Event III` sub = `Facet Filter - T_arg with Objects` app = `z2ui5_cl_demo_app_197` )
-      ( group = `framework - basics` header = `Message` sub = `Message Box` app = `z2ui5_cl_demo_app_008` )
-      ( group = `framework - basics` header = `Message` sub = `Message Toast` app = `z2ui5_cl_demo_app_187` )
-      ( group = `framework - basics` header = `Messages` sub = `Message toast and message box notifications` app = `z2ui5_cl_demo_app_381` )
+      ( group = `framework - basics` header = `Message` sub = `Message Box, Toast and Strip` app = `z2ui5_cl_demo_app_008` )
       ( group = `framework - basics` header = `More` sub = `Call and leave to apps` app = `z2ui5_cl_demo_app_024` )
       ( group = `framework - basics` header = `More` sub = `Model Size Limit` app = `z2ui5_cl_demo_app_071` )
       ( group = `framework - basics` header = `More` sub = `Read Frontend Infos` app = `z2ui5_cl_demo_app_122` )
@@ -237,6 +235,14 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Popup I` sub = `Different ways of calling Popups` app = `z2ui5_cl_demo_app_012` )
       ( group = `framework - basics` header = `Popup II` sub = `Create Popup for Value Help` app = `z2ui5_cl_demo_app_009` )
       ( group = `framework - basics` header = `Popup III` sub = `Popup in Popup - Backend Stack Handling` app = `z2ui5_cl_demo_app_161` )
+      ( group = `framework - basics` header = `sap.m.MessageBox`
+        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
+              `fers several actions.`
+        app = `z2ui5_cl_demo_app_382` )
+      ( group = `framework - basics` header = `sap.m.MessageToast`
+        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
+              ` show the toast.`
+        app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `Templating I` sub = `Basic Example` app = `z2ui5_cl_demo_app_173` )
       ( group = `framework - basics` header = `Templating II` sub = `Nested Views` app = `z2ui5_cl_demo_app_176` )
       ( group = `framework - action` header = `Clipboard` sub = `Copy & Paste Text` app = `z2ui5_cl_demo_app_325` )
