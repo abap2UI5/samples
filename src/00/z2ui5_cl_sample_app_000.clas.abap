@@ -95,11 +95,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->action->gen(
-        val   = z2ui5_if_client=>cs_event-scroll_to
-        t_arg = VALUE #( ( s_scroll-id )
-                         ( |{ s_scroll-y }| )
-                         ( |{ s_scroll-x }| ) ) ).
+    client->follow_up_action( |.eF('SCROLL_TO', '{ s_scroll-id }', '{ s_scroll-y }', '{ s_scroll-x }')| ).
 
   ENDMETHOD.
 

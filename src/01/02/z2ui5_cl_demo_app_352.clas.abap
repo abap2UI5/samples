@@ -23,12 +23,8 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( ).
-      client->action->gen(
-          val   = z2ui5_if_client=>cs_event-set_focus
-          t_arg = VALUE #( ( `ZINPUT` ) ) ).
-      client->action->gen(
-          val   = z2ui5_if_client=>cs_event-keyboard_set_mode
-          t_arg = VALUE #( ( `ZINPUT` ) ( `numeric` ) ) ).
+      client->follow_up_action( |.eF('SET_FOCUS', 'ZINPUT')| ).
+      client->follow_up_action( |.eF('KEYBOARD_SET_MODE', 'ZINPUT', 'numeric')| ).
     ENDIF.
 
     on_event( ).
@@ -65,9 +61,7 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `CALL_KEYBOARD` ).
-      client->action->gen(
-          val   = z2ui5_if_client=>cs_event-keyboard_set_mode
-          t_arg = VALUE #( ( `ZINPUT` ) ( `none` ) ) ).
+      client->follow_up_action( |.eF('KEYBOARD_SET_MODE', 'ZINPUT', 'none')| ).
     ENDIF.
 
   ENDMETHOD.

@@ -80,9 +80,7 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
 
   METHOD start_timer.
 
-    client->action->gen(
-        val   = z2ui5_if_client=>cs_event-start_timer
-        t_arg = VALUE #( ( client->_event( `TIMER_FINISHED` ) ) ( `2000` ) ) ).
+    client->follow_up_action( |.eF('START_TIMER', { client->_event( `TIMER_FINISHED` ) }, '2000')| ).
 
   ENDMETHOD.
 

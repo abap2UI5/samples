@@ -42,15 +42,11 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
-      client->action->gen(
-          val   = z2ui5_if_client=>cs_event-set_title_launchpad
-          t_arg = VALUE #( ( mv_title ) ) ).
+      client->follow_up_action( |.eF('SET_TITLE_LAUNCHPAD', '{ mv_title }')| ).
 
     ELSEIF client->check_on_event( `SET_TITLE` ).
 
-      client->action->gen(
-          val   = z2ui5_if_client=>cs_event-set_title_launchpad
-          t_arg = VALUE #( ( mv_title ) ) ).
+      client->follow_up_action( |.eF('SET_TITLE_LAUNCHPAD', '{ mv_title }')| ).
 
     ENDIF.
 
