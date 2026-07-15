@@ -100,13 +100,10 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->get( )-check_on_navigated = abap_true.
-
+    IF client->check_on_navigated( ).
       view_display( ).
       RETURN.
     ENDIF.
-
     on_event( ).
 
   ENDMETHOD.

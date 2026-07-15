@@ -123,9 +123,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `ROW_DELETE`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-        READ TABLE lt_arg INTO DATA(ls_arg) INDEX 1.
-
+        DATA(ls_arg) = client->get_event_arg( ).
         IF ls_arg IS NOT INITIAL.
           DELETE t_tab2 WHERE title = ls_arg.
         ENDIF.

@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
         ENDCASE.
 
       CATCH cx_root INTO DATA(x).
-        client->nav_app_call( z2ui5_cl_pop_error=>factory( x ) ).
+        client->message_box_display( x ).
     ENDTRY.
 
   ENDMETHOD.

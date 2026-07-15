@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_382</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>sap.m.MessageBox - A modal dialog for confirmations, informa</DESCRIPT>
+    <DESCRIPT>Message - MessageBox</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

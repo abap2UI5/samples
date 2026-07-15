@@ -47,12 +47,10 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
         target = `top_input`.
       WHEN `VALIDATE`.
         IF field_02 IS INITIAL.
-
           target = `middle_input`.
           block  = `center`.
           client->message_toast_display( `Middle field is required` ).
         ELSE.
-
           client->message_toast_display( `All fields ok` ).
           RETURN.
         ENDIF.

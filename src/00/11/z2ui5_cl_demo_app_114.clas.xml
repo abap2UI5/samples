@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_114</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>more - feed input</DESCRIPT>
+    <DESCRIPT>sap.m.FeedInput</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

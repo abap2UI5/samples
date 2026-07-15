@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_064</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Timer II - Set Loading Indicator while Server Request</DESCRIPT>
+    <DESCRIPT>Timer II - Loading Indicator with WAIT UP Backend</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -122,14 +122,10 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     IF mo_parent_view IS INITIAL.
       DATA(page) = z2ui5_cl_xml_view=>factory( ).
-
     ELSE.
       page = mo_parent_view->get( `Page` ).
-
     ENDIF.
 
-*    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-*                                          width = `100%` ).
     page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`
@@ -141,7 +137,6 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
 
     ELSE.
       mv_view_display = abap_true.
-
     ENDIF.
 
   ENDMETHOD.
@@ -159,7 +154,6 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       on_init( ).
-
     ENDIF.
 
   ENDMETHOD.

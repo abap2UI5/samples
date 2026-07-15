@@ -20,7 +20,9 @@ CLASS z2ui5_cl_demo_app_074 DEFINITION PUBLIC.
 ENDCLASS.
 
 
+
 CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
+
 
   METHOD on_event.
 
@@ -104,19 +106,13 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-
       view_display( ).
-      RETURN.
-    ENDIF.
-
-    IF client->get( )-check_on_navigated = abap_true.
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSE.
+      on_event( ).
     ENDIF.
-
-    on_event( ).
 
   ENDMETHOD.
-
 ENDCLASS.

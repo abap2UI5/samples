@@ -103,12 +103,9 @@ CLASS z2ui5_cl_demo_app_279 IMPLEMENTATION.
     IF client->get( )-check_on_navigated = abap_true.
       on_navigation( ).
     ENDIF.
-
     on_event( ).
-
     IF client->check_on_init( ).
       view_display( ).
-
     ELSE.
       client->view_model_update( ).
     ENDIF.

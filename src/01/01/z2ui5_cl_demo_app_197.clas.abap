@@ -50,10 +50,8 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
       )->facet_filter_list( title     = `Products`
                             mode      = `MultiSelect`
                             items     = client->_bind( mt_table_products )
-                            listclose = client->_event( val                      = `FILTER`
-*                                                                           t_arg = VALUE #( ( `${$parameters>/selectedAll}` ) ) )
-*                                                                           t_arg = VALUE #( ( `$event.mParameters` ) ) )
-                                                                           t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
+                            listclose = client->_event( val   = `FILTER`
+                                                        t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
         )->facet_filter_item( text = `{PRODUCT}` ).
 
     DATA(tab) = page->table( id    = `tab`

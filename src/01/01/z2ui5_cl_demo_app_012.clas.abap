@@ -166,10 +166,8 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).
-
     ELSEIF client->check_on_navigated( ).
       on_navigation( ).
-
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.

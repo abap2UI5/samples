@@ -36,7 +36,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
       view_display( ).
-
     ELSEIF client->check_on_event( `TIMER_FINISHED` ).
       on_event( ).
     ENDIF.
@@ -47,7 +46,6 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
   METHOD on_init.
 
     counter = 1.
-
     t_tab = VALUE #(
         ( title = |entry{ counter }|
           info  = `completed`

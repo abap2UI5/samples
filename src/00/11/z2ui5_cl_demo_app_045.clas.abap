@@ -47,7 +47,6 @@ CLASS z2ui5_cl_demo_app_045 IMPLEMENTATION.
 
       WHEN `FILTER_INFO`.
         refresh_data( ).
-
         IF mv_info_filter <> ``.
           DELETE t_tab WHERE info <> mv_info_filter.
         ENDIF.

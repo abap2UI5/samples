@@ -7,7 +7,6 @@ CLASS z2ui5_cl_demo_app_381 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-  PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
     DATA message TYPE string.
     DATA duration TYPE string.
@@ -18,6 +17,9 @@ CLASS z2ui5_cl_demo_app_381 DEFINITION PUBLIC.
     DATA animation_timing TYPE string.
     DATA animation_duration TYPE string.
     DATA autoclose TYPE abap_bool.
+
+  PROTECTED SECTION.
+
 
     METHODS on_init.
     METHODS show_toast.

@@ -109,10 +109,10 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN `POPUP_TABLE_value`.
+      WHEN `POPUP_TABLE_VALUE`.
         t_suggestion_sel = t_suggestion.
         popup_value_suggestion( ).
-      WHEN `POPUP_TABLE_value_CUSTOM`.
+      WHEN `POPUP_TABLE_VALUE_CUSTOM`.
         t_employees_sel = VALUE #( ).
         popup_value_employee( ).
       WHEN `SEARCH`.
@@ -122,7 +122,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           DELETE t_employees_sel WHERE city <> s_screen-city.
         ENDIF.
         popup_value_employee( ).
-      WHEN `POPUP_TABLE_value_CUSTOM_CONTINUE`.
+      WHEN `POPUP_TABLE_VALUE_CUSTOM_CONTINUE`.
         DELETE t_employees_sel WHERE selkz = abap_false.
 
         IF lines( t_employees_sel ) = 1.
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           client->popup_destroy( ).
 
         ENDIF.
-      WHEN `POPUP_TABLE_value_CONTINUE`.
+      WHEN `POPUP_TABLE_VALUE_CONTINUE`.
         DELETE t_suggestion_sel WHERE selkz = abap_false.
 
         IF lines( t_suggestion_sel ) = 1.
@@ -192,19 +192,19 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             value            = client->_bind_edit( s_screen-color_02 )
             placeholder      = `fill in your favorite colour`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_value` ) ).
+            valuehelprequest = client->_event( `POPUP_TABLE_VALUE` ) ).
 
     form->label( `Custom value Popup`
         )->input(
             value            = client->_bind_edit( s_screen-name )
             placeholder      = `name`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_value_CUSTOM` )
+            valuehelprequest = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
         )->input(
             value            = client->_bind_edit( s_screen-lastname )
             placeholder      = `lastname`
             showvaluehelp    = abap_true
-            valuehelprequest = client->_event( `POPUP_TABLE_value_CUSTOM` ) ).
+            valuehelprequest = client->_event( `POPUP_TABLE_VALUE_CUSTOM` ) ).
 
     page->footer(
         )->overflow_toolbar(
@@ -248,7 +248,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     dialog->buttons(
         )->button(
             text  = `continue`
-            press = client->_event( `POPUP_TABLE_value_CONTINUE` )
+            press = client->_event( `POPUP_TABLE_VALUE_CONTINUE` )
             type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
@@ -302,7 +302,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     dialog->buttons(
         )->button(
             text  = `continue`
-            press = client->_event( `POPUP_TABLE_value_CUSTOM_CONTINUE` )
+            press = client->_event( `POPUP_TABLE_VALUE_CUSTOM_CONTINUE` )
             type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
