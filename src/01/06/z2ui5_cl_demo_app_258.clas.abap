@@ -24,7 +24,9 @@ CLASS z2ui5_cl_demo_app_258 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_258 IMPLEMENTATION.
+
 
   METHOD on_event.
 
@@ -192,5 +194,4 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
     render_main_view( client ).
 
   ENDMETHOD.
-
 ENDCLASS.

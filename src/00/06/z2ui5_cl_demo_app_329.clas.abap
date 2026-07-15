@@ -16,7 +16,9 @@ CLASS z2ui5_cl_demo_app_329 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_329 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_329 IMPLEMENTATION.
+
 
   METHOD factory.
 
@@ -25,5 +27,4 @@ CLASS z2ui5_cl_demo_app_329 IMPLEMENTATION.
     result->mr_data = i_data.
 
   ENDMETHOD.
-
 ENDCLASS.
