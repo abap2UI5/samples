@@ -236,6 +236,14 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Popup I` sub = `Different ways of calling Popups` app = `z2ui5_cl_demo_app_012` )
       ( group = `framework - basics` header = `Popup II` sub = `Create Popup for Value Help` app = `z2ui5_cl_demo_app_009` )
       ( group = `framework - basics` header = `Popup III` sub = `Popup in Popup - Backend Stack Handling` app = `z2ui5_cl_demo_app_161` )
+      ( group = `framework - basics` header = `sap.m.MessageBox`
+        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
+              `fers several actions.`
+        app = `z2ui5_cl_demo_app_382` )
+      ( group = `framework - basics` header = `sap.m.MessageToast`
+        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
+              ` show the toast.`
+        app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `Templating I` sub = `Basic Example` app = `z2ui5_cl_demo_app_173` )
       ( group = `framework - basics` header = `Templating II` sub = `Nested Views` app = `z2ui5_cl_demo_app_176` )
       ( group = `framework - action` header = `Clipboard` sub = `Copy & Paste Text` app = `z2ui5_cl_demo_app_325` )
@@ -309,16 +317,8 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `The sap.m.MaskInput control allows users to easily enter data in a certain format and in a fixed- width input (for example: date, time, credit card number, and others).`
         app = `z2ui5_cl_demo_app_110` )
       ( group = `controls - sap.m` header = `sap.m.MenuButton` sub = `This control is used to open a menu in both desktop and mobile.` app = `z2ui5_cl_demo_app_372` )
-      ( group = `controls - sap.m` header = `sap.m.MessageBox`
-        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
-              `fers several actions.`
-        app = `z2ui5_cl_demo_app_382` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `A sample MessageStrip that shows status messages with additional formatting.` app = `z2ui5_cl_demo_app_291` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `MessageStrip for showing status messages.` app = `z2ui5_cl_demo_app_238` )
-      ( group = `controls - sap.m` header = `sap.m.MessageToast`
-        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
-              ` show the toast.`
-        app = `z2ui5_cl_demo_app_381` )
       ( group = `controls - sap.m` header = `sap.m.MessageView` sub = `A sample with Message View and inside a Dialog and grouping of items` app = `z2ui5_cl_demo_app_038` )
       ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_233` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_232` )
