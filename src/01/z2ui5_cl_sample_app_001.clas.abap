@@ -311,6 +311,10 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.MenuButton` sub = `This control is used to open a menu in both desktop and mobile.` app = `z2ui5_cl_demo_app_372` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `A sample MessageStrip that shows status messages with additional formatting.` app = `z2ui5_cl_demo_app_291` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `MessageStrip for showing status messages.` app = `z2ui5_cl_demo_app_238` )
+      ( group = `controls - sap.m` header = `sap.m.MessageToast`
+        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
+              ` show the toast.`
+        app = `z2ui5_cl_demo_app_381` )
       ( group = `controls - sap.m` header = `sap.m.MessageView` sub = `A sample with Message View and inside a Dialog and grouping of items` app = `z2ui5_cl_demo_app_038` )
       ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_233` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_232` )
