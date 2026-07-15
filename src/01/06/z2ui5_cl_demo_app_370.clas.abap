@@ -24,7 +24,9 @@ CLASS z2ui5_cl_demo_app_370 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_370 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_370 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -110,5 +112,4 @@ CLASS z2ui5_cl_demo_app_370 IMPLEMENTATION.
       by_id = id ).
 
   ENDMETHOD.
-
 ENDCLASS.

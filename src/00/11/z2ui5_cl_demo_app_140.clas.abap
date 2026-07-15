@@ -26,7 +26,9 @@ CLASS z2ui5_cl_demo_app_140 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_140 IMPLEMENTATION.
+
 
   METHOD on_event.
 
@@ -98,5 +100,4 @@ CLASS z2ui5_cl_demo_app_140 IMPLEMENTATION.
     on_event( ).
 
   ENDMETHOD.
-
 ENDCLASS.

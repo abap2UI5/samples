@@ -49,7 +49,9 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -335,5 +337,4 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     client->popup_display( sort_view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
