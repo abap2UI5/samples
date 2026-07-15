@@ -309,6 +309,10 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `The sap.m.MaskInput control allows users to easily enter data in a certain format and in a fixed- width input (for example: date, time, credit card number, and others).`
         app = `z2ui5_cl_demo_app_110` )
       ( group = `controls - sap.m` header = `sap.m.MenuButton` sub = `This control is used to open a menu in both desktop and mobile.` app = `z2ui5_cl_demo_app_372` )
+      ( group = `controls - sap.m` header = `sap.m.MessageBox`
+        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
+              `fers several actions.`
+        app = `z2ui5_cl_demo_app_382` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `A sample MessageStrip that shows status messages with additional formatting.` app = `z2ui5_cl_demo_app_291` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `MessageStrip for showing status messages.` app = `z2ui5_cl_demo_app_238` )
       ( group = `controls - sap.m` header = `sap.m.MessageToast`
