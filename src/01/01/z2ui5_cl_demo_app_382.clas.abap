@@ -97,6 +97,10 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
 
     page->footer(
         )->overflow_toolbar(
+            )->button(
+                text  = `Back`
+                icon  = `sap-icon://nav-back`
+                press = client->_event_nav_app_leave( )
             )->text( `Open Message Box:`
             )->toolbar_spacer(
             )->button(

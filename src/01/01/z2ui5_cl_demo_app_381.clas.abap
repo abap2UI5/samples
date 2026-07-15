@@ -142,6 +142,13 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
         type  = `Emphasized`
         press = client->_event( `SHOW` ) ).
 
+    page->footer(
+        )->overflow_toolbar(
+            )->button(
+                text  = `Back`
+                icon  = `sap-icon://nav-back`
+                press = client->_event_nav_app_leave( ) ).
+
     client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
