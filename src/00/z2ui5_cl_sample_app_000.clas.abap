@@ -236,7 +236,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only with javascript and css and html` header = `Messages with Styles I` sub = `` app = `z2ui5_cl_demo_app_310` )
       ( group = `only with javascript and css and html` header = `Messages with Styles II` sub = `` app = `z2ui5_cl_demo_app_311` )
       ( group = `only with javascript and css and html` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
-      ( group = `only with javascript and css and html` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
       ( group = `only with javascript and css and html` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `only with javascript and css and html` header = `Softkeyboard on/off` sub = `` app = `z2ui5_cl_demo_app_352_0` )
       ( group = `only with javascript and css and html` header = `tab` sub = `focus edit controls` app = `z2ui5_cl_demo_app_346` )
@@ -282,7 +281,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `experimental` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
       ( group = `experimental` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
       ( group = `experimental` header = `tab` sub = `odata, device, http` app = `z2ui5_cl_demo_app_314` )
-      ( group = `experimental` header = `UploadSet` sub = `` app = `z2ui5_cl_demo_app_354` )
       ( group = `demos` header = `Sample App` sub = `` app = `z2ui5_cl_demo_app_085` )
       ( group = `demos` header = `Selection Screen` sub = `Explore Input Controls` app = `z2ui5_cl_demo_app_002` )
       ( group = `generic xml view` header = `more` sub = `InputListItem Sample` app = `z2ui5_cl_demo_app_355` )
@@ -358,6 +356,11 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `controls - custom` header = `Tree Table II` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `controls - custom` header = `ui.Table I` sub = `Simple example` app = `z2ui5_cl_demo_app_070` )
       ( group = `controls - custom` header = `ui.Table II` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
+      ( group = `deprecated` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
+      ( group = `deprecated` header = `sap.m.ActionSheet`
+        sub = `Action Sheet provides an easier way of showing a list of actions and allowing the user to select one. Title and Cancel button can be shown or hidden. Without an icon the entry will be left-aligned (see the last action in the list).`
+        app = `z2ui5_cl_demo_app_373` )
+      ( group = `deprecated` header = `UploadSet` sub = `` app = `z2ui5_cl_demo_app_354` )
       ( group = `obsolete` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolete` header = `obsolete` sub = `old focus demo, use Focus custom control` app = `z2ui5_cl_demo_app_133_0` )
       ( group = `obsolete` header = `obsolete` sub = `old focus demo, use Focus custom control` app = `z2ui5_cl_demo_app_189_0` )

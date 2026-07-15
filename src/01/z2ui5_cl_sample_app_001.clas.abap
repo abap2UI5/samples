@@ -259,9 +259,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - extended` header = `Wizard Control I` sub = `` app = `z2ui5_cl_demo_app_175` )
       ( group = `controls - extended` header = `Wizard Control II` sub = `Next step & SubSequentStep` app = `z2ui5_cl_demo_app_202` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
-      ( group = `controls - sap.m` header = `sap.m.ActionSheet`
-        sub = `Action Sheet provides an easier way of showing a list of actions and allowing the user to select one. Title and Cancel button can be shown or hidden. Without an icon the entry will be left-aligned (see the last action in the list).`
-        app = `z2ui5_cl_demo_app_373` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
         sub = `The Busy Indicator signals that some operation is going on and that the user must wait. It does not block the current UI screen so other operations could be triggered in parallel.`

@@ -47,6 +47,7 @@ src/
     ├── 10/  only non-openui5-with-cc     SAPUI5-only control that also needs a custom control
     ├── 11/  uncategorized                not yet triaged into a category
     ├── 12/  controls - custom            own control demos without a UI5 demo kit original
+    ├── 13/  deprecated                   sample built on a deprecated UI5 control (ActionSheet, P13n*, UploadSet, …)
     └── 99/  obsolete                     superseded, or uses a deprecated control
 ```
 
