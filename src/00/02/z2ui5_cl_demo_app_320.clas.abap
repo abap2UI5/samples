@@ -140,7 +140,9 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
                                           src          = `{SRC}` ).
     client->view_display( view->stringify( ) ).
 
-    client->follow_up_action( |.eF('SET_TITLE', 'Avatar Group Sample')| ).
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `Avatar Group Sample` ) ) ).
 
   ENDMETHOD.
 
@@ -290,13 +292,17 @@ CLASS z2ui5_cl_demo_app_320 IMPLEMENTATION.
         content_width = `250px`.
 
         client->popover_model_update( ).
-        client->follow_up_action( |.eF('POPOVER_NAV_CONTAINER_TO', 'navContainer', 'detail')| ).
+        client->follow_up_action(
+            val   = `POPOVER_NAV_CONTAINER_TO`
+            t_arg = VALUE #( ( `navContainer` ) ( `detail` ) ) ).
       WHEN `onNavBack`.
         content_height = calculate_content_height( lines( group_items ) ).
         content_width = `450px`.
 
         client->popover_model_update( ).
-        client->follow_up_action( |.eF('POPOVER_NAV_CONTAINER_TO', 'navContainer', 'main')| ).
+        client->follow_up_action(
+            val   = `POPOVER_NAV_CONTAINER_TO`
+            t_arg = VALUE #( ( `navContainer` ) ( `main` ) ) ).
     ENDCASE.
 
   ENDMETHOD.

@@ -36,7 +36,11 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.
 
     IF client->get( )-check_on_navigated = abap_true AND s_scroll-id IS NOT INITIAL.
-      client->follow_up_action( |.eF('SCROLL_TO', '{ s_scroll-id }', '{ s_scroll-y }', '{ s_scroll-x }')| ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-scroll_to
+          t_arg = VALUE #( ( s_scroll-id )
+                           ( |{ s_scroll-y }| )
+                           ( |{ s_scroll-x }| ) ) ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -69,7 +73,9 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->get_parent( ).
 
     IF client->get( )-check_launchpad_active = abap_true.
-      client->follow_up_action( |.eF('SET_TITLE_LAUNCHPAD', '{ c_title }')| ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-set_title_launchpad
+          t_arg = VALUE #( ( c_title ) ) ).
     ENDIF.
 
 *    page = page->grid( `L12 M12 S12`

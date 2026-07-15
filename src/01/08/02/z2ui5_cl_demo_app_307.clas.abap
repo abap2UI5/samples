@@ -250,7 +250,9 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
 
-    client->follow_up_action( |.eF('SET_TITLE', 'Grid List with Drag and Drop')| ).
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `Grid List with Drag and Drop` ) ) ).
 
   ENDMETHOD.
 

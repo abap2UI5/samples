@@ -101,7 +101,9 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
 
-    client->follow_up_action( |.eF('SET_TITLE', 'abap2UI5 - Weird Behavior Showcase')| ).
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-set_title
+        t_arg = VALUE #( ( `abap2UI5 - Weird Behavior Showcase` ) ) ).
 
   ENDMETHOD.
 

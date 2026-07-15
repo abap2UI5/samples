@@ -23,9 +23,13 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `one_enter`.
-        client->follow_up_action( |.eF('SET_FOCUS', 'IdTwo')| ).
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-set_focus
+            t_arg = VALUE #( ( `IdTwo` ) ) ).
       WHEN `two_enter`.
-        client->follow_up_action( |.eF('SET_FOCUS', 'IdThree')| ).
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-set_focus
+            t_arg = VALUE #( ( `IdThree` ) ) ).
     ENDCASE.
 
     client->view_model_update( ).
@@ -63,7 +67,9 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       render( ).
-      client->follow_up_action( |.eF('SET_FOCUS', 'IdOne')| ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-set_focus
+          t_arg = VALUE #( ( `IdOne` ) ) ).
     ENDIF.
 
     dispatch( ).

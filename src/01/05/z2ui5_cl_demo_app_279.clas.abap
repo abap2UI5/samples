@@ -59,7 +59,9 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
-    client->follow_up_action( |.eF('SET_FOCUS', 'input')| ).
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-set_focus
+        t_arg = VALUE #( ( `input` ) ) ).
 
   ENDMETHOD.
 
