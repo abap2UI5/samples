@@ -286,9 +286,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `samples - mixed` header = `sap.ui.table` sub = `filtering` app = `z2ui5_cl_demo_app_143` )
       ( group = `samples - mixed` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
       ( group = `samples - mixed` header = `SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
-      ( group = `controls - UI5 Demo Kit Copy` header = `sap.f.DynamicPage`
-        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
-        app = `z2ui5_cl_demo_app_030` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
@@ -398,6 +395,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout` sub = `ObjectPage sample that demonstrates the combination of header facets and showTitle properties of sections and subsections.` app = `z2ui5_cl_demo_app_330` )
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout` sub = `ObjectPage sample with Header Container` app = `z2ui5_cl_demo_app_303` )
       ( group = `controls - sap.f` header = `sap.f.Card` sub = `This sample illustrates how to specify the predefined header and the content of the Card control.` app = `z2ui5_cl_demo_app_181` )
+      ( group = `controls - sap.f` header = `sap.f.DynamicPage`
+        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
+        app = `z2ui5_cl_demo_app_030` )
       ( group = `controls - sap.f` header = `sap.f.GridList` sub = `This sample represents GridList with enabled Drag and Drop functionality.` app = `z2ui5_cl_demo_app_307` )
       ( group = `controls - sap.ui.core` header = `sap.ui.core.HTML` sub = `With the HTML controls you can easily embed any kind of HTML content into your UI5 mobile application.` app = `z2ui5_cl_demo_app_242` )
       ( group = `controls - sap.ui.core` header = `sap.ui.core.InvisibleText`
