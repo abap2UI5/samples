@@ -262,7 +262,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - use cases` header = `sap.m.List` sub = `Events & Visualization` app = `z2ui5_cl_demo_app_048` )
       ( group = `framework - use cases` header = `sap.m.SearchField` sub = `Live Search` app = `z2ui5_cl_demo_app_059` )
       ( group = `framework - use cases` header = `sap.m.SearchField` sub = `Search` app = `z2ui5_cl_demo_app_053` )
-      ( group = `framework - use cases` header = `sap.m.Table` sub = `backend filter columns` app = `z2ui5_cl_demo_app_045` )
+      ( group = `framework - use cases` header = `sap.m.Table` sub = `Backend Filter` app = `z2ui5_cl_demo_app_045` )
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Editable` app = `z2ui5_cl_demo_app_011` )
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Selection Modes: Single Select & Multi Select` app = `z2ui5_cl_demo_app_019` )
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Table with sap.m.ScrollContainer` app = `z2ui5_cl_demo_app_006` )
