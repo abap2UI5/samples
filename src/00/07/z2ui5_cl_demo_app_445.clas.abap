@@ -8,13 +8,6 @@ CLASS z2ui5_cl_demo_app_445 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    " options JSON forwarded 1:1 to the control API - bound into the model so
-    " the frontend binding ${...} resolves to the string and the handler
-    " JSON.parses it (an inline object literal is not evaluated in an event
-    " handler argument)
-    DATA toast_options TYPE string.
-    DATA box_options   TYPE string.
-
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -57,9 +50,6 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
   METHOD view_display.
 
-    toast_options = `{"duration":5000,"width":"25em","my":"center center","at":"center center"}`.
-    box_options   = `{"title":"abap2UI5","actions":["Approve","Reject"],"emphasizedAction":"Approve"}`.
-
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = `abap2UI5 - Sample: DISPLAY_MESSAGE_BOX / DISPLAY_MESSAGE_TOAST`
@@ -80,7 +70,7 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
                 press = client->_event_client(
                             val   = client->cs_event-display_message_toast
                             t_arg = VALUE #( ( `Toast with custom options, 1:1 to MessageToast.show( ).` )
-                                             ( `$` && client->_bind( toast_options ) ) ) )
+                                             ( `{ duration: 5000, width: '25em', my: 'center center', at: 'center center' }` ) ) )
             )->button(
                 text  = `MessageBox (backend, message only)`
                 class = `sapUiTinyMarginBottom`
@@ -90,7 +80,7 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
                 press = client->_event_client(
                             val   = client->cs_event-display_message_box
                             t_arg = VALUE #( ( `Message box with title and custom actions, 1:1 to MessageBox.show( ).` )
-                                             ( `$` && client->_bind( box_options ) ) ) ) ).
+                                             ( `{ title: 'abap2UI5', actions: ['Approve', 'Reject'], emphasizedAction: 'Approve' }` ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 
