@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
         view_display( ).
 
       WHEN `POST`.
-        client->message_toast_display( client->get_event_arg( 1 ) ).
+        client->message_toast_display( client->get_event_arg( ) ).
 
       WHEN `LOAD_CC`.
         mv_load_cc = abap_true.

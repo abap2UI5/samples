@@ -145,7 +145,7 @@ CLASS Z2UI5_CL_DEMO_APP_069 IMPLEMENTATION.
         view_display_app_01( ).
 
       WHEN `EVENT_ITEM`.
-        CASE client->get_event_arg( 1 ).
+        CASE client->get_event_arg( ).
           WHEN `App_001`.
             view_display_app_01( ).
           WHEN `App_002`.

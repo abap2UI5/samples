@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_317 IMPLEMENTATION.
         client->follow_up_action( `debugger; z2ui5.oView.byId( 'tree' ).expandToLevel(10);`).
 
       WHEN `onDrop`.
-        mt_node[ id = client->get_event_arg( 1 ) ]-id_parent = client->get_event_arg( 2 ).
+        mt_node[ id = client->get_event_arg( ) ]-id_parent = client->get_event_arg( 2 ).
         build_tree( ).
         view_display( client ).
     ENDCASE.

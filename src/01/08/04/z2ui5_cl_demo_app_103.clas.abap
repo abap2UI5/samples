@@ -87,7 +87,7 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
 
   METHOD resize_message.
 
-    DATA(old_sizes) = client->get_event_arg( 1 ).
+    DATA(old_sizes) = client->get_event_arg( ).
     DATA(new_sizes) = client->get_event_arg( 2 ).
     DATA(message)   = val.
 

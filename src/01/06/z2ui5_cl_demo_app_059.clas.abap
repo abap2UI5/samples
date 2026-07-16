@@ -56,7 +56,7 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
       set_data( ).
       z2ui5_cl_sample_context=>itab_filter_by_val(
           EXPORTING
-              val = client->get_event_arg( 1 )
+              val = client->get_event_arg( )
           CHANGING
               tab = mt_table ).
 

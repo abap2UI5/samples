@@ -95,7 +95,7 @@ CLASS Z2UI5_CL_DEMO_APP_374 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `ITEM_PRESS`.
 
-        detail_text = |{ client->get_event_arg( 1 ) } selected in the master list.|.
+        detail_text = |{ client->get_event_arg( ) } selected in the master list.|.
         client->view_model_update( ).
 
       WHEN `CLICK_HINT_ICON`.

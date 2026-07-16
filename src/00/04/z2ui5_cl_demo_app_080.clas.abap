@@ -72,7 +72,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
       DATA(selection) = COND string( WHEN client->get_event_arg( 2 ) = `true`
                                      THEN `selected`
                                      ELSE `deselected` ).
-      client->message_box_display( |'{ client->get_event_arg( 1 ) }' { selection }| ).
+      client->message_box_display( |'{ client->get_event_arg( ) }' { selection }| ).
 
     ELSEIF client->check_on_event( `SELECTION_FINISH` ).
 
