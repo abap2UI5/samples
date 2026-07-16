@@ -302,7 +302,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.CheckBox` sub = `Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you should use the Switch control instead.` app = `z2ui5_cl_demo_app_239` )
       ( group = `controls - sap.m` header = `sap.m.ComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_229` )
       ( group = `controls - sap.m` header = `sap.m.DatePicker` sub = `This example shows different DatePicker value states.` app = `z2ui5_cl_demo_app_294` )
-      ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `The Date Range Selection is an extension of the Date Picker Control and enables the user to select range of dates.` app = `z2ui5_cl_demo_app_231` )
       ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `This example shows different DateRangeSelection value states.` app = `z2ui5_cl_demo_app_295` )
       ( group = `controls - sap.m` header = `sap.m.FeedContent` sub = `Shows the tile containing the text of the feed, a subheader, and a numeric value.` app = `z2ui5_cl_demo_app_275` )
       ( group = `controls - sap.m` header = `sap.m.FeedInput` sub = `This sample shows a standalone feed input with different settings.` app = `z2ui5_cl_demo_app_283` )
@@ -371,7 +370,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
               `de a customer header. Gernerally you should use Toolbars in the Page. If you need a centered title you may use a Bar.`
         app = `z2ui5_cl_demo_app_227` )
       ( group = `controls - sap.m` header = `sap.m.Panel` sub = `Panels are helpful to group custom content. They can be decorated with header and info toolbars.` app = `z2ui5_cl_demo_app_378` )
-      ( group = `controls - sap.m` header = `sap.m.PlanningCalendar` sub = `PlanningCalendar with single row selection that illustrates the built-in views.` app = `z2ui5_cl_demo_app_080` )
       ( group = `controls - sap.m` header = `sap.m.ProgressIndicator` sub = `Shows the progress of a process in a graphical way. To indicate the progress, the inside of the ProgressIndicator is filled with a color.` app = `z2ui5_cl_demo_app_022` )
       ( group = `controls - sap.m` header = `sap.m.RadioButton`
         sub = `Typically the Radio Button is used by other controls. E.g. the List uses it for the single selection. But you can also use the Radio Buttons control directly, to allow selection of exactly one of multiple options.`
