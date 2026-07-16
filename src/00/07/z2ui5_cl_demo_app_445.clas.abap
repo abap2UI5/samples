@@ -1,8 +1,7 @@
 "! Demo of the DISPLAY_MESSAGE_TOAST / DISPLAY_MESSAGE_BOX frontend events -
 "! they forward their arguments 1:1 to the sap.m.MessageToast.show( ) /
-"! sap.m.MessageBox.show( ) control API. Options are passed as a JS object
-"! literal from a frontend binding (_event_client); a plain message can also be
-"! shown from the backend via follow_up_action.
+"! sap.m.MessageBox[method]( ) control API. Triggered from the backend via
+"! follow_up_action; the options are a JSON string passed straight through.
 CLASS z2ui5_cl_demo_app_445 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -36,13 +35,20 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `SHOW_TOAST`.
+        " DISPLAY_MESSAGE_TOAST: message, options -> MessageToast.show( )
         client->follow_up_action(
             val   = client->cs_event-display_message_toast
-            t_arg = VALUE #( ( `Toast from the backend via follow_up_action.` ) ) ).
+            t_arg = VALUE #(
+                ( `Toast with custom options, 1:1 to MessageToast.show( ).` )
+                ( `{"duration":5000,"width":"25em","my":"center center","at":"center center"}` ) ) ).
       WHEN `SHOW_BOX`.
+        " DISPLAY_MESSAGE_BOX: method, message, options -> MessageBox[method]( )
         client->follow_up_action(
             val   = client->cs_event-display_message_box
-            t_arg = VALUE #( ( `Message box from the backend via follow_up_action.` ) ) ).
+            t_arg = VALUE #(
+                ( `confirm` )
+                ( `Message box with title and custom actions, 1:1 to MessageBox.show( ).` )
+                ( `{"title":"abap2UI5","actions":["Approve","Reject"],"emphasizedAction":"Approve"}` ) ) ).
     ENDCASE.
 
   ENDMETHOD.
@@ -61,26 +67,12 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
         )->vbox(
             class = `sapUiSmallMargin`
             )->button(
-                text  = `Toast (backend, message only)`
+                text  = `Show MessageToast (1:1 options)`
                 class = `sapUiTinyMarginBottom`
                 press = client->_event( `SHOW_TOAST` )
             )->button(
-                text  = `Toast (frontend, 1:1 options)`
-                class = `sapUiTinyMarginBottom`
-                press = client->_event_client(
-                            val   = client->cs_event-display_message_toast
-                            t_arg = VALUE #( ( `Toast with custom options, 1:1 to MessageToast.show( ).` )
-                                             ( `{ duration: 5000, width: '25em', my: 'center center', at: 'center center' }` ) ) )
-            )->button(
-                text  = `MessageBox (backend, message only)`
-                class = `sapUiTinyMarginBottom`
-                press = client->_event( `SHOW_BOX` )
-            )->button(
-                text  = `MessageBox (frontend, 1:1 options)`
-                press = client->_event_client(
-                            val   = client->cs_event-display_message_box
-                            t_arg = VALUE #( ( `Message box with title and custom actions, 1:1 to MessageBox.show( ).` )
-                                             ( `{ title: 'abap2UI5', actions: ['Approve', 'Reject'], emphasizedAction: 'Approve' }` ) ) ) ).
+                text  = `Show MessageBox confirm (1:1 options)`
+                press = client->_event( `SHOW_BOX` ) ).
 
     client->view_display( page->stringify( ) ).
 
