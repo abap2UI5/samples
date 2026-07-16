@@ -259,8 +259,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `` app = `z2ui5_cl_demo_app_088` )
       ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `Popup` app = `z2ui5_cl_demo_app_170` )
       ( group = `framework - extended (CC and Action)` header = `A Wizard Control` sub = `` app = `z2ui5_cl_demo_app_202` )
-      ( group = `framework - extended (CC and Action)` header = `CC CameraSelector` sub = `` app = `z2ui5_cl_demo_app_306` )
-      ( group = `framework - extended (CC and Action)` header = `CC Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
       ( group = `framework - extended (CC and Action)` header = `CC File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
       ( group = `framework - extended (CC and Action)` header = `CC Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
       ( group = `samples - mixed` header = `Popover V` sub = `Display with Menu` app = `z2ui5_cl_demo_app_163` )
