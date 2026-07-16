@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_373 IMPLEMENTATION.
         action_sheet_display( `button_action_sheet_id` ).
 
       WHEN `SHEET_ACTION`.
-        client->message_toast_display( |{ client->get_event_arg( 1 ) } pressed| ).
+        client->message_toast_display( |{ client->get_event_arg( ) } pressed| ).
 
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).

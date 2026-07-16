@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DEVC>
-    <CTEXT>framework - extended (CC and Action)</CTEXT>
+    <CTEXT>framework - extended Controls (CC and Action)</CTEXT>
    </DEVC>
   </asx:values>
  </asx:abap>

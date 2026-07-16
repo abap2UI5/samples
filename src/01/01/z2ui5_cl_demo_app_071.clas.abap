@@ -26,7 +26,7 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `UPDATE`.
-        client->action->gen(
+        client->follow_up_action(
             val   = `SET_SIZE_LIMIT`
             t_arg = VALUE #( ( CONV #( mv_set_size_limit ) ) ( client->cs_view-main ) ) ).
         client->message_toast_display( `SizeLimitUpdated` ).

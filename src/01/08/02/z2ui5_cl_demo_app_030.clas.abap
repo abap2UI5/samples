@@ -90,10 +90,11 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
       WHEN `TOGGLE_FOOTER`.
         show_footer = xsdbool( show_footer = abap_false ).
         client->view_model_update( ).
-      WHEN `OPEN_POPOVER_TAG`.
-        popover_display( `generic_tag_id` ).
-      WHEN `OPEN_POPOVER_BUTTON`.
-        popover_display( `button_layout_data_id` ).
+      WHEN `OPEN_POPOVER`.
+        " open the popover by the control that fired the event, exactly like
+        " the original sample (oEvent.getSource) - the source control id is
+        " passed as the first event argument
+        popover_display( client->get_event_arg( ) ).
     ENDCASE.
 
   ENDMETHOD.
@@ -149,11 +150,11 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
     header_title->content( `f`
         )->overflow_toolbar(
             )->generic_tag(
-                id     = `generic_tag_id`
                 text   = `SR`
                 status = `Error`
                 design = `StatusIconHidden`
-                press  = client->_event( `OPEN_POPOVER_TAG` )
+                press  = client->_event( val   = `OPEN_POPOVER`
+                                         t_arg = VALUE #( ( `${$source>/id}` ) ) )
                 )->object_number(
                     number     = `2`
                     unit       = `M`
@@ -179,10 +180,10 @@ CLASS z2ui5_cl_demo_app_030 IMPLEMENTATION.
             icon = `sap-icon://action`
             type = `Transparent`
         )->button(
-            id    = `button_layout_data_id`
             text  = `Button with layoutData`
             type  = `Transparent`
-            press = client->_event( `OPEN_POPOVER_BUTTON` )
+            press = client->_event( val   = `OPEN_POPOVER`
+                                    t_arg = VALUE #( ( `${$source>/id}` ) ) )
         )->get( )->layout_data(
             )->overflow_toolbar_layout_data(
                 priority                   = `AlwaysOverflow`

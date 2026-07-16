@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_296 IMPLEMENTATION.
         popover_display( `button_hint_id` ).
       WHEN `onSearch`.
 
-        IF client->get_event_arg( 1 ) = `true`.
+        IF client->get_event_arg( ) = `true`.
           client->message_toast_display( `'search' event fired with 'searchButtonPressed' parameter` ).
         ENDIF.
     ENDCASE.

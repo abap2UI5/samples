@@ -98,9 +98,9 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       WAIT UP TO 2 SECONDS.
 
       IF mv_check_active = abap_true.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( client->_event( `LOAD` ) ) ( `0` ) ) ).
+            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
       ENDIF.
 
       client->view_model_update( ).

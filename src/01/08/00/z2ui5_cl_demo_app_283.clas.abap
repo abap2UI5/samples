@@ -104,7 +104,7 @@ CLASS z2ui5_cl_demo_app_283 IMPLEMENTATION.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `onPost`.
-        client->message_toast_display( |Posted new feed entry: { client->get_event_arg( 1 ) }| ).
+        client->message_toast_display( |Posted new feed entry: { client->get_event_arg( ) }| ).
     ENDCASE.
 
   ENDMETHOD.

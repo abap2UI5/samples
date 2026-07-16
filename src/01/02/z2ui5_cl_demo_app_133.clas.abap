@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_133 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON01` OR `BUTTON02`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
             t_arg = VALUE #( ( client->get( )-event ) ( selstart ) ( selend ) ) ).
         client->message_toast_display( |focus changed| ).

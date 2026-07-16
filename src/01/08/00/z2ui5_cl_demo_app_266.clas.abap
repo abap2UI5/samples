@@ -128,7 +128,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `onPress`.
-        IF client->get_event_arg( 1 ) = `X`.
+        IF client->get_event_arg( ) = `X`.
           client->message_toast_display( |{ client->get_event_arg( 2 ) } Pressed| ).
 
         ELSE.

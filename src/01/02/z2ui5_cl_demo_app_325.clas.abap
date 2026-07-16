@@ -75,13 +75,13 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `COPY_INPUT`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
             t_arg = VALUE #( ( input ) ) ).
         client->message_toast_display( |input field copied: { input }| ).
 
       WHEN `COPY_TEXT_AREA`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
             t_arg = VALUE #( ( text ) ) ).
         client->message_toast_display( |text area copied: { text }| ).

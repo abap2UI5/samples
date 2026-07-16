@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `onPress`.
-        client->message_toast_display( |{ client->get_event_arg( 1 ) } marker pressed!| ).
+        client->message_toast_display( |{ client->get_event_arg( ) } marker pressed!| ).
     ENDCASE.
 
   ENDMETHOD.

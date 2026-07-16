@@ -12,10 +12,8 @@ CLASS z2ui5_cl_demo_app_059 DEFINITION PUBLIC.
         storage_location TYPE string,
         quantity         TYPE i,
       END OF ty_s_tab.
-
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
-*    DATA mv_search_value TYPE string.
     DATA mt_table TYPE ty_t_table.
 
   PROTECTED SECTION.
@@ -30,7 +28,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_059 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -56,7 +54,7 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
       set_data( ).
       z2ui5_cl_sample_context=>itab_filter_by_val(
           EXPORTING
-              val = client->get_event_arg( 1 )
+              val = client->get_event_arg( )
           CHANGING
               tab = mt_table ).
 

@@ -95,7 +95,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->action->gen(
+    client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_to
         t_arg = VALUE #( ( s_scroll-id )
                          ( |{ s_scroll-y }| )
@@ -189,7 +189,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only non-openui5 or higher UI5 1.71` header = `Avatar Group (since 1.73)` sub = `` app = `z2ui5_cl_demo_app_320` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `control` sub = `Badge (since 1.80)` app = `z2ui5_cl_demo_app_063` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Expandable Text (since 1.87)` sub = `` app = `z2ui5_cl_demo_app_301` )
-      ( group = `only non-openui5 or higher UI5 1.71` header = `gantt` sub = `test` app = `z2ui5_cl_demo_app_076` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Harvey Chart` sub = `` app = `z2ui5_cl_demo_app_308` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `MapContainer` sub = `` app = `z2ui5_cl_demo_app_444` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `messages` sub = `illustrated (since 1.98)` app = `z2ui5_cl_demo_app_033` )
@@ -198,6 +197,8 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only non-openui5 or higher UI5 1.71` header = `more` sub = `timeline` app = `z2ui5_cl_demo_app_113` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `networkgraph` sub = `org tree` app = `z2ui5_cl_demo_app_182` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `odata, smartmultiinput` sub = `` app = `z2ui5_cl_demo_app_319` )
+      ( group = `only non-openui5 or higher UI5 1.71` header = `sap.ui.RichTextEditor` sub = `` app = `z2ui5_cl_demo_app_106` )
+      ( group = `only non-openui5 or higher UI5 1.71` header = `sap.webc.TabContainer` sub = `Multiple Items` app = `z2ui5_cl_demo_app_380` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Side Panel (since 1.107)` sub = `` app = `z2ui5_cl_demo_app_108` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Standard List Item` sub = `Info State Inverted (since 1.74)` app = `z2ui5_cl_demo_app_286` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `status indicator` sub = `` app = `z2ui5_cl_demo_app_196` )
@@ -215,6 +216,10 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only with launchpad` header = `launchpad II` sub = `Set Title` app = `z2ui5_cl_demo_app_lp_02` )
       ( group = `only with launchpad` header = `Launchpad III` sub = `cross app navigation I` app = `z2ui5_cl_demo_app_lp_03` )
       ( group = `only with launchpad` header = `Launchpad IV` sub = `cross app navigation II` app = `z2ui5_cl_demo_app_lp_04` )
+      ( group = `use of z2ui5` header = `gantt` sub = `test` app = `z2ui5_cl_demo_app_076` )
+      ( group = `use of z2ui5` header = `gantt II` sub = `` app = `z2ui5_cl_demo_app_179` )
+      ( group = `use of z2ui5` header = `sap.m.DateRangeSelection` sub = `The Date Range Selection is an extension of the Date Picker Control and enables the user to select range of dates.` app = `z2ui5_cl_demo_app_231` )
+      ( group = `use of z2ui5` header = `sap.m.PlanningCalendar` sub = `PlanningCalendar with single row selection that illustrates the built-in views.` app = `z2ui5_cl_demo_app_080` )
       ( group = `only with javascript and css and html` header = `Cell Coloring` sub = `` app = `z2ui5_cl_demo_app_305` )
       ( group = `only with javascript and css and html` header = `Change CSS` sub = `Send your own CSS to the frontend` app = `z2ui5_cl_demo_app_050` )
       ( group = `only with javascript and css and html` header = `custom function in popup` sub = `` app = `z2ui5_cl_demo_app_141` )
@@ -236,7 +241,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only with javascript and css and html` header = `Messages with Styles I` sub = `` app = `z2ui5_cl_demo_app_310` )
       ( group = `only with javascript and css and html` header = `Messages with Styles II` sub = `` app = `z2ui5_cl_demo_app_311` )
       ( group = `only with javascript and css and html` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
-      ( group = `only with javascript and css and html` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `only with javascript and css and html` header = `tab` sub = `focus edit controls` app = `z2ui5_cl_demo_app_346` )
       ( group = `only with javascript and css and html` header = `Tile` sub = `KPI Tile` app = `z2ui5_cl_demo_app_277` )
       ( group = `only with javascript and css and html` header = `tree` sub = `drag & drop` app = `z2ui5_cl_demo_app_317` )
@@ -252,7 +256,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only testing` header = `App in App` sub = `Subapp` app = `z2ui5_cl_demo_app_342` )
       ( group = `only testing` header = `App in App I` sub = `` app = `z2ui5_cl_demo_app_211` )
       ( group = `only testing` header = `App in App II` sub = `` app = `z2ui5_cl_demo_app_212` )
-      ( group = `only testing` header = `basic` sub = `popups and flow` app = `z2ui5_cl_demo_app_341` )
       ( group = `only testing` header = `basic` sub = `popups with ref from prev App` app = `z2ui5_cl_demo_app_328` )
       ( group = `only testing` header = `binding` sub = `` app = `z2ui5_cl_demo_app_153` )
       ( group = `only testing` header = `binding` sub = `normal, deep, refs` app = `z2ui5_cl_demo_app_094` )
@@ -283,14 +286,14 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only testing` header = `Type Ref to Data Table with refresh` sub = `` app = `z2ui5_cl_demo_app_199` )
       ( group = `only testing` header = `unit test` sub = `long variable` app = `z2ui5_cl_demo_app_138` )
       ( group = `only testing` header = `ZZZ Data Object for Sample 328` sub = `` app = `z2ui5_cl_demo_app_329` )
-      ( group = `experimental, TODO` header = `cc` sub = `geoloaction` app = `z2ui5_cl_demo_app_120` )
-      ( group = `experimental, TODO` header = `gantt II` sub = `` app = `z2ui5_cl_demo_app_179` )
       ( group = `experimental, TODO` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
       ( group = `experimental, TODO` header = `Navigation` sub = `app state` app = `z2ui5_cl_demo_app_321` )
       ( group = `experimental, TODO` header = `Navigation` sub = `app state share` app = `z2ui5_cl_demo_app_323` )
       ( group = `experimental, TODO` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
       ( group = `experimental, TODO` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
-      ( group = `experimental, TODO` header = `SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
+      ( group = `experimental, TODO` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
+      ( group = `experimental, TODO` header = `sap.m.ObjectIdentifier` sub = `inside a Table` app = `z2ui5_cl_demo_app_370` )
+      ( group = `experimental, TODO` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `experimental, TODO` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
       ( group = `experimental, TODO` header = `tab` sub = `cell copy` app = `z2ui5_cl_demo_app_087` )
       ( group = `experimental, TODO` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
@@ -317,7 +320,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.f.Avatar, use sap.m.Avatar` app = `z2ui5_cl_demo_app_269` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_284` )
       ( group = `obsolete` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_285` )
-      ( group = `obsolete` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
       ( group = `obsolete` header = `sap.m.ActionSheet`
         sub = `Action Sheet provides an easier way of showing a list of actions and allowing the user to select one. Title and Cancel button can be shown or hidden. Without an icon the entry will be left-aligned (see the last action in the list).`
         app = `z2ui5_cl_demo_app_373` )

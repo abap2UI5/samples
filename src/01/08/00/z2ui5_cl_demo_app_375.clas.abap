@@ -66,13 +66,13 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `CLOSE`.
 
-        DATA(closed_title) = client->get_event_arg( 1 ).
+        DATA(closed_title) = client->get_event_arg( ).
         DELETE t_items WHERE title = closed_title.
         client->message_toast_display( |Item Closed: { closed_title }| ).
         view_display( ).
 
       WHEN `ITEM_PRESS`.
-        client->message_toast_display( |Item Pressed: { client->get_event_arg( 1 ) }| ).
+        client->message_toast_display( |Item Pressed: { client->get_event_arg( ) }| ).
 
       WHEN `ACCEPT`.
         client->message_toast_display( `Accept Button Pressed` ).

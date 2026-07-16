@@ -71,10 +71,10 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
       client->view_model_update( ).
 
     ELSEIF client->check_on_event( `SENDER_PRESS` ).
-      client->message_toast_display( |Clicked on Link: { client->get_event_arg( 1 ) }| ).
+      client->message_toast_display( |Clicked on Link: { client->get_event_arg( ) }| ).
 
     ELSEIF client->check_on_event( `ICON_PRESS` ).
-      client->message_toast_display( |Clicked on Image: { client->get_event_arg( 1 ) }| ).
+      client->message_toast_display( |Clicked on Image: { client->get_event_arg( ) }| ).
     ENDIF.
 
   ENDMETHOD.

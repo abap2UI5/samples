@@ -23,7 +23,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `EDIT`.
-        DATA(lv_row_title) = client->get_event_arg( 1 ).
+        DATA(lv_row_title) = client->get_event_arg( ).
         client->message_box_display( |EDIT - { lv_row_title }| ).
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
@@ -56,7 +56,6 @@ CLASS Z2UI5_CL_DEMO_APP_048 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             ).
-
     page->list(
         headertext      = `List Output`
         items           = client->_bind_edit( t_tab )

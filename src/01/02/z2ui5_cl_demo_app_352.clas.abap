@@ -15,7 +15,9 @@ CLASS z2ui5_cl_demo_app_352 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_352 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -23,10 +25,10 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       view_display( ).
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `ZINPUT` ) ) ).
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-keyboard_set_mode
           t_arg = VALUE #( ( `ZINPUT` ) ( `numeric` ) ) ).
     ENDIF.
@@ -65,11 +67,10 @@ CLASS z2ui5_cl_demo_app_352 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `CALL_KEYBOARD` ).
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-keyboard_set_mode
           t_arg = VALUE #( ( `ZINPUT` ) ( `none` ) ) ).
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.

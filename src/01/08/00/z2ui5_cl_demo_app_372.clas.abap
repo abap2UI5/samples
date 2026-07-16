@@ -139,10 +139,10 @@ CLASS z2ui5_cl_demo_app_372 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `ITEM_PRESS`.
-        client->message_toast_display( |{ client->get_event_arg( 1 ) } Pressed| ).
+        client->message_toast_display( |{ client->get_event_arg( ) } Pressed| ).
 
       WHEN `MENU_ACTION`.
-        client->message_toast_display( |Action triggered on item: { client->get_event_arg( 1 ) }| ).
+        client->message_toast_display( |Action triggered on item: { client->get_event_arg( ) }| ).
 
       WHEN `DEFAULT_ACTION`.
         client->message_toast_display( `Default action triggered` ).

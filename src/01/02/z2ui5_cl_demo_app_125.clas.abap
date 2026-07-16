@@ -10,7 +10,9 @@ CLASS z2ui5_cl_demo_app_125 DEFINITION PUBLIC.
 ENDCLASS.
 
 
+
 CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -35,12 +37,11 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
     ELSEIF client->check_on_event( `SET_TITLE` ).
 
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_title
           t_arg = VALUE #( ( title ) ) ).
 
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.

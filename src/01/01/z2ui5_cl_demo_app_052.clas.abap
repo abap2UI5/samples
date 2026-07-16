@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
       WHEN `POPOVER_DETAIL`.
         mv_check_popover = abap_true.
         mv_product       = client->get_event_arg( 2 ).
-        popover_display( client->get_event_arg( 1 ) ).
+        popover_display( client->get_event_arg( ) ).
     ENDCASE.
 
   ENDMETHOD.

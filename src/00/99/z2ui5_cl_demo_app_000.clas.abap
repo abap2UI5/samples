@@ -36,7 +36,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     CONSTANTS c_title TYPE string VALUE ` abap2UI5 - Samples`.
 
     IF client->get( )-check_on_navigated = abap_true AND s_scroll-id IS NOT INITIAL.
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-scroll_to
           t_arg = VALUE #( ( s_scroll-id )
                            ( |{ s_scroll-y }| )
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         )->get_parent( ).
 
     IF client->get( )-check_launchpad_active = abap_true.
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_title_launchpad
           t_arg = VALUE #( ( c_title ) ) ).
     ENDIF.
@@ -197,13 +197,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Scroll to position`
-                         subheader = `client->action->gen( SCROLL_TO )`
+                         subheader = `client->follow_up_action( SCROLL_TO )`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_362` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Scroll into view`
-                         subheader = `client->action->gen( SCROLL_INTO_VIEW )`
+                         subheader = `client->follow_up_action( SCROLL_INTO_VIEW )`
                          press     = client->_event( `Z2UI5_CL_DEMO_APP_363` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).

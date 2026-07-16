@@ -100,7 +100,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->action->gen(
+    client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_to
         t_arg = VALUE #( ( s_scroll-id )
                          ( |{ s_scroll-y }| )
@@ -218,19 +218,14 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Event I` sub = `Handle events & change the view` app = `z2ui5_cl_demo_app_004` )
       ( group = `framework - basics` header = `Event II` sub = `Additional Infos with t_args` app = `z2ui5_cl_demo_app_167` )
       ( group = `framework - basics` header = `Event III` sub = `Facet Filter - T_arg with Objects` app = `z2ui5_cl_demo_app_197` )
-      ( group = `framework - basics` header = `Message`
-        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
-              `fers several actions.`
-        app = `z2ui5_cl_demo_app_382` )
-      ( group = `framework - basics` header = `Message`
-        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
-              ` show the toast.`
-        app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `Message` sub = `Backend` app = `z2ui5_cl_demo_app_008` )
+      ( group = `framework - basics` header = `Message` sub = `MessageBox` app = `z2ui5_cl_demo_app_382` )
+      ( group = `framework - basics` header = `Message` sub = `MessageToast` app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `More` sub = `Call and leave to apps` app = `z2ui5_cl_demo_app_024` )
       ( group = `framework - basics` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_demo_app_061` )
       ( group = `framework - basics` header = `More` sub = `Model Size Limit` app = `z2ui5_cl_demo_app_071` )
       ( group = `framework - basics` header = `More` sub = `Read Frontend Infos` app = `z2ui5_cl_demo_app_122` )
+      ( group = `framework - basics` header = `More` sub = `require sap.m.MessageToast in XML View` app = `z2ui5_cl_demo_app_163` )
       ( group = `framework - basics` header = `Nested Views I` sub = `Basic Example` app = `z2ui5_cl_demo_app_065` )
       ( group = `framework - basics` header = `Nested Views II` sub = `Head & Item Table` app = `z2ui5_cl_demo_app_097` )
       ( group = `framework - basics` header = `Nested Views III` sub = `Head & Item Table & Detail` app = `z2ui5_cl_demo_app_098` )
@@ -239,59 +234,41 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Popover II` sub = `Item Level of Table` app = `z2ui5_cl_demo_app_052` )
       ( group = `framework - basics` header = `Popover III` sub = `List to select in Popover` app = `z2ui5_cl_demo_app_081` )
       ( group = `framework - basics` header = `Popover IV` sub = `with Quick View` app = `z2ui5_cl_demo_app_109` )
-      ( group = `framework - basics` header = `Popover V` sub = `Display with Menu` app = `z2ui5_cl_demo_app_163` )
       ( group = `framework - basics` header = `Popup I` sub = `Different ways of calling Popups` app = `z2ui5_cl_demo_app_012` )
       ( group = `framework - basics` header = `Popup II` sub = `Create Popup for Value Help` app = `z2ui5_cl_demo_app_009` )
       ( group = `framework - basics` header = `Popup III` sub = `Popup in Popup - Backend Stack Handling` app = `z2ui5_cl_demo_app_161` )
       ( group = `framework - basics` header = `Templating I` sub = `Basic Example` app = `z2ui5_cl_demo_app_173` )
       ( group = `framework - basics` header = `Templating II` sub = `Nested Views` app = `z2ui5_cl_demo_app_176` )
-      ( group = `framework - action` header = `Clipboard` sub = `Copy & Paste Text` app = `z2ui5_cl_demo_app_325` )
+      ( group = `framework - action` header = `Browser` sub = `Logout` app = `z2ui5_cl_demo_app_361` )
+      ( group = `framework - action` header = `Browsre` sub = `Title` app = `z2ui5_cl_demo_app_125` )
       ( group = `framework - action` header = `Focus I` sub = `Set Focus in Textfield` app = `z2ui5_cl_demo_app_133` )
       ( group = `framework - action` header = `Focus II` sub = `Jump with the focus` app = `z2ui5_cl_demo_app_189` )
-      ( group = `framework - action` header = `Keyboard` sub = `Hide/show Soft Keyboard` app = `z2ui5_cl_demo_app_352` )
+      ( group = `framework - action` header = `Input` sub = `Clipboard` app = `z2ui5_cl_demo_app_325` )
+      ( group = `framework - action` header = `Input` sub = `Hide/show Soft Keyboard` app = `z2ui5_cl_demo_app_352` )
       ( group = `framework - action` header = `Scroll I` sub = `Scroll to position` app = `z2ui5_cl_demo_app_362` )
       ( group = `framework - action` header = `Scroll II` sub = `Scroll into view` app = `z2ui5_cl_demo_app_363` )
-      ( group = `framework - action` header = `System` sub = `Logout` app = `z2ui5_cl_demo_app_361` )
       ( group = `framework - action` header = `Timer I` sub = `Wait n MS and call again the server` app = `z2ui5_cl_demo_app_028` )
       ( group = `framework - action` header = `Timer II` sub = `Loading Indicator with WAIT UP Backend` app = `z2ui5_cl_demo_app_064` )
-      ( group = `framework - action` header = `Title` sub = `Set Title` app = `z2ui5_cl_demo_app_125` )
       ( group = `framework - action` header = `URL I` sub = `New Tab Open an URL in a new tab` app = `z2ui5_cl_demo_app_073` )
       ( group = `framework - action` header = `URL II` sub = `Open Telephon, Email usw` app = `z2ui5_cl_demo_app_316` )
-      ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `` app = `z2ui5_cl_demo_app_088` )
-      ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `Popup` app = `z2ui5_cl_demo_app_170` )
-      ( group = `framework - extended (CC and Action)` header = `A Wizard Control` sub = `` app = `z2ui5_cl_demo_app_202` )
-      ( group = `framework - extended (CC and Action)` header = `CC CameraSelector` sub = `` app = `z2ui5_cl_demo_app_306` )
-      ( group = `framework - extended (CC and Action)` header = `CC Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
-      ( group = `framework - extended (CC and Action)` header = `CC File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
-      ( group = `framework - extended (CC and Action)` header = `CC Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
-      ( group = `samples - mixed` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
-      ( group = `samples - mixed` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
-      ( group = `samples - mixed` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
-      ( group = `samples - mixed` header = `sap.m.GenericTag` sub = `` app = `z2ui5_cl_demo_app_062` )
-      ( group = `samples - mixed` header = `sap.m.List` sub = `` app = `z2ui5_cl_demo_app_003` )
-      ( group = `samples - mixed` header = `sap.m.List` sub = `Events & Visualization` app = `z2ui5_cl_demo_app_048` )
-      ( group = `samples - mixed` header = `sap.m.MultiComboBox` sub = `` app = `z2ui5_cl_demo_app_140` )
-      ( group = `samples - mixed` header = `sap.m.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
-      ( group = `samples - mixed` header = `sap.m.Object Number` sub = `inside a Table` app = `z2ui5_cl_demo_app_369` )
-      ( group = `samples - mixed` header = `sap.m.ObjectIdentifier` sub = `inside a Table` app = `z2ui5_cl_demo_app_370` )
-      ( group = `samples - mixed` header = `sap.m.Page` sub = `Header, Sub-Header & Footer` app = `z2ui5_cl_demo_app_366` )
-      ( group = `samples - mixed` header = `sap.m.RangeSlider` sub = `` app = `z2ui5_cl_demo_app_005` )
-      ( group = `samples - mixed` header = `sap.m.ScrollContainer, sap.m.Table` sub = `` app = `z2ui5_cl_demo_app_006` )
-      ( group = `samples - mixed` header = `sap.m.SearchField` sub = `` app = `z2ui5_cl_demo_app_053` )
-      ( group = `samples - mixed` header = `sap.m.SearchField` sub = `` app = `z2ui5_cl_demo_app_059` )
-      ( group = `samples - mixed` header = `sap.m.StepInput` sub = `` app = `z2ui5_cl_demo_app_041` )
-      ( group = `samples - mixed` header = `sap.m.TabContainer` sub = `Multiple Items` app = `z2ui5_cl_demo_app_380` )
-      ( group = `samples - mixed` header = `sap.m.table` sub = `backend filter columns` app = `z2ui5_cl_demo_app_045` )
-      ( group = `samples - mixed` header = `sap.m.Table` sub = `Editable` app = `z2ui5_cl_demo_app_011` )
-      ( group = `samples - mixed` header = `sap.m.Table` sub = `Selection Modes: Single Select & Multi Select` app = `z2ui5_cl_demo_app_019` )
-      ( group = `samples - mixed` header = `sap.m.Text` sub = `with class -Standard Margins - Negative Margins` app = `z2ui5_cl_demo_app_243` )
-      ( group = `samples - mixed` header = `sap.m.TextArea` sub = `` app = `z2ui5_cl_demo_app_021` )
-      ( group = `samples - mixed` header = `sap.m.TimePicker` sub = `Formats & Steps` app = `z2ui5_cl_demo_app_376` )
-      ( group = `samples - mixed` header = `sap.ui.Grid` sub = `Split View in different Areas` app = `z2ui5_cl_demo_app_367` )
-      ( group = `samples - mixed` header = `sap.ui.RichTextEditor` sub = `` app = `z2ui5_cl_demo_app_106` )
-      ( group = `samples - mixed` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
-      ( group = `samples - mixed` header = `sap.ui.table` sub = `filtering` app = `z2ui5_cl_demo_app_143` )
-      ( group = `samples - mixed` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
+      ( group = `framework - extended Controls (CC and Action)` header = `A Nav Container` sub = `` app = `z2ui5_cl_demo_app_088` )
+      ( group = `framework - extended Controls (CC and Action)` header = `A Nav Container` sub = `Popup` app = `z2ui5_cl_demo_app_170` )
+      ( group = `framework - extended Controls (CC and Action)` header = `A Wizard Control` sub = `` app = `z2ui5_cl_demo_app_202` )
+      ( group = `framework - extended Controls (CC and Action)` header = `C File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
+      ( group = `framework - extended Controls (CC and Action)` header = `C Geoloaction` sub = `` app = `z2ui5_cl_demo_app_120` )
+      ( group = `framework - extended Controls (CC and Action)` header = `C Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
+      ( group = `framework - extended Controls (CC and Action)` header = `CC CameraSelector` sub = `` app = `z2ui5_cl_demo_app_306` )
+      ( group = `framework - extended Controls (CC and Action)` header = `CC Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
+      ( group = `framework - use cases` header = `sap.m.List` sub = `Events & Visualization` app = `z2ui5_cl_demo_app_048` )
+      ( group = `framework - use cases` header = `sap.m.SearchField` sub = `Live Search` app = `z2ui5_cl_demo_app_059` )
+      ( group = `framework - use cases` header = `sap.m.SearchField` sub = `Search` app = `z2ui5_cl_demo_app_053` )
+      ( group = `framework - use cases` header = `sap.m.Table` sub = `backend filter columns` app = `z2ui5_cl_demo_app_045` )
+      ( group = `framework - use cases` header = `sap.m.Table` sub = `Editable` app = `z2ui5_cl_demo_app_011` )
+      ( group = `framework - use cases` header = `sap.m.Table` sub = `Selection Modes: Single Select & Multi Select` app = `z2ui5_cl_demo_app_019` )
+      ( group = `framework - use cases` header = `sap.m.Table` sub = `Table with sap.m.ScrollContainer` app = `z2ui5_cl_demo_app_006` )
+      ( group = `framework - use cases` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
+      ( group = `framework - use cases` header = `sap.ui.Table` sub = `Filtering` app = `z2ui5_cl_demo_app_143` )
+      ( group = `framework - use cases` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
@@ -302,9 +279,10 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.CheckBox` sub = `Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you should use the Switch control instead.` app = `z2ui5_cl_demo_app_239` )
       ( group = `controls - sap.m` header = `sap.m.ComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_229` )
       ( group = `controls - sap.m` header = `sap.m.DatePicker` sub = `This example shows different DatePicker value states.` app = `z2ui5_cl_demo_app_294` )
-      ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `The Date Range Selection is an extension of the Date Picker Control and enables the user to select range of dates.` app = `z2ui5_cl_demo_app_231` )
       ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `This example shows different DateRangeSelection value states.` app = `z2ui5_cl_demo_app_295` )
+      ( group = `controls - sap.m` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
       ( group = `controls - sap.m` header = `sap.m.FeedContent` sub = `Shows the tile containing the text of the feed, a subheader, and a numeric value.` app = `z2ui5_cl_demo_app_275` )
+      ( group = `controls - sap.m` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
       ( group = `controls - sap.m` header = `sap.m.FeedInput` sub = `This sample shows a standalone feed input with different settings.` app = `z2ui5_cl_demo_app_283` )
       ( group = `controls - sap.m` header = `sap.m.FeedListItem` sub = `This sample shows you how to build a complete feed user interface by combining a FeedInput with a list of FeedListItems.` app = `z2ui5_cl_demo_app_101` )
       ( group = `controls - sap.m` header = `sap.m.FlexBox` sub = `Flex Box items can be placed in different areas using the justifyContent and alignItem properties.` app = `z2ui5_cl_demo_app_205` )
@@ -346,6 +324,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `A sample MessageStrip that shows status messages with additional formatting.` app = `z2ui5_cl_demo_app_291` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `MessageStrip for showing status messages.` app = `z2ui5_cl_demo_app_238` )
       ( group = `controls - sap.m` header = `sap.m.MessageView` sub = `A sample with Message View and inside a Dialog and grouping of items` app = `z2ui5_cl_demo_app_038` )
+      ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `` app = `z2ui5_cl_demo_app_140` )
       ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_233` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_232` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `This sample illustrates the different value states of the sap.m.MultiInput control.` app = `z2ui5_cl_demo_app_267` )
@@ -363,6 +342,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         app = `z2ui5_cl_demo_app_272` )
       ( group = `controls - sap.m` header = `sap.m.ObjectListItem` sub = `This sample shows the different states of an Object List Item, which can be set using the markers aggregation.` app = `z2ui5_cl_demo_app_290` )
       ( group = `controls - sap.m` header = `sap.m.ObjectMarker` sub = `The ObjectMarker is a small building block representing an object by an icon or text and icon. Often it is used in a table.` app = `z2ui5_cl_demo_app_289` )
+      ( group = `controls - sap.m` header = `sap.m.ObjectNumber` sub = `inside a Table` app = `z2ui5_cl_demo_app_369` )
       ( group = `controls - sap.m` header = `sap.m.ObjectStatus` sub = `The object status is a small building block representing a status with a semantic color.` app = `z2ui5_cl_demo_app_300` )
       ( group = `controls - sap.m` header = `sap.m.OverflowToolbar` sub = `OverflowToolbar and Toolbar are often used for left/right alignment. This is easily achieved with ToolbarSpacer.` app = `z2ui5_cl_demo_app_250` )
       ( group = `controls - sap.m` header = `sap.m.OverflowToolbar` sub = `The sap.m.Title control can be used to place a title inside an OverflowToolbar/Toolbar.` app = `z2ui5_cl_demo_app_217` )
@@ -370,13 +350,14 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `Each screen of a mobile application is typically represented by a 'Page' consisting of a header, a scrollable content area and optionally a footer. The standard header offers a navigation button and a title. Alternatively you can provi` &&
               `de a customer header. Gernerally you should use Toolbars in the Page. If you need a centered title you may use a Bar.`
         app = `z2ui5_cl_demo_app_227` )
+      ( group = `controls - sap.m` header = `sap.m.Page` sub = `Header, Sub-Header & Footer` app = `z2ui5_cl_demo_app_366` )
       ( group = `controls - sap.m` header = `sap.m.Panel` sub = `Panels are helpful to group custom content. They can be decorated with header and info toolbars.` app = `z2ui5_cl_demo_app_378` )
-      ( group = `controls - sap.m` header = `sap.m.PlanningCalendar` sub = `PlanningCalendar with single row selection that illustrates the built-in views.` app = `z2ui5_cl_demo_app_080` )
       ( group = `controls - sap.m` header = `sap.m.ProgressIndicator` sub = `Shows the progress of a process in a graphical way. To indicate the progress, the inside of the ProgressIndicator is filled with a color.` app = `z2ui5_cl_demo_app_022` )
       ( group = `controls - sap.m` header = `sap.m.RadioButton`
         sub = `Typically the Radio Button is used by other controls. E.g. the List uses it for the single selection. But you can also use the Radio Buttons control directly, to allow selection of exactly one of multiple options.`
         app = `z2ui5_cl_demo_app_207` )
       ( group = `controls - sap.m` header = `sap.m.RadioButtonGroup` sub = `A wrapper for a group of radio buttons.` app = `z2ui5_cl_demo_app_208` )
+      ( group = `controls - sap.m` header = `sap.m.RangeSlider` sub = `` app = `z2ui5_cl_demo_app_005` )
       ( group = `controls - sap.m` header = `sap.m.RatingIndicator` sub = `A Rating Indicator can be used to both indicate and/or rate content.` app = `z2ui5_cl_demo_app_220` )
       ( group = `controls - sap.m` header = `sap.m.SearchField` sub = `Use the Search Field to let the user enter a search string and trigger the search process.` app = `z2ui5_cl_demo_app_296` )
       ( group = `controls - sap.m` header = `sap.m.SegmentedButton` sub = `Segmented Button used in Input List Item component` app = `z2ui5_cl_demo_app_230` )
@@ -386,15 +367,18 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.Select` sub = `Visualizes the validation state of the control, for example, Error, Warning and Success.` app = `z2ui5_cl_demo_app_298` )
       ( group = `controls - sap.m` header = `sap.m.Slider` sub = `With the Slider a user can choose a value from a numerical range.` app = `z2ui5_cl_demo_app_237` )
       ( group = `controls - sap.m` header = `sap.m.SlideTile` sub = `Shows Generic Tile with the 2x1 frame type displayed as sliding tiles.` app = `z2ui5_cl_demo_app_274` )
+      ( group = `controls - sap.m` header = `sap.m.SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
       ( group = `controls - sap.m` header = `sap.m.StandardListItem`
         sub = `This sample demonstrates the wrapping behavior of the title text and the description text. In desktop mode, the character limit is set to 300 characters, whereas in the phone mode, the character limit is set to 100 characters.`
         app = `z2ui5_cl_demo_app_287` )
       ( group = `controls - sap.m` header = `sap.m.StepInput` sub = `This example shows different StepInput value states.` app = `z2ui5_cl_demo_app_264` )
       ( group = `controls - sap.m` header = `sap.m.Switch` sub = `"Some say it is only a switch, I say it is one of the most stylish controls in the universe of mobile UI controls." (unknown developer)` app = `z2ui5_cl_demo_app_240` )
       ( group = `controls - sap.m` header = `sap.m.Text` sub = `The Text control has a property to limit the number of lines for wrapping texts.` app = `z2ui5_cl_demo_app_206` )
+      ( group = `controls - sap.m` header = `sap.m.Text` sub = `with class -Standard Margins - Negative Margins` app = `z2ui5_cl_demo_app_243` )
       ( group = `controls - sap.m` header = `sap.m.TextArea` sub = `Since 1.38 the growing property of sap.m.TextArea gives the ability of a control to automatically grow and shrink dynamically with its content.` app = `z2ui5_cl_demo_app_236` )
       ( group = `controls - sap.m` header = `sap.m.TextArea` sub = `This sample illustrates the different value states of the sap.m.TextArea control.` app = `z2ui5_cl_demo_app_234` )
       ( group = `controls - sap.m` header = `sap.m.TileContent` sub = `Shows the universal container for different content types and context information in the footer area.` app = `z2ui5_cl_demo_app_241` )
+      ( group = `controls - sap.m` header = `sap.m.TimePicker` sub = `Formats & Steps` app = `z2ui5_cl_demo_app_376` )
       ( group = `controls - sap.m` header = `sap.m.ToggleButton` sub = `Toggle Buttons can be toggled between pressed and normal state.` app = `z2ui5_cl_demo_app_266` )
       ( group = `controls - sap.m` header = `sap.m.Toolbar` sub = `Toolbar handles overflow by shrinking items. OverflowToolbar provides an overflow menu. Bar is able to perfectly center a text if nothing overflows.` app = `z2ui5_cl_demo_app_235` )
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout`
@@ -412,6 +396,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `Many controls provide the associations ariaLabelledBy and ariaDescribedBy for accessibility purposes. The InvisibleText control can be used by application to provide hidden texts on the UI which can be referenced via these associations` &&
               `.`
         app = `z2ui5_cl_demo_app_282` )
+      ( group = `controls - sap.ui.layout` header = `sap.ui.Grid` sub = `Split View in different Areas` app = `z2ui5_cl_demo_app_367` )
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.ResponsiveSplitter`
         sub = `ResponsiveSplitter is used to visually divide the content of its parent. It consists of PaneContainers that further agregate other PaneContainers and SplitPanes. SplitPanes can be moved to the pagination when a minimum width of their p` &&
               `arent is reached.`
@@ -421,7 +406,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.Splitter` sub = `Simple splitter example with two content areas` app = `z2ui5_cl_demo_app_247` )
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.Splitter` sub = `Simple splitter example with two content areas that cannot be resized` app = `z2ui5_cl_demo_app_248` )
       ( group = `controls - sap.tnt` header = `sap.tnt.InfoLabel` sub = `InfoLabel with all available color schemes` app = `z2ui5_cl_demo_app_209` )
-      ( group = `controls - sap.ui.codeeditor` header = `sap.ui.codeeditor.CodeEditor` sub = `` app = `z2ui5_cl_demo_app_265` ) ).
+      ( group = `controls - sap.tnt` header = `sap.tnt.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
+      ( group = `controls - sap.ui.codeeditor` header = `sap.ui.codeeditor.CodeEditor` sub = `` app = `z2ui5_cl_demo_app_265` )
+      ( group = `controls - sap.ui.unified` header = `sap.ui.unified.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` ) ).
 
   ENDMETHOD.
 

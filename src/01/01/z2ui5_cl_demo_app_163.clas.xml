@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_163</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Popover V - Display with Menu</DESCRIPT>
+    <DESCRIPT>More - require sap.m.MessageToast in XML View</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

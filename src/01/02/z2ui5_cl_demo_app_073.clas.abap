@@ -45,7 +45,7 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `BUTTON_OPEN_NEW_TAB`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-open_new_tab
             t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5&oq=abap2ui5,123` ) ) ).
     ENDCASE.

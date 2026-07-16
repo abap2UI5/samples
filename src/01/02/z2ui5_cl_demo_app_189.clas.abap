@@ -23,11 +23,11 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `one_enter`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
             t_arg = VALUE #( ( `IdTwo` ) ) ).
       WHEN `two_enter`.
-        client->action->gen(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
             t_arg = VALUE #( ( `IdThree` ) ) ).
     ENDCASE.
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
 
     IF client->check_on_init( ).
       render( ).
-      client->action->gen(
+      client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_focus
           t_arg = VALUE #( ( `IdOne` ) ) ).
     ENDIF.
