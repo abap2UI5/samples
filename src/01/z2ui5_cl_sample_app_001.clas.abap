@@ -218,15 +218,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Event I` sub = `Handle events & change the view` app = `z2ui5_cl_demo_app_004` )
       ( group = `framework - basics` header = `Event II` sub = `Additional Infos with t_args` app = `z2ui5_cl_demo_app_167` )
       ( group = `framework - basics` header = `Event III` sub = `Facet Filter - T_arg with Objects` app = `z2ui5_cl_demo_app_197` )
-      ( group = `framework - basics` header = `Message`
-        sub = `A message box is a modal dialog for confirmations, information, warnings, errors and success messages. Configure the title, message and details, then press a button to open the matching message box type - the custom box additionally of` &&
-              `fers several actions.`
-        app = `z2ui5_cl_demo_app_382` )
-      ( group = `framework - basics` header = `Message`
-        sub = `A message toast is a small, non-disruptive popup for success or information messages that disappears automatically after a couple of seconds. Configure the text, duration, width, docking position and animation, then press the button to` &&
-              ` show the toast.`
-        app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `Message` sub = `Backend` app = `z2ui5_cl_demo_app_008` )
+      ( group = `framework - basics` header = `Message` sub = `MessageBox` app = `z2ui5_cl_demo_app_382` )
+      ( group = `framework - basics` header = `Message` sub = `MessageToast` app = `z2ui5_cl_demo_app_381` )
       ( group = `framework - basics` header = `More` sub = `Call and leave to apps` app = `z2ui5_cl_demo_app_024` )
       ( group = `framework - basics` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_demo_app_061` )
       ( group = `framework - basics` header = `More` sub = `Model Size Limit` app = `z2ui5_cl_demo_app_071` )
