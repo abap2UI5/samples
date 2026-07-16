@@ -100,7 +100,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->action(
+    client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_to
         t_arg = VALUE #( ( s_scroll-id )
                          ( |{ s_scroll-y }| )

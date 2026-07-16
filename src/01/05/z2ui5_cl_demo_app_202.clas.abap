@@ -82,12 +82,12 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `STEP22`.
-        client->action(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-wizard_set_next_step
             t_arg = VALUE #( ( `wiz` ) ( `STEP2` ) ( `STEP22` ) ) ).
 
       WHEN `STEP23`.
-        client->action(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-wizard_set_next_step
             t_arg = VALUE #( ( `wiz` ) ( `STEP2` ) ( `STEP23` ) ) ).
 
