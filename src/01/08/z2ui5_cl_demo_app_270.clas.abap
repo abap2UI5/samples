@@ -27,9 +27,6 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
              )->content( ns = `form`
                 )->color_picker(
                   colorstring = client->_bind_edit( color )
-*                  displaymode =
-*                  change      =
-*                  livechange  =
                 )->input( client->_bind_edit( color )
         )->stringify( ) ).
 
