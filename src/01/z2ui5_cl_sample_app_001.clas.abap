@@ -269,18 +269,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Filtering` app = `z2ui5_cl_demo_app_143` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.MultiComboBox` sub = `` app = `z2ui5_cl_demo_app_140` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.ObjectNumber` sub = `inside a Table` app = `z2ui5_cl_demo_app_369` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.Page` sub = `Header, Sub-Header & Footer` app = `z2ui5_cl_demo_app_366` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.RangeSlider` sub = `` app = `z2ui5_cl_demo_app_005` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.Text` sub = `with class -Standard Margins - Negative Margins` app = `z2ui5_cl_demo_app_243` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.m.TimePicker` sub = `Formats & Steps` app = `z2ui5_cl_demo_app_376` )
-      ( group = `controls - UI5 Demo Kit` header = `sap.ui.Grid` sub = `Split View in different Areas` app = `z2ui5_cl_demo_app_367` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
@@ -289,10 +277,13 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.Button` sub = `Buttons trigger user actions and come in a variety of shapes and colors. Placing a button on a page header or footer changes its appearance.` app = `z2ui5_cl_demo_app_259` )
       ( group = `controls - sap.m` header = `sap.m.Carousel` sub = `A sample of a Carousel that contains images.` app = `z2ui5_cl_demo_app_371` )
       ( group = `controls - sap.m` header = `sap.m.CheckBox` sub = `Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you should use the Switch control instead.` app = `z2ui5_cl_demo_app_239` )
+      ( group = `controls - sap.m` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
       ( group = `controls - sap.m` header = `sap.m.ComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_229` )
       ( group = `controls - sap.m` header = `sap.m.DatePicker` sub = `This example shows different DatePicker value states.` app = `z2ui5_cl_demo_app_294` )
       ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `This example shows different DateRangeSelection value states.` app = `z2ui5_cl_demo_app_295` )
+      ( group = `controls - sap.m` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
       ( group = `controls - sap.m` header = `sap.m.FeedContent` sub = `Shows the tile containing the text of the feed, a subheader, and a numeric value.` app = `z2ui5_cl_demo_app_275` )
+      ( group = `controls - sap.m` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
       ( group = `controls - sap.m` header = `sap.m.FeedInput` sub = `This sample shows a standalone feed input with different settings.` app = `z2ui5_cl_demo_app_283` )
       ( group = `controls - sap.m` header = `sap.m.FeedListItem` sub = `This sample shows you how to build a complete feed user interface by combining a FeedInput with a list of FeedListItems.` app = `z2ui5_cl_demo_app_101` )
       ( group = `controls - sap.m` header = `sap.m.FlexBox` sub = `Flex Box items can be placed in different areas using the justifyContent and alignItem properties.` app = `z2ui5_cl_demo_app_205` )
@@ -334,9 +325,11 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `A sample MessageStrip that shows status messages with additional formatting.` app = `z2ui5_cl_demo_app_291` )
       ( group = `controls - sap.m` header = `sap.m.MessageStrip` sub = `MessageStrip for showing status messages.` app = `z2ui5_cl_demo_app_238` )
       ( group = `controls - sap.m` header = `sap.m.MessageView` sub = `A sample with Message View and inside a Dialog and grouping of items` app = `z2ui5_cl_demo_app_038` )
+      ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `` app = `z2ui5_cl_demo_app_140` )
       ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_233` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_232` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `This sample illustrates the different value states of the sap.m.MultiInput control.` app = `z2ui5_cl_demo_app_267` )
+      ( group = `controls - sap.m` header = `sap.m.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
       ( group = `controls - sap.m` header = `sap.m.NewsContent` sub = `This control is used to display the news content text and subheader in a tile.` app = `z2ui5_cl_demo_app_261` )
       ( group = `controls - sap.m` header = `sap.m.NotificationListItem` sub = `A list item suitable for showing notifications to the user.` app = `z2ui5_cl_demo_app_375` )
       ( group = `controls - sap.m` header = `sap.m.NumericContent` sub = `Shows NumericContent including an icon.` app = `z2ui5_cl_demo_app_263` )
@@ -351,6 +344,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         app = `z2ui5_cl_demo_app_272` )
       ( group = `controls - sap.m` header = `sap.m.ObjectListItem` sub = `This sample shows the different states of an Object List Item, which can be set using the markers aggregation.` app = `z2ui5_cl_demo_app_290` )
       ( group = `controls - sap.m` header = `sap.m.ObjectMarker` sub = `The ObjectMarker is a small building block representing an object by an icon or text and icon. Often it is used in a table.` app = `z2ui5_cl_demo_app_289` )
+      ( group = `controls - sap.m` header = `sap.m.ObjectNumber` sub = `inside a Table` app = `z2ui5_cl_demo_app_369` )
       ( group = `controls - sap.m` header = `sap.m.ObjectStatus` sub = `The object status is a small building block representing a status with a semantic color.` app = `z2ui5_cl_demo_app_300` )
       ( group = `controls - sap.m` header = `sap.m.OverflowToolbar` sub = `OverflowToolbar and Toolbar are often used for left/right alignment. This is easily achieved with ToolbarSpacer.` app = `z2ui5_cl_demo_app_250` )
       ( group = `controls - sap.m` header = `sap.m.OverflowToolbar` sub = `The sap.m.Title control can be used to place a title inside an OverflowToolbar/Toolbar.` app = `z2ui5_cl_demo_app_217` )
@@ -358,12 +352,14 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `Each screen of a mobile application is typically represented by a 'Page' consisting of a header, a scrollable content area and optionally a footer. The standard header offers a navigation button and a title. Alternatively you can provi` &&
               `de a customer header. Gernerally you should use Toolbars in the Page. If you need a centered title you may use a Bar.`
         app = `z2ui5_cl_demo_app_227` )
+      ( group = `controls - sap.m` header = `sap.m.Page` sub = `Header, Sub-Header & Footer` app = `z2ui5_cl_demo_app_366` )
       ( group = `controls - sap.m` header = `sap.m.Panel` sub = `Panels are helpful to group custom content. They can be decorated with header and info toolbars.` app = `z2ui5_cl_demo_app_378` )
       ( group = `controls - sap.m` header = `sap.m.ProgressIndicator` sub = `Shows the progress of a process in a graphical way. To indicate the progress, the inside of the ProgressIndicator is filled with a color.` app = `z2ui5_cl_demo_app_022` )
       ( group = `controls - sap.m` header = `sap.m.RadioButton`
         sub = `Typically the Radio Button is used by other controls. E.g. the List uses it for the single selection. But you can also use the Radio Buttons control directly, to allow selection of exactly one of multiple options.`
         app = `z2ui5_cl_demo_app_207` )
       ( group = `controls - sap.m` header = `sap.m.RadioButtonGroup` sub = `A wrapper for a group of radio buttons.` app = `z2ui5_cl_demo_app_208` )
+      ( group = `controls - sap.m` header = `sap.m.RangeSlider` sub = `` app = `z2ui5_cl_demo_app_005` )
       ( group = `controls - sap.m` header = `sap.m.RatingIndicator` sub = `A Rating Indicator can be used to both indicate and/or rate content.` app = `z2ui5_cl_demo_app_220` )
       ( group = `controls - sap.m` header = `sap.m.SearchField` sub = `Use the Search Field to let the user enter a search string and trigger the search process.` app = `z2ui5_cl_demo_app_296` )
       ( group = `controls - sap.m` header = `sap.m.SegmentedButton` sub = `Segmented Button used in Input List Item component` app = `z2ui5_cl_demo_app_230` )
@@ -373,15 +369,18 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.Select` sub = `Visualizes the validation state of the control, for example, Error, Warning and Success.` app = `z2ui5_cl_demo_app_298` )
       ( group = `controls - sap.m` header = `sap.m.Slider` sub = `With the Slider a user can choose a value from a numerical range.` app = `z2ui5_cl_demo_app_237` )
       ( group = `controls - sap.m` header = `sap.m.SlideTile` sub = `Shows Generic Tile with the 2x1 frame type displayed as sliding tiles.` app = `z2ui5_cl_demo_app_274` )
+      ( group = `controls - sap.m` header = `sap.m.SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
       ( group = `controls - sap.m` header = `sap.m.StandardListItem`
         sub = `This sample demonstrates the wrapping behavior of the title text and the description text. In desktop mode, the character limit is set to 300 characters, whereas in the phone mode, the character limit is set to 100 characters.`
         app = `z2ui5_cl_demo_app_287` )
       ( group = `controls - sap.m` header = `sap.m.StepInput` sub = `This example shows different StepInput value states.` app = `z2ui5_cl_demo_app_264` )
       ( group = `controls - sap.m` header = `sap.m.Switch` sub = `"Some say it is only a switch, I say it is one of the most stylish controls in the universe of mobile UI controls." (unknown developer)` app = `z2ui5_cl_demo_app_240` )
       ( group = `controls - sap.m` header = `sap.m.Text` sub = `The Text control has a property to limit the number of lines for wrapping texts.` app = `z2ui5_cl_demo_app_206` )
+      ( group = `controls - sap.m` header = `sap.m.Text` sub = `with class -Standard Margins - Negative Margins` app = `z2ui5_cl_demo_app_243` )
       ( group = `controls - sap.m` header = `sap.m.TextArea` sub = `Since 1.38 the growing property of sap.m.TextArea gives the ability of a control to automatically grow and shrink dynamically with its content.` app = `z2ui5_cl_demo_app_236` )
       ( group = `controls - sap.m` header = `sap.m.TextArea` sub = `This sample illustrates the different value states of the sap.m.TextArea control.` app = `z2ui5_cl_demo_app_234` )
       ( group = `controls - sap.m` header = `sap.m.TileContent` sub = `Shows the universal container for different content types and context information in the footer area.` app = `z2ui5_cl_demo_app_241` )
+      ( group = `controls - sap.m` header = `sap.m.TimePicker` sub = `Formats & Steps` app = `z2ui5_cl_demo_app_376` )
       ( group = `controls - sap.m` header = `sap.m.ToggleButton` sub = `Toggle Buttons can be toggled between pressed and normal state.` app = `z2ui5_cl_demo_app_266` )
       ( group = `controls - sap.m` header = `sap.m.Toolbar` sub = `Toolbar handles overflow by shrinking items. OverflowToolbar provides an overflow menu. Bar is able to perfectly center a text if nothing overflows.` app = `z2ui5_cl_demo_app_235` )
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout`
@@ -399,6 +398,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         sub = `Many controls provide the associations ariaLabelledBy and ariaDescribedBy for accessibility purposes. The InvisibleText control can be used by application to provide hidden texts on the UI which can be referenced via these associations` &&
               `.`
         app = `z2ui5_cl_demo_app_282` )
+      ( group = `controls - sap.ui.layout` header = `sap.ui.Grid` sub = `Split View in different Areas` app = `z2ui5_cl_demo_app_367` )
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.ResponsiveSplitter`
         sub = `ResponsiveSplitter is used to visually divide the content of its parent. It consists of PaneContainers that further agregate other PaneContainers and SplitPanes. SplitPanes can be moved to the pagination when a minimum width of their p` &&
               `arent is reached.`
