@@ -239,7 +239,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Popover II` sub = `Item Level of Table` app = `z2ui5_cl_demo_app_052` )
       ( group = `framework - basics` header = `Popover III` sub = `List to select in Popover` app = `z2ui5_cl_demo_app_081` )
       ( group = `framework - basics` header = `Popover IV` sub = `with Quick View` app = `z2ui5_cl_demo_app_109` )
-      ( group = `framework - basics` header = `Popover V` sub = `Display with Menu` app = `z2ui5_cl_demo_app_163` )
       ( group = `framework - basics` header = `Popup I` sub = `Different ways of calling Popups` app = `z2ui5_cl_demo_app_012` )
       ( group = `framework - basics` header = `Popup II` sub = `Create Popup for Value Help` app = `z2ui5_cl_demo_app_009` )
       ( group = `framework - basics` header = `Popup III` sub = `Popup in Popup - Backend Stack Handling` app = `z2ui5_cl_demo_app_161` )
@@ -264,6 +263,10 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - extended (CC and Action)` header = `CC Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
       ( group = `framework - extended (CC and Action)` header = `CC File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
       ( group = `framework - extended (CC and Action)` header = `CC Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
+      ( group = `samples - mixed` header = `Popover V` sub = `Display with Menu` app = `z2ui5_cl_demo_app_163` )
+      ( group = `samples - mixed` header = `sap.f.DynamicPage`
+        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
+        app = `z2ui5_cl_demo_app_030` )
       ( group = `samples - mixed` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
       ( group = `samples - mixed` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
       ( group = `samples - mixed` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
@@ -401,9 +404,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout` sub = `ObjectPage sample that demonstrates the combination of header facets and showTitle properties of sections and subsections.` app = `z2ui5_cl_demo_app_330` )
       ( group = `controls - sap.uxap` header = `sap.uxap.ObjectPageLayout` sub = `ObjectPage sample with Header Container` app = `z2ui5_cl_demo_app_303` )
       ( group = `controls - sap.f` header = `sap.f.Card` sub = `This sample illustrates how to specify the predefined header and the content of the Card control.` app = `z2ui5_cl_demo_app_181` )
-      ( group = `controls - sap.f` header = `sap.f.DynamicPage`
-        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
-        app = `z2ui5_cl_demo_app_030` )
       ( group = `controls - sap.f` header = `sap.f.GridList` sub = `This sample represents GridList with enabled Drag and Drop functionality.` app = `z2ui5_cl_demo_app_307` )
       ( group = `controls - sap.ui.core` header = `sap.ui.core.HTML` sub = `With the HTML controls you can easily embed any kind of HTML content into your UI5 mobile application.` app = `z2ui5_cl_demo_app_242` )
       ( group = `controls - sap.ui.core` header = `sap.ui.core.InvisibleText`
