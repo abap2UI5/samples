@@ -14,72 +14,55 @@ CLASS z2ui5_cl_demo_app_361 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_util_xml=>factory( ).
-      DATA(root) = view->__( n = `View` ns = `mvc`
-          p = VALUE #( ( n = `displayBlock` v = abap_true )
-                       ( n = `height`       v = `100%` )
-                       ( n = `xmlns`        v = `sap.m` )
-                       ( n = `xmlns:mvc`    v = `sap.ui.core.mvc` ) ) ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(page) = view->shell(
+          )->page(
+              title          = `abap2UI5 - System Logout`
+              navbuttonpress = client->_event_nav_app_leave( )
+              shownavbutton  = client->check_app_prev_stack( ) ).
 
-      DATA(page) = root->__( `Shell`
-         )->__( n = `Page`
-                p = VALUE #( ( n = `navButtonPress` v = client->_event_nav_app_leave( ) )
-                             ( n = `showNavButton`  v = client->check_app_prev_stack( ) )
-                             ( n = `title`          v = `abap2UI5 - System Logout` ) ) ).
+      page->message_strip(
+          text     = `Trigger SYSTEM_LOGOUT on the client. Inside a Fiori Launchpad the shell container handles the sign-out; otherwise the app navigates to the ICF logoff endpoint.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiMediumMargin`
+      )->button(
+          text  = `Logout now`
+          icon  = `sap-icon://log`
+          type  = `Reject`
+          class = `sapUiSmallMargin`
+          press = client->_event_client( client->cs_event-system_logout ) ).
 
-      page->_(
-          n = `Text`
-          p = VALUE #(
-                  ( n = `class`    v = `sapUiMediumMargin` )
-                  ( n = `showIcon` v = abap_true )
-                  ( n = `text`
-                    v = `Trigger SYSTEM_LOGOUT on the client. Inside a Fiori Launchpad the shell container handles the sign-out; otherwise the app navigates to the ICF logoff endpoint.` )
-                  ( n = `type`     v = `Information` ) )
-         )->_( n = `Button`
-               p = VALUE #( ( n = `class` v = `sapUiSmallMargin` )
-                            ( n = `icon`  v = `sap-icon://log` )
-                            ( n = `text`  v = `Logout now` )
-                            ( n = `type`  v = `Reject` )
-                            ( n = `press` v = client->_event_client( client->cs_event-system_logout ) ) ) ).
+      page->message_strip(
+          text     = `Trigger SYSTEM_LOGOUT on the client and a redirect to google.com`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiMediumMargin`
+      )->button(
+          text  = `Logout now`
+          icon  = `sap-icon://log`
+          type  = `Reject`
+          class = `sapUiSmallMargin`
+          press = client->_event_client(
+                      val   = client->cs_event-system_logout
+                      t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) ) ).
 
-      page->_(
-          n = `Text`
-          p = VALUE #(
-                  ( n = `class`    v = `sapUiMediumMargin` )
-                  ( n = `showIcon` v = abap_true )
-                  ( n = `text`
-                    v = `Trigger SYSTEM_LOGOUT on the client and a redirect to google.com` )
-                  ( n = `type`     v = `Information` ) )
-         )->_( n = `Button`
-               p = VALUE #( ( n = `class` v = `sapUiSmallMargin` )
-                            ( n = `icon`  v = `sap-icon://log` )
-                            ( n = `text`  v = `Logout now` )
-                            ( n = `type`  v = `Reject` )
-                            ( n = `press` v = client->_event_client(
-                                                val   = client->cs_event-system_logout
-                                                t_arg = value #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) )
-                                              ) ) ) ).
-
-      page->_( n = `Text`
-               p = VALUE #( ( n = `class`    v = `sapUiMediumMargin` )
-                            ( n = `showIcon` v = abap_true )
-                            ( n = `text`     v = `Trigger Event LOGOUT which is handled in the APP.` )
-                            ( n = `type`     v = `Information` ) )
-         )->_( n = `Button`
-               p = VALUE #( ( n = `class` v = `sapUiSmallMargin` )
-                            ( n = `icon`  v = `sap-icon://log` )
-                            ( n = `text`  v = `Logout now` )
-                            ( n = `type`  v = `Reject` )
-                            ( n = `press` v = client->_event( `LOGOUT` ) ) ) ).
+      page->message_strip(
+          text     = `Trigger Event LOGOUT which is handled in the APP.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiMediumMargin`
+      )->button(
+          text  = `Logout now`
+          icon  = `sap-icon://log`
+          type  = `Reject`
+          class = `sapUiSmallMargin`
+          press = client->_event( `LOGOUT` ) ).
 
       client->view_display( view->stringify( ) ).
 
-    ELSE.
-
-      IF client->check_on_event( `LOGOUT` ).
-        client->action( client->cs_event-system_logout ).
-      ENDIF.
-
+    ELSEIF client->check_on_event( `LOGOUT` ).
+      client->action( client->cs_event-system_logout ).
     ENDIF.
 
   ENDMETHOD.
