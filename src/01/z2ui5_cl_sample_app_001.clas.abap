@@ -225,6 +225,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_demo_app_061` )
       ( group = `framework - basics` header = `More` sub = `Model Size Limit` app = `z2ui5_cl_demo_app_071` )
       ( group = `framework - basics` header = `More` sub = `Read Frontend Infos` app = `z2ui5_cl_demo_app_122` )
+      ( group = `framework - basics` header = `More` sub = `require sap.m.MessageToast in XML View` app = `z2ui5_cl_demo_app_163` )
       ( group = `framework - basics` header = `Nested Views I` sub = `Basic Example` app = `z2ui5_cl_demo_app_065` )
       ( group = `framework - basics` header = `Nested Views II` sub = `Head & Item Table` app = `z2ui5_cl_demo_app_097` )
       ( group = `framework - basics` header = `Nested Views III` sub = `Head & Item Table & Detail` app = `z2ui5_cl_demo_app_098` )
@@ -253,12 +254,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `` app = `z2ui5_cl_demo_app_088` )
       ( group = `framework - extended (CC and Action)` header = `A Nav Container` sub = `Popup` app = `z2ui5_cl_demo_app_170` )
       ( group = `framework - extended (CC and Action)` header = `A Wizard Control` sub = `` app = `z2ui5_cl_demo_app_202` )
-      ( group = `framework - extended (CC and Action)` header = `CC File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
-      ( group = `framework - extended (CC and Action)` header = `CC Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
-      ( group = `samples - mixed` header = `Popover V` sub = `Display with Menu` app = `z2ui5_cl_demo_app_163` )
-      ( group = `samples - mixed` header = `sap.f.DynamicPage`
-        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
-        app = `z2ui5_cl_demo_app_030` )
+      ( group = `framework - extended (CC and Action)` header = `C File Uploader` sub = `` app = `z2ui5_cl_demo_app_074` )
+      ( group = `framework - extended (CC and Action)` header = `C Geoloaction` sub = `` app = `z2ui5_cl_demo_app_120` )
+      ( group = `framework - extended (CC and Action)` header = `C Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
       ( group = `samples - mixed` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
       ( group = `samples - mixed` header = `sap.m.DateTimePicker` sub = `Value States` app = `z2ui5_cl_demo_app_377` )
       ( group = `samples - mixed` header = `sap.m.FeedInput` sub = `` app = `z2ui5_cl_demo_app_114` )
@@ -287,6 +285,10 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `samples - mixed` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `samples - mixed` header = `sap.ui.table` sub = `filtering` app = `z2ui5_cl_demo_app_143` )
       ( group = `samples - mixed` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
+      ( group = `samples - mixed` header = `SplitContainer` sub = `Master & Detail Pages` app = `z2ui5_cl_demo_app_374` )
+      ( group = `controls - UI5 Demo Kit Copy` header = `sap.f.DynamicPage`
+        sub = `Dynamic Page freestyle example with a responsive sap.m.Table in the content area, showing that each control can be placed in the title and the header content areas.`
+        app = `z2ui5_cl_demo_app_030` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
