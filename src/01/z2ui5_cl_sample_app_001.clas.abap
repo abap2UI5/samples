@@ -277,7 +277,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.Button` sub = `Buttons trigger user actions and come in a variety of shapes and colors. Placing a button on a page header or footer changes its appearance.` app = `z2ui5_cl_demo_app_259` )
       ( group = `controls - sap.m` header = `sap.m.Carousel` sub = `A sample of a Carousel that contains images.` app = `z2ui5_cl_demo_app_371` )
       ( group = `controls - sap.m` header = `sap.m.CheckBox` sub = `Checkboxes allow users to select a subset of options. If you want to offer an off/on setting you should use the Switch control instead.` app = `z2ui5_cl_demo_app_239` )
-      ( group = `controls - sap.m` header = `sap.m.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` )
       ( group = `controls - sap.m` header = `sap.m.ComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_229` )
       ( group = `controls - sap.m` header = `sap.m.DatePicker` sub = `This example shows different DatePicker value states.` app = `z2ui5_cl_demo_app_294` )
       ( group = `controls - sap.m` header = `sap.m.DateRangeSelection` sub = `This example shows different DateRangeSelection value states.` app = `z2ui5_cl_demo_app_295` )
@@ -329,7 +328,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.m` header = `sap.m.MultiComboBox` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_233` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `Suggestions wrap automatically when longer then the dropdown width` app = `z2ui5_cl_demo_app_232` )
       ( group = `controls - sap.m` header = `sap.m.MultiInput` sub = `This sample illustrates the different value states of the sap.m.MultiInput control.` app = `z2ui5_cl_demo_app_267` )
-      ( group = `controls - sap.m` header = `sap.m.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
       ( group = `controls - sap.m` header = `sap.m.NewsContent` sub = `This control is used to display the news content text and subheader in a tile.` app = `z2ui5_cl_demo_app_261` )
       ( group = `controls - sap.m` header = `sap.m.NotificationListItem` sub = `A list item suitable for showing notifications to the user.` app = `z2ui5_cl_demo_app_375` )
       ( group = `controls - sap.m` header = `sap.m.NumericContent` sub = `Shows NumericContent including an icon.` app = `z2ui5_cl_demo_app_263` )
@@ -408,7 +406,9 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.Splitter` sub = `Simple splitter example with two content areas` app = `z2ui5_cl_demo_app_247` )
       ( group = `controls - sap.ui.layout` header = `sap.ui.layout.Splitter` sub = `Simple splitter example with two content areas that cannot be resized` app = `z2ui5_cl_demo_app_248` )
       ( group = `controls - sap.tnt` header = `sap.tnt.InfoLabel` sub = `InfoLabel with all available color schemes` app = `z2ui5_cl_demo_app_209` )
-      ( group = `controls - sap.ui.codeeditor` header = `sap.ui.codeeditor.CodeEditor` sub = `` app = `z2ui5_cl_demo_app_265` ) ).
+      ( group = `controls - sap.tnt` header = `sap.tnt.NavigationList` sub = `simple` app = `z2ui5_cl_demo_app_258` )
+      ( group = `controls - sap.ui.codeeditor` header = `sap.ui.codeeditor.CodeEditor` sub = `` app = `z2ui5_cl_demo_app_265` )
+      ( group = `controls - sap.ui.unified` header = `sap.ui.unified.ColorPicker` sub = `` app = `z2ui5_cl_demo_app_270` ) ).
 
   ENDMETHOD.
 
