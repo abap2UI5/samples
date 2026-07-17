@@ -266,6 +266,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Editable` app = `z2ui5_cl_demo_app_011` )
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Selection Modes: Single Select & Multi Select` app = `z2ui5_cl_demo_app_019` )
       ( group = `framework - use cases` header = `sap.m.Table` sub = `Table with sap.m.ScrollContainer` app = `z2ui5_cl_demo_app_006` )
+      ( group = `framework - use cases` header = `sap.ui.Device` sub = `Device Model in views and popups` app = `z2ui5_cl_demo_app_445` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Filtering` app = `z2ui5_cl_demo_app_143` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
