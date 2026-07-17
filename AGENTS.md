@@ -12,6 +12,16 @@ ABAP code style / app-structure conventions.
 **This entire project is in English.** All code, comments, commit messages, PR
 titles, PR descriptions, and any other text must be written in English.
 
+## Pull requests
+
+- **The PR title becomes the squash-merge commit subject — make it describe
+  the change.** Before merging, replace any auto-generated title (e.g. a
+  branch name like `Claude/...-abc123`) with a short descriptive English
+  title that states what actually changed.
+- **One topic per PR.** A structural change (moving, adding, or renaming
+  subpackages) must not ride along in a PR titled for an unrelated sample —
+  split it into its own PR so the history stays searchable.
+
 ---
 
 ## 1. Repository layout
@@ -25,31 +35,32 @@ src/
 ├── 01/  "basic"     cloud-ready & downportable — survives every build
 │   ├── 01/  framework - basics
 │   ├── 02/  framework - action
-│   ├── 05/  controls - extended
-│   └── 08/  controls              1:1 rebuilds of UI5 demo kit samples, split by library
+│   ├── 05/  framework - extended Controls (CC and Action)
+│   ├── 06/  framework - use cases
+│   └── 08/  controls - UI5 Demo Kit     1:1 rebuilds of UI5 demo kit samples, split by library
 │       ├── 00/  controls - sap.m
 │       ├── 01/  controls - sap.uxap
 │       ├── 02/  controls - sap.f
 │       ├── 03/  controls - sap.ui.core
 │       ├── 04/  controls - sap.ui.layout
 │       ├── 05/  controls - sap.tnt
-│       └── 06/  controls - sap.ui.codeeditor
+│       ├── 06/  controls - sap.ui.codeeditor
+│       └── 07/  controls - sap.ui.unified
 └── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 01/  only non-abap-cloud          on-premise-only ABAP (not ABAP Cloud ready)
-    ├── 02/  only non-openui5             SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …)
+    ├── 02/  only non-openui5 or higher UI5 1.71   SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …) or a control/property introduced after UI5 1.71
     ├── 03/  only with launchpad          runs only inside the Fiori Launchpad
-    ├── 04/  only higher UI5 1.71         uses a control/property introduced after UI5 1.71
+    ├── 04/  use of z2ui5                 needs the z2ui5/Util frontend helper module in the view
     ├── 05/  only with javascript and css and html   needs native JS / CSS / HTML
     ├── 06/  only testing                 test / scaffolding apps, not demos
-    ├── 07/  experimental                 work-in-progress / not finished
-    ├── 08/  demos                        complete showcase apps (multi-feature)
-    ├── 09/  generic xml view             built on z2ui5_cl_util_xml
-    ├── 10/  only non-openui5-with-cc     SAPUI5-only control that also needs a custom control
-    ├── 11/  uncategorized                not yet triaged into a category
-    ├── 12/  controls - custom            own control demos without a UI5 demo kit original
-    ├── 13/  deprecated                   sample built on a deprecated UI5 control (ActionSheet, P13n*, UploadSet, …)
-    └── 99/  obsolete                     superseded, or uses a deprecated control
+    ├── 07/  experimental, TODO           work-in-progress / not finished
+    └── 99/  obsolete                     superseded, or built on a deprecated UI5 control
 ```
+
+This tree is machine-checked: `node scripts/check-agents-structure.js` compares
+it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
+drift (runs in CI). **Whenever a subpackage is added, removed, or renamed,
+update this tree in the same change.**
 
 Each subpackage's `package.devc.xml` `<CTEXT>` is the human-readable name shown
 above (e.g. `only non-abap-cloud`). **That CTEXT string is also the overview
@@ -71,14 +82,14 @@ the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
 truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original belong in `00/12` (controls - custom)
-instead.
+Demos that have no demo kit original do not belong in `01/08` — file them in
+the framework packages (`01/05` for custom-control/action demos, `01/06` for
+use cases) or, when a restriction applies, in the matching `src/00` category.
 
-Machine-generated ports that have not been manually reviewed yet live in
-`01/08/07` (controls - generated) and carry the marker line
-`"! Generated port of a UI5 demo kit sample - not yet manually reviewed`
-directly above the `"! Rebuild ...` line. After review, move a sample into
-the library subpackage it belongs to and drop the marker line.
+Machine-generated demo kit ports that have not been manually reviewed do not
+live in this repository — they are collected in the separate api repository
+of the abap2UI5 organization. Everything under `01/08` here is manually
+reviewed.
 
 ---
 
@@ -103,22 +114,19 @@ The split is driven directly by the CI builds:
   applies:
 
   1. Needs on-premise-only ABAP (not Cloud) → `00/01`
-  2. Uses SAPUI5-only controls → `00/02` (and if it *also* needs a custom control → `00/10`)
+  2. Uses a SAPUI5-only control, **or** a control/property introduced after UI5 1.71 → `00/02`
   3. Runs only inside the Launchpad → `00/03`
-  4. Uses a control/property introduced after UI5 1.71 → `00/04`
+  4. Needs the `z2ui5/Util` frontend helper module in the view (`core:require {Helper:'z2ui5/Util'}`) → `00/04`
   5. Needs native JavaScript / CSS / HTML → `00/05`
   6. Test / scaffolding app → `00/06`
   7. Experimental / work-in-progress → `00/07`
-  8. Complete multi-feature showcase demo → `00/08`
-  9. Built on the generic XML view (`z2ui5_cl_util_xml`) → `00/09`
-  10. Deprecated control/property, or superseded → `00/99`
-  11. Not yet triaged → `00/11` (temporary parking; triage into 01–99 later)
+  8. Deprecated control/property, or superseded → `00/99`
 
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native
 JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`);
-"non-deprecated" is not enough (post-1.71 → `00/04`).
+"non-deprecated" is not enough (post-1.71 → `00/02`).
 
 ---
 
@@ -224,20 +232,21 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/01` → `00/12` → `00/99`; `01/01` → `01/08/00` → `01/08/06`) so the
+   (`00/01` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. `uncategorized` = `00/11` goes **after**
-   `only non-openui5-with-cc` (`00/10`) and **before** `obsolete` (`00/99`)).
+   numeric slot (e.g. `use of z2ui5` = `00/04` goes **after**
+   `only with launchpad` (`00/03`) and **before**
+   `only with javascript and css and html` (`00/05`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
    likewise `Popover I…IV`, `Popup I…III`). The group order from rule 4 is
    untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage = moving its whole tile group** between the two
-   catalogs, inserted at the correct numeric slot (e.g. the uncategorized move
-   `src/01/07` → `src/00/11` lifted the entire `uncategorized` group out of
-   `sample_app_001` and into `sample_app_000`).
+   catalogs, inserted at the correct numeric slot (moving a subpackage from
+   `src/01` to `src/00` lifts its entire tile group out of `sample_app_001`
+   and into `sample_app_000`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
    overview, none missing. The safest way to regenerate is to rebuild each
@@ -256,18 +265,20 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 
 **Adding a sample**
 1. Create the class; place it in the correct folder per §2.
-2. Add one tile to the matching overview catalog (§4), in the right group and
-   numeric position, sorted by `sub`.
+2. Regenerate the overview catalogs: `npm run launchpad` (§4).
 3. `abaplint` → 0 issues → commit (English message).
 
 **Moving a sample / subpackage**
 1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
-2. Update the catalog(s): change the tile's `group`, and if it crossed between
-   `src/00` and `src/01`, move the tile to the other overview app.
-3. `abaplint` → 0 issues → commit.
+2. Regenerate the overview catalogs: `npm run launchpad` (§4).
+3. If a subpackage was added/removed/renamed: update the §1 tree and run
+   `node scripts/check-agents-structure.js`.
+4. `abaplint` → 0 issues → commit.
 
 **Before every commit**
 - `abaplint` reports 0 issues (config `abaplint.jsonc`).
+- `node scripts/check-agents-structure.js` reports no drift between the §1
+  tree and the actual `package.devc.xml` CTEXTs.
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
 - Overview catalogs still mirror the folder tree (§4).
@@ -481,7 +492,9 @@ ENDMETHOD.
 
 ## 10. Building Views
 
-Views are XML strings passed to `client->view_display()`. There are two ways to build them:
+Views are XML strings passed to `client->view_display()`, built with the
+`z2ui5_cl_xml_view` fluent API — typed methods where they exist, `_generic( )`
+for the rest.
 
 ### 1. `z2ui5_cl_xml_view` — typed fluent API
 Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `input`, `button`, etc.). Use this for standard layouts.
@@ -542,75 +555,33 @@ ENDMETHOD.
 The hierarchy above is: `shell` → `page` → `simple_form` → `content` → (leaf elements).
 `label`, `input`, `button` are siblings inside `content`, so they stay at the same indent level as `)->content(`.
 
-### 2. `z2ui5_cl_util_xml` — generic XML builder
-Builds any XML structure directly from element names, namespaces and attributes. **Look up the control in the [UI5 API Reference](https://ui5.sap.com/#/api) and translate 1:1 to ABAP** — no wrapper, no abstraction layer.
+### 2. `_generic( )` — controls without a typed method
 
-**UI5 XML:**
-```xml
-<form:SimpleForm title="T" editable="true">
-  <form:content>
-    <Label text="qty"/>
-    <Input value="{...}"/>
-  </form:content>
-</form:SimpleForm>
-```
-
-**ABAP:**
-```abap
-->_( n = `SimpleForm` ns = `form` p = VALUE #(
-        ( n = `title`    v = `T` )
-        ( n = `editable` v = abap_true ) )
-)->_( n = `content` ns = `form`
-)->__( n = `Label` a = `text` v = `qty`
-)->__( n = `Input` a = `value` v = client->_bind_edit( qty ) )
-```
-
-Key rules for `z2ui5_cl_util_xml`:
-- `_( n, ns, p )` — add child element, navigate **into** it
-- `__( n, ns, a, v, p )` — add child element, **stay** at current level
-- `p( n, v )` — add a single attribute to current element
-- Single attribute: use `a = ... v = ...` parameters directly
-- Multiple attributes: use `p = VALUE #( ( n = ... v = ... ) ... )`
-- Namespace declarations go on the root `mvc:View` element as regular attributes (`xmlns:form`, etc.)
-- Only declare namespaces that are actually used in the view
-- `stringify()` on the factory root produces the complete XML string
-
-#### Method chaining
-
-Each call in a chain must start on its own line — never place two `->_()` / `->__()` calls on the same line:
+When a control or aggregation has no typed wrapper method (yet), stay inside
+the `z2ui5_cl_xml_view` chain and add the element generically. **Look up the
+control in the [UI5 API Reference](https://ui5.sap.com/#/api) and translate
+1:1** — element name, namespace and properties exactly as documented:
 
 ```abap
-" Wrong
-DATA(page) = root->__( `Shell` )->__( n = `Page`
-
-" Correct
-DATA(page) = root->__( `Shell`
-   )->__( n = `Page`
+header_title->_generic(
+    name   = `breadcrumbs`
+    ns     = `f`
+    )->breadcrumbs(
+        )->link( text = `Home` ).
 ```
 
-Chain continuations (`)->`) are indented 3 spaces relative to the statement's base indentation.
+Key rules for `_generic( )`:
+- `_generic( name = ... ns = ... t_prop = ... )` adds one element and
+  navigates **into** it; typed methods continue the chain below it.
+- Attributes go into `t_prop = VALUE #( ( n = `...` v = `...` ) ... )`.
+- `ns` is registered on the view automatically — only pass namespaces that
+  are actually used.
+- Raw embedded content (e.g. an inline `<style>` body) goes through
+  `_cc_plain_xml( )`.
 
-#### Parameter alignment
-
-When `p` appears on a continuation line, align it directly under `n` — one space after the opening `(`:
-
-```abap
-" Wrong — p is one space too far right
-)->_( n = `Input`
-              p = VALUE #( ... ) ).
-
-" Correct — p directly under n
-)->_( n = `Input`
-             p = VALUE #( ... ) ).
-```
-
-Continuation lines inside `VALUE #( )` align with the first tuple `(`:
-
-```abap
-)->_( n = `Input`
-      p = VALUE #( ( n = `type`  v = `Number` )
-                   ( n = `value` v = client->_bind_edit( qty ) ) ) ).
-```
+> The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
+> framework (obsolete package, no new consumers) and is no longer used by any
+> sample — do not use it in new samples.
 
 #### VALUE #( ) formatting
 
