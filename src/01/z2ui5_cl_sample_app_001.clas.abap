@@ -243,6 +243,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - action` header = `Browsre` sub = `Title` app = `z2ui5_cl_demo_app_125` )
       ( group = `framework - action` header = `Focus I` sub = `Set Focus in Textfield` app = `z2ui5_cl_demo_app_133` )
       ( group = `framework - action` header = `Focus II` sub = `Jump with the focus` app = `z2ui5_cl_demo_app_189` )
+      ( group = `framework - action` header = `Image Editor` sub = `Edit in Popup and return PNG` app = `z2ui5_cl_demo_app_383` )
       ( group = `framework - action` header = `Input` sub = `Clipboard` app = `z2ui5_cl_demo_app_325` )
       ( group = `framework - action` header = `Input` sub = `Hide/show Soft Keyboard` app = `z2ui5_cl_demo_app_352` )
       ( group = `framework - action` header = `Scroll I` sub = `Scroll to position` app = `z2ui5_cl_demo_app_362` )
