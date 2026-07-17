@@ -44,7 +44,8 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
         )->shell(
             )->page( title          = `abap2UI5 - Sample: URL Helper`
                      navbuttonpress = client->_event_nav_app_leave( )
-                     shownavbutton  = client->check_app_prev_stack( ) ).
+                     shownavbutton  = client->check_app_prev_stack( )
+                      ).
 
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
@@ -116,8 +117,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                         class       = `sapUiSmallMarginBottom` ).
     mobile_form->button( text  = `Trigger SMS`
                          press = client->_event_client( val   = client->cs_event-urlhelper
-                         t_arg = VALUE #( ( `TRIGGER_SMS` )
-                                                                         ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
+                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
 
     DATA(url_form) = layout->simple_form( `Redirect` ).
     url_form->label( text     = `URL`
@@ -129,8 +129,7 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      class       = `sapUiSmallMarginBottom` ).
     url_form->button( text  = `Redirect`
                       press = client->_event_client( val   = client->cs_event-urlhelper
-                      t_arg = VALUE #( ( `REDIRECT` )
-                                                                      ( |${ client->_bind_edit( url ) }| ) ) ) ).
+                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind_edit( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 

@@ -792,6 +792,12 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
     FIELD-SYMBOLS <row>   TYPE any.
     FIELD-SYMBOLS <field> TYPE any.
 
+    " an empty search matches everything (and find( sub = `` ) would dump
+    " with CX_SY_STRG_PAR_VAL), so leave the table untouched
+    IF val IS INITIAL.
+      RETURN.
+    ENDIF.
+
     DATA(lv_search) = COND string( WHEN ignore_case = abap_true
                                    THEN to_upper( val )
                                    ELSE val ).

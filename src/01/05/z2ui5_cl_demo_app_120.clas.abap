@@ -24,6 +24,10 @@ CLASS z2ui5_cl_demo_app_120 DEFINITION PUBLIC.
     DATA mt_spot TYPE TABLE OF ty_s_spot.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -32,89 +36,66 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
+
     IF client->check_on_init( ).
-
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display( view->shell(
-              )->page(
-                      title          = `abap2UI5 - Device Capabilities`
-                      navbuttonpress = client->_event_nav_app_leave( )
-                      shownavbutton  = client->check_app_prev_stack( )
-                  )->_z2ui5( )->geolocation(
-                                            finished         = client->_event( `GEOLOCATION_LOADED` )
-                                            longitude        = client->_bind_edit( longitude )
-                                            latitude         = client->_bind_edit( latitude )
-                                            altitude         = client->_bind_edit( altitude )
-                                            altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                                            accuracy         = client->_bind_edit( accuracy )
-                                            speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = `Geolocation`
-                                  editable = abap_true
-                      )->content( `form`
-                          )->label( `Longitude`
-                          )->input( client->_bind_edit( longitude )
-                          )->label( `Latitude`
-                          )->input( client->_bind_edit( latitude )
-                          )->label( `Altitude`
-                          )->input( client->_bind_edit( altitude )
-                          )->label( `Accuracy`
-                          )->input( client->_bind_edit( accuracy )
-                          )->label( `AltitudeAccuracy`
-                          )->input( client->_bind_edit( altitudeaccuracy )
-                          )->label( `Speed`
-                          )->input( client->_bind_edit( speed )
-                          )->label( `MapContainer`
-                          )->button( text  = `Display`
-                                     press = client->_event( `MAP_CONTAINER_DISPLAY` )
-               )->stringify( ) ).
-
+      view_display( ).
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
 
-      WHEN `MAP_CONTAINER_DISPLAY`.
+      WHEN `GEOLOCATION_ERROR`.
 
-        IF longitude IS NOT INITIAL.
-          mt_spot = VALUE #( ( pos = longitude && `;` && latitude && `;0`  type = `Default`  contentoffset = `0;-6` scale = `1;1;1` key = `Your Position`   tooltip = `Your Position` ) ).
-        ENDIF.
-
-        view = z2ui5_cl_xml_view=>factory( ).
-        client->view_display( view->shell(
-              )->page(
-                      title          = `abap2UI5 - Device Capabilities`
-                      navbuttonpress = client->_event_nav_app_leave( )
-                      shownavbutton  = client->check_app_prev_stack( )
-                  )->_z2ui5( )->geolocation(
-                                            finished         = client->_event( )
-                                            longitude        = client->_bind_edit( longitude )
-                                            latitude         = client->_bind_edit( latitude )
-                                            altitude         = client->_bind_edit( altitude )
-                                            altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                                            accuracy         = client->_bind_edit( accuracy )
-                                            speed            = client->_bind_edit( speed )
-                  )->simple_form( title    = `Geolocation`
-                                  editable = abap_true
-                      )->content( `form`
-                          )->label( `Longitude`
-                          )->input( client->_bind_edit( longitude )
-                          )->label( `Latitude`
-                          )->input( client->_bind_edit( latitude )
-                          )->label( `Altitude`
-                          )->input( client->_bind_edit( altitude )
-                          )->label( `Accuracy`
-                          )->input( client->_bind_edit( accuracy )
-                          )->label( `AltitudeAccuracy`
-                          )->input( client->_bind_edit( altitudeaccuracy )
-                          )->label( `Speed`
-                          )->input( client->_bind_edit( speed )
-                          )->label( `MapContainer`
-                          )->button( text  = `Display`
-                                     press = client->_event( `MAP_CONTAINER_DISPLAY` )
-               )->get_parent( )->get_parent(
-               )->stringify( ) ).
+        " the Geolocation control fires `error` when the position cannot be
+        " read; the code (1 = permission denied, 2 = position unavailable,
+        " 3 = timeout) and message are passed as event arguments.
+        client->message_box_display(
+            text = |Location unavailable ({ client->get_event_arg( 1 ) }): { client->get_event_arg( 2 ) }|
+            type = `error` ).
 
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    view->shell(
+          )->page(
+                  title          = `abap2UI5 - Device Capabilities`
+                  navbuttonpress = client->_event_nav_app_leave( )
+                  shownavbutton  = client->check_app_prev_stack( )
+              )->_z2ui5( )->geolocation(
+                                        finished         = client->_event( `GEOLOCATION_LOADED` )
+                                        error            = client->_event( val   = `GEOLOCATION_ERROR`
+                                                                           t_arg = VALUE #( ( `${$parameters>/code}` )
+                                                                                            ( `${$parameters>/message}` ) ) )
+                                        longitude        = client->_bind_edit( longitude )
+                                        latitude         = client->_bind_edit( latitude )
+                                        altitude         = client->_bind_edit( altitude )
+                                        altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
+                                        accuracy         = client->_bind_edit( accuracy )
+                                        speed            = client->_bind_edit( speed )
+              )->simple_form( title    = `Geolocation`
+                              editable = abap_false
+                  )->content( `form`
+                      )->label( `Longitude`
+                      )->input( value = client->_bind_edit( longitude ) editable = abap_false
+                      )->label( `Latitude`
+                      )->input( value = client->_bind_edit( latitude ) editable = abap_false
+                      )->label( `Altitude`
+                      )->input( value = client->_bind_edit( altitude ) editable = abap_false
+                      )->label( `Accuracy`
+                      )->input( value = client->_bind_edit( accuracy ) editable = abap_false
+                      )->label( `AltitudeAccuracy`
+                      )->input( value = client->_bind_edit( altitudeaccuracy ) editable = abap_false
+                      )->label( `Speed`
+                      )->input( value = client->_bind_edit( speed ) editable = abap_false ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

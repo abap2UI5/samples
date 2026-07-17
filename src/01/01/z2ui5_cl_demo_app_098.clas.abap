@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
     page = page->text( client->_bind( mv_title )
        )->button(
            text  = `frontend event`
-           press = client->_event_client( val = client->cs_event-open_new_tab t_arg = VALUE #( ( `https://github.com/abap2UI5/abap2UI5/` ) ) ) ).
+           press = client->_event( `NN_VIEW` ) ).
 
     client->nest2_view_display(
       val            = lo_view_nested->stringify( )
@@ -149,6 +149,9 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
+      WHEN 'NN_VIEW'.
+        client->message_box_display(  `Event in nested nested view raised` ).
+
       WHEN `ROW_NAVIGATE`.
 
         IF client->get_event_arg( ) IS NOT INITIAL.
@@ -165,7 +168,9 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        APPEND ls_sel TO t_tab2.
+        IF NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+          INSERT ls_sel INTO TABLE t_tab2.
+        ENDIF.
 
         mv_layout = `TwoColumnsMidExpanded`.
 

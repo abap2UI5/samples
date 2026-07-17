@@ -39,32 +39,43 @@ CLASS z2ui5_cl_demo_app_160 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS load_output_table.
+    METHODS model_init.
     METHODS on_event.
-    METHODS render_main_screen.
+    METHODS view_display.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_DEMO_APP_160 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
 
-  METHOD load_output_table.
+    me->client = client.
+    IF client->check_on_init( ).
+      model_init( ).
+      view_display( ).
+    ELSE.
+      on_event( ).
+    ENDIF.
 
-    DATA ls_output TYPE ty_s_output.
+  ENDMETHOD.
+
+  METHOD model_init.
+
     mt_output = VALUE #( ).
 
     DO 10 TIMES.
-      ls_output-index = sy-index.
-      ls_output-set_sk = `Test`.
-      ls_output-matnr  = `1234567`.
-      ls_output-description = `Test`.
-      ls_output-pl_01 = 0.
-      ls_output-pl_02 = 0.
 
-      APPEND ls_output TO mt_output.
+      INSERT VALUE #(
+        index = sy-index
+        set_sk = `Test`
+        matnr  = `1234567`
+        description = `Test`
+        pl_01 = 0
+        pl_02 = 0
+      ) INTO TABLE mt_output.
 
     ENDDO.
 
@@ -73,27 +84,21 @@ CLASS Z2UI5_CL_DEMO_APP_160 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA lt_event_arguments TYPE string_table.
-
     IF client->check_on_event( `PL_TOTAL_CHANGE` ).
-
-      lt_event_arguments = client->get( )-t_event_arg.
-      DATA(lv_id_event) = lt_event_arguments[ 1 ].
-
-      DATA(lv_tab_index) = lt_event_arguments[ 2 ].
-      DATA(ls_row_submit) = mt_output[ lv_tab_index ].
-
-      DATA(lv_id_parent) = lt_event_arguments[ 3 ].
-
-      client->message_box_display( lv_tab_index && lv_id_event && lv_id_parent ).
+      client->message_box_display(
+        `Id of Input via source object: ` &&  client->get_event_arg( ) && z2ui5_cl_sample_context=>cv_char_util_newline  &&
+        `Id of Input via event.oSource.sId: ` &&  client->get_event_arg( 2 ) && z2ui5_cl_sample_context=>cv_char_util_newline &&
+        `Value of same row, index: ` &&  client->get_event_arg( 3 ) && z2ui5_cl_sample_context=>cv_char_util_newline  &&
+        `Id of parent (row) via event.oSource.oParent.sId: ` &&  client->get_event_arg( 4 ) && z2ui5_cl_sample_context=>cv_char_util_newline  &&
+        `Attribute of parameters.value: ` &&  client->get_event_arg( 5 )
+        ).
     ENDIF.
 
-    client->view_model_update( ).
 
   ENDMETHOD.
 
 
-  METHOD render_main_screen.
+  METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
@@ -106,13 +111,15 @@ CLASS Z2UI5_CL_DEMO_APP_160 IMPLEMENTATION.
             )->link(
       )->get_parent( ).
 
-    DATA(table) = page->flex_box( height = `85vh` )->ui_table( alternaterowcolors  = `true`
-                                                               selectionmode       = `None`
-                                                               visiblerowcountmode = `Auto`
-                                                               fixedrowcount       = `1`
-                                                               rows                = client->_bind_edit( val = mt_output
-*        compress_mode = z2ui5_if_client=>cs_compress_mode-none
-      ) ).
+    page->text( `Make an input and press ENTER` ).
+
+    DATA(table) = page->flex_box( height = `85vh`
+        )->ui_table( alternaterowcolors  = `true`
+                     selectionmode       = `None`
+                     visiblerowcountmode = `Auto`
+                     fixedrowcount       = `1`
+                     rows                = client->_bind_edit( mt_output )
+    ).
 
     DATA(columns) = table->ui_columns( ).
 
@@ -122,127 +129,24 @@ CLASS Z2UI5_CL_DEMO_APP_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `MATNR`
                         filterproperty = `MATNR` )->text( `Column 2` )->ui_template( )->text( `{MATNR}` ).
-    columns->ui_column( width          = `20rem`
-                        sortproperty   = `DESCRIPTION`
-                        filterproperty = `DESCRIPTION` )->text( `Column 3` )->ui_template( )->text( `{DESCRIPTION}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_TOTAL`
-                        filterproperty = `IS_TOTAL` )->text( `Column 4` )->ui_template( )->text( `{IS_TOTAL}` ).
-
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_TOTAL`
                         filterproperty = `PL_TOTAL` )->text( `Column 5` )->ui_template( )->input(
                         value          = `{PL_TOTAL}`
                         submit         = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` )
+        ( `$event.oSource.sId` )
         ( `${INDEX}` )
-*        ( `$source.oParent.sId` )
         ( `$event.oSource.oParent.sId` )
-         ) ) editable = abap_true
-      type            = `Number` ).
+        ( `${$parameters>/value}` )
+         ) ) editable = abap_true type = `Number` ).
 
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_total`
-                        filterproperty = `per_cent_total` )->text( `Column 6` )->ui_template( )->text( `{per_cent_total} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_01_PREV`
-                        filterproperty = `IS_01_PREV` )->text( `Column 7` )->ui_template( )->text( `{IS_01_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_01`
-                        filterproperty = `PL_01` )->text( `Column 8` )->ui_template( )->input( value    = `{PL_01}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_01`
-                        filterproperty = `per_cent_01` )->text( `Column 9` )->ui_template( )->text( `{per_cent_01} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_02_PREV`
-                        filterproperty = `IS_02_PREV` )->text( `Column 10` )->ui_template( )->text( `{IS_02_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_02`
-                        filterproperty = `PL_02` )->text( `Column 11` )->ui_template( )->input( value    = `{PL_02}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_02`
-                        filterproperty = `per_cent_02` )->text( `Column 12` )->ui_template( )->text( `{per_cent_02} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_03_PREV`
-                        filterproperty = `IS_03_PREV` )->text( `Column 13` )->ui_template( )->text( `{IS_03_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_03`
-                        filterproperty = `PL_03` )->text( `Column 14` )->ui_template( )->input( value    = `{PL_03}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_03`
-                        filterproperty = `per_cent_03` )->text( `Column 15` )->ui_template( )->text( `{per_cent_03} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_Q01_PREV`
-                        filterproperty = `IS_Q01_PREV` )->text( `Column 16` )->ui_template( )->text( `{IS_Q01_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_Q01`
-                        filterproperty = `PL_Q01` )->text( `Column 17` )->ui_template( )->text( `{PL_Q01}` ). "Not editable, because it is planned at detail level
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_q01`
-                        filterproperty = `per_cent_q01` )->text( `Column 18` )->ui_template( )->text( `{per_cent_q01} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_Q02_PREV`
-                        filterproperty = `IS_Q02_PREV` )->text( `Column 19` )->ui_template( )->text( `{IS_Q02_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_Q02`
-                        filterproperty = `PL_Q02` )->text( `Column 20` )->ui_template( )->input( value    = `{PL_Q02}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_q02`
-                        filterproperty = `per_cent_q02` )->text( `Column 21` )->ui_template( )->text( `{per_cent_q02} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_Q03_PREV`
-                        filterproperty = `IS_Q03_PREV` )->text( `Column 22` )->ui_template( )->text( `{IS_Q03_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_Q03`
-                        filterproperty = `PL_Q03` )->text( `Column 23` )->ui_template( )->input( value    = `{PL_Q03}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_q03`
-                        filterproperty = `per_cent_q03` )->text( `Column 24` )->ui_template( )->text( `{per_cent_q03} %` ).
-
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `IS_Q04_PREV`
-                        filterproperty = `IS_Q04_PREV` )->text( `Column 25` )->ui_template( )->text( `{IS_Q04_PREV}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_Q04`
-                        filterproperty = `PL_Q04` )->text( `Column 26` )->ui_template( )->input( value    = `{PL_Q04}`
-                        editable       = abap_true
-                        type           = `Number` ).
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_q04`
-                        filterproperty = `per_cent_q04` )->text( `Column 27` )->ui_template( )->text( `{per_cent_q04} %` ).
+                        filterproperty = `per_cent_total` )->text( `Column 6` )->ui_template( )->text( `{PL_TOTAL} %` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->check_on_init( ).
-
-      load_output_table( ).
-      render_main_screen( ).
-
-    ELSE.
-      on_event( ).
-    ENDIF.
-
-  ENDMETHOD.
 ENDCLASS.

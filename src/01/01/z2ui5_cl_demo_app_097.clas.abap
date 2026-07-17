@@ -5,6 +5,7 @@ CLASS z2ui5_cl_demo_app_097 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_s_row,
+        uuid     TYPE string,
         title    TYPE string,
         value    TYPE string,
         descr    TYPE string,
@@ -57,7 +58,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
                            filterproperty = `INFO` )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
        )->ui_row_action_item( icon = `sap-icon://delete`
-                           press   = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                           press   = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -123,11 +124,8 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `ROW_DELETE`.
-        DATA(ls_arg) = client->get_event_arg( ).
-        IF ls_arg IS NOT INITIAL.
-          DELETE t_tab2 WHERE title = ls_arg.
-        ENDIF.
 
+        DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
         client->nest_view_model_update( ).
 
       WHEN `SELCHANGE`.
@@ -135,7 +133,8 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        APPEND ls_sel TO t_tab2.
+        ls_sel-uuid = z2ui5_cl_sample_context=>uuid_get_c32( ).
+        INSERT ls_sel INTO TABLE t_tab2.
 
         mv_layout = `TwoColumnsMidExpanded`.
 
