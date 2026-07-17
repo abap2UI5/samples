@@ -93,10 +93,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                       )->label( `AltitudeAccuracy`
                       )->input( value = client->_bind_edit( altitudeaccuracy ) editable = abap_false
                       )->label( `Speed`
-                      )->input( value = client->_bind_edit( speed ) editable = abap_false
-                      )->label( `MapContainer`
-                      )->button( text  = `Display`
-                                 press = client->_event( `MAP_CONTAINER_DISPLAY` ) ).
+                      )->input( value = client->_bind_edit( speed ) editable = abap_false ).
 
     client->view_display( view->stringify( ) ).
 
