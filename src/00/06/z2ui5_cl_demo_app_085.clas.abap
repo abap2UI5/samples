@@ -104,9 +104,8 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     header_title->snapped_heading(
             )->flex_box( alignitems = `Center`
-              )->image( src   = c_pic_url && ls_detail-pic
-                        width = `2rem`
-                        class = `sapUiTinyMarginEnd`
+              )->avatar( src   = c_pic_url && ls_detail-pic
+                         class = `sapUiTinyMarginEnd`
                 )->info_label( text        = |Product Id | && client->_bind( ls_detail-productid )
                                colorscheme = `9`
                                width       = `200px`
@@ -154,9 +153,9 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
 
     DATA(header_content) = page->header_content( `uxap` ).
     header_content->flex_box( wrap = `Wrap`
-       )->image( src   = c_pic_url && ls_detail-pic
-                 width = `5rem`
-                 class = `sapUiSmallMarginEnd`
+       )->avatar( src         = c_pic_url && ls_detail-pic
+                  class       = `sapUiSmallMarginEnd`
+                  displaysize = `layout`
         )->vertical_layout( class = `sapUiSmallMarginBeginEnd`
             )->label( `Dimension`
             )->label( `Weight`
