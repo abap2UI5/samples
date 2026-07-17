@@ -132,6 +132,8 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
+        ELSE.
+          client->message_toast_display( `please select exactly one employee` ).
         ENDIF.
       WHEN `POPUP_TABLE_VALUE_CONTINUE`.
         DELETE t_suggestion_sel WHERE selkz = abap_false.
@@ -142,6 +144,8 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
           client->message_toast_display( `value selected` ).
           client->popup_destroy( ).
 
+        ELSE.
+          client->message_toast_display( `please select exactly one color` ).
         ENDIF.
       WHEN `BUTTON_SEND`.
         client->message_box_display( `success - values sent to the server` ).
@@ -163,6 +167,13 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
             title          = `abap2UI5 - Value Help Examples`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Four value-help patterns: inline suggestions, numeric-only input, a value-help popup with a selectable table, ` &&
+                   `and a custom popup with a city search. Fill the fields, then Clear resets the view and Send simulates a submit.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
     DATA(form) = page->grid( `L7 M7 S7`
         )->content( `layout`
@@ -210,16 +221,15 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
         )->overflow_toolbar(
             )->toolbar_spacer(
             )->button(
-                text    = `Clear`
-                press   = client->_event( `BUTTON_CLEAR` )
-                type    = `Reject`
-                enabled = abap_false
-                icon    = `sap-icon://delete`
+                text  = `Clear`
+                press = client->_event( `BUTTON_CLEAR` )
+                type  = `Reject`
+                icon  = `sap-icon://delete`
             )->button(
-                text    = `Send to Server`
-                press   = client->_event( `BUTTON_SEND` )
-                enabled = abap_false
-                type    = `Success` ).
+                text  = `Send to Server`
+                press = client->_event( `BUTTON_SEND` )
+                type  = `Success`
+                icon  = `sap-icon://paper-plane` ).
 
     client->view_display( view->stringify( ) ).
 
