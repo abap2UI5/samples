@@ -118,7 +118,8 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
                               class      = `sapUiSmallMargin`
         )->icon_tab_bar(
             expanded = `{= !${device>/system/phone} }`
-            class    = `sapUiResponsiveContentPadding` ).
+            class    = `sapUiResponsiveContentPadding`
+        )->items( ).
 
     tabs->icon_tab_filter( text = `Sales` key = `sales` icon = `sap-icon://money-bills`
         )->text( `On a phone the tab content is collapsed to save space; on tablet/desktop it stays expanded.` ).
