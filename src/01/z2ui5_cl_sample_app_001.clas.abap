@@ -286,6 +286,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_demo_app_160` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Filtering` app = `z2ui5_cl_demo_app_143` )
       ( group = `framework - use cases` header = `sap.ui.Table` sub = `Full Example` app = `z2ui5_cl_demo_app_070` )
+      ( group = `framework - use cases` header = `Tree` sub = `editable nodes (CustomTreeItem)` app = `z2ui5_cl_demo_app_463` )
       ( group = `controls - sap.m` header = `sap.m.ActionListItem` sub = `Use the Action List Item to trigger an action directly from a list` app = `z2ui5_cl_demo_app_216` )
       ( group = `controls - sap.m` header = `sap.m.Breadcrumbs` sub = `Breadcrumbs sample with current page set as aggregation, resulting in a link` app = `z2ui5_cl_demo_app_292` )
       ( group = `controls - sap.m` header = `sap.m.BusyIndicator`
