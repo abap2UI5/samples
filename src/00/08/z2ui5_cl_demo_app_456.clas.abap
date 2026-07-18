@@ -78,11 +78,15 @@ CLASS z2ui5_cl_demo_app_456 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
+    " the startDate path must come from _bind_edit - a hardcoded binding
+    " path is never registered in the model, the frontend then receives no
+    " data and the formatter passes a non-Date into the object property
     page->planning_calendar(
         id        = `PC1`
         class     = `sapUiSmallMargin`
-        startdate = `{ path: '/START_DATE', formatter: 'Formatter.DateCreateObject' }`
-        rows      = client->_bind( t_people )
+        startdate = |\{ path: '{ client->_bind_edit( val = start_date path = abap_true ) }', | &&
+                    |formatter: 'Formatter.DateCreateObject' \}|
+        rows      = client->_bind_edit( t_people )
         )->rows(
         )->planning_calendar_row(
             title        = `{NAME}`

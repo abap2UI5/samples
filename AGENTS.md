@@ -576,6 +576,16 @@ header_title->_generic(
         )->link( text = `Home` ).
 ```
 
+**Binding paths always come from a bind call — never hardcode them.** Every
+model value a view references must be registered through
+`client->_bind_edit( )` (use `_bind_edit`, not the one-way `_bind`): a
+hand-written path (`{/START_DATE}`, or `{ path: '/START_DATE', ... }` in a
+raw binding-info string) is NOT part of the serialized model — the frontend
+receives no data for it and typed/object properties crash on the missing
+value (human find 2026-07-18 in samples 456/457). Compose raw binding-info
+strings with the bare path from
+`client->_bind_edit( val = x path = abap_true )`.
+
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and
   navigates **into** it; typed methods continue the chain below it.

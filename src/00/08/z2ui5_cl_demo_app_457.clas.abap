@@ -53,10 +53,13 @@ CLASS z2ui5_cl_demo_app_457 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
+    " the path must come from _bind_edit - a hardcoded binding path is never
+    " registered in the model and the frontend receives no data for it
     page->vbox( `sapUiSmallMargin`
         )->date_picker( displayformat = `long`
-                        datevalue     = `{ path: '/DATE_ISO', formatter: 'Formatter.DateCreateObject' }`
-        )->text( text  = `Model value (unchanged string): {/DATE_ISO}`
+                        datevalue     = |\{ path: '{ client->_bind_edit( val = date_iso path = abap_true ) }', | &&
+                                        |formatter: 'Formatter.DateCreateObject' \}|
+        )->text( text  = |Model value (unchanged string): { client->_bind_edit( date_iso ) }|
                  class = `sapUiTinyMarginTop` ).
 
     client->view_display( view->stringify( ) ).
