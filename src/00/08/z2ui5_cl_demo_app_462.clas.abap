@@ -61,6 +61,13 @@ CLASS z2ui5_cl_demo_app_462 IMPLEMENTATION.
       WHEN `OPEN_POPUP`.
         popup_display( ).
 
+      WHEN `CLOSE_POPUP`.
+        " closing goes through the backend ON PURPOSE: the z2ui5.cc.Tree
+        " companion snapshots the expand state right before every roundtrip,
+        " so this event captures it while the dialog still exists - a pure
+        " client-side popup_close would skip the snapshot
+        client->popup_destroy( ).
+
     ENDCASE.
 
   ENDMETHOD.
@@ -73,13 +80,19 @@ CLASS z2ui5_cl_demo_app_462 IMPLEMENTATION.
 
     " the popup view slot gets its own copy of the model - the nested table
     " bound here renders in the dialog exactly like in a main view
-    dialog->tree( headertext = `Documents`
+    dialog->tree( id         = `treePopup`
+                  headertext = `Documents`
                   items      = client->_bind_edit( t_nodes )
         )->standard_tree_item( title = `{TEXT}` ).
 
+    " invisible companion: snapshots the tree's expand state before each
+    " roundtrip and re-applies it after rendering - reopening the dialog
+    " shows the same nodes expanded as when it was closed
+    dialog->_z2ui5( )->tree( `treePopup` ).
+
     dialog->buttons(
         )->button( text  = `Close`
-                   press = client->_event_client( client->cs_event-popup_close ) ).
+                   press = client->_event( `CLOSE_POPUP` ) ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -97,8 +110,9 @@ CLASS z2ui5_cl_demo_app_462 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `The button opens a Dialog whose content is a sap.m.Tree over the same nested ` &&
-                   `ABAP table - tree binding works in every view slot, popups included.`
+        text     = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
+                   `table. Expand some nodes, close and reopen: the z2ui5.cc.Tree companion ` &&
+                   `preserves the expand state across the roundtrips.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
