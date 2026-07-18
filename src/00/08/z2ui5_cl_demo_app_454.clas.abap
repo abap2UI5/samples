@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_454 IMPLEMENTATION.
             )->button( text  = `Sort descending`
                        icon  = `sap-icon://sort-descending`
                        press = client->_event( `SORT_DESC` )
-                       class = `sapUiTinyMarginBegin` ) ).
+                       class = `sapUiTinyMarginBegin` ).
 
     page->list( id         = `productList`
                 headertext = `Products`
