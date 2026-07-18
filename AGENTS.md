@@ -37,6 +37,7 @@ src/
 │   ├── 02/  framework - action
 │   ├── 05/  framework - extended Controls (CC and Action)
 │   ├── 06/  framework - use cases
+│   ├── 07/  framework - new (beta)      newest framework features, not yet in a stable release
 │   └── 08/  controls - UI5 Demo Kit     1:1 rebuilds of UI5 demo kit samples, split by library
 │       ├── 00/  controls - sap.m
 │       ├── 01/  controls - sap.uxap
