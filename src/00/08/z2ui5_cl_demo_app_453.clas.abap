@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_453 IMPLEMENTATION.
                 )->object_status(
                     text  = `{STATUS}`
                     icon  = |\{ path: 'STATUS', formatter: 'Formatter.stockStatusIcon' \}|
-                    state = |\{ path: 'STATUS', formatter: 'Formatter.stockStatusState' \}|
+                    state = |\{ path: 'STATUS', formatter: 'Formatter.stockStatusState' \}| )->get_parent(
                 )->object_status(
                     text  = `{DELIVERY}`
                     state = |\{ path: 'DELIVERY', formatter: 'Formatter.deliveryStatusState' \}| ).

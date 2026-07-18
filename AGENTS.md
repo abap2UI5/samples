@@ -575,6 +575,17 @@ header_title->_generic(
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and
   navigates **into** it; typed methods continue the chain below it.
+- **Navigation is per-method, not uniform — check `result =` in
+  `z2ui5_cl_xml_view` before chaining siblings.** Methods returning
+  `result = me` stay on the current node (leaf controls like `text`,
+  `button`, `object_number`, `search_field`, `standard_list_item`,
+  `message_strip`) — siblings chain directly. Methods returning
+  `result = _generic( ... )` navigate INTO the new element (all containers
+  and aggregations, but also child-less controls like `object_status`) —
+  a following sibling needs `->get_parent( )` first, or it silently nests
+  inside and UI5 fails view creation with "Cannot add direct child
+  without default aggregation" (bit sample 453: two chained
+  `object_status` cells).
 - Attributes go into `t_prop = VALUE #( ( n = `...` v = `...` ) ... )`.
 - `ns` is registered on the view automatically — only pass namespaces that
   are actually used.

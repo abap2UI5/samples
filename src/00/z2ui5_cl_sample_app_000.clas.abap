@@ -307,6 +307,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `framework - new (beta)` header = `Control Call` sub = `Panel setExpanded` app = `z2ui5_cl_demo_app_448` )
       ( group = `framework - new (beta)` header = `Control Call` sub = `PDFViewer open` app = `z2ui5_cl_demo_app_449` )
       ( group = `framework - new (beta)` header = `Custom Control` sub = `MultiInput Validator` app = `z2ui5_cl_demo_app_451` )
+      ( group = `framework - new (beta)` header = `Formatter` sub = `Date objects for PlanningCalendar` app = `z2ui5_cl_demo_app_456` )
       ( group = `framework - new (beta)` header = `Formatter` sub = `demo kit pack` app = `z2ui5_cl_demo_app_453` )
       ( group = `framework - new (beta)` header = `Formatter` sub = `weightState via core require` app = `z2ui5_cl_demo_app_450` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
