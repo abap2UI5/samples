@@ -51,18 +51,24 @@ CLASS z2ui5_cl_demo_app_461 IMPLEMENTATION.
 
       WHEN `MOVE_NODE`.
         " both event args arrive resolved client-side: the binding context
-        " paths of the dragged and the drop target item, e.g.
-        " /T_NODES/0/NODES/1 (a file) and /T_NODES/2 (a folder)
+        " paths of the dragged and the drop target item. The two-way model
+        " prefixes them with /XX/, e.g. /XX/T_NODES/0/NODES/1 (a file) and
+        " /XX/T_NODES/2 (a folder) - so parse from the END of the path
         SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(lt_drag).
         SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(lt_drop).
-        IF lines( lt_drag ) <> 5 OR lines( lt_drop ) <> 3.
+        DATA(lv_drag_lines) = lines( lt_drag ).
+        DATA(lv_drop_lines) = lines( lt_drop ).
+        IF lv_drag_lines < 4 OR lv_drop_lines < 2
+            OR VALUE #( lt_drag[ lv_drag_lines - 1 ] OPTIONAL ) <> `NODES`
+            OR VALUE #( lt_drag[ lv_drag_lines - 3 ] OPTIONAL ) <> `T_NODES`
+            OR VALUE #( lt_drop[ lv_drop_lines - 1 ] OPTIONAL ) <> `T_NODES`.
           client->message_toast_display( `drop a file onto a folder` ).
           RETURN.
         ENDIF.
         TRY.
-            DATA(lv_from_root)  = CONV i( lt_drag[ 3 ] ) + 1.
-            DATA(lv_from_child) = CONV i( lt_drag[ 5 ] ) + 1.
-            DATA(lv_to_root)    = CONV i( lt_drop[ 3 ] ) + 1.
+            DATA(lv_from_root)  = CONV i( lt_drag[ lv_drag_lines - 2 ] ) + 1.
+            DATA(lv_from_child) = CONV i( lt_drag[ lv_drag_lines ] ) + 1.
+            DATA(lv_to_root)    = CONV i( lt_drop[ lv_drop_lines ] ) + 1.
             DATA(ls_child)      = t_nodes[ lv_from_root ]-nodes[ lv_from_child ].
           CATCH cx_root.
             RETURN.
