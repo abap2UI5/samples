@@ -57,6 +57,10 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
           CATCH cx_root.
             RETURN.
         ENDTRY.
+        " dropping a row onto itself is a no-op
+        IF lv_from = lv_to.
+          RETURN.
+        ENDIF.
         DELETE t_products INDEX lv_from.
         IF lv_from < lv_to.
           lv_to = lv_to - 1.

@@ -73,6 +73,10 @@ CLASS z2ui5_cl_demo_app_461 IMPLEMENTATION.
           CATCH cx_root.
             RETURN.
         ENDTRY.
+        " dropping a file onto its own parent folder is a no-op
+        IF lv_from_root = lv_to_root.
+          RETURN.
+        ENDIF.
         ASSIGN t_nodes[ lv_from_root ] TO FIELD-SYMBOL(<from>).
         IF sy-subrc <> 0.
           RETURN.
@@ -107,7 +111,7 @@ CLASS z2ui5_cl_demo_app_461 IMPLEMENTATION.
     page->message_strip(
         text     = `Drag a file onto another folder: the drop event ships the binding context ` &&
                    `paths of both tree items, ABAP moves the node inside the nested table and ` &&
-                   `view_model_update refreshes the tree.`
+                   `redraws the view - the z2ui5.cc.Tree companion keeps the expanded nodes open.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
