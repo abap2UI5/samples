@@ -269,6 +269,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - extended Controls (CC and Action)` header = `C Multi Input` sub = `` app = `z2ui5_cl_demo_app_078` )
       ( group = `framework - extended Controls (CC and Action)` header = `CC CameraSelector` sub = `` app = `z2ui5_cl_demo_app_306` )
       ( group = `framework - extended Controls (CC and Action)` header = `CC Data loss protection` sub = `` app = `z2ui5_cl_demo_app_279` )
+      ( group = `framework - use cases` header = `Error Handling` sub = `unexpected error popup` app = `z2ui5_cl_demo_app_464` )
       ( group = `framework - use cases` header = `sap.m.List` sub = `Events & Visualization` app = `z2ui5_cl_demo_app_048` )
       ( group = `framework - use cases` header = `sap.m.Panel (A)` sub = `setExpanded` app = `z2ui5_cl_demo_app_448` )
       ( group = `framework - use cases` header = `sap.m.PDFViewer (A)` sub = `` app = `z2ui5_cl_demo_app_449` )
