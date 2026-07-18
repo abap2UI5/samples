@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_459</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_460</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Drag and Drop - Table reorder via event args</DESCRIPT>
+    <DESCRIPT>sap.m.Tree</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
