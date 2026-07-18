@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method
     " has no dropPosition parameter
-    tab->drag_drop_config( ns = ``
+    tab->drag_drop_config( ``
         )->_generic(
             name   = `DragDropInfo`
             ns     = `dnd`
