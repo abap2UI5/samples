@@ -244,7 +244,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - action` header = `Action` sub = `control_call_by_id` app = `z2ui5_cl_demo_app_447` )
       ( group = `framework - action` header = `Browser` sub = `Logout` app = `z2ui5_cl_demo_app_361` )
       ( group = `framework - action` header = `Browser` sub = `Title` app = `z2ui5_cl_demo_app_125` )
-      ( group = `framework - action` header = `Drag and Drop` sub = `Table reorder via event args` app = `z2ui5_cl_demo_app_459` )
       ( group = `framework - action` header = `Focus I` sub = `Set Focus in Textfield` app = `z2ui5_cl_demo_app_133` )
       ( group = `framework - action` header = `Focus II` sub = `Jump with the focus` app = `z2ui5_cl_demo_app_189` )
       ( group = `framework - action` header = `Image Editor` sub = `Edit in Popup and return PNG` app = `z2ui5_cl_demo_app_383` )
