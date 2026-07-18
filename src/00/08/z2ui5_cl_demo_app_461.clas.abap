@@ -83,7 +83,11 @@ CLASS z2ui5_cl_demo_app_461 IMPLEMENTATION.
         ENDIF.
         DELETE <from>-nodes INDEX lv_from_child.
         APPEND ls_child TO <to>-nodes.
-        client->view_model_update( ).
+        " full view rebuild instead of view_model_update: the z2ui5.cc.Tree
+        " companion re-applies the expand state (snapshotted before this
+        " roundtrip) only when it renders - a pure model refresh would leave
+        " the rebuilt tree binding collapsed
+        view_display( ).
 
     ENDCASE.
 
@@ -126,6 +130,10 @@ CLASS z2ui5_cl_demo_app_461 IMPLEMENTATION.
                                       ( `${$parameters>/droppedControl}.getBindingContext().getPath()` ) ) ) ) ) ).
 
     tree->standard_tree_item( title = `{TEXT}` ).
+
+    " invisible companion: preserves the tree's expand state across the
+    " move roundtrips (snapshot before the request, re-apply after render)
+    page->_z2ui5( )->tree( `tree1` ).
 
     client->view_display( view->stringify( ) ).
 
