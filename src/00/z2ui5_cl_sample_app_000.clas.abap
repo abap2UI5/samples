@@ -311,6 +311,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `framework - new (beta)` header = `Formatter` sub = `Date objects for PlanningCalendar` app = `z2ui5_cl_demo_app_456` )
       ( group = `framework - new (beta)` header = `Formatter` sub = `demo kit pack` app = `z2ui5_cl_demo_app_453` )
       ( group = `framework - new (beta)` header = `Formatter` sub = `weightState via core require` app = `z2ui5_cl_demo_app_450` )
+      ( group = `framework - new (beta)` header = `Message Model` sub = `automatic validation` app = `z2ui5_cl_demo_app_458` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolete` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolete` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )
