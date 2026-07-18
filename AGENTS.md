@@ -302,6 +302,10 @@ All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
 must conform to the abapGit file format:
 - **Encoding**: UTF-8 (with optional BOM: `xEF BB BF`)
 - **Line endings**: LF (`x0A`) only — never CRLF
+- **abapGit `*.clas.xml` sidecars start with the UTF-8 BOM** (`EF BB BF` before
+  `<?xml`) — abapGit writes them that way, and a BOM-less sidecar produces a
+  spurious diff on the next push from a system (human fixes 2026-07-18).
+  Copy an existing sidecar as template.
 - **Final newline**: every file must end with a single newline character after the last line
 - **Indentation**: 2 spaces — never tabs
 - **Line length**: max **255 characters** per `.abap` source line (hard ABAP
