@@ -190,6 +190,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `only non-openui5 or higher UI5 1.71` header = `control` sub = `Badge (since 1.80)` app = `z2ui5_cl_demo_app_063` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Expandable Text (since 1.87)` sub = `` app = `z2ui5_cl_demo_app_301` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Harvey Chart` sub = `` app = `z2ui5_cl_demo_app_308` )
+      ( group = `only non-openui5 or higher UI5 1.71` header = `Image Editor` sub = `Edit in Popup and return PNG` app = `z2ui5_cl_demo_app_383` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `MapContainer` sub = `` app = `z2ui5_cl_demo_app_444` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `messages` sub = `illustrated (since 1.98)` app = `z2ui5_cl_demo_app_033` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `more` sub = `map container` app = `z2ui5_cl_demo_app_123` )
