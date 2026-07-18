@@ -221,6 +221,7 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Message` sub = `Backend` app = `z2ui5_cl_demo_app_008` )
       ( group = `framework - basics` header = `Message` sub = `MessageBox` app = `z2ui5_cl_demo_app_382` )
       ( group = `framework - basics` header = `Message` sub = `MessageToast` app = `z2ui5_cl_demo_app_381` )
+      ( group = `framework - basics` header = `Message` sub = `MessageView` app = `z2ui5_cl_demo_app_452` )
       ( group = `framework - basics` header = `More` sub = `Call and leave to apps` app = `z2ui5_cl_demo_app_024` )
       ( group = `framework - basics` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_demo_app_061` )
       ( group = `framework - basics` header = `More` sub = `Model Size Limit` app = `z2ui5_cl_demo_app_071` )
