@@ -303,8 +303,6 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
       ( group = `experimental, TODO` header = `Tree Table II` sub = `` app = `z2ui5_cl_demo_app_069` )
       ( group = `experimental, TODO` header = `Tree Table III` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `experimental, TODO` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
-      ( group = `framework - new (beta)` header = `Binding Call` sub = `filter and sort via backend event` app = `z2ui5_cl_demo_app_454` )
-      ( group = `framework - new (beta)` header = `Binding Call` sub = `live filter without roundtrip` app = `z2ui5_cl_demo_app_455` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolete` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolete` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )

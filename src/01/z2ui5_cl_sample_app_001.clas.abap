@@ -243,6 +243,8 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
       ( group = `framework - basics` header = `Templating II` sub = `Nested Views` app = `z2ui5_cl_demo_app_176` )
       ( group = `framework - action` header = `Action` sub = `control_call` app = `z2ui5_cl_demo_app_446` )
       ( group = `framework - action` header = `Action` sub = `control_call_by_id` app = `z2ui5_cl_demo_app_447` )
+      ( group = `framework - action` header = `Binding Call` sub = `filter and sort via backend event` app = `z2ui5_cl_demo_app_454` )
+      ( group = `framework - action` header = `Binding Call` sub = `live filter without roundtrip` app = `z2ui5_cl_demo_app_455` )
       ( group = `framework - action` header = `Browser` sub = `Logout` app = `z2ui5_cl_demo_app_361` )
       ( group = `framework - action` header = `Browser` sub = `Title` app = `z2ui5_cl_demo_app_125` )
       ( group = `framework - action` header = `Focus I` sub = `Set Focus in Textfield` app = `z2ui5_cl_demo_app_133` )
