@@ -131,16 +131,6 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
                                          t_arg = VALUE #( ( url_restricted ) ) ) ).
     ENDIF.
 
-    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
-      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
-      page->message_strip(
-          type                = `Warning`
-          showicon            = abap_true
-          enableformattedtext = abap_true
-          class               = `sapUiSmallMarginBottom`
-          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic overview.| ).
-    ENDIF.
-
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.
 

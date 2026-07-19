@@ -35,6 +35,11 @@ CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
+    METHODS class_exists
+      IMPORTING
+        name          TYPE clike
+      RETURNING
+        VALUE(result) TYPE abap_bool.
     METHODS block_widths
       IMPORTING
         t_catalog     TYPE ty_t_tile
@@ -124,6 +129,16 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
         press = client->_event_client( val   = client->cs_event-open_new_tab
                                        t_arg = VALUE #( ( url_standard ) ) ) ).
 
+    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
+      page->message_strip(
+          type                = `Warning`
+          showicon            = abap_true
+          enableformattedtext = abap_true
+          class               = `sapUiSmallMarginBottom`
+          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic overview.| ).
+    ENDIF.
+
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.
 
@@ -172,6 +187,19 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD class_exists.
+
+    TRY.
+        DATA li_app TYPE REF TO z2ui5_if_app.
+        CREATE OBJECT li_app TYPE (name).
+        result = xsdbool( li_app IS BOUND ).
+      CATCH cx_root.
+        result = abap_false.
+    ENDTRY.
 
   ENDMETHOD.
 
