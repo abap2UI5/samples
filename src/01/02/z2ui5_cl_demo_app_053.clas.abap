@@ -67,6 +67,13 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
             navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `A search field triggers a backend filter on Enter or via the Go button; the matching ` &&
+                   `rows are computed server-side and the table is refreshed.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(vbox) = page->vbox( ).
 
     vbox->hbox( )->search_field(

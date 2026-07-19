@@ -44,6 +44,13 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample demonstrates structure-level binding: each input is bound to a ` &&
+                   `field of a flat structure, including fields pulled in via INCLUDE.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->input( client->_bind_edit( val = ms_struc-title ) ).
     page->input( client->_bind_edit( val = ms_struc-value ) ).
     page->input( client->_bind_edit( val = ms_struc-value2 ) ).

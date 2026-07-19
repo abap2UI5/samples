@@ -27,6 +27,13 @@ CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample shows how to pass extra arguments to an event via t_arg - fixed ` &&
+                   `values, model values, or client-side expressions - and read them in the backend.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->link( text   = `More Infos..`
                 target = `_blank`
                 href   = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).

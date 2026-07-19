@@ -103,6 +103,13 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `A three-column FlexibleColumnLayout: select a row to open the detail column, then ` &&
+                   `navigate on to open a third, deeply nested column.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
                                                      id     = `test` ).
 

@@ -97,6 +97,13 @@ CLASS z2ui5_cl_demo_app_028 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `The list refreshes itself automatically: a client-side timer (follow_up_action) fires ` &&
+                   `every 2 seconds, appending a new entry on the server until three rows exist.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->list(
         headertext = `Data auto refresh (2 sec)`
         items      = client->_bind( t_tab )

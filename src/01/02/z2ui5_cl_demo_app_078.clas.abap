@@ -37,6 +37,13 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
       navbuttonpress = client->_event_nav_app_leave( )
       shownavbutton  = client->check_app_prev_stack( ) ).
 
+      view->message_strip(
+          text     = `The multiinput_ext custom control extends a sap.m.MultiInput so that added and removed ` &&
+                     `tokens are reported back to ABAP, where the token table and the linked list are updated.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
+
       view->_z2ui5( )->multiinput_ext(
                             addedtokens   = client->_bind_edit( mt_tokens_added )
                             removedtokens = client->_bind_edit( mt_tokens_removed )

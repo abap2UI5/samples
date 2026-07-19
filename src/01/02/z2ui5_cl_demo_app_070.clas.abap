@@ -146,6 +146,13 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
             shownavbutton        = client->check_app_prev_stack( )
             class                = `sapUiContentPadding` ).
 
+    page1->message_strip(
+        text     = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
+                   `progress-indicator and currency cells, plus backend-driven search, sort and filter events.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).

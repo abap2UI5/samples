@@ -35,6 +35,13 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `A SegmentedButton switches the table's selection mode (None, Single, Multi) at ` &&
+                   `runtime; a second table below collects the rows selected in the first.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->segmented_button(
             selected_key     = client->_bind_edit( sel_mode )
             selection_change = client->_event( `BUTTON_SEGMENT_CHANGE` ) )->get(

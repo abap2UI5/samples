@@ -56,6 +56,14 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             ).
+
+    page->message_strip(
+        text     = `A List of generic StandardListItems showing highlight bars, colored infoState and ` &&
+                   `wrap-character limits; the detail button and selection changes raise backend events with message boxes.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->list(
         headertext      = `List Output`
         items           = client->_bind_edit( t_tab )

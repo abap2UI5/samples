@@ -55,6 +55,13 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
         title          = `abap2UI5 - Sample: Nav Container`
        )->content( ).
 
+    page->message_strip(
+        text     = `Selecting a tab in the IconTabHeader switches the NavContainer page on the client via the ` &&
+                   `nav_container_to front-end action, without a backend roundtrip.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->icon_tab_header( selectedkey                   = client->_bind_edit( mv_selected_key )
                                                   select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   mode   = `Inline`

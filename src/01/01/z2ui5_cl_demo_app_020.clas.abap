@@ -49,19 +49,28 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    client->popup_display( z2ui5_cl_xml_view=>factory_popup(
-         )->dialog( `abap2UI5 - Popup to decide`
-                )->vbox(
-                    )->text( text )->get_parent(
-                )->buttons(
-                        )->button(
-                            text  = cancel_text
-                            press = client->_event( cancel_event )
-                        )->button(
-                            text  = confirm_text
-                            press = client->_event( confirm_event )
-                            type  = `Emphasized`
-                        )->stringify( ) ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(dialog) = popup->dialog( `abap2UI5 - Popup to decide` ).
+
+    dialog->message_strip(
+        text     = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&
+                   `are passed in by the caller, and the pressed event is sent back.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    dialog->vbox(
+            )->text( text )->get_parent(
+        )->buttons(
+                )->button(
+                    text  = cancel_text
+                    press = client->_event( cancel_event )
+                )->button(
+                    text  = confirm_text
+                    press = client->_event( confirm_event )
+                    type  = `Emphasized` ).
+
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 

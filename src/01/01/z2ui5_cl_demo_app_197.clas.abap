@@ -42,6 +42,13 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample shows a list-report table with a FacetFilter: selecting products ` &&
+                   `filters the rows, and Reset restores the full list.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(facet) = page->facet_filter( id                  = `idFacetFilter`
                                       type                = `Light`
                                       showpersonalization = abap_true

@@ -134,6 +134,13 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample demonstrates the MessageView control listing grouped messages by ` &&
+                   `severity; the same messages also appear in a dialog and a MessagePopover.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->header_content(
        )->link(
            text   = `UI5 Demo Kit`

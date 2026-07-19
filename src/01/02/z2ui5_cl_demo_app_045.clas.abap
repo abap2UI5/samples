@@ -66,6 +66,13 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
                 )->link(
       )->get_parent( ).
 
+    page->message_strip(
+        text     = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&
+                   `pressing filter deletes the non-matching rows server-side before re-rendering.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->simple_form( title    = `Form Title`
                        editable = abap_true
                 )->content( `form`

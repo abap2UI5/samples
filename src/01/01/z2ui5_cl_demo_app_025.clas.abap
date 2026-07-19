@@ -80,6 +80,13 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `The second app in the app-to-app flow: it reads the caller's data, returns to it ` &&
+                   `optionally raising an event, and switches between two views.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     CASE show_view.
 
       WHEN `MAIN` OR ``.

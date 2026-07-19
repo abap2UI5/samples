@@ -30,6 +30,13 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Formats amounts with the sap.ui.model.type.Currency type and its format options, ` &&
+                   `and shows how to strip the leading zeros from a numeric field.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->simple_form( title    = `Currency`
                        editable = abap_true
       )->content( `form`

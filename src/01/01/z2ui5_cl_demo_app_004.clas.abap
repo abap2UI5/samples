@@ -70,6 +70,13 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Controller basics: the buttons trigger a server roundtrip, restart the app, ` &&
+                   `switch to a second view, or raise an uncaught error.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->grid( `L6 M12 S12`
         )->content( `layout`
         )->simple_form(

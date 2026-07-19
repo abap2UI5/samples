@@ -86,6 +86,13 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Selecting a list row instantiates another abap2UI5 app by its class name and ` &&
+                   `embeds that app's own view into the detail column.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
                                                      id     = `test` ).
 

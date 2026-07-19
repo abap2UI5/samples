@@ -82,6 +82,13 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample demonstrates MessageToast: configure the text, duration, position ` &&
+                   `and animation, then show a short, non-blocking toast notification.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
@@ -139,13 +146,6 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
         text  = `Show Message Toast`
         type  = `Emphasized`
         press = client->_event( `SHOW` ) ).
-
-    page->footer(
-        )->overflow_toolbar(
-            )->button(
-                text  = `Back`
-                icon  = `sap-icon://nav-back`
-                press = client->_event_nav_app_leave( ) ).
 
     client->view_display( page->stringify( ) ).
 

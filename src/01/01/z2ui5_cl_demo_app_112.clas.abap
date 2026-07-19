@@ -23,6 +23,13 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
 
   METHOD view_display.
 
+    mo_view_parent->message_strip(
+        text     = `This is sub-app class 2: it has no page of its own - its view is injected into ` &&
+                   `a column of the calling parent app through a shared view reference.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
                            placeholder = `Input From Class 2` ).
 

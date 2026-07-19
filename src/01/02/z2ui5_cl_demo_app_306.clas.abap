@@ -56,6 +56,13 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Capture photos from the device camera custom control; pick the facing mode and camera, then edit a ` &&
+                   `captured picture in the popup image editor.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->vbox( `sapUiSmallMargin`
        )->label( text     = `facingMode: `
                  labelfor = `ComboFacingMode`

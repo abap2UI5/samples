@@ -63,12 +63,20 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    view->shell(
+    DATA(page) = view->shell(
           )->page(
                   title          = `abap2UI5 - Device Capabilities`
                   navbuttonpress = client->_event_nav_app_leave( )
-                  shownavbutton  = client->check_app_prev_stack( )
-              )->_z2ui5( )->geolocation(
+                  shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `The geolocation custom control reads the device position from the browser and binds ` &&
+                   `longitude, latitude, altitude, accuracy and speed into the read-only form below.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->_z2ui5( )->geolocation(
                                         finished         = client->_event( `GEOLOCATION_LOADED` )
                                         error            = client->_event( val   = `GEOLOCATION_ERROR`
                                                                            t_arg = VALUE #( ( `${$parameters>/code}` )

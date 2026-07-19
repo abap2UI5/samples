@@ -40,6 +40,13 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( )
             id             = `test2` ).
 
+    page->message_strip(
+        text     = `A MultiSelect table whose input cells switch between display and edit mode via the ` &&
+                   `toolbar, which also adds new rows and deletes the currently selected ones.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(tab) = page->table(
             items = |\{path: '{ client->_bind_edit( val = t_tab path = abap_true ) }', templateShareable: false\}|
             mode  = `MultiSelect`

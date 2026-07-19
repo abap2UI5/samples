@@ -81,12 +81,20 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(page) = view->shell(
         )->page(
             title          = `abap2UI5 - Popover Examples`
             navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form( `Popover`
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Popover demo: choose a placement with the segmented button, then open a popover ` &&
+                   `anchored to a control, with confirm and cancel actions.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( `Popover`
         )->content( `form`
         )->title( `Input`
         )->label( `Link`

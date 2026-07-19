@@ -46,6 +46,13 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = client->check_app_prev_stack( ) ).
 
+    view->message_strip(
+        text     = `This sample builds table columns and cells dynamically from a layout table ` &&
+                   `using template repeat, plus a template if/then/else that re-renders on a switch.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     view->table( client->_bind_edit( mt_data )
       )->columns(
         )->template_repeat( list = `{template>/XX/MT_LAYOUT}`

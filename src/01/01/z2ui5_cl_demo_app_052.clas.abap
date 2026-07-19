@@ -72,6 +72,13 @@ CLASS z2ui5_cl_demo_app_052 IMPLEMENTATION.
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `List report layout: a dynamic page with a table whose product links open a popover ` &&
+                   `showing details for the selected row.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page = page->dynamic_page( headerexpanded = abap_true ).
 
     DATA(cont) = page->content( `f` ).

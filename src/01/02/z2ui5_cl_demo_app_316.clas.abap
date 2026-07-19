@@ -47,6 +47,13 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      shownavbutton  = client->check_app_prev_stack( )
                       ).
 
+    page->message_strip(
+        text     = `The URL helper triggers native browser actions from ABAP: open e-mail, telephone and SMS links, or ` &&
+                   `redirect the browser to a URL.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
 

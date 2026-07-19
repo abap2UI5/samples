@@ -48,6 +48,13 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
                 navbuttonpress = i_client->_event_nav_app_leave( )
                 shownavbutton  = i_client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample renders a main view and then embeds a second view into it as ` &&
+                   `nested content via nest_view_display.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     i_client->view_display( lo_view->stringify( ) ).
 
   ENDMETHOD.

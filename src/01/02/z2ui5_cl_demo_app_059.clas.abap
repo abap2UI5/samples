@@ -86,6 +86,13 @@ CLASS Z2UI5_CL_DEMO_APP_059 IMPLEMENTATION.
             navbuttonpress                 = client->_event_nav_app_leave( )
             shownavbutton                  = client->check_app_prev_stack( ) ).
 
+    page1->message_strip(
+        text     = `The search field's livechange event sends every keystroke to the backend (multiple ` &&
+                   `parallel requests allowed) to live-filter the table as the user types.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(lo_box) = page1->vbox( )->text( `Search`
         )->search_field( width      = `17.5rem`
                          livechange = client->_event(

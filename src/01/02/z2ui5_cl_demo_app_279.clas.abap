@@ -31,6 +31,13 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
                       navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Unsaved input marks the page dirty via a custom control; navigating back then opens a confirmation ` &&
+                   `popup instead of leaving and losing the data.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(box) = page->flex_box( direction  = `Row`
                                 alignitems = `Start`
                                 class      = `sapUiTinyMargin` ).

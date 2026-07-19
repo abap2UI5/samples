@@ -77,12 +77,20 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(page) = view->shell(
         )->page(
             title          = `abap2UI5 - flow logic - APP 01`
             navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-        )->grid( `L6 M12 S12`
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `App-to-app navigation: calls a second app in different ways - open a view, raise ` &&
+                   `an event or pass data - and reads the input it returns.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->grid( `L6 M12 S12`
         )->content( `layout`
         )->simple_form( `Controller`
         )->content( `form`

@@ -102,14 +102,22 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
+    DATA(page) = view->shell(
         )->page(
                 title          = `abap2UI5 - Popup To Popup`
                 navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
-           )->button(
-            text  = `Open Popup...`
-            press = client->_event( `POPUP` ) ).
+                shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Press the button to open a dialog; from there a second popup can be opened and navigated ` &&
+                   `back to the first, demonstrating popup-to-popup navigation.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->button(
+        text  = `Open Popup...`
+        press = client->_event( `POPUP` ) ).
 
     client->view_display( view->stringify( ) ).
 

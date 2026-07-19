@@ -78,6 +78,13 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
+                   `strips the prefix, decodes the payload and shows the file content in a message box.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     IF table IS NOT INITIAL.
 
       FIELD-SYMBOLS <table> TYPE table.

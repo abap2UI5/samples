@@ -55,6 +55,14 @@ CLASS Z2UI5_CL_DEMO_APP_047 IMPLEMENTATION.
                 title          = `abap2UI5 - Integer and Decimals`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Numeric and date/time binding: integer and decimal fields use automatic type ` &&
+                   `conversion, buttons calculate the sums, and a growing table lists the values.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->simple_form( title    = `Integer and Decimals`
                        editable = abap_true
              )->content( `form`

@@ -21,24 +21,32 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
       quantity = `500`.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->shell(
+      DATA(page) = view->shell(
           )->page(
               title          = `abap2UI5 - First Example`
               navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form(
-                  title    = `Form Title`
-                  editable = abap_true
-                  )->content( `form`
-                  )->label( `quantity`
-                  )->input( client->_bind_edit( quantity )
-                  )->label( `product`
-                  )->input(
-                      value   = product
-                      enabled = abap_false
-                  )->button(
-                      text  = `post`
-                      press = client->_event( `BUTTON_POST` ) ).
+              shownavbutton  = client->check_app_prev_stack( ) ).
+
+      page->message_strip(
+          text     = `The first abap2UI5 app: an editable quantity field bound two-way, a read-only ` &&
+                     `product field, and a button that sends both values to the server.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
+
+      page->simple_form(
+          title    = `Form Title`
+          editable = abap_true
+          )->content( `form`
+          )->label( `quantity`
+          )->input( client->_bind_edit( quantity )
+          )->label( `product`
+          )->input(
+              value   = product
+              enabled = abap_false
+          )->button(
+              text  = `post`
+              press = client->_event( `BUTTON_POST` ) ).
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `BUTTON_POST` ).

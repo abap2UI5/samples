@@ -92,6 +92,13 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `A large table (10,000 rows) is rendered inside a ScrollContainer using growing / ` &&
+                   `scroll-to-load, with a sticky header toolbar offering sort buttons and a segmented button.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(tab) = page->scroll_container(
         height   = `70%`
         vertical = abap_true

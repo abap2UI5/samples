@@ -30,6 +30,13 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample demonstrates cell-level binding: each input is bound to one ` &&
+                   `cell of an internal table via tab_index, so edits target exactly that row and field.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.
       page->input( client->_bind_edit( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).

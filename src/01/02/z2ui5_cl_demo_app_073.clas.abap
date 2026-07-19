@@ -18,18 +18,27 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    client->view_display( view->shell(
-          )->page(
-                  title          = `abap2UI5 - Open New Tab`
-                  navbuttonpress = client->_event_nav_app_leave( )
-                  shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form( title    = `Form Title`
-                              editable = abap_true
-                  )->content( `form`
-                      )->button(
-                          text  = `open new tab`
-                          press = client->_event( val = `BUTTON_OPEN_NEW_TAB` )
-           )->stringify( ) ).
+    DATA(page) = view->shell( )->page(
+        title          = `abap2UI5 - Open New Tab`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Press the button to open the app's own URL in a new browser tab: the backend builds the ` &&
+                   `URL and the open_new_tab front-end action launches it.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form(
+        title    = `Form Title`
+        editable = abap_true
+        )->content( `form`
+            )->button(
+                text  = `open new tab`
+                press = client->_event( val = `BUTTON_OPEN_NEW_TAB` ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 

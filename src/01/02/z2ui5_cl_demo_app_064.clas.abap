@@ -129,6 +129,13 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     shownavbutton  = temp5
     class          = `sapUiContentPadding` ).
 
+    page1->message_strip(
+        text     = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
+                   `step and re-arms a client timer (follow_up_action), advancing the bar in 25% steps until it completes.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     layout = page1->vertical_layout( class = `sapuicontentpadding`
     width  = `100%` ).
     layout->vbox( )->progress_indicator(

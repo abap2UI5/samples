@@ -111,6 +111,13 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
             )->link(
       )->get_parent( ).
 
+    page->message_strip(
+        text     = `Pressing ENTER in a sap.ui.table cell input fires a backend event that carries the cell id, ` &&
+                   `its row index and the parent row id as event arguments, shown here in a message box.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->text( `Make an input and press ENTER` ).
 
     DATA(table) = page->flex_box( height = `85vh`

@@ -47,6 +47,12 @@ CLASS Z2UI5_CL_DEMO_APP_189 IMPLEMENTATION.
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Pressing Enter in an input field jumps the cursor to the next one via the set_focus follow-up action.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->simple_form(
        )->content( `form`
        )->label( `One (Press Enter)` )->input( id     = `IdOne`

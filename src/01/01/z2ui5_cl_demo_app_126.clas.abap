@@ -126,6 +126,13 @@ CLASS z2ui5_cl_demo_app_126 IMPLEMENTATION.
       page = mo_parent_view->get( `Page` ).
     ENDIF.
 
+    page->message_strip(
+        text     = `This sample shows the ProgressIndicator control, which renders a ` &&
+                   `completion percentage as a labeled progress bar.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`

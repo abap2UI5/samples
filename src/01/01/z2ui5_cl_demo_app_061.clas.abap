@@ -30,6 +30,13 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE table.
     ASSIGN t_tab->* TO <tab>.
 
+    page->message_strip(
+        text     = `A table typed dynamically at runtime via RTTI from a DDIC table type, with editable ` &&
+                   `multi-select rows bound directly to the dynamically created data.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(tab) = page->table(
             items = client->_bind_edit( <tab> )
             mode  = `MultiSelect`

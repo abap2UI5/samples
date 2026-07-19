@@ -19,20 +19,28 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->shell(
+      DATA(page) = view->shell(
           )->page(
               title          = `abap2UI5 - Change Browser Title`
               navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( )
-              )->simple_form(
-                  title    = `Form Title`
-                  editable = abap_true
-                  )->content( `form`
-                  )->label( `title`
-                  )->input( client->_bind_edit( title )
-                  )->button(
-                      text  = `Set Title`
-                      press = client->_event( `SET_TITLE` ) ).
+              shownavbutton  = client->check_app_prev_stack( ) ).
+
+      page->message_strip(
+          text     = `Enter a title and press the button to run the set_title front-end action, which updates ` &&
+                     `the browser tab title (document.title) without reloading the page.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
+
+      page->simple_form(
+          title    = `Form Title`
+          editable = abap_true
+          )->content( `form`
+          )->label( `title`
+          )->input( client->_bind_edit( title )
+          )->button(
+              text  = `Set Title`
+              press = client->_event( `SET_TITLE` ) ).
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `SET_TITLE` ).

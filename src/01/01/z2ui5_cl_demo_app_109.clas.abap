@@ -67,12 +67,21 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-      )->page(
-              title          = `abap2UI5 - Popover Quickview Examples`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( `QuickView Popover`
+
+    DATA(page) = view->shell(
+        )->page(
+            title          = `abap2UI5 - Popover Quickview Examples`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Opens a QuickView popover, a compact contact card with grouped fields and links, ` &&
+                   `anchored to a button; the segmented button sets its placement.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( `QuickView Popover`
               )->content( `form`
                   )->title( `QuickView Popover`
                   )->label( `placement`

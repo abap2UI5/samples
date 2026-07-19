@@ -72,6 +72,13 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `This sample demonstrates MessageBox: open confirm, information, success, ` &&
+                   `warning, error, or a custom dialog with your own actions.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->header_content(
        )->link(
            text   = `UI5 Demo Kit`
@@ -94,10 +101,6 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
 
     page->footer(
         )->overflow_toolbar(
-            )->button(
-                text  = `Back`
-                icon  = `sap-icon://nav-back`
-                press = client->_event_nav_app_leave( )
             )->text( `Open Message Box:`
             )->toolbar_spacer(
             )->button(

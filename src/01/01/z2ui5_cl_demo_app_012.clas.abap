@@ -87,6 +87,13 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Shows different ways to open a popup - inside the same app or as a sub-app - ` &&
+                   `and how the background view is kept, destroyed or re-rendered.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
         )->simple_form( `Popup in same App` )->content( `form`
             )->label( `Demo`

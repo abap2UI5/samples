@@ -49,31 +49,39 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
     ENDDO.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( view->shell(
-         )->page(
-                 title          = `abap2UI5 - First Example`
-                 navbuttonpress = client->_event_nav_app_leave( )
-                 shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( title = `Form Title` editable = abap_true
-                 )->content( `form`
-                     )->title( `Input`
-                     )->label( `Link`
-                     )->label( `setSizeLimit`
-                     )->input( value = client->_bind_edit( mv_set_size_limit )
-                     )->button(
-                         text  = `update size limit`
-                         press = client->_event( val = `UPDATE` )
-                     )->label( `Number of Entries`
-                     )->input( value = client->_bind_edit( mv_combo_number )
-                     )->button(
-                         text  = `update number entries`
-                         press = client->_event( val = `UPDATE_MODEL` )
-                     )->label( `demo`
-                     )->combobox( items = client->_bind( t_combo )
-                        )->item( key = `{KEY}` text = `{TEXT}`
-                        )->get_parent( )->get_parent(
 
-        )->stringify( ) ).
+    DATA(page) = view->shell(
+        )->page(
+            title          = `abap2UI5 - First Example`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `A ComboBox bound to a large internal table: adjust the model's setSizeLimit to ` &&
+                   `control how many of the entries the control actually renders.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( title = `Form Title` editable = abap_true
+        )->content( `form`
+            )->title( `Input`
+            )->label( `Link`
+            )->label( `setSizeLimit`
+            )->input( client->_bind_edit( mv_set_size_limit )
+            )->button(
+                text  = `update size limit`
+                press = client->_event( val = `UPDATE` )
+            )->label( `Number of Entries`
+            )->input( client->_bind_edit( mv_combo_number )
+            )->button(
+                text  = `update number entries`
+                press = client->_event( val = `UPDATE_MODEL` )
+            )->label( `demo`
+            )->combobox( items = client->_bind( t_combo )
+               )->item( key = `{KEY}` text = `{TEXT}` ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

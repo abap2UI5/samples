@@ -57,14 +57,22 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
     bind_input52  = client->_bind( val = input52 path = abap_true ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(form) = view->shell(
+    DATA(page) = view->shell(
         )->page(
             title          = `abap2UI5 - Binding Syntax`
             navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-        )->simple_form(
-            title    = `Binding Syntax`
-            editable = abap_true
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Advanced binding syntax: expression binding, typed bindings, conditional enabling ` &&
+                   `with RegExp checks, and composite (parts) bindings.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    DATA(form) = page->simple_form(
+        title    = `Binding Syntax`
+        editable = abap_true
         )->content( `form` ).
 
     form->title( `Expression Binding`

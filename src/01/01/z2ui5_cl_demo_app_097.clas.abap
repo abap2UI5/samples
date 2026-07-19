@@ -77,6 +77,13 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `A master-detail screen built with FlexibleColumnLayout: select a list row and its ` &&
+                   `detail opens in a second column as a nested view with a table.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
                                                      id     = `test` ).
 

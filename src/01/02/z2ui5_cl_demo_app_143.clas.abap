@@ -63,6 +63,13 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( ) ).
 
+    page1->message_strip(
+        text     = `This sample uses the abap2UI5 uitableext custom control so the active sap.ui.table column ` &&
+                   `filters are preserved across a view model update instead of being reset.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(page) = page1->dynamic_page( headerexpanded = abap_true
                                       headerpinned   = abap_true ).
     page1->_z2ui5( )->uitableext( `Table1` ).

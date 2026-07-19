@@ -48,6 +48,13 @@ CLASS Z2UI5_CL_DEMO_APP_352 IMPLEMENTATION.
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Set the on-screen soft keyboard mode (numeric or off) via the keyboard_set_mode follow-up action, and ` &&
+                   `focus the input on load.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->simple_form(
               editable = abap_true
          )->content( `form`

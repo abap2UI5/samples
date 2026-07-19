@@ -65,6 +65,13 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = client->check_app_prev_stack( ) ).
 
+    view->message_strip(
+        text     = `This sample opens a Menu as a popover anchored to a button; choosing an ` &&
+                   `item shows the selected action in a MessageToast.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     DATA(vbox) = view->vbox( ).
 
     vbox->button( text  = `Open Menu`
