@@ -77,8 +77,8 @@ CLASS Z2UI5_CL_DEMO_APP_455 IMPLEMENTATION.
                 headertext = `Products`
                 items      = client->_bind_edit( t_products )
                 class      = `sapUiSmallMargin`
-        )->standard_list_item( title = `{NAME}`
-                               info  = `{CATEGORY}` ).
+        )->standard_list_item( title       = `{NAME}`
+                               description = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).
 
