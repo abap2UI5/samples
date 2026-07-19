@@ -50,9 +50,6 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
       WHEN `BUTTON_RESTART`.
         client->nav_app_call( NEW z2ui5_cl_demo_app_025( ) ).
 
-      WHEN `BUTTON_CHANGE_APP`.
-        client->nav_app_call( NEW z2ui5_cl_demo_app_001( ) ).
-
       WHEN `BUTTON_READ_PREVIOUS`.
         DATA(app_024) = CAST z2ui5_cl_demo_app_024( client->get_app( client->get( )-s_draft-id_prev_app ) ).
         input_previous = app_024->input2.

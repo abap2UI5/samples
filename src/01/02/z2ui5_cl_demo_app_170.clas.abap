@@ -28,7 +28,8 @@ CLASS z2ui5_cl_demo_app_170 IMPLEMENTATION.
          )->content( ).
 
     DATA(content) = dialog->icon_tab_bar( selectedkey        = client->_bind_edit( mv_selected_key )
-                                                  select     = client->_event_client( val = `POPUP_NAV_CONTAINER_TO` t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                  select     = client->_event_client( val   = client->cs_event-control_by_id
+                                                                                      t_arg = VALUE #( ( `NavCon` ) ( `POPUP` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   headermode = `Inline`
                                                   expanded   = abap_true
                                                   expandable = abap_false

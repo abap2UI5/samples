@@ -211,7 +211,6 @@ CLASS z2ui5_cl_demo_app_g00 IMPLEMENTATION.
       ( group = `Basic I` header = `Binding` sub = `Expression Binding` app = `z2ui5_cl_demo_app_027` )
       ( group = `Basic I` header = `Binding` sub = `Formatting Currencies` app = `z2ui5_cl_demo_app_067` )
       ( group = `Basic I` header = `Binding` sub = `Formatting Integers, Decimals, Dates & Time` app = `z2ui5_cl_demo_app_047` )
-      ( group = `Basic I` header = `Binding` sub = `Level Simple` app = `z2ui5_cl_demo_app_001` )
       ( group = `Basic I` header = `Binding` sub = `Level Structure/Component` app = `z2ui5_cl_demo_app_166` )
       ( group = `Basic I` header = `Binding` sub = `Level Table/Cell` app = `z2ui5_cl_demo_app_144` )
       ( group = `Basic I` header = `Event` sub = `Additional Infos with t_args` app = `z2ui5_cl_demo_app_167` )

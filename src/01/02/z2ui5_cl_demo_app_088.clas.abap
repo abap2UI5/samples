@@ -57,13 +57,14 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     page->message_strip(
         text     = `Selecting a tab in the IconTabHeader switches the NavContainer page on the client via the ` &&
-                   `nav_container_to front-end action, without a backend roundtrip.`
+                   `generic CONTROL_BY_ID front-end action (whitelisted method 'to'), without a backend roundtrip.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
     page->icon_tab_header( selectedkey                   = client->_bind_edit( mv_selected_key )
-                                                  select = client->_event_client( val = client->cs_event-nav_container_to t_arg  = VALUE #( ( `NavCon` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                  select = client->_event_client( val   = client->cs_event-control_by_id
+                                                                                  t_arg = VALUE #( ( `NavCon` ) ( `MAIN` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   mode   = `Inline`
                                   )->items(
                                     )->icon_tab_filter( key  = `page1`
