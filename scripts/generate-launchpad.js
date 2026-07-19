@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /*
  * Generates the two overview apps' catalogs from the folder tree.
- * (These are the sample_app_000/001 index pages, not the Fiori Launchpad
- * samples in src/00/03.)
+ * (These are the demo_app_g00 / sample_app_g01 index pages, not the Fiori
+ * Launchpad samples in src/00/03.)
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -14,7 +14,7 @@
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
- *      overview app of each area (src/01 -> sample_app_001, src/00 -> sample_app_000):
+ *      overview app of each area (src/01 -> demo_app_g00, src/00 -> sample_app_g01):
  *        - groups in folder-number order
  *        - tiles within a group sorted by header, then sub, then app
  *
@@ -29,9 +29,17 @@ const SRC = path.join(__dirname, '..', 'src');
 
 // area (top-level package under src) -> overview app file
 const TARGETS = {
-  '01': path.join(SRC, '01', 'z2ui5_cl_sample_app_001.clas.abap'),
-  '00': path.join(SRC, '00', 'z2ui5_cl_sample_app_000.clas.abap'),
+  '01': path.join(SRC, '01', 'z2ui5_cl_demo_app_g00.clas.abap'),
+  '00': path.join(SRC, '00', 'z2ui5_cl_sample_app_g01.clas.abap'),
 };
+
+// The overview apps live under src/ too; the src/01 one (z2ui5_cl_demo_app_g00)
+// even shares the demo-app class-name prefix. Skip both so an overview never
+// lists itself as a tile.
+const OVERVIEW_APPS = new Set([
+  'z2ui5_cl_demo_app_g00',
+  'z2ui5_cl_sample_app_g01',
+]);
 
 function walk(dir, out = []) {
   for (const name of fs.readdirSync(dir)) {
@@ -98,6 +106,7 @@ let hidden = 0;
 for (const abap of walk(SRC)) {
   if (!abap.endsWith('.clas.abap')) continue;
   const cls = path.basename(abap, '.clas.abap');
+  if (OVERVIEW_APPS.has(cls)) continue; // an overview app is never a tile
   if (!cls.startsWith('z2ui5_cl_demo_app')) continue;
 
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]

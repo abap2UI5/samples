@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_sample_app_001 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_g00 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_sample_app_001 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_g00 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -128,8 +128,8 @@ CLASS z2ui5_cl_sample_app_001 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    IF class_exists( `Z2UI5_CL_SAMPLE_APP_000` ) = abap_true.
-      DATA(url_restricted) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_app_000|.
+    IF class_exists( `Z2UI5_CL_SAMPLE_APP_G01` ) = abap_true.
+      DATA(url_restricted) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_app_g01|.
       page->header_content( )->button(
           text  = `Extended Samples`
           icon  = `sap-icon://action`

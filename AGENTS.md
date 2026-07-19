@@ -132,7 +132,7 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 ## 3. The two overview apps
 
-`z2ui5_cl_sample_app_000` and `z2ui5_cl_sample_app_001` are **overview apps** —
+`z2ui5_cl_sample_app_g01` and `z2ui5_cl_demo_app_g00` are **overview apps** —
 generated index pages that list all samples of an area. They are *not* Fiori
 Launchpad apps; do not confuse them with the launchpad samples in `src/00/03`,
 which are the demos that run inside a real Fiori Launchpad.
@@ -141,8 +141,8 @@ There is **one overview app per top-level package**, and they cross-link:
 
 | App class                | Lives in | Title                            | Mirrors     | Button → other |
 |--------------------------|----------|----------------------------------|-------------|----------------|
-| `z2ui5_cl_sample_app_001`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_000` |
-| `z2ui5_cl_sample_app_000`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `sample_app_001` |
+| `z2ui5_cl_demo_app_g00`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_g01` |
+| `z2ui5_cl_sample_app_g01`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `demo_app_g00` |
 
 Both are identical in shape: a `get_catalog( )` method returning a flat table of
 tiles, and a `view_display( )` that loops the catalog, emitting an H3 section
@@ -168,7 +168,7 @@ the block plus roughly one space, precomputed by `block_widths( )` /
 underneath each other in one column, directly next to the links.
 
 `z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
-obsolete); `sample_app_000` links to it from its info message strip. Do not
+obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 
 ---
@@ -230,8 +230,8 @@ from the old catalog.
 
 ### Generation rules
 
-1. **One catalog per area.** Apps in `src/01/**` belong in `sample_app_001`; apps in
-   `src/00/**` belong in `sample_app_000`. Never list an app in the wrong overview app.
+1. **One catalog per area.** Apps in `src/01/**` belong in `demo_app_g00`; apps in
+   `src/00/**` belong in `sample_app_g01`. Never list an app in the wrong overview app.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
@@ -254,8 +254,8 @@ from the old catalog.
    untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (moving a subpackage from
-   `src/01` to `src/00` lifts its entire tile group out of `sample_app_001`
-   and into `sample_app_000`).
+   `src/01` to `src/00` lifts its entire tile group out of `demo_app_g00`
+   and into `sample_app_g01`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
    overview, none missing. The safest way to regenerate is to rebuild each

@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_app_g01 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -66,7 +66,7 @@ CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -128,7 +128,7 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_app_001|.
+    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_g00|.
     page->header_content( )->button(
         text  = `Basic Samples`
         icon  = `sap-icon://action`
