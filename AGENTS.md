@@ -156,13 +156,16 @@ catalog correct.
 Within a group, `view_display( )` also inserts a **blank line between blocks**:
 consecutive tiles whose `header` shares the same base name form one block, and a
 new block (first row gets `sapUiSmallMarginTop`) starts when the base changes.
-The base is the header with a trailing Roman numeral removed (`header_base( )`),
-so `Binding`, `Binding I` … `Binding VIII` render as one block, then a gap, then
-the `Event` block, and so on. All links of a block share the same width — the
-estimated render width of the widest header in the block plus roughly one
-space, precomputed by `block_widths( )` / `header_width( )` — so the `sub`
-descriptions of a block line up exactly underneath each other in one column,
-directly next to the links.
+The base comes from `block_base( )`: in the **controls section** (groups whose
+CTEXT starts with `controls -`) it is the header's **first letter**, so a blank
+line separates letter groups only (`Button`, `ButtonGroup` render together, then
+a gap before `Carousel`); everywhere else it is the header with a trailing Roman
+numeral removed (`header_base( )`), so `Binding`, `Binding I` … `Binding VIII`
+render as one block, then a gap, then the `Event` block, and so on. All links of
+a block share the same width — the estimated render width of the widest header in
+the block plus roughly one space, precomputed by `block_widths( )` /
+`header_width( )` — so the `sub` descriptions of a block line up exactly
+underneath each other in one column, directly next to the links.
 
 `z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_001` links to it via a message strip. Do not extend it.
@@ -214,6 +217,11 @@ line:
   before is `header`, the part after is `sub` (which may itself contain ` - `).
 - No ` - ` at all → `header` = the whole DESCRIPT, `sub` = empty.
 - Unescape XML entities (`&amp;` → `&`, etc.) when copying into the ABAP literal.
+- **Controls section only** (groups whose CTEXT starts with `controls -`): the
+  generator drops the namespace prefix from `header` (`sap.m.Switch` → `Switch`
+  — the group heading already names the namespace) and truncates `sub` to one
+  line (`CONTROLS_SUB_MAX` characters, backed off to a word boundary, `+ " ..."`)
+  so the overview never wraps.
 
 When regenerating, **re-read every class's `<DESCRIPT>`** — the descriptions are
 maintained on the classes and change there, so never carry `header`/`sub` over

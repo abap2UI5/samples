@@ -55,6 +55,12 @@ CLASS z2ui5_cl_sample_app_000 DEFINITION PUBLIC.
         header        TYPE string
       RETURNING
         VALUE(result) TYPE string.
+    METHODS block_base
+      IMPORTING
+        group         TYPE string
+        header        TYPE string
+      RETURNING
+        VALUE(result) TYPE string.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -144,7 +150,8 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
 
     LOOP AT t_catalog INTO DATA(tile).
 
-      DATA(base) = header_base( tile-header ).
+      DATA(base) = block_base( group  = tile-group
+                               header = tile-header ).
       DATA(new_block) = abap_false.
 
       IF tile-group <> prev_group.
@@ -362,7 +369,8 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
 
     LOOP AT t_catalog INTO DATA(tile).
 
-      DATA(base) = header_base( tile-header ).
+      DATA(base) = block_base( group  = tile-group
+                               header = tile-header ).
       READ TABLE result ASSIGNING FIELD-SYMBOL(<block>)
         WITH KEY group = tile-group
                  base  = base.
@@ -417,6 +425,23 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
           table = words
           sep   = ` ` ).
 
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD block_base.
+
+    " In the controls section a block groups all controls that share the same
+    " first letter, so a blank line separates letter groups only (Button,
+    " ButtonGroup | Carousel). Elsewhere a block is the header without its
+    " trailing Roman numeral (Binding, Binding II, ...).
+    IF group CP `controls -*`.
+      result = to_upper( substring( val = header
+                                    off = 0
+                                    len = 1 ) ).
+    ELSE.
+      result = header_base( header ).
     ENDIF.
 
   ENDMETHOD.

@@ -63,6 +63,25 @@ function splitDescript(d) {
   return i === -1 ? { header: t, sub: '' } : { header: t.slice(0, i), sub: t.slice(i + 3) };
 }
 
+// Controls-section tiles (the 01/08 demo-kit rebuilds) are shown without their
+// namespace prefix - the group heading already states it (sap.m, sap.uxap, …) -
+// and with a one-line, truncated description so the overview never wraps.
+const CONTROLS_SUB_MAX = 90;
+
+// keep only the entity name after the last dot: sap.m.Switch -> Switch
+function stripNamespace(header) {
+  return header.replace(/^.*\./, '');
+}
+
+// cut to CONTROLS_SUB_MAX, backing off to the last word boundary, + " ..."
+function truncateSub(sub) {
+  if (sub.length <= CONTROLS_SUB_MAX) return sub;
+  let cut = sub.slice(0, CONTROLS_SUB_MAX);
+  const space = cut.lastIndexOf(' ');
+  if (space > CONTROLS_SUB_MAX * 0.6) cut = cut.slice(0, space);
+  return `${cut.replace(/[\s.,;:]+$/, '')} ...`;
+}
+
 // --- 1. scan --------------------------------------------------------------
 const ctextCache = {};
 function groupOf(dir) {
@@ -109,9 +128,17 @@ for (const abap of walk(SRC)) {
   }
 
   if (header.trim().toUpperCase() === 'ZZZ') { hidden++; continue; }
+
+  const group = groupOf(path.dirname(abap));
+  // controls section: drop the namespace prefix and truncate the description
+  if (group.startsWith('controls -')) {
+    header = stripNamespace(header);
+    sub = truncateSub(sub);
+  }
+
   if ((header + sub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
 
-  tiles[area].push({ subnum, group: groupOf(path.dirname(abap)), header, sub, app: cls });
+  tiles[area].push({ subnum, group, header, sub, app: cls });
 }
 
 // --- 2. sort --------------------------------------------------------------
