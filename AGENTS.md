@@ -34,9 +34,7 @@ apps directly in `src/` root** — every sample sits in a categorised subpackage
 src/
 ├── 01/  "basic"     cloud-ready & downportable — survives every build
 │   ├── 01/  framework - basics
-│   ├── 02/  framework - action
-│   ├── 05/  framework - extended Controls (CC and Action)
-│   ├── 06/  framework - use cases
+│   ├── 02/  framework - use cases     framework actions, custom controls and use cases
 │   └── 08/  controls - UI5 Demo Kit     1:1 rebuilds of UI5 demo kit samples, split by library
 │       ├── 00/  controls - sap.m
 │       ├── 01/  controls - sap.uxap
@@ -84,8 +82,8 @@ truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
 Demos that have no demo kit original do not belong in `01/08` — file them in
-the framework packages (`01/05` for custom-control/action demos, `01/06` for
-use cases) or, when a restriction applies, in the matching `src/00` category.
+the framework package (`01/02`, actions / custom controls / use cases) or,
+when a restriction applies, in the matching `src/00` category.
 
 Machine-generated demo kit ports that have not been manually reviewed do not
 live in this repository — they are collected in the separate api repository
