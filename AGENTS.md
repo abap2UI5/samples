@@ -165,7 +165,11 @@ render as one block, then a gap, then the `Event` block, and so on. All links of
 a block share the same width — the estimated render width of the widest header in
 the block plus roughly one space, precomputed by `block_widths( )` /
 `header_width( )` — so the `sub` descriptions of a block line up exactly
-underneath each other in one column, directly next to the links.
+underneath each other in one column, directly next to the links. This
+blank-line-between-blocks applies to the **basic** overview (`demo_app_g00`)
+only; the **extended** overview (`sample_app_g01`) lists every sample directly
+under the previous one (no inter-block blank line), keeping only the per-group
+H3 titles and the column alignment.
 
 `z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not

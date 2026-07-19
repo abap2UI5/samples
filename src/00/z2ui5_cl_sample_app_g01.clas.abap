@@ -153,13 +153,11 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
         text                = info ).
 
     DATA(prev_group) = ``.
-    DATA(prev_base) = ``.
 
     LOOP AT t_catalog INTO DATA(tile).
 
       DATA(base) = block_base( group  = tile-group
                                header = tile-header ).
-      DATA(new_block) = abap_false.
 
       IF tile-group <> prev_group.
         page->title(
@@ -167,22 +165,17 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
             level = `H3`
             class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
         prev_group = tile-group.
-
-      ELSEIF base <> prev_base.
-        new_block = abap_true.
       ENDIF.
-
-      prev_base = base.
 
       " widest header of the block plus roughly one space, in 1/100 em
       DATA(tenths) = ( t_blocks[ group = tile-group base = base ]-width + 45 ) DIV 10.
       DATA(width) = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
+      " extended overview: every sample directly under the previous one, no
+      " blank line between blocks
       DATA(row) = page->hbox(
           alignitems = `Center`
           wrap       = `Wrap`
-          class      = COND #( WHEN new_block = abap_true
-                               THEN `sapUiTinyMarginBegin sapUiSmallMarginTop`
-                               ELSE `sapUiTinyMarginBegin` ) ).
+          class      = `sapUiTinyMarginBegin` ).
 
       IF tile-sub IS INITIAL.
         row->link(
