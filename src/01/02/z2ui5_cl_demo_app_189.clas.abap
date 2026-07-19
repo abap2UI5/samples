@@ -17,7 +17,9 @@ CLASS z2ui5_cl_demo_app_189 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_189 IMPLEMENTATION.
+
 
   METHOD dispatch.
 
@@ -75,5 +77,4 @@ CLASS z2ui5_cl_demo_app_189 IMPLEMENTATION.
     dispatch( ).
 
   ENDMETHOD.
-
 ENDCLASS.
