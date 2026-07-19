@@ -33,8 +33,8 @@ apps directly in `src/` root** — every sample sits in a categorised subpackage
 ```
 src/
 ├── 01/  "basic"     cloud-ready & downportable — survives every build
-│   ├── 01/  Basics
-│   ├── 02/  Extended     framework actions, custom controls and use cases
+│   ├── 01/  Basic I
+│   ├── 02/  Basic II     framework actions, custom controls and use cases
 │   └── 08/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
 │       ├── 00/  controls - sap.m
 │       ├── 01/  controls - sap.uxap
