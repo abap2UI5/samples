@@ -747,3 +747,43 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
 ENDCLASS.
 ```
+
+---
+
+## 12. Sample content conventions
+
+Learned while curating the `01/01` (Basic I) and `01/02` (Basic II) packages —
+follow these so new/edited samples stay consistent:
+
+- **Every sample opens with an intro `MessageStrip`.** As the **first control in
+  the page content** (right after the page is created, before the form/table),
+  add a short, specific English explanation of what the sample demonstrates:
+  ```abap
+  page->message_strip(
+      text     = `<one or two sentences: what this sample shows / does>`
+      type     = `Information`
+      showicon = abap_true
+      class    = `sapUiSmallMargin` ).
+  ```
+  Split a long `text` into `` `chunk ` && `` continuation lines (≤255 chars/line,
+  aligned under the first backtick). If the view is one uncaptured fluent chain,
+  capture the page first (`DATA(page) = <view>->shell( )->page( ... ).`).
+
+- **`01/02` DESCRIPTs carry a capability marker** appended to the `<DESCRIPT>`
+  (leading space), surfaced in the overview:
+  - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
+    `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
+  - `(A)` — performs a **frontend action**: `client->_event_client( )`,
+    `client->follow_up_action( )`, `control_call`/`control_call_by_id`,
+    `binding_call`/`binding_call_by_id`, or a client-side interaction like
+    drag-and-drop. The ubiquitous back-button `client->_event_nav_app_leave( )`
+    does **not** count.
+  - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
+
+- **A read-only info form disables its inputs** (`enabled = abap_false`) — do not
+  leave display-only values in editable inputs (see `z2ui5_cl_demo_app_122`).
+
+- **No redundant footer Back button.** The `shell( )->page( )` already renders a
+  nav-back button (`navbuttonpress` / `shownavbutton`); do not add a second
+  `Back` button in the page footer (removed from the MessageBox / MessageToast
+  samples).
