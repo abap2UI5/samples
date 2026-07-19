@@ -54,6 +54,7 @@ CLASS Z2UI5_CL_DEMO_APP_189 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     page->simple_form(
+        editable = abap_true
        )->content( `form`
        )->label( `One (Press Enter)` )->input( id     = `IdOne`
                                                value  = client->_bind_edit( one )

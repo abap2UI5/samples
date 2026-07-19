@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_448 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Action - control_call_by_id setExpanded`
+            title          = `abap2UI5 - Panel - setExpanded via control_call_by_id`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

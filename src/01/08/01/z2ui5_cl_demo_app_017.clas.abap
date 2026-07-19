@@ -107,14 +107,12 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                 titleuppercase = abap_false
                 id             = `goalsSectionSS1`
                 title          = `2014 Goals Plan`
-            )->heading( `uxap`
-                )->message_strip( `this is a message strip`
-            )->get_parent(
             )->sub_sections(
                 )->object_page_sub_section(
                         id    = `goalssubSectionSS1`
                         title = `goals1`
                     )->blocks(
+                          )->message_strip( `this is a message strip`
                           )->vbox(
                           )->label( `goals1`
                           )->label( `goals1`
@@ -145,8 +143,6 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                 titleuppercase = abap_false
                 id             = `PersonalSection`
                 title          = `Personal`
-            )->heading( `uxap`
-            )->get_parent(
             )->sub_sections(
                 )->object_page_sub_section(
                         id    = `personalSectionSS1`
@@ -166,8 +162,6 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                 titleuppercase = abap_false
                 id             = `employmentSection`
                 title          = `Employment`
-             )->heading( `uxap`
-             )->get_parent(
              )->sub_sections(
                 )->object_page_sub_section(
                         id    = `empSectionSS1`

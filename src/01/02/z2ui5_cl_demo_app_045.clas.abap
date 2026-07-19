@@ -59,7 +59,7 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = `abap2UI5 - Scroll Container with Table and Toolbar`
+            title          = `abap2UI5 - Table - Backend Filter`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(

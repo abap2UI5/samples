@@ -48,9 +48,9 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = `id_sec1`
-                                     title          = `...` )->heading( `uxap`
-        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_input`
-                                                                    title = `Input field`
+                                     title          = `...`
+        )->sub_sections( )->object_page_sub_section( id    = `id_input`
+                                                     title = `Input field`
         )->blocks( )->vbox(
         )->input( value = client->_bind_edit( input )
                   width = `50%`
@@ -60,9 +60,9 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = `id_sec2`
-                                     title          = `...` )->heading( `uxap`
-        )->get_parent( )->sub_sections( )->object_page_sub_section( id    = `id_text_area`
-                                                                    title = `Text area`
+                                     title          = `...`
+        )->sub_sections( )->object_page_sub_section( id    = `id_text_area`
+                                                     title = `Text area`
         )->blocks( )->vbox(
         )->button( text  = `Copy text area`
                    type  = `Emphasized`
