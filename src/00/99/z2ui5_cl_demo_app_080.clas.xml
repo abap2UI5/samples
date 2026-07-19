@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_080</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>sap.m.PlanningCalendar - PlanningCalendar with single row se</DESCRIPT>
+    <DESCRIPT>sap.m.PlanningCalendar - use of z2ui5</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
