@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_447</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Action - control_call_by_id</DESCRIPT>
+    <DESCRIPT>Action - Call Method of Object by ID</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

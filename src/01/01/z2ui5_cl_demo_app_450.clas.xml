@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_450</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Formatter - weightState via core require</DESCRIPT>
+    <DESCRIPT>Formatter - Use via core:require</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
