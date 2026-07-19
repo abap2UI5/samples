@@ -135,15 +135,22 @@ CLASS z2ui5_cl_sample_app_000 IMPLEMENTATION.
         press = client->_event_client( val   = client->cs_event-open_new_tab
                                        t_arg = VALUE #( ( url_standard ) ) ) ).
 
+    DATA(info) = |The <b>Basic</b> samples are written for maximum compatibility - | &&
+                 |plain OpenUI5, every UI5 release since 1.71 and both ABAP Cloud and 7.02. | &&
+                 |The <b>Extended</b> samples here can need a specific system, so check per sample | &&
+                 |which ABAP stack (ABAP Cloud / on-premise), UI5 release and other prerequisites it requires.|.
+
     IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
       DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
-      page->message_strip(
-          type                = `Warning`
-          showicon            = abap_true
-          enableformattedtext = abap_true
-          class               = `sapUiSmallMarginBottom`
-          text                = |This overview is still under construction. Click <a href="{ url }" target="_blank">here</a> to open the classic overview.| ).
+      info = |{ info } Click <a href="{ url }" target="_blank">here</a> for the classic overview.|.
     ENDIF.
+
+    page->message_strip(
+        type                = `Information`
+        showicon            = abap_true
+        enableformattedtext = abap_true
+        class               = `sapUiSmallMarginBottom`
+        text                = info ).
 
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.

@@ -168,7 +168,8 @@ the block plus roughly one space, precomputed by `block_widths( )` /
 underneath each other in one column, directly next to the links.
 
 `z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
-obsolete); `sample_app_001` links to it via a message strip. Do not extend it.
+obsolete); `sample_app_000` links to it from its info message strip. Do not
+extend it.
 
 ---
 
