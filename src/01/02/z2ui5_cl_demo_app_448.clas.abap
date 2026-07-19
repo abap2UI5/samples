@@ -35,11 +35,14 @@ CLASS z2ui5_cl_demo_app_448 IMPLEMENTATION.
 
       WHEN `TOGGLE`.
         " invert the mirrored state and call the whitelisted setExpanded on
-        " the panel - client-side, after the response renders, no rebuild
+        " the panel - client-side, after the response renders, no rebuild.
+        " t_arg is positional: id, view (`` = global lookup), method, params
         expanded = xsdbool( expanded = abap_false ).
-        client->control_call_by_id( id     = `demoPanel`
-                                    method = `setExpanded`
-                                    params = VALUE #( ( CONV string( expanded ) ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                  t_arg = VALUE #( ( `demoPanel` )
+                                                   ( `` )
+                                                   ( `setExpanded` )
+                                                   ( CONV string( expanded ) ) ) ).
 
     ENDCASE.
 
@@ -52,13 +55,13 @@ CLASS z2ui5_cl_demo_app_448 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Panel - setExpanded via control_call_by_id`
+            title          = `abap2UI5 - Panel - setExpanded via CONTROL_BY_ID`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
         text     = `The button toggles the panel via the whitelisted setExpanded method ` &&
-                   `(control_call_by_id), client-side after render - no view rebuild.`
+                   `(follow_up_action with cs_event-control_by_id), client-side after render - no view rebuild.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).

@@ -774,10 +774,10 @@ follow these so new/edited samples stay consistent:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
   - `(A)` — performs a **frontend action**: `client->_event_client( )`,
-    `client->follow_up_action( )`, `control_call`/`control_call_by_id`,
-    `binding_call`/`binding_call_by_id`, or a client-side interaction like
-    drag-and-drop. The ubiquitous back-button `client->_event_nav_app_leave( )`
-    does **not** count.
+    `client->follow_up_action( )` (including the `cs_event-control_by_id` /
+    `cs_event-control_global` / `cs_event-binding_call` events), or a
+    client-side interaction like drag-and-drop. The ubiquitous back-button
+    `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
 
 - **A read-only info form disables its inputs** (`enabled = abap_false`) — do not

@@ -32,24 +32,28 @@ CLASS z2ui5_cl_demo_app_446 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `TOAST`.
-        client->control_call( object = `MESSAGE_TOAST`
-                              method = `show`
-                              params = VALUE #( ( `Hello from control_call!` ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                                  t_arg = VALUE #( ( `MESSAGE_TOAST` )
+                                                   ( `show` )
+                                                   ( `Hello from CONTROL_GLOBAL!` ) ) ).
 
       WHEN `MSGBOX`.
-        client->control_call( object = `MESSAGE_BOX`
-                              method = `show`
-                              params = VALUE #( ( `A message box, opened via control_call.` ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                                  t_arg = VALUE #( ( `MESSAGE_BOX` )
+                                                   ( `show` )
+                                                   ( `A message box, opened via CONTROL_GLOBAL.` ) ) ).
 
       WHEN `THEME_DARK`.
-        client->control_call( object = `THEMING`
-                              method = `setTheme`
-                              params = VALUE #( ( `sap_horizon_dark` ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                                  t_arg = VALUE #( ( `THEMING` )
+                                                   ( `setTheme` )
+                                                   ( `sap_horizon_dark` ) ) ).
 
       WHEN `THEME_LIGHT`.
-        client->control_call( object = `THEMING`
-                              method = `setTheme`
-                              params = VALUE #( ( `sap_horizon` ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global
+                                  t_arg = VALUE #( ( `THEMING` )
+                                                   ( `setTheme` )
+                                                   ( `sap_horizon` ) ) ).
 
     ENDCASE.
 
@@ -64,14 +68,14 @@ CLASS z2ui5_cl_demo_app_446 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Action - control_call`
+            title          = `abap2UI5 - Action - CONTROL_GLOBAL`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `Each button lets the backend call a method on a global frontend object ` &&
-                   `(MessageToast, MessageBox, Theming) - client-side, after the response renders, ` &&
-                   `without wiring a control event.`
+        text     = `Each button lets the backend call a whitelisted method on a global frontend object ` &&
+                   `(MessageToast, MessageBox, Theming) via follow_up_action( cs_event-control_global ) - ` &&
+                   `client-side, after the response renders, without wiring a control event.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).

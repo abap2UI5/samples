@@ -52,18 +52,24 @@ CLASS Z2UI5_CL_DEMO_APP_454 IMPLEMENTATION.
         " client-side after the response renders. The model data stays
         " untouched (no table copy, no view_model_update); an empty query
         " clears the filter again.
-        client->binding_call_by_id( id     = `productList`
-                                    params = VALUE #( ( `NAME` )
-                                                      ( `Contains` )
-                                                      ( client->get_event_arg( ) ) ) ).
+        " t_arg is positional: id, aggregation, method, params
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
+                                  t_arg = VALUE #( ( `productList` )
+                                                   ( `items` )
+                                                   ( `filter` )
+                                                   ( `NAME` )
+                                                   ( `Contains` )
+                                                   ( client->get_event_arg( ) ) ) ).
 
       WHEN `SORT_ASC` OR `SORT_DESC`.
-        client->binding_call_by_id( id     = `productList`
-                                    method = `sort`
-                                    params = VALUE #( ( `NAME` )
-                                                      ( COND #( WHEN client->get( )-event = `SORT_DESC`
-                                                                THEN `true`
-                                                                ELSE `false` ) ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
+                                  t_arg = VALUE #( ( `productList` )
+                                                   ( `items` )
+                                                   ( `sort` )
+                                                   ( `NAME` )
+                                                   ( COND #( WHEN client->get( )-event = `SORT_DESC`
+                                                             THEN `true`
+                                                             ELSE `false` ) ) ) ).
 
     ENDCASE.
 
@@ -81,8 +87,9 @@ CLASS Z2UI5_CL_DEMO_APP_454 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `Search and sort are applied to the list's items BINDING via binding_call_by_id ` &&
-                   `- the UI5 controller pattern getBinding('items').filter(...). The model stays untouched.`
+        text     = `Search and sort are applied to the list's items BINDING via follow_up_action ` &&
+                   `with cs_event-binding_call - the UI5 controller pattern getBinding('items').filter(...). ` &&
+                   `The model stays untouched.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).

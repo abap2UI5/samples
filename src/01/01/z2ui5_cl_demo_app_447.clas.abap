@@ -46,14 +46,19 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
+      " t_arg is positional: id, view (`` = global lookup), method, params
       WHEN `FOCUS`.
-        client->control_call_by_id( id     = `nameInput`
-                                    method = `focus` ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                  t_arg = VALUE #( ( `nameInput` )
+                                                   ( `` )
+                                                   ( `focus` ) ) ).
 
       WHEN `SCROLL`.
-        client->control_call_by_id( id     = `bigTable`
-                                    method = `scrollToIndex`
-                                    params = VALUE #( ( `25` ) ) ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                  t_arg = VALUE #( ( `bigTable` )
+                                                   ( `` )
+                                                   ( `scrollToIndex` )
+                                                   ( `25` ) ) ).
 
     ENDCASE.
 
@@ -68,13 +73,14 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Action - control_call_by_id`
+            title          = `abap2UI5 - Action - CONTROL_BY_ID`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `The backend calls a whitelisted method on a control resolved by id, after the ` &&
-                   `response renders: focus() on the input, scrollToIndex() on the table.`
+        text     = `The backend calls a whitelisted method on a control resolved by id via ` &&
+                   `follow_up_action( cs_event-control_by_id ), after the response renders: ` &&
+                   `focus() on the input, scrollToIndex() on the table.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).

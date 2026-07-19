@@ -33,9 +33,12 @@ CLASS z2ui5_cl_demo_app_449 IMPLEMENTATION.
 
       WHEN `OPEN`.
         " open the popup-mode PDFViewer via the whitelisted open method -
-        " the viewer brings its own dialog and close button
-        client->control_call_by_id( id     = `demoPdf`
-                                    method = `open` ).
+        " the viewer brings its own dialog and close button.
+        " t_arg is positional: id, view (`` = global lookup), method
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
+                                  t_arg = VALUE #( ( `demoPdf` )
+                                                   ( `` )
+                                                   ( `open` ) ) ).
 
     ENDCASE.
 
@@ -48,7 +51,7 @@ CLASS z2ui5_cl_demo_app_449 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - PDF Viewer - Display via control_call_by_id`
+            title          = `abap2UI5 - PDF Viewer - Display via CONTROL_BY_ID`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -63,7 +66,7 @@ CLASS z2ui5_cl_demo_app_449 IMPLEMENTATION.
 
     page->message_strip(
         text     = `The button opens the popup-mode PDFViewer via the whitelisted open method ` &&
-                   `(control_call_by_id), client-side after render.`
+                   `(follow_up_action with cs_event-control_by_id), client-side after render.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
