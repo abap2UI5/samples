@@ -787,3 +787,38 @@ follow these so new/edited samples stay consistent:
   nav-back button (`navbuttonpress` / `shownavbutton`); do not add a second
   `Back` button in the page footer (removed from the MessageBox / MessageToast
   samples).
+
+- **Must run on OpenUI5 1.71 — watch for "phantom control" 404s.** A generic
+  aggregation-escape method that names an aggregation the parent does **not**
+  have makes UI5 resolve it as a *control class* and 404 with `failed to load
+  sap/<lib>/<name>.js` on 1.71, crashing the sample. Two real cases:
+  - `object_page_section( )->heading( `uxap` )` — `sap.uxap.ObjectPageSection`
+    has no `heading` aggregation. Put the section title in `title = `…`` and go
+    straight to `sub_sections( )`. (`heading( `f` )` **is** valid on a
+    `dynamic_page_title( )` — sap.f `DynamicPageTitle` has that aggregation.)
+  - `<footer>` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
+    aggregation ~1.110; a `page( )->footer( )` is fine (sap.m.Page always had
+    one). Every control/property in `src/01` must exist since 1.71 (§2); when in
+    doubt check "available since" in the demo kit.
+
+- **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
+  to line up on one row — without it the form renders in display mode and the
+  first field is mislaid (fixed in `189`; compare `133`).
+
+- **`StandardListItem`: `info` right-aligns to the far edge** (a status/amount
+  slot). For a secondary attribute that belongs *with* the title (e.g. a
+  product's category) use `description` — a left-aligned subtitle — instead; the
+  far-right float looks disconnected on wide screens (fixed in `454`/`455`).
+
+- **The page title should carry the `<DESCRIPT>` text.** A user clicks a tile in
+  the overview (which shows the DESCRIPT) and the opened sample's
+  `page( title = … )` should name the same thing so it is recognisably the right
+  sample — e.g. `045` had a copy-pasted "Scroll Container" title on a "Backend
+  Filter" sample.
+
+- **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
+  so all samples share the same outer frame (fixed in `143`).
+
+- **Give a `search_field` an explicit `placeholder`.** Without one UI5 shows its
+  locale default (German "Suchen" on a DE system), which clashes with the
+  otherwise-English samples.
