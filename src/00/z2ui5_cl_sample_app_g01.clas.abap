@@ -214,6 +214,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `extended` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
+      ( group = `extended` header = `tab` sub = `odata, device, http` app = `z2ui5_cl_demo_app_314` )
       ( group = `only non-abap-cloud` header = `Conversion Exits` sub = `` app = `z2ui5_cl_demo_app_s_04` )
       ( group = `only non-abap-cloud` header = `Generated APC WebSocket protocol impementation class` sub = `` app = `z2ui5_cl_demo_app_s_05_ws` )
       ( group = `only non-abap-cloud` header = `Navigation with app state change v2` sub = `` app = `z2ui5_cl_demo_app_s_06` )
@@ -252,10 +254,6 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `only with launchpad` header = `launchpad II` sub = `Set Title` app = `z2ui5_cl_demo_app_lp_02` )
       ( group = `only with launchpad` header = `Launchpad III` sub = `cross app navigation I` app = `z2ui5_cl_demo_app_lp_03` )
       ( group = `only with launchpad` header = `Launchpad IV` sub = `cross app navigation II` app = `z2ui5_cl_demo_app_lp_04` )
-      ( group = `use of z2ui5` header = `gantt` sub = `test` app = `z2ui5_cl_demo_app_076` )
-      ( group = `use of z2ui5` header = `gantt II` sub = `` app = `z2ui5_cl_demo_app_179` )
-      ( group = `use of z2ui5` header = `sap.m.DateRangeSelection` sub = `The Date Range Selection is an extension of the Date Picker Control and enables the user to select range of dates.` app = `z2ui5_cl_demo_app_231` )
-      ( group = `use of z2ui5` header = `sap.m.PlanningCalendar` sub = `PlanningCalendar with single row selection that illustrates the built-in views.` app = `z2ui5_cl_demo_app_080` )
       ( group = `only with javascript and css and html` header = `Cell Coloring` sub = `` app = `z2ui5_cl_demo_app_305` )
       ( group = `only with javascript and css and html` header = `Change CSS` sub = `Send your own CSS to the frontend` app = `z2ui5_cl_demo_app_050` )
       ( group = `only with javascript and css and html` header = `custom function in popup` sub = `` app = `z2ui5_cl_demo_app_141` )
@@ -322,21 +320,16 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `only testing` header = `Type Ref to Data Table with refresh` sub = `` app = `z2ui5_cl_demo_app_199` )
       ( group = `only testing` header = `unit test` sub = `long variable` app = `z2ui5_cl_demo_app_138` )
       ( group = `only testing` header = `ZZZ Data Object for Sample 328` sub = `` app = `z2ui5_cl_demo_app_329` )
+      ( group = `experimental, TODO` header = `gantt` sub = `test` app = `z2ui5_cl_demo_app_076` )
+      ( group = `experimental, TODO` header = `gantt II` sub = `` app = `z2ui5_cl_demo_app_179` )
       ( group = `experimental, TODO` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
       ( group = `experimental, TODO` header = `Navigation` sub = `app state` app = `z2ui5_cl_demo_app_321` )
       ( group = `experimental, TODO` header = `Navigation` sub = `app state share` app = `z2ui5_cl_demo_app_323` )
       ( group = `experimental, TODO` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
       ( group = `experimental, TODO` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
       ( group = `experimental, TODO` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
-      ( group = `experimental, TODO` header = `sap.m.ObjectIdentifier` sub = `inside a Table` app = `z2ui5_cl_demo_app_370` )
       ( group = `experimental, TODO` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `experimental, TODO` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
-      ( group = `experimental, TODO` header = `tab` sub = `cell copy` app = `z2ui5_cl_demo_app_087` )
-      ( group = `experimental, TODO` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
-      ( group = `experimental, TODO` header = `tab` sub = `odata, device, http` app = `z2ui5_cl_demo_app_314` )
-      ( group = `experimental, TODO` header = `Tree Table I` sub = `Popup Select Entry` app = `z2ui5_cl_demo_app_068` )
-      ( group = `experimental, TODO` header = `Tree Table II` sub = `` app = `z2ui5_cl_demo_app_069` )
-      ( group = `experimental, TODO` header = `Tree Table III` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `experimental, TODO` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolete` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
@@ -359,7 +352,13 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `obsolete` header = `sap.m.ActionSheet`
         sub = `Action Sheet provides an easier way of showing a list of actions and allowing the user to select one. Title and Cancel button can be shown or hidden. Without an icon the entry will be left-aligned (see the last action in the list).`
         app = `z2ui5_cl_demo_app_373` )
+      ( group = `obsolete` header = `sap.m.DateRangeSelection` sub = `The Date Range Selection is an extension of the Date Picker Control and enables the user to select range of dates.` app = `z2ui5_cl_demo_app_231` )
+      ( group = `obsolete` header = `sap.m.PlanningCalendar` sub = `PlanningCalendar with single row selection that illustrates the built-in views.` app = `z2ui5_cl_demo_app_080` )
       ( group = `obsolete` header = `Softkeyboard on/off` sub = `` app = `z2ui5_cl_demo_app_352_0` )
+      ( group = `obsolete` header = `tab` sub = `cell copy` app = `z2ui5_cl_demo_app_087` )
+      ( group = `obsolete` header = `Tree Table I` sub = `Popup Select Entry` app = `z2ui5_cl_demo_app_068` )
+      ( group = `obsolete` header = `Tree Table II` sub = `` app = `z2ui5_cl_demo_app_069` )
+      ( group = `obsolete` header = `Tree Table III` sub = `Checkbox Binding per Node` app = `z2ui5_cl_demo_app_364` )
       ( group = `obsolete` header = `wizard` sub = `nextStep & subsequentSteps` app = `z2ui5_cl_demo_app_202_0` ) ).
 
   ENDMETHOD.

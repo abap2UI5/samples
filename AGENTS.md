@@ -45,14 +45,13 @@ src/
 │       ├── 06/  controls - sap.ui.codeeditor
 │       └── 07/  controls - sap.ui.unified
 └── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
+    ├── 00/  extended                     restricted samples without a more specific category
     ├── 01/  only non-abap-cloud          on-premise-only ABAP (not ABAP Cloud ready)
     ├── 02/  only non-openui5 or higher UI5 1.71   SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …) or a control/property introduced after UI5 1.71
     ├── 03/  only with launchpad          runs only inside the Fiori Launchpad
-    ├── 04/  use of z2ui5                 needs the z2ui5/Util frontend helper module in the view
     ├── 05/  only with javascript and css and html   needs native JS / CSS / HTML
     ├── 06/  only testing                 test / scaffolding apps, not demos
     ├── 07/  experimental, TODO           work-in-progress / not finished
-    ├── 08/  framework - new (beta)       needs framework features not yet in a stable release
     └── 99/  obsolete                     superseded, or built on a deprecated UI5 control
 ```
 
@@ -115,12 +114,11 @@ The split is driven directly by the CI builds:
   1. Needs on-premise-only ABAP (not Cloud) → `00/01`
   2. Uses a SAPUI5-only control, **or** a control/property introduced after UI5 1.71 → `00/02`
   3. Runs only inside the Launchpad → `00/03`
-  4. Needs the `z2ui5/Util` frontend helper module in the view (`core:require {Helper:'z2ui5/Util'}`) → `00/04`
-  5. Needs native JavaScript / CSS / HTML → `00/05`
-  6. Test / scaffolding app → `00/06`
-  7. Experimental / work-in-progress → `00/07`
-  8. Needs framework features not yet in a stable release (beta) → `00/08`
-  9. Deprecated control/property, or superseded → `00/99`
+  4. Needs native JavaScript / CSS / HTML → `00/05`
+  5. Test / scaffolding app → `00/06`
+  6. Experimental / work-in-progress → `00/07`
+  7. Deprecated control/property, or superseded → `00/99`
+  8. Otherwise restricted, not fitting any category above → `00/00` ("extended")
 
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
@@ -245,11 +243,11 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/01` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
+   (`00/00` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. `use of z2ui5` = `00/04` goes **after**
-   `only with launchpad` (`00/03`) and **before**
+   numeric slot (e.g. `only with launchpad` = `00/03` goes **after**
+   `only non-openui5 or higher UI5 1.71` (`00/02`) and **before**
    `only with javascript and css and html` (`00/05`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
