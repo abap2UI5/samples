@@ -1,16 +1,25 @@
 name: generate_overview_apps
 
+# Guards that the two overview apps (get_catalog) are in sync with the folder
+# tree: regenerates them and fails on any diff. standard is a protected branch
+# (changes only via pull request), so CI cannot push fixes back — contributors
+# regenerate the catalogs in their PR instead (see AGENTS.md §4).
+
 on:
+  pull_request:
   push:
     branches: [standard]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: generate_overview_apps-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   generate_overview_apps:
-    if: github.ref == 'refs/heads/standard'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -26,19 +35,9 @@ jobs:
     - run: npm ci
     - run: npm run launchpad
 
-    - name: Stamp last run date into README
+    - name: Verify overview apps are up to date
       run: |
-        STAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-        sed -i "s|<!-- last-run -->.*<!-- /last-run -->|<!-- last-run -->$STAMP<!-- /last-run -->|" README.md
-
-    - name: Commit and push changes
-      run: |
-        git config user.name 'github-actions[bot]'
-        git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git add src README.md
-        if git diff --staged --quiet; then
-          echo "No changes to commit."
-        else
-          git commit -m "Regenerate overview apps"
-          git push origin HEAD:standard
+        if ! git diff --exit-code -- src; then
+          echo "::error::Overview apps are out of date. Run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
+          exit 1
         fi
