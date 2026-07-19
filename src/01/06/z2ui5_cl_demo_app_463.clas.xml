@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_463</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Tree - editable nodes (CustomTreeItem)</DESCRIPT>
+    <DESCRIPT>Tree - Editable with Custom Item (C)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

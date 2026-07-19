@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_004</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Event I - Handle events &amp; change the view</DESCRIPT>
+    <DESCRIPT>Event - Handle events &amp; change the view</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

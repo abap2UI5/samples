@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_454</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Binding Call - filter and sort via backend event</DESCRIPT>
+    <DESCRIPT>List - Filter and sort via backend event (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -30,7 +30,6 @@ CLASS z2ui5_cl_demo_app_143 IMPLEMENTATION.
 
     TRY.
         IF client->check_on_event( `ROW_ACTION_ITEM_ADD` ).
-
           client->message_toast_display( `Something` ).
           client->view_model_update( ).
         ENDIF.
