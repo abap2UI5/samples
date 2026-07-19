@@ -14,7 +14,9 @@ CLASS z2ui5_cl_demo_app_167 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
+
 
   METHOD set_view.
 
@@ -73,5 +75,4 @@ CLASS z2ui5_cl_demo_app_167 IMPLEMENTATION.
     client->view_model_update( ).
 
   ENDMETHOD.
-
 ENDCLASS.
