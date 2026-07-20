@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
 
     DATA(page) = lo_view_nested->page( `Nested View` ).
 
-    DATA(tab) = page->ui_table( rows               = client->_bind_edit( val = t_tab2 view = client->cs_view-nested )
+    DATA(tab) = page->ui_table( rows               = client->_bind_edit( val = t_tab2 )
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `1`
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
 
     DATA(lr_list) = lr_master->list(
           headertext      = `List Output`
-          items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
+          items           = client->_bind_edit( val = t_tab )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( `SELCHANGE` )
           )->standard_list_item(
