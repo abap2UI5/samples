@@ -62,19 +62,19 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     email_form->label( text     = `E-Mail`
                        labelfor = `inputEmail` ).
     email_form->input( id          = `inputEmail`
-                       value       = client->_bind_edit( email-email )
+                       value       = client->_bind( email-email )
                        type        = `Email`
                        placeholder = `Enter email`
                        class       = `sapUiSmallMarginBottom` ).
 
     email_form->input( id          = `inputCcEmail`
-                       value       = client->_bind_edit( email-cc )
+                       value       = client->_bind( email-cc )
                        type        = `Email`
                        placeholder = `Enter cc email`
                        class       = `sapUiSmallMarginBottom` ).
 
     email_form->input( id          = `inputBccEmail`
-                       value       = client->_bind_edit( email-bcc )
+                       value       = client->_bind( email-bcc )
                        type        = `Email`
                        placeholder = `Enter bcc email`
                        class       = `sapUiSmallMarginBottom` ).
@@ -82,13 +82,13 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     email_form->label( text     = `Subject`
                        labelfor = `inputText` ).
     email_form->input( id          = `inputText`
-                       value       = client->_bind_edit( email-subject )
+                       value       = client->_bind( email-subject )
                        placeholder = `Enter text`
                        class       = `sapUiSmallMarginBottom` ).
 
     email_form->label( `Mail Body`
          )->text_area( valueliveupdate = abap_true
-                       value           = client->_bind_edit( email-body )
+                       value           = client->_bind( email-body )
                        growing         = abap_true
                        growingmaxlines = `7`
                        width           = `100%` ).
@@ -96,14 +96,14 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
     email_form->button( text  = `Trigger Email`
                         press = client->_event_client( val   = client->cs_event-urlhelper
                         t_arg = VALUE #( ( `TRIGGER_EMAIL` )
-                                                                        ( |${ client->_bind_edit( email ) }| ) ) ) ).
+                                                                        ( |${ client->_bind( email ) }| ) ) ) ).
 
     DATA(telephone_form) = layout->simple_form( `Trigger Telephone` ).
 
     telephone_form->label( text     = `Telephone`
                            labelfor = `inputTel` ).
     telephone_form->input( id          = `inputTel`
-                           value       = client->_bind_edit( phone )
+                           value       = client->_bind( phone )
                            type        = `Tel`
                            placeholder = `Enter telephone number`
                            class       = `sapUiSmallMarginBottom` ).
@@ -111,32 +111,32 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
         text  = `Trigger Telephone`
         press = client->_event_client( val   = client->cs_event-urlhelper
         t_arg = VALUE #( ( `TRIGGER_TEL` )
-                                                        ( |${ client->_bind_edit( phone ) }| ) ) ) ).
+                                                        ( |${ client->_bind( phone ) }| ) ) ) ).
 
     DATA(mobile_form) = layout->simple_form( `Trigger SMS` ).
 
     mobile_form->label( text     = `Number`
                         labelfor = `inputNumber` ).
     mobile_form->input( id          = `inputNumber`
-                        value       = client->_bind_edit( mobile )
+                        value       = client->_bind( mobile )
                         type        = `Number`
                         placeholder = `Enter a number`
                         class       = `sapUiSmallMarginBottom` ).
     mobile_form->button( text  = `Trigger SMS`
                          press = client->_event_client( val   = client->cs_event-urlhelper
-                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind_edit( mobile ) }| ) ) ) ).
+                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind( mobile ) }| ) ) ) ).
 
     DATA(url_form) = layout->simple_form( `Redirect` ).
     url_form->label( text     = `URL`
                      labelfor = `inputUrl` ).
     url_form->input( id          = `inputUrl`
-                     value       = client->_bind_edit( url-url )
+                     value       = client->_bind( url-url )
                      type        = `Url`
                      placeholder = `Enter URL`
                      class       = `sapUiSmallMarginBottom` ).
     url_form->button( text  = `Redirect`
                       press = client->_event_client( val   = client->cs_event-urlhelper
-                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind_edit( url ) }| ) ) ) ).
+                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).
 

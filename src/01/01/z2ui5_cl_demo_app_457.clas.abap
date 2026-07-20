@@ -57,9 +57,9 @@ CLASS z2ui5_cl_demo_app_457 IMPLEMENTATION.
     " registered in the model and the frontend receives no data for it
     page->vbox( `sapUiSmallMargin`
         )->date_picker( displayformat = `long`
-                        datevalue     = |\{ path: '{ client->_bind_edit( val = date_iso path = abap_true ) }', | &&
+                        datevalue     = |\{ path: '{ client->_bind( val = date_iso path = abap_true ) }', | &&
                                         |formatter: 'Formatter.DateCreateObject' \}|
-        )->text( text  = |Model value (unchanged string): { client->_bind_edit( date_iso ) }|
+        )->text( text  = |Model value (unchanged string): { client->_bind( date_iso ) }|
                  class = `sapUiTinyMarginTop` ).
 
     client->view_display( view->stringify( ) ).

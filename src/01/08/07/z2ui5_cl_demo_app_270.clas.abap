@@ -26,8 +26,8 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
         )->simple_form( editable = abap_true
              )->content( ns = `form`
                 )->color_picker(
-                  colorstring = client->_bind_edit( color )
-                )->input( client->_bind_edit( color )
+                  colorstring = client->_bind( color )
+                )->input( client->_bind( color )
         )->stringify( ) ).
 
     ENDIF.

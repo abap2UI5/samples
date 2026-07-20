@@ -81,27 +81,27 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
                                         error            = client->_event( val   = `GEOLOCATION_ERROR`
                                                                            t_arg = VALUE #( ( `${$parameters>/code}` )
                                                                                             ( `${$parameters>/message}` ) ) )
-                                        longitude        = client->_bind_edit( longitude )
-                                        latitude         = client->_bind_edit( latitude )
-                                        altitude         = client->_bind_edit( altitude )
-                                        altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                                        accuracy         = client->_bind_edit( accuracy )
-                                        speed            = client->_bind_edit( speed )
+                                        longitude        = client->_bind( longitude )
+                                        latitude         = client->_bind( latitude )
+                                        altitude         = client->_bind( altitude )
+                                        altitudeaccuracy = client->_bind( altitudeaccuracy )
+                                        accuracy         = client->_bind( accuracy )
+                                        speed            = client->_bind( speed )
               )->simple_form( title    = `Geolocation`
                               editable = abap_false
                   )->content( `form`
                       )->label( `Longitude`
-                      )->input( value = client->_bind_edit( longitude ) editable = abap_false
+                      )->input( value = client->_bind( longitude ) editable = abap_false
                       )->label( `Latitude`
-                      )->input( value = client->_bind_edit( latitude ) editable = abap_false
+                      )->input( value = client->_bind( latitude ) editable = abap_false
                       )->label( `Altitude`
-                      )->input( value = client->_bind_edit( altitude ) editable = abap_false
+                      )->input( value = client->_bind( altitude ) editable = abap_false
                       )->label( `Accuracy`
-                      )->input( value = client->_bind_edit( accuracy ) editable = abap_false
+                      )->input( value = client->_bind( accuracy ) editable = abap_false
                       )->label( `AltitudeAccuracy`
-                      )->input( value = client->_bind_edit( altitudeaccuracy ) editable = abap_false
+                      )->input( value = client->_bind( altitudeaccuracy ) editable = abap_false
                       )->label( `Speed`
-                      )->input( value = client->_bind_edit( speed ) editable = abap_false ).
+                      )->input( value = client->_bind( speed ) editable = abap_false ).
 
     client->view_display( view->stringify( ) ).
 

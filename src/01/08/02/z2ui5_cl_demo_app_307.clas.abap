@@ -216,7 +216,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
         )->get_parent(
         )->grid_list( id         = `gridList`
                       headertext = `GridList header`
-                      items      = client->_bind_edit( items )
+                      items      = client->_bind( items )
             )->drag_drop_config(
                 )->drag_info( `items`
                 )->grid_drop_info(

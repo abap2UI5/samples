@@ -70,7 +70,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
                    )->toolbar_spacer(
                    )->toggle_button(
                        text    = `Toggle Wrapping`
-                       pressed = client->_bind_edit( wrapping )
+                       pressed = client->_bind( wrapping )
                )->get_parent(
            )->get_parent(
            )->items(
@@ -83,7 +83,7 @@ CLASS z2ui5_cl_demo_app_287 IMPLEMENTATION.
                    info          = `{INFO}`
                    infostate     = `{HIGHLIGHT}`
                    type          = `Detail`
-                   wrapping      = client->_bind_edit( wrapping )
+                   wrapping      = client->_bind( wrapping )
                    wrapcharlimit = `{WRAPCHARLIMIT}` ).
 
     client->view_display( page->stringify( ) ).

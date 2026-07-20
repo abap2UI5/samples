@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_101 IMPLEMENTATION.
     page->feed_input(
         post  = client->_event( `POST` )
         icon  = base_url && `test-resources/sap/m/images/dronning_victoria.jpg`
-        value = client->_bind_edit( value )
+        value = client->_bind( value )
         class = `sapUiSmallMarginTopBottom` ).
 
     page->list(

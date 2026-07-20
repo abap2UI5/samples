@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
     " Top section
     form->label( `Top field (id = top_input)` ).
     form->input( id    = `top_input`
-                 value = client->_bind_edit( field_01 ) ).
+                 value = client->_bind( field_01 ) ).
 
     " spacer
     DO 25 TIMES.
@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
     " Middle section (required)
     form->label( `Middle field - required (id = middle_input)` ).
     form->input( id    = `middle_input`
-                 value = client->_bind_edit( field_02 ) ).
+                 value = client->_bind( field_02 ) ).
 
     " spacer
     DO 25 TIMES.
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
     " Bottom section
     form->label( `Bottom field (id = bottom_input)` ).
     form->input( id    = `bottom_input`
-                 value = client->_bind_edit( field_03 ) ).
+                 value = client->_bind( field_03 ) ).
 
     page->footer( )->overflow_toolbar(
          )->button( text  = `Jump to Top`

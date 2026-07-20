@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
                 )->content(
                       )->select(
                           forceselection = abap_false
-                          selectedkey    = client->_bind_edit( selected_product )
+                          selectedkey    = client->_bind( selected_product )
                           items          = client->_bind( lt_product_collection )
                           )->item(
                           )->list_item( key  = `{PRODUCT_ID}`

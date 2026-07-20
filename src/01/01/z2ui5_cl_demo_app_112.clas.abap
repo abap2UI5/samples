@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_112 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    mo_view_parent->input( value       = client->_bind_edit( mv_class_2 )
+    mo_view_parent->input( value       = client->_bind( mv_class_2 )
                            placeholder = `Input From Class 2` ).
 
   ENDMETHOD.

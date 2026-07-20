@@ -100,7 +100,7 @@ CLASS z2ui5_cl_demo_app_463 IMPLEMENTATION.
     " {TEXT} because the items aggregation itself is bound with _bind_edit
     DATA(tree) = page->tree( id         = `tree1`
                              headertext = `Files (editable)`
-                             items      = client->_bind_edit( t_nodes ) ).
+                             items      = client->_bind( t_nodes ) ).
 
     tree->_generic( `CustomTreeItem`
         )->content(

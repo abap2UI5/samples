@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_458 IMPLEMENTATION.
     page->vbox( `sapUiSmallMargin`
         )->label( `Amount (integer only)`
         )->input( width = `12rem`
-                  value = |\{ path: '{ client->_bind_edit( val = amount path = abap_true ) }', | &&
+                  value = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
                           |type: 'sap.ui.model.type.Integer' \}| ).
 
     page->list( headertext = `Validation messages ({message>/})`

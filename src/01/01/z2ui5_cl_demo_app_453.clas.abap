@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_453 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(tab) = page->table( id    = `productTable`
-                             items = client->_bind_edit( t_products ) ).
+                             items = client->_bind( t_products ) ).
 
     tab->columns(
         )->column( )->text( `Product` )->get_parent(

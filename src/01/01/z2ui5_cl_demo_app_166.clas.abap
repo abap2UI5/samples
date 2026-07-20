@@ -51,17 +51,17 @@ CLASS z2ui5_cl_demo_app_166 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    page->input( client->_bind_edit( val = ms_struc-title ) ).
-    page->input( client->_bind_edit( val = ms_struc-value ) ).
-    page->input( client->_bind_edit( val = ms_struc-value2 ) ).
+    page->input( client->_bind( val = ms_struc-title ) ).
+    page->input( client->_bind( val = ms_struc-value ) ).
+    page->input( client->_bind( val = ms_struc-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-title ) ).
-    page->input( client->_bind_edit( val = ms_struc2-value ) ).
-    page->input( client->_bind_edit( val = ms_struc2-value2 ) ).
+    page->input( client->_bind( val = ms_struc2-title ) ).
+    page->input( client->_bind( val = ms_struc2-value ) ).
+    page->input( client->_bind( val = ms_struc2-value2 ) ).
 
-    page->input( client->_bind_edit( val = ms_struc2-incl_title ) ).
-    page->input( client->_bind_edit( val = ms_struc2-incl_value ) ).
-    page->input( client->_bind_edit( val = ms_struc2-incl_value2 ) ).
+    page->input( client->_bind( val = ms_struc2-incl_title ) ).
+    page->input( client->_bind( val = ms_struc2-incl_value ) ).
+    page->input( client->_bind( val = ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
 

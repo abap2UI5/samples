@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_197 IMPLEMENTATION.
         )->facet_filter_item( text = `{PRODUCT}` ).
 
     DATA(tab) = page->table( id    = `tab`
-                             items = client->_bind_edit( val = mt_table ) ).
+                             items = client->_bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( `Product` ).

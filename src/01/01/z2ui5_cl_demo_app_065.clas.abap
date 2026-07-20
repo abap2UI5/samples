@@ -44,13 +44,13 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                  press = client->_event( `NEST` )
       )->button( text  = `Update only nested MODEL (nest_view_model_update)`
                  press = client->_event( `NEST_MODEL` )
-      )->input( client->_bind_edit( mv_input_main ) ).
+      )->input( client->_bind( mv_input_main ) ).
 
     DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory(
           )->page( `Nested View`
               )->button( text  = `event`
                          press = client->_event( `TEST` )
-              )->input( client->_bind_edit( mv_input_nest ) ).
+              )->input( client->_bind( mv_input_nest ) ).
 
     IF client->check_on_init( ).
       client->view_display( lo_view->stringify( ) ).

@@ -85,7 +85,7 @@ CLASS z2ui5_cl_demo_app_109 IMPLEMENTATION.
               )->content( `form`
                   )->title( `QuickView Popover`
                   )->label( `placement`
-                  )->segmented_button( client->_bind_edit( mv_placement )
+                  )->segmented_button( client->_bind( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key  = `Left`

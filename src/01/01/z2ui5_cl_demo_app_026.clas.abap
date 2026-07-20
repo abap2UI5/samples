@@ -102,7 +102,7 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
             text = `Documentation UI5 Popover Control`
             href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
         )->label( `placement`
-        )->segmented_button( client->_bind_edit( placement )
+        )->segmented_button( client->_bind( placement )
             )->items(
             )->segmented_button_item(
                 key  = `Left`

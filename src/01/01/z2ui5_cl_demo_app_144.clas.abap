@@ -39,12 +39,12 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.
-      page->input( client->_bind_edit( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
-      page->input( client->_bind_edit( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
+      page->input( client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
+      page->input( client->_bind( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
     ENDLOOP.
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            items = client->_bind( t_tab )
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(
@@ -58,10 +58,10 @@ CLASS z2ui5_cl_demo_app_144 IMPLEMENTATION.
           )->input( `{TITLE}`
           )->input( `{VALUE}` ).
 
-    page->input( client->_bind_edit( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
-    page->input( client->_bind_edit( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
-    page->input( client->_bind_edit( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
-    page->input( client->_bind_edit( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
+    page->input( client->_bind( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
+    page->input( client->_bind( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
+    page->input( client->_bind( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
+    page->input( client->_bind( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
 
     client->view_display( view->stringify( ) ).
 

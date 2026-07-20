@@ -57,13 +57,13 @@ CLASS Z2UI5_CL_DEMO_APP_189 IMPLEMENTATION.
         editable = abap_true
        )->content( `form`
        )->label( `One (Press Enter)` )->input( id     = `IdOne`
-                                               value  = client->_bind_edit( one )
+                                               value  = client->_bind( one )
                                                submit = client->_event( `one_enter` )
        )->label( `Two` )->input( id     = `IdTwo`
-                                 value  = client->_bind_edit( two )
+                                 value  = client->_bind( two )
                                  submit = client->_event( `two_enter` )
        )->label( `Three` )->input( id    = `IdThree`
-                                   value = client->_bind_edit( three ) ).
+                                   value = client->_bind( three ) ).
 
     client->view_display( page->stringify( ) ).
 

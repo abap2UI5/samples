@@ -51,8 +51,8 @@ CLASS Z2UI5_CL_DEMO_APP_005 IMPLEMENTATION.
             labelinterval = `2`
             width         = `80%`
             class         = `sapUiTinyMargin`
-            value         = client->_bind_edit( value1 )
-            value2        = client->_bind_edit( value2 )
+            value         = client->_bind( value1 )
+            value2        = client->_bind( value2 )
             change        = client->_event( `SLIDER_CHANGE` ) ).
     client->view_display( view->stringify( ) ).
 

@@ -44,19 +44,19 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
         )->content( `form`
                 )->title( `Input`
                 )->label( `Sel_Start`
-                )->input( client->_bind_edit( selstart )
+                )->input( client->_bind( selstart )
                 )->label( `Sel_End`
-                )->input( client->_bind_edit( selend )
+                )->input( client->_bind( selend )
                 )->label( `field_01`
                 )->input(
-                    value = client->_bind_edit( field_01 )
+                    value = client->_bind( field_01 )
                     id    = `BUTTON01`
                 )->button(
                     text  = `focus here`
                     press = client->_event( `BUTTON01` )
                 )->label( `field_02`
                 )->input(
-                    value = client->_bind_edit( field_02 )
+                    value = client->_bind( field_02 )
                     id    = `BUTTON02`
                 )->button(
                     text  = `focus here`

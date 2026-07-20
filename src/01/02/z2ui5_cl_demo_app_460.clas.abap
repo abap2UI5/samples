@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_460 IMPLEMENTATION.
 
     page->tree( id         = `tree1`
                 headertext = `Files`
-                items      = client->_bind_edit( t_nodes )
+                items      = client->_bind( t_nodes )
         )->standard_tree_item( title = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).

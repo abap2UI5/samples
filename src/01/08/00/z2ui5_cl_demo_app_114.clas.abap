@@ -96,7 +96,7 @@ CLASS Z2UI5_CL_DEMO_APP_114 IMPLEMENTATION.
                     src   = `sap-icon://person-placeholder`
                     class = `sapUiSmallMarginEnd`
             )->text_area(
-                    value       = client->_bind_edit( mv_value )
+                    value       = client->_bind( mv_value )
                     rows        = `4`
                     cols        = `120`
                     class       = `sapUiSmallMarginEnd`
@@ -109,7 +109,7 @@ CLASS Z2UI5_CL_DEMO_APP_114 IMPLEMENTATION.
                     iconfirst = abap_true ).
 
     page->list(
-      items          = client->_bind_edit( mt_feed )
+      items          = client->_bind( mt_feed )
       showseparators = `Inner`
         )->feed_list_item(
           sender                   = `{AUTHOR}`

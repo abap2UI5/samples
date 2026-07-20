@@ -91,12 +91,12 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
                  editable = abap_true
                  )->content( `form`
                  )->label( `Title`
-                 )->input( client->_bind_edit( title )
+                 )->input( client->_bind( title )
                  )->label( `Message`
-                 )->input( client->_bind_edit( message )
+                 )->input( client->_bind( message )
                  )->label( `Details`
                  )->text_area(
-                     value = client->_bind_edit( details )
+                     value = client->_bind( details )
                      rows  = `3` ).
 
     page->footer(

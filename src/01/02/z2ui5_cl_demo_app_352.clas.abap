@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_352 IMPLEMENTATION.
              )->label( `Input (numeric keyboard)`
              )->input(
                  id               = `ZINPUT`
-                 value            = client->_bind_edit( input )
+                 value            = client->_bind( input )
                  showvaluehelp    = abap_true
                  valuehelprequest = client->_event( `CALL_KEYBOARD` ) ).
 

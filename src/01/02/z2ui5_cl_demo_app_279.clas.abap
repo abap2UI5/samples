@@ -44,7 +44,7 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
 
     box->input(
       id          = `input`
-      value       = client->_bind_edit( text_input )
+      value       = client->_bind( text_input )
       submit      = client->_event( `submit` )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).

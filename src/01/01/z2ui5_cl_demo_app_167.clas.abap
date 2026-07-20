@@ -42,10 +42,10 @@ CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
                   press = client->_event( val = `EVENT_FIX_VAL` t_arg = VALUE #(
         ( `FIX_VAL` ) ) ) ).
 
-    page->input( client->_bind_edit( mv_value ) ).
+    page->input( client->_bind( mv_value ) ).
     page->button( text  = `EVENT_MODEL_VALUE`
                   press = client->_event( val = `EVENT_MODEL_VALUE` t_arg = VALUE #(
-        ( `$` && client->_bind_edit( mv_value ) ) ) ) ).
+        ( `$` && client->_bind( mv_value ) ) ) ) ).
 
     page->button( text  = `SOURCE_PROPERTY_TEXT`
                   press = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = VALUE #(

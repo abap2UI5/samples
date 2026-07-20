@@ -67,8 +67,8 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
        )->label( text     = `facingMode: `
                  labelfor = `ComboFacingMode`
        )->combobox( id          = `ComboFacingMode`
-                    selectedkey = client->_bind_edit( facing_mode )
-                    items       = |\{path:'{ client->_bind_edit( val  = facing_modes
+                    selectedkey = client->_bind( facing_mode )
+                    items       = |\{path:'{ client->_bind( val  = facing_modes
                     path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
@@ -78,21 +78,21 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
                  labelfor = `ComboDevice`
        )->_z2ui5( )->camera_selector(
            id          = `ComboDevice`
-           selectedkey = client->_bind_edit( device )
-           items       = |\{path:'{ client->_bind_edit( val  = devices
+           selectedkey = client->_bind( device )
+           items       = |\{path:'{ client->_bind( val  = devices
            path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
        )->get( )->item( key  = `{KEY}`
                         text = `{TEXT}` ).
 
-    page->_z2ui5( )->camera_picture( value      = client->_bind_edit( mv_picture_base )
-                                     thumbnail  = client->_bind_edit( mv_picture_thumb )
+    page->_z2ui5( )->camera_picture( value      = client->_bind( mv_picture_base )
+                                     thumbnail  = client->_bind( mv_picture_thumb )
                                      onphoto    = client->_event( `CAPTURE` )
-                                     facingmode = client->_bind_edit( facing_mode )
-                                     deviceid   = client->_bind_edit( device ) ).
+                                     facingmode = client->_bind( facing_mode )
+                                     deviceid   = client->_bind( device ) ).
 
     DATA(lo_list) = page->list(
                                 headertext      = `List Output`
-                                items           = client->_bind_edit( mt_picture_out )
+                                items           = client->_bind( mt_picture_out )
                                 mode            = `SingleSelectMaster`
                                 selectionchange = client->_event( `DISPLAY` ) ).
 

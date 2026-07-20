@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                       )->select(
                           id             = `errorSelect`
                           forceselection = abap_true
-                          selectedkey    = client->_bind_edit( selectedproducterrorcollection )
+                          selectedkey    = client->_bind( selectedproducterrorcollection )
                           valuestate     = `Error`
                           valuestatetext = `error value state text`
                           items          = client->_bind( lt_a_products )
@@ -80,7 +80,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                       )->select(
                           id             = `warningSelect`
                           forceselection = abap_true
-                          selectedkey    = client->_bind_edit( selectedproductwrnngcollection )
+                          selectedkey    = client->_bind( selectedproductwrnngcollection )
                           valuestate     = `Warning`
                           valuestatetext = `This is a Level 1 explanation. The items Lorem and Ipsum are not recommended from the system.`
                           items          = client->_bind( lt_a_products )
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                       )->select(
                           id             = `successSelect`
                           forceselection = abap_true
-                          selectedkey    = client->_bind_edit( selectedproductsccsscollection )
+                          selectedkey    = client->_bind( selectedproductsccsscollection )
                           valuestate     = `Success`
                           valuestatetext = `success value state text`
                           items          = client->_bind( lt_a_products )
@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
                       )->select(
                           id             = `informationSelect`
                           forceselection = abap_true
-                          selectedkey    = client->_bind_edit( selectedproductinforcollection )
+                          selectedkey    = client->_bind( selectedproductinforcollection )
                           valuestate     = `Information`
                           valuestatetext = `information value state text`
                           items          = client->_bind( lt_a_products )
