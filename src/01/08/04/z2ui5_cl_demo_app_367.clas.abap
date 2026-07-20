@@ -24,7 +24,7 @@ CLASS Z2UI5_CL_DEMO_APP_367 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
     ELSE.
@@ -36,7 +36,9 @@ CLASS Z2UI5_CL_DEMO_APP_367 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA grid TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Grid`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -54,7 +56,8 @@ CLASS Z2UI5_CL_DEMO_APP_367 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Grid` ).
 
-    DATA(grid) = page->grid( `L4 M4 S4` )->content( `layout` ).
+    
+    grid = page->grid( `L4 M4 S4` )->content( `layout` ).
 
     grid->simple_form( `Grid width 33%` )->content( `form`
         )->button( text = `button`
@@ -85,7 +88,7 @@ CLASS Z2UI5_CL_DEMO_APP_367 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -94,7 +97,8 @@ CLASS Z2UI5_CL_DEMO_APP_367 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

@@ -32,15 +32,33 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
 
   METHOD view_display.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    DATA email_form TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA telephone_form TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp3 TYPE string_table.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA mobile_form TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp5 TYPE string_table.
+    DATA temp6 LIKE LINE OF temp5.
+    DATA url_form TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp7 TYPE string_table.
+    DATA temp8 LIKE LINE OF temp7.
+    DATA temp9 TYPE string_table.
 
-    url        = VALUE #( url        = `http://www.sap.com`
-    new_window = `true` ).
-    email      = VALUE #( email      = `email@email.com`
-    subject    = `subject`
-    body       = `body`
-    new_window = `true` ).
+    CLEAR url.
+    url-url = `http://www.sap.com`.
+    url-new_window = `true`.
+    CLEAR email.
+    email-email = `email@email.com`.
+    email-subject = `subject`.
+    email-body = `body`.
+    email-new_window = `true`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
+    
+    page = z2ui5_cl_xml_view=>factory(
         )->shell(
             )->page( title          = `abap2UI5 - Browser - Open Telephone, Email etc.`
                      navbuttonpress = client->_event_nav_app_leave( )
@@ -54,10 +72,12 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    
+    layout = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
 
-    DATA(email_form) = layout->simple_form( `Trigger E-Mail` ).
+    
+    email_form = layout->simple_form( `Trigger E-Mail` ).
 
     email_form->label( text     = `E-Mail`
                        labelfor = `inputEmail` ).
@@ -93,12 +113,18 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                        growingmaxlines = `7`
                        width           = `100%` ).
 
+    
+    CLEAR temp1.
+    INSERT `TRIGGER_EMAIL` INTO TABLE temp1.
+    
+    temp2 = |${ client->_bind( email ) }|.
+    INSERT temp2 INTO TABLE temp1.
     email_form->button( text  = `Trigger Email`
                         press = client->_event_client( val   = client->cs_event-urlhelper
-                        t_arg = VALUE #( ( `TRIGGER_EMAIL` )
-                                                                        ( |${ client->_bind( email ) }| ) ) ) ).
+                        t_arg = temp1 ) ).
 
-    DATA(telephone_form) = layout->simple_form( `Trigger Telephone` ).
+    
+    telephone_form = layout->simple_form( `Trigger Telephone` ).
 
     telephone_form->label( text     = `Telephone`
                            labelfor = `inputTel` ).
@@ -107,13 +133,19 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                            type        = `Tel`
                            placeholder = `Enter telephone number`
                            class       = `sapUiSmallMarginBottom` ).
+    
+    CLEAR temp3.
+    INSERT `TRIGGER_TEL` INTO TABLE temp3.
+    
+    temp4 = |${ client->_bind( phone ) }|.
+    INSERT temp4 INTO TABLE temp3.
     telephone_form->button(
         text  = `Trigger Telephone`
         press = client->_event_client( val   = client->cs_event-urlhelper
-        t_arg = VALUE #( ( `TRIGGER_TEL` )
-                                                        ( |${ client->_bind( phone ) }| ) ) ) ).
+        t_arg = temp3 ) ).
 
-    DATA(mobile_form) = layout->simple_form( `Trigger SMS` ).
+    
+    mobile_form = layout->simple_form( `Trigger SMS` ).
 
     mobile_form->label( text     = `Number`
                         labelfor = `inputNumber` ).
@@ -122,11 +154,18 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                         type        = `Number`
                         placeholder = `Enter a number`
                         class       = `sapUiSmallMarginBottom` ).
+    
+    CLEAR temp5.
+    INSERT `TRIGGER_SMS` INTO TABLE temp5.
+    
+    temp6 = |${ client->_bind( mobile ) }|.
+    INSERT temp6 INTO TABLE temp5.
     mobile_form->button( text  = `Trigger SMS`
                          press = client->_event_client( val   = client->cs_event-urlhelper
-                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind( mobile ) }| ) ) ) ).
+                         t_arg = temp5 ) ).
 
-    DATA(url_form) = layout->simple_form( `Redirect` ).
+    
+    url_form = layout->simple_form( `Redirect` ).
     url_form->label( text     = `URL`
                      labelfor = `inputUrl` ).
     url_form->input( id          = `inputUrl`
@@ -134,22 +173,31 @@ CLASS z2ui5_cl_demo_app_316 IMPLEMENTATION.
                      type        = `Url`
                      placeholder = `Enter URL`
                      class       = `sapUiSmallMarginBottom` ).
+    
+    CLEAR temp7.
+    INSERT `REDIRECT` INTO TABLE temp7.
+    
+    temp8 = |${ client->_bind( url ) }|.
+    INSERT temp8 INTO TABLE temp7.
     url_form->button( text  = `Redirect`
                       press = client->_event_client( val   = client->cs_event-urlhelper
-                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind( url ) }| ) ) ) ).
+                      t_arg = temp7 ) ).
 
     client->view_display( page->stringify( ) ).
 
+    
+    CLEAR temp9.
+    INSERT `URL Helper Sample` INTO TABLE temp9.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_title
-        t_arg = VALUE #( ( `URL Helper Sample` ) ) ).
+        t_arg = temp9 ).
 
   ENDMETHOD.
 
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

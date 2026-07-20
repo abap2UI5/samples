@@ -29,7 +29,7 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       product  = `tomato`.
       quantity = `500`.
@@ -49,6 +49,9 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
     DATA bind_quantity TYPE string.
     DATA bind_input51  TYPE string.
     DATA bind_input52  TYPE string.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA form TYPE REF TO z2ui5_cl_xml_view.
 
     bind_input31  = client->_bind( val = input31 path = abap_true ).
     bind_input32  = client->_bind( val = input32 path = abap_true ).
@@ -56,8 +59,10 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
     bind_input51  = client->_bind( val = input51 path = abap_true ).
     bind_input52  = client->_bind( val = input52 path = abap_true ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Binding Syntax`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -70,7 +75,8 @@ CLASS Z2UI5_CL_DEMO_APP_027 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(form) = page->simple_form(
+    
+    form = page->simple_form(
         title    = `Binding Syntax`
         editable = abap_true
         )->content( `form` ).

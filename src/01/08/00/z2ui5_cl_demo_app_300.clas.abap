@@ -26,7 +26,8 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object Status`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -377,15 +378,19 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
 
     CASE client->get( )-event.
       WHEN `CLICK_HINT_ICON`.
         popover_display( `button_hint_id` ).
       WHEN `handleStatusPressed`.
+        
+        CLEAR temp1.
+        INSERT `OK ` INTO TABLE temp1.
         client->message_box_display( title   = `Error description`
                                      type    = ``  "Keep this empty to use the custom title instead of the default message type as title
                                      text    = `Product was damaged along transportation.`
-                                     actions = VALUE string_table( ( `OK ` ) ) ). "Add space after 'OK' to prevent the button type from being 'Emphasized'
+                                     actions = temp1 ). "Add space after 'OK' to prevent the button type from being 'Emphasized'
     ENDCASE.
 
   ENDMETHOD.
@@ -393,7 +398,8 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -411,7 +417,7 @@ CLASS z2ui5_cl_demo_app_300 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

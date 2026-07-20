@@ -15,8 +15,9 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       html_text = `<h3>subheader</h3><p>link: <a href="https://www.sap.com" style="color:green; font-weight:600;">link to sap.com</a> - links open in ` &&
         `a new window.</p><p>paragraph: <strong>strong</strong> and <em>emphasized</em>.</p><p>list:</p><ul` &&
         `><li>list item 1</li><li>list item 2<ul><li>sub item 1</li><li>sub item 2</li></ul></li></ul><p>pre:</p><pre>abc    def    ghi` &&
@@ -24,7 +25,8 @@ CLASS z2ui5_cl_demo_app_015 IMPLEMENTATION.
         `<dl><dt>definition:</dt><dd>definition list of terms and descriptions</dd>`.
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
         )->page(
             title          = `abap2UI5 - Formatted Text`

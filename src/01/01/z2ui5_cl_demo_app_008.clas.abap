@@ -22,10 +22,10 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -33,22 +33,33 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA ls_msg_sy TYPE z2ui5_cl_sample_context=>ty_s_msg.
+        DATA temp1 TYPE bapiret2.
+        DATA ls_msg_bapiret LIKE temp1.
+            DATA lv_val TYPE i.
+            DATA lx TYPE REF TO cx_root.
 
     CASE client->get( )-event.
       WHEN `BUTTON_MESSAGE_BOX_SY`.
-        DATA(ls_msg_sy) = z2ui5_cl_sample_context=>msg_get_by_msg(
+        
+        ls_msg_sy = z2ui5_cl_sample_context=>msg_get_by_msg(
             id = `NET`
             no = `001` ).
         client->message_box_display( ls_msg_sy ).
       WHEN `BUTTON_MESSAGE_BOX_BAPIRET`.
-        DATA(ls_msg_bapiret) = VALUE bapiret2(
-            id     = `NET`
-            number = `001` ).
+        
+        CLEAR temp1.
+        temp1-id = `NET`.
+        temp1-number = `001`.
+        
+        ls_msg_bapiret = temp1.
         client->message_box_display( ls_msg_bapiret ).
       WHEN `BUTTON_MESSAGE_BOX_CX_ROOT`.
         TRY.
-            DATA(lv_val) = 1 / 0.
-          CATCH cx_root INTO DATA(lx).
+            
+            lv_val = 1 / 0.
+            
+          CATCH cx_root INTO lx.
             client->message_box_display( lx ).
         ENDTRY.
     ENDCASE.
@@ -60,8 +71,11 @@ CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Messages`
             navbuttonpress = client->_event_nav_app_leave( )

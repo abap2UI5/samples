@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
 
   METHOD factory.
 
-    result = NEW #( ).
+    CREATE OBJECT result.
     result->text          = i_text.
     result->cancel_text   = i_cancel_text.
     result->cancel_event  = i_cancel_event.
@@ -40,6 +40,8 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    DATA dialog TYPE REF TO z2ui5_cl_xml_view.
 
     CASE client->get( )-event.
       WHEN cancel_event OR confirm_event.
@@ -49,8 +51,10 @@ CLASS z2ui5_cl_demo_app_020 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( `abap2UI5 - Popup to decide` ).
+    
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
+    
+    dialog = popup->dialog( `abap2UI5 - Popup to decide` ).
 
     dialog->message_strip(
         text     = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&

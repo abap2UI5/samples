@@ -21,11 +21,16 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
   METHOD on_navigation.
+      DATA temp1 TYPE REF TO z2ui5_cl_demo_app_020.
+      DATA app LIKE temp1.
 
     IF check_popup = abap_true.
 
       check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_demo_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+      
+      temp1 ?= client->get_app( client->get( )-s_draft-id_prev_app ).
+      
+      app = temp1.
       client->message_toast_display( |{ app->event } pressed| ).
     ENDIF.
 
@@ -80,8 +85,12 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA grid TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Popups`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -94,7 +103,8 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
+    
+    grid = page->grid( `L7 M12 S12` )->content( `layout`
         )->simple_form( `Popup in same App` )->content( `form`
             )->label( `Demo`
             )->button(
@@ -131,7 +141,8 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
   METHOD popup_decide.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
     popup->dialog( `Popup - Decide`
             )->vbox(
                 )->text( `this is a popup to decide, you have to make a decision now...`
@@ -152,7 +163,8 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
 
   METHOD popup_info.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
     popup->dialog( `Popup - Info`
             )->vbox(
                 )->text( `this is an information, press close to go back to the main view without a server roundtrip`
@@ -171,11 +183,11 @@ CLASS z2ui5_cl_demo_app_012 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       on_navigation( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 

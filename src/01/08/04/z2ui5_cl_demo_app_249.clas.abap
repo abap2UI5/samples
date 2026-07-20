@@ -26,7 +26,9 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Splitter Layout - 3 areas`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -44,7 +46,8 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.ui.layout.Splitter/sample/sap.ui.layout.sample.Splitter4` ).
 
-    DATA(layout) = page->splitter( height = `500px`
+    
+    layout = page->splitter( height = `500px`
                                    width  = `100%`
                           )->button( width = `100%`
                                      text  = `Content 1` )->get(
@@ -67,7 +70,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `POPOVER` ).
+    IF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `hint_icon` ).
     ENDIF.
 
@@ -76,7 +79,8 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -94,7 +98,7 @@ CLASS z2ui5_cl_demo_app_249 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

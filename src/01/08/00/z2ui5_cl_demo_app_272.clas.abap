@@ -32,15 +32,20 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
     DATA base_url TYPE string VALUE `https://sapui5.hana.ondemand.com/`.
 
     " sap.m.ObjectHeader is deprecated since 1.42 - use sap.uxap.ObjectPageHeader instead
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA header TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page( title          = `abap2UI5 - Object Header with Circle-shaped Image`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
         )->object_page_layout( showtitleinheadercontent = abap_true ).
 
-    DATA(header) = page->header_title(
+    
+    header = page->header_title(
         )->object_page_header(
             objecttitle             = `Denise Smith`
             objectsubtitle          = `Senior Developer`
@@ -81,7 +86,7 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -90,7 +95,8 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -110,7 +116,7 @@ CLASS z2ui5_cl_demo_app_272 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

@@ -34,7 +34,8 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object Attribute inside Table`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -93,7 +94,8 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -108,23 +110,48 @@ CLASS z2ui5_cl_demo_app_302 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE lt_a_data.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
 
-      lt_a_data = VALUE #(
-        ( product = `Power Projector 4713`    supplier = `Robert Brown Entertainment` )
-        ( product = `HT-1022`                 supplier = `Pear Computing Services` )
-        ( product = `Ergo Screen E-III`       supplier = `DelBont Industries` )
-        ( product = `Gladiator MX`            supplier = `Asia High tech` )
-        ( product = `Hurricane GX`            supplier = `Telecomunicaciones Star` )
-        ( product = `Notebook Basic 17`       supplier = `Pear Computing Services` )
-        ( product = `ITelO Vault SAT`         supplier = `New Line Design` )
-        ( product = `Hurricane GX`            supplier = `Robert Brown Entertainment` )
-        ( product = `Webcam`                  supplier = `Getränkegroßhandel Janssen` )
-        ( product = `Deskjet Super Highspeed` supplier = `Vente Et Réparation de Ordinateur` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-product = `Power Projector 4713`.
+      temp2-supplier = `Robert Brown Entertainment`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `HT-1022`.
+      temp2-supplier = `Pear Computing Services`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Ergo Screen E-III`.
+      temp2-supplier = `DelBont Industries`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Gladiator MX`.
+      temp2-supplier = `Asia High tech`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Hurricane GX`.
+      temp2-supplier = `Telecomunicaciones Star`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Notebook Basic 17`.
+      temp2-supplier = `Pear Computing Services`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `ITelO Vault SAT`.
+      temp2-supplier = `New Line Design`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Hurricane GX`.
+      temp2-supplier = `Robert Brown Entertainment`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Webcam`.
+      temp2-supplier = `Getränkegroßhandel Janssen`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product = `Deskjet Super Highspeed`.
+      temp2-supplier = `Vente Et Réparation de Ordinateur`.
+      INSERT temp2 INTO TABLE temp1.
+      lt_a_data = temp1.
     ENDIF.
 
     on_event( client ).

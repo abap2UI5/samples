@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -28,6 +28,7 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
 
     CASE client->get( )-event.
 
@@ -36,11 +37,14 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
         " ref - the whitelisted toggleBy opens it if closed, closes it if open
         " (the controller pattern oPopover.openBy(oButton) / oPopover.close()).
         " t_arg is positional: id, view (`` = global lookup), method, anchor id
+        
+        CLEAR temp1.
+        INSERT `demoPopover` INTO TABLE temp1.
+        INSERT `` INTO TABLE temp1.
+        INSERT `toggleBy` INTO TABLE temp1.
+        INSERT client->get_event_arg( ) INTO TABLE temp1.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                  t_arg = VALUE #( ( `demoPopover` )
-                                                   ( `` )
-                                                   ( `toggleBy` )
-                                                   ( client->get_event_arg( ) ) ) ).
+                                  t_arg = temp1 ).
 
     ENDCASE.
 
@@ -49,9 +53,13 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Popover - Toggle via CONTROL_BY_ID`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -76,11 +84,14 @@ CLASS z2ui5_cl_demo_app_465 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp3.
+    INSERT `$event.oSource.sId` INTO TABLE temp3.
     page->vbox( `sapUiSmallMargin`
         )->button( text  = `Toggle popover`
                    icon  = `sap-icon://email`
                    press = client->_event( val   = `TOGGLE`
-                                           t_arg = VALUE #( ( `$event.oSource.sId` ) ) ) ).
+                                           t_arg = temp3 ) ).
 
     client->view_display( view->stringify( ) ).
 

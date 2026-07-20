@@ -23,7 +23,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       mv_page = `page1`.
       view_display( ).
 
@@ -48,8 +48,12 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell( )->page(
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
         title          = `abap2UI5 - Sample: Nav Container`
@@ -62,9 +66,15 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp1.
+    INSERT `NavCon` INTO TABLE temp1.
+    INSERT `MAIN` INTO TABLE temp1.
+    INSERT `to` INTO TABLE temp1.
+    INSERT `${$parameters>/selectedKey}` INTO TABLE temp1.
     page->icon_tab_header( selectedkey                   = client->_bind( mv_selected_key )
                                                   select = client->_event_client( val   = client->cs_event-control_by_id
-                                                                                  t_arg = VALUE #( ( `NavCon` ) ( `MAIN` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                                                  t_arg = temp1 )
                                                   mode   = `Inline`
                                   )->items(
                                     )->icon_tab_filter( key  = `page1`

@@ -28,8 +28,14 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA object_page_layout TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_content TYPE REF TO z2ui5_cl_xml_view.
+    DATA section TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    object_page_layout = view->shell(
         )->page( title          = `Robot Arm Series 9`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
@@ -41,7 +47,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
             )->get_parent(
             )->object_page_layout( uppercaseanchorbar = abap_false ).
 
-    DATA(header_title) = object_page_layout->header_title(
+    
+    header_title = object_page_layout->header_title(
         )->object_page_dyn_header_title( ).
 
     header_title->expanded_heading(
@@ -68,7 +75,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                   )->button( text = `Delete`
                   )->button( text = `Simulate Assembly` ).
 
-    DATA(header_content) = object_page_layout->header_content( `uxap`
+    
+    header_content = object_page_layout->header_content( `uxap`
                                                )->flex_box( wrap         = `Wrap`
                                                             fitcontainer = abap_true ).
 
@@ -134,7 +142,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
                     )->get_parent(
                  )->get_parent( ).
 
-    DATA(section) = object_page_layout->sections( ).
+    
+    section = object_page_layout->sections( ).
 
     section->object_page_section( titleuppercase = abap_false
                                   title          = `General Information`
@@ -332,7 +341,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -341,7 +350,8 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -359,7 +369,7 @@ CLASS z2ui5_cl_demo_app_330 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
 
     ENDIF.

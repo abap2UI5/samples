@@ -19,7 +19,9 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Icon Tab Bar - Separator`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -31,7 +33,8 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.IconTabBar/sample/sap.m.sample.IconTabSeparator` ).
 
-    DATA(layout) = page->label( wrapping = `true`
+    
+    layout = page->label( wrapping = `true`
                                 text     = `No icon(='') used as separator, the separator will be a vertical line.`
                                 class    = `sapUiSmallMargin` ).
 
@@ -125,7 +128,7 @@ CLASS z2ui5_cl_demo_app_225 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

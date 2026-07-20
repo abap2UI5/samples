@@ -20,7 +20,9 @@ CLASS z2ui5_cl_demo_app_207 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Radio Button`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -32,7 +34,8 @@ CLASS z2ui5_cl_demo_app_207 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.RadioButton/sample/sap.m.sample.RadioButton` ).
 
-    DATA(layout) = page->vbox( `sapUiSmallMargin`
+    
+    layout = page->vbox( `sapUiSmallMargin`
                           )->label( text     = `Default RadioButton use`
                                     labelfor = `GroupA`
                           )->radio_button_group( id = `GroupA`
@@ -85,7 +88,7 @@ CLASS z2ui5_cl_demo_app_207 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

@@ -26,7 +26,19 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    DATA temp2 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    DATA temp4 TYPE string_table.
+    DATA temp5 TYPE string_table.
+    DATA temp6 TYPE string_table.
+    DATA temp7 TYPE string_table.
+    DATA temp8 TYPE string_table.
+    DATA temp9 TYPE string_table.
+    DATA temp10 TYPE string_table.
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Toggle Button`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -44,7 +56,48 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ToggleButton/sample/sap.m.sample.ToggleButton` ).
 
-    DATA(page_02) = page_01->page(
+    
+    CLEAR temp1.
+    INSERT `${$source>/pressed}` INTO TABLE temp1.
+    INSERT `${$source>/id}` INTO TABLE temp1.
+    
+    CLEAR temp2.
+    INSERT `${$source>/pressed}` INTO TABLE temp2.
+    INSERT `${$source>/id}` INTO TABLE temp2.
+    
+    CLEAR temp3.
+    INSERT `${$source>/pressed}` INTO TABLE temp3.
+    INSERT `${$source>/id}` INTO TABLE temp3.
+    
+    CLEAR temp4.
+    INSERT `${$source>/pressed}` INTO TABLE temp4.
+    INSERT `${$source>/id}` INTO TABLE temp4.
+    
+    CLEAR temp5.
+    INSERT `${$source>/pressed}` INTO TABLE temp5.
+    INSERT `${$source>/id}` INTO TABLE temp5.
+    
+    CLEAR temp6.
+    INSERT `${$source>/pressed}` INTO TABLE temp6.
+    INSERT `${$source>/id}` INTO TABLE temp6.
+    
+    CLEAR temp7.
+    INSERT `${$source>/pressed}` INTO TABLE temp7.
+    INSERT `${$source>/id}` INTO TABLE temp7.
+    
+    CLEAR temp8.
+    INSERT `${$source>/pressed}` INTO TABLE temp8.
+    INSERT `${$source>/id}` INTO TABLE temp8.
+    
+    CLEAR temp9.
+    INSERT `${$source>/pressed}` INTO TABLE temp9.
+    INSERT `${$source>/id}` INTO TABLE temp9.
+    
+    CLEAR temp10.
+    INSERT `${$source>/pressed}` INTO TABLE temp10.
+    INSERT `${$source>/id}` INTO TABLE temp10.
+    
+    page_02 = page_01->page(
                               title = `Page`
                               class = `sapUiContentPadding`
                               )->custom_header(
@@ -55,7 +108,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                       )->get_parent(
                                       )->content_right(
                                           )->toggle_button( icon  = `sap-icon://edit`
-                                                            press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press = client->_event( val = `onPress` t_arg = temp1 )
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
@@ -65,25 +118,25 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                           )->toggle_button( text    = `Pressed`
                                                             enabled = abap_true
                                                             pressed = abap_true
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `onPress` t_arg = temp2 )
                                           )->toggle_button( text    = `Pressed & Disabled`
                                                             enabled = abap_false
                                                             pressed = abap_true
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `onPress` t_arg = temp3 )
                                       )->get_parent(
                                       )->content_right(
                                           )->toggle_button( icon  = `sap-icon://action`
-                                                            press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press = client->_event( val = `onPress` t_arg = temp4 )
                                           )->toggle_button( icon    = `sap-icon://home`
                                                             enabled = abap_false
-                                                            press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                            press   = client->_event( val = `onPress` t_arg = temp5 )
                                       )->get_parent(
                                   )->get_parent(
                               )->get_parent(
                               )->hbox(
                                   )->toggle_button( text    = `Disabled`
                                                     enabled = `false`
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `onPress` t_arg = temp6 ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -91,7 +144,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                   )->toggle_button( text    = `Pressed`
                                                     enabled = abap_true
                                                     pressed = abap_true
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `onPress` t_arg = temp7 ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -99,7 +152,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                   )->toggle_button( icon    = `sap-icon://action`
                                                     enabled = abap_true
                                                     pressed = abap_true
-                                                    press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) ) )->get(
+                                                    press   = client->_event( val = `onPress` t_arg = temp8 ) )->get(
                                       )->layout_data(
                                           )->flex_item_data( growfactor = `1`
                                       )->get_parent(
@@ -111,9 +164,9 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
                                            )->toggle_button( text    = `Pressed & Disabled`
                                                              enabled = abap_false
                                                              pressed = abap_true
-                                                             press   = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                             press   = client->_event( val = `onPress` t_arg = temp9 )
                                            )->toggle_button( icon  = `sap-icon://action`
-                                                             press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/pressed}` ) ( `${$source>/id}` ) ) )
+                                                             press = client->_event( val = `onPress` t_arg = temp10 )
                                        )->get_parent(
                                    )->get_parent(
                               )->get_parent( ).
@@ -141,7 +194,8 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -159,7 +213,7 @@ CLASS z2ui5_cl_demo_app_266 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

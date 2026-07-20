@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_459 DEFINITION PUBLIC.
         name     TYPE string,
         category TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -23,16 +23,33 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_products.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
-    IF client->check_on_init( ).
-      t_products = VALUE #(
-          ( name = `Notebook Basic 15`  category = `Laptops` )
-          ( name = `Notebook Basic 17`  category = `Laptops` )
-          ( name = `Ergo Screen E-I`    category = `Screens` )
-          ( name = `Flat Basic`         category = `Screens` )
-          ( name = `Comfort Easy`       category = `PDAs` )
-          ( name = `ITelO Vault`        category = `PDAs` ) ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp1.
+      
+      temp2-name = `Notebook Basic 15`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Notebook Basic 17`.
+      temp2-category = `Laptops`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Ergo Screen E-I`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Flat Basic`.
+      temp2-category = `Screens`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `Comfort Easy`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-name = `ITelO Vault`.
+      temp2-category = `PDAs`.
+      INSERT temp2 INTO TABLE temp1.
+      t_products = temp1.
       view_display( ).
     ELSE.
       on_event( ).
@@ -42,6 +59,14 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
 
 
   METHOD on_event.
+            DATA temp3 TYPE i.
+            DATA lv_from TYPE i.
+            DATA temp4 TYPE i.
+            DATA lv_to TYPE i.
+            DATA lv_pos TYPE string.
+            DATA ls_row LIKE LINE OF t_products.
+            DATA temp1 LIKE LINE OF t_products.
+            DATA temp2 LIKE sy-tabix.
 
     CASE client->get( )-event.
 
@@ -50,10 +75,26 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
         " event: dragged row index, drop target index (both 0-based) and
         " the drop position (Before/After)
         TRY.
-            DATA(lv_from) = CONV i( client->get_event_arg( ) ) + 1.
-            DATA(lv_to)   = CONV i( client->get_event_arg( 2 ) ) + 1.
-            DATA(lv_pos)  = client->get_event_arg( 3 ).
-            DATA(ls_row)  = t_products[ lv_from ].
+            
+            temp3 = client->get_event_arg( ).
+            
+            lv_from = temp3 + 1.
+            
+            temp4 = client->get_event_arg( 2 ).
+            
+            lv_to   = temp4 + 1.
+            
+            lv_pos  = client->get_event_arg( 3 ).
+            
+            
+            
+            temp2 = sy-tabix.
+            READ TABLE t_products INDEX lv_from INTO temp1.
+            sy-tabix = temp2.
+            IF sy-subrc <> 0.
+              ASSERT 1 = 0.
+            ENDIF.
+            ls_row = temp1.
           CATCH cx_root.
             RETURN.
         ENDTRY.
@@ -79,9 +120,16 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp5 TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA temp6 LIKE LINE OF temp5.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Drag and Drop - Table reorder`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -95,25 +143,40 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->table( id    = `reorderTable`
+    
+    tab = page->table( id    = `reorderTable`
                              items = client->_bind( t_products ) ).
 
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method
     " has no dropPosition parameter
+    
+    CLEAR temp5.
+    
+    temp6-n = `sourceAggregation`.
+    temp6-v = `items`.
+    INSERT temp6 INTO TABLE temp5.
+    temp6-n = `targetAggregation`.
+    temp6-v = `items`.
+    INSERT temp6 INTO TABLE temp5.
+    temp6-n = `dropPosition`.
+    temp6-v = `Between`.
+    INSERT temp6 INTO TABLE temp5.
+    temp6-n = `drop`.
+    
+    CLEAR temp3.
+    INSERT `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` INTO TABLE temp3.
+    INSERT `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` INTO TABLE temp3.
+    INSERT `${$parameters>/dropPosition}` INTO TABLE temp3.
+    temp6-v = client->_event(
+val = `REORDER`
+t_arg = temp3 ).
+    INSERT temp6 INTO TABLE temp5.
     tab->drag_drop_config( ``
         )->_generic(
             name   = `DragDropInfo`
             ns     = `dnd`
-            t_prop = VALUE #( ( n = `sourceAggregation` v = `items` )
-                              ( n = `targetAggregation` v = `items` )
-                              ( n = `dropPosition`      v = `Between` )
-                              ( n = `drop`              v = client->_event(
-                                  val   = `REORDER`
-                                  t_arg = VALUE #(
-                                      ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
-                                      ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
-                                      ( `${$parameters>/dropPosition}` ) ) ) ) ) ).
+            t_prop = temp5 ).
 
     tab->columns(
         )->column( )->text( `Product` )->get_parent(

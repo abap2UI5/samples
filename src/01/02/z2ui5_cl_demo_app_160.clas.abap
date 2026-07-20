@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       model_init( ).
       view_display( ).
     ELSE.
@@ -64,18 +64,22 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
   METHOD model_init.
 
-    mt_output = VALUE #( ).
+    DATA temp1 LIKE mt_output.
+      DATA temp2 TYPE z2ui5_cl_demo_app_160=>ty_s_output.
+    CLEAR temp1.
+    mt_output = temp1.
 
     DO 10 TIMES.
 
-      INSERT VALUE #(
-        index = sy-index
-        set_sk = `Test`
-        matnr  = `1234567`
-        description = `Test`
-        pl_01 = 0
-        pl_02 = 0
-      ) INTO TABLE mt_output.
+      
+      CLEAR temp2.
+      temp2-index = sy-index.
+      temp2-set_sk = `Test`.
+      temp2-matnr = `1234567`.
+      temp2-description = `Test`.
+      temp2-pl_01 = 0.
+      temp2-pl_02 = 0.
+      INSERT temp2 INTO TABLE mt_output.
 
     ENDDO.
 
@@ -84,7 +88,7 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `PL_TOTAL_CHANGE` ).
+    IF client->check_on_event( `PL_TOTAL_CHANGE` ) IS NOT INITIAL.
       client->message_box_display(
         `Id of Input via source object: ` &&  client->get_event_arg( ) && z2ui5_cl_sample_context=>cv_char_util_newline  &&
         `Id of Input via event.oSource.sId: ` &&  client->get_event_arg( 2 ) && z2ui5_cl_sample_context=>cv_char_util_newline &&
@@ -100,9 +104,15 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA table TYPE REF TO z2ui5_cl_xml_view.
+    DATA columns TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp3 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
       )->page(
         title          = `abap2UI5 - Event on cell level`
         navbuttonpress = client->_event_nav_app_leave( )
@@ -120,7 +130,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
 
     page->text( `Make an input and press ENTER` ).
 
-    DATA(table) = page->flex_box( height = `85vh`
+    
+    table = page->flex_box( height = `85vh`
         )->ui_table( alternaterowcolors  = `true`
                      selectionmode       = `None`
                      visiblerowcountmode = `Auto`
@@ -128,7 +139,8 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
                      rows                = client->_bind( mt_output )
     ).
 
-    DATA(columns) = table->ui_columns( ).
+    
+    columns = table->ui_columns( ).
 
     columns->ui_column( width          = `5.2rem`
                         sortproperty   = `SET_SK`
@@ -136,17 +148,18 @@ CLASS z2ui5_cl_demo_app_160 IMPLEMENTATION.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `MATNR`
                         filterproperty = `MATNR` )->text( `Column 2` )->ui_template( )->text( `{MATNR}` ).
+    
+    CLEAR temp3.
+    INSERT `${$source>/id}` INTO TABLE temp3.
+    INSERT `$event.oSource.sId` INTO TABLE temp3.
+    INSERT `${INDEX}` INTO TABLE temp3.
+    INSERT `$event.oSource.oParent.sId` INTO TABLE temp3.
+    INSERT `${$parameters>/value}` INTO TABLE temp3.
     columns->ui_column( width          = `5rem`
                         sortproperty   = `PL_TOTAL`
                         filterproperty = `PL_TOTAL` )->text( `Column 5` )->ui_template( )->input(
                         value          = `{PL_TOTAL}`
-                        submit         = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
-        ( `${$source>/id}` )
-        ( `$event.oSource.sId` )
-        ( `${INDEX}` )
-        ( `$event.oSource.oParent.sId` )
-        ( `${$parameters>/value}` )
-         ) ) editable = abap_true type = `Number` ).
+                        submit         = client->_event( val = `PL_TOTAL_CHANGE` t_arg = temp3 ) editable = abap_true type = `Number` ).
 
     columns->ui_column( width          = `4rem`
                         sortproperty   = `per_cent_total`

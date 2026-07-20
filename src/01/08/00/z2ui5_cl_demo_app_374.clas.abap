@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_374 DEFINITION PUBLIC.
         title TYPE string,
         descr TYPE string,
       END OF ty_s_item.
-    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
+    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH DEFAULT KEY.
 
     DATA detail_text TYPE string.
 
@@ -30,15 +30,26 @@ CLASS Z2UI5_CL_DEMO_APP_374 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_items.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_items = VALUE #(
-          ( title = `Product A` descr = `First product` )
-          ( title = `Product B` descr = `Second product` )
-          ( title = `Product C` descr = `Third product` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-title = `Product A`.
+      temp2-descr = `First product`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `Product B`.
+      temp2-descr = `Second product`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-title = `Product C`.
+      temp2-descr = `Third product`.
+      INSERT temp2 INTO TABLE temp1.
+      t_items = temp1.
       detail_text = `Select an item from the master list.`.
 
       view_display( ).
@@ -52,7 +63,10 @@ CLASS Z2UI5_CL_DEMO_APP_374 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA split TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp3 TYPE string_table.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Split Container`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -70,15 +84,19 @@ CLASS Z2UI5_CL_DEMO_APP_374 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.SplitContainer` ).
 
-    DATA(split) = page->split_container( ).
+    
+    split = page->split_container( ).
 
+    
+    CLEAR temp3.
+    INSERT `${TITLE}` INTO TABLE temp3.
     split->master_pages(
         )->page( `Master`
             )->list( client->_bind( t_items )
                 )->standard_list_item( title       = `{TITLE}`
                                        description = `{DESCR}`
                                        type        = `Active`
-                                       press       = client->_event( val = `ITEM_PRESS` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                                       press       = client->_event( val = `ITEM_PRESS` t_arg = temp3 ) ).
 
     split->detail_pages(
         )->page( title = `Detail`
@@ -107,7 +125,8 @@ CLASS Z2UI5_CL_DEMO_APP_374 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

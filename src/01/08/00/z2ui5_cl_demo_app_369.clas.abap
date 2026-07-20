@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_369 DEFINITION PUBLIC.
         waers         TYPE waers,
         state_price   TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -33,18 +33,65 @@ CLASS Z2UI5_CL_DEMO_APP_369 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE t_products.
+      DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_products = VALUE #(
-          ( productname = `table`    measure = 100 unit = `KG` state_measure = `Warning`     price = `1000.50` waers = `EUR` state_price = `Success` )
-          ( productname = `chair`    measure = 123 unit = `KG` state_measure = `Warning`     price = `2000.55` waers = `USD` state_price = `Error` )
-          ( productname = `sofa`     measure = 700 unit = `KG` state_measure = `Warning`     price = `3000.11` waers = `CNY` state_price = `Success` )
-          ( productname = `computer` measure = 200 unit = `KG` state_measure = `Success`     price = `4000.88` waers = `USD` state_price = `Success` )
-          ( productname = `printer`  measure = 90  unit = `KG` state_measure = `Warning`     price = `5000.47` waers = `EUR` state_price = `Error` )
-          ( productname = `table2`   measure = 600 unit = `KG` state_measure = `Information` price = `6000.33` waers = `GBP` state_price = `Success` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-productname = `table`.
+      temp2-measure = 100.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Warning`.
+      temp2-price = `1000.50`.
+      temp2-waers = `EUR`.
+      temp2-state_price = `Success`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-productname = `chair`.
+      temp2-measure = 123.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Warning`.
+      temp2-price = `2000.55`.
+      temp2-waers = `USD`.
+      temp2-state_price = `Error`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-productname = `sofa`.
+      temp2-measure = 700.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Warning`.
+      temp2-price = `3000.11`.
+      temp2-waers = `CNY`.
+      temp2-state_price = `Success`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-productname = `computer`.
+      temp2-measure = 200.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Success`.
+      temp2-price = `4000.88`.
+      temp2-waers = `USD`.
+      temp2-state_price = `Success`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-productname = `printer`.
+      temp2-measure = 90.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Warning`.
+      temp2-price = `5000.47`.
+      temp2-waers = `EUR`.
+      temp2-state_price = `Error`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-productname = `table2`.
+      temp2-measure = 600.
+      temp2-unit = `KG`.
+      temp2-state_measure = `Information`.
+      temp2-price = `6000.33`.
+      temp2-waers = `GBP`.
+      temp2-state_price = `Success`.
+      INSERT temp2 INTO TABLE temp1.
+      t_products = temp1.
 
       view_display( ).
 
@@ -57,7 +104,8 @@ CLASS Z2UI5_CL_DEMO_APP_369 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object Number inside a Table`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -100,7 +148,7 @@ CLASS Z2UI5_CL_DEMO_APP_369 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -109,7 +157,8 @@ CLASS Z2UI5_CL_DEMO_APP_369 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

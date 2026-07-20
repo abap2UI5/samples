@@ -19,7 +19,9 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Toolbar vs Bar vs OverflowToolbar`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -31,7 +33,8 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Toolbar/sample/sap.m.sample.ToolbarVsBar` ).
 
-    DATA(page_02) = page_01->page(
+    
+    page_02 = page_01->page(
                          title         = `Bar can center a Title.`
                          titlelevel    = `H2`
                          class         = `sapUiContentPadding`
@@ -108,7 +111,7 @@ CLASS z2ui5_cl_demo_app_235 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

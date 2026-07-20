@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `OPEN_MENU` ).
+    IF client->check_on_event( `OPEN_MENU` ) IS NOT INITIAL.
       view_menu( ).
     ENDIF.
 
@@ -27,9 +27,15 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
   METHOD view_menu.
 
-    DATA(menu_view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA menu_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE z2ui5_if_types=>ty_s_name_value.
+    menu_view = z2ui5_cl_xml_view=>factory_popup( ).
 
-    menu_view->_generic_property( VALUE #( n = `core:require` v = `{ MessageToast: 'sap/m/MessageToast' }` ) ).
+    
+    CLEAR temp1.
+    temp1-n = `core:require`.
+    temp1-v = `{ MessageToast: 'sap/m/MessageToast' }`.
+    menu_view->_generic_property( temp1 ).
 
     menu_view->menu( title = `Choose Your Action`
       )->menu_item( text  = `Accept`
@@ -58,7 +64,9 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA vbox TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     view           = view->shell( )->page( id = `page_main`
     title          = `abap2UI5 - Menu`
@@ -72,7 +80,8 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(vbox) = view->vbox( ).
+    
+    vbox = view->vbox( ).
 
     vbox->button( text  = `Open Menu`
                   press = client->_event( `OPEN_MENU` )
@@ -87,7 +96,7 @@ CLASS z2ui5_cl_demo_app_163 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).

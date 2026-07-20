@@ -19,13 +19,18 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD simple_popup1.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    DATA dialog TYPE REF TO z2ui5_cl_xml_view.
+    DATA content TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
+    
+    dialog = popup->dialog(
             afterclose = client->_event( `BTN_OK_1ND` )
          )->content( ).
 
-    DATA(content) = dialog->button( text  = `Open 2nd popup`
+    
+    content = dialog->button( text  = `Open 2nd popup`
                                     press = client->_event( `GOTO_2ND` ) ).
 
     dialog->get_parent( )->buttons(
@@ -41,13 +46,18 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD simple_popup2.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    DATA dialog TYPE REF TO z2ui5_cl_xml_view.
+    DATA content TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
+    
+    dialog = popup->dialog(
         afterclose = client->_event( `BTN_OK_2ND` )
          )->content( ).
 
-    DATA(content) = dialog->label( `this is a second popup` ).
+    
+    content = dialog->label( `this is a second popup` ).
 
     dialog->get_parent( )->buttons(
                   )->button(
@@ -62,8 +72,11 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
                 title          = `abap2UI5 - Popup To Popup`
                 navbuttonpress = client->_event_nav_app_leave( )
@@ -108,7 +121,7 @@ CLASS z2ui5_cl_demo_app_161 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_navigated( ).
+    IF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
       RETURN.
     ENDIF.

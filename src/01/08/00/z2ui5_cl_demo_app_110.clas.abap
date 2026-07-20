@@ -22,7 +22,8 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
     view->shell(
       )->page(
               title          = `abap2UI5 - Sample: MaskInput`
@@ -101,7 +102,7 @@ CLASS z2ui5_cl_demo_app_110 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( ).
       RETURN.

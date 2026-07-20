@@ -36,7 +36,8 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Select - with icons`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -77,7 +78,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -86,7 +87,8 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -104,7 +106,7 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( client ).
       set_data( ).
@@ -117,23 +119,63 @@ CLASS z2ui5_cl_demo_app_297 IMPLEMENTATION.
 
   METHOD set_data.
 
-    selected_product      = VALUE #( ).
-    lt_product_collection = VALUE #( ).
+    DATA temp1 TYPE string.
+    DATA temp2 LIKE lt_product_collection.
+    DATA temp3 LIKE lt_product_collection.
+    DATA temp4 LIKE LINE OF temp3.
+    CLEAR temp1.
+    selected_product      = temp1.
+    
+    CLEAR temp2.
+    lt_product_collection = temp2.
 
     selected_product  = `HT-1001`.
 
     " Populate the internal table
-    lt_product_collection = VALUE #(
-      ( product_id = `HT-1001` name = `Notebook Basic 17`        icon = `sap-icon://paper-plane` )
-      ( product_id = `HT-1002` name = `Notebook Basic 18`        icon = `sap-icon://add-document` )
-      ( product_id = `HT-1003` name = `Notebook Basic 19`        icon = `sap-icon://doctor` )
-      ( product_id = `HT-1007` name = `ITelO Vault`              icon = `sap-icon://sys-find-next` )
-      ( product_id = `HT-1010` name = `Notebook Professional 15` icon = `sap-icon://add-product` )
-      ( product_id = `HT-1011` name = `Notebook Professional 17` icon = `sap-icon://add-product` )
-      ( product_id = `HT-1020` name = `ITelO Vault Net`          icon = `sap-icon://add-product` )
-      ( product_id = `HT-1021` name = `ITelO Vault SAT`          icon = `sap-icon://add-product` )
-      ( product_id = `HT-1022` name = `Comfort Easy`             icon = `sap-icon://add-product` )
-      ( product_id = `HT-1023` name = `Comfort Senior`           icon = `sap-icon://add-product` ) ).
+    
+    CLEAR temp3.
+    
+    temp4-product_id = `HT-1001`.
+    temp4-name = `Notebook Basic 17`.
+    temp4-icon = `sap-icon://paper-plane`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1002`.
+    temp4-name = `Notebook Basic 18`.
+    temp4-icon = `sap-icon://add-document`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1003`.
+    temp4-name = `Notebook Basic 19`.
+    temp4-icon = `sap-icon://doctor`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1007`.
+    temp4-name = `ITelO Vault`.
+    temp4-icon = `sap-icon://sys-find-next`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1010`.
+    temp4-name = `Notebook Professional 15`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1011`.
+    temp4-name = `Notebook Professional 17`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1020`.
+    temp4-name = `ITelO Vault Net`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1021`.
+    temp4-name = `ITelO Vault SAT`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1022`.
+    temp4-name = `Comfort Easy`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-product_id = `HT-1023`.
+    temp4-name = `Comfort Senior`.
+    temp4-icon = `sap-icon://add-product`.
+    INSERT temp4 INTO TABLE temp3.
+    lt_product_collection = temp3.
     SORT lt_product_collection BY name.
 
   ENDMETHOD.

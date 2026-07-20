@@ -8,7 +8,7 @@ CLASS z2ui5_cl_demo_app_447 DEFINITION PUBLIC.
         index TYPE i,
         text  TYPE string,
       END OF ty_s_row.
-    DATA mt_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA mt_row TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -23,14 +23,18 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
+        DATA temp1 TYPE z2ui5_cl_demo_app_447=>ty_s_row.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       DO 30 TIMES.
-        INSERT VALUE #( index = sy-index
-                        text  = |Row number { sy-index }| ) INTO TABLE mt_row.
+        
+        CLEAR temp1.
+        temp1-index = sy-index.
+        temp1-text = |Row number { sy-index }|.
+        INSERT temp1 INTO TABLE mt_row.
       ENDDO.
 
       view_display( ).
@@ -43,22 +47,30 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp2 TYPE string_table.
+        DATA temp4 TYPE string_table.
 
     CASE client->get( )-event.
 
       " t_arg is positional: id, view (`` = global lookup), method, params
       WHEN `FOCUS`.
+        
+        CLEAR temp2.
+        INSERT `nameInput` INTO TABLE temp2.
+        INSERT `` INTO TABLE temp2.
+        INSERT `focus` INTO TABLE temp2.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                  t_arg = VALUE #( ( `nameInput` )
-                                                   ( `` )
-                                                   ( `focus` ) ) ).
+                                  t_arg = temp2 ).
 
       WHEN `SCROLL`.
+        
+        CLEAR temp4.
+        INSERT `bigTable` INTO TABLE temp4.
+        INSERT `` INTO TABLE temp4.
+        INSERT `scrollToIndex` INTO TABLE temp4.
+        INSERT `25` INTO TABLE temp4.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
-                                  t_arg = VALUE #( ( `bigTable` )
-                                                   ( `` )
-                                                   ( `scrollToIndex` )
-                                                   ( `25` ) ) ).
+                                  t_arg = temp4 ).
 
     ENDCASE.
 
@@ -69,9 +81,13 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Action - CONTROL_BY_ID`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -97,7 +113,8 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
                    press = client->_event( `SCROLL` )
                    class = `sapUiTinyMarginTop` ).
 
-    DATA(tab) = page->table( id    = `bigTable`
+    
+    tab = page->table( id    = `bigTable`
                              items = client->_bind( mt_row ) ).
 
     tab->columns(

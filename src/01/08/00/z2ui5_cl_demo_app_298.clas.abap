@@ -38,7 +38,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Select - Validation states`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -127,7 +128,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -136,7 +137,8 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -154,7 +156,7 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( client ).
       set_data( ).
@@ -167,11 +169,27 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
 
   METHOD set_data.
 
-    selectedproducterrorcollection = VALUE #( ).
-    selectedproductwrnngcollection = VALUE #( ).
-    selectedproductsccsscollection = VALUE #( ).
-    selectedproductinforcollection = VALUE #( ).
-    lt_a_products                  = VALUE #( ).
+    DATA temp1 TYPE string.
+    DATA temp2 TYPE string.
+    DATA temp3 TYPE string.
+    DATA temp4 TYPE string.
+    DATA temp5 LIKE lt_a_products.
+    DATA temp6 LIKE lt_a_products.
+    DATA temp7 LIKE LINE OF temp6.
+    CLEAR temp1.
+    selectedproducterrorcollection = temp1.
+    
+    CLEAR temp2.
+    selectedproductwrnngcollection = temp2.
+    
+    CLEAR temp3.
+    selectedproductsccsscollection = temp3.
+    
+    CLEAR temp4.
+    selectedproductinforcollection = temp4.
+    
+    CLEAR temp5.
+    lt_a_products                  = temp5.
 
     selectedproducterrorcollection  = `HT-998`.
     selectedproductwrnngcollection  = `HT-999`.
@@ -179,23 +197,58 @@ CLASS z2ui5_cl_demo_app_298 IMPLEMENTATION.
     selectedproductinforcollection  = `HT-1007`.
 
     " Populate the internal table
-    lt_a_products = VALUE #(
-      ( product_id = `HT-998`  name = `Notebook Basic 11` )
-      ( product_id = `HT-999`  name = `Notebook Basic 13` )
-      ( product_id = `HT-1000` name = `Notebook Basic 15` )
-      ( product_id = `HT-1001` name = `Notebook Basic 17` )
-      ( product_id = `HT-1002` name = `Notebook Basic 18` )
-      ( product_id = `HT-1003` name = `Notebook Basic 19` )
-      ( product_id = `HT-1007` name = `ITelO Vault` )
-      ( product_id = `HT-1008` name = `Notebook Professional 11` )
-      ( product_id = `HT-1009` name = `Notebook Professional 13` )
-      ( product_id = `HT-1010` name = `Notebook Professional 15` )
-      ( product_id = `HT-1011` name = `Notebook Professional 17` )
-      ( product_id = `HT-1012` name = `Notebook Professional 19` )
-      ( product_id = `HT-1020` name = `ITelO Vault Net` )
-      ( product_id = `HT-1021` name = `ITelO Vault SAT` )
-      ( product_id = `HT-1022` name = `Comfort Easy` )
-      ( product_id = `HT-1023` name = `Comfort Senior` ) ).
+    
+    CLEAR temp6.
+    
+    temp7-product_id = `HT-998`.
+    temp7-name = `Notebook Basic 11`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-999`.
+    temp7-name = `Notebook Basic 13`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1000`.
+    temp7-name = `Notebook Basic 15`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1001`.
+    temp7-name = `Notebook Basic 17`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1002`.
+    temp7-name = `Notebook Basic 18`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1003`.
+    temp7-name = `Notebook Basic 19`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1007`.
+    temp7-name = `ITelO Vault`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1008`.
+    temp7-name = `Notebook Professional 11`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1009`.
+    temp7-name = `Notebook Professional 13`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1010`.
+    temp7-name = `Notebook Professional 15`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1011`.
+    temp7-name = `Notebook Professional 17`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1012`.
+    temp7-name = `Notebook Professional 19`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1020`.
+    temp7-name = `ITelO Vault Net`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1021`.
+    temp7-name = `ITelO Vault SAT`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1022`.
+    temp7-name = `Comfort Easy`.
+    INSERT temp7 INTO TABLE temp6.
+    temp7-product_id = `HT-1023`.
+    temp7-name = `Comfort Senior`.
+    INSERT temp7 INTO TABLE temp6.
+    lt_a_products = temp6.
     SORT lt_a_products BY name.
 
   ENDMETHOD.

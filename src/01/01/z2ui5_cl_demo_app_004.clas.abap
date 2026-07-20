@@ -21,9 +21,9 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -39,12 +39,16 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE REF TO z2ui5_cl_demo_app_004.
+        DATA dummy TYPE i.
 
     CASE client->get( )-event.
       WHEN `BUTTON_ROUNDTRIP`.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
       WHEN `BUTTON_RESTART`.
-        client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
+        
+        CREATE OBJECT temp1 TYPE z2ui5_cl_demo_app_004.
+        client->nav_app_leave( temp1 ).
       WHEN `BUTTON_CHANGE_VIEW`.
         CASE view_main.
           WHEN `MAIN`.
@@ -53,18 +57,23 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
             view_main_display( ).
         ENDCASE.
       WHEN `BUTTON_ERROR`.
-        DATA(dummy) = 1 / 0.
+        
+        dummy = 1 / 0.
     ENDCASE.
 
   ENDMETHOD.
 
 
   METHOD view_main_display.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
 
     view_main = `MAIN`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Controller`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -106,11 +115,15 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
 
   METHOD view_second_display.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
 
     view_main = `SECOND`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Controller`
             navbuttonpress = client->_event_nav_app_leave( )

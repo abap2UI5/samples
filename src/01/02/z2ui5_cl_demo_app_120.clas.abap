@@ -38,7 +38,7 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
       RETURN.
     ENDIF.
@@ -61,9 +61,13 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
           )->page(
                   title          = `abap2UI5 - Geolocation`
                   navbuttonpress = client->_event_nav_app_leave( )
@@ -76,11 +80,14 @@ CLASS z2ui5_cl_demo_app_120 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
+    
+    CLEAR temp1.
+    INSERT `${$parameters>/code}` INTO TABLE temp1.
+    INSERT `${$parameters>/message}` INTO TABLE temp1.
     page->_z2ui5( )->geolocation(
                                         finished         = client->_event( `GEOLOCATION_LOADED` )
                                         error            = client->_event( val   = `GEOLOCATION_ERROR`
-                                                                           t_arg = VALUE #( ( `${$parameters>/code}` )
-                                                                                            ( `${$parameters>/message}` ) ) )
+                                                                           t_arg = temp1 )
                                         longitude        = client->_bind( longitude )
                                         latitude         = client->_bind( latitude )
                                         altitude         = client->_bind( altitude )

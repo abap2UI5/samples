@@ -18,7 +18,9 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: ComboBox - Suggestions wrapping`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -30,7 +32,8 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ComboBox/sample/sap.m.sample.ComboBoxWrapping` ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    
+    layout = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
     layout->label( text     = `Product`
                    labelfor = `wrappingComboBox` ).
@@ -56,7 +59,7 @@ CLASS z2ui5_cl_demo_app_229 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

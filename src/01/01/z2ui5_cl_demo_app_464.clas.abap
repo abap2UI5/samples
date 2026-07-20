@@ -18,7 +18,7 @@ CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -28,6 +28,8 @@ CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA lv_zero TYPE i.
+        DATA lv_result TYPE i.
 
     CASE client->get( )-event.
 
@@ -41,8 +43,10 @@ CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
       WHEN `DIVIDE_BY_ZERO`.
         " a genuine, unplanned runtime dump (CX_SY_ZERODIVIDE) - the same
         " path: the app never handles it, so it surfaces in the popup
-        DATA(lv_zero) = 0.
-        DATA(lv_result) = 1 / lv_zero.
+        
+        lv_zero = 0.
+        
+        lv_result = 1 / lv_zero.
         client->message_toast_display( |{ lv_result }| ).
 
     ENDCASE.
@@ -52,9 +56,12 @@ CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Error Handling`
             navbuttonpress = client->_event_nav_app_leave( )

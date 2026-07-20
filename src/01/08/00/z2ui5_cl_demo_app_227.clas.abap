@@ -21,7 +21,9 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Page, Toolbar and Bar`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -33,7 +35,8 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Page/sample/sap.m.sample.Page` ).
 
-    DATA(page_02) = page_01->page( title         = `Title`
+    
+    page_02 = page_01->page( title         = `Title`
                                    class         = `sapUiContentPadding sapUiResponsivePadding--header sapUiResponsivePadding--subHeader sapUiResponsivePadding--content sapUiResponsivePadding--footer`
                                    shownavbutton = `true`
                               )->header_content(
@@ -69,7 +72,7 @@ CLASS z2ui5_cl_demo_app_227 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

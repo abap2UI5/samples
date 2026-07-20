@@ -19,7 +19,9 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Busy Indicator`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -31,7 +33,8 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.BusyIndicator/sample/sap.m.sample.BusyIndicator` ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
+    
+    layout = page->vertical_layout( class = `sapUiContentPadding`
                                           width = `100%` ).
     layout->busy_indicator( text  = `... something is happening`
                             class = `sapUiTinyMarginBottom` ).
@@ -48,7 +51,7 @@ CLASS z2ui5_cl_demo_app_215 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

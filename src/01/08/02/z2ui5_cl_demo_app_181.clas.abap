@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `BOOK` ).
+    IF client->check_on_event( `BOOK` ) IS NOT INITIAL.
       client->message_toast_display( `BOOKED !!! ENJOY` ).
     ENDIF.
 
@@ -53,9 +53,18 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE z2ui5_cl_demo_app_181=>t_cities.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 TYPE z2ui5_cl_demo_app_181=>t_product_items.
+    DATA temp4 LIKE LINE OF temp3.
+    DATA card_1 TYPE REF TO z2ui5_cl_xml_view.
+    DATA card_2 TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    
+    page = view->shell( )->page(
         title          = `Cards Demo`
         class          = `sapUiContentPadding`
         navbuttonpress = client->_event_nav_app_leave( )
@@ -67,19 +76,57 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.f.Card/sample/sap.f.sample.Card` ).
 
-    mt_cities = VALUE #( ( text = `Berlin` key = `BR` )
-                                                                                                       ( text = `London` key = `LN` )
-                                                                                                       ( text = `Madrid` key = `MD` )
-                                                                                                       ( text = `Prague` key = `PR` )
-                                                                                                       ( text = `Paris`  key = `PS` )
-                                                                                                       ( text = `Sofia`  key = `SF` )
-                                                                                                       ( text = `Vienna` key = `VN` ) ).
+    
+    CLEAR temp1.
+    
+    temp2-text = `Berlin`.
+    temp2-key = `BR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `London`.
+    temp2-key = `LN`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `Madrid`.
+    temp2-key = `MD`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `Prague`.
+    temp2-key = `PR`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `Paris`.
+    temp2-key = `PS`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `Sofia`.
+    temp2-key = `SF`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-text = `Vienna`.
+    temp2-key = `VN`.
+    INSERT temp2 INTO TABLE temp1.
+    mt_cities = temp1.
 
-    mt_products = VALUE #( ( title = `Notebook HT` subtitle = `ID23452256-D44` revenue = `27.25K EUR` status = `success` status_schema = `Success` )
-                                                                                                 ( title = `Notebook XT` subtitle = `ID27852256-D47` revenue = `7.35K EUR` status = `exceeded` status_schema = `Error` )
-                                                                                                 ( title = `Notebook ST` subtitle = `ID123555587-I05` revenue = `22.89K EUR` status = `warning` status_schema = `Warning` ) ).
+    
+    CLEAR temp3.
+    
+    temp4-title = `Notebook HT`.
+    temp4-subtitle = `ID23452256-D44`.
+    temp4-revenue = `27.25K EUR`.
+    temp4-status = `success`.
+    temp4-status_schema = `Success`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `Notebook XT`.
+    temp4-subtitle = `ID27852256-D47`.
+    temp4-revenue = `7.35K EUR`.
+    temp4-status = `exceeded`.
+    temp4-status_schema = `Error`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `Notebook ST`.
+    temp4-subtitle = `ID123555587-I05`.
+    temp4-revenue = `22.89K EUR`.
+    temp4-status = `warning`.
+    temp4-status_schema = `Warning`.
+    INSERT temp4 INTO TABLE temp3.
+    mt_products = temp3.
 
-    DATA(card_1) = page->card( width = `300px`
+    
+    card_1 = page->card( width = `300px`
                                class = `sapUiMediumMargin`
       )->header( `f`
         )->card_header( title    = `Buy bus ticket on-line`
@@ -111,7 +158,8 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
                                press = client->_event( `BOOK` )
                                class = `sapUiTinyMarginBegin` ).
 
-    DATA(card_2) = page->card( width = `300px`
+    
+    card_2 = page->card( width = `300px`
                                class = `sapUiMediumMargin`
                      )->header( `f`
                        )->card_header( title    = `Project Cloud Transformation`
@@ -141,7 +189,7 @@ CLASS z2ui5_cl_demo_app_181 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
     ENDIF.

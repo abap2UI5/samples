@@ -69,25 +69,33 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
   METHOD render_main_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA content TYPE REF TO z2ui5_cl_xml_view.
+    DATA navlist TYPE REF TO z2ui5_cl_xml_view.
+    DATA site_content TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     "Custom CSS
     view->_generic( ns   = `html`
                     name = `style` )->_cc_plain_xml( `.sapMPage>section { height: 100% }` &&
       `#mainView--site_content { border-radius: 0.75em }` ).
 
-    DATA(page) = view->page(
+    
+    page = view->page(
             title           = `abap2UI5 - Sample: Side Navigation`
             navbuttonpress  = client->_event_nav_app_leave( )
             enablescrolling = abap_false
             class           = `sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer`
             shownavbutton   = client->check_app_prev_stack( ) ).
 
-    DATA(content) = page->flex_box( width      = `100%`
+    
+    content = page->flex_box( width      = `100%`
                                     height     = `90%`
                                     alignitems = `Start` ).
 
-    DATA(navlist) = content->flex_box( width     = `100%`
+    
+    navlist = content->flex_box( width     = `100%`
                                        height    = `100%`
                                        direction = `Column` )->layout_data( )->flex_item_data( growfactor = `1`
       basesize                                                                                            = `0` )->get_parent( )->side_navigation( id                                           = `sideNavigation`
@@ -138,7 +146,8 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
                                icon = `sap-icon://chain-link`
                                href = `https://github.com/abap2UI5/abap2UI5` ).
 
-    DATA(site_content) = content->flex_box( id               = `site_content`
+    
+    site_content = content->flex_box( id               = `site_content`
                                             class            = `sapUiTinyMarginTop sapUiTinyMarginBegin`
                                             width            = `100%`
                                             height           = `100%`
@@ -186,7 +195,7 @@ CLASS z2ui5_cl_demo_app_258 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       selected_menu_entry = `Home`.
     ENDIF.
 

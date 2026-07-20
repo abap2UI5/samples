@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
     ELSE.
@@ -37,9 +37,13 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/`.
+    DATA base_url TYPE string.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA hbox TYPE REF TO z2ui5_cl_xml_view.
+    base_url = `https://sapui5.hana.ondemand.com/test-resources/`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Image`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -57,7 +61,8 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Image/sample/sap.m.sample.Image` ).
 
-    DATA(hbox) = page->vbox( `sapUiSmallMarginTopBottom sapUiLargeMarginBeginEnd`
+    
+    hbox = page->vbox( `sapUiSmallMarginTopBottom sapUiLargeMarginBeginEnd`
         )->hbox( justifycontent = `SpaceBetween` ).
 
     hbox->vbox(
@@ -112,7 +117,8 @@ CLASS z2ui5_cl_demo_app_379 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

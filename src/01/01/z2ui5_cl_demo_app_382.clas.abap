@@ -23,10 +23,10 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -43,15 +43,20 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE string_table.
 
     CASE client->get( )-event.
       WHEN `CUSTOM`.
+        
+        CLEAR temp1.
+        INSERT `Approve` INTO TABLE temp1.
+        INSERT `Reject` INTO TABLE temp1.
         client->message_box_display(
             text             = message
             title            = title
             type             = `information`
             details          = details
-            actions          = VALUE #( ( `Approve` ) ( `Reject` ) )
+            actions          = temp1
             emphasizedaction = `Approve` ).
       WHEN OTHERS.
         client->message_box_display(
@@ -66,7 +71,8 @@ CLASS z2ui5_cl_demo_app_382 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Message Box`
             navbuttonpress = client->_event_nav_app_leave( )

@@ -18,10 +18,10 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
         key  TYPE string,
         text TYPE string,
       END OF ty_s_combo,
-      tt_combo TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
+      tt_combo TYPE STANDARD TABLE OF ty_s_combo WITH DEFAULT KEY.
 
-    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
-    DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH EMPTY KEY.
+    DATA mt_picture       TYPE STANDARD TABLE OF ty_s_picture WITH DEFAULT KEY.
+    DATA mt_picture_out   TYPE STANDARD TABLE OF ty_s_picture WITH DEFAULT KEY.
     DATA mv_pic_display   TYPE string.
     DATA mv_picture_base  TYPE string.
     DATA mv_picture_thumb TYPE string.
@@ -49,10 +49,20 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA cont TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_list TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA lo_item TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_hbox TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(cont) = view->shell( ).
-    DATA(page) = cont->page( title          = `abap2UI5 - Device Camera Picture`
+    
+    cont = view->shell( ).
+    
+    page = cont->page( title          = `abap2UI5 - Device Camera Picture`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -90,16 +100,25 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
                                      facingmode = client->_bind( facing_mode )
                                      deviceid   = client->_bind( device ) ).
 
-    DATA(lo_list) = page->list(
+    
+    lo_list = page->list(
                                 headertext      = `List Output`
                                 items           = client->_bind( mt_picture_out )
                                 mode            = `SingleSelectMaster`
                                 selectionchange = client->_event( `DISPLAY` ) ).
 
-    DATA(lo_item) = lo_list->_generic( name   = `CustomListItem`
-                                       t_prop = VALUE #( ( n = `selected` v = `{SELECTED}` ) ) ).
+    
+    CLEAR temp1.
+    
+    temp2-n = `selected`.
+    temp2-v = `{SELECTED}`.
+    INSERT temp2 INTO TABLE temp1.
+    
+    lo_item = lo_list->_generic( name   = `CustomListItem`
+                                       t_prop = temp1 ).
 
-    DATA(lo_hbox) = lo_item->hbox( alignitems = `Center` ).
+    
+    lo_hbox = lo_item->hbox( alignitems = `Center` ).
     lo_hbox->image( src    = `{THUMBNAIL}`
                     height = `80px` ).
     lo_hbox->text( `{NAME}` ).
@@ -116,15 +135,38 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp3 TYPE tt_combo.
+      DATA temp4 LIKE LINE OF temp3.
+        DATA temp5 TYPE z2ui5_cl_demo_app_306=>ty_s_picture.
+                        DATA temp6 TYPE string.
+                        DATA temp7 TYPE string.
+        DATA temp8 LIKE LINE OF mt_picture_out.
+        DATA temp9 LIKE sy-tabix.
+        DATA temp10 LIKE LINE OF mt_picture.
+        DATA temp11 LIKE sy-tabix.
 
     me->client = client.
 
-    IF client->check_on_init( ).
-      facing_modes = VALUE tt_combo( ( key = `` text = `` )
-                                     ( key = `environment` text = `environment` )
-                                     ( key = `user` text = `user` )
-                                     ( key = `left` text = `left` )
-                                     ( key = `right` text = `right` ) ).
+    IF client->check_on_init( ) IS NOT INITIAL.
+      
+      CLEAR temp3.
+      
+      temp4-key = ``.
+      temp4-text = ``.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `environment`.
+      temp4-text = `environment`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `user`.
+      temp4-text = `user`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `left`.
+      temp4-text = `left`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-key = `right`.
+      temp4-text = `right`.
+      INSERT temp4 INTO TABLE temp3.
+      facing_modes = temp3.
 
       view_display( ).
     ENDIF.
@@ -140,17 +182,40 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `CAPTURE`.
-        INSERT VALUE #( data             = mv_picture_base
-                        thumbnail        = mv_picture_thumb
-                        time             = sy-uzeit ) INTO TABLE mt_picture.
-                        mv_picture_base  = VALUE #( ).
-                        mv_picture_thumb = VALUE #( ).
+        
+        CLEAR temp5.
+        temp5-data = mv_picture_base.
+        temp5-thumbnail = mv_picture_thumb.
+        temp5-time = sy-uzeit.
+        INSERT temp5 INTO TABLE mt_picture.
+                        
+                        CLEAR temp6.
+                        mv_picture_base  = temp6.
+                        
+                        CLEAR temp7.
+                        mv_picture_thumb = temp7.
         client->view_model_update( ).
 
       WHEN `DISPLAY`.
 
-        selected_picture = mt_picture_out[ selected = abap_true ].
-        mv_pic_display   = mt_picture[ selected_picture-id ]-data.
+        
+        
+        temp9 = sy-tabix.
+        READ TABLE mt_picture_out WITH KEY selected = abap_true INTO temp8.
+        sy-tabix = temp9.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        selected_picture = temp8.
+        
+        
+        temp11 = sy-tabix.
+        READ TABLE mt_picture INDEX selected_picture-id INTO temp10.
+        sy-tabix = temp11.
+        IF sy-subrc <> 0.
+          ASSERT 1 = 0.
+        ENDIF.
+        mv_pic_display   = temp10-data.
         rebuild_output( ).
         view_display( ).
         RETURN.
@@ -174,13 +239,27 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
 
   METHOD rebuild_output.
 
-    mt_picture_out = VALUE #( ).
-    LOOP AT mt_picture INTO DATA(ls_pic).
-      INSERT VALUE #( name      = |picture { sy-tabix }|
-                      id        = sy-tabix
-                      thumbnail = ls_pic-thumbnail
-                      selected  = COND #( WHEN sy-tabix = selected_picture-id
-                                          THEN abap_true ) )
+    DATA temp12 LIKE mt_picture_out.
+    DATA ls_pic LIKE LINE OF mt_picture.
+      DATA temp13 TYPE z2ui5_cl_demo_app_306=>ty_s_picture.
+      DATA temp1 TYPE abap_bool.
+    CLEAR temp12.
+    mt_picture_out = temp12.
+    
+    LOOP AT mt_picture INTO ls_pic.
+      
+      CLEAR temp13.
+      temp13-name = |picture { sy-tabix }|.
+      temp13-id = sy-tabix.
+      temp13-thumbnail = ls_pic-thumbnail.
+      
+      IF sy-tabix = selected_picture-id.
+        temp1 = abap_true.
+      ELSE.
+        CLEAR temp1.
+      ENDIF.
+      temp13-selected = temp1.
+      INSERT temp13
              INTO TABLE mt_picture_out.
     ENDLOOP.
 
@@ -188,14 +267,23 @@ CLASS Z2UI5_CL_DEMO_APP_306 IMPLEMENTATION.
 
 
   METHOD on_navigation.
+        DATA lo_prev TYPE REF TO z2ui5_if_app.
+        DATA temp14 TYPE REF TO z2ui5_cl_pop_image_editor.
+        DATA result TYPE z2ui5_cl_pop_image_editor=>t_result.
+          FIELD-SYMBOLS <picture> TYPE z2ui5_cl_demo_app_306=>ty_s_picture.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
+        
+        lo_prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        
+        temp14 ?= lo_prev.
+        
+        result = temp14->result( ).
 
         IF result-check_confirmed = abap_true.
           mv_pic_display = result-image.
-          ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
+          
+          READ TABLE mt_picture INDEX selected_picture-id ASSIGNING <picture>.
 
           IF sy-subrc = 0.
 

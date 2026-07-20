@@ -46,7 +46,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       initialization( ).
       view_display( client ).
@@ -59,144 +59,180 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
   METHOD initialization.
 
-    items = VALUE #(
-        ( title     = `Box title 1`
-          subtitle  = `Subtitle 1`
-          counter   = 5
-          highlight = `Error`
-          unread    = abap_true
-          type      = `Active` )
-        ( title     = `Box title 2`
-          subtitle  = `Subtitle 2`
-          counter   = 15
-          highlight = `Warning`
-          type      = `Active` )
-        ( title     = `Box title 3`
-          subtitle  = `Subtitle 3`
-          counter   = 15734
-          highlight = `None`
-          type      = `Inactive`
-          busy      = abap_true )
-        ( title     = `Box title 4`
-          subtitle  = `Subtitle 4`
-          counter   = 2
-          highlight = `None`
-          type      = `Inactive` )
-        ( title     = `Box title 5`
-          subtitle  = `Subtitle 5`
-          counter   = 1
-          highlight = `Warning`
-          type      = `Inactive` )
-        ( title     = `Box title 6 Box title Box title Box title Box title Box title`
-          subtitle  = `Subtitle 6`
-          counter   = 5
-          highlight = `None`
-          type      = `Active` )
-        ( title     = `Very long Box title that should wrap 7`
-          subtitle  = `This is a long subtitle 7`
-          counter   = 5
-          highlight = `Error`
-          type      = `DetailAndActive` )
-        ( title     = `Box title B 8`
-          subtitle  = `Subtitle 8`
-          counter   = 0
-          highlight = `None`
-          type      = `Navigation` )
-        ( title     = `Box title B 9 Box title B  Box title B 9 Box title B 9Box title B 9title B 9 Box title B 9Box title B`
-          subtitle  = `Subtitle 9`
-          highlight = `Success`
-          type      = `Inactive` )
-        ( title     = `Box title B 10`
-          subtitle  = `Subtitle 10`
-          highlight = `None`
-          type      = `Active` )
-        ( title     = `Box title B 11`
-          subtitle  = `Subtitle 11`
-          highlight = `None`
-          type      = `Active` )
-        ( title     = `Box title B 12`
-          subtitle  = `Subtitle 12`
-          highlight = `Information`
-          type      = `Inactive` )
-        ( title     = `Box title 13`
-          subtitle  = `Subtitle 13`
-          counter   = 5
-          highlight = `None`
-          type      = `Navigation` )
-        ( title     = `Box title 14`
-          subtitle  = `Subtitle 14`
-          highlight = `Success`
-          type      = `DetailAndActive` )
-        ( title     = `Box title 15`
-          subtitle  = `Subtitle 15`
-          highlight = `None`
-          type      = `Inactive` )
-        ( title     = `Box title 16`
-          subtitle  = `Subtitle 16`
-          counter   = 37412578
-          highlight = `None`
-          type      = `Navigation` )
-        ( title     = `Box title 17`
-          subtitle  = `Subtitle 17`
-          highlight = `Information`
-          type      = `Inactive` )
-        ( title     = `Box title 18`
-          subtitle  = `Subtitle 18`
-          highlight = `None`
-          type      = `Inactive` )
-        ( title     = `Very long Box title that should wrap 19`
-          subtitle  = `This is a long subtitle 19`
-          highlight = `None`
-          type      = `Inactive` )
-        ( title     = `Box title B 20`
-          subtitle  = `Subtitle 20`
-          counter   = 1
-          busy      = abap_true
-          highlight = `Success`
-          type      = `Inactive` )
-        ( title     = `Box title B 21`
-          subtitle  = `Subtitle 21`
-          highlight = `None`
-          type      = `Navigation` )
-        ( title     = `Box title B 22`
-          subtitle  = `Subtitle 22`
-          counter   = 5
-          highlight = `None`
-          unread    = abap_true
-          type      = `Inactive` )
-        ( title     = `Box title B 23`
-          subtitle  = `Subtitle 23`
-          counter   = 3
-          highlight = `None`
-          unread    = abap_true
-          type      = `Inactive` )
-        ( title     = `Box title B 24`
-          subtitle  = `Subtitle 24`
-          counter   = 5
-          highlight = `Error`
-          type      = `Inactive` )
-        ( title     = `Box title B 21`
-          subtitle  = `Subtitle 21`
-          highlight = `None`
-          type      = `Inactive` )
-        ( title     = `Box title B 22`
-          subtitle  = `Subtitle 22`
-          highlight = `None`
-          unread    = abap_true
-          type      = `Navigation` )
-        ( title     = `Box title B 23`
-          subtitle  = `Subtitle 23`
-          highlight = `None`
-          type      = `Navigation` ) ).
+    DATA temp1 TYPE z2ui5_cl_demo_app_307=>ty_items.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-title = `Box title 1`.
+    temp2-subtitle = `Subtitle 1`.
+    temp2-counter = 5.
+    temp2-highlight = `Error`.
+    temp2-unread = abap_true.
+    temp2-type = `Active`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 2`.
+    temp2-subtitle = `Subtitle 2`.
+    temp2-counter = 15.
+    temp2-highlight = `Warning`.
+    temp2-type = `Active`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 3`.
+    temp2-subtitle = `Subtitle 3`.
+    temp2-counter = 15734.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    temp2-busy = abap_true.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 4`.
+    temp2-subtitle = `Subtitle 4`.
+    temp2-counter = 2.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 5`.
+    temp2-subtitle = `Subtitle 5`.
+    temp2-counter = 1.
+    temp2-highlight = `Warning`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 6 Box title Box title Box title Box title Box title`.
+    temp2-subtitle = `Subtitle 6`.
+    temp2-counter = 5.
+    temp2-highlight = `None`.
+    temp2-type = `Active`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Very long Box title that should wrap 7`.
+    temp2-subtitle = `This is a long subtitle 7`.
+    temp2-counter = 5.
+    temp2-highlight = `Error`.
+    temp2-type = `DetailAndActive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 8`.
+    temp2-subtitle = `Subtitle 8`.
+    temp2-counter = 0.
+    temp2-highlight = `None`.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 9 Box title B  Box title B 9 Box title B 9Box title B 9title B 9 Box title B 9Box title B`.
+    temp2-subtitle = `Subtitle 9`.
+    temp2-highlight = `Success`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 10`.
+    temp2-subtitle = `Subtitle 10`.
+    temp2-highlight = `None`.
+    temp2-type = `Active`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 11`.
+    temp2-subtitle = `Subtitle 11`.
+    temp2-highlight = `None`.
+    temp2-type = `Active`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 12`.
+    temp2-subtitle = `Subtitle 12`.
+    temp2-highlight = `Information`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 13`.
+    temp2-subtitle = `Subtitle 13`.
+    temp2-counter = 5.
+    temp2-highlight = `None`.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 14`.
+    temp2-subtitle = `Subtitle 14`.
+    temp2-highlight = `Success`.
+    temp2-type = `DetailAndActive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 15`.
+    temp2-subtitle = `Subtitle 15`.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 16`.
+    temp2-subtitle = `Subtitle 16`.
+    temp2-counter = 37412578.
+    temp2-highlight = `None`.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 17`.
+    temp2-subtitle = `Subtitle 17`.
+    temp2-highlight = `Information`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title 18`.
+    temp2-subtitle = `Subtitle 18`.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Very long Box title that should wrap 19`.
+    temp2-subtitle = `This is a long subtitle 19`.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 20`.
+    temp2-subtitle = `Subtitle 20`.
+    temp2-counter = 1.
+    temp2-busy = abap_true.
+    temp2-highlight = `Success`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 21`.
+    temp2-subtitle = `Subtitle 21`.
+    temp2-highlight = `None`.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 22`.
+    temp2-subtitle = `Subtitle 22`.
+    temp2-counter = 5.
+    temp2-highlight = `None`.
+    temp2-unread = abap_true.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 23`.
+    temp2-subtitle = `Subtitle 23`.
+    temp2-counter = 3.
+    temp2-highlight = `None`.
+    temp2-unread = abap_true.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 24`.
+    temp2-subtitle = `Subtitle 24`.
+    temp2-counter = 5.
+    temp2-highlight = `Error`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 21`.
+    temp2-subtitle = `Subtitle 21`.
+    temp2-highlight = `None`.
+    temp2-type = `Inactive`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 22`.
+    temp2-subtitle = `Subtitle 22`.
+    temp2-highlight = `None`.
+    temp2-unread = abap_true.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-title = `Box title B 23`.
+    temp2-subtitle = `Subtitle 23`.
+    temp2-highlight = `None`.
+    temp2-type = `Navigation`.
+    INSERT temp2 INTO TABLE temp1.
+    items = temp1.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp3 TYPE string_table.
+    DATA temp5 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page( title          = `Grid List with Drag and Drop`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( ) ).
@@ -207,6 +243,11 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.f.GridList/sample/sap.f.sample.GridListDragAndDrop` ).
 
+    
+    CLEAR temp3.
+    INSERT `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` INTO TABLE temp3.
+    INSERT `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` INTO TABLE temp3.
+    INSERT `${$parameters>/dropPosition}` INTO TABLE temp3.
     page->panel( id               = `panelForGridList`
                  backgrounddesign = `Transparent`
         )->header_toolbar(
@@ -225,10 +266,7 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
                     droplayout        = `Horizontal`
                     drop              = client->_event(
                     val               = `onDrop`
-                    t_arg             = VALUE #(
-                            ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
-                            ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
-                            ( `${$parameters>/dropPosition}` ) ) )
+                    t_arg             = temp3 )
             )->get_parent(
             )->custom_layout( `f`
                 )->grid_box_layout( boxminwidth = `17rem`
@@ -250,22 +288,81 @@ CLASS z2ui5_cl_demo_app_307 IMPLEMENTATION.
 
     client->view_display( view->stringify( ) ).
 
+    
+    CLEAR temp5.
+    INSERT `Grid List with Drag and Drop` INTO TABLE temp5.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_title
-        t_arg = VALUE #( ( `Grid List with Drag and Drop` ) ) ).
+        t_arg = temp5 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+      DATA ondropparameters TYPE string_table.
+          DATA temp7 TYPE i.
+          DATA temp1 LIKE LINE OF ondropparameters.
+          DATA temp2 LIKE sy-tabix.
+          DATA drag_position TYPE i.
+          DATA temp8 TYPE i.
+          DATA temp3 LIKE LINE OF ondropparameters.
+          DATA temp4 LIKE sy-tabix.
+          DATA drop_position TYPE i.
+          DATA insert_position LIKE LINE OF ondropparameters.
+          DATA temp5 LIKE LINE OF ondropparameters.
+          DATA temp6 LIKE sy-tabix.
+          DATA item LIKE LINE OF items.
+          DATA temp9 LIKE LINE OF items.
+          DATA temp10 LIKE sy-tabix.
 
-    IF client->check_on_event( `onDrop` ).
-      DATA(ondropparameters) = client->get( )-t_event_arg.
+    IF client->check_on_event( `onDrop` ) IS NOT INITIAL.
+      
+      ondropparameters = client->get( )-t_event_arg.
       TRY.
-          DATA(drag_position) = CONV i( ondropparameters[ 1 ] ) + 1.
-          DATA(drop_position) = CONV i( ondropparameters[ 2 ] ) + 1.
-          DATA(insert_position) = ondropparameters[ 3 ].
-          DATA(item) = items[ drag_position ].
+          
+          
+          
+          temp2 = sy-tabix.
+          READ TABLE ondropparameters INDEX 1 INTO temp1.
+          sy-tabix = temp2.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          temp7 = temp1.
+          
+          drag_position = temp7 + 1.
+          
+          
+          
+          temp4 = sy-tabix.
+          READ TABLE ondropparameters INDEX 2 INTO temp3.
+          sy-tabix = temp4.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          temp8 = temp3.
+          
+          drop_position = temp8 + 1.
+          
+          
+          
+          temp6 = sy-tabix.
+          READ TABLE ondropparameters INDEX 3 INTO temp5.
+          sy-tabix = temp6.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          insert_position = temp5.
+          
+          
+          
+          temp10 = sy-tabix.
+          READ TABLE items INDEX drag_position INTO temp9.
+          sy-tabix = temp10.
+          IF sy-subrc <> 0.
+            ASSERT 1 = 0.
+          ENDIF.
+          item = temp9.
         CATCH cx_root.
           RETURN.
       ENDTRY.

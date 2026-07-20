@@ -22,9 +22,9 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -33,9 +33,15 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA(target) = client->get( )-event.
-    DATA(behavior) = `smooth`.
-    DATA(block) = `start`.
+    DATA target TYPE z2ui5_if_types=>ty_s_get-event.
+    DATA behavior TYPE string.
+    DATA block TYPE string.
+    DATA temp1 TYPE string_table.
+    target = client->get( )-event.
+    
+    behavior = `smooth`.
+    
+    block = `start`.
 
     CASE target.
       WHEN `JUMP_BOTTOM`.
@@ -58,17 +64,26 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
+    
+    CLEAR temp1.
+    INSERT target INTO TABLE temp1.
+    INSERT behavior INTO TABLE temp1.
+    INSERT block INTO TABLE temp1.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-scroll_into_view
-        t_arg = VALUE #( ( target ) ( behavior ) ( block ) ) ).
+        t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA form TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `scroll_into_view - jump to a control`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -78,7 +93,8 @@ CLASS z2ui5_cl_demo_app_363 IMPLEMENTATION.
         text = `Use the toolbar to scroll to a control by id, or press Validate - if the middle field is empty it scrolls to it automatically.`
         type = `Information` ).
 
-    DATA(form) = page->simple_form( editable = abap_true
+    
+    form = page->simple_form( editable = abap_true
                                     title    = `Long form`
         )->content( `form` ).
 

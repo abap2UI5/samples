@@ -24,7 +24,7 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
 
     ELSE.
@@ -37,9 +37,12 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
   METHOD view_display.
 
     " Image URLs of the mock model sap/ui/demo/mock/img.json used by the original sample
-    DATA(base_url) = `https://sapui5.hana.ondemand.com/test-resources/sap/ui/documentation/sdk/images/`.
+    DATA base_url TYPE string.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    base_url = `https://sapui5.hana.ondemand.com/test-resources/sap/ui/documentation/sdk/images/`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Carousel`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -80,7 +83,7 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -89,7 +92,8 @@ CLASS z2ui5_cl_demo_app_371 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

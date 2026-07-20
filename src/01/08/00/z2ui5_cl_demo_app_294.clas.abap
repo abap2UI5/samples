@@ -36,7 +36,8 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Date Picker - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -73,7 +74,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -82,7 +83,8 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -100,7 +102,7 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( client ).
       set_data( ).
@@ -113,28 +115,52 @@ CLASS z2ui5_cl_demo_app_294 IMPLEMENTATION.
 
   METHOD set_data.
 
-    s_text    = VALUE #( ).
-    lt_a_data = VALUE #( ).
+    DATA temp1 TYPE string.
+    DATA temp2 LIKE lt_a_data.
+    DATA temp3 TYPE z2ui5_cl_demo_app_294=>ty_s_a_data.
+    DATA temp4 TYPE z2ui5_cl_demo_app_294=>ty_s_a_data.
+    DATA temp5 TYPE z2ui5_cl_demo_app_294=>ty_s_a_data.
+    DATA temp6 TYPE z2ui5_cl_demo_app_294=>ty_s_a_data.
+    DATA temp7 TYPE z2ui5_cl_demo_app_294=>ty_s_a_data.
+    CLEAR temp1.
+    s_text    = temp1.
+    
+    CLEAR temp2.
+    lt_a_data = temp2.
 
     s_text = `DatePicker with valueState `.
 
     " Append entries to the internal table
-    APPEND VALUE #( label       = s_text && `None`
-                    value_state = `None` ) TO lt_a_data.
+    
+    CLEAR temp3.
+    temp3-label = s_text && `None`.
+    temp3-value_state = `None`.
+    APPEND temp3 TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Information`
-                    value_state = `Information` ) TO lt_a_data.
+    
+    CLEAR temp4.
+    temp4-label = s_text && `Information`.
+    temp4-value_state = `Information`.
+    APPEND temp4 TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Success`
-                    value_state = `Success` ) TO lt_a_data.
+    
+    CLEAR temp5.
+    temp5-label = s_text && `Success`.
+    temp5-value_state = `Success`.
+    APPEND temp5 TO lt_a_data.
 
-    APPEND VALUE #( label            = s_text && `Warning and long valueStateText`
-                    value_state      = `Warning`
-                    value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
-                                       `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` ) TO lt_a_data.
+    
+    CLEAR temp6.
+    temp6-label = s_text && `Warning and long valueStateText`.
+    temp6-value_state = `Warning`.
+    temp6-value_state_text = `Warning message. This is an extra long text used as a warning message. ` && `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.`.
+    APPEND temp6 TO lt_a_data.
 
-    APPEND VALUE #( label       = s_text && `Error`
-                    value_state = `Error` ) TO lt_a_data.
+    
+    CLEAR temp7.
+    temp7-label = s_text && `Error`.
+    temp7-value_state = `Error`.
+    APPEND temp7 TO lt_a_data.
 
   ENDMETHOD.
 

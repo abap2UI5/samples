@@ -22,9 +22,9 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( `CLICK_HINT_ICON` ).
+    ELSEIF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -34,12 +34,17 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
   METHOD view_display.
 
     " the original uses the same Lorem ipsum text for the content of both panels
-    DATA(lorem) = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
+    DATA lorem TYPE string.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA panel_picture TYPE REF TO z2ui5_cl_xml_view.
+    DATA panel_header TYPE REF TO z2ui5_cl_xml_view.
+    lorem = `Lorem ipsum dolor st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
       `At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ` &&
       `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. ` &&
       `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat`.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Panel`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -58,7 +63,8 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Panel/sample/sap.m.sample.Panel` ).
 
     " the accessibleRole property of the original is not available in the view API, therefore omitted
-    DATA(panel_picture) = page->panel( width = `auto`
+    
+    panel_picture = page->panel( width = `auto`
                                        class = `sapUiResponsiveMargin` ).
     panel_picture->header_toolbar(
         )->overflow_toolbar(
@@ -69,7 +75,8 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
                   width = `10em` ).
     panel_picture->text( lorem ).
 
-    DATA(panel_header) = page->panel( width = `auto`
+    
+    panel_header = page->panel( width = `auto`
                                       class = `sapUiResponsiveMargin` ).
     panel_header->header_toolbar(
         )->overflow_toolbar(
@@ -86,7 +93,8 @@ CLASS z2ui5_cl_demo_app_378 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

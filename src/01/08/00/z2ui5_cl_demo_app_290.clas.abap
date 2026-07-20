@@ -27,7 +27,12 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    DATA temp2 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    DATA temp4 TYPE string_table.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object List Item - markers aggregation`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -45,12 +50,24 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectListItem/sample/sap.m.sample.ObjectListItemMarkers` ).
 
+    
+    CLEAR temp1.
+    INSERT `${$source>/title}` INTO TABLE temp1.
+    
+    CLEAR temp2.
+    INSERT `${$source>/title}` INTO TABLE temp2.
+    
+    CLEAR temp3.
+    INSERT `${$source>/title}` INTO TABLE temp3.
+    
+    CLEAR temp4.
+    INSERT `${$source>/title}` INTO TABLE temp4.
     page->list(
            headertext = `Products`
            )->object_list_item(
                  title      = `Gladiator MX`
                  type       = `Active`
-                 press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
+                 press      = client->_event( val = `onListItemPress` t_arg = temp1 )
                  number     = `87.50`
                  unit       = `EUR`
                )->first_status(
@@ -69,7 +86,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
            )->object_list_item(
                  title      = `Hurricane GX`
                  type       = `Active`
-                 press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
+                 press      = client->_event( val = `onListItemPress` t_arg = temp2 )
                  number     = `235`
                  unit       = `EUR`
                )->first_status(
@@ -88,7 +105,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
            )->object_list_item(
                  title      = `Power Projector 4713`
                  type       = `Active`
-                 press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
+                 press      = client->_event( val = `onListItemPress` t_arg = temp3 )
                  number     = `135`
                  unit       = `EUR`
                )->first_status(
@@ -108,7 +125,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
            )->object_list_item(
                  title      = `Webcam`
                  type       = `Active`
-                 press      = client->_event( val = `onListItemPress` t_arg = VALUE #( ( `${$source>/title}` ) ) )
+                 press      = client->_event( val = `onListItemPress` t_arg = temp4 )
                  number     = `15`
                  unit       = `EUR`
                )->first_status(
@@ -144,7 +161,8 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -162,7 +180,7 @@ CLASS z2ui5_cl_demo_app_290 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

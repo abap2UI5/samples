@@ -42,11 +42,11 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_navigated( ).
+    ELSEIF client->check_on_navigated( ) IS NOT INITIAL.
       view_display( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -62,11 +62,13 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA closed_title TYPE string.
 
     CASE client->get( )-event.
       WHEN `CLOSE`.
 
-        DATA(closed_title) = client->get_event_arg( ).
+        
+        closed_title = client->get_event_arg( ).
         DELETE t_items WHERE title = closed_title.
         client->message_toast_display( |Item Closed: { closed_title }| ).
         view_display( ).
@@ -89,7 +91,13 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA list TYPE REF TO z2ui5_cl_xml_view.
+    DATA s_item LIKE LINE OF t_items.
+      DATA temp1 TYPE string_table.
+      DATA temp2 TYPE string_table.
+      DATA list_item TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Notification List Item`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -109,13 +117,22 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
 
     " The original sample uses a sap.m.NotificationList (available since UI5 1.90) with a
     " FlexItemData maxWidth - a sap.m.List is used here instead
-    DATA(list) = page->vbox( `sapUiSmallMargin`
+    
+    list = page->vbox( `sapUiSmallMargin`
         )->list( ).
 
-    LOOP AT t_items INTO DATA(s_item).
+    
+    LOOP AT t_items INTO s_item.
 
       " The properties `authorInitials` and `authorAvatarColor` of the original items are not available in UI5 1.71 and therefore omitted here
-      DATA(list_item) = list->notification_list_item(
+      
+      CLEAR temp1.
+      INSERT `${$source>/title}` INTO TABLE temp1.
+      
+      CLEAR temp2.
+      INSERT `${$source>/title}` INTO TABLE temp2.
+      
+      list_item = list->notification_list_item(
           title              = s_item-title
           description        = s_item-description
           datetime           = s_item-datetime
@@ -128,9 +145,9 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
           hideshowmorebutton = s_item-hideshowmorebutton
           showbuttons        = s_item-showbuttons
           close              = client->_event( val   = `CLOSE`
-                                               t_arg = VALUE #( ( `${$source>/title}` ) ) )
+                                               t_arg = temp1 )
           press              = client->_event( val   = `ITEM_PRESS`
-                                               t_arg = VALUE #( ( `${$source>/title}` ) ) ) ).
+                                               t_arg = temp2 ) ).
 
       CASE s_item-buttons.
         WHEN `ACCEPT_REJECT_LONG`.
@@ -185,96 +202,110 @@ CLASS z2ui5_cl_demo_app_375 IMPLEMENTATION.
 
     " The `Get Error` button of the original eighth item sets a MessageStrip via the `processingMessage`
     " aggregation, which is not available in the view API - the button is omitted here
-    t_items = VALUE #(
-      ( title           = `New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        description     = `And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        showclosebutton = abap_true
-        datetime        = `1 hour`
-        unread          = abap_true
-        priority        = `None`
-        authorname      = `Jean Doe`
-        authorpicture   = base_url && `test-resources/sap/m/images/Woman_04.png`
-        buttons         = `ACCEPT_REJECT_LONG` )
-      ( title           = `New order (#2524), without action buttons`
-        description     = `Short description`
-        showclosebutton = abap_true
-        datetime        = `3 days`
-        unread          = abap_true
-        priority        = `High`
-        authorname      = `Office Notification`
-        authorpicture   = `sap-icon://group` )
-      ( title           = `New order (#2523) With a long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
-        description     = `And short description`
-        showclosebutton = abap_false
-        unread          = abap_false
-        datetime        = `3 days`
-        priority        = `High`
-        authorname      = `Patricia Clark`
-        buttons         = `ACCEPT_REJECT_ICON` )
-      ( title           = `New order (#2522)`
-        description     = `With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        showclosebutton = abap_true
-        datetime        = `3 days`
-        unread          = abap_true
-        priority        = `Medium`
-        authorname      = `John Smith` )
-      ( title           = `New order (#2521)`
-        description     = `With a very long description and no action buttons below - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        showclosebutton = abap_true
-        datetime        = `3 days`
-        unread          = abap_true
-        priority        = `Low`
-        authorname      = `John Smith`
-        authorpicture   = base_url && `test-resources/sap/m/images/headerImg2.jpg` )
-      ( title           = `New order (#2525) With a very long title and truncation disabled by default! Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        description     = `And a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                          `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        showclosebutton = abap_true
-        datetime        = `2 day`
-        unread          = abap_false
-        priority        = `Low`
-        authorname      = `Jean Doe`
-        authorpicture   = base_url && `test-resources/sap/m/images/Woman_04.png`
-        truncate        = `false`
-        buttons         = `ACCEPT` )
-      ( title              = `New order (#2525) With a very long title and with truncation enabled but 'Show More' hidden! Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                             `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        description        = `And a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
-                             `Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`
-        showclosebutton    = abap_true
-        datetime           = `2 day`
-        unread             = abap_false
-        priority           = `Low`
-        authorname         = `Jean Doe`
-        authorpicture      = base_url && `test-resources/sap/m/images/Woman_04.png`
-        hideshowmorebutton = `true`
-        showbuttons        = `false`
-        buttons            = `ACCEPT_REJECT` )
-      ( title           = `New order (#2523) With a long title without description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet`
-        showclosebutton = abap_false
-        unread          = abap_false
-        datetime        = `3 days`
-        priority        = `High`
-        authorname      = `Patricia Clark`
-        authorpicture   = base_url && `test-resources/sap/m/images/female_BaySu.jpg`
-        buttons         = `ACCEPT_REJECT_ICON` )
-      ( title           = `New order (#2523) With a long title without description`
-        showclosebutton = abap_true
-        unread          = abap_false
-        datetime        = `3 days`
-        priority        = `High` ) ).
+    DATA temp3 LIKE t_items.
+    DATA temp4 LIKE LINE OF temp3.
+    CLEAR temp3.
+    
+    temp4-title = `New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-description = `And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `1 hour`.
+    temp4-unread = abap_true.
+    temp4-priority = `None`.
+    temp4-authorname = `Jean Doe`.
+    temp4-authorpicture = base_url && `test-resources/sap/m/images/Woman_04.png`.
+    temp4-buttons = `ACCEPT_REJECT_LONG`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2524), without action buttons`.
+    temp4-description = `Short description`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `3 days`.
+    temp4-unread = abap_true.
+    temp4-priority = `High`.
+    temp4-authorname = `Office Notification`.
+    temp4-authorpicture = `sap-icon://group`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2523) With a long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit.`.
+    temp4-description = `And short description`.
+    temp4-showclosebutton = abap_false.
+    temp4-unread = abap_false.
+    temp4-datetime = `3 days`.
+    temp4-priority = `High`.
+    temp4-authorname = `Patricia Clark`.
+    temp4-buttons = `ACCEPT_REJECT_ICON`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2522)`.
+    temp4-description = `With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `3 days`.
+    temp4-unread = abap_true.
+    temp4-priority = `Medium`.
+    temp4-authorname = `John Smith`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2521)`.
+    temp4-description = `With a very long description and no action buttons below - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `3 days`.
+    temp4-unread = abap_true.
+    temp4-priority = `Low`.
+    temp4-authorname = `John Smith`.
+    temp4-authorpicture = base_url && `test-resources/sap/m/images/headerImg2.jpg`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2525) With a very long title and truncation disabled by default! Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-description = `And a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `2 day`.
+    temp4-unread = abap_false.
+    temp4-priority = `Low`.
+    temp4-authorname = `Jean Doe`.
+    temp4-authorpicture = base_url && `test-resources/sap/m/images/Woman_04.png`.
+    temp4-truncate = `false`.
+    temp4-buttons = `ACCEPT`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2525) With a very long title and with truncation enabled but 'Show More' hidden! Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-description = `And a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. ` &&
+`Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.`.
+    temp4-showclosebutton = abap_true.
+    temp4-datetime = `2 day`.
+    temp4-unread = abap_false.
+    temp4-priority = `Low`.
+    temp4-authorname = `Jean Doe`.
+    temp4-authorpicture = base_url && `test-resources/sap/m/images/Woman_04.png`.
+    temp4-hideshowmorebutton = `true`.
+    temp4-showbuttons = `false`.
+    temp4-buttons = `ACCEPT_REJECT`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2523) With a long title without description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet`.
+    temp4-showclosebutton = abap_false.
+    temp4-unread = abap_false.
+    temp4-datetime = `3 days`.
+    temp4-priority = `High`.
+    temp4-authorname = `Patricia Clark`.
+    temp4-authorpicture = base_url && `test-resources/sap/m/images/female_BaySu.jpg`.
+    temp4-buttons = `ACCEPT_REJECT_ICON`.
+    INSERT temp4 INTO TABLE temp3.
+    temp4-title = `New order (#2523) With a long title without description`.
+    temp4-showclosebutton = abap_true.
+    temp4-unread = abap_false.
+    temp4-datetime = `3 days`.
+    temp4-priority = `High`.
+    INSERT temp4 INTO TABLE temp3.
+    t_items = temp3.
 
   ENDMETHOD.
 
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

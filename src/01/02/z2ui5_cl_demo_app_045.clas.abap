@@ -12,7 +12,7 @@ CLASS z2ui5_cl_demo_app_045 DEFINITION PUBLIC.
         info     TYPE string,
         checkbox TYPE abap_bool,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA mv_info_filter TYPE string.
 
@@ -28,11 +28,26 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
 
 
   METHOD refresh_data.
+      DATA temp1 TYPE ty_s_row.
+      DATA temp2 TYPE z2ui5_cl_demo_app_045=>ty_s_row-info.
+      DATA ls_row LIKE temp1.
 
     DO 1000 TIMES.
-      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
-        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
-        descr = `this is a description` checkbox = abap_true ).
+      
+      CLEAR temp1.
+      temp1-count = sy-index.
+      temp1-value = `red`.
+      
+      IF sy-index < 50.
+        temp2 = `completed`.
+      ELSE.
+        temp2 = `uncompleted`.
+      ENDIF.
+      temp1-info = temp2.
+      temp1-descr = `this is a description`.
+      temp1-checkbox = abap_true.
+      
+      ls_row = temp1.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
 
@@ -40,8 +55,10 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       refresh_data( ).
     ENDIF.
 
@@ -57,7 +74,8 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
         client->message_box_display( `button post was pressed` ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
             title          = `abap2UI5 - Table - Backend Filter`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -83,7 +101,8 @@ CLASS Z2UI5_CL_DEMO_APP_045 IMPLEMENTATION.
                         text  = `filter`
                         press = client->_event( `FILTER_INFO` ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
+    
+    tab = page->scroll_container( height   = `70%`
                                         vertical = abap_true
         )->table(
             growing             = abap_true

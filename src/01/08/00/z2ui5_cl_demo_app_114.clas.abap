@@ -33,7 +33,7 @@ CLASS Z2UI5_CL_DEMO_APP_114 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       set_data( ).
       view_display( ).
 
@@ -45,11 +45,14 @@ CLASS Z2UI5_CL_DEMO_APP_114 IMPLEMENTATION.
 
 
   METHOD on_event.
+        DATA temp1 TYPE z2ui5_cl_demo_app_114=>ty_s_feed.
 
-    IF client->check_on_event( `POST` ).
+    IF client->check_on_event( `POST` ) IS NOT INITIAL.
 
       IF mv_value IS NOT INITIAL.
-        ms_feed = VALUE #( ).
+        
+        CLEAR temp1.
+        ms_feed = temp1.
         ms_feed-author = sy-uname.
         ms_feed-type = `Respond`.
         ms_feed-text = mv_value.
@@ -65,25 +68,41 @@ CLASS Z2UI5_CL_DEMO_APP_114 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_feed = VALUE #(
-                      ( author = `choper725` authorpic = `employee` type = `Request` date = `August 26 2023`
-                        text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
-                          `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
-                          `aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` )
-      ( author = `choper725` authorpic = `sap-icon://employee` type = `Reply` date = `August 26 2023` text = `this is feed input` ) ).
+    DATA temp2 LIKE mt_feed.
+    DATA temp3 LIKE LINE OF temp2.
+    CLEAR temp2.
+    
+    temp3-author = `choper725`.
+    temp3-authorpic = `employee`.
+    temp3-type = `Request`.
+    temp3-date = `August 26 2023`.
+    temp3-text = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, seddiamnonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.` &&
+`Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna` &&
+`aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.`.
+    INSERT temp3 INTO TABLE temp2.
+    temp3-author = `choper725`.
+    temp3-authorpic = `sap-icon://employee`.
+    temp3-type = `Reply`.
+    temp3-date = `August 26 2023`.
+    temp3-text = `this is feed input`.
+    INSERT temp3 INTO TABLE temp2.
+    mt_feed = temp2.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    lo_view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view->shell( )->page(
+    
+    page = lo_view->shell( )->page(
              title          = `Feed Input`
              navbuttonpress = client->_event_nav_app_leave( )
              shownavbutton  = client->check_app_prev_stack( ) ).

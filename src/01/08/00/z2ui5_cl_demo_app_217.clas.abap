@@ -18,7 +18,9 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Placing a Title in OverflowToolbar/Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -30,7 +32,8 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.OverflowToolbar/sample/sap.m.sample.TitleToolBar` ).
 
-    DATA(layout) = page->overflow_toolbar( design = `Transparent`
+    
+    layout = page->overflow_toolbar( design = `Transparent`
                                            height = `3rem`
                           )->title( `Title Only` ).
     page->overflow_toolbar( design = `Transparent`
@@ -47,7 +50,7 @@ CLASS z2ui5_cl_demo_app_217 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

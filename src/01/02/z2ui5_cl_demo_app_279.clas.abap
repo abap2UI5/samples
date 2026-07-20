@@ -24,7 +24,10 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA box TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    page = z2ui5_cl_xml_view=>factory(
                    )->shell(
                    )->page(
                       title          = `abap2UI5 - data loss protection`
@@ -38,7 +41,8 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(box) = page->flex_box( direction  = `Row`
+    
+    box = page->flex_box( direction  = `Row`
                                 alignitems = `Start`
                                 class      = `sapUiTinyMargin` ).
 
@@ -66,14 +70,20 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
 
     client->view_display( page->stringify( ) ).
 
+    
+    CLEAR temp1.
+    INSERT `input` INTO TABLE temp1.
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_focus
-        t_arg = VALUE #( ( `input` ) ) ).
+        t_arg = temp1 ).
 
   ENDMETHOD.
 
 
   METHOD on_event.
+        DATA temp1 TYPE xsdboolean.
+        DATA temp3 TYPE abap_bool.
+        DATA temp4 TYPE string.
 
     CASE client->get( )-event.
       WHEN `BACK`.
@@ -84,10 +94,16 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
           client->nav_app_leave( ).
         ENDIF.
       WHEN `submit`.
-        dirty = xsdbool( text_input IS NOT INITIAL ).
+        
+        temp1 = boolc( text_input IS NOT INITIAL ).
+        dirty = temp1.
       WHEN `reset`.
-        dirty      = VALUE #( ).
-        text_input = VALUE #( ).
+        
+        CLEAR temp3.
+        dirty      = temp3.
+        
+        CLEAR temp4.
+        text_input = temp4.
     ENDCASE.
 
   ENDMETHOD.
@@ -113,7 +129,7 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
       on_navigation( ).
     ENDIF.
     on_event( ).
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       client->view_model_update( ).
@@ -123,17 +139,27 @@ CLASS Z2UI5_CL_DEMO_APP_279 IMPLEMENTATION.
 
 
   METHOD on_navigation.
+        DATA prev TYPE REF TO z2ui5_if_app.
+        DATA temp5 TYPE REF TO z2ui5_cl_pop_to_confirm.
+        DATA confirm_leave TYPE abap_bool.
+      DATA temp6 TYPE abap_bool.
 
     TRY.
-        DATA(prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
-        DATA(confirm_leave) = CAST z2ui5_cl_pop_to_confirm( prev )->result( ).
+        
+        prev = client->get_app( client->get( )-s_draft-id_prev_app ).
+        
+        temp5 ?= prev.
+        
+        confirm_leave = temp5->result( ).
 
       CATCH cx_root.
     ENDTRY.
 
     IF confirm_leave = abap_true.
 
-      dirty = VALUE #( ).
+      
+      CLEAR temp6.
+      dirty = temp6.
       client->nav_app_leave( ).
     ENDIF.
 

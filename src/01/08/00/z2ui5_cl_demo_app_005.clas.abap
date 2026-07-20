@@ -16,24 +16,30 @@ CLASS Z2UI5_CL_DEMO_APP_005 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA grid TYPE REF TO z2ui5_cl_xml_view.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       value1 = 10.
       value2 = 90.
 
-    ELSEIF client->check_on_event( `SLIDER_CHANGE` ).
+    ELSEIF client->check_on_event( `SLIDER_CHANGE` ) IS NOT INITIAL.
       client->message_toast_display( |Range Slider { cl_abap_char_utilities=>newline }value1 { value1 } { cl_abap_char_utilities=>newline }value2 { value2 }| ).
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Range Slider Example`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(grid) = page->grid( `L12 M12 S12`
+    
+    grid = page->grid( `L12 M12 S12`
         )->content( `layout` ).
 
     grid->simple_form(

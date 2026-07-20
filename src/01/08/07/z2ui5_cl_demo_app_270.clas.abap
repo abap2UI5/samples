@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_270 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->shell(

@@ -20,14 +20,19 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    FIELD-SYMBOLS <tab> TYPE table.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
                 title          = `abap2UI5 - RTTI created Table`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 
-    FIELD-SYMBOLS <tab> TYPE table.
+    
     ASSIGN t_tab->* TO <tab>.
 
     page->message_strip(
@@ -37,7 +42,8 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->table(
+    
+    tab = page->table(
             items = client->_bind( <tab> )
             mode  = `MultiSelect`
         )->header_toolbar(
@@ -71,20 +77,38 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     FIELD-SYMBOLS <tab> TYPE table.
+      DATA temp1 TYPE z2ui5_t_01.
+      DATA temp2 TYPE z2ui5_t_01.
+      DATA temp3 TYPE z2ui5_t_01.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       CREATE DATA t_tab TYPE STANDARD TABLE OF (`Z2UI5_T_01`).
       ASSIGN t_tab->* TO <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp1.
+      temp1-id = `this is an uuid`.
+      temp1-timestampl = `2023234243`.
+      temp1-id_prev = `previous`.
+      INSERT temp1
         INTO TABLE <tab>.
 
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp2.
+      temp2-id = `this is an uuid`.
+      temp2-timestampl = `2023234243`.
+      temp2-id_prev = `previous`.
+      INSERT temp2
           INTO TABLE <tab>.
-      INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
+      
+      CLEAR temp3.
+      temp3-id = `this is an uuid`.
+      temp3-timestampl = `2023234243`.
+      temp3-id_prev = `previous`.
+      INSERT temp3
           INTO TABLE <tab>.
 
     ENDIF.

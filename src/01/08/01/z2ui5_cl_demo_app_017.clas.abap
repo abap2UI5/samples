@@ -19,8 +19,14 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_content TYPE REF TO z2ui5_cl_xml_view.
+    DATA sections TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page( title          = `abap2UI5 - Object Page with Avatar`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
@@ -36,7 +42,8 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
              editheaderbuttonpress    = client->_event( `EDIT_HEADER_PRESS` )
              uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = page->header_title( )->object_page_dyn_header_title( ).
+    
+    header_title = page->header_title( )->object_page_dyn_header_title( ).
 
     header_title->expanded_heading(
                 )->hbox(
@@ -74,7 +81,8 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                  text    = `show state`
                  tooltip = `show` ).
 
-    DATA(header_content) = page->header_content( `uxap` ).
+    
+    header_content = page->header_content( `uxap` ).
 
     header_content->flex_box( wrap = `Wrap`
            )->icon(
@@ -101,7 +109,8 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
                 )->label( `San Jose, USA`
             )->get_parent( ).
 
-    DATA(sections) = page->sections( ).
+    
+    sections = page->sections( ).
 
     sections->object_page_section(
                 titleuppercase = abap_false
@@ -196,7 +205,7 @@ CLASS z2ui5_cl_demo_app_017 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_event( `BUTTON_MSG_BOX` ).
+    IF client->check_on_event( `BUTTON_MSG_BOX` ) IS NOT INITIAL.
       client->message_box_display(
             text = `this is a message box with a custom text`
             type = `success` ).

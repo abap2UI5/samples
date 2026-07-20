@@ -27,9 +27,9 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -80,7 +80,9 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Progress Indicator Example`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -92,7 +94,8 @@ CLASS z2ui5_cl_demo_app_022 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ProgressIndicator/sample/sap.m.sample.ProgressIndicator` ).
 
-    DATA(layout) = page->vertical_layout(
+    
+    layout = page->vertical_layout(
                        class = `sapUiContentPadding`
                        width = `100%` ).
 

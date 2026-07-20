@@ -18,7 +18,9 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `Sample: Icon Tab Bar - Text Only`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -30,7 +32,8 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.IconTabBar/sample/sap.m.sample.IconTabBarNoIcons` ).
 
-    DATA(layout) = page->icon_tab_bar( id       = `idIconTabBarNoIcons`
+    
+    layout = page->icon_tab_bar( id       = `idIconTabBarNoIcons`
                                        expanded = `{device>/isNoPhone}`
                                        class    = `sapUiResponsiveContentPadding`
                           )->items(
@@ -54,7 +57,7 @@ CLASS z2ui5_cl_demo_app_224 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

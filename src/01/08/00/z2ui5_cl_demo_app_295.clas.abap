@@ -35,7 +35,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Date Range Selection - Value States`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -71,7 +72,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -80,7 +81,8 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -98,7 +100,7 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       view_display( client ).
       set_data( ).
@@ -111,15 +113,31 @@ CLASS z2ui5_cl_demo_app_295 IMPLEMENTATION.
 
   METHOD set_data.
 
-    DATA(text) = `DateRangeSelection with valueState `.
-    t_data = VALUE #(
-      ( label = |{ text }None|        value_state = `None` )
-      ( label = |{ text }Information| value_state = `Information` )
-      ( label = |{ text }Success|     value_state = `Success` )
-      ( label = |{ text }Warning and long valueStateText| value_state = `Warning`
-                value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
-                                   `It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.` )
-      ( label = |{ text }Error|    value_state = `Error` ) ).
+    DATA text TYPE string.
+    DATA temp1 LIKE t_data.
+    DATA temp2 LIKE LINE OF temp1.
+    text = `DateRangeSelection with valueState `.
+    
+    CLEAR temp1.
+    
+    temp2-label = |{ text }None|.
+    temp2-value_state = `None`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = |{ text }Information|.
+    temp2-value_state = `Information`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = |{ text }Success|.
+    temp2-value_state = `Success`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = |{ text }Warning and long valueStateText|.
+    temp2-value_state = `Warning`.
+    temp2-value_state_text = `Warning message. This is an extra long text used as a warning message. ` &&
+`It illustrates how the text wraps into two or more lines without truncation to show the full length of the message.`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-label = |{ text }Error|.
+    temp2-value_state = `Error`.
+    INSERT temp2 INTO TABLE temp1.
+    t_data = temp1.
 
   ENDMETHOD.
 

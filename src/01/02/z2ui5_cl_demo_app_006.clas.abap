@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_006 DEFINITION PUBLIC.
         percentage TYPE p LENGTH 5 DECIMALS 2,
         valuecolor TYPE string,
       END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client    TYPE REF TO z2ui5_if_client.
@@ -37,10 +37,10 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
 
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -73,20 +73,39 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
 
   METHOD refresh_data.
 
-    t_tab      = VALUE #( FOR i = 1 UNTIL i > 10000 (
-    count      = i
-    value      = `red`
-    descr      = `this is a description`
-    checkbox   = abap_true
-    valuecolor = `Good` ) ).
+    DATA temp1 LIKE t_tab.
+    DATA i TYPE i.
+    DATA temp3 LIKE sy-index.
+      DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    i = 1.
+    
+    temp3 = sy-index.
+    WHILE NOT i > 10000.
+      sy-index = temp3.
+      
+      temp2-count = i.
+      temp2-value = `red`.
+      temp2-descr = `this is a description`.
+      temp2-checkbox = abap_true.
+      temp2-valuecolor = `Good`.
+      INSERT temp2 INTO TABLE temp1.
+      i = i + 1.
+    ENDWHILE.
+    t_tab      = temp1.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Scroll Container with Table and Toolbar`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -99,7 +118,8 @@ CLASS Z2UI5_CL_DEMO_APP_006 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->scroll_container(
+    
+    tab = page->scroll_container(
         height   = `70%`
         vertical = abap_true
         )->table(

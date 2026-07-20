@@ -23,9 +23,12 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Focus`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -68,10 +71,12 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+        DATA temp1 TYPE string_table.
+        DATA temp2 LIKE LINE OF temp1.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       field_01 = `this is a text`.
       field_02 = `this is another text`.
@@ -85,9 +90,16 @@ CLASS Z2UI5_CL_DEMO_APP_133 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON01` OR `BUTTON02`.
+        
+        CLEAR temp1.
+        
+        temp2 = client->get( )-event.
+        INSERT temp2 INTO TABLE temp1.
+        INSERT selstart INTO TABLE temp1.
+        INSERT selend INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( client->get( )-event ) ( selstart ) ( selend ) ) ).
+            t_arg = temp1 ).
         client->message_toast_display( |focus changed| ).
     ENDCASE.
 

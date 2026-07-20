@@ -35,7 +35,9 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Object Marker in a table`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -53,6 +55,9 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.ObjectMarker/sample/sap.m.sample.ObjectMarker` ).
 
+    
+    CLEAR temp1.
+    INSERT `${TYPE}` INTO TABLE temp1.
     page->table( id = `idProductsTable`
            items    = client->_bind( lt_a_data )
            )->columns(
@@ -74,7 +79,7 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
                )->object_marker(
                    type           = `{TYPE}`
                    additionalinfo = `{ADDITIONALINFO}`
-                   press          = client->_event( val = `onPress` t_arg = VALUE #( ( `${TYPE}` ) ) ) ).
+                   press          = client->_event( val = `onPress` t_arg = temp1 ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -95,7 +100,8 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -110,23 +116,50 @@ CLASS z2ui5_cl_demo_app_289 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp3 LIKE lt_a_data.
+      DATA temp4 LIKE LINE OF temp3.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
 
-      lt_a_data = VALUE #(
-        ( product = `Power Projector 4713`    type = `Locked` )
-        ( product = `Power Projector 4713`    type = `LockedBy` additionalinfo = `John Doe` )
-        ( product = `Power Projector 4713`    type = `LockedBy` )
-        ( product = `Gladiator MX`            type = `Draft` )
-        ( product = `Hurricane GX`            type = `Unsaved` )
-        ( product = `Hurricane GX`            type = `UnsavedBy` additionalinfo = `John Doe` )
-        ( product = `Hurricane GX`            type = `UnsavedBy` )
-        ( product = `Hurricane GX`            type = `Unsaved` )
-        ( product = `Webcam`                  type = `Favorite` )
-        ( product = `Deskjet Super Highspeed` type = `Flagged` ) ).
+      
+      CLEAR temp3.
+      
+      temp4-product = `Power Projector 4713`.
+      temp4-type = `Locked`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Power Projector 4713`.
+      temp4-type = `LockedBy`.
+      temp4-additionalinfo = `John Doe`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Power Projector 4713`.
+      temp4-type = `LockedBy`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Gladiator MX`.
+      temp4-type = `Draft`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Hurricane GX`.
+      temp4-type = `Unsaved`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Hurricane GX`.
+      temp4-type = `UnsavedBy`.
+      temp4-additionalinfo = `John Doe`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Hurricane GX`.
+      temp4-type = `UnsavedBy`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Hurricane GX`.
+      temp4-type = `Unsaved`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Webcam`.
+      temp4-type = `Favorite`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product = `Deskjet Super Highspeed`.
+      temp4-type = `Flagged`.
+      INSERT temp4 INTO TABLE temp3.
+      lt_a_data = temp3.
 
     ENDIF.
 

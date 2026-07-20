@@ -16,9 +16,12 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
+    
+    page = view->shell( )->page(
         title          = `abap2UI5 - Open New Tab`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
@@ -44,10 +47,13 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+        DATA ls_config TYPE z2ui5_if_types=>ty_s_config.
+        DATA result TYPE string.
+        DATA temp1 TYPE string_table.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ENDIF.
 
@@ -55,18 +61,21 @@ CLASS z2ui5_cl_demo_app_073 IMPLEMENTATION.
 
       WHEN `BUTTON_OPEN_NEW_TAB`.
 
-        DATA(ls_config) = client->get( )-s_config.
-        DATA(result) = z2ui5_cl_a2ui5_context=>app_get_url( classname = `z2ui5_cl_demo_app_073`
+        
+        ls_config = client->get( )-s_config.
+        
+        result = z2ui5_cl_a2ui5_context=>app_get_url( classname = `z2ui5_cl_demo_app_073`
                                                       origin    = ls_config-origin
                                                       pathname  = ls_config-pathname
                                                       search    = ls_config-search
                                                       hash      = ls_config-hash ).
 
+        
+        CLEAR temp1.
+        INSERT result INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-open_new_tab
-            t_arg = VALUE #(
-                ( result )
-                ) ).
+            t_arg = temp1 ).
     ENDCASE.
 
   ENDMETHOD.

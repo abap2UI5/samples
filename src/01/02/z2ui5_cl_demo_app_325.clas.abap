@@ -16,11 +16,20 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      DATA obj_page TYPE REF TO z2ui5_cl_xml_view.
+      DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+      DATA sections TYPE REF TO z2ui5_cl_xml_view.
+        DATA temp1 TYPE string_table.
+        DATA temp3 TYPE string_table.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      
+      page = view->shell(
           )->page( title          = `Clipboard`
                    navbuttonpress = client->_event_nav_app_leave( )
                    shownavbutton  = client->check_app_prev_stack( ) ).
@@ -31,12 +40,14 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
           showicon = abap_true
           class    = `sapUiSmallMargin` ).
 
-      DATA(obj_page) = page->object_page_layout(
+      
+      obj_page = page->object_page_layout(
           showtitleinheadercontent = abap_true
           showeditheaderbutton     = abap_true
           uppercaseanchorbar       = abap_false ).
 
-      DATA(header_title) = obj_page->header_title(
+      
+      header_title = obj_page->header_title(
          )->object_page_dyn_header_title( ).
 
       header_title->expanded_heading( )->hbox( )->title( text     = `Test`
@@ -44,7 +55,8 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
       header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text     = `Test`
                                                                                   wrapping = abap_true ).
 
-      DATA(sections) = obj_page->sections( ).
+      
+      sections = obj_page->sections( ).
 
       sections->object_page_section( titleuppercase = abap_false
                                      id             = `id_sec1`
@@ -82,15 +94,21 @@ CLASS Z2UI5_CL_DEMO_APP_325 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `COPY_INPUT`.
+        
+        CLEAR temp1.
+        INSERT input INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( input ) ) ).
+            t_arg = temp1 ).
         client->message_toast_display( |input field copied: { input }| ).
 
       WHEN `COPY_TEXT_AREA`.
+        
+        CLEAR temp3.
+        INSERT text INTO TABLE temp3.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy
-            t_arg = VALUE #( ( text ) ) ).
+            t_arg = temp3 ).
         client->message_toast_display( |text area copied: { text }| ).
 
     ENDCASE.

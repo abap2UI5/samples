@@ -20,8 +20,17 @@ CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    DATA temp2 LIKE LINE OF temp3.
+    DATA temp5 TYPE string_table.
+    DATA temp7 TYPE string_table.
+    DATA temp9 TYPE string_table.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
                 title          = `abap2UI5 - Event with add Information and t_arg`
                 navbuttonpress = client->_event_nav_app_leave( )
@@ -38,27 +47,39 @@ CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
                 target = `_blank`
                 href   = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
 
+    
+    CLEAR temp1.
+    INSERT `FIX_VAL` INTO TABLE temp1.
     page->button( text  = `EVENT_FIX_VAL`
-                  press = client->_event( val = `EVENT_FIX_VAL` t_arg = VALUE #(
-        ( `FIX_VAL` ) ) ) ).
+                  press = client->_event( val = `EVENT_FIX_VAL` t_arg = temp1 ) ).
 
     page->input( client->_bind( mv_value ) ).
+    
+    CLEAR temp3.
+    
+    temp2 = `$` && client->_bind( mv_value ).
+    INSERT temp2 INTO TABLE temp3.
     page->button( text  = `EVENT_MODEL_VALUE`
-                  press = client->_event( val = `EVENT_MODEL_VALUE` t_arg = VALUE #(
-        ( `$` && client->_bind( mv_value ) ) ) ) ).
+                  press = client->_event( val = `EVENT_MODEL_VALUE` t_arg = temp3 ) ).
 
+    
+    CLEAR temp5.
+    INSERT `${$source>/text}` INTO TABLE temp5.
     page->button( text  = `SOURCE_PROPERTY_TEXT`
-                  press = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = VALUE #(
-        ( `${$source>/text}` ) ) ) ).
+                  press = client->_event( val = `SOURCE_PROPERTY_TEXT` t_arg = temp5 ) ).
 
+    
+    CLEAR temp7.
+    INSERT `${$parameters>/value}` INTO TABLE temp7.
     page->input(
         description = `make an input and press enter - `
-        submit      = client->_event( val = `EVENT_PROPERTY_VALUE` t_arg = VALUE #(
-        ( `${$parameters>/value}` ) ) ) ).
+        submit      = client->_event( val = `EVENT_PROPERTY_VALUE` t_arg = temp7 ) ).
 
+    
+    CLEAR temp9.
+    INSERT `$event.oSource.oParent.sId` INTO TABLE temp9.
     page->button( text  = `PARENT_PROPERTY_ID`
-                  press = client->_event( val = `PARENT_PROPERTY_ID` t_arg = VALUE #(
-        ( `$event.oSource.oParent.sId` ) ) ) ).
+                  press = client->_event( val = `PARENT_PROPERTY_ID` t_arg = temp9 ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -69,7 +90,7 @@ CLASS Z2UI5_CL_DEMO_APP_167 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       mv_value = `my value`.
       set_view( ).
     ENDIF.

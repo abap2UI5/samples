@@ -11,7 +11,7 @@ CLASS z2ui5_cl_demo_app_452 DEFINITION PUBLIC.
         description TYPE string,
         group       TYPE string,
       END OF ty_s_msg.
-    DATA t_msg TYPE STANDARD TABLE OF ty_s_msg WITH EMPTY KEY.
+    DATA t_msg TYPE STANDARD TABLE OF ty_s_msg WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -33,9 +33,9 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
-    ELSEIF client->check_on_event( ).
+    ELSEIF client->check_on_event( ) IS NOT INITIAL.
       on_event( ).
     ENDIF.
 
@@ -45,60 +45,77 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
   METHOD on_init.
 
     " the original controller reuses the same long description text for every message
-    DATA(description) = `First Error message description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ` &&
+    DATA description TYPE string.
+    DATA temp1 LIKE t_msg.
+    DATA temp2 LIKE LINE OF temp1.
+    description = `First Error message description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ` &&
       `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` &&
       `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ` &&
       `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`.
 
-    t_msg = VALUE #(
-        ( type        = `Error`
-          title       = `Account 801 requires an assignment`
-          subtitle    = `Role is invalid`
-          description = description
-          group       = `Purchase Order 450001` )
-        ( type        = `Warning`
-          title       = `Account 821 requires a check`
-          subtitle    = `Undefined task`
-          description = description
-          group       = `Purchase Order 450001` )
-        ( type        = `Warning`
-          title       = `Enter a text with maximum 6 characters length`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Warning`
-          title       = `Enter a text with maximum 8 characters length`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Error`
-          title       = `Account 802 requires an assignment`
-          subtitle    = `Role is invalid`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Information`
-          title       = `Account 804 requires an assignment`
-          subtitle    = `Information type subtitle`
-          description = description
-          group       = `Purchase Order 450002` )
-        ( type        = `Error`
-          title       = `Technical message without object relation`
-          description = description
-          group       = `General` )
-        ( type        = `Warning`
-          title       = `Global System will be down on Sunday`
-          description = description
-          group       = `General` )
-        ( type        = `Error`
-          title       = `Global System will be down on Sunday`
-          description = description
-          group       = `General` )
-        ( type        = `Error`
-          title       = `An Error`
-          subtitle    = `Ungrouped message`
-          description = description )
-        ( type        = `Warning`
-          title       = `A Warning`
-          subtitle    = `Ungrouped message`
-          description = description ) ).
+    
+    CLEAR temp1.
+    
+    temp2-type = `Error`.
+    temp2-title = `Account 801 requires an assignment`.
+    temp2-subtitle = `Role is invalid`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450001`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Warning`.
+    temp2-title = `Account 821 requires a check`.
+    temp2-subtitle = `Undefined task`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450001`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Warning`.
+    temp2-title = `Enter a text with maximum 6 characters length`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450002`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Warning`.
+    temp2-title = `Enter a text with maximum 8 characters length`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450002`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Error`.
+    temp2-title = `Account 802 requires an assignment`.
+    temp2-subtitle = `Role is invalid`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450002`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Information`.
+    temp2-title = `Account 804 requires an assignment`.
+    temp2-subtitle = `Information type subtitle`.
+    temp2-description = description.
+    temp2-group = `Purchase Order 450002`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Error`.
+    temp2-title = `Technical message without object relation`.
+    temp2-description = description.
+    temp2-group = `General`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Warning`.
+    temp2-title = `Global System will be down on Sunday`.
+    temp2-description = description.
+    temp2-group = `General`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Error`.
+    temp2-title = `Global System will be down on Sunday`.
+    temp2-description = description.
+    temp2-group = `General`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Error`.
+    temp2-title = `An Error`.
+    temp2-subtitle = `Ungrouped message`.
+    temp2-description = description.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-type = `Warning`.
+    temp2-title = `A Warning`.
+    temp2-subtitle = `Ungrouped message`.
+    temp2-description = description.
+    INSERT temp2 INTO TABLE temp1.
+    t_msg = temp1.
 
     view_display( ).
 
@@ -122,13 +139,18 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
   METHOD view_display.
 
     " the original derives the footer button icon and text from the highest message severity via formatters - here Error
-    DATA(error_count) = 0.
+    DATA error_count TYPE i.
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    error_count = 0.
     LOOP AT t_msg TRANSPORTING NO FIELDS WHERE type = `Error`.
       error_count = error_count + 1.
     ENDLOOP.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Sample: Message View with Grouping`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -180,10 +202,13 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    DATA dialog TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     " the original hosts a back button for the message details in a custom header - here the dialog keeps the plain title
-    DATA(dialog) = popup->dialog(
+    
+    dialog = popup->dialog(
         title             = `Publish order`
         contentheight     = `50%`
         contentwidth      = `50%`
@@ -215,7 +240,8 @@ CLASS z2ui5_cl_demo_app_452 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     popup->message_popover(
         items       = client->_bind( t_msg )

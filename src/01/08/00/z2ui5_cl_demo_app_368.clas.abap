@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_368 DEFINITION PUBLIC.
         measure      TYPE i,
         unit         TYPE string,
       END OF ty_s_product.
-    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH EMPTY KEY.
+    DATA t_products TYPE STANDARD TABLE OF ty_s_product WITH DEFAULT KEY.
 
     DATA cnt_total TYPE i.
     DATA cnt_ok TYPE i.
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       set_data( ).
       view_display( ).
@@ -55,7 +55,9 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA items TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Icon Tab Bar - Filter Table`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -73,7 +75,8 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.IconTabBar/sample/sap.m.sample.IconTabBar` ).
 
-    DATA(items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
+    
+    items = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
                                       selectedkey = client->_bind( selectedkey )
                                       select      = client->_event( `TAB_SELECT` ) )->items( ).
 
@@ -138,18 +141,79 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
 
   METHOD set_data.
 
-    t_products = VALUE #(
-        ( productname = `table`    suppliername = `Company 1` measure = 100 unit = `KG` )
-        ( productname = `chair`    suppliername = `Company 2` measure = 123 unit = `KG` )
-        ( productname = `sofa`     suppliername = `Company 3` measure = 700 unit = `KG` )
-        ( productname = `computer` suppliername = `Company 4` measure = 200 unit = `KG` )
-        ( productname = `printer`  suppliername = `Company 5` measure = 90  unit = `KG` )
-        ( productname = `table2`   suppliername = `Company 6` measure = 600 unit = `KG` ) ).
+    DATA temp1 LIKE t_products.
+    DATA temp2 LIKE LINE OF temp1.
+    DATA temp3 TYPE i.
+    DATA i TYPE i.
+    DATA temp4 LIKE LINE OF t_products.
+    DATA temp5 TYPE i.
+    DATA j TYPE i.
+    DATA temp6 LIKE LINE OF t_products.
+    DATA temp7 TYPE i.
+    DATA k TYPE i.
+    DATA row LIKE LINE OF t_products.
+    CLEAR temp1.
+    
+    temp2-productname = `table`.
+    temp2-suppliername = `Company 1`.
+    temp2-measure = 100.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-productname = `chair`.
+    temp2-suppliername = `Company 2`.
+    temp2-measure = 123.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-productname = `sofa`.
+    temp2-suppliername = `Company 3`.
+    temp2-measure = 700.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-productname = `computer`.
+    temp2-suppliername = `Company 4`.
+    temp2-measure = 200.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-productname = `printer`.
+    temp2-suppliername = `Company 5`.
+    temp2-measure = 90.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-productname = `table2`.
+    temp2-suppliername = `Company 6`.
+    temp2-measure = 600.
+    temp2-unit = `KG`.
+    INSERT temp2 INTO TABLE temp1.
+    t_products = temp1.
 
     cnt_total      = lines( t_products ).
-    cnt_ok         = REDUCE i( INIT i = 0 FOR row IN t_products WHERE ( measure <= 100 ) NEXT i = i + 1 ).
-    cnt_heavy      = REDUCE i( INIT j = 0 FOR row IN t_products WHERE ( measure > 100 AND measure <= 500 ) NEXT j = j + 1 ).
-    cnt_overweight = REDUCE i( INIT k = 0 FOR row IN t_products WHERE ( measure > 500 ) NEXT k = k + 1 ).
+    
+    
+    i = 0.
+    
+    LOOP AT t_products INTO temp4 WHERE measure <= 100.
+      i = i + 1.
+    ENDLOOP.
+    temp3 = i.
+    cnt_ok         = temp3.
+    
+    
+    j = 0.
+    
+    LOOP AT t_products INTO temp6 WHERE measure > 100 AND measure <= 500.
+      j = j + 1.
+    ENDLOOP.
+    temp5 = j.
+    cnt_heavy      = temp5.
+    
+    
+    k = 0.
+    
+    LOOP AT t_products INTO row WHERE measure > 500.
+      k = k + 1.
+    ENDLOOP.
+    temp7 = k.
+    cnt_overweight = temp7.
 
     CASE selectedkey.
       WHEN `OK`.
@@ -165,7 +229,8 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`

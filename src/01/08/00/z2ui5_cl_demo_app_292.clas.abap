@@ -26,7 +26,14 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    DATA temp2 TYPE string_table.
+    DATA temp3 TYPE string_table.
+    DATA temp4 TYPE string_table.
+    DATA temp5 TYPE string_table.
+    DATA temp6 TYPE string_table.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Breadcrumbs sample with current page link`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -47,6 +54,24 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
     " The original sample renders 'Page 6' as a link via the currentLocation
     " aggregation, which is available only since UI5 1.123 — currentLocationText
     " is used instead
+    
+    CLEAR temp1.
+    INSERT `${$source>/text}` INTO TABLE temp1.
+    
+    CLEAR temp2.
+    INSERT `${$source>/text}` INTO TABLE temp2.
+    
+    CLEAR temp3.
+    INSERT `${$source>/text}` INTO TABLE temp3.
+    
+    CLEAR temp4.
+    INSERT `${$source>/text}` INTO TABLE temp4.
+    
+    CLEAR temp5.
+    INSERT `${$source>/text}` INTO TABLE temp5.
+    
+    CLEAR temp6.
+    INSERT `${$source>/text}` INTO TABLE temp6.
     page->vertical_layout(
             class = `sapUiContentPadding`
             width = `100%`
@@ -54,17 +79,17 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
            )->breadcrumbs( id                  = `idBreadcrumbs`
                            currentlocationtext = `Page 6`
                )->link( text  = `Home`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+                        press = client->_event( val = `onPress` t_arg = temp1 )
                )->link( text  = `Page 1`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+                        press = client->_event( val = `onPress` t_arg = temp2 )
                )->link( text  = `Page 2`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+                        press = client->_event( val = `onPress` t_arg = temp3 )
                )->link( text  = `Page 3`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+                        press = client->_event( val = `onPress` t_arg = temp4 )
                )->link( text  = `Page 4`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) )
+                        press = client->_event( val = `onPress` t_arg = temp5 )
                )->link( text  = `Page 5`
-                        press = client->_event( val = `onPress` t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+                        press = client->_event( val = `onPress` t_arg = temp6 ) ).
 
     client->view_display( page->stringify( ) ).
 
@@ -85,7 +110,8 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -103,7 +129,7 @@ CLASS z2ui5_cl_demo_app_292 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
 
     ENDIF.

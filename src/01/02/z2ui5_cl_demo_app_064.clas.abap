@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       on_init( ).
 
     ELSE.
@@ -80,8 +80,9 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
 
     DATA lt_arg TYPE string_table.
     DATA ls_arg TYPE string.
+        DATA temp1 TYPE string_table.
 
-    IF client->check_on_event( `LOAD` ).
+    IF client->check_on_event( `LOAD` ) IS NOT INITIAL.
 
       mv_percent       = mv_percent + 25.
       mv_check_active  = abap_true.
@@ -98,9 +99,13 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
       WAIT UP TO 2 SECONDS.
 
       IF mv_check_active = abap_true.
+        
+        CLEAR temp1.
+        INSERT `LOAD` INTO TABLE temp1.
+        INSERT `0` INTO TABLE temp1.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-start_timer
-            t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
+            t_arg = temp1 ).
       ENDIF.
 
       client->view_model_update( ).
@@ -117,7 +122,9 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     DATA page1 TYPE REF TO z2ui5_cl_xml_view.
     DATA temp5 TYPE abap_bool.
     DATA layout TYPE REF TO z2ui5_cl_xml_view.
-    temp1 = VALUE #( ).
+    DATA temp3 TYPE z2ui5_if_types=>ty_t_name_value.
+    CLEAR temp3.
+    temp1 = temp3.
 
     mv_check_enabled = abap_true.
     view             = z2ui5_cl_xml_view=>factory( ).

@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       placement = `Left`.
       product   = `tomato`.
@@ -33,15 +33,15 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
 
       view_display( ).
 
-    ELSEIF client->check_on_event( `POPOVER` ).
+    ELSEIF client->check_on_event( `POPOVER` ) IS NOT INITIAL.
       popover_display( `TEST` ).
 
-    ELSEIF client->check_on_event( `BUTTON_CONFIRM` ).
+    ELSEIF client->check_on_event( `BUTTON_CONFIRM` ) IS NOT INITIAL.
 
       client->message_toast_display( `confirm` ).
       client->popover_destroy( ).
 
-    ELSEIF client->check_on_event( `BUTTON_CANCEL` ).
+    ELSEIF client->check_on_event( `BUTTON_CANCEL` ) IS NOT INITIAL.
 
       client->message_toast_display( `cancel` ).
       client->popover_destroy( ).
@@ -53,7 +53,8 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->popover(
             title     = `Popover Title`
             placement = placement
@@ -80,8 +81,11 @@ CLASS z2ui5_cl_demo_app_026 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Popover Examples`
             navbuttonpress = client->_event_nav_app_leave( )

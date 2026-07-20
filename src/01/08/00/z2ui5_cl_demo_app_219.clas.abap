@@ -18,7 +18,9 @@ CLASS z2ui5_cl_demo_app_219 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Input List Item`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -30,7 +32,8 @@ CLASS z2ui5_cl_demo_app_219 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.InputListItem/sample/sap.m.sample.InputListItem` ).
 
-    DATA(layout) = page->list( headertext = `Input`
+    
+    layout = page->list( headertext = `Input`
                            )->input_list_item( `WLAN`
                                )->switch( state = `true` )->get_parent(
                            )->input_list_item( `Flight Mode`
@@ -72,7 +75,7 @@ CLASS z2ui5_cl_demo_app_219 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
     ENDIF.
 

@@ -15,11 +15,16 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA view TYPE REF TO z2ui5_cl_xml_view.
+      DATA page TYPE REF TO z2ui5_cl_xml_view.
+      DATA temp1 TYPE string_table.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
+      
+      view = z2ui5_cl_xml_view=>factory( ).
+      
+      page = view->shell(
           )->page(
               title          = `abap2UI5 - Change Browser Title`
               navbuttonpress = client->_event_nav_app_leave( )
@@ -43,11 +48,14 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
               press = client->_event( `SET_TITLE` ) ).
       client->view_display( view->stringify( ) ).
 
-    ELSEIF client->check_on_event( `SET_TITLE` ).
+    ELSEIF client->check_on_event( `SET_TITLE` ) IS NOT INITIAL.
 
+      
+      CLEAR temp1.
+      INSERT title INTO TABLE temp1.
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_title
-          t_arg = VALUE #( ( title ) ) ).
+          t_arg = temp1 ).
 
     ENDIF.
 

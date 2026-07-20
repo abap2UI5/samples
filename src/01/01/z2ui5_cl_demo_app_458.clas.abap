@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_458 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       amount = 42.
       view_display( ).
     ENDIF.
@@ -29,9 +29,12 @@ CLASS z2ui5_cl_demo_app_458 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Message Model - automatic validation`
             navbuttonpress = client->_event_nav_app_leave( )

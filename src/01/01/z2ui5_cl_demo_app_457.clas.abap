@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_457 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       date_iso = `2026-07-20`.
       view_display( ).
     ENDIF.
@@ -29,17 +29,24 @@ CLASS z2ui5_cl_demo_app_457 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE z2ui5_if_types=>ty_s_name_value.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     " the minimal date-object case: DatePicker.dateValue is typed "object"
     " and demands a real JS Date - a plain string binding crashes view
     " creation. Formatter.DateCreateObject converts the model's ISO string
     " at this one binding; the model itself keeps the plain string (the
     " Text below proves it).
-    view->_generic_property( VALUE #( n = `core:require`
-                                      v = `{Formatter: 'z2ui5/model/formatter'}` ) ).
+    
+    CLEAR temp1.
+    temp1-n = `core:require`.
+    temp1-v = `{Formatter: 'z2ui5/model/formatter'}`.
+    view->_generic_property( temp1 ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Formatter - Date object minimal`
             navbuttonpress = client->_event_nav_app_leave( )

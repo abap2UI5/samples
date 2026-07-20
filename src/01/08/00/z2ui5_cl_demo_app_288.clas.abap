@@ -42,7 +42,9 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page_01) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page_01 TYPE REF TO z2ui5_cl_xml_view.
+    DATA page_02 TYPE REF TO z2ui5_cl_xml_view.
+    page_01 = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
             title          = `abap2UI5 - Sample: Select`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -60,7 +62,8 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
            target = `_blank`
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.Select/sample/sap.m.sample.Select` ).
 
-    DATA(page_02) = page_01->page(
+    
+    page_02 = page_01->page(
                               showheader = abap_false
                               class      = `sapUiContentPadding`
                               )->sub_header(
@@ -122,7 +125,7 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `CLICK_HINT_ICON` ).
+    IF client->check_on_event( `CLICK_HINT_ICON` ) IS NOT INITIAL.
       popover_display( `button_hint_id` ).
     ENDIF.
 
@@ -131,7 +134,8 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory_popup( ).
     view->quick_view( placement = `Bottom`
                       width     = `auto`
               )->quick_view_page( pageid      = `sampleInformationId`
@@ -146,10 +150,16 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp1 LIKE lt_product_collection.
+      DATA temp2 LIKE LINE OF temp1.
+      DATA temp3 LIKE lt_product_collection2.
+      DATA temp4 LIKE LINE OF temp3.
+      DATA temp5 LIKE lt_product_collection3.
+      DATA temp6 LIKE LINE OF temp5.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( client ).
 
       selected_product  = `HT-1001`.
@@ -157,25 +167,67 @@ CLASS z2ui5_cl_demo_app_288 IMPLEMENTATION.
       selected_product3 = `HT-1001`.
 
       " Populate the internal tables
-      lt_product_collection = VALUE #( ( product_id = `HT-1000` name = `Notebook Basic 15` )
-                                       ( product_id = `HT-1001` name = `Notebook Basic 17` )
-                                       ( product_id = `HT-1002` name = `Notebook Basic 18` )
-                                       ( product_id = `HT-1003` name = `Notebook Basic 19` )
-                                       ( product_id = `HT-1007` name = `ITelO Vault` ) ).
+      
+      CLEAR temp1.
+      
+      temp2-product_id = `HT-1000`.
+      temp2-name = `Notebook Basic 15`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product_id = `HT-1001`.
+      temp2-name = `Notebook Basic 17`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product_id = `HT-1002`.
+      temp2-name = `Notebook Basic 18`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product_id = `HT-1003`.
+      temp2-name = `Notebook Basic 19`.
+      INSERT temp2 INTO TABLE temp1.
+      temp2-product_id = `HT-1007`.
+      temp2-name = `ITelO Vault`.
+      INSERT temp2 INTO TABLE temp1.
+      lt_product_collection = temp1.
       SORT lt_product_collection BY name.
 
-      lt_product_collection2 = VALUE #( ( product_id = `HT-1000` name = `Notebook Basic 15` )
-                                        ( product_id = `HT-1001` name = `Notebook Basic 17` )
-                                        ( product_id = `HT-1002` name = `Notebook Basic 18` )
-                                        ( product_id = `HT-1003` name = `Notebook Basic 19` )
-                                        ( product_id = `HT-1007` name = `ITelO Vault` ) ).
+      
+      CLEAR temp3.
+      
+      temp4-product_id = `HT-1000`.
+      temp4-name = `Notebook Basic 15`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product_id = `HT-1001`.
+      temp4-name = `Notebook Basic 17`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product_id = `HT-1002`.
+      temp4-name = `Notebook Basic 18`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product_id = `HT-1003`.
+      temp4-name = `Notebook Basic 19`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-product_id = `HT-1007`.
+      temp4-name = `ITelO Vault`.
+      INSERT temp4 INTO TABLE temp3.
+      lt_product_collection2 = temp3.
       SORT lt_product_collection2 BY name.
 
-      lt_product_collection3 = VALUE #( ( product_id = `HT-1000` name = `Notebook Basic 15` )
-                                        ( product_id = `HT-1001` name = `Notebook Basic 17` )
-                                        ( product_id = `HT-1002` name = `Notebook Basic 18` )
-                                        ( product_id = `HT-1003` name = `Notebook Basic 19` )
-                                        ( product_id = `HT-1007` name = `ITelO Vault` ) ).
+      
+      CLEAR temp5.
+      
+      temp6-product_id = `HT-1000`.
+      temp6-name = `Notebook Basic 15`.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-product_id = `HT-1001`.
+      temp6-name = `Notebook Basic 17`.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-product_id = `HT-1002`.
+      temp6-name = `Notebook Basic 18`.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-product_id = `HT-1003`.
+      temp6-name = `Notebook Basic 19`.
+      INSERT temp6 INTO TABLE temp5.
+      temp6-product_id = `HT-1007`.
+      temp6-name = `ITelO Vault`.
+      INSERT temp6 INTO TABLE temp5.
+      lt_product_collection3 = temp5.
       SORT lt_product_collection3 BY name.
 
       editable = abap_true.

@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       view_display( ).
     ELSE.
       on_event( ).
@@ -41,7 +41,7 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
   METHOD on_event.
 
-    IF client->check_on_event( `OPEN_POPUP` ).
+    IF client->check_on_event( `OPEN_POPUP` ) IS NOT INITIAL.
       popup_display( ).
     ENDIF.
 
@@ -50,7 +50,8 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
   METHOD device_form.
 
-    DATA(form) = parent->simple_form( editable = abap_false
+    DATA form TYPE REF TO z2ui5_cl_xml_view.
+    form = parent->simple_form( editable = abap_false
                                       layout   = `ResponsiveGridLayout` ).
 
     " a readable label per system type instead of the raw booleans
@@ -86,9 +87,13 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tabs TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - Device Model`
             navbuttonpress = client->_event_nav_app_leave( )
@@ -114,7 +119,8 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     " 3) a control whose content collapses on a phone: expanded = !phone
-    DATA(tabs) = page->panel( headertext = `Responsive IconTabBar (expanded only when it is not a phone)`
+    
+    tabs = page->panel( headertext = `Responsive IconTabBar (expanded only when it is not a phone)`
                               class      = `sapUiSmallMargin`
         )->icon_tab_bar(
             expanded = `{= !${device>/system/phone} }`
@@ -141,10 +147,13 @@ CLASS z2ui5_cl_demo_app_445 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA popup TYPE REF TO z2ui5_cl_xml_view.
+    DATA dialog TYPE REF TO z2ui5_cl_xml_view.
+    popup = z2ui5_cl_xml_view=>factory_popup( ).
 
     " the dialog width itself is driven by the device model
-    DATA(dialog) = popup->dialog(
+    
+    dialog = popup->dialog(
         title        = `Device model inside a popup`
         contentwidth = `{= ${device>/system/phone} ? '95%' : '420px' }` ).
 

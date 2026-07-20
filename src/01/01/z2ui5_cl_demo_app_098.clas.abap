@@ -15,9 +15,9 @@ CLASS z2ui5_cl_demo_app_098 DEFINITION PUBLIC.
       END OF ty_s_row.
 
     DATA
-      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+      t_tab TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
     DATA
-      t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+      t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH DEFAULT KEY.
 
     DATA mv_layout TYPE string.
     DATA mv_title TYPE string.
@@ -39,11 +39,18 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE string_table.
+    lo_view_nested = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view_nested->page( `Nested View` ).
+    
+    page = lo_view_nested->page( `Nested View` ).
 
-    DATA(tab) = page->ui_table( rows               = client->_bind( val = t_tab2 )
+    
+    tab = page->ui_table( rows               = client->_bind( val = t_tab2 )
                                 editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `1`
@@ -53,7 +60,8 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
                                 filter             = client->_event( `FILTER` )
                                 customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
-    DATA(lo_columns) = tab->ui_columns( ).
+    
+    lo_columns = tab->ui_columns( ).
 
     lo_columns->ui_column( sortproperty                  = `TITLE`
                                           filterproperty = `TITLE` )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
@@ -61,9 +69,12 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
                            filterproperty = `DESCR` )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
     lo_columns->ui_column( sortproperty   = `INFO`
                            filterproperty = `INFO`)->text( `INFO` )->ui_template( )->text( `{INFO}` ).
+    
+    CLEAR temp1.
+    INSERT `${TITLE}` INTO TABLE temp1.
     lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
        )->ui_row_action_item( type = `Navigation` "icon = `sap-icon://navigation-right-arrow`
-                           press   = client->_event( val = `ROW_NAVIGATE` t_arg = VALUE #( ( `${TITLE}` ) ) ) ).
+                           press   = client->_event( val = `ROW_NAVIGATE` t_arg = temp1 ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -76,9 +87,12 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
   METHOD view_display_detail_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    lo_view_nested = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view_nested->page( `Nested View` ).
+    
+    page = lo_view_nested->page( `Nested View` ).
 
     page = page->text( client->_bind( mv_title )
        )->button(
@@ -96,9 +110,15 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE xsdboolean.
+    DATA col_layout TYPE REF TO z2ui5_cl_xml_view.
+    DATA lr_master TYPE REF TO z2ui5_cl_xml_view.
+    DATA lr_list TYPE REF TO z2ui5_cl_xml_view.
+    temp1 = boolc( abap_false = client->get( )-check_launchpad_active ).
+    page = z2ui5_cl_xml_view=>factory( )->shell(
        )->page(
-          showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
+          showheader     = temp1
           title          = `abap2UI5 - Master Detail Page with Nested View`
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
@@ -110,12 +130,15 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind( mv_layout )
+    
+    col_layout = page->flexible_column_layout( layout = client->_bind( mv_layout )
                                                      id     = `test` ).
 
-    DATA(lr_master) = col_layout->begin_column_pages( ).
+    
+    lr_master = col_layout->begin_column_pages( ).
 
-    DATA(lr_list) = lr_master->list(
+    
+    lr_list = lr_master->list(
           headertext      = `List Output`
           items           = client->_bind( val = t_tab )
           mode            = `SingleSelectMaster`
@@ -134,18 +157,50 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+      DATA temp3 LIKE t_tab.
+      DATA temp4 LIKE LINE OF temp3.
+        DATA lt_sel LIKE t_tab.
+        DATA ls_sel TYPE z2ui5_cl_demo_app_098=>ty_s_row.
+        DATA temp5 LIKE sy-subrc.
 
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
-      t_tab = VALUE #(
-        ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-        ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+      
+      CLEAR temp3.
+      
+      temp4-title = `row_01`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_02`.
+      temp4-info = `incompleted`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_03`.
+      temp4-info = `working`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_04`.
+      temp4-info = `working`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_05`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      temp4-title = `row_06`.
+      temp4-info = `completed`.
+      temp4-descr = `this is a description`.
+      temp4-icon = `sap-icon://account`.
+      INSERT temp4 INTO TABLE temp3.
+      t_tab = temp3.
 
       mv_layout = `OneColumn`.
 
@@ -171,11 +226,16 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
         view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
-        DATA(lt_sel) = t_tab.
+        
+        lt_sel = t_tab.
         DELETE lt_sel WHERE selected = abap_false.
 
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        IF NOT line_exists( t_tab2[ title = ls_sel-title ] ).
+        
+        READ TABLE lt_sel INTO ls_sel INDEX 1.
+        
+        READ TABLE t_tab2 WITH KEY title = ls_sel-title TRANSPORTING NO FIELDS.
+        temp5 = sy-subrc.
+        IF NOT temp5 = 0.
           INSERT ls_sel INTO TABLE t_tab2.
         ENDIF.
 

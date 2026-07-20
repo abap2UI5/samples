@@ -14,7 +14,7 @@ CLASS z2ui5_cl_demo_app_053 DEFINITION PUBLIC.
       END OF ty_s_tab.
 
     DATA mv_search_value TYPE string.
-    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+    DATA mt_table TYPE STANDARD TABLE OF ty_s_tab WITH DEFAULT KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -34,7 +34,7 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
     me->client     = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       set_data( ).
       view_display( ).
 
@@ -60,9 +60,16 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA vbox TYPE REF TO z2ui5_cl_xml_view.
+    DATA tab TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_columns TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_cells TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( id = `page_main`
+    
+    page = view->shell( )->page( id = `page_main`
             title                         = `abap2UI5 - Search with Enter`
             navbuttonpress                = client->_event_nav_app_leave( )
             shownavbutton                 = client->check_app_prev_stack( ) ).
@@ -74,7 +81,8 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(vbox) = page->vbox( ).
+    
+    vbox = page->vbox( ).
 
     vbox->hbox( )->search_field(
          value  = client->_bind( mv_search_value )
@@ -86,16 +94,19 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
          press = client->_event( `BUTTON_START` )
          type  = `Emphasized` ).
 
-    DATA(tab) = vbox->table( client->_bind( val = mt_table ) ).
+    
+    tab = vbox->table( client->_bind( val = mt_table ) ).
 
-    DATA(lo_columns) = tab->columns( ).
+    
+    lo_columns = tab->columns( ).
     lo_columns->column( )->text( `Product` ).
     lo_columns->column( )->text( `Date` ).
     lo_columns->column( )->text( `Name` ).
     lo_columns->column( )->text( `Location` ).
     lo_columns->column( )->text( `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    
+    lo_cells = tab->items( )->column_list_item( ).
     lo_cells->text( `{PRODUCT}` ).
     lo_cells->text( `{CREATE_DATE}` ).
     lo_cells->text( `{CREATE_BY}` ).
@@ -109,13 +120,47 @@ CLASS z2ui5_cl_demo_app_053 IMPLEMENTATION.
 
   METHOD set_data.
 
-    mt_table = VALUE #(
-        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
+    DATA temp1 LIKE mt_table.
+    DATA temp2 LIKE LINE OF temp1.
+    CLEAR temp1.
+    
+    temp2-product = `table`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Peter`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 400.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `chair`.
+    temp2-create_date = `01.01.2022`.
+    temp2-create_by = `James`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 123.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `sofa`.
+    temp2-create_date = `01.05.2021`.
+    temp2-create_by = `Simone`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 700.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `computer`.
+    temp2-create_date = `27.01.2023`.
+    temp2-create_by = `Theo`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 200.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `printer`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Hannah`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 90.
+    INSERT temp2 INTO TABLE temp1.
+    temp2-product = `table2`.
+    temp2-create_date = `01.01.2023`.
+    temp2-create_by = `Julia`.
+    temp2-storage_location = `AREA_001`.
+    temp2-quantity = 110.
+    INSERT temp2 INTO TABLE temp1.
+    mt_table = temp1.
 
   ENDMETHOD.
 

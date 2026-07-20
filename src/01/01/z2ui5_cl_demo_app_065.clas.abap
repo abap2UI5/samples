@@ -16,9 +16,13 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA lo_view TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
+    lo_view = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = lo_view->shell(
+    
+    page = lo_view->shell(
         )->page(
                 title          = `Main View`
                 id             = `test`
@@ -46,13 +50,14 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                  press = client->_event( `NEST_MODEL` )
       )->input( client->_bind( mv_input_main ) ).
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory(
+    
+    lo_view_nested = z2ui5_cl_xml_view=>factory(
           )->page( `Nested View`
               )->button( text  = `event`
                          press = client->_event( `TEST` )
               )->input( client->_bind( mv_input_nest ) ).
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
       client->view_display( lo_view->stringify( ) ).
 
     ENDIF.

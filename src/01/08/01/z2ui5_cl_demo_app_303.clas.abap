@@ -14,8 +14,14 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(object_page_layout) = view->shell(
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA object_page_layout TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_title TYPE REF TO z2ui5_cl_xml_view.
+    DATA header_content TYPE REF TO z2ui5_cl_xml_view.
+    DATA section TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
+    
+    object_page_layout = view->shell(
         )->page( title          = `Object Page Header with Header Container`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( )
@@ -28,7 +34,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
             )->object_page_layout( showtitleinheadercontent = `Title`
                                    uppercaseanchorbar       = abap_false ).
 
-    DATA(header_title) = object_page_layout->header_title(
+    
+    header_title = object_page_layout->header_title(
         )->object_page_dyn_header_title( ).
 
     header_title->expanded_heading(
@@ -62,7 +69,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
                                     text    = `Share`
                                     tooltip = `action` ).
 
-    DATA(header_content) = object_page_layout->header_content( `uxap`
+    
+    header_content = object_page_layout->header_content( `uxap`
         )->header_container_control( id           = `headerContainer`
                                      scrollstep   = `200`
                                      showdividers = abap_false ).
@@ -188,7 +196,8 @@ CLASS z2ui5_cl_demo_app_303 IMPLEMENTATION.
         )->vbox( alignitems = `End`
             )->text( `4.1 out of 5` ).
 
-    DATA(section) = object_page_layout->sections( ).
+    
+    section = object_page_layout->sections( ).
 
     section->object_page_section( titleuppercase = abap_false
                                   id             = `goalsSection`

@@ -17,15 +17,17 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       numeric  = `000000000012`.
       amount   = `123456789.123`.
       currency = `USD`.
 
     ENDIF.
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+    
+    page = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( title          = `abap2UI5 - Currency Format`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).

@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_466 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) IS NOT INITIAL.
 
       status_text = `<strong>Deployment successful!</strong> %%icon:sap-icon://message-success%% All services ` &&
                     `%%icon:sap-icon://sys-enter-2%% are running. <em>Check status</em> ` &&
@@ -34,7 +34,10 @@ CLASS z2ui5_cl_demo_app_466 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA view TYPE REF TO z2ui5_cl_xml_view.
+    DATA temp1 TYPE z2ui5_if_types=>ty_s_name_value.
+    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    view = z2ui5_cl_xml_view=>factory( ).
 
     " require the framework's curated formatter module into the view -
     " expandInlineIcons is the sap.m.MessageStripUtilities.getInlineIcon()
@@ -42,10 +45,14 @@ CLASS z2ui5_cl_demo_app_466 IMPLEMENTATION.
     " %%icon:sap-icon://<name>%% placeholder with inline-icon markup (the
     " glyph resolved via IconPool), so the app never hardcodes icon-font
     " codepoints. Rendered by MessageStrip with enableFormattedText.
-    view->_generic_property( VALUE #( n = `core:require`
-                                      v = `{Formatter: 'z2ui5/model/formatter'}` ) ).
+    
+    CLEAR temp1.
+    temp1-n = `core:require`.
+    temp1-v = `{Formatter: 'z2ui5/model/formatter'}`.
+    view->_generic_property( temp1 ).
 
-    DATA(page) = view->shell(
+    
+    page = view->shell(
         )->page(
             title          = `abap2UI5 - MessageStrip - inline icons via Formatter`
             navbuttonpress = client->_event_nav_app_leave( )
