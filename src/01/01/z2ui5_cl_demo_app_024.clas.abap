@@ -107,12 +107,12 @@ CLASS Z2UI5_CL_DEMO_APP_024 IMPLEMENTATION.
             text  = `call new app (set Event)`
             press = client->_event( `CALL_NEW_APP_EVENT` )
         )->label( `Demo`
-        )->input( client->_bind_edit( input )
+        )->input( client->_bind( input )
         )->button(
             text  = `call new app (set data)`
             press = client->_event( `CALL_NEW_APP_READ` )
         )->label( `some data, you can read in the next app`
-        )->input( client->_bind_edit( input2 ) ).
+        )->input( client->_bind( input2 ) ).
 
     client->view_display( view->stringify( ) ).
 

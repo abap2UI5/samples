@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    view->table( client->_bind_edit( mt_data )
+    view->table( client->_bind( mt_data )
       )->columns(
         )->template_repeat( list = `{template>/XX/MT_LAYOUT}`
                             var  = `L0`
@@ -68,7 +68,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
                 )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
     view->label( `IF Template (with re-rendering)` ).
-    view->switch( state  = client->_bind_edit( mv_flag )
+    view->switch( state  = client->_bind( mv_flag )
                   change = client->_event( `CHANGE_FLAG` ) ).
                   view   = view->vbox( ).
 

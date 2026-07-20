@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   title     = `Popover Title`
                   placement = mv_placement
               )->list(
-                items           = client->_bind_edit( mt_tab )
+                items           = client->_bind( mt_tab )
                 selectionchange = client->_event( val = `SEL_CHANGE` )
                 mode            = `SingleSelectMaster`
                  )->standard_list_item(
@@ -107,7 +107,7 @@ CLASS z2ui5_cl_demo_app_081 IMPLEMENTATION.
                   )->link( text = `Documentation UI5 Popover Control`
                            href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
                   )->label( `placement`
-                  )->segmented_button( client->_bind_edit( mv_placement )
+                  )->segmented_button( client->_bind( mv_placement )
                         )->items(
                         )->segmented_button_item(
                                 key  = `Left`

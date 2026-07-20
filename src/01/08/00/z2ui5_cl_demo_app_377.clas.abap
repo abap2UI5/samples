@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_DEMO_APP_377 IMPLEMENTATION.
     DATA(vbox) = page->vbox( `sapUiSmallMargin` ).
 
     vbox->label( `Default:` ).
-    vbox->date_time_picker( client->_bind_edit( datetime_default ) ).
+    vbox->date_time_picker( client->_bind( datetime_default ) ).
 
     vbox->label( text  = `With placeholder:`
                  class = `sapUiSmallMarginTop` ).
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_377 IMPLEMENTATION.
 
     vbox->label( text  = `Value state Warning:`
                  class = `sapUiSmallMarginTop` ).
-    vbox->date_time_picker( value      = client->_bind_edit( datetime_state )
+    vbox->date_time_picker( value      = client->_bind( datetime_state )
                             valuestate = `Warning` ).
 
     vbox->label( text  = `Disabled:`

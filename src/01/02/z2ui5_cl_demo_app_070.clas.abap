@@ -165,7 +165,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
                       justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
 
     lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind_edit( mv_search_value )
+         value  = client->_bind( mv_search_value )
          search = client->_event( `BUTTON_SEARCH` )
          change = client->_event( `BUTTON_SEARCH` )
          width  = `17.5rem`
@@ -189,7 +189,7 @@ CLASS Z2UI5_CL_DEMO_APP_070 IMPLEMENTATION.
                                 customfilter       = client->_event( `CUSTOMFILTER` ) ).
     tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
     DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind_edit( lv_selkz )
+    lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind( lv_selkz )
                                                        enabled  = abap_true
                                                        select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
     lo_columns->ui_column( width          = `5rem`

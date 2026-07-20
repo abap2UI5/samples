@@ -90,7 +90,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
       FIELD-SYMBOLS <table> TYPE table.
       ASSIGN table->* TO <table>.
 
-      DATA(tab) = page->table( client->_bind_edit( <table> )
+      DATA(tab) = page->table( client->_bind( <table> )
           )->header_toolbar(
               )->overflow_toolbar(
                   )->title( `CSV Content`
@@ -111,8 +111,8 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
     page->footer(
         )->overflow_toolbar(
             )->_z2ui5( )->file_uploader(
-                value       = client->_bind_edit( file )
-                path        = client->_bind_edit( filepath )
+                value       = client->_bind( file )
+                path        = client->_bind( filepath )
                 placeholder = `filepath here...`
                 upload      = client->_event( `UPLOAD` ) ).
 

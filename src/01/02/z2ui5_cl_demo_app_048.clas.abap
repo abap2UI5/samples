@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_048 IMPLEMENTATION.
 
     page->list(
         headertext      = `List Output`
-        items           = client->_bind_edit( t_tab )
+        items           = client->_bind( t_tab )
         mode            = `SingleSelectMaster`
         selectionchange = client->_event( `SELCHANGE` )
       )->_generic(

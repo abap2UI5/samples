@@ -46,49 +46,49 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
                   href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
          )->label( `One field`
          )->input(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
          )->label( `Two field`
          )->input(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
          )->input(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
          )->label( `Default`
          )->text(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
          )->label( `preserveDecimals:false`
-         )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                      path = abap_true ) }', '| && client->_bind_edit(
+         )->text( |\{ parts: [ '{ client->_bind( val  = amount
+                                                      path = abap_true ) }', '| && client->_bind(
                                                       val  = currency
                                                       path = abap_true ) &&
                      |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
          )->label( `currencyCode:false`
-         )->text( |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                      path = abap_true ) }', '| && client->_bind_edit(
+         )->text( |\{ parts: [ '{ client->_bind( val  = amount
+                                                      path = abap_true ) }', '| && client->_bind(
                                                       val  = currency
                                                       path = abap_true ) &&
                          |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
          )->label( `style:'short'`
          )->text(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
          )->label( `style:'long'`
          )->text(
-             |\{ parts: [ '{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }', '{ client->_bind_edit(
+             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
                                                  path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
          )->label( `event`
@@ -103,12 +103,12 @@ CLASS Z2UI5_CL_DEMO_APP_067 IMPLEMENTATION.
       )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
          href       = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
       )->label( `Numeric`
-      )->input( client->_bind_edit( val = numeric )
+      )->input( client->_bind( val = numeric )
 
       )->label( `Without leading Zeros`
 
       )->text(
-      |\{path : '{ client->_bind_edit(
+      |\{path : '{ client->_bind(
                             val  = numeric
                             path = abap_true ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 

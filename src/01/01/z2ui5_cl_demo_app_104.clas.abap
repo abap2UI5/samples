@@ -93,14 +93,14 @@ CLASS z2ui5_cl_demo_app_104 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind_edit( mv_layout )
+    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind( mv_layout )
                                                      id     = `test` ).
 
     DATA(lr_master) = col_layout->begin_column_pages( ).
 
     DATA(lr_list) = lr_master->list(
           headertext      = `List Output`
-          items           = client->_bind_edit( val = t_tab view = client->cs_view-main )
+          items           = client->_bind( val = t_tab )
           mode            = `SingleSelectMaster`
           selectionchange = client->_event( val = `SELCHANGE` )
           )->standard_list_item(

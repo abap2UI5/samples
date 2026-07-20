@@ -37,7 +37,7 @@ CLASS z2ui5_cl_demo_app_125 IMPLEMENTATION.
           editable = abap_true
           )->content( `form`
           )->label( `title`
-          )->input( client->_bind_edit( title )
+          )->input( client->_bind( title )
           )->button(
               text  = `Set Title`
               press = client->_event( `SET_TITLE` ) ).

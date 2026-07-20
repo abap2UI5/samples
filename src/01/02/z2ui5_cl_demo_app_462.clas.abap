@@ -84,7 +84,7 @@ CLASS Z2UI5_CL_DEMO_APP_462 IMPLEMENTATION.
     " bound here renders in the dialog exactly like in a main view
     dialog->tree( id         = `treePopup`
                   headertext = `Documents`
-                  items      = client->_bind_edit( t_nodes )
+                  items      = client->_bind( t_nodes )
         )->standard_tree_item( title = `{TEXT}` ).
 
     " invisible companion: snapshots the tree's expand state before each

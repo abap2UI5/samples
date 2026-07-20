@@ -48,7 +48,7 @@ CLASS Z2UI5_CL_DEMO_APP_011 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(tab) = page->table(
-            items = |\{path: '{ client->_bind_edit( val = t_tab path = abap_true ) }', templateShareable: false\}|
+            items = |\{path: '{ client->_bind( val = t_tab path = abap_true ) }', templateShareable: false\}|
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(

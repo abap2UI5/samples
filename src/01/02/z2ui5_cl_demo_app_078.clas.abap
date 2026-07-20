@@ -45,14 +45,14 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
           class    = `sapUiSmallMargin` ).
 
       view->_z2ui5( )->multiinput_ext(
-                            addedtokens   = client->_bind_edit( mt_tokens_added )
-                            removedtokens = client->_bind_edit( mt_tokens_removed )
+                            addedtokens   = client->_bind( mt_tokens_added )
+                            removedtokens = client->_bind( mt_tokens_removed )
                             change        = client->_event( `UPDATE_BACKEND` )
                             multiinputid  = `test` ).
 
       view->multi_input(
                             id            = `test`
-                            tokens        = client->_bind_edit( mt_token )
+                            tokens        = client->_bind( mt_token )
                             showclearicon = abap_true
                        )->tokens(
                            )->token( key      = `{KEY}`
@@ -62,7 +62,7 @@ CLASS Z2UI5_CL_DEMO_APP_078 IMPLEMENTATION.
                                      editable = `{EDITABLE}` ).
 
       DATA(tab) = view->table(
-        items = client->_bind_edit( mt_token )
+        items = client->_bind( mt_token )
         mode  = `MultiSelect` ).
 
       tab->columns(

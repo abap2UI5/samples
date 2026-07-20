@@ -102,18 +102,18 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
                               )->content( `form` ).
 
     form->label( `Message`
-        )->input( client->_bind_edit( message )
+        )->input( client->_bind( message )
         )->label( `Duration (ms)`
         )->input(
-            value = client->_bind_edit( duration )
+            value = client->_bind( duration )
             type  = `Number`
         )->label( `Width`
-        )->input( client->_bind_edit( width ) ).
+        )->input( client->_bind( width ) ).
 
     DATA(select_my) = form->label( `my`
-                          )->select( selectedkey = client->_bind_edit( my ) ).
+                          )->select( selectedkey = client->_bind( my ) ).
     DATA(select_at) = form->label( `at`
-                          )->select( selectedkey = client->_bind_edit( at ) ).
+                          )->select( selectedkey = client->_bind( at ) ).
 
     LOOP AT get_positions( ) INTO DATA(position).
       select_my->item(
@@ -125,10 +125,10 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
     ENDLOOP.
 
     form->label( `offset` ).
-    form->input( client->_bind_edit( offset ) ).
+    form->input( client->_bind( offset ) ).
 
     DATA(select_animation) = form->label( `animationTimingFunction`
-                                 )->select( selectedkey = client->_bind_edit( animation_timing ) ).
+                                 )->select( selectedkey = client->_bind( animation_timing ) ).
     select_animation->item( key = `ease`        text = `ease`
                  )->item( key = `linear`        text = `linear`
                  )->item( key = `ease-in`       text = `ease-in`
@@ -137,10 +137,10 @@ CLASS z2ui5_cl_demo_app_381 IMPLEMENTATION.
 
     form->label( `animationDuration (ms)`
         )->input(
-            value = client->_bind_edit( animation_duration )
+            value = client->_bind( animation_duration )
             type  = `Number`
         )->label( `autoClose`
-        )->checkbox( client->_bind_edit( autoclose ) ).
+        )->checkbox( client->_bind( autoclose ) ).
 
     form->button(
         text  = `Show Message Toast`

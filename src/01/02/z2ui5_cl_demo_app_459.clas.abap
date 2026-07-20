@@ -96,7 +96,7 @@ CLASS z2ui5_cl_demo_app_459 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(tab) = page->table( id    = `reorderTable`
-                             items = client->_bind_edit( t_products ) ).
+                             items = client->_bind( t_products ) ).
 
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method

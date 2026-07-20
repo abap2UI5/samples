@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_368 IMPLEMENTATION.
            href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.IconTabBar/sample/sap.m.sample.IconTabBar` ).
 
     DATA(items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
-                                      selectedkey = client->_bind_edit( selectedkey )
+                                      selectedkey = client->_bind( selectedkey )
                                       select      = client->_event( `TAB_SELECT` ) )->items( ).
 
     items->icon_tab_filter( count   = client->_bind( cnt_total )

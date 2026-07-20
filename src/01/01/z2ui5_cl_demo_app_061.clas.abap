@@ -38,7 +38,7 @@ CLASS Z2UI5_CL_DEMO_APP_061 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( <tab> )
+            items = client->_bind( <tab> )
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(

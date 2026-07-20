@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
                 text  = `read`
                 press = client->_event( `BUTTON_READ_PREVIOUS` )
             )->label( `Call previous app and show data of this app`
-            )->input( client->_bind_edit( input )
+            )->input( client->_bind( input )
             )->button(
                 text  = `back`
                 press = client->_event( `BACK_WITH_EVENT` ) ).

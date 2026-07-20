@@ -120,7 +120,7 @@ CLASS Z2UI5_CL_DEMO_APP_461 IMPLEMENTATION.
 
     DATA(tree) = page->tree( id         = `tree1`
                              headertext = `Folders`
-                             items      = client->_bind_edit( t_nodes ) ).
+                             items      = client->_bind( t_nodes ) ).
 
     tree->drag_drop_config( ``
         )->_generic(

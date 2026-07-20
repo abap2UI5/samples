@@ -84,9 +84,9 @@ CLASS z2ui5_cl_demo_app_456 IMPLEMENTATION.
     page->planning_calendar(
         id        = `PC1`
         class     = `sapUiSmallMargin`
-        startdate = |\{ path: '{ client->_bind_edit( val = start_date path = abap_true ) }', | &&
+        startdate = |\{ path: '{ client->_bind( val = start_date path = abap_true ) }', | &&
                     |formatter: 'Formatter.DateCreateObject' \}|
-        rows      = client->_bind_edit( t_people )
+        rows      = client->_bind( t_people )
         )->rows(
         )->planning_calendar_row(
             title        = `{NAME}`

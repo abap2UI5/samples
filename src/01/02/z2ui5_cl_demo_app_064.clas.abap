@@ -139,8 +139,8 @@ CLASS z2ui5_cl_demo_app_064 IMPLEMENTATION.
     layout = page1->vertical_layout( class = `sapuicontentpadding`
     width  = `100%` ).
     layout->vbox( )->progress_indicator(
-      percentvalue = client->_bind_edit( mv_percent )
-      displayvalue = client->_bind_edit( screen-display_value )
+      percentvalue = client->_bind( mv_percent )
+      displayvalue = client->_bind( screen-display_value )
       showvalue    = abap_true
       state        = `Success` ).
 

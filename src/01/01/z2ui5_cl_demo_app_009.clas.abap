@@ -182,7 +182,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
     form->label( `Input with suggestion items`
         )->input(
-            value           = client->_bind_edit( s_screen-color_01 )
+            value           = client->_bind( s_screen-color_01 )
             placeholder     = `fill in your favorite colour`
             suggestionitems = client->_bind( t_suggestion )
             showsuggestion  = abap_true
@@ -194,25 +194,25 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
 
     form->label( `Input only numbers allowed`
         )->input(
-            value       = client->_bind_edit( s_screen-quantity )
+            value       = client->_bind( s_screen-quantity )
             type        = `Number`
             placeholder = `quantity` ).
 
     form->label( `Input with value`
         )->input(
-            value            = client->_bind_edit( s_screen-color_02 )
+            value            = client->_bind( s_screen-color_02 )
             placeholder      = `fill in your favorite colour`
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `POPUP_TABLE_VALUE` ) ).
 
     form->label( `Custom value Popup`
         )->input(
-            value            = client->_bind_edit( s_screen-name )
+            value            = client->_bind( s_screen-name )
             placeholder      = `name`
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `POPUP_TABLE_VALUE_CUSTOM` )
         )->input(
-            value            = client->_bind_edit( s_screen-lastname )
+            value            = client->_bind( s_screen-lastname )
             placeholder      = `lastname`
             showvaluehelp    = abap_true
             valuehelprequest = client->_event( `POPUP_TABLE_VALUE_CUSTOM` ) ).
@@ -242,7 +242,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     DATA(dialog) = popup->dialog( `abap2UI5 - Value Help` ).
     DATA(tab) = dialog->table(
         mode  = `SingleSelectLeft`
-        items = client->_bind_edit( t_suggestion_sel ) ).
+        items = client->_bind( t_suggestion_sel ) ).
 
     tab->columns(
         )->column( `20rem`
@@ -274,7 +274,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     dialog->simple_form(
         )->label( `Location`
         )->input(
-            value           = client->_bind_edit( s_screen-city )
+            value           = client->_bind( s_screen-city )
             suggestionitems = client->_bind( t_cities )
             showsuggestion  = abap_true
         )->get(
@@ -290,7 +290,7 @@ CLASS z2ui5_cl_demo_app_009 IMPLEMENTATION.
     DATA(tab) = dialog->table(
         headertext = `Employees`
         mode       = `SingleSelectLeft`
-        items      = client->_bind_edit( t_employees_sel ) ).
+        items      = client->_bind( t_employees_sel ) ).
 
     tab->columns(
         )->column( `10rem`

@@ -43,7 +43,7 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     page->segmented_button(
-            selected_key     = client->_bind_edit( sel_mode )
+            selected_key     = client->_bind( sel_mode )
             selection_change = client->_event( `BUTTON_SEGMENT_CHANGE` ) )->get(
                 )->items( )->get(
                     )->segmented_button_item(
@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_019 IMPLEMENTATION.
     page->table(
             headertext = `Table`
             mode       = sel_mode
-            items      = client->_bind_edit( t_tab )
+            items      = client->_bind( t_tab )
             )->columns(
                 )->column( )->text( `Title` )->get_parent(
                 )->column( )->text( `Value` )->get_parent(

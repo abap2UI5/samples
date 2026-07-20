@@ -66,7 +66,7 @@ CLASS z2ui5_cl_demo_app_376 IMPLEMENTATION.
     DATA(vbox) = page->vbox( `sapUiSmallMargin` ).
 
     vbox->label( `Default with seconds:` ).
-    vbox->time_picker( value         = client->_bind_edit( time_default )
+    vbox->time_picker( value         = client->_bind( time_default )
                        valueformat   = `HH:mm:ss`
                        displayformat = `HH:mm:ss`
                        width         = `12rem`
@@ -74,7 +74,7 @@ CLASS z2ui5_cl_demo_app_376 IMPLEMENTATION.
 
     vbox->label( text  = `Display format HH:mm (24 hours):`
                  class = `sapUiSmallMarginTop` ).
-    vbox->time_picker( value         = client->_bind_edit( time_short )
+    vbox->time_picker( value         = client->_bind( time_short )
                        valueformat   = `HH:mm:ss`
                        displayformat = `HH:mm`
                        width         = `12rem`
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_376 IMPLEMENTATION.
 
     vbox->label( text  = `Minutes in steps of 15:`
                  class = `sapUiSmallMarginTop` ).
-    vbox->time_picker( value         = client->_bind_edit( time_steps )
+    vbox->time_picker( value         = client->_bind( time_steps )
                        valueformat   = `HH:mm:ss`
                        displayformat = `HH:mm`
                        minutesstep   = `15`

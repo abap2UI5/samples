@@ -75,7 +75,7 @@ CLASS Z2UI5_CL_DEMO_APP_455 IMPLEMENTATION.
 
     page->list( id         = `productList`
                 headertext = `Products`
-                items      = client->_bind_edit( t_products )
+                items      = client->_bind( t_products )
                 class      = `sapUiSmallMargin`
         )->standard_list_item( title       = `{NAME}`
                                description = `{CATEGORY}` ).

@@ -73,9 +73,9 @@ CLASS Z2UI5_CL_DEMO_APP_140 IMPLEMENTATION.
                   )->multi_combobox(
 *                            name = 'Multi'
                            name          = `MultiComboBox`
-                    selectedkeys         = client->_bind_edit( gt_sel_multi2 )
-*                            selecteditems = client->_bind_edit( gt_sel_multi )
-                                   items = client->_bind_edit( val = gt_multi )
+                    selectedkeys         = client->_bind( gt_sel_multi2 )
+*                            selecteditems = client->_bind( gt_sel_multi )
+                                   items = client->_bind( val = gt_multi )
                                    )->item(
                                       key  = `{KEY}`
                                       text = `{TEXT}`

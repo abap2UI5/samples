@@ -68,12 +68,12 @@ CLASS Z2UI5_CL_DEMO_APP_071 IMPLEMENTATION.
             )->title( `Input`
             )->label( `Link`
             )->label( `setSizeLimit`
-            )->input( client->_bind_edit( mv_set_size_limit )
+            )->input( client->_bind( mv_set_size_limit )
             )->button(
                 text  = `update size limit`
                 press = client->_event( val = `UPDATE` )
             )->label( `Number of Entries`
-            )->input( client->_bind_edit( mv_combo_number )
+            )->input( client->_bind( mv_combo_number )
             )->button(
                 text  = `update number entries`
                 press = client->_event( val = `UPDATE_MODEL` )
