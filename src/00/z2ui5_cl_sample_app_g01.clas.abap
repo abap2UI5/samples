@@ -275,7 +275,6 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `only with javascript and css and html` header = `Messages with Styles I` sub = `` app = `z2ui5_cl_demo_app_310` )
       ( group = `only with javascript and css and html` header = `Messages with Styles II` sub = `` app = `z2ui5_cl_demo_app_311` )
       ( group = `only with javascript and css and html` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
-      ( group = `only with javascript and css and html` header = `tab` sub = `focus edit controls` app = `z2ui5_cl_demo_app_346` )
       ( group = `only with javascript and css and html` header = `Tile` sub = `KPI Tile` app = `z2ui5_cl_demo_app_277` )
       ( group = `only with javascript and css and html` header = `tree` sub = `drag & drop` app = `z2ui5_cl_demo_app_317` )
       ( group = `only with javascript and css and html` header = `tree` sub = `popup select - state` app = `z2ui5_cl_demo_app_178` )
