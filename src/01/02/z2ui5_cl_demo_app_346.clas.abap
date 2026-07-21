@@ -108,14 +108,14 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
     page->message_strip(
         text     = `Set the keyboard focus to any editable table cell from the backend - type a column id ` &&
                    `(Title, Color, Info, Checkbox or Description) and a row index, then press Set Focus, or ` &&
-                   `use Next / Reset. No JavaScript is shipped with the view: the set_focus follow-up action ` &&
-                   `targets the cell by its control id, and the framework reports the focused cell back in s_focus.`
+                   `use Next / Reset. No JavaScript is shipped with the view: every cell has a stable control ` &&
+                   `id (<column>_<row>) that the set_focus follow-up action targets, and the framework reports ` &&
+                   `the currently focused cell back to the backend in s_focus.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
     DATA(tab) = page->table(
-            client->_bind_edit( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
                 )->title( client->_bind( focusid )
@@ -152,29 +152,40 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
         )->column( )->text( `Checkbox` )->get_parent(
         )->column( )->text( `Description` ).
 
-    tab->items(
-        )->column_list_item(
-            )->cells(
-                )->text( `{INDEX}`
-                )->input(
-                    id     = cs_column-title
-                    value  = `{TITLE}`
-                    submit = client->_event( `NEXT` )
-                )->input(
-                    id     = cs_column-color
-                    value  = `{VALUE}`
-                    submit = client->_event( `NEXT` )
-                )->input(
-                    id     = cs_column-info
-                    value  = `{INFO}`
-                    submit = client->_event( `NEXT` )
-                )->checkbox(
-                    id       = cs_column-checkbox
-                    selected = `{CHECKBOX}`
-                )->input(
-                    id     = cs_column-description
-                    value  = `{DESCRIPTION}`
-                    submit = client->_event( `NEXT` ) ).
+    " Build the rows explicitly (no aggregation binding): only then does every
+    " cell keep the stable control id <column>_<row> that set_focus can target.
+    " A bound template would clone the cells under randomly generated ids.
+    DATA(path)  = client->_bind_edit( val = t_tab path = abap_true ).
+    DATA(items) = tab->items( ).
+
+    LOOP AT t_tab REFERENCE INTO DATA(row).
+
+      DATA(i) = sy-tabix - 1.
+
+      items->column_list_item(
+          )->cells(
+              )->text( |{ row->index }|
+              )->input(
+                  id     = |{ cs_column-title }_{ i }|
+                  value  = |\{{ path }/{ i }/TITLE\}|
+                  submit = client->_event( `NEXT` )
+              )->input(
+                  id     = |{ cs_column-color }_{ i }|
+                  value  = |\{{ path }/{ i }/VALUE\}|
+                  submit = client->_event( `NEXT` )
+              )->input(
+                  id     = |{ cs_column-info }_{ i }|
+                  value  = |\{{ path }/{ i }/INFO\}|
+                  submit = client->_event( `NEXT` )
+              )->checkbox(
+                  id       = |{ cs_column-checkbox }_{ i }|
+                  selected = |\{{ path }/{ i }/CHECKBOX\}|
+              )->input(
+                  id     = |{ cs_column-description }_{ i }|
+                  value  = |\{{ path }/{ i }/DESCRIPTION\}|
+                  submit = client->_event( `NEXT` ) ).
+
+    ENDLOOP.
 
     client->view_display( view->stringify( ) ).
 
@@ -183,7 +194,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD focus.
 
-    focusid = |{ focuscolumn }-{ focusrow }|.
+    focusid = |{ focuscolumn }_{ focusrow }|.
 
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_focus
@@ -194,7 +205,7 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
 
   METHOD read_focus.
 
-    SPLIT client->get( )-s_focus-id AT `-` INTO DATA(col) DATA(row).
+    SPLIT client->get( )-s_focus-id AT `_` INTO DATA(col) DATA(row).
 
     IF row IS NOT INITIAL
         AND row CO `0123456789`
