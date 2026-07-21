@@ -1,0 +1,29 @@
+name: test_rename
+
+# Smoke test that the basic samples (and the abap2UI5 framework they
+# reference) can be renamed from the z2ui5 namespace to another one for a
+# parallel installation - runs the abaplint rename with the checked-in
+# config .github/abaplint/rename_test.jsonc and syntax-checks the result.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test_rename-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test_rename:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run rename

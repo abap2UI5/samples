@@ -1,0 +1,61 @@
+{
+  // Rename smoke test for the test_rename workflow: renames every sample
+  // (and the abap2UI5 framework it references) from the z2ui5 namespace to
+  // the placeholder zabap2ui5 and syntax-checks the result. This proves the
+  // basic samples stay renameable for a parallel installation alongside a
+  // renamed abap2UI5 (see https://abap2ui5.github.io/docs/advanced/renaming.html).
+  // Scoped to the portable src/01 set - it is the only namespace-clean,
+  // dependency-free-of-src/00 area (src/00 is stripped from the cloud/702
+  // builds and carries non-ABAP objects that are out of scope for renaming).
+  // Runs standalone as well:
+  //   npx abaplint .github/abaplint/rename_test.jsonc --rename
+  "global": {
+    "files": "/../../src/01/**/*.*"
+  },
+  "dependencies": [
+    {
+      "url": "https://github.com/abapedia/steampunk-2305-api-intersect-702",
+      "files": "/src/**/*.*"
+    },
+    {
+      "url": "https://github.com/abap2UI5/abap2UI5",
+      "files": "/src/**/*.*"
+    }
+  ],
+  "rename": {
+    "output": "output",
+    "patterns": [
+      {
+        "type": "CLAS|INTF|TABL",
+        "oldName": "^z2ui5(.*)$",
+        "newName": "zabap2ui5$1"
+      }
+    ]
+  },
+  "syntax": {
+    "version": "v750",
+    "errorNamespace": "."
+  },
+  "rules": {
+    "allowed_object_types": {
+      "allowed": [
+        "CLAS",
+        "DEVC",
+        "INTF",
+        "TABL"
+      ]
+    },
+    "allowed_object_naming": true,
+    "begin_end_names": true,
+    "check_ddic": true,
+    "check_include": true,
+    "check_syntax": true,
+    "global_class": true,
+    "implement_methods": true,
+    "method_implemented_twice": true,
+    "parser_error": true,
+    "superclass_final": true,
+    "unknown_types": true,
+    "xml_consistency": true
+  }
+}

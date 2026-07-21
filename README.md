@@ -5,7 +5,7 @@
 [![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
 [![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
 <br>
-[![renaming](https://github.com/abap2UI5/samples/actions/workflows/rename_test.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/rename_test.yaml)
+[![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml)
 
 # abap2UI5-samples
 
