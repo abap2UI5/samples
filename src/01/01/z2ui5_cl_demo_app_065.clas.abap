@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                  press = client->_event( `MAIN` )
       )->button( text  = `Rerender only nested view`
                  press = client->_event( `NEST` )
-      )->button( text  = `Update only nested MODEL (nest_view_model_update)`
+      )->button( text  = `Update only nested MODEL (view_model_update)`
                  press = client->_event( `NEST_MODEL` )
       )->input( client->_bind( mv_input_main ) ).
 
@@ -77,13 +77,13 @@ CLASS z2ui5_cl_demo_app_065 IMPLEMENTATION.
                                    method_insert = `addContent` ).
 
       WHEN `NEST_MODEL`.
-        " change only a nest-bound field and refresh the nested view's model
-        " copy (no re-render of the nested XML) - this isolates the effect of
-        " nest_view_model_update. Press "Rerender only nested view" first so
-        " the nested view exists.
+        " change only a nest-bound field and refresh the shared view model
+        " (no re-render of the nested XML). The main and nested views share one
+        " model, so view_model_update refreshes the nested view too. Press
+        " "Rerender only nested view" first so the nested view exists.
         mv_count      = mv_count + 1.
         mv_input_nest = |nest model updated #{ mv_count }|.
-        client->nest_view_model_update( ).
+        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.

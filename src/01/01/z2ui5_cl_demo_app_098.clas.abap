@@ -166,7 +166,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
           mv_title  = client->get_event_arg( ).
         ENDIF.
 
-        client->nest_view_model_update( ).
         client->view_model_update( ).
         view_display_detail_detail( ).
 
@@ -181,7 +180,6 @@ CLASS z2ui5_cl_demo_app_098 IMPLEMENTATION.
 
         mv_layout = `TwoColumnsMidExpanded`.
 
-        client->nest_view_model_update( ).
         client->view_model_update( ).
 
         view_display_detail( ).
