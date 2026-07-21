@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_088 IMPLEMENTATION.
 
     page->icon_tab_header( selectedkey                   = client->_bind( mv_selected_key )
                                                   select = client->_event_client( val   = client->cs_event-control_by_id
-                                                                                  t_arg = VALUE #( ( `NavCon` ) ( `MAIN` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
+                                                                                  t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
                                                   mode   = `Inline`
                                   )->items(
                                     )->icon_tab_filter( key  = `page1`

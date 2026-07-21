@@ -34,10 +34,10 @@ CLASS z2ui5_cl_demo_app_449 IMPLEMENTATION.
       WHEN `OPEN`.
         " open the popup-mode PDFViewer via the whitelisted open method -
         " the viewer brings its own dialog and close button.
-        " t_arg is positional: id, view (`` = global lookup), method
+        " t_arg is positional: id, method (the view defaults to cs_view-main
+        " and can be omitted for a main-view control)
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `demoPdf` )
-                                                   ( `` )
                                                    ( `open` ) ) ).
 
     ENDCASE.

@@ -46,17 +46,16 @@ CLASS z2ui5_cl_demo_app_447 IMPLEMENTATION.
 
     CASE client->get( )-event.
 
-      " t_arg is positional: id, view (`` = global lookup), method, params
+      " t_arg is positional: id, method, params (the view defaults to
+      " cs_view-main and can be omitted for a main-view control)
       WHEN `FOCUS`.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `nameInput` )
-                                                   ( `` )
                                                    ( `focus` ) ) ).
 
       WHEN `SCROLL`.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `bigTable` )
-                                                   ( `` )
                                                    ( `scrollToIndex` )
                                                    ( `25` ) ) ).
 

@@ -84,13 +84,14 @@ CLASS Z2UI5_CL_DEMO_APP_202 IMPLEMENTATION.
       WHEN `STEP22` OR `STEP23`.
         " the original wizard flow (discardProgress + setNextStep) as two
         " generic whitelisted control calls - t_arg is positional:
-        " id, view, method, params (the step params are control ids)
+        " id, method, params (the step params are control ids; the view
+        " defaults to cs_view-main)
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `wiz` ) ( `MAIN` ) ( `discardProgress` ) ( `STEP2` ) ) ).
+            t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `STEP2` ) ( `MAIN` ) ( `setNextStep` ) ( client->get( )-event ) ) ).
+            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get( )-event ) ) ).
 
     ENDCASE.
     client->view_model_update( ).

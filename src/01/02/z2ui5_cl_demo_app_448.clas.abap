@@ -36,11 +36,11 @@ CLASS z2ui5_cl_demo_app_448 IMPLEMENTATION.
       WHEN `TOGGLE`.
         " invert the mirrored state and call the whitelisted setExpanded on
         " the panel - client-side, after the response renders, no rebuild.
-        " t_arg is positional: id, view (`` = global lookup), method, params
+        " t_arg is positional: id, method, params (the view defaults to
+        " cs_view-main and can be omitted for a main-view control)
         expanded = xsdbool( expanded = abap_false ).
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `demoPanel` )
-                                                   ( `` )
                                                    ( `setExpanded` )
                                                    ( CONV string( expanded ) ) ) ).
 
