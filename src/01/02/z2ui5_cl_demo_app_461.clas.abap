@@ -53,9 +53,9 @@ CLASS Z2UI5_CL_DEMO_APP_461 IMPLEMENTATION.
 
       WHEN `MOVE_NODE`.
         " both event args arrive resolved client-side: the binding context
-        " paths of the dragged and the drop target item. The two-way model
-        " prefixes them with /XX/, e.g. /XX/T_NODES/0/NODES/1 (a file) and
-        " /XX/T_NODES/2 (a folder) - so parse from the END of the path
+        " paths of the dragged and the drop target item, e.g.
+        " /T_NODES/0/NODES/1 (a file) and /T_NODES/2 (a folder) - so parse
+        " from the END of the path
         SPLIT client->get_event_arg( ) AT `/` INTO TABLE DATA(lt_drag).
         SPLIT client->get_event_arg( 2 ) AT `/` INTO TABLE DATA(lt_drop).
         DATA(lv_drag_lines) = lines( lt_drag ).

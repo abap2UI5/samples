@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
     lo_view_nested->shell( )->page( `Nested View`
       )->table( i_client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{template>/XX/MT_LAYOUT}`
+        )->template_repeat( list = `{template>/MT_LAYOUT}`
                             var  = `LO`
           )->column( mergeduplicates = `{LO>MERGE}`
                      visible         = `{LO>VISIBLE}` )->get_parent(
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_demo_app_176 IMPLEMENTATION.
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{template>/XX/MT_LAYOUT}`
+              )->template_repeat( list = `{template>/MT_LAYOUT}`
                                   var  = `LO2`
                 )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
 

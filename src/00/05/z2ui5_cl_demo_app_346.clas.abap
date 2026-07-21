@@ -66,8 +66,8 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
                                                 && `    const m = focusCtrlId.match(/(\d+$)/);`
                                                 && `    const model = z2ui5.oView.getModel() ;`
                                                 && `    model.setProperty("/FOCUSID",focusCtrlId);`
-                                                && `    model.setProperty("/XX/FOCUSCOLUMN",column);`
-                                                && `    model.setProperty("/XX/FOCUSROW",m[1]);`
+                                                && `    model.setProperty("/FOCUSCOLUMN",column);`
+                                                && `    model.setProperty("/FOCUSROW",m[1]);`
                                                 && `  } catch(e){}`
                                                 && `}, true);`
                                                 && ``

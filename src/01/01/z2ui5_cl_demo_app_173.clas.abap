@@ -55,7 +55,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
 
     view->table( client->_bind( mt_data )
       )->columns(
-        )->template_repeat( list = `{template>/XX/MT_LAYOUT}`
+        )->template_repeat( list = `{template>/MT_LAYOUT}`
                             var  = `L0`
           )->column( mergeduplicates = `{L0>MERGE}`
                      visible         = `{L0>VISIBLE}` )->text( `{L0>FNAME}` )->get_parent(
@@ -63,7 +63,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
         )->items(
           )->column_list_item(
             )->cells(
-              )->template_repeat( list = `{template>/XX/MT_LAYOUT}`
+              )->template_repeat( list = `{template>/MT_LAYOUT}`
                                   var  = `L1`
                 )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
 
@@ -72,7 +72,7 @@ CLASS Z2UI5_CL_DEMO_APP_173 IMPLEMENTATION.
                   change = client->_event( `CHANGE_FLAG` ) ).
                   view   = view->vbox( ).
 
-    view->template_if( `{template>/XX/MV_FLAG}`
+    view->template_if( `{template>/MV_FLAG}`
       )->template_then(
         )->icon( src   = `sap-icon://accept`
                  color = `green` )->get_parent(
