@@ -160,10 +160,10 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     sel->items(
         )->column_list_item(
             )->cells(
-                )->text( `{SIGN}`
-                )->text( `{OPTION}`
-                )->text( `{LOW}`
-                )->text( `{HIGH}` ).
+                )->text( `{http>SIGN}`
+                )->text( `{http>OPTION}`
+                )->text( `{http>LOW}`
+                )->text( `{http>HIGH}` ).
 
     " the rows the range selects out of the demo product list
     DATA(res) = page->table( m_client->_bind( val = t_result switch_default_model = abap_true ) ).
@@ -174,8 +174,8 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     res->items(
         )->column_list_item(
             )->cells(
-                )->text( `{PRODUCT_TYPE}`
-                )->text( `{NAME}` ).
+                )->text( `{http>PRODUCT_TYPE}`
+                )->text( `{http>NAME}` ).
 
     " OData service block - adjust to your value-list-annotated Gateway service.
     " The SmartMultiInput's value help (Product Type) comes from here; the demo
