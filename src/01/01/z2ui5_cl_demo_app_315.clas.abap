@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         )->text( `{FLIGHT>City}`
         )->text( `{FLIGHT>CountryCode}` ).
 
-      client->view_display( val                       = view->stringify( )
+      client->view_display( view->stringify( )
 *                            switch_default_model_path = ``
                             ).
 

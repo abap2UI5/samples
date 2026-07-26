@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_470 IMPLEMENTATION.
         contentwidth = `24rem` ).
 
     " relative bindings - resolved by the element bind below
-    DATA(box) = dialog->vbox( class = `sapUiSmallMarginBegin sapUiSmallMarginTop` ).
+    DATA(box) = dialog->vbox( `sapUiSmallMarginBegin sapUiSmallMarginTop` ).
     box->object_status( title = `Category` text = `{CATEGORY}` ).
     box->object_status( title = `Price` text = `{PRICE} EUR` ).
 
