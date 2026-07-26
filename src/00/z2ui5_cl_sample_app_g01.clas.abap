@@ -214,8 +214,9 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
-      ( group = `extended` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
-      ( group = `extended` header = `tab` sub = `odata, device, http` app = `z2ui5_cl_demo_app_314` )
+      ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Multi Input` app = `z2ui5_cl_demo_app_319` )
+      ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Table and Variants` app = `z2ui5_cl_demo_app_313` )
+      ( group = `extended` header = `EXPERIMENTAL` sub = `Switch default Model` app = `z2ui5_cl_demo_app_314` )
       ( group = `only non-abap-cloud` header = `Conversion Exits` sub = `` app = `z2ui5_cl_demo_app_s_04` )
       ( group = `only non-abap-cloud` header = `Generated APC WebSocket protocol impementation class` sub = `` app = `z2ui5_cl_demo_app_s_05_ws` )
       ( group = `only non-abap-cloud` header = `Navigation with app state change v2` sub = `` app = `z2ui5_cl_demo_app_s_06` )
@@ -234,13 +235,11 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `only non-openui5 or higher UI5 1.71` header = `more` sub = `ndc scanner (since 1.102)` app = `z2ui5_cl_demo_app_124` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `more` sub = `timeline` app = `z2ui5_cl_demo_app_113` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `networkgraph` sub = `org tree` app = `z2ui5_cl_demo_app_182` )
-      ( group = `only non-openui5 or higher UI5 1.71` header = `odata, smartmultiinput` sub = `` app = `z2ui5_cl_demo_app_319` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `sap.ui.RichTextEditor` sub = `` app = `z2ui5_cl_demo_app_106` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `sap.webc.TabContainer` sub = `Multiple Items` app = `z2ui5_cl_demo_app_380` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Side Panel (since 1.107)` sub = `` app = `z2ui5_cl_demo_app_108` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `Standard List Item` sub = `Info State Inverted (since 1.74)` app = `z2ui5_cl_demo_app_286` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `status indicator` sub = `` app = `z2ui5_cl_demo_app_196` )
-      ( group = `only non-openui5 or higher UI5 1.71` header = `tab` sub = `smart controls` app = `z2ui5_cl_demo_app_313` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `tab` sub = `toolbar container sort` app = `z2ui5_cl_demo_app_177` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `table columnmenu (since 1.110)` sub = `` app = `z2ui5_cl_demo_app_183` )
       ( group = `only non-openui5 or higher UI5 1.71` header = `ui table` sub = `` app = `z2ui5_cl_demo_app_100` )
