@@ -74,17 +74,19 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
 
     l_page->smart_multi_input(
       id                = `ProductTypeMultiInput`
-*     value             = '{ProductType}'
-      value             = `{CurrencyCode}`
-      entityset         = `Booking`
+     value             = '{ProductType}'
+*      value             = `{CurrencyCode}`
+*      entityset         = `Booking`
+      entityset         = `ProductType_2`
       supportranges     = `true`
       enableodataselect = `true` ).
 
     m_client->view_display( val      = l_page->stringify( )
-*       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
-       switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
-*       switchdefaultmodelannouri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
-       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value` ).
+       switch_default_model_path = `/sap/opu/odata/sap/UI_PRODUCTLIST`
+*       switch_default_model_path     = `/sap/opu/odata/DMO/UI_TRAVEL_A_D_O2`
+       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='UI_PRODUCTLIST_VAN',Version='0001')/$value`
+*       switch_default_model_anno_uri = `/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='%2FDMO%2FUI_TRAVEL_A_D_O2_VAN',Version='0001')/$value`
+ ).
 
   ENDMETHOD.
 
@@ -92,7 +94,8 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
   METHOD on_event.
 
     IF m_client->check_on_event( `PRODTYPE_CHANGED` ).
-      INSERT VALUE #( operation = `EQ` value1 = `EUR` keyfield = `CurrencyCode` tokentext = `Euro (auto added line)` ) INTO TABLE m_selection-product_type-ranges.
+*      INSERT VALUE #( operation = `EQ` value1 = `EUR` keyfield = `CurrencyCode` tokentext = `Euro (auto added line)` ) INTO TABLE m_selection-product_type-ranges.
+*      INSERT VALUE #( operation = `EQ` value1 = `EUR` keyfield = `ProductType` tokentext = `Euro (auto added line)` ) INTO TABLE m_selection-product_type-ranges.
       m_client->view_model_update( ).
       TRY.
           m_client->message_box_display(

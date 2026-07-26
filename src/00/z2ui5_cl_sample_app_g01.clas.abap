@@ -214,6 +214,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `extended` header = `tab` sub = `different odata models` app = `z2ui5_cl_demo_app_315` )
+      ( group = `extended` header = `tab` sub = `odata, device, http` app = `z2ui5_cl_demo_app_314` )
       ( group = `only non-abap-cloud` header = `Conversion Exits` sub = `` app = `z2ui5_cl_demo_app_s_04` )
       ( group = `only non-abap-cloud` header = `Generated APC WebSocket protocol impementation class` sub = `` app = `z2ui5_cl_demo_app_s_05_ws` )
       ( group = `only non-abap-cloud` header = `Navigation with app state change v2` sub = `` app = `z2ui5_cl_demo_app_s_06` )

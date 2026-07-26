@@ -60,7 +60,8 @@ CLASS z2ui5_cl_demo_app_315 IMPLEMENTATION.
         )->text( `{FLIGHT>CountryCode}` ).
 
       client->view_display( val                       = view->stringify( )
-                            switch_default_model_path = `` ).
+*                            switch_default_model_path = ``
+                            ).
 
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_odata_model
