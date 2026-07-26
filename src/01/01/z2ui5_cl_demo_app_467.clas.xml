@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_DEMO_APP_314</CLSNAME>
+    <CLSNAME>Z2UI5_CL_DEMO_APP_467</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>EXPERIMENTAL - Switch default Model</DESCRIPT>
+    <DESCRIPT>Message - Message Manager (C)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
