@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
          )->text( `{http>DESCR}`).
 
       tab = page->table(
-         items   = `{/BookingSupplement}`
+         items   = `{/BusinessPartnerSet}`
          growing = abap_true ).
 
       tab->header_toolbar(
@@ -83,25 +83,28 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
         )->title( `table with odata model` ).
 
       tab->columns(
-          )->column( )->text( `TravelID` )->get_parent(
-          )->column( )->text( `BookingID` )->get_parent(
-          )->column( )->text( `BookingSupplementID` )->get_parent(
-          )->column( )->text( `SupplementID` )->get_parent(
-          )->column( )->text( `SupplementText` )->get_parent(
-          )->column( )->text( `Price` )->get_parent(
-          )->column( )->text( `CurrencyCode` )->get_parent( ).
+          )->column( )->text( `BusinessPartnerID` )->get_parent(
+          )->column( )->text( `CompanyName` )->get_parent(
+          )->column( )->text( `WebAddress` )->get_parent(
+*          )->column( )->text( `SupplementID` )->get_parent(
+*          )->column( )->text( `SupplementText` )->get_parent(
+*          )->column( )->text( `Price` )->get_parent(
+*          )->column( )->text( `CurrencyCode` )->get_parent( ).
+        ).
 
       tab->items( )->column_list_item( )->cells(
-         )->text( `{TravelID}`
-         )->text( `{BookingID}`
-         )->text( `{BookingSupplementID}`
-         )->text( `{SupplementID}`
-         )->text( `{SupplementText}`
-         )->text( `{Price}`
-         )->text( `{CurrencyCode}` ).
+         )->text( `{BusinessPartnerID}`
+         )->text( `{CompanyName}`
+         )->text( `{WebAddress}`
+*         )->text( `{SupplementID}`
+*         )->text( `{SupplementText}`
+*         )->text( `{Price}`
+*         )->text( `{CurrencyCode}`
+         ).
 
       client->view_display( val                       = view->stringify( )
-                            switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
+                            switch_default_model_path = `/sap/opu/odata/iwbep/gwsample_basic/` ).
+*                            switch_default_model_path = `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` ).
 
     ENDIF.
 

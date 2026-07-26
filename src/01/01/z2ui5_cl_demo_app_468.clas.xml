@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_468</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Navigation - Routing modes (default / fresh / keep)</DESCRIPT>
+    <DESCRIPT>EXPERIMENTAL - Navigation - Routing modes</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
