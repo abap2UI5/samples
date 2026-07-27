@@ -81,7 +81,11 @@ CLASS z2ui5_cl_demo_app_470 IMPLEMENTATION.
   METHOD view_display.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page( `abap2UI5 - Aggregation binding on a popup` ).
+    DATA(page) = view->shell( )->page(
+            title          =  `abap2UI5 - Aggregation binding on a popup`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
 
     page->message_strip(
         text     = `The table is bound to the product aggregation. Press a row's "components" button - the ` &&
