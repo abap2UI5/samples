@@ -222,7 +222,6 @@ CLASS z2ui5_cl_demo_app_g00 IMPLEMENTATION.
       ( group = `Basic I` header = `Event` sub = `Additional Infos with t_args` app = `z2ui5_cl_demo_app_167` )
       ( group = `Basic I` header = `Event` sub = `Facet Filter T_arg with Objects` app = `z2ui5_cl_demo_app_197` )
       ( group = `Basic I` header = `Event` sub = `Handle events & change the view` app = `z2ui5_cl_demo_app_004` )
-      ( group = `Basic I` header = `EXPERIMENTAL` sub = `Navigation - Routing modes` app = `z2ui5_cl_demo_app_468` )
       ( group = `Basic I` header = `Focus` sub = `Focus Aggregations` app = `z2ui5_cl_demo_app_421` )
       ( group = `Basic I` header = `Focus` sub = `Jump with the focus (A)` app = `z2ui5_cl_demo_app_189` )
       ( group = `Basic I` header = `Focus` sub = `Set Focus in Textfield (A)` app = `z2ui5_cl_demo_app_133` )

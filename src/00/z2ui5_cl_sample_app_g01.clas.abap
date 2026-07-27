@@ -214,6 +214,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `extended` header = `EXPERIMENTAL` sub = `Navigation - Routing modes` app = `z2ui5_cl_demo_app_468` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Multi Input` app = `z2ui5_cl_demo_app_319` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Table and Variants` app = `z2ui5_cl_demo_app_313` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Switch default Model` app = `z2ui5_cl_demo_app_314` )
