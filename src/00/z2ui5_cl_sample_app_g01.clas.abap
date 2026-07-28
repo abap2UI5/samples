@@ -326,7 +326,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `experimental, TODO` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
       ( group = `experimental, TODO` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
       ( group = `experimental, TODO` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
-      ( group = `experimental, TODO` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
+      ( group = `experimental, TODO` header = `selscreen` sub = `filter bar with variant management, no JS` app = `z2ui5_cl_demo_app_111` )
       ( group = `experimental, TODO` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
       ( group = `experimental, TODO` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )

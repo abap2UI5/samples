@@ -4,34 +4,35 @@ CLASS z2ui5_cl_demo_app_111 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_tab,
-        selkz            TYPE abap_bool,
+      BEGIN OF ty_s_row,
         product          TYPE string,
         create_date      TYPE string,
         create_by        TYPE string,
         storage_location TYPE string,
-        quantity         TYPE i,
-      END OF ty_s_tab.
-    TYPES
-      ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+        quantity         TYPE string,
+      END OF ty_s_row.
+    DATA t_table TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA mv_search_value TYPE string.
-    DATA mt_table TYPE ty_t_table.
-    DATA mv_key TYPE string.
-    DATA mv_product TYPE string.
-    DATA mv_create_date TYPE string.
-    DATA mv_create_by TYPE string.
-    DATA mv_storage_location TYPE string.
-    DATA mv_quantity TYPE string.
+    DATA product TYPE string.
+    DATA create_date TYPE string.
+    DATA create_by TYPE string.
+    DATA storage_location TYPE string.
+    DATA quantity TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_event.
-    METHODS set_search.
-    METHODS set_data.
+    METHODS on_init.
+    METHODS on_search.
     METHODS view_display.
-    METHODS get_custom_js
+    METHODS data_read.
+    METHODS filter_groups
+      RETURNING
+        VALUE(result) TYPE string.
+    METHODS filter_group
+      IMPORTING
+        name          TYPE string
+        value         TYPE string
       RETURNING
         VALUE(result) TYPE string.
 
@@ -43,72 +44,116 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
-
+    me->client = client.
     IF client->check_on_init( ).
-
-      set_data( ).
-      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
-      RETURN.
-    ENDIF.
-
-    IF client->get( )-check_on_navigated = abap_true.
-
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
+    ELSEIF client->check_on_event( `SEARCH` ).
+      on_search( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    data_read( ).
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_search.
+
+    " the filter values travelled with the event through the two-way binding of
+    " the filter fields, so the search only has to hand the table's items
+    " binding a filter - the rows themselves never move again (the client-side
+    " equivalent of oTable.getBinding( 'items' ).filter( ... ))
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call
+                              t_arg = VALUE #( ( `table1` )
+                                               ( `items` )
+                                               ( `filter` )
+                                               ( filter_groups( ) ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD data_read.
+
+    t_table = VALUE #(
+        ( product          = `table`
+          create_date      = `01.01.2023`
+          create_by        = `Peter`
+          storage_location = `AREA_001`
+          quantity         = `400` )
+        ( product          = `chair`
+          create_date      = `01.01.2022`
+          create_by        = `James`
+          storage_location = `AREA_001`
+          quantity         = `123` )
+        ( product          = `sofa`
+          create_date      = `01.05.2021`
+          create_by        = `Simone`
+          storage_location = `AREA_002`
+          quantity         = `700` )
+        ( product          = `computer`
+          create_date      = `27.01.2023`
+          create_by        = `Theo`
+          storage_location = `AREA_002`
+          quantity         = `200` )
+        ( product          = `printer`
+          create_date      = `01.01.2023`
+          create_by        = `Hannah`
+          storage_location = `AREA_003`
+          quantity         = `90` )
+        ( product          = `table2`
+          create_date      = `01.01.2023`
+          create_by        = `Julia`
+          storage_location = `AREA_003`
+          quantity         = `110` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD filter_groups.
+
+    " the compound payload of cs_event-binding_call: an array of groups, each
+    " group an array of [ path, operator, value ] rows - OR inside a group, AND
+    " across the groups. One group per filled field therefore ANDs the fields,
+    " and an empty array clears the filter again
+    DATA(t_groups) = VALUE string_table(
+        ( filter_group( name  = `PRODUCT`
+                        value = product ) )
+        ( filter_group( name  = `CREATE_DATE`
+                        value = create_date ) )
+        ( filter_group( name  = `CREATE_BY`
+                        value = create_by ) )
+        ( filter_group( name  = `STORAGE_LOCATION`
+                        value = storage_location ) )
+        ( filter_group( name  = `QUANTITY`
+                        value = quantity ) ) ).
+
+    DELETE t_groups WHERE table_line IS INITIAL.
+
+    result = |[{ concat_lines_of( table = t_groups
+                                  sep   = `,` ) }]|.
+
+  ENDMETHOD.
+
+
+  METHOD filter_group.
+
+    IF value IS INITIAL.
       RETURN.
     ENDIF.
 
-    on_event( ).
+    DATA(value_json) = value.
+    REPLACE ALL OCCURRENCES OF `\` IN value_json WITH `\\`.
+    REPLACE ALL OCCURRENCES OF `"` IN value_json WITH `\"`.
 
-  ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get( )-event.
-
-      WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
-        client->view_model_update( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD set_data.
-
-    mt_table = VALUE #(
-        ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
-        ( product = `chair` create_date = `01.01.2022` create_by = `James` storage_location = `AREA_001` quantity = 123 )
-        ( product = `sofa` create_date = `01.05.2021` create_by = `Simone` storage_location = `AREA_001` quantity = 700 )
-        ( product = `computer` create_date = `27.01.2023` create_by = `Theo` storage_location = `AREA_001` quantity = 200 )
-        ( product = `printer` create_date = `01.01.2023` create_by = `Hannah` storage_location = `AREA_001` quantity = 90 )
-        ( product = `table2` create_date = `01.01.2023` create_by = `Julia` storage_location = `AREA_001` quantity = 110 ) ).
-
-  ENDMETHOD.
-
-
-  METHOD set_search.
-
-    IF mv_search_value IS NOT INITIAL.
-
-      LOOP AT mt_table REFERENCE INTO DATA(lr_row).
-        DATA(lv_row) = ``.
-        DATA(lv_index) = 1.
-        DO.
-          ASSIGN COMPONENT lv_index OF STRUCTURE lr_row->* TO FIELD-SYMBOL(<field>).
-
-          IF sy-subrc <> 0.
-            EXIT.
-          ENDIF.
-          lv_row = lv_row && <field>.
-          lv_index = lv_index + 1.
-        ENDDO.
-
-        IF lv_row NS mv_search_value.
-          DELETE mt_table.
-        ENDIF.
-      ENDLOOP.
-    ENDIF.
+    result = |[["{ name }","Contains","{ value_json }"]]|.
 
   ENDMETHOD.
 
@@ -117,177 +162,99 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-*        )->_cc_plain_xml( `<html:script>` && lv_script && `</html:script>`
-      )->_generic( ns   = `html`
-                   name = `script` )->_cc_plain_xml( `z2ui5.InitSvm();`
-      )->stringify( ) ).
+    DATA(page) = view->shell(
+        )->page(
+            title          = `abap2UI5 - Filter Bar with Variant Management`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(page1) = view->page( id = `page_main`
-            title                = `abap2UI5 - List Report Features`
-            navbuttonpress       = client->_event_nav_app_leave( )
-            shownavbutton        = client->check_app_prev_stack( ) ).
+    page->message_strip(
+        text     = `A list report built entirely in ABAP: the sap.ui.comp FilterBar is wired to the ` &&
+                   `SmartVariantManagement by cs_event-filter_bar_variant_init, so saving, selecting ` &&
+                   `and restoring a variant works without the controller boilerplate such an app ` &&
+                   `usually needs. Go filters the table's items binding via cs_event-binding_call - ` &&
+                   `client-side, the rows never travel again. No JavaScript in the view.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
-                                      headerpinned   = abap_true ).
+    DATA(dynamic_page) = page->dynamic_page( headerexpanded = abap_true
+                                             headerpinned   = abap_true ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( `f` )->smart_variant_management( id                     = `svm`
-                                                                 showexecuteonselection = abap_true ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( `f` ).
+    dynamic_page->title( ns = `f` )->get( )->dynamic_page_title(
+        )->heading( `f`
+            )->smart_variant_management( id                     = `svm`
+                                         showexecuteonselection = abap_true ).
 
-    DATA(lo_fb) = page->header( )->dynamic_page_header( abap_true ).
-
-    lo_fb->filter_bar( id             = `fbar`
+    dynamic_page->header( )->dynamic_page_header( abap_true
+        )->filter_bar( id             = `fbar`
                        persistencykey = `myPersKey`
                        usetoolbar     = abap_false
-                       search         = `z2ui5.onSearch();`
-      )->filter_group_items(
-        )->filter_group_item( name               = `PRODUCT`
-                              label              = `Product`
-                              groupname          = `group1`
-                              visibleinfilterbar = abap_true
-          )->fb_control(
-            )->input( value           = client->_bind_edit( mv_product )
-                      suggest         = abap_true
-                      suggestionitems = `{/EDIT/MT_TABLE}`
-                      change          = `z2ui5.onChange();`
-              )->get( )->suggestion_items( )->item( text = `{PRODUCT}`
-            )->get_parent( )->get_parent( )->get_parent( )->get_parent(
-        )->filter_group_item( name               = `CREATE_DATE`
-                              label              = `Create Date`
-                              groupname          = `group1`
-                              visibleinfilterbar = abap_true
-          )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_date )
-                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
-        )->filter_group_item( name               = `CREATE_BY`
-                              label              = `Create By`
-                              groupname          = `group1`
-                              visibleinfilterbar = abap_true
-          )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_by )
-                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
-        )->filter_group_item( name               = `STORAGE_LOCATION`
-                              label              = `Storage Location`
-                              groupname          = `group1`
-                              visibleinfilterbar = abap_true
-          )->fb_control(
-            )->input( value  = client->_bind_edit( mv_storage_location )
-                      change = `z2ui5.onChange();` )->get_parent( )->get_parent(
-        )->filter_group_item( name               = `QUANTITY`
-                              label              = `Quantity`
-                              groupname          = `group1`
-                              visibleinfilterbar = abap_true
-          )->fb_control(
-            )->input( suggest         = abap_true
-                      suggestionitems = `{/EDIT/MT_TABLE}`
-                      value           = client->_bind_edit( mv_quantity )
-                      change          = `z2ui5.onChange($event);`
-              )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
-            )->get_parent( )->get_parent( )->get_parent( ).
+                       search         = client->_event( `SEARCH` )
+            )->filter_group_items(
+                )->filter_group_item( name               = `PRODUCT`
+                                      label              = `Product`
+                                      groupname          = `group1`
+                                      visibleinfilterbar = abap_true
+                    )->fb_control(
+                        )->input( value           = client->_bind( product )
+                                  suggest         = abap_true
+                                  suggestionitems = client->_bind( t_table )
+                            )->get( )->suggestion_items( )->item( text = `{PRODUCT}`
+                            )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                )->filter_group_item( name               = `CREATE_DATE`
+                                      label              = `Create Date`
+                                      groupname          = `group1`
+                                      visibleinfilterbar = abap_true
+                    )->fb_control(
+                        )->input( client->_bind( create_date ) )->get_parent( )->get_parent(
+                )->filter_group_item( name               = `CREATE_BY`
+                                      label              = `Create By`
+                                      groupname          = `group1`
+                                      visibleinfilterbar = abap_true
+                    )->fb_control(
+                        )->input( client->_bind( create_by ) )->get_parent( )->get_parent(
+                )->filter_group_item( name               = `STORAGE_LOCATION`
+                                      label              = `Storage Location`
+                                      groupname          = `group1`
+                                      visibleinfilterbar = abap_true
+                    )->fb_control(
+                        )->input( client->_bind( storage_location ) )->get_parent( )->get_parent(
+                )->filter_group_item( name               = `QUANTITY`
+                                      label              = `Quantity`
+                                      groupname          = `group1`
+                                      visibleinfilterbar = abap_true
+                    )->fb_control(
+                        )->input( client->_bind( quantity ) ).
 
-    DATA(cont) = page->content( `f` ).
+    DATA(table) = dynamic_page->content( `f`
+        )->table( id    = `table1`
+                  items = client->_bind( t_table ) ).
 
-    DATA(tab) = cont->table( id    = `table1`
-                             items = client->_bind_edit( val = mt_table ) ).
+    DATA(columns) = table->columns( ).
+    columns->column( )->text( `Product` ).
+    columns->column( )->text( `Date` ).
+    columns->column( )->text( `Name` ).
+    columns->column( )->text( `Location` ).
+    columns->column( )->text( `Quantity` ).
 
-    DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( `Product` ).
-    lo_columns->column( )->text( `Date` ).
-    lo_columns->column( )->text( `Name` ).
-    lo_columns->column( )->text( `Location` ).
-    lo_columns->column( )->text( `Quantity` ).
-
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{PRODUCT}` ).
-    lo_cells->text( `{CREATE_DATE}` ).
-    lo_cells->text( `{CREATE_BY}` ).
-    lo_cells->text( `{STORAGE_LOCATION}` ).
-    lo_cells->text( `{QUANTITY}` ).
+    DATA(cells) = table->items( )->column_list_item( ).
+    cells->text( `{PRODUCT}` ).
+    cells->text( `{CREATE_DATE}` ).
+    cells->text( `{CREATE_BY}` ).
+    cells->text( `{STORAGE_LOCATION}` ).
+    cells->text( `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
 
-  ENDMETHOD.
-
-
-  METHOD get_custom_js.
-
-    result  = `z2ui5.InitSvm = () => {` && |\n| &&
-                 ` var oView = z2ui5.oView` && |\n| &&
-                 ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
-                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                 ` var aData = _registerFetchData(oFilterBar);` && |\n| &&
-                 ` oFilterBar.registerFetchData( aData );` && |\n| &&
-                 ` oFilterBar.registerApplyData( _registerApplyData(oFilterBar, aData));` && |\n| &&
-                 ` oFilterBar.registerGetFiltersWithValues( _registerGetFiltersWithValues(oFilterBar));` && |\n| &&
-                 ` var oPersInfo = new sap.ui.comp.smartvariants.PersonalizableInfo({` && |\n| &&
-                 `   type: "filterBar",` && |\n| &&
-                 `   keyName: "persistencyKey",` && |\n| &&
-                 `   dataSource: "",` && |\n| &&
-                 `   control: oFilterBar` && |\n| &&
-                 ` });` && |\n| &&
-                 ` oSmartVariantManagement.addPersonalizableControl(oPersInfo);` && |\n| &&
-                 ` oSmartVariantManagement.initialise(function () {oSmartVariantManagement.currentVariantSetModified(false);}, oFilterBar);` && |\n| &&
-                 `};` && |\n| &&
-                 `_registerFetchData = (oFilterBar) => {` && |\n| &&
-                 ` var aData = oFilterBar.getAllFilterItems().reduce(function (aResult, oFilterItem) {` && |\n| &&
-                 `   aResult.push({` && |\n| &&
-                 `     groupName: oFilterItem.getGroupName(),` && |\n| &&
-                 `     fieldName: oFilterItem.getName(),` && |\n| &&
-                 `     fieldData: oFilterItem.getControl().getValue()` && |\n| &&
-                 `   });` && |\n| &&
-                 `   return aResult;` && |\n| &&
-                 ` }, []);` && |\n| &&
-                 ` return aData;` && |\n| &&
-                 `};` && |\n| &&
-                 `_registerApplyData = (oFilterBar, aData) => {` && |\n| &&
-                 ` aData.forEach(function (oDataObject) {` && |\n| &&
-                 `   var oControl = oFilterBar.determineControlByName(oDataObject.fieldName, oDataObject.groupName);` && |\n| &&
-                 `   oControl.setValue(oDataObject.fieldData);` && |\n| &&
-                 ` });` && |\n| &&
-                 `};` && |\n| &&
-                 `_registerGetFiltersWithValues = (oFilterBar) => {` && |\n| &&
-                 ` var aFiltersWithValue = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
-                 `   var oControl = oFilterGroupItem.getControl();` && |\n| &&
-                 `   if (oControl &amp;&amp; oControl.getValue &amp;&amp; oControl.getValue().length > 0) {` && |\n| &&
-                 `       aResult.push(oFilterGroupItem);` && |\n| &&
-                 `   }` && |\n| &&
-                 `   return aResult;` && |\n| &&
-                 ` }, []);` && |\n| &&
-                 ` return aFiltersWithValue;` && |\n| &&
-                 `};` && |\n| &&
-                 `z2ui5.onSearch = () => {` && |\n| &&
-                 ` var oView = z2ui5.oView` && |\n| &&
-                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                 ` var oTable = oView.byId("table1");` && |\n| &&
-                 ` var aTableFilters = oFilterBar.getFilterGroupItems().reduce(function (aResult, oFilterGroupItem) {` && |\n| &&
-                 `   var oControl = oFilterGroupItem.getControl(),` && |\n| &&
-                 `       aSelectedKey = oControl.getValue(),` && |\n| &&
-                 `       aFilters = return new sap.ui.model.Filter({` && |\n| &&
-                 `                   path: oFilterGroupItem.getName(),` && |\n| &&
-                 `                   operator: "Contains",` && |\n| &&
-                 `                   value1: sSelectedKey` && |\n| &&
-                 `                });` && |\n| &&
-*                        `     });` && |\n| &&
-                 ` if (aSelectedKey.length > 0) {` && |\n| &&
-                 `     aResult.push(new sap.ui.model.Filter({` && |\n| &&
-                 `                   filters: aFilters,` && |\n| &&
-                 `                   and: false` && |\n| &&
-                 `                 }));` && |\n| &&
-                 ` }` && |\n| &&
-                 ` return aResult;` && |\n| &&
-                 `     }, []);` && |\n| &&
-                 `  oTable.getBinding("items").filter(aTableFilters);` && |\n| &&
-                 `};` && |\n| &&
-                 `z2ui5.onChange = (oEvent) => {` && |\n| &&
-                 ` var oView = z2ui5.oView` && |\n| &&
-                 ` var oFilterBar = oView.byId("fbar");` && |\n| &&
-                 ` var oSmartVariantManagement = oView.byId("svm");` && |\n| &&
-                 ` oSmartVariantManagement.currentVariantSetModified(true);` && |\n| &&
-                 ` oFilterBar.fireFilterChange(oEvent);` && |\n| &&
-                 `}`.
+    " the handshake between FilterBar and SmartVariantManagement that a list
+    " report normally hand-writes in its controller (registerFetchData,
+    " registerApplyData, registerGetFiltersWithValues, addPersonalizableControl
+    " and a change handler per field). Re-sent after every view_display, since
+    " a rebuilt view brings new control instances
+    client->follow_up_action( val   = z2ui5_if_client=>cs_event-filter_bar_variant_init
+                              t_arg = VALUE #( ( `svm` )
+                                               ( `fbar` ) ) ).
 
   ENDMETHOD.
 
