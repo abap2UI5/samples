@@ -1,15 +1,14 @@
-"! Hash-based app routing (UI5 Router style), mode FRESH:
-"! client->set_nav_routing( client->cs_nav_mode-fresh ) makes the URL mirror the
-"! running app by CLASS only ('#/app/<CLASS>'). Browser Back/Forward - and a
-"! reload or a bookmark - therefore start the app FRESH: the input and the
-"! counter are gone.
+"! Hash-based app routing (UI5 Router style), mode KEEP:
+"! client->set_nav_routing( client->cs_nav_mode-keep ) makes the URL carry the
+"! app-state draft as well ('#/app/<CLASS>/<DRAFT>'), so browser Back/Forward
+"! restore the EXACT state: the input and the counter come back unchanged.
 "!
 "! Put in some state (type / raise the counter), open the detail page
 "! (z2ui5_cl_demo_app_469) via client->nav_app_call( ), then press the BROWSER
-"! Back button and watch this page - it comes back empty.
+"! Back button and watch this page - it comes back exactly as you left it.
 "!
-"! z2ui5_cl_demo_app_480 is the same demo in mode KEEP, where the state survives.
-CLASS z2ui5_cl_demo_app_468 DEFINITION PUBLIC.
+"! z2ui5_cl_demo_app_468 is the same demo in mode FRESH, where the state is lost.
+CLASS z2ui5_cl_demo_app_480 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -27,7 +26,7 @@ CLASS z2ui5_cl_demo_app_468 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_468 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_480 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -66,11 +65,11 @@ CLASS z2ui5_cl_demo_app_468 IMPLEMENTATION.
 
     " assert the routing mode on every render, so THIS page's history entry - the
     " one the browser Back button returns to - is written under it
-    client->set_nav_routing( client->cs_nav_mode-fresh ).
+    client->set_nav_routing( client->cs_nav_mode-keep ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Routing Mode fresh`
+        title          = `abap2UI5 - Navigation - Routing Mode keep`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -83,7 +82,7 @@ CLASS z2ui5_cl_demo_app_468 IMPLEMENTATION.
 
     DATA(form) = page->grid( `L6 M12 S12`
         )->content( `layout`
-        )->simple_form( `Routing mode fresh`
+        )->simple_form( `Routing mode keep`
         )->content( `form` ).
 
     form->label( `1. Some state - type here` ).
@@ -101,8 +100,8 @@ CLASS z2ui5_cl_demo_app_468 IMPLEMENTATION.
         press = client->_event( `GO_DETAIL` ) ).
 
     page->message_strip(
-        text     = `fresh: the URL carries the class only (#/app/<CLASS>). After the detail page, the ` &&
-                   `browser Back button starts this app FRESH - input and counter are reset.`
+        text     = `keep: the URL carries the app-state draft (#/app/<CLASS>/<DRAFT>). After the detail ` &&
+                   `page, the browser Back button restores this page EXACTLY - input and counter come back.`
         type     = `Success`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
