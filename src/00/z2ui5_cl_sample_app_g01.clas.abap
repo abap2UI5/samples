@@ -214,6 +214,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `extended` header = `EXPERIMENTAL` sub = `Filter Bar with Variant Management` app = `z2ui5_cl_demo_app_475` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Navigation - Routing modes` app = `z2ui5_cl_demo_app_468` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Multi Input` app = `z2ui5_cl_demo_app_319` )
       ( group = `extended` header = `EXPERIMENTAL` sub = `Smart Table and Variants` app = `z2ui5_cl_demo_app_313` )
@@ -326,13 +327,13 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `experimental, TODO` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
       ( group = `experimental, TODO` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
       ( group = `experimental, TODO` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
-      ( group = `experimental, TODO` header = `selscreen` sub = `filter bar with variant management WIP` app = `z2ui5_cl_demo_app_111` )
       ( group = `experimental, TODO` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
       ( group = `experimental, TODO` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
       ( group = `obsolete` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolete` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
       ( group = `obsolete` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolete` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )
+      ( group = `obsolete` header = `obsolete` sub = `filter bar with variants, replaced by 475` app = `z2ui5_cl_demo_app_111` )
       ( group = `obsolete` header = `obsolete` sub = `old focus demo, use Focus custom control` app = `z2ui5_cl_demo_app_133_0` )
       ( group = `obsolete` header = `obsolete` sub = `old focus demo, use Focus custom control` app = `z2ui5_cl_demo_app_189_0` )
       ( group = `obsolete` header = `obsolete` sub = `old scroll demo, use Scrolling custom control` app = `z2ui5_cl_demo_app_134_0` )
