@@ -58,7 +58,6 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
 
     DATA(page) = view->shell(
          )->page(
-            showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
             title          = `abap2UI5 - Download Base64 File`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
