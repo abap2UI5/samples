@@ -4,6 +4,11 @@
 "! history entry, so the browser Back button returns to the hub it came from.
 "! This app only shows what to do next; it is a hidden helper (never listed on
 "! its own in the overview).
+"!
+"! In mode keep the browser Forward button (or a reload/bookmark of the route)
+"! restores this app from its draft and enters main( ) via
+"! check_on_navigated( ) - the view must be rendered again there, or the
+"! browser keeps showing the hub it navigated away from.
 CLASS z2ui5_cl_demo_app_469 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -27,6 +32,12 @@ CLASS z2ui5_cl_demo_app_469 IMPLEMENTATION.
     me->client = client.
 
     IF client->check_on_init( ).
+      view_display( ).
+
+    ELSEIF client->check_on_navigated( ).
+      " browser Forward / reload / bookmark restored this app from its draft
+      " (routing mode keep) - the state survived, only the view must be
+      " rendered again
       view_display( ).
     ENDIF.
 
