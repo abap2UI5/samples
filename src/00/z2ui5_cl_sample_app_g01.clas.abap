@@ -214,6 +214,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `restricted - release - version` header = `EXPERIMENTAL` sub = `Filter Bar with Variant Management` app = `z2ui5_cl_demo_app_481` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation I` app = `z2ui5_cl_demo_app_lp_03` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation II` app = `z2ui5_cl_demo_app_lp_04` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `Set Title` app = `z2ui5_cl_demo_app_lp_02` )

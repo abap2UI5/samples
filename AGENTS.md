@@ -45,14 +45,11 @@ src/
 │       ├── 06/  controls - sap.ui.codeeditor
 │       └── 07/  controls - sap.ui.unified
 └── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
-    ├── 00/  extended                     restricted samples without a more specific category
-    ├── 01/  only non-abap-cloud          on-premise-only ABAP (not ABAP Cloud ready)
-    ├── 02/  only non-openui5 or higher UI5 1.71   SAPUI5-only controls (sap.suite.*, sap.ui.comp.*, VizFrame, …) or a control/property introduced after UI5 1.71
-    ├── 03/  only with launchpad          runs only inside the Fiori Launchpad
-    ├── 05/  only with javascript and css and html   needs native JS / CSS / HTML
-    ├── 06/  only testing                 test / scaffolding apps, not demos
-    ├── 07/  experimental, TODO           work-in-progress / not finished
-    └── 99/  obsolete                     superseded, or built on a deprecated UI5 control
+    ├── 00/  "restricted - release - version"   needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
+    ├── 01/  "restricted - abap standard"       on-premise-only ABAP (not ABAP Cloud ready)
+    ├── 06/  "restricted - testing"             test / scaffolding apps, not demos
+    ├── 07/  "restricted - experimental"        work-in-progress / not finished
+    └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control
 ```
 
 This tree is machine-checked: `node scripts/check-agents-structure.js` compares
@@ -111,20 +108,22 @@ The split is driven directly by the CI builds:
   `ABAP_STANDARD`. Pick the subpackage by the **first** restriction that
   applies:
 
-  1. Needs on-premise-only ABAP (not Cloud) → `00/01`
-  2. Uses a SAPUI5-only control, **or** a control/property introduced after UI5 1.71 → `00/02`
-  3. Runs only inside the Launchpad → `00/03`
-  4. Needs native JavaScript / CSS / HTML → `00/05`
-  5. Test / scaffolding app → `00/06`
-  6. Experimental / work-in-progress → `00/07`
-  7. Deprecated control/property, or superseded → `00/99`
-  8. Otherwise restricted, not fitting any category above → `00/00` ("extended")
+  1. Deprecated control/property, or superseded → `00/99`
+  2. Test / scaffolding app → `00/06`
+  3. Experimental / work-in-progress → `00/07`
+  4. Needs on-premise-only ABAP (not Cloud) → `00/01`
+  5. Everything else → `00/00` — the catch-all for a sample that plain
+     OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
+     (`sap.suite.*`, `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
+     `sap.ui.richtexteditor`, …), a control/property **introduced after UI5
+     1.71**, or a **runtime the sample cannot ship** — the Fiori Launchpad, an
+     OData service, native JavaScript / CSS / HTML.
 
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native
 JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`);
-"non-deprecated" is not enough (post-1.71 → `00/02`).
+"non-deprecated" is not enough (post-1.71 → `00/00`).
 
 ---
 
@@ -132,7 +131,7 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 `z2ui5_cl_sample_app_g01` and `z2ui5_cl_demo_app_g00` are **overview apps** —
 generated index pages that list all samples of an area. They are *not* Fiori
-Launchpad apps; do not confuse them with the launchpad samples in `src/00/03`,
+Launchpad apps; do not confuse them with the launchpad samples in `src/00/00`,
 which are the demos that run inside a real Fiori Launchpad.
 
 There is **one overview app per top-level package**, and they cross-link:
@@ -246,9 +245,9 @@ from the old catalog.
    (`00/00` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. `only with launchpad` = `00/03` goes **after**
-   `only non-openui5 or higher UI5 1.71` (`00/02`) and **before**
-   `only with javascript and css and html` (`00/05`)).
+   numeric slot (e.g. a new `00/02` group goes **after**
+   `restricted - abap standard` (`00/01`) and **before**
+   `restricted - testing` (`00/06`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
