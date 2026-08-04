@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_450</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Formatter - Use via core:require</DESCRIPT>
+    <DESCRIPT>Formatter - ABAP date strings (DATS/TIMS)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

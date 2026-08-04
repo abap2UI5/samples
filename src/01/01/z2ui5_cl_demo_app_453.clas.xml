@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_453</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Formatter - Simple</DESCRIPT>
+    <DESCRIPT>Formatter - Thin frontend, computed in ABAP</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
