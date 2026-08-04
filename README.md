@@ -14,7 +14,7 @@ Install this repository and try out over 350 samples. This is the easiest way to
 
 #### Overview Apps
 
-[![generate_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/generate_overview_apps.yaml)
+[![check_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml)
 
 #### Dependencies
 * [abap2UI5](https://github.com/abap2UI5/abap2UI5)

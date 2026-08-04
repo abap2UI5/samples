@@ -181,11 +181,11 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
-Stale catalogs never block a pull request: the `generate_overview_apps`
-workflow does not run on `pull_request`. It runs after the merge, regenerates
-the catalogs on `standard` and pushes the result back, so `standard` is
-self-healing. Regenerate them yourself anyway — it keeps the diff reviewable
-and saves the extra bot commit.
+A stale catalog blocks the pull request: the `check_overview_apps` workflow
+regenerates both catalogs on every pull request and fails on any diff. It
+cannot fix them for you — `standard` is protected and no workflow can push to
+it — so regenerate them yourself and commit the result with the change that
+made them stale.
 
 ### Regenerate with the generator
 
