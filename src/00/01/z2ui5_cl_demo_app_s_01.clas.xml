@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_S_01</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Sticky session with locking</DESCRIPT>
+    <DESCRIPT>Sticky Session with Locks</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

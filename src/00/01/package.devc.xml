@@ -3,7 +3,7 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DEVC>
-    <CTEXT>only non-abap-cloud</CTEXT>
+    <CTEXT>restricted - abap standard</CTEXT>
    </DEVC>
   </asx:values>
  </asx:abap>
