@@ -42,7 +42,7 @@ CLASS z2ui5_cl_demo_app_180 IMPLEMENTATION.
     page->button( text  = `call frontend event from backend event`
                   press = client->_event( `CALL_EF` ) ).
     page->label( `MV_URL was set AFTER backend event and model update to:` ).
-    page->label( client->_bind_edit( mv_url ) ).
+    page->label( client->_bind( mv_url ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -53,7 +53,7 @@ CLASS z2ui5_cl_demo_app_457 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    " the path must come from _bind_edit - a hardcoded binding path is never
+    " the path must come from _bind - a hardcoded binding path is never
     " registered in the model and the frontend receives no data for it
     page->vbox( `sapUiSmallMargin`
         )->date_picker( displayformat = `long`

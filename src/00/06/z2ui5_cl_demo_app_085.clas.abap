@@ -342,7 +342,7 @@ CLASS z2ui5_cl_demo_app_085 IMPLEMENTATION.
                            width  = `17.5rem`
                            search = client->_event( `ONSEARCH` )
                            change = client->_event( `ONSEARCH` )
-                           value  = client->_bind_edit( mv_search_value )
+                           value  = client->_bind( mv_search_value )
           )->toolbar_spacer(
           )->overflow_toolbar_button( icon  = `sap-icon://sort`
                                       type  = `Transparent`

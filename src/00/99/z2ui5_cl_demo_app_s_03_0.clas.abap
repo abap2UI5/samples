@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_s_03_0 IMPLEMENTATION.
         visible = `{= !!$` && client->_bind( message-text ) && ` }` ).
     vbox->text( `The magic key is: abap2UI5` ).
     vbox->input( id          = `inputApp`
-                 value       = client->_bind_edit( magic_key )
+                 value       = client->_bind( magic_key )
                  placeholder = `Enter magic key`
                  submit      = client->_event( `enter` ) ).
     vbox->button( text  = `submit`

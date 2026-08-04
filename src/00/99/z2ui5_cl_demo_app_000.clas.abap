@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
     DATA(page2) = page.
 
     page = page->panel( expandable = abap_true
-                        expanded   = client->_bind_edit( ms_check_expanded-basics )
+                        expanded   = client->_bind( ms_check_expanded-basics )
                         headertext = `General` ).
 
     DATA(panel) = page->panel( expandable = abap_false
@@ -354,7 +354,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-input )
+                         expanded   = client->_bind( ms_check_expanded-input )
                          headertext = `Input & Output` ).
 
     panel = page->panel( expandable = abap_false
@@ -802,7 +802,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-more )
+                         expanded   = client->_bind( ms_check_expanded-more )
                          headertext = `Tables & Trees` ).
 
     panel = page->panel( expandable = abap_false
@@ -922,7 +922,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-popups )
+                         expanded   = client->_bind( ms_check_expanded-popups )
                          headertext = `Popups & Popovers` ).
 
     panel = page->panel( expandable = abap_false
@@ -1062,7 +1062,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-features )
+                         expanded   = client->_bind( ms_check_expanded-features )
                          headertext = `More Controls` ).
 
     panel = page->panel( expandable = abap_false
@@ -1348,7 +1348,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-extensions )
+                         expanded   = client->_bind( ms_check_expanded-extensions )
                          headertext = `Custom Extensions` ).
 
     panel = page->panel( expandable = abap_false
@@ -1388,7 +1388,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-demos )
+                         expanded   = client->_bind( ms_check_expanded-demos )
                          headertext = `Demos` ).
 
     page->generic_tile( header    = `Selection Screen`
@@ -1405,7 +1405,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     page = page2->panel( expandable = abap_true
-                         expanded   = client->_bind_edit( ms_check_expanded-version )
+                         expanded   = client->_bind( ms_check_expanded-version )
                          headertext = `UI5 Version Specific, Experimental & WIP` ).
 
     panel = page->panel( expandable = abap_false

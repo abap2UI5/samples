@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_344 IMPLEMENTATION.
 
     ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
     DATA(table) = i_page->table( width = `auto`
-                                 items = i_client->_bind_edit( val = <table> ) ).
+                                 items = i_client->_bind( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 

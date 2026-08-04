@@ -122,13 +122,13 @@ CLASS z2ui5_cl_demo_app_421 IMPLEMENTATION.
                 )->toolbar_spacer(
                 )->label( `Column Id`
                 )->input(
-                    value       = client->_bind_edit( focuscolumn )
+                    value       = client->_bind( focuscolumn )
                     submit      = client->_event( `FOCUS` )
                     placeholder = `Column`
                     width       = `8rem`
                 )->label( `Row Index`
                 )->input(
-                    value       = client->_bind_edit( focusrow )
+                    value       = client->_bind( focusrow )
                     submit      = client->_event( `FOCUS` )
                     placeholder = `Row`
                     type        = `Number`
@@ -155,7 +155,7 @@ CLASS z2ui5_cl_demo_app_421 IMPLEMENTATION.
     " Build the rows explicitly (no aggregation binding): only then does every
     " cell keep the stable control id <column>_<row> that set_focus can target.
     " A bound template would clone the cells under randomly generated ids.
-    DATA(path)  = client->_bind_edit( val = t_tab path = abap_true ).
+    DATA(path)  = client->_bind( val = t_tab path = abap_true ).
     DATA(items) = tab->items( ).
 
     LOOP AT t_tab REFERENCE INTO DATA(row).

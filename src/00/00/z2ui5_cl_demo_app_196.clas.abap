@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
     panel->text( `Use the slider for adjusting the fill` ).
     panel->slider( class           = `sapUiLargeMarginBottom`
                    enabletickmarks = abap_true
-               value               = client->_bind_edit( mv_slider_value ) )->get(
+               value               = client->_bind( mv_slider_value ) )->get(
        )->responsive_scale( tickmarksbetweenlabels = `10` ).
 
     DATA(fb) = panel->flex_box( wrap  = `Wrap`
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_demo_app_196 IMPLEMENTATION.
       )->flex_box( direction = `Column`
                    class     = `sapUiTinyMargin SIBorderStyle`
         )->items(
-          )->status_indicator( value  = client->_bind_edit( mv_slider_value )
+          )->status_indicator( value  = client->_bind( mv_slider_value )
                                width  = `120px`
                                height = `120px`
                                class  = `sapUiTinyMargin SICursorStyle`

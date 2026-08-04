@@ -38,9 +38,9 @@ CLASS z2ui5_cl_demo_app_124 IMPLEMENTATION.
                               editable = abap_true
                   )->content( `form`
                       )->label( `mv_scan_input`
-                      )->input( client->_bind_edit( mv_scan_input )
+                      )->input( client->_bind( mv_scan_input )
                       )->label( `mv_scan_type`
-                      )->input( client->_bind_edit( mv_scan_type )
+                      )->input( client->_bind( mv_scan_type )
                       )->label( `scanner`
                       )->barcode_scanner_button(
                         scansuccess = client->_event( val = `ON_SCAN_SUCCESS` t_arg = VALUE #( ( `${$parameters>/text}` ) ( `${$parameters>/format}` ) ) )

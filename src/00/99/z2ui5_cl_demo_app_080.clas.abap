@@ -157,7 +157,7 @@ CLASS z2ui5_cl_demo_app_080 IMPLEMENTATION.
     vbox->multi_combobox(
         width           = `230px`
         placeholder     = `Choose built-in views`
-        selectedkeys    = client->_bind_edit( t_selected_views )
+        selectedkeys    = client->_bind( t_selected_views )
         selectionfinish = client->_event( `SELECTION_FINISH` )
         )->item(
             key  = `Hour`

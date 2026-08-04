@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_467 IMPLEMENTATION.
 *                       class    = `sapUiSmallMargin`
 *        )->content(
             )->label( `Name`
-            )->input( client->_bind_edit( name ) ).
+            )->input( client->_bind( name ) ).
 
     page->list( headertext = `Collected messages (message> model)`
                 items      = `{message>/}`

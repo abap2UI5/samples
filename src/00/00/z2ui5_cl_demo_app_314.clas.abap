@@ -51,10 +51,10 @@ CLASS z2ui5_cl_demo_app_314 IMPLEMENTATION.
                    enabled     = abap_false ).
 
       mv_val = `input value with http model`.
-      page->input( client->_bind_edit( val                  = mv_val
+      page->input( client->_bind( val                  = mv_val
                                        switch_default_model = abap_true ) ).
 
-      DATA(tab) = page->table( client->_bind_edit( val                  = t_tab
+      DATA(tab) = page->table( client->_bind( val                  = t_tab
                                                    switch_default_model = abap_true ) ).
 
       tab->header_toolbar(

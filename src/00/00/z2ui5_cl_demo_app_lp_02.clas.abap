@@ -31,7 +31,7 @@ CLASS z2ui5_cl_demo_app_lp_02 IMPLEMENTATION.
               editable = abap_true
           )->content( `form`
           )->label( ``
-          )->input( client->_bind_edit( mv_title )
+          )->input( client->_bind( mv_title )
           )->label( ``
           )->button(
               text  = `Set Title`

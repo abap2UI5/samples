@@ -60,17 +60,17 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
                             selectionchanged = client->_event( `DONUT_CHANGED` )
                     )->segments( ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind_edit( sel4 )
+        selected       = client->_bind( sel4 )
         label          = `Impl. Phase`
         value          = `40.0`
         displayedvalue = `40.0%` ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind_edit( sel5 )
+        selected       = client->_bind( sel5 )
         label          = `Design Phase`
         value          = `21.5`
         displayedvalue = `21.5%` ).
     seg->interact_donut_chart_segment(
-        selected       = client->_bind_edit( sel6 )
+        selected       = client->_bind( sel6 )
         label          = `Test Phase`
         value          = `38.5`
         displayedvalue = `38.5%` ).
@@ -155,8 +155,8 @@ CLASS z2ui5_cl_demo_app_013 IMPLEMENTATION.
             justifycontent = `SpaceBetween`
             )->items(
                 )->interact_donut_chart(
-                    displayedsegments = client->_bind_edit( total_count )
-                    segments          = client->_bind_edit( counts ) ).
+                    displayedsegments = client->_bind( total_count )
+                    segments          = client->_bind( counts ) ).
 
     donut_chart->interact_donut_chart_segment(
         label          = `{TEXT}`

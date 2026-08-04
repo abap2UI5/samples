@@ -42,7 +42,7 @@ CLASS Z2UI5_CL_DEMO_APP_139 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(tmp) = view->_z2ui5( )->history( client->_bind_edit( search )
+    DATA(tmp) = view->_z2ui5( )->history( client->_bind( search )
          )->shell(
          )->page(
                  title          = `abap2UI5 - Change URL History`
@@ -53,7 +53,7 @@ CLASS Z2UI5_CL_DEMO_APP_139 IMPLEMENTATION.
                  )->content( `form`
                      )->title( `Input`
                      )->label( `search`
-                     )->input( client->_bind_edit( search ) ).
+                     )->input( client->_bind( search ) ).
 
     client->view_display( tmp->stringify( ) ).
 

@@ -135,7 +135,7 @@ CLASS z2ui5_cl_demo_app_037 IMPLEMENTATION.
                           `<body>`.
 
     IF mv_display_cc = abap_true.
-      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind_edit( mv_value ) && `"/>`.
+      lv_xml = lv_xml && ` <z2ui5:MyCC change=" ` && client->_event( `MYCC` ) && `"  value="` && client->_bind( mv_value ) && `"/>`.
     ENDIF.
 
     lv_xml = lv_xml && `</body>` && |\n| &&

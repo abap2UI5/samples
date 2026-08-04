@@ -117,7 +117,7 @@ CLASS z2ui5_cl_demo_app_231 IMPLEMENTATION.
     vbox->label( text     = `Change event`
                  labelfor = `TextEvent` ).
     vbox->text( id   = `TextEvent`
-                text = client->_bind_edit( text ) ).
+                text = client->_bind( text ) ).
 
     client->view_display( page->stringify( ) ).
 

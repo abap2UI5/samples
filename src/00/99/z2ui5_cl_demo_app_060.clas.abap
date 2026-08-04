@@ -330,7 +330,7 @@ CLASS z2ui5_cl_demo_app_060 IMPLEMENTATION.
             )->label( `Input with value help`
             )->input(
                     id                           = `suggInput`
-                    value                        = client->_bind_edit( input )
+                    value                        = client->_bind( input )
                     suggest                      = client->_event( `ON_SUGGEST` )
                     showtablesuggestionvaluehelp = abap_false
                     suggestionrows               = client->_bind( mt_suggestion_out )

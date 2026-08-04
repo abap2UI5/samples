@@ -24,17 +24,17 @@ CLASS z2ui5_cl_demo_app_lp_02_0 IMPLEMENTATION.
 
       IF client->get( )-check_launchpad_active = abap_true.
         DATA(page) = shell->page( showheader = abap_false ).
-        page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
+        page->_z2ui5( )->lp_title( client->_bind( mv_title ) ).
 
       ELSE.
-        page = shell->page( client->_bind_edit( mv_title ) ).
+        page = shell->page( client->_bind( mv_title ) ).
       ENDIF.
 
       client->view_display( page->simple_form( title    = `Set Launchpad Title Dynamically`
                                                editable = abap_true
                      )->content( `form`
                          )->label( ``
-                         )->input( client->_bind_edit( mv_title )
+                         )->input( client->_bind( mv_title )
                          )->label( ``
                          )->button( text  = `Go Back`
                                     press = client->_event_nav_app_leave( ) )->stringify( ) ).

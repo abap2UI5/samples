@@ -127,9 +127,9 @@ CLASS z2ui5_cl_demo_app_319 IMPLEMENTATION.
     " the invisible companion mirrors tokens + range data into the (switched) app
     " model so the backend can read AND restore the input across roundtrips
     page->_z2ui5( )->smartmultiinput_ext(
-                          addedtokens   = m_client->_bind_edit( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
-                          removedtokens = m_client->_bind_edit( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
-                          rangedata     = m_client->_bind_edit( val = m_selection-product_type-ranges switch_default_model = abap_true )
+                          addedtokens   = m_client->_bind( val = m_selection-product_type-tokens_added switch_default_model = abap_true )
+                          removedtokens = m_client->_bind( val = m_selection-product_type-tokens_removed switch_default_model = abap_true )
+                          rangedata     = m_client->_bind( val = m_selection-product_type-ranges switch_default_model = abap_true )
                           change        = m_client->_event( `PRODTYPE_CHANGED` )
                           multiinputid  = `ProductTypeMultiInput` ).
 
