@@ -1,9 +1,22 @@
 name: generate_overview_apps
 
-# Guards that the two overview apps (get_catalog) are in sync with the folder
-# tree: regenerates them and fails on any diff. standard is a protected branch
-# (changes only via pull request), so CI cannot push fixes back — contributors
-# regenerate the catalogs in their PR instead (see AGENTS.md §4).
+# Keeps the two overview apps (get_catalog) in sync with the folder tree.
+#
+# On a pull request from a branch of this repository the workflow regenerates
+# the catalogs and pushes the result into the PR branch, so a contributor who
+# forgot `npm run launchpad` does not have to push a follow-up commit. The push
+# uses the deploy key ACTION_KEY_SAMPLES (same pattern as ACTION_KEY_FRONTEND /
+# ACTION_KEY_LOCAL in abap2UI5/abap2UI5) — pushing with the default GITHUB_TOKEN
+# would not re-trigger the other checks, which would leave the new commit
+# unverified. The follow-up run sees no diff and finishes green.
+#
+# Everywhere the push cannot happen — fork pull requests (no secrets), and
+# pushes to the protected branch standard — the workflow stays a pure guard and
+# fails on any diff. Without the secret configured it behaves exactly that way
+# for every event, so it is safe before the key exists.
+#
+# Contributors are still expected to regenerate the catalogs themselves
+# (AGENTS.md §4); this is the safety net, not the intended workflow.
 
 on:
   pull_request:
@@ -25,6 +38,13 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      with:
+        # For a pull request from this repository check out the head branch
+        # itself instead of the merge commit, so the regenerated catalogs can be
+        # committed onto it. Fork pull requests and pushes fall back to the
+        # default checkout (empty inputs), where nothing is pushed anyway.
+        ref: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref || '' }}
+        ssh-key: ${{ github.event.pull_request.head.repo.full_name == github.repository && secrets.ACTION_KEY_SAMPLES || '' }}
 
     - name: Set up Node.js
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -35,9 +55,26 @@ jobs:
     - run: npm ci
     - run: npm run launchpad
 
-    - name: Verify overview apps are up to date
+    - name: Sync overview apps
+      env:
+        CAN_PUSH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && secrets.ACTION_KEY_SAMPLES != '' }}
+        HEAD_REF: ${{ github.event.pull_request.head.ref }}
       run: |
-        if ! git diff --exit-code -- src; then
+        if git diff --quiet -- src; then
+          echo "Overview apps are up to date."
+          exit 0
+        fi
+
+        git diff --stat -- src
+
+        if [ "$CAN_PUSH" != "true" ]; then
           echo "::error::Overview apps are out of date. Run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
           exit 1
         fi
+
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+        git add -- src
+        git commit -m 'Regenerate overview apps'
+        git push origin "HEAD:refs/heads/${HEAD_REF}"
+        echo "::notice::Overview apps were out of date — regenerated and pushed to ${HEAD_REF}."
