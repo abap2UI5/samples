@@ -9,16 +9,17 @@ name: generate_overview_apps
 # workflow regenerates the catalogs on standard and pushes the result back, so
 # standard is self-healing.
 #
-# The push uses the deploy key ACTION_KEY_SAMPLES (same pattern as
-# ACTION_KEY_FRONTEND / ACTION_KEY_LOCAL in abap2UI5/abap2UI5), for two
-# reasons: standard is protected, so the pushing actor needs a bypass entry in
-# its branch ruleset, and a push with the default GITHUB_TOKEN would not
-# re-trigger auto_cloud / auto_downport — the cloud and 702 branches would keep
-# the stale catalog until the next unrelated push. The run triggered by the
-# push itself sees no diff and stops, so this does not loop.
+# standard is protected, so the push only works once the GitHub Actions app is
+# a bypass actor on its branch ruleset. Until then the job fails on a diff,
+# which is the previous behaviour.
 #
-# Without the secret configured the workflow only verifies and fails on a diff,
-# which is the previous behaviour — so it is safe before the key exists.
+# A push made with GITHUB_TOKEN does not start further workflow runs (GitHub's
+# guard against recursive workflows), so the rebuilds of the cloud and 702
+# branches are dispatched explicitly below — workflow_dispatch is exempt from
+# that restriction. Without it those branches would keep the stale catalog
+# until the next unrelated push to standard.
+#
+# The push does not re-run this workflow either, so this cannot loop.
 
 on:
   push:
@@ -26,7 +27,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  actions: write
 
 concurrency:
   group: generate_overview_apps
@@ -39,10 +41,6 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      with:
-        # Empty when the secret is not configured — checkout then falls back to
-        # the default token and the workflow stays a read-only guard.
-        ssh-key: ${{ secrets.ACTION_KEY_SAMPLES }}
 
     - name: Set up Node.js
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -55,7 +53,7 @@ jobs:
 
     - name: Sync overview apps
       env:
-        CAN_PUSH: ${{ secrets.ACTION_KEY_SAMPLES != '' }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if git diff --quiet -- src; then
           echo "Overview apps are up to date."
@@ -64,14 +62,19 @@ jobs:
 
         git diff --stat -- src
 
-        if [ "$CAN_PUSH" != "true" ]; then
-          echo "::error::Overview apps are out of date and no deploy key is configured. Run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
-          exit 1
-        fi
-
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add -- src
         git commit -m "Regenerate overview apps from ${GITHUB_SHA}"
-        git push origin HEAD:refs/heads/standard
-        echo "::notice::Overview apps were out of date — regenerated and pushed to standard."
+
+        if ! git push origin HEAD:refs/heads/standard; then
+          echo "::error::Could not push the regenerated overview apps. Add the GitHub Actions app as a bypass actor on the standard branch ruleset, or run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
+          exit 1
+        fi
+
+        # This push started no workflow run, so the branch rebuilds that
+        # normally react to a push on standard have to be triggered by hand.
+        gh workflow run auto_cloud.yaml --ref standard
+        gh workflow run auto_downport.yaml --ref standard
+
+        echo "::notice::Overview apps were out of date — regenerated, pushed to standard and the cloud / 702 rebuilds dispatched."

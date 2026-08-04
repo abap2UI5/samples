@@ -6,6 +6,9 @@ name: auto_downport
 on:
   push:
     branches: [standard]
+  # generate_overview_apps dispatches this after pushing regenerated catalogs:
+  # its push carries the GITHUB_TOKEN and therefore starts no run by itself.
+  workflow_dispatch:
 
 permissions:
   contents: write
