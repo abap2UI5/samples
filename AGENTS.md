@@ -194,6 +194,11 @@ npx abaplint           # must report 0 issues
 `scripts/generate-launchpad.js` implements every rule below. Edit the script (not
 the generated ABAP) if a rule changes.
 
+The `generate_overview_apps` workflow is the safety net, not a substitute: on a
+pull request from a branch of this repository it regenerates the catalogs and
+pushes the result into the PR branch. Regenerate them yourself anyway — on fork
+pull requests and on `standard` the workflow only guards and fails on any diff.
+
 ### Tile schema
 
 One row per app, all four fields always present:
