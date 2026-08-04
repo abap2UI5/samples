@@ -290,6 +290,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - experimental` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
       ( group = `restricted - experimental` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
       ( group = `restricted - experimental` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
+      ( group = `restricted - experimental` header = `Set Cursor Test` sub = `` app = `z2ui5_cl_demo_app_443` )
       ( group = `restricted - experimental` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
       ( group = `restricted - experimental` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
       ( group = `obsolet` header = `Download CSV` sub = `Export Table as CSV` app = `z2ui5_cl_demo_app_057` )
