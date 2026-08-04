@@ -86,7 +86,7 @@ CLASS z2ui5_cl_demo_app_480 IMPLEMENTATION.
         )->content( `form` ).
 
     form->label( `1. Some state - type here` ).
-    form->input( client->_bind_edit( input ) ).
+    form->input( client->_bind( input ) ).
 
     form->label( `and raise a counter` ).
     form->button(

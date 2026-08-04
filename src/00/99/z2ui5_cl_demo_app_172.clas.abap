@@ -120,7 +120,7 @@ CLASS z2ui5_cl_demo_app_172 IMPLEMENTATION.
     DATA(table) = page->ui_table( id                 = `tab`
                                   alternaterowcolors = `true`
                                   selectionmode      = `None`
-                                  rows               = client->_bind_edit( val = output ) ).
+                                  rows               = client->_bind( val = output ) ).
 
     table->rowmode( `table`
         )->auto(

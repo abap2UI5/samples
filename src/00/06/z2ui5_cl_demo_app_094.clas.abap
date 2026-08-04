@@ -83,19 +83,19 @@ CLASS z2ui5_cl_demo_app_094 IMPLEMENTATION.
           )->content( `form` ).
 
     content->label( `structure level 01`
-      )->input( client->_bind_edit( ms_screen-input )
+      )->input( client->_bind( ms_screen-input )
       )->label( `ref data`
-      )->input( client->_bind_edit( <input> )
+      )->input( client->_bind( <input> )
       )->label( `ref data struc field`
-      )->input( client->_bind_edit( <screen>-input )
+      )->input( client->_bind( <screen>-input )
       )->label( `struc deep dissolve`
-      )->input( client->_bind_edit( ms_screen-ty_s_02-input )
+      )->input( client->_bind( ms_screen-ty_s_02-input )
       )->label( `struc deep switch guid name`
-      )->input( client->_bind_edit( ms_screen-ty_s_02-ty_s_03-ty_s_04-input )
+      )->input( client->_bind( ms_screen-ty_s_02-ty_s_03-ty_s_04-input )
       )->label( `instance attribute val`
-      )->input( client->_bind_edit( mo_app->mv_val )
+      )->input( client->_bind( mo_app->mv_val )
       )->label( `instance attribute struc`
-      )->input( client->_bind_edit( mo_app->ms_screen-input ) ).
+      )->input( client->_bind( mo_app->ms_screen-input ) ).
 
     page->footer( )->overflow_toolbar(
                    )->toolbar_spacer(

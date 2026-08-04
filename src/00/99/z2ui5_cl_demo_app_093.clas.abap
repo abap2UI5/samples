@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_093 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
+                        )->input( client->_bind( quantity )
                         )->label( `product`
                         )->input( value   = product
                                   enabled = abap_false

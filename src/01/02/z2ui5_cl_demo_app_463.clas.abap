@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_463 IMPLEMENTATION.
 
     " CustomTreeItem is not a typed builder method - build it via _generic;
     " its content aggregation holds the editable Input, bound two-way to
-    " {TEXT} because the items aggregation itself is bound with _bind_edit
+    " {TEXT} because the items aggregation itself is bound with _bind
     DATA(tree) = page->tree( id         = `tree1`
                              headertext = `Files (editable)`
                              items      = client->_bind( t_nodes ) ).

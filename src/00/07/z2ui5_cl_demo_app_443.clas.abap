@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_443 IMPLEMENTATION.
                         text = client->_bind( info )
               )->label( `Document Number`
               )->input( id      = `inpDocNum`
-                        value   = client->_bind_edit( value )
+                        value   = client->_bind( value )
                         enabled = client->_bind( enabled )
               )->label( ``
               )->button( text  = `1 - Lock field (enabled = false)`

@@ -147,7 +147,7 @@ CLASS z2ui5_cl_demo_app_471 IMPLEMENTATION.
 
     page->list(
         headertext = `Triggered events`
-        items      = client->_bind_edit( t_log )
+        items      = client->_bind( t_log )
         )->standard_list_item( title = `{ENTRY}` ).
 
     client->view_display( view->stringify( ) ).

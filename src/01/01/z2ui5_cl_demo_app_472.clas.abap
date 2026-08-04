@@ -82,7 +82,7 @@ CLASS z2ui5_cl_demo_app_472 IMPLEMENTATION.
 
     form->label( `Cancel the browser navigation`
         )->switch(
-            state  = client->_bind_edit( block_navigation )
+            state  = client->_bind( block_navigation )
             change = client->_event( `TOGGLE` )
         )->label( `Link`
         )->link(
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_demo_app_472 IMPLEMENTATION.
                 val    = `LINK_PRESS`
                 s_ctrl = VALUE #( check_prevent_default = block_navigation ) )
         )->label( `Result`
-        )->text( client->_bind_edit( last_press ) ).
+        )->text( client->_bind( last_press ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -40,11 +40,11 @@ CLASS Z2UI5_CL_DEMO_APP_354 IMPLEMENTATION.
 
       page->_z2ui5( )->uploadset_ext(
           uploadsetid     = `myUploadSet`
-          filedata        = client->_bind_edit( filedata )
-          filename        = client->_bind_edit( filename )
-          mediatype       = client->_bind_edit( mediatype )
-          filesize        = client->_bind_edit( filesize )
-          removedfilename = client->_bind_edit( removedfilename )
+          filedata        = client->_bind( filedata )
+          filename        = client->_bind( filename )
+          mediatype       = client->_bind( mediatype )
+          filesize        = client->_bind( filesize )
+          removedfilename = client->_bind( removedfilename )
           change          = client->_event( `FILE_ADDED` )
           remove          = client->_event( `FILE_REMOVED` ) ).
 
@@ -54,7 +54,7 @@ CLASS Z2UI5_CL_DEMO_APP_354 IMPLEMENTATION.
               showicons     = abap_true
               uploadenabled = abap_true
               mode          = `MultiSelect`
-              items         = client->_bind_edit( t_files )
+              items         = client->_bind( t_files )
           )->items( `upload`
               )->upload_set_item(
                   filename  = `{FILENAME}`

@@ -53,9 +53,9 @@ CLASS z2ui5_cl_demo_app_138 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `quantity`
-                        )->input( client->_bind_edit( quantity )
+                        )->input( client->_bind( quantity )
                         )->label( `product`
-                        )->input( client->_bind_edit( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val )
+                        )->input( client->_bind( ms_data-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-ms_data2-val )
                         )->button(
                             text  = `post`
                             press = client->_event( `BUTTON_POST` )

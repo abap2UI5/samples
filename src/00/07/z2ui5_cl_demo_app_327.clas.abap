@@ -58,20 +58,20 @@ CLASS Z2UI5_CL_DEMO_APP_327 IMPLEMENTATION.
             )->content( `form`
                 )->label( `Type`
                       )->select( forceselection = abap_true
-                                 selectedkey    = client->_bind_edit( storage-type )
+                                 selectedkey    = client->_bind( storage-type )
                                  items          = client->_bind( storage_types )
                           )->item( key  = `{TYPE}`
                                    text = `{TYPE}`
                           )->get_parent(
                 )->label( `Prefix`
-                )->input( client->_bind_edit( storage-prefix )
+                )->input( client->_bind( storage-prefix )
                 )->label( `Key`
-                )->input( client->_bind_edit( storage-key )
+                )->input( client->_bind( storage-key )
                 )->label( `Value`
-                )->input( client->_bind_edit( storage-value )
+                )->input( client->_bind( storage-value )
                 )->button( text  = `store`
                            press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data
-                                                          t_arg = VALUE #( ( |${ client->_bind_edit( storage ) }| ) ) )
+                                                          t_arg = VALUE #( ( |${ client->_bind( storage ) }| ) ) )
 
                 )->button( text  = `get`
                            press = client->_event( `GET_STORED_VALUE` )
@@ -82,10 +82,10 @@ CLASS Z2UI5_CL_DEMO_APP_327 IMPLEMENTATION.
             finished = client->_event(
                 val   = `LOCAL_STORAGE_LOADED`
                 t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` ) ) )
-            type     = client->_bind_edit( storage-type )
-            prefix   = client->_bind_edit( storage-prefix )
-            key      = client->_bind_edit( storage-key )
-            value    = client->_bind_edit( stored_value ) ).
+            type     = client->_bind( storage-type )
+            prefix   = client->_bind( storage-prefix )
+            key      = client->_bind( storage-key )
+            value    = client->_bind( stored_value ) ).
       client->view_display( view->stringify( ) ).
 
     ENDIF.

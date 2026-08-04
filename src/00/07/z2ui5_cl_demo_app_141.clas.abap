@@ -80,12 +80,12 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
            )->simple_form(
                )->label( text = `Input1`
                          id   = `lbl1`
-               )->input( client->_bind_edit( ms_popup_input-value1 )
+               )->input( client->_bind( ms_popup_input-value1 )
                )->label( `Input2`
-               )->input( client->_bind_edit( ms_popup_input-value2 )
+               )->input( client->_bind( ms_popup_input-value2 )
                )->label( `Checkbox`
                )->checkbox(
-                   selected = client->_bind_edit( ms_popup_input-check_is_active )
+                   selected = client->_bind( ms_popup_input-check_is_active )
                    text     = `this is a checkbox`
                    enabled  = abap_true
          )->get_parent( )->get_parent(

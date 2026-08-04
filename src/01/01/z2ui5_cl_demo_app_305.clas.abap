@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_305 IMPLEMENTATION.
         && `}` ).
 
     DATA(tab) = page->table(
-            items = client->_bind_edit( t_tab )
+            items = client->_bind( t_tab )
             mode  = `MultiSelect`
         )->header_toolbar(
             )->overflow_toolbar(

@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(tab_ko) = page->table(
                         mode  = `MultiSelect`
-                        items = client->_bind_edit( problematic_rows ) ).
+                        items = client->_bind( problematic_rows ) ).
 
     tab_ko->header_toolbar(
             )->toolbar(
@@ -79,7 +79,7 @@ CLASS z2ui5_cl_demo_app_118 IMPLEMENTATION.
 
     DATA(tab_ok) = page->table(
                         mode  = `MultiSelect`
-                        items = client->_bind_edit( these_are_fine_rows ) ).
+                        items = client->_bind( these_are_fine_rows ) ).
 
     tab_ok->header_toolbar(
             )->toolbar(

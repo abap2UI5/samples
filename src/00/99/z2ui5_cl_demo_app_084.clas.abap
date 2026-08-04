@@ -169,7 +169,7 @@ CLASS z2ui5_cl_demo_app_084 IMPLEMENTATION.
             )->label( `Input with suggestion items`
             )->input(
                     id              = `suggInput`
-                    value           = client->_bind_edit( screen-colour )
+                    value           = client->_bind( screen-colour )
                     placeholder     = `Fill in your favorite color`
                     suggestionitems = client->_bind( mt_suggestion )
                     showsuggestion  = abap_true )->get(

@@ -65,7 +65,7 @@ CLASS z2ui5_cl_demo_app_040 IMPLEMENTATION.
                           `</head>` && |\n| &&
                           `<body>` && |\n| &&
                           `<m:Button text="LoadJSBarcode" press="` && client->_event( `LOAD_BC` ) && `" />` && |\n| &&
-                          `<m:Input value="` && client->_bind_edit( mv_barcode ) && `" />` && |\n| &&
+                          `<m:Input value="` && client->_bind( mv_barcode ) && `" />` && |\n| &&
                          `<m:Button text="Display Barcode" press="` && client->_event( `DISPLAY_BC` ) && `" />` && |\n| &&
                           `<h1>JSBarcode Library</h1>` && |\n| &&
                           `  <svg id="barcode">` && |\n| &&

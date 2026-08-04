@@ -51,7 +51,7 @@ CLASS z2ui5_cl_demo_app_lp_04 IMPLEMENTATION.
                     )->content( `form`
                         )->title( `Input`
                         )->label( `product nav param`
-                        )->input( client->_bind_edit( product )
+                        )->input( client->_bind( product )
                         )->label( `CHECK_LAUNCHPAD_ACTIVE`
                         )->input( check_launchpad_active
                         )->button( press = client->_event( )

@@ -118,7 +118,7 @@ CLASS z2ui5_cl_demo_app_342 IMPLEMENTATION.
     DATA(table) = page->table( width = `auto`
                                mode  = `SingleSelectLeft`
                                selectionchange  = client->_event( `SELECTION_CHANGE` )
-                               items = client->_bind_edit( val = <table> ) ).
+                               items = client->_bind( val = <table> ) ).
 
     DATA(columns) = table->columns( ).
 

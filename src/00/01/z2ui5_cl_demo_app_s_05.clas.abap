@@ -95,19 +95,19 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
                     )->content( `form` ).
 
     form->feed_input(
-        value = client->_bind_edit( news_input )
+        value = client->_bind( news_input )
         post  = client->_event_client(
                   val   = `Z2UI5`
                   t_arg = VALUE #( ( `feedInputPost` ) )
                 ) ).
 
     form->label( text = `Author`
-       )->input( value       = client->_bind_edit( author_input )
+       )->input( value       = client->_bind( author_input )
                  placeholder = `Anonymous` ).
 
     page->list(
               headertext = `News`
-              items      = client->_bind_edit( news_list )
+              items      = client->_bind( news_list )
          )->feed_list_item(
               sender   = `{AUTHOR}`
               text     = `{TEXT}`
@@ -115,7 +115,7 @@ CLASS z2ui5_cl_demo_app_s_05 IMPLEMENTATION.
 
     DATA(footer) = page->footer( )->overflow_toolbar( ).
     footer->info_label(
-        text        = client->_bind_edit( connections )
+        text        = client->_bind( connections )
         colorscheme = `7`
         icon        = `sap-icon://connected` ).
 

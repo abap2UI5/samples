@@ -138,7 +138,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
       content->label( `text` ).
 
-      content->input( value       = client->_bind_edit( <val> )
+      content->input( value       = client->_bind( <val> )
                     enabled       = abap_false
                     showvaluehelp = abap_false ).
 
@@ -175,7 +175,7 @@ CLASS z2ui5_cl_demo_app_212 IMPLEMENTATION.
 
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind_edit( val = <tab> ) ).
+                               items   = client->_bind( val = <tab> ) ).
 
     DATA(headder) = table->header_toolbar(
                )->overflow_toolbar(
