@@ -2,34 +2,37 @@ name: generate_overview_apps
 
 # Keeps the two overview apps (get_catalog) in sync with the folder tree.
 #
-# On a pull request from a branch of this repository the workflow regenerates
-# the catalogs and pushes the result into the PR branch, so a contributor who
-# forgot `npm run launchpad` does not have to push a follow-up commit. The push
-# uses the deploy key ACTION_KEY_SAMPLES (same pattern as ACTION_KEY_FRONTEND /
-# ACTION_KEY_LOCAL in abap2UI5/abap2UI5) — pushing with the default GITHUB_TOKEN
-# would not re-trigger the other checks, which would leave the new commit
-# unverified. The follow-up run sees no diff and finishes green.
+# The catalogs are generated entirely from the folder tree and the class
+# descriptions, so they are not a review concern and must never hold up a pull
+# request — this workflow deliberately does not run on pull_request. A branch
+# that adds or moves samples can be merged as is; right after the merge this
+# workflow regenerates the catalogs on standard and pushes the result back, so
+# standard is self-healing.
 #
-# Everywhere the push cannot happen — fork pull requests (no secrets), and
-# pushes to the protected branch standard — the workflow stays a pure guard and
-# fails on any diff. Without the secret configured it behaves exactly that way
-# for every event, so it is safe before the key exists.
+# standard is protected, so the push only works once the GitHub Actions app is
+# a bypass actor on its branch ruleset. Until then the job fails on a diff,
+# which is the previous behaviour.
 #
-# Contributors are still expected to regenerate the catalogs themselves
-# (AGENTS.md §4); this is the safety net, not the intended workflow.
+# A push made with GITHUB_TOKEN does not start further workflow runs (GitHub's
+# guard against recursive workflows), so the rebuilds of the cloud and 702
+# branches are dispatched explicitly below — workflow_dispatch is exempt from
+# that restriction. Without it those branches would keep the stale catalog
+# until the next unrelated push to standard.
+#
+# The push does not re-run this workflow either, so this cannot loop.
 
 on:
-  pull_request:
   push:
     branches: [standard]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  actions: write
 
 concurrency:
-  group: generate_overview_apps-${{ github.ref }}
-  cancel-in-progress: true
+  group: generate_overview_apps
+  cancel-in-progress: false
 
 jobs:
   generate_overview_apps:
@@ -38,13 +41,6 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      with:
-        # For a pull request from this repository check out the head branch
-        # itself instead of the merge commit, so the regenerated catalogs can be
-        # committed onto it. Fork pull requests and pushes fall back to the
-        # default checkout (empty inputs), where nothing is pushed anyway.
-        ref: ${{ github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref || '' }}
-        ssh-key: ${{ github.event.pull_request.head.repo.full_name == github.repository && secrets.ACTION_KEY_SAMPLES || '' }}
 
     - name: Set up Node.js
       uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
@@ -57,8 +53,7 @@ jobs:
 
     - name: Sync overview apps
       env:
-        CAN_PUSH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && secrets.ACTION_KEY_SAMPLES != '' }}
-        HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if git diff --quiet -- src; then
           echo "Overview apps are up to date."
@@ -67,14 +62,19 @@ jobs:
 
         git diff --stat -- src
 
-        if [ "$CAN_PUSH" != "true" ]; then
-          echo "::error::Overview apps are out of date. Run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
-          exit 1
-        fi
-
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
         git add -- src
-        git commit -m 'Regenerate overview apps'
-        git push origin "HEAD:refs/heads/${HEAD_REF}"
-        echo "::notice::Overview apps were out of date — regenerated and pushed to ${HEAD_REF}."
+        git commit -m "Regenerate overview apps from ${GITHUB_SHA}"
+
+        if ! git push origin HEAD:refs/heads/standard; then
+          echo "::error::Could not push the regenerated overview apps. Add the GitHub Actions app as a bypass actor on the standard branch ruleset, or run 'npm run launchpad' and commit the result (see AGENTS.md §4)."
+          exit 1
+        fi
+
+        # This push started no workflow run, so the branch rebuilds that
+        # normally react to a push on standard have to be triggered by hand.
+        gh workflow run auto_cloud.yaml --ref standard
+        gh workflow run auto_downport.yaml --ref standard
+
+        echo "::notice::Overview apps were out of date — regenerated, pushed to standard and the cloud / 702 rebuilds dispatched."

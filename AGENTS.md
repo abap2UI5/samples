@@ -179,7 +179,13 @@ extend it.
 **Treat the two `get_catalog( )` tables as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
-description — you **must** regenerate the affected catalog(s) in the same change.
+description — regenerate the affected catalog(s) in the same change.
+
+Stale catalogs never block a pull request: the `generate_overview_apps`
+workflow does not run on `pull_request`. It runs after the merge, regenerates
+the catalogs on `standard` and pushes the result back, so `standard` is
+self-healing. Regenerate them yourself anyway — it keeps the diff reviewable
+and saves the extra bot commit.
 
 ### Regenerate with the generator
 
@@ -193,11 +199,6 @@ npx abaplint           # must report 0 issues
 
 `scripts/generate-launchpad.js` implements every rule below. Edit the script (not
 the generated ABAP) if a rule changes.
-
-The `generate_overview_apps` workflow is the safety net, not a substitute: on a
-pull request from a branch of this repository it regenerates the catalogs and
-pushes the result into the PR branch. Regenerate them yourself anyway — on fork
-pull requests and on `standard` the workflow only guards and fails on any diff.
 
 ### Tile schema
 
