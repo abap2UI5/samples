@@ -1,0 +1,56 @@
+name: check_overview_apps
+
+# Checks that the two overview apps (get_catalog) still mirror the folder tree.
+#
+# The catalogs are generated entirely from the folder tree and the class
+# descriptions, so the check is purely mechanical: regenerate and compare.
+#
+# This used to run after the merge instead, regenerating the catalogs on
+# standard and pushing the result back so standard would be self-healing. That
+# cannot work: standard is protected and github-actions[bot] can never be added
+# to a bypass list — neither in classic branch protection nor in a ruleset — so
+# the push with GITHUB_TOKEN is always rejected and every stale catalog left
+# standard red.
+#
+# The catalog is therefore checked on the pull request, where the fix is one
+# command: npm run launchpad, commit, push.
+
+on:
+  pull_request:
+  push:
+    branches: [standard]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check_overview_apps-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  overview_apps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: '22'
+        cache: 'npm'
+
+    - run: npm ci
+    - run: npm run launchpad
+
+    - name: Overview apps must mirror the folder tree
+      run: |
+        if git diff --quiet -- src; then
+          echo "Overview apps are up to date."
+          exit 0
+        fi
+
+        git diff -- src
+        echo "::error::The overview catalogs are out of date. Run 'npm run launchpad', commit the result and push (see AGENTS.md §4)."
+        exit 1
