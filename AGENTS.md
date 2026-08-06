@@ -181,7 +181,7 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
-A stale catalog blocks the pull request: the `check-overview-apps` workflow
+A stale catalog blocks the pull request: the `publish-overview-apps` workflow
 regenerates both catalogs on every pull request and fails on any diff. It
 cannot fix them for you — `standard` is protected and no workflow can push to
 it — so regenerate them yourself and commit the result with the change that
