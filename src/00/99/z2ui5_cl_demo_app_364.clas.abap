@@ -99,7 +99,7 @@ CLASS z2ui5_cl_demo_app_364 IMPLEMENTATION.
 
     DATA(columns) = page->tree_table(
             id            = `treeTable`
-            rows          = `{path:'` && client->_bind_edit( val = t_tree path = abap_true )
+            rows          = `{path:'` && client->_bind( val = t_tree path = abap_true )
                          && `', parameters: {arrayNames:['NODES'], numberOfExpandedLevels: 1}}`
             selectionmode = `None`
         )->tree_columns( ).

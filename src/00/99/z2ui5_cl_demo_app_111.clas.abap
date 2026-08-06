@@ -149,7 +149,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value           = client->_bind_edit( mv_product )
+            )->input( value           = client->_bind( mv_product )
                       suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
                       change          = `z2ui5.onChange();`
@@ -160,21 +160,21 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_date )
+            )->input( value  = client->_bind( mv_create_date )
                       change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `CREATE_BY`
                               label              = `Create By`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_create_by )
+            )->input( value  = client->_bind( mv_create_by )
                       change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `STORAGE_LOCATION`
                               label              = `Storage Location`
                               groupname          = `group1`
                               visibleinfilterbar = abap_true
           )->fb_control(
-            )->input( value  = client->_bind_edit( mv_storage_location )
+            )->input( value  = client->_bind( mv_storage_location )
                       change = `z2ui5.onChange();` )->get_parent( )->get_parent(
         )->filter_group_item( name               = `QUANTITY`
                               label              = `Quantity`
@@ -183,7 +183,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
           )->fb_control(
             )->input( suggest         = abap_true
                       suggestionitems = `{/EDIT/MT_TABLE}`
-                      value           = client->_bind_edit( mv_quantity )
+                      value           = client->_bind( mv_quantity )
                       change          = `z2ui5.onChange($event);`
               )->get( )->suggestion_items( )->item( text = `{QUANTITY}`
             )->get_parent( )->get_parent( )->get_parent( ).
@@ -191,7 +191,7 @@ CLASS z2ui5_cl_demo_app_111 IMPLEMENTATION.
     DATA(cont) = page->content( `f` ).
 
     DATA(tab) = cont->table( id    = `table1`
-                             items = client->_bind_edit( val = mt_table ) ).
+                             items = client->_bind( val = mt_table ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( `Product` ).

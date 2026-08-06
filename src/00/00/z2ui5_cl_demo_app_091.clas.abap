@@ -101,8 +101,8 @@ CLASS z2ui5_cl_demo_app_091 IMPLEMENTATION.
         wheelzoomable = abap_false
         foldedcorners = abap_true
         nodepress     = client->_event( val = `NODE_PRESS` )
-        nodes         = client->_bind_edit( mt_nodes )
-        lanes         = client->_bind_edit( mt_lanes )
+        nodes         = client->_bind( mt_nodes )
+        lanes         = client->_bind( mt_lanes )
       )->nodes( `commons`
         )->process_flow_node(
           laneid            = `{LANE}`

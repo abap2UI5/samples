@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_153</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>binding</DESCRIPT>
+    <DESCRIPT>binding two way with ajson objects</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

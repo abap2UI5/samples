@@ -33,25 +33,25 @@ CLASS z2ui5_cl_demo_app_133_0 IMPLEMENTATION.
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( )
                         )->_z2ui5( )->focus(
-                              focusid          = client->_bind_edit( focus_id )
-                                selectionstart = client->_bind_edit( selstart )
-                                selectionend   = client->_bind_edit( selend )
-                                setupdate      = client->_bind_edit( update_focus )
+                              focusid          = client->_bind( focus_id )
+                                selectionstart = client->_bind( selstart )
+                                selectionend   = client->_bind( selend )
+                                setupdate      = client->_bind( update_focus )
               )->simple_form( title    = `Focus & Cursor`
                               editable = abap_true
                   )->content( `form`
                       )->title( `Input`
                       )->label( `Sel_Start`
-                      )->input( value = client->_bind_edit( selstart )
+                      )->input( value = client->_bind( selstart )
                       )->label( `Sel_End`
-                      )->input( value = client->_bind_edit( selend )
+                      )->input( value = client->_bind( selend )
                       )->label( `field_01`
-                      )->input( value = client->_bind_edit( field_01 )
+                      )->input( value = client->_bind( field_01 )
                                 id    = `BUTTON01`
                       )->button( text  = `focus here`
                                  press = client->_event( `BUTTON01` )
                       )->label( `field_02`
-                      )->input( value = client->_bind_edit( field_02 )
+                      )->input( value = client->_bind( field_02 )
                                 id    = `BUTTON02`
                       )->button( text  = `focus here`
                                  press = client->_event( `BUTTON02` )

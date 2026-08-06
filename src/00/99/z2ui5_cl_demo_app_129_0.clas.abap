@@ -129,7 +129,7 @@ CLASS z2ui5_cl_demo_app_129_0 IMPLEMENTATION.
     DATA(grid) = page->grid( `L6 M12 S12`
         )->content( `layout` ).
 
-    grid = grid->text( client->_bind_edit( val = lv_text view = client->cs_view-main
+    grid = grid->text( client->_bind( val = lv_text view = client->cs_view-main
       ) ).
 
     page->footer( )->overflow_toolbar(

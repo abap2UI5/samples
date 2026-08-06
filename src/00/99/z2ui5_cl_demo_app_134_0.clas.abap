@@ -53,8 +53,8 @@ CLASS z2ui5_cl_demo_app_134_0 IMPLEMENTATION.
         shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->_z2ui5( )->scrolling(
-          setupdate = client->_bind_edit( mv_scrollupdate )
-          items     = client->_bind_edit( mt_scroll ) ).
+          setupdate = client->_bind( mv_scrollupdate )
+          items     = client->_bind( mt_scroll ) ).
 
     DATA(tab) = page->table( sticky     = `ColumnHeaders,HeaderToolbar`
                              headertext = `Table with some entries`

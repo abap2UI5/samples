@@ -181,11 +181,11 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
-Stale catalogs never block a pull request: the `generate_overview_apps`
-workflow does not run on `pull_request`. It runs after the merge, regenerates
-the catalogs on `standard` and pushes the result back, so `standard` is
-self-healing. Regenerate them yourself anyway — it keeps the diff reviewable
-and saves the extra bot commit.
+A stale catalog blocks the pull request: the `check_overview_apps` workflow
+regenerates both catalogs on every pull request and fails on any diff. It
+cannot fix them for you — `standard` is protected and no workflow can push to
+it — so regenerate them yourself and commit the result with the change that
+made them stale.
 
 ### Regenerate with the generator
 
@@ -464,7 +464,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Nested views | `nest_view_display/destroy/model_update`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy`, `popup_model_update` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy`, `popover_model_update` | Context popovers |
-| Binding | `_bind(val)`, `_bind_edit(val)` | Read-only / two-way binding |
+| Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
@@ -531,7 +531,7 @@ Indent the fluent chain to reflect the XML hierarchy:
 
 #### Parameter formatting
 
-- **Single parameter**: write inline — `)->label( `Quantity` )` or `)->input( client->_bind_edit( qty ) )`.
+- **Single parameter**: write inline — `)->label( `Quantity` )` or `)->input( client->_bind( qty ) )`.
 - **More than one parameter**: always split across multiple lines — one parameter per line, aligned below the opening `(`, closing `)` on its own line:
 
 ```abap
@@ -559,7 +559,7 @@ METHOD view_display.
               editable = abap_true
               )->content( `form`
               )->label( `Quantity`
-              )->input( client->_bind_edit( quantity )
+              )->input( client->_bind( quantity )
               )->label( `Product`
               )->input(
                   value   = product
@@ -592,13 +592,20 @@ header_title->_generic(
 
 **Binding paths always come from a bind call — never hardcode them.** Every
 model value a view references must be registered through
-`client->_bind_edit( )` (use `_bind_edit`, not the one-way `_bind`): a
+`client->_bind( )`: a
 hand-written path (`{/START_DATE}`, or `{ path: '/START_DATE', ... }` in a
 raw binding-info string) is NOT part of the serialized model — the frontend
 receives no data for it and typed/object properties crash on the missing
 value (human find 2026-07-18 in samples 456/457). Compose raw binding-info
 strings with the bare path from
-`client->_bind_edit( val = x path = abap_true )`.
+`client->_bind( val = x path = abap_true )`.
+
+**Always `_bind( )`, never `_bind_edit( )`.** Both bind two-way into the same
+root model — the one-way/two-way split disappeared with the `XX/` view-model
+node — so `_bind_edit` is only an obsolete alias and is slated for removal.
+The single exception is a mapping that differs per direction, because `_bind`
+has no `custom_mapper_back` / `custom_filter_back` parameters; the one sample
+that needs it (`z2ui5_cl_demo_app_153`) says so in a comment at the call.
 
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and
@@ -672,7 +679,7 @@ The following is the **maximum structure**. Only add methods that are actually n
 CLASS z2ui5_cl_app_xxx DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    " bound data (DATA attributes for _bind/_bind_edit)...
+    " bound data (DATA attributes for _bind)...
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 

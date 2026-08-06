@@ -30,7 +30,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
             page->simple_form(
                   )->content( `form`
                                )->button(
-                                   text  = client->_bind_edit( text )
+                                   text  = client->_bind( text )
                                    width = `20%`
                                    press = client->_event( `CALL_BOOKING_MASK` ) ).
             client->view_display( view->stringify( ) ).
@@ -130,7 +130,7 @@ CLASS z2ui5_cl_demo_app_350 IMPLEMENTATION.
       `Current Lock Value in Table ZTEST` ).
     hbox->input(
       editable = abap_false
-      value    = client->_bind_edit( varkey ) ).
+      value    = client->_bind( varkey ) ).
     hbox->button(
       text  = `Next Lock View`
       press = client->_event( `NEXT_LOCK` ) ).

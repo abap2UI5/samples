@@ -78,7 +78,7 @@ CLASS z2ui5_cl_demo_app_456 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    " the startDate path must come from _bind_edit - a hardcoded binding
+    " the startDate path must come from _bind - a hardcoded binding
     " path is never registered in the model, the frontend then receives no
     " data and the formatter passes a non-Date into the object property
     page->planning_calendar(

@@ -47,10 +47,10 @@ CLASS z2ui5_cl_demo_app_s_04 IMPLEMENTATION.
                    )->content( `form`
                        )->title( `Conversion`
                        )->label( `Numeric`
-                       )->input( value   = client->_bind_edit( numc_out )
+                       )->input( value   = client->_bind( numc_out )
                                  enabled = abap_false
                        )->label( `Unit`
-                       )->input( value   = client->_bind_edit( unit )
+                       )->input( value   = client->_bind( unit )
                                  enabled = abap_false
                        )->stringify( ) ).
 

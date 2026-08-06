@@ -220,7 +220,7 @@ CLASS z2ui5_cl_demo_app_312 IMPLEMENTATION.
                                                          )->filter_control( ).
 
     " ---------- Set combo box input field ------------------------------------------------------------
-    lr_filter->combobox( selectedkey   = client->_bind_edit( ms_screen-viztypesel )
+    lr_filter->combobox( selectedkey   = client->_bind( ms_screen-viztypesel )
                          change        = client->_event( `EVT_VIZTYPE_CHANGE` )
                          showclearicon = abap_true
                          items         = client->_bind( mt_viztypes )

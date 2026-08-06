@@ -67,7 +67,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
                     alignitems     = `Center`
                     justifycontent = `SpaceAround`
       )->vbox( )->text( `Base64 String:`
-      )->text_area( value    = client->_bind_edit( file_content_64 )
+      )->text_area( value    = client->_bind( file_content_64 )
                     rows     = `20`
                     width    = `800px`
                     wrapping = abap_true
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_demo_app_186 IMPLEMENTATION.
       )->vbox( justifycontent = `Center`
                alignitems     = `Center`
       )->text( `fill filename:`
-      )->input( value = client->_bind_edit( file_name )
+      )->input( value = client->_bind( file_name )
                 class = `sapUiLargeMarginBottom`
                 width = `15rem`
       )->button( type  = `Emphasized`

@@ -76,7 +76,7 @@ CLASS z2ui5_cl_demo_app_211 IMPLEMENTATION.
                              class          = `sapUiContentPadding` ).
 
     DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
-                                         selectedkey = client->_bind_edit( mv_selectedkey )
+                                         selectedkey = client->_bind( mv_selectedkey )
                                          select      = client->_event( `ONSELECTICONTABBAR` )
                                                        )->items( ).
 

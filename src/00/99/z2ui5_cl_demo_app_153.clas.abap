@@ -55,6 +55,10 @@ CLASS z2ui5_cl_demo_app_153 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " the only remaining _bind_edit in this repository: _bind is the
+    " successor everywhere else, but it has no custom_mapper_back /
+    " custom_filter_back parameters - so a mapping that differs per
+    " direction still has to go through _bind_edit
     client->_bind_edit(
         val                = ms_struc
         custom_mapper      = z2ui5_cl_ajson_mapping=>create_camel_case( iv_first_json_upper = abap_false )

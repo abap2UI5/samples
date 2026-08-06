@@ -92,15 +92,15 @@ CLASS z2ui5_cl_demo_app_346 IMPLEMENTATION.
             shownavbutton  = abap_true ).
 
     DATA(tab) = page->table(
-            client->_bind_edit( t_tab )
+            client->_bind( t_tab )
         )->header_toolbar(
             )->overflow_toolbar(
                 )->label( `Column Id` )->input( submit      = client->_event( `FOCUS` )
-                                                value       = client->_bind_edit( focuscolumn )
+                                                value       = client->_bind( focuscolumn )
                                                 placeholder = `Focus Column`
                                                 width       = `10%`
                 )->label( `Row Index` )->input( submit      = client->_event( `FOCUS` )
-                                                value       = client->_bind_edit( focusrow )
+                                                value       = client->_bind( focusrow )
                                                 placeholder = `Focus Row`
                                                 width       = `10%`
                                                 type        = `Number`

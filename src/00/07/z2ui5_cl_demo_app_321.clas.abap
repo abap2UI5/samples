@@ -25,7 +25,7 @@ CLASS z2ui5_cl_demo_app_321 IMPLEMENTATION.
                      )->content( `form`
                          )->title( `Input`
                          )->label( `quantity`
-                         )->input( client->_bind_edit( mv_quantity )
+                         )->input( client->_bind( mv_quantity )
                          )->button(
                              text  = `post with state`
                              press = client->_event( `BUTTON_POST` )

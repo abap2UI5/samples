@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_068 IMPLEMENTATION.
 
     dialog->tree(
         mode  = `SingleSelectMaster`
-        items = client->_bind_edit( prodh_nodes )
+        items = client->_bind( prodh_nodes )
         )->items(
             )->standard_tree_item( selected = `{IS_SELECTED}`
                                    title    = `{TEXT}` ).

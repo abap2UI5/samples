@@ -103,7 +103,7 @@ CLASS z2ui5_cl_demo_app_337 IMPLEMENTATION.
   METHOD xml_table.
 
     DATA(table) = i_page->table( width = `auto`
-                                 items = i_client->_bind_edit( val = mt_data ) ).
+                                 items = i_client->_bind( val = mt_data ) ).
 
     DATA(columns) = table->columns( ).
 

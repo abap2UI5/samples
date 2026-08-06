@@ -61,7 +61,7 @@ CLASS z2ui5_cl_demo_app_199 IMPLEMENTATION.
                              class          = `sapUiContentPadding` ).
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
-                               items   = client->_bind_edit( <tab> ) ).
+                               items   = client->_bind( <tab> ) ).
 
     DATA(columns) = table->columns( ).
 
