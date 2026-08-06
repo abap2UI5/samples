@@ -1,6 +1,6 @@
-name: auto_cloud
+name: publish-cloud
 
-# Rebuilds the cloud branch via auto_branch.yaml: removes the restricted
+# Rebuilds the cloud branch via publish-branch.yaml: removes the restricted
 # samples (src/00), lints with the cloud config and force-pushes.
 
 on:
@@ -13,12 +13,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: auto_cloud
+  group: publish-cloud
   cancel-in-progress: false
 
 jobs:
-  auto_cloud:
-    uses: ./.github/workflows/auto_branch.yaml
+  publish-cloud:
+    uses: ./.github/workflows/publish-branch.yaml
     with:
       branch: cloud
       lint_config: .github/abaplint/abap_cloud.jsonc

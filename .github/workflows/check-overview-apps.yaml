@@ -1,4 +1,4 @@
-name: check_overview_apps
+name: check-overview-apps
 
 # Checks that the two overview apps (get_catalog) still mirror the folder tree.
 #
@@ -24,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: check_overview_apps-${{ github.ref }}
+  group: check-overview-apps-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

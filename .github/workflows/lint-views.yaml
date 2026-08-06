@@ -1,4 +1,4 @@
-name: abap2ui5lint
+name: lint-views
 
 # Validates the views without an SAP system: the UI5 version/deprecation
 # property gate plus a headless render smoke. Configuration lives in
@@ -12,11 +12,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: abap2ui5lint-${{ github.ref }}
+  group: lint-views-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  abap2ui5lint:
+  lint-views:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

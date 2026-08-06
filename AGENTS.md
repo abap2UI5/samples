@@ -94,9 +94,9 @@ The split is driven directly by the CI builds:
 
 | Build (workflow)   | What it does                                    | Sees `src/01` | Sees `src/00` |
 |--------------------|-------------------------------------------------|:---:|:---:|
-| `ABAP_STANDARD`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
-| `ABAP_CLOUD`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
-| `ABAP_702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
+| `lint-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
+| `lint-cloud`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
+| `lint-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
 
 **Consequence of the rule:**
 
@@ -105,7 +105,7 @@ The split is driven directly by the CI builds:
   restriction. These survive all three builds.
 - **`src/00` ("extended")** — anything with *any* restriction. It is deleted
   before the cloud and 702 builds, so it is only ever checked by
-  `ABAP_STANDARD`. Pick the subpackage by the **first** restriction that
+  `lint-standard`. Pick the subpackage by the **first** restriction that
   applies:
 
   1. Deprecated control/property, or superseded → `00/99`
@@ -181,7 +181,7 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
-A stale catalog blocks the pull request: the `check_overview_apps` workflow
+A stale catalog blocks the pull request: the `check-overview-apps` workflow
 regenerates both catalogs on every pull request and fails on any diff. It
 cannot fix them for you — `standard` is protected and no workflow can push to
 it — so regenerate them yourself and commit the result with the change that

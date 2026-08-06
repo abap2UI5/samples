@@ -1,6 +1,6 @@
-name: auto_downport
+name: publish-702
 
-# Rebuilds the 702 branch via auto_branch.yaml: downports the sources,
+# Rebuilds the 702 branch via publish-branch.yaml: downports the sources,
 # lints with the 702 config and force-pushes.
 
 on:
@@ -13,12 +13,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: auto_downport
+  group: publish-702
   cancel-in-progress: false
 
 jobs:
-  auto_downport:
-    uses: ./.github/workflows/auto_branch.yaml
+  publish-702:
+    uses: ./.github/workflows/publish-branch.yaml
     with:
       branch: '702'
       do_downport: true

@@ -1,25 +1,24 @@
-name: ABAP_CLOUD
+name: check-docs
 
 on:
   pull_request:
+  push:
+    branches: [standard]
 
 permissions:
   contents: read
 
 concurrency:
-  group: ABAP_CLOUD-${{ github.ref }}
+  group: check-docs-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  ABAP_CLOUD:
+  agents_structure:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
     - uses: actions/checkout@v7
     - uses: actions/setup-node@v6
       with:
         node-version: '22'
-        cache: 'npm'
-    - run: npm ci
-    - run: rm -r src/00
-    - run: npx abaplint .github/abaplint/abap_cloud.jsonc
+    - run: node scripts/check-agents-structure.js

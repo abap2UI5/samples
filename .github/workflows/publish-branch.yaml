@@ -1,6 +1,6 @@
-name: auto_branch
+name: publish-branch
 
-# Shared implementation for auto_cloud/auto_downport: transforms the
+# Shared implementation for publish-cloud/publish-702: transforms the
 # standard branch content, validates it with abaplint and force-pushes
 # the result to the given output branch. The thin auto_<name> callers
 # provide the trigger and the parameters.
@@ -26,7 +26,7 @@ permissions:
   contents: write
 
 jobs:
-  auto_branch:
+  publish-branch:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

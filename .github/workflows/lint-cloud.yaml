@@ -1,17 +1,17 @@
-name: ABAP_STANDARD
+name: lint-cloud
 
 on:
   pull_request:
-  
+
 permissions:
   contents: read
 
 concurrency:
-  group: ABAP_STANDARD-${{ github.ref }}
+  group: lint-cloud-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  ABAP_STANDARD:
+  lint-cloud:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -21,4 +21,5 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: npx abaplint ./abaplint.jsonc
+    - run: rm -r src/00
+    - run: npx abaplint .github/abaplint/abap_cloud.jsonc

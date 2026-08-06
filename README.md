@@ -1,16 +1,14 @@
-[![ABAP_STANDARD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
-[![ABAP_CLOUD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml)
-[![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml)
+[![lint-standard](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml)
+[![lint-cloud](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml)
+[![lint-702](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml)
+[![lint-views](https://github.com/abap2UI5/samples/actions/workflows/lint-views.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-views.yaml)
 <br>
-[![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
-[![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
+[![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
+[![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
 <br>
-[![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml)
+[![test-rename](https://github.com/abap2UI5/samples/actions/workflows/test-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test-rename.yaml)
 <br>
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
-<br>
-[![abaplint](https://img.shields.io/github/actions/workflow/status/abap2UI5/samples/ABAP_STANDARD.yaml?label=abaplint)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
-[![abap2ui5lint](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml)
 
 # abap2UI5-samples
 
@@ -19,7 +17,7 @@ Install this repository and try out over 350 samples. This is the easiest way to
 
 #### Overview Apps
 
-[![check_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml)
+[![check-overview-apps](https://github.com/abap2UI5/samples/actions/workflows/check-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-overview-apps.yaml)
 
 #### Dependencies
 * [abap2UI5](https://github.com/abap2UI5/abap2UI5)
