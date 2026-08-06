@@ -1,13 +1,12 @@
 [![lint-standard](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml)
 [![lint-abap2ui5](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2ui5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2ui5.yaml)
+[![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 <br>
 [![lint-cloud](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml)
 [![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
-<br>
 [![lint-702](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml)
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
 <br>
-[![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![check-rename](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml)
 
 # abap2UI5-samples
