@@ -327,7 +327,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
   `openui5`, `failOn: warning`)
-- Run: `npm run lint:abap2ui5`
+- Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
 - **It currently reports nothing in this repository.** It inspects classes

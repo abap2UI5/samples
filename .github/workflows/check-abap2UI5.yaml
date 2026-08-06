@@ -1,4 +1,4 @@
-name: abap2UI5
+name: check-abap2UI5
 
 # The abap2UI5-specific lint, as opposed to abap-standard/cloud/702, which
 # lint ABAP itself. It checks a whole app class against five rule groups:
@@ -7,7 +7,7 @@ name: abap2UI5
 # and the abap2ui5 semantics - the defects that live in the relationship
 # between the ABAP class and the view it builds, which no UI5 tooling sees.
 # Configuration lives in abap2ui5lint.jsonc; the linter is pinned as a
-# devDependency so CI and `npm run lint:abap2ui5` run the same version.
+# devDependency so CI and `npm run check:abap2ui5` run the same version.
 
 on:
   pull_request:
@@ -16,11 +16,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: abap2UI5-${{ github.ref }}
+  group: check-abap2UI5-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  abap2UI5:
+  check-abap2UI5:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
