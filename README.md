@@ -1,7 +1,7 @@
 [![lint-standard](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml)
 [![lint-cloud](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml)
 [![lint-702](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml)
-[![lint-views](https://github.com/abap2UI5/samples/actions/workflows/lint-views.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-views.yaml)
+[![lint-abap2ui5](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2ui5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2ui5.yaml)
 <br>
 [![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
