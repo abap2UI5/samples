@@ -1,7 +1,7 @@
 [![lint-standard](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml)
 [![lint-cloud](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-cloud.yaml)
 [![lint-702](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-702.yaml)
-|
+&emsp;&emsp;
 [![lint-abap2UI5](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2UI5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2UI5.yaml)
 <br>
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
