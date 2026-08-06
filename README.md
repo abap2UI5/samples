@@ -1,5 +1,6 @@
 [![lint-standard](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-standard.yaml)
 [![lint-abap2UI5](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2UI5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/lint-abap2UI5.yaml)
+<br>
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
 <br>
