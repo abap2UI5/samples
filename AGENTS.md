@@ -310,6 +310,32 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
 
+### abap2UI5-linter
+
+- **It is not a view checker.** It validates a **whole app class** — the ABAP
+  and the view it produces, together. Assuming it only inspects XML is the
+  common mistake, and it misses the point: the group that catches what no
+  other tool can is precisely the one that spans both sides.
+
+  | Rule group | What it catches |
+  |------------|-----------------|
+  | `metadata` | controls and members resolved against the UI5 metadata snapshot |
+  | `structure`| defects in the shape of the document itself |
+  | `version`  | controls, members and enum values newer than the target UI5 release |
+  | `data`     | the view renders, but not with the data — or not for the user — the author meant |
+  | `abap2ui5` | defects living in the relationship between the ABAP class and the view it builds; silent at runtime, invisible to any UI5 tooling |
+
+- Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
+  `openui5`, `failOn: warning`)
+- Run: `npm run lint:abap2ui5`
+- CI: `lint-abap2ui5` — as opposed to `lint-standard` / `lint-cloud` /
+  `lint-702`, which lint ABAP itself against three target releases
+- **It currently reports nothing in this repository.** It inspects classes
+  built with `z2ui5_cl_ai_xml`, while every sample here still uses
+  `z2ui5_cl_xml_view` (§10). The gate becomes effective as samples move to
+  the new builder — until then a green `lint-abap2ui5` badge means "nothing
+  was checkable", not "the apps are clean".
+
 ### abapGit file consistency
 
 All serialized files (`.abap`, `.xml`, and any other abapGit-managed file types)
