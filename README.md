@@ -1,10 +1,16 @@
-| | |
-| --- | --- |
-| **Compatibility** | [![ABAP_STANDARD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml) [![ABAP_CLOUD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml) [![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml) |
-| **Static code check** | [![abaplint](https://img.shields.io/github/actions/workflow/status/abap2UI5/samples/ABAP_STANDARD.yaml?label=abaplint)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml) [![abap2ui5lint](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml) |
-| **Feature** | [![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml) |
-| **Jobs** | [![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml) [![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml) |
-| **Info** | [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc) |
+[![ABAP_STANDARD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
+[![ABAP_CLOUD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml)
+[![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml)
+<br>
+[![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
+[![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
+<br>
+[![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml)
+<br>
+[![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
+<br>
+[![abaplint](https://img.shields.io/github/actions/workflow/status/abap2UI5/samples/ABAP_STANDARD.yaml?label=abaplint)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
+[![abap2ui5lint](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml)
 
 # abap2UI5-samples
 
