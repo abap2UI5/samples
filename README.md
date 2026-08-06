@@ -6,6 +6,9 @@
 [![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
 <br>
 [![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml)
+<br>
+[![abaplint](https://img.shields.io/github/actions/workflow/status/abap2UI5/samples/ABAP_STANDARD.yaml?label=abaplint)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
+[![abap2ui5lint](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap2ui5lint.yaml)
 
 # abap2UI5-samples
 
