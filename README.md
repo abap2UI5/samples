@@ -10,8 +10,7 @@
 <br>
 [![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
-<br>
-[![publish-overview-apps](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml)
+[![publish-overview](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml)
 
 # abap2UI5-samples
 
