@@ -168,7 +168,7 @@ only; the **extended** overview (`sample_app_g01`) lists every sample directly
 under the previous one (no inter-block blank line), keeping only the per-group
 H3 titles and the column alignment.
 
-`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
+`z2ui5_cl_smp_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 

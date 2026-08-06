@@ -27,6 +27,15 @@
     "line_length": {
       "length": 255
     },
+    // Class names must not exceed 24 characters. ABAP allows 30, but a
+    // parallel installation renames the namespace z2ui5 (5 chars) to up to
+    // 9 chars (see build_rename in abap2UI5), which costs 4 - and one more
+    // is kept in reserve. "Z2UI5_C(L|X)" is 8 chars, so 16 remain.
+    "object_naming": {
+      "patternKind": "required",
+      "severity": "Error",
+      "clas": "^Z2UI5_C(L|X).{0,16}$"
+    },
     "downport": true,
     "begin_end_names": true,
     "check_ddic": true,

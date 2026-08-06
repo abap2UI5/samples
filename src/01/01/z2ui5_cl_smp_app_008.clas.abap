@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_008 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -16,7 +16,7 @@ ENDCLASS.
 
 
 
-CLASS z2ui5_cl_demo_app_008 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
