@@ -94,9 +94,9 @@ The split is driven directly by the CI builds:
 
 | Build (workflow)   | What it does                                    | Sees `src/01` | Sees `src/00` |
 |--------------------|-------------------------------------------------|:---:|:---:|
-| `lint-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
-| `lint-cloud`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
-| `lint-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
+| `abap-cloud`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
 
 **Consequence of the rule:**
 
@@ -105,7 +105,7 @@ The split is driven directly by the CI builds:
   restriction. These survive all three builds.
 - **`src/00` ("extended")** — anything with *any* restriction. It is deleted
   before the cloud and 702 builds, so it is only ever checked by
-  `lint-standard`. Pick the subpackage by the **first** restriction that
+  `abap-standard`. Pick the subpackage by the **first** restriction that
   applies:
 
   1. Deprecated control/property, or superseded → `00/99`
@@ -328,12 +328,12 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
   `openui5`, `failOn: warning`)
 - Run: `npm run lint:abap2ui5`
-- CI: `lint-abap2UI5` — as opposed to `lint-standard` / `lint-cloud` /
-  `lint-702`, which lint ABAP itself against three target releases
+- CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
+  `abap-702`, which lint ABAP itself against three target releases
 - **It currently reports nothing in this repository.** It inspects classes
   built with `z2ui5_cl_ai_xml`, while every sample here still uses
   `z2ui5_cl_xml_view` (§10). The gate becomes effective as samples move to
-  the new builder — until then a green `lint-abap2UI5` badge means "nothing
+  the new builder — until then a green `abap2UI5` badge means "nothing
   was checkable", not "the apps are clean".
 
 ### abapGit file consistency

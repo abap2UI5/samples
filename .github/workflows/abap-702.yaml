@@ -1,17 +1,17 @@
-name: lint-standard
+name: abap-702
 
 on:
   pull_request:
-  
+
 permissions:
   contents: read
 
 concurrency:
-  group: lint-standard-${{ github.ref }}
+  group: abap-702-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint-standard:
+  abap-702:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -21,4 +21,5 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: npx abaplint ./abaplint.jsonc
+    - run: npm run downport
+    - run: npx abaplint .github/abaplint/abap_702.jsonc
