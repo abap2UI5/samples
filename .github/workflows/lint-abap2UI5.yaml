@@ -1,4 +1,4 @@
-name: lint-abap2ui5
+name: lint-abap2UI5
 
 # The abap2UI5-specific lint, as opposed to lint-standard/cloud/702, which
 # lint ABAP itself. It checks a whole app class against five rule groups:
@@ -16,11 +16,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: lint-abap2ui5-${{ github.ref }}
+  group: lint-abap2UI5-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  lint-abap2ui5:
+  lint-abap2UI5:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

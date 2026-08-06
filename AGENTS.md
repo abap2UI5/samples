@@ -328,12 +328,12 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
   `openui5`, `failOn: warning`)
 - Run: `npm run lint:abap2ui5`
-- CI: `lint-abap2ui5` — as opposed to `lint-standard` / `lint-cloud` /
+- CI: `lint-abap2UI5` — as opposed to `lint-standard` / `lint-cloud` /
   `lint-702`, which lint ABAP itself against three target releases
 - **It currently reports nothing in this repository.** It inspects classes
   built with `z2ui5_cl_ai_xml`, while every sample here still uses
   `z2ui5_cl_xml_view` (§10). The gate becomes effective as samples move to
-  the new builder — until then a green `lint-abap2ui5` badge means "nothing
+  the new builder — until then a green `lint-abap2UI5` badge means "nothing
   was checkable", not "the apps are clean".
 
 ### abapGit file consistency
