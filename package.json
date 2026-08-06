@@ -5,6 +5,8 @@
   "description": "Learn how to code with abap2UI5.",
   "scripts": {
     "launchpad": "node scripts/generate-launchpad.js",
+    "lint": "abaplint ./abaplint.jsonc",
+    "check:abap2ui5": "abap2ui5lint",
     "rename": "abaplint .github/abaplint/rename_test.jsonc --rename",
     "check:agents": "node scripts/check-agents-structure.js",
     "syfixes": "find . -type f -name '*.abap' -exec sed -i -e 's/ RAISE EXCEPTION TYPE cx_sy_itab_line_not_found/ ASSERT 1 = 0/g' {} + ",
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/abap2UI5/samples#readme",
   "devDependencies": {
+    "@abap2ui5/linter": "github:abap2UI5/linter#8de79537a714adc34088afeea00fbea13c207a64",
     "@abaplint/cli": "^2.119.66"
   },
   "engines": {

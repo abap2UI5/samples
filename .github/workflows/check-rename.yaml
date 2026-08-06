@@ -1,4 +1,4 @@
-name: test_rename
+name: check-rename
 
 # Smoke test that the basic samples (and the abap2UI5 framework they
 # reference) can be renamed from the z2ui5 namespace to another one for a
@@ -12,11 +12,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: test_rename-${{ github.ref }}
+  group: check-rename-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  test_rename:
+  check-rename:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

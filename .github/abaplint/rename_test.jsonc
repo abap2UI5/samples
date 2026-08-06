@@ -1,5 +1,5 @@
 {
-  // Rename smoke test for the test_rename workflow: renames every sample
+  // Rename smoke test for the check-rename workflow: renames every sample
   // (and the abap2UI5 framework it references) from the z2ui5 namespace to
   // the placeholder zabap2ui5 and syntax-checks the result. This proves the
   // basic samples stay renameable for a parallel installation alongside a

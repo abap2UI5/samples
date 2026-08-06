@@ -140,8 +140,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
                  |The extended samples here can need a specific system, so check per sample | &&
                  |which ABAP stack (ABAP Cloud / on-premise), UI5 release and other prerequisites it requires.|.
 
-    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
-      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
+    IF class_exists( `Z2UI5_CL_SMP_APP_000` ) = abap_true.
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
       info = |{ info } Click <a href="{ url }" target="_blank">here</a> for the classic overview.|.
     ENDIF.
 
@@ -232,7 +232,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - release - version` header = `Smart Controls` sub = `SmartForm, editable toggle` app = `z2ui5_cl_demo_app_476` )
       ( group = `restricted - release - version` header = `Smart Controls` sub = `Switch Default Model` app = `z2ui5_cl_demo_app_314` )
       ( group = `restricted - release - version` header = `visualization` sub = `bar chart` app = `z2ui5_cl_demo_app_016` )
-      ( group = `restricted - release - version` header = `visualization` sub = `donut chart` app = `z2ui5_cl_demo_app_013` )
+      ( group = `restricted - release - version` header = `visualization` sub = `donut chart` app = `z2ui5_cl_smp_app_013` )
       ( group = `restricted - release - version` header = `visualization` sub = `Harvey Chart` app = `z2ui5_cl_demo_app_308` )
       ( group = `restricted - release - version` header = `visualization` sub = `line chart` app = `z2ui5_cl_demo_app_014` )
       ( group = `restricted - release - version` header = `visualization` sub = `process flow` app = `z2ui5_cl_demo_app_091` )
@@ -276,7 +276,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_344` )
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_345` )
       ( group = `restricted - testing` header = `Sample App` sub = `Full View` app = `z2ui5_cl_demo_app_085` )
-      ( group = `restricted - testing` header = `Sample App` sub = `Selection Screen` app = `z2ui5_cl_demo_app_002` )
+      ( group = `restricted - testing` header = `Sample App` sub = `Selection Screen` app = `z2ui5_cl_smp_app_002` )
       ( group = `restricted - testing` header = `Type Ref to Data Table with refresh` sub = `` app = `z2ui5_cl_demo_app_199` )
       ( group = `restricted - testing` header = `unit test` sub = `long variable` app = `z2ui5_cl_demo_app_138` )
       ( group = `restricted - testing` header = `ZZZ Data Object for Sample 328` sub = `` app = `z2ui5_cl_demo_app_329` )
@@ -301,7 +301,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309` )
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolet` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
-      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
+      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_smp_app_000` )
       ( group = `obsolet` header = `Message Box & Input Functions` sub = `` app = `z2ui5_cl_demo_app_084` )
       ( group = `obsolet` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )
       ( group = `obsolet` header = `obsolete` sub = `filter bar with variants, replaced by 478` app = `z2ui5_cl_demo_app_111` )

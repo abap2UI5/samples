@@ -1,0 +1,35 @@
+name: check-abap2UI5
+
+# The abap2UI5-specific lint, as opposed to abap-standard/cloud/702, which
+# lint ABAP itself. It checks a whole app class against five rule groups:
+# the controls and members it writes, the structure of the document, the
+# UI5 version and deprecation floor, the data and usability of the result,
+# and the abap2ui5 semantics - the defects that live in the relationship
+# between the ABAP class and the view it builds, which no UI5 tooling sees.
+# Configuration lives in abap2ui5lint.jsonc; the linter is pinned as a
+# devDependency so CI and `npm run check:abap2ui5` run the same version.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-abap2UI5-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-abap2UI5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+        cache: 'npm'
+    - run: npm ci
+    # the render gate drives a headless browser
+    - run: npx playwright install chromium --with-deps
+    - run: npx abap2ui5lint

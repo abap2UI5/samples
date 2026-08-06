@@ -27,6 +27,21 @@
     "line_length": {
       "length": 255
     },
+    // Every class carries the samples token: Z2UI5_CL_SMP_<object>.
+    // Length is capped at 25 characters by the leading lookahead. ABAP
+    // allows 30, but build_rename (see abap2UI5) replaces the namespace
+    // z2ui5 (5 chars) with up to 9, which costs 4 - so 26 is the hard
+    // ceiling and 25 keeps one character in reserve. A parallel
+    // installation therefore never needs truncation patterns.
+    // "Z2UI5_CL_SMP_" is 13 chars, so 12 remain for the object name.
+    // DEMO and SAMPLE are the legacy tokens. They are still accepted while
+    // the migration to SMP runs - drop them from the alternation once the
+    // last class is renamed, leaving "^(?=.{1,25}$)Z2UI5_C(L|X)_SMP_".
+    "object_naming": {
+      "patternKind": "required",
+      "severity": "Error",
+      "clas": "^(?=.{1,25}$)Z2UI5_C(L|X)_(SMP|DEMO|SAMPLE)_"
+    },
     "downport": true,
     "begin_end_names": true,
     "check_ddic": true,

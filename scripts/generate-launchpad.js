@@ -107,7 +107,10 @@ for (const abap of walk(SRC)) {
   if (!abap.endsWith('.clas.abap')) continue;
   const cls = path.basename(abap, '.clas.abap');
   if (OVERVIEW_APPS.has(cls)) continue; // an overview app is never a tile
-  if (!cls.startsWith('z2ui5_cl_demo_app')) continue;
+  // smp is the token this repository owns (AGENTS.md §6); demo is the legacy
+  // one, still present until the migration to smp is complete. A class that
+  // matches neither is not a sample and never becomes a tile.
+  if (!cls.startsWith('z2ui5_cl_smp_app') && !cls.startsWith('z2ui5_cl_demo_app')) continue;
 
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
   if (rel.length < 3) continue;

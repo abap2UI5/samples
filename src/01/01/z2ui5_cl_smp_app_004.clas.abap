@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -16,7 +16,7 @@ CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -44,7 +44,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
       WHEN `BUTTON_ROUNDTRIP`.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
       WHEN `BUTTON_RESTART`.
-        client->nav_app_leave( NEW z2ui5_cl_demo_app_004( ) ).
+        client->nav_app_leave( NEW z2ui5_cl_smp_app_004( ) ).
       WHEN `BUTTON_CHANGE_VIEW`.
         CASE view_main.
           WHEN `MAIN`.

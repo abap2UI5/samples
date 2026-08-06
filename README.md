@@ -1,23 +1,22 @@
-[![ABAP_STANDARD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_STANDARD.yaml)
-[![ABAP_CLOUD](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_CLOUD.yaml)
-[![ABAP_702](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/ABAP_702.yaml)
+[![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
+[![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
 <br>
-[![auto_cloud](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_cloud.yaml)
-[![auto_downport](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/auto_downport.yaml)
+[![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
+[![abap-cloud](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-cloud.yaml)
+[![abap-702](https://github.com/abap2UI5/samples/actions/workflows/abap-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-702.yaml)
 <br>
-[![test_rename](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/test_rename.yaml)
+[![check-abap2UI5](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml)
+[![check-rename](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml)
+<br>
+[![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
+[![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
+<br>
+[![publish-overview-apps](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-overview-apps.yaml)
 
 # abap2UI5-samples
 
 Install this repository and try out over 350 samples. This is the easiest way to learn abap2UI5 development. [More information here.](https://abap2ui5.github.io/docs/get_started/samples.html)
 
-
-#### Overview Apps
-
-[![check_overview_apps](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check_overview_apps.yaml)
-
-#### Dependencies
-* [abap2UI5](https://github.com/abap2UI5/abap2UI5)
 
 #### Issues
 

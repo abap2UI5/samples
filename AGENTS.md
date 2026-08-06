@@ -94,9 +94,9 @@ The split is driven directly by the CI builds:
 
 | Build (workflow)   | What it does                                    | Sees `src/01` | Sees `src/00` |
 |--------------------|-------------------------------------------------|:---:|:---:|
-| `ABAP_STANDARD`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
-| `ABAP_CLOUD`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
-| `ABAP_702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
+| `abap-cloud`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
 
 **Consequence of the rule:**
 
@@ -105,7 +105,7 @@ The split is driven directly by the CI builds:
   restriction. These survive all three builds.
 - **`src/00` ("extended")** — anything with *any* restriction. It is deleted
   before the cloud and 702 builds, so it is only ever checked by
-  `ABAP_STANDARD`. Pick the subpackage by the **first** restriction that
+  `abap-standard`. Pick the subpackage by the **first** restriction that
   applies:
 
   1. Deprecated control/property, or superseded → `00/99`
@@ -168,7 +168,7 @@ only; the **extended** overview (`sample_app_g01`) lists every sample directly
 under the previous one (no inter-block blank line), keeping only the per-group
 H3 titles and the column alignment.
 
-`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
+`z2ui5_cl_smp_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 
@@ -181,7 +181,7 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00` and `src/01`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
-A stale catalog blocks the pull request: the `check_overview_apps` workflow
+A stale catalog blocks the pull request: the `publish-overview-apps` workflow
 regenerates both catalogs on every pull request and fails on any diff. It
 cannot fix them for you — `standard` is protected and no workflow can push to
 it — so regenerate them yourself and commit the result with the change that
@@ -309,6 +309,32 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - Configuration: `abaplint.jsonc`
 - Install: `npm install -g @abaplint/cli`
 - Run: `abaplint`
+
+### abap2UI5-linter
+
+- **It is not a view checker.** It validates a **whole app class** — the ABAP
+  and the view it produces, together. Assuming it only inspects XML is the
+  common mistake, and it misses the point: the group that catches what no
+  other tool can is precisely the one that spans both sides.
+
+  | Rule group | What it catches |
+  |------------|-----------------|
+  | `metadata` | controls and members resolved against the UI5 metadata snapshot |
+  | `structure`| defects in the shape of the document itself |
+  | `version`  | controls, members and enum values newer than the target UI5 release |
+  | `data`     | the view renders, but not with the data — or not for the user — the author meant |
+  | `abap2ui5` | defects living in the relationship between the ABAP class and the view it builds; silent at runtime, invisible to any UI5 tooling |
+
+- Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
+  `openui5`, `failOn: warning`)
+- Run: `npm run check:abap2ui5`
+- CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
+  `abap-702`, which lint ABAP itself against three target releases
+- **It currently reports nothing in this repository.** It inspects classes
+  built with `z2ui5_cl_ai_xml`, while every sample here still uses
+  `z2ui5_cl_xml_view` (§10). The gate becomes effective as samples move to
+  the new builder — until then a green `abap2UI5` badge means "nothing
+  was checkable", not "the apps are clean".
 
 ### abapGit file consistency
 

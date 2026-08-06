@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -29,7 +29,7 @@ CLASS z2ui5_cl_demo_app_000 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -136,7 +136,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Event I`
                          subheader = `Handle events & change the view`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_004` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_004` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -253,7 +253,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Basic`
                          subheader = `Toast, Box & Strip`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_008` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_008` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -447,7 +447,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Range Slider`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_005` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_005` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -811,7 +811,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Toolbar`
                          subheader = `Add a container & toolbar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_006` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_006` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -823,7 +823,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Editable`
                          subheader = `Set columns editable`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_011` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_011` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -931,7 +931,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Flow Logic`
                          subheader = `Different ways of calling Popups`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_012` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_012` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -943,7 +943,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `F4-Value-Help`
                          subheader = `Popup for value help`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_009` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_009` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1393,7 +1393,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     page->generic_tile( header    = `Selection Screen`
                         subheader = `Explore Input Controls`
-                        press     = client->_event( `Z2UI5_CL_DEMO_APP_002` )
+                        press     = client->_event( `Z2UI5_CL_SMP_APP_002` )
                         mode      = `LineMode`
                         class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1421,7 +1421,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header = `Donut Chart`
 *                         subheader = 'Use RTTI to send tables to the frontend'
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_013` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_013` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 

@@ -1,0 +1,18 @@
+{
+  // abap2UI5-linter — validates a whole app class without an SAP system:
+  // the ABAP and the view it produces, together. Not a view checker: of its
+  // five rule groups (metadata, structure, version, data, abap2ui5) the last
+  // one is about the relationship between the ABAP class and the view it
+  // builds — defects that stay silent at runtime and that no UI5 tooling can
+  // see. See AGENTS.md §6 and https://github.com/abap2UI5/linter
+  "$schema": "./node_modules/@abap2ui5/linter/data/abap2ui5lint.schema.json",
+
+  "paths": ["src"],
+
+  // The samples must run on the oldest release abap2UI5 supports, so the
+  // property gate uses the same 1.71 floor as the rest of the project.
+  "ui5": "1.71",
+  "distribution": "openui5",
+
+  "failOn": "warning"
+}
