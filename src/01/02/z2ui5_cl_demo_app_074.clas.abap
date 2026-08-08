@@ -49,8 +49,8 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
             SPLIT file   AT `;` INTO DATA(header) DATA(base64).
             SPLIT base64 AT `,` INTO header base64.
 
-            DATA(raw)     = z2ui5_cl_sample_context=>conv_decode_x_base64( base64 ).
-            DATA(content) = z2ui5_cl_sample_context=>conv_get_string_by_xstring( raw ).
+            DATA(raw)     = z2ui5_cl_smp_context=>conv_decode_x_base64( base64 ).
+            DATA(content) = z2ui5_cl_smp_context=>conv_get_string_by_xstring( raw ).
 
             client->message_box_display( content ).
 
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_demo_app_074 IMPLEMENTATION.
                   )->toolbar_spacer(
           )->get_parent( )->get_parent( ).
 
-      DATA(fields)  = z2ui5_cl_sample_context=>rtti_get_t_attri_by_any( <table> ).
+      DATA(fields)  = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
       DATA(columns) = tab->columns( ).
       DATA(cells)   = tab->items( )->column_list_item( )->cells( ).
 

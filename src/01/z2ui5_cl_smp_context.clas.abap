@@ -1,41 +1,21 @@
-CLASS z2ui5_cl_sample_context DEFINITION
+CLASS z2ui5_cl_smp_context DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
   PUBLIC SECTION.
 
-    " Environment-abstracted character/format constants. Callers must read
-    " these from z2ui5_cl_sample_context instead of referencing cl_abap_char_utilities /
-    " cl_abap_format directly, so the dependency on those SAP standard classes
-    " lives in exactly one place (this class' class_constructor) and can be
-    " ported once for non-ABAP runtimes (e.g. transpiled JS).
     CLASS-DATA cv_char_util_newline        TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_char_util_cr_lf          TYPE c LENGTH 2 READ-ONLY.
-
     CLASS-DATA cv_char_util_horizontal_tab TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_char_util_charsize       TYPE i          READ-ONLY.
-
     CLASS-DATA cv_format_e_xml_attr             TYPE i          READ-ONLY.
-
-    " RTTI type-kind / kind / visibility constants, so callers can branch on
-    " stored type_kind/kind fields without referencing cl_abap_typedescr /
-    " cl_abap_objectdescr directly.
     CLASS-DATA cv_typedescr_typekind_table   TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_typekind_dref    TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_typekind_oref    TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_typekind_struct1 TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_typekind_struct2 TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_kind_struct      TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_typedescr_kind_ref         TYPE c LENGTH 1 READ-ONLY.
-
     CLASS-DATA cv_objectdescr_public         TYPE c LENGTH 1 READ-ONLY.
 
     CLASS-METHODS class_constructor.
@@ -45,7 +25,6 @@ CLASS z2ui5_cl_sample_context DEFINITION
         n TYPE string,
         v TYPE string,
       END OF ty_s_name_value.
-
     TYPES ty_t_name_value TYPE STANDARD TABLE OF ty_s_name_value WITH EMPTY KEY.
 
     TYPES:
@@ -142,7 +121,7 @@ CLASS z2ui5_cl_sample_context DEFINITION
       IMPORTING
         filter TYPE ty_t_filter_multi
       CHANGING
-        val     TYPE STANDARD TABLE.
+        val    TYPE STANDARD TABLE.
 
     CLASS-METHODS filter_get_multi_by_data
       IMPORTING
@@ -540,7 +519,7 @@ CLASS z2ui5_cl_sample_context DEFINITION
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_context IMPLEMENTATION.
+CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
   METHOD class_constructor.
 
@@ -944,7 +923,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                                IMPORTING ev_container     = data ).
 
       CATCH cx_root INTO DATA(x).
-        RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+        RAISE EXCEPTION TYPE z2ui5_cx_smp_error
           EXPORTING
             val = x.
     ENDTRY.
@@ -973,7 +952,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                              EXCEPTIONS type_not_found = 1 ).
 
       CATCH cx_root INTO DATA(x).
-        RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+        RAISE EXCEPTION TYPE z2ui5_cx_smp_error
           EXPORTING
             previous = x.
     ENDTRY.
@@ -1165,7 +1144,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
         CATCH cx_root.
 
           DATA(lv_text) = `UNSUPPORTED_FEATURE`.
-          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+          RAISE EXCEPTION TYPE z2ui5_cx_smp_error
             EXPORTING
               val = lv_text.
 
@@ -1186,7 +1165,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
   METHOD rtti_get_t_attri_by_table_name.
 
     IF table_name IS INITIAL.
-      RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+      RAISE EXCEPTION TYPE z2ui5_cx_smp_error
         EXPORTING
           val = `TABLE_NAME_INITIAL_ERROR`.
     ENDIF.
@@ -1199,7 +1178,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
             ).
 
         IF sy-subrc <> 0.
-          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+          RAISE EXCEPTION TYPE z2ui5_cx_smp_error
             EXPORTING
               val = |TABLE_NOT_FOUD_NAME___{ table_name }|.
         ENDIF.
@@ -1214,7 +1193,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
                                                               OTHERS         = 2
             ).
             IF sy-subrc <> 0.
-              RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+              RAISE EXCEPTION TYPE z2ui5_cx_smp_error
                 EXPORTING
                   val = |TABLE_NOT_FOUD_NAME___{ table_name }|.
             ENDIF.
@@ -1532,7 +1511,7 @@ CLASS z2ui5_cl_sample_context IMPLEMENTATION.
         ENDIF.
 
         IF tabname IS INITIAL.
-          RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+          RAISE EXCEPTION TYPE z2ui5_cx_smp_error
             EXPORTING
               val = `RTTI_BY_NAME_TAB_INITIAL`.
         ENDIF.

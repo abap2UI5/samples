@@ -19,7 +19,7 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
 
     me->client = client.
 
-    TRY.
+*    TRY.
         IF client->check_on_init( ).
           client->view_display( z2ui5_cl_xml_view=>factory(
                                     )->page( shownavbutton  = client->check_app_prev_stack( )
@@ -34,9 +34,9 @@ CLASS z2ui5_cl_demo_app_324 IMPLEMENTATION.
             call_dynpro( ).
         ENDCASE.
 
-      CATCH cx_root INTO DATA(x).
-        client->message_box_display( x ).
-    ENDTRY.
+*      CATCH cx_root INTO DATA(x).
+*        client->message_box_display( x ).
+*    ENDTRY.
 
   ENDMETHOD.
 

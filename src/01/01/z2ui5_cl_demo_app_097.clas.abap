@@ -140,7 +140,7 @@ CLASS z2ui5_cl_demo_app_097 IMPLEMENTATION.
         DELETE lt_sel WHERE selected = abap_false.
 
         READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        ls_sel-uuid = z2ui5_cl_sample_context=>uuid_get_c32( ).
+        ls_sel-uuid = z2ui5_cl_smp_context=>uuid_get_c32( ).
         INSERT ls_sel INTO TABLE t_tab2.
 
         mv_layout = `TwoColumnsMidExpanded`.

@@ -92,10 +92,10 @@ CLASS z2ui5_cl_demo_app_103 IMPLEMENTATION.
     DATA(message)   = val.
 
     IF old_sizes IS NOT INITIAL.
-      message = |{ message }{ z2ui5_cl_sample_context=>cv_char_util_newline }Old panes sizes = [{ old_sizes }]|.
+      message = |{ message }{ z2ui5_cl_smp_context=>cv_char_util_newline }Old panes sizes = [{ old_sizes }]|.
     ENDIF.
 
-    message = |{ message }{ z2ui5_cl_sample_context=>cv_char_util_newline }New panes sizes = [{ new_sizes }]|.
+    message = |{ message }{ z2ui5_cl_smp_context=>cv_char_util_newline }New panes sizes = [{ new_sizes }]|.
     client->message_toast_display( message ).
 
   ENDMETHOD.
