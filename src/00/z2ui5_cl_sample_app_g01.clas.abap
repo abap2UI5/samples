@@ -128,7 +128,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_g00|.
+    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
     page->header_content( )->button(
         text  = `Basic Samples`
         icon  = `sap-icon://action`
@@ -140,8 +140,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
                  |The extended samples here can need a specific system, so check per sample | &&
                  |which ABAP stack (ABAP Cloud / on-premise), UI5 release and other prerequisites it requires.|.
 
-    IF class_exists( `Z2UI5_CL_SMP_APP_000` ) = abap_true.
-      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
+    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
       info = |{ info } Click <a href="{ url }" target="_blank">here</a> for the classic overview.|.
     ENDIF.
 
