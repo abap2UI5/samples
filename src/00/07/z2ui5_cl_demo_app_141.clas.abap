@@ -61,18 +61,27 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Popups`
+                                       navbuttonpress = client->_event_nav_app_leave( )
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
+
     " A style class the app owns. There is no bindable property for "carry
     " this CSS class", so the class itself is declared here and put on the
     " control by a frontend action below - the one case where a control
     " method beats a binding.
-    view->_generic( name = `style`
-                    ns   = `html`
-      )->_cc_plain_xml( `.demoHighlight { color: #bb0000 !important; font-size: 1.5rem !important; }`
-      )->get_parent( ).
-
-    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Popups`
-                                       navbuttonpress = client->_event_nav_app_leave( )
-                                       shownavbutton  = client->check_app_prev_stack( ) ).
+    "
+    " It has to travel in the `content` ATTRIBUTE of a core:HTML control. An
+    " html:style ELEMENT does not survive into the DOM (raw XHTML nodes in an
+    " XMLView are deprecated), which leaves the class with no rule behind it:
+    " addStyleClass then succeeds and nothing changes visually.
+    "
+    " The literal CSS braces must be escaped \{ \} in a BACKTICK literal - the
+    " XMLView binding parser reads an unescaped { in any attribute value as a
+    " binding and crashes, and a |...| template would collapse \{ back to {.
+    page->_generic( name   = `HTML`
+                    ns     = `core`
+                    t_prop = VALUE #( ( n = `content`
+                                        v = `<style>.demoHighlight \{ color: #bb0000 !important; font-size: 1.5rem !important; \}</style>` ) ) ).
 
     page->message_strip(
         text     = `Changes a control INSIDE an open popup from the backend. The ` &&
