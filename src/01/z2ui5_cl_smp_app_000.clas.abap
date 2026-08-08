@@ -128,15 +128,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    IF class_exists( `Z2UI5_CL_SAMPLE_APP_G01` ) = abap_true.
-      DATA(url_restricted) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_sample_app_g01|.
-      page->header_content( )->button(
-          text  = `Extended Samples`
-          icon  = `sap-icon://action`
-          press = client->_event_client( val   = client->cs_event-open_new_tab
-                                         t_arg = VALUE #( ( url_restricted ) ) ) ).
-    ENDIF.
-
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.
 
