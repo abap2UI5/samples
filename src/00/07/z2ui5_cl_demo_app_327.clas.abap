@@ -3,9 +3,16 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    " Both fields are strings on purpose. The value round-trips through the
+    " browser and back through the storage, so whatever sits under the key is
+    " outside this app's control - and the framework converts it into these
+    " components BEFORE main( ) runs, where no TRY/CATCH of ours can reach it.
+    " A numeric component would let one oversized stored value (or a leftover
+    " from an earlier shape) fail the conversion on every single app start,
+    " leaving no screen from which to clear it.
     TYPES:
       BEGIN OF ty_s_value,
-        field1 TYPE i,
+        field1 TYPE string,
         field2 TYPE string,
       END OF ty_s_value.
     TYPES:
@@ -56,7 +63,7 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
     s_storage = VALUE #( type   = `local`
                          prefix = `prefix1`
                          key    = `key1`
-                         value  = VALUE #( field1 = 1
+                         value  = VALUE #( field1 = `1`
                                            field2 = `textfld1` ) ).
 
     view_display( ).
@@ -73,7 +80,11 @@ CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
         " and reports it through its `finished` event. The payload is a whole
         " structure, so it arrives as JSON and is parsed back into ABAP.
         TRY.
+            " corresponding fields only: whatever sits under the key may carry
+            " more (or other) fields than this app models - an earlier shape,
+            " or a value someone else wrote
             z2ui5_cl_ajson=>parse( client->get_event_arg( 4 )
+              )->to_abap_corresponding_only(
               )->to_abap( IMPORTING ev_container = s_storage-value ).
           CATCH z2ui5_cx_ajson_error INTO DATA(lx_load).
             client->message_box_display( lx_load->get_text( ) ).
