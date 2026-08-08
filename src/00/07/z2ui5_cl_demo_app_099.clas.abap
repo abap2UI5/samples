@@ -38,12 +38,12 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     DATA t_sort TYPE ty_t_key.
     DATA t_group TYPE ty_t_key.
     DATA t_filter TYPE STANDARD TABLE OF ty_s_filter WITH EMPTY KEY.
+    DATA group_descending TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA group_field TYPE string.
-    DATA group_descending TYPE abap_bool.
     DATA filter_expr TYPE string.
 
     METHODS on_init.
@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDIF.
 
     DATA(field) = t_items[ 1 ]-key.
-    IF client->get_event_arg( 2 ) = `true`.
+    IF client->get_event_arg( 2 ) = abap_true.
       SORT t_tab BY (field) DESCENDING.
 
     ELSE.
@@ -202,7 +202,12 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDIF.
 
     TRY.
-        z2ui5_cl_ajson=>parse( lv_json )->to_abap( IMPORTING ev_container = result ).
+        " the frontend marshals a control with ALL its public properties
+        " (enabled, textDirection, wrapping, ...), so only the fields this app
+        " models are mapped - a plain to_abap( ) fails on the first extra one
+        z2ui5_cl_ajson=>parse( lv_json
+          )->to_abap_corresponding_only(
+          )->to_abap( IMPORTING ev_container = result ).
       CATCH z2ui5_cx_ajson_error INTO DATA(lx).
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.
@@ -338,13 +343,13 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
   METHOD data_read.
 
-    t_tab = VALUE #(
-        ( title = `row_01` info = `completed`   descr = `initial load` icon = `sap-icon://account` )
-        ( title = `row_02` info = `incompleted` descr = `initial load` icon = `sap-icon://account` )
-        ( title = `row_03` info = `working`     descr = `manual entry` icon = `sap-icon://account` )
-        ( title = `row_04` info = `working`     descr = `manual entry` icon = `sap-icon://account` )
-        ( title = `row_05` info = `completed`   descr = `manual entry` icon = `sap-icon://account` )
-        ( title = `row_06` info = `completed`   descr = `initial load` icon = `sap-icon://account` ) ).
+    t_tab = VALUE #( icon = `sap-icon://account`
+        ( title = `row_01` info = `completed`   descr = `initial load` )
+        ( title = `row_02` info = `incompleted` descr = `initial load` )
+        ( title = `row_03` info = `working`     descr = `manual entry` )
+        ( title = `row_04` info = `working`     descr = `manual entry` )
+        ( title = `row_05` info = `completed`   descr = `manual entry` )
+        ( title = `row_06` info = `completed`   descr = `initial load` ) ).
 
     " The sort and group keys are ABAP field names - they are fed straight
     " into SORT ... BY (field) and into the binding sorter path.
