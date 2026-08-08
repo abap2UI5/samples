@@ -38,12 +38,12 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
     DATA t_sort TYPE ty_t_key.
     DATA t_group TYPE ty_t_key.
     DATA t_filter TYPE STANDARD TABLE OF ty_s_filter WITH EMPTY KEY.
+    DATA group_descending TYPE abap_bool.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
     DATA group_field TYPE string.
-    DATA group_descending TYPE abap_bool.
     DATA filter_expr TYPE string.
 
     METHODS on_init.
@@ -202,7 +202,12 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDIF.
 
     TRY.
-        z2ui5_cl_ajson=>parse( lv_json )->to_abap( IMPORTING ev_container = result ).
+        " the frontend marshals a control with ALL its public properties
+        " (enabled, textDirection, wrapping, ...), so only the fields this app
+        " models are mapped - a plain to_abap( ) fails on the first extra one
+        z2ui5_cl_ajson=>parse( lv_json
+          )->to_abap_corresponding_only(
+          )->to_abap( IMPORTING ev_container = result ).
       CATCH z2ui5_cx_ajson_error INTO DATA(lx).
         client->message_box_display( lx->get_text( ) ).
     ENDTRY.

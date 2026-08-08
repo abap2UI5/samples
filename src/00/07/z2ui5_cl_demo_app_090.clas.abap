@@ -84,6 +84,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       WHEN `COLUMNS_CHANGED`.
         TRY.
             z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap_corresponding_only(
               )->to_abap( IMPORTING ev_container = t_columns ).
           CATCH z2ui5_cx_ajson_error INTO DATA(lx).
             client->message_box_display( lx->get_text( ) ).
@@ -92,6 +93,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       WHEN `SORT_CHANGED`.
         TRY.
             z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap_corresponding_only(
               )->to_abap( IMPORTING ev_container = t_sort ).
           CATCH z2ui5_cx_ajson_error INTO lx.
             client->message_box_display( lx->get_text( ) ).
@@ -100,6 +102,7 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
       WHEN `GROUP_CHANGED`.
         TRY.
             z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap_corresponding_only(
               )->to_abap( IMPORTING ev_container = t_group ).
           CATCH z2ui5_cx_ajson_error INTO lx.
             client->message_box_display( lx->get_text( ) ).
