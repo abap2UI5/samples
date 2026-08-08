@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
             `(()=>{ ` &&
             `  const ws_url = (window.location.origin + '/sap/bc/apc/sap/z2ui5_sample').replace('http','ws');` &&
             `  try { ` &&
-            `    ws = new WebSocket(ws_url);` &&
+            `   ws = new WebSocket(ws_url);` &&
             `  } catch (err) {` &&
             `    alert(err);` &&
             `  }` &&
@@ -140,11 +140,11 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
             `    const model = z2ui5.oController.oView.getModel();` &&
             `    const data = model.getData();` &&
             `    if (msg.data === '` && z2ui5_cl_smp_app_489_ws=>c_msg-__new_connection__ && `') {` &&
-            `      data.XX.CONNECTIONS += 1;` &&
+            `      data.CONNECTIONS += 1;` &&
             `    } else if (msg.data === '` && z2ui5_cl_smp_app_489_ws=>c_msg-__closed__ && `') {` &&
-            `      data.XX.CONNECTIONS -= 1;` &&
+            `      data.CONNECTIONS -= 1;` &&
             `    } else {` &&
-            `      data.XX.NEWS_LIST.push(JSON.parse(msg.data));` &&
+            `      data.NEWS_LIST.push(JSON.parse(msg.data));` &&
             `    }` &&
             `    model.setData(data);` &&
             `  };` &&
@@ -158,11 +158,11 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
              `  const model = z2ui5.oView.getModel();` &&
              `  const data = model.getData();` &&
              `  ws.send(JSON.stringify({ ` &&
-             `    TEXT : data.XX.NEWS_INPUT,` &&
-             `    AUTHOR : data.XX.AUTHOR_INPUT ` &&
+             `    TEXT : data.NEWS_INPUT,` &&
+             `    AUTHOR : data.AUTHOR_INPUT ` &&
              `  }));` &&
              `  setTimeout( () => { ` &&
-             `    data.XX.NEWS_INPUT = "";` &&
+             `    data.NEWS_INPUT = "";` &&
              `    model.setData(data);` &&
              `  }, 10 ); ` &&
              `}` ).
