@@ -115,8 +115,12 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
                 )->checkbox( selected = client->_bind( s_input-is_active )
                              text     = `this is a checkbox`
                              enabled  = abap_true )->get_parent( )->get_parent( )->get_parent(
-        )->footer( )->overflow_toolbar(
-            )->toolbar_spacer(
+        " the `buttons` aggregation, not `footer`: sap.m.Dialog only got a
+        " public footer around UI5 1.110, and an aggregation tag the parent
+        " does not have is resolved as a CONTROL CLASS - it 404s and takes the
+        " whole view with it (abap2UI5 AGENTS rule 15). `buttons` exists since
+        " 1.21.1 and right-aligns them the same way.
+        )->buttons(
             )->button( text  = `Cancel`
                        press = client->_event_client( client->cs_event-popup_close )
             )->button( text  = `Confirm`
