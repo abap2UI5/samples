@@ -1,6 +1,6 @@
 "! Hash-based app routing (UI5 Router style), mode KEEP:
 "! client->set_nav_routing( client->cs_nav_mode-keep ) makes the URL carry the
-"! app-state draft as well ('#/app/<CLASS>/<DRAFT>'), so browser Back/Forward
+"! app-state draft as well ('#/app/{CLASS}/{DRAFT}'), so browser Back/Forward
 "! restore the EXACT state: the input and the counter come back unchanged.
 "!
 "! Put in some state (type / raise the counter), open the detail page

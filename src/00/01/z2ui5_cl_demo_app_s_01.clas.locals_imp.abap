@@ -1,3 +1,41 @@
+"! Local exception of this demo - the sample keeps its own error type so it
+"! stays self-contained and does not depend on any other sample class.
+CLASS lcx_error DEFINITION INHERITING FROM cx_no_check FINAL
+  CREATE PUBLIC.
+
+  PUBLIC SECTION.
+
+    METHODS constructor
+      IMPORTING
+        val TYPE string OPTIONAL
+          PREFERRED PARAMETER val.
+
+    METHODS if_message~get_text REDEFINITION.
+
+  PRIVATE SECTION.
+    DATA mv_text TYPE string.
+ENDCLASS.
+
+
+CLASS lcx_error IMPLEMENTATION.
+
+  METHOD constructor.
+
+    super->constructor( ).
+    CLEAR textid.
+    mv_text = val.
+
+  ENDMETHOD.
+
+  METHOD if_message~get_text.
+
+    result = COND #( WHEN mv_text IS INITIAL THEN `UNKNOWN_ERROR` ELSE mv_text ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+
+
 CLASS lcl_locking DEFINITION CREATE PRIVATE.
   PUBLIC SECTION.
 
@@ -52,7 +90,7 @@ CLASS lcl_locking IMPLEMENTATION.
         OTHERS         = 3.
     IF sy-subrc <> 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO DATA(error_text).
-      RAISE EXCEPTION TYPE z2ui5_cx_sample_error EXPORTING val = error_text.
+      RAISE EXCEPTION TYPE lcx_error EXPORTING val = error_text.
     ENDIF.
 
   ENDMETHOD.
@@ -77,7 +115,7 @@ CLASS lcl_locking IMPLEMENTATION.
         OTHERS                = 3.
     IF sy-subrc <> 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO DATA(error_text).
-      RAISE EXCEPTION TYPE z2ui5_cx_sample_error EXPORTING val = error_text.
+      RAISE EXCEPTION TYPE lcx_error EXPORTING val = error_text.
     ENDIF.
 
     result = VALUE #( enqueue_table[ 1 ]-gusevb OPTIONAL ).

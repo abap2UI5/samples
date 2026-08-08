@@ -2,7 +2,7 @@
 "! to the product aggregation ({/T_PRODUCT}); pressing a row's "components"
 "! button opens a popup that uses RELATIVE bindings only ({NAME}, {CATEGORY}, and
 "! the nested aggregation {T_ITEM}). Instead of copying the row's data into event
-"! args, the app element-binds the whole popup slot to /T_PRODUCT/<index> with
+"! args, the app element-binds the whole popup slot to /T_PRODUCT/{index} with
 "! client->follow_up_action( cs_event-bind_element, view = cs_view-popup ), so the
 "! popup's relative bindings - including its component list's aggregation binding -
 "! resolve against the selected product. The row index arrives as the event arg
