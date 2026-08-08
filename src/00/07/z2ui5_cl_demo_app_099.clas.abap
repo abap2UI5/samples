@@ -338,13 +338,13 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
   METHOD data_read.
 
-    t_tab = VALUE #( icon = `sap-icon://account`
-        ( title = `row_01` info = `completed`   descr = `initial load` )
-        ( title = `row_02` info = `incompleted` descr = `initial load` )
-        ( title = `row_03` info = `working`     descr = `manual entry` )
-        ( title = `row_04` info = `working`     descr = `manual entry` )
-        ( title = `row_05` info = `completed`   descr = `manual entry` )
-        ( title = `row_06` info = `completed`   descr = `initial load` ) ).
+    t_tab = VALUE #(
+        ( title = `row_01` info = `completed`   descr = `initial load` icon = `sap-icon://account` )
+        ( title = `row_02` info = `incompleted` descr = `initial load` icon = `sap-icon://account` )
+        ( title = `row_03` info = `working`     descr = `manual entry` icon = `sap-icon://account` )
+        ( title = `row_04` info = `working`     descr = `manual entry` icon = `sap-icon://account` )
+        ( title = `row_05` info = `completed`   descr = `manual entry` icon = `sap-icon://account` )
+        ( title = `row_06` info = `completed`   descr = `initial load` icon = `sap-icon://account` ) ).
 
     " The sort and group keys are ABAP field names - they are fed straight
     " into SORT ... BY (field) and into the binding sorter path.
