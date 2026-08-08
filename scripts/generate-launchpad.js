@@ -29,15 +29,15 @@ const SRC = path.join(__dirname, '..', 'src');
 
 // area (top-level package under src) -> overview app file
 const TARGETS = {
-  '01': path.join(SRC, '01', 'z2ui5_cl_demo_app_g00.clas.abap'),
+  '01': path.join(SRC, '01', 'z2ui5_cl_smp_app_000.clas.abap'),
   '00': path.join(SRC, '00', 'z2ui5_cl_sample_app_g01.clas.abap'),
 };
 
-// The overview apps live under src/ too; the src/01 one (z2ui5_cl_demo_app_g00)
-// even shares the demo-app class-name prefix. Skip both so an overview never
+// The overview apps live under src/ too; the src/01 one (z2ui5_cl_smp_app_000)
+// even shares the sample-app class-name prefix. Skip both so an overview never
 // lists itself as a tile.
 const OVERVIEW_APPS = new Set([
-  'z2ui5_cl_demo_app_g00',
+  'z2ui5_cl_smp_app_000',
   'z2ui5_cl_sample_app_g01',
 ]);
 

@@ -36,7 +36,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `BUTTON_MESSAGE_BOX_SY`.
-        DATA(ls_msg_sy) = z2ui5_cl_sample_context=>msg_get_by_msg(
+        DATA(ls_msg_sy) = z2ui5_cl_smp_context=>msg_get_by_msg(
             id = `NET`
             no = `001` ).
         client->message_box_display( ls_msg_sy ).

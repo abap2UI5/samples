@@ -1,0 +1,122 @@
+CLASS z2ui5_cl_smp_app_045 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_row,
+        count    TYPE i,
+        value    TYPE string,
+        descr    TYPE string,
+        icon     TYPE string,
+        info     TYPE string,
+        checkbox TYPE abap_bool,
+      END OF ty_s_row.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+
+    DATA mv_info_filter TYPE string.
+
+    METHODS refresh_data.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS Z2UI5_CL_SMP_APP_045 IMPLEMENTATION.
+
+
+  METHOD refresh_data.
+
+    DO 1000 TIMES.
+      DATA(ls_row) = VALUE ty_s_row( count = sy-index  value = `red`
+        info = COND #( WHEN sy-index < 50 THEN `completed` ELSE `uncompleted` )
+        descr = `this is a description` checkbox = abap_true ).
+      INSERT ls_row INTO TABLE t_tab.
+    ENDDO.
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+      refresh_data( ).
+    ENDIF.
+
+    CASE client->get( )-event.
+
+      WHEN `FILTER_INFO`.
+        refresh_data( ).
+        IF mv_info_filter <> ``.
+          DELETE t_tab WHERE info <> mv_info_filter.
+        ENDIF.
+
+      WHEN `BUTTON_POST`.
+        client->message_box_display( `button post was pressed` ).
+    ENDCASE.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+        )->page(
+            title          = `abap2UI5 - Table - Backend Filter`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( )
+            )->header_content(
+                )->link(
+      )->get_parent( ).
+
+    page->message_strip(
+        text     = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&
+                   `pressing filter deletes the non-matching rows server-side before re-rendering.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( title    = `Form Title`
+                       editable = abap_true
+                )->content( `form`
+                    )->title( `Filter`
+                    )->label( `info`
+                    )->input( client->_bind( mv_info_filter )
+                    )->button(
+                        text  = `filter`
+                        press = client->_event( `FILTER_INFO` ) ).
+
+    DATA(tab) = page->scroll_container( height   = `70%`
+                                        vertical = abap_true
+        )->table(
+            growing             = abap_true
+            growingthreshold    = `20`
+            growingscrolltoload = abap_true
+            items               = client->_bind( t_tab )
+            sticky              = `ColumnHeaders,HeaderToolbar` ).
+
+    tab->header_toolbar(
+        )->overflow_toolbar(
+            )->toolbar_spacer( ).
+
+    tab->columns(
+        )->column(
+            )->text( `Color` )->get_parent(
+        )->column(
+            )->text( `Info` )->get_parent(
+        )->column(
+            )->text( `Description` )->get_parent(
+        )->column(
+            )->text( `Checkbox` )->get_parent(
+         )->column(
+            )->text( `Counter` ).
+
+    tab->items( )->column_list_item( )->cells(
+       )->text( `{VALUE}`
+       )->text( `{INFO}`
+       )->text( `{DESCR}`
+       )->checkbox( selected = `{CHECKBOX}`
+                    enabled  = abap_false
+       )->text( `{COUNT}` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+ENDCLASS.

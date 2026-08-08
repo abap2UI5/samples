@@ -58,7 +58,7 @@ CLASS Z2UI5_CL_DEMO_APP_333 IMPLEMENTATION.
 
     result = NEW #( ).
 
-    DATA(t_comp) = z2ui5_cl_sample_context=>rtti_get_t_attri_by_any( i_data ).
+    DATA(t_comp) = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( i_data ).
 
     DATA(index) = 0.
 
@@ -77,7 +77,7 @@ CLASS Z2UI5_CL_DEMO_APP_333 IMPLEMENTATION.
     ENDLOOP.
 
     TRY.
-        result->ms_data-guid = z2ui5_cl_sample_context=>uuid_get_c32( ).
+        result->ms_data-guid = z2ui5_cl_smp_context=>uuid_get_c32( ).
       CATCH cx_root.
     ENDTRY.
 

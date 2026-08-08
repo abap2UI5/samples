@@ -128,7 +128,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_g00|.
+    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
     page->header_content( )->button(
         text  = `Basic Samples`
         icon  = `sap-icon://action`
@@ -140,8 +140,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
                  |The extended samples here can need a specific system, so check per sample | &&
                  |which ABAP stack (ABAP Cloud / on-premise), UI5 release and other prerequisites it requires.|.
 
-    IF class_exists( `Z2UI5_CL_SMP_APP_000` ) = abap_true.
-      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
+    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
       info = |{ info } Click <a href="{ url }" target="_blank">here</a> for the classic overview.|.
     ENDIF.
 
@@ -214,6 +214,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `restricted - release - version` header = `Demo App` sub = `Main-Detail Overview` app = `z2ui5_cl_demo_app_085` )
+      ( group = `restricted - release - version` header = `Demo App` sub = `Selection Screen` app = `z2ui5_cl_smp_app_002` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation I` app = `z2ui5_cl_demo_app_lp_03` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation II` app = `z2ui5_cl_demo_app_lp_04` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `Set Title` app = `z2ui5_cl_demo_app_lp_02` )
@@ -261,6 +263,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - testing` header = `Deep Structure Main App` sub = `` app = `z2ui5_cl_demo_app_195` )
       ( group = `restricted - testing` header = `Deep Structure Sub App` sub = `` app = `z2ui5_cl_demo_app_191` )
       ( group = `restricted - testing` header = `Deep Structure Sub App` sub = `` app = `z2ui5_cl_demo_app_194` )
+      ( group = `restricted - testing` header = `model update input editable with focus` sub = `` app = `z2ui5_cl_demo_app_443` )
       ( group = `restricted - testing` header = `Multiple Timers` sub = `` app = `z2ui5_cl_demo_app_353` )
       ( group = `restricted - testing` header = `Nested Apps I` sub = `Calling another app for rendering` app = `z2ui5_cl_demo_app_117` )
       ( group = `restricted - testing` header = `Nested Apps II` sub = `Use RTTI to render different Subapps` app = `z2ui5_cl_demo_app_131` )
@@ -275,8 +278,6 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - testing` header = `RTTI` sub = `Table with Ref in Object` app = `z2ui5_cl_demo_app_347` )
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_344` )
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_345` )
-      ( group = `restricted - testing` header = `Sample App` sub = `Full View` app = `z2ui5_cl_demo_app_085` )
-      ( group = `restricted - testing` header = `Sample App` sub = `Selection Screen` app = `z2ui5_cl_smp_app_002` )
       ( group = `restricted - testing` header = `Type Ref to Data Table with refresh` sub = `` app = `z2ui5_cl_demo_app_199` )
       ( group = `restricted - testing` header = `unit test` sub = `long variable` app = `z2ui5_cl_demo_app_138` )
       ( group = `restricted - testing` header = `ZZZ Data Object for Sample 328` sub = `` app = `z2ui5_cl_demo_app_329` )
@@ -297,11 +298,12 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `obsolet` header = `ext` sub = `call custom function` app = `z2ui5_cl_demo_app_093` )
       ( group = `obsolet` header = `extension` sub = `canvas and svg` app = `z2ui5_cl_demo_app_036` )
       ( group = `obsolet` header = `extension` sub = `custom control` app = `z2ui5_cl_demo_app_037` )
+      ( group = `obsolet` header = `extension` sub = `ext library` app = `z2ui5_cl_demo_app_040` )
       ( group = `obsolet` header = `extension` sub = `html css js` app = `z2ui5_cl_demo_app_032` )
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309` )
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolet` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
-      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_smp_app_000` )
+      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolet` header = `Message Box & Input Functions` sub = `` app = `z2ui5_cl_demo_app_084` )
       ( group = `obsolet` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )
       ( group = `obsolet` header = `obsolete` sub = `filter bar with variants, replaced by 478` app = `z2ui5_cl_demo_app_111` )

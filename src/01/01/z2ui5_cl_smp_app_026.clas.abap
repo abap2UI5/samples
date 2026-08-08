@@ -1,0 +1,140 @@
+CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA product   TYPE string.
+    DATA quantity  TYPE string.
+    DATA placement TYPE string.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+    METHODS view_display.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+
+      placement = `Left`.
+      product   = `tomato`.
+      quantity  = `500`.
+
+      view_display( ).
+
+    ELSEIF client->check_on_event( `POPOVER` ).
+      popover_display( `TEST` ).
+
+    ELSEIF client->check_on_event( `BUTTON_CONFIRM` ).
+
+      client->message_toast_display( `confirm` ).
+      client->popover_destroy( ).
+
+    ELSEIF client->check_on_event( `BUTTON_CANCEL` ).
+
+      client->message_toast_display( `cancel` ).
+      client->popover_destroy( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->popover(
+            title     = `Popover Title`
+            placement = placement
+        )->footer(
+        )->overflow_toolbar(
+            )->toolbar_spacer(
+            )->button(
+                text  = `Cancel`
+                press = client->_event( `BUTTON_CANCEL` )
+            )->button(
+                text  = `Confirm`
+                press = client->_event( `BUTTON_CONFIRM` )
+                type  = `Emphasized`
+        )->get_parent( )->get_parent(
+        )->text( `make an input here:`
+        )->input( `abcd` ).
+
+    client->popover_display(
+        xml   = view->stringify( )
+        by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
+        )->page(
+            title          = `abap2UI5 - Popover Examples`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Popover demo: choose a placement with the segmented button, then open a popover ` &&
+                   `anchored to a control, with confirm and cancel actions.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( `Popover`
+        )->content( `form`
+        )->title( `Input`
+        )->label( `Link`
+        )->link(
+            text = `Documentation UI5 Popover Control`
+            href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
+        )->label( `placement`
+        )->segmented_button( client->_bind( placement )
+            )->items(
+            )->segmented_button_item(
+                key  = `Left`
+                icon = `sap-icon://add-favorite`
+                text = `Left`
+            )->segmented_button_item(
+                key  = `Top`
+                icon = `sap-icon://accept`
+                text = `Top`
+            )->segmented_button_item(
+                key  = `Bottom`
+                icon = `sap-icon://accept`
+                text = `Bottom`
+            )->segmented_button_item(
+                key  = `Right`
+                icon = `sap-icon://attachment`
+                text = `Right`
+        )->get_parent( )->get_parent(
+        )->label( `popover`
+        )->button(
+            text  = `show`
+            press = client->_event( `POPOVER` )
+            id    = `TEST`
+        )->button(
+            text  = `cancel`
+            press = client->_event( `POPOVER` )
+        )->button(
+            text  = `post`
+            press = client->_event( `POPOVER` ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+ENDCLASS.
