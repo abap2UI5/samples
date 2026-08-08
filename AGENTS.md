@@ -416,6 +416,8 @@ manually or via editor tooling that the above rules are met.
       data_update( ).
     ENDIF.
     ```
+- **ABAP Doc (`"!`) position** — not caught by `abaplint`, but the extended check (SLIN/ATC) reports "ABAP Doc comment is in the wrong position": a `"!` block must sit directly before the one declaration it documents. Inside a chained statement (`TYPES: BEGIN OF …`) that means directly before the component, *within* the chain. It is never allowed inside a `METHODS` parameter list — document parameters in the method's own doc block above the `METHODS` keyword via `"! @parameter <name> | <text>`. A plain `"` comment (no `!`) is fine anywhere.
+- ABAP Doc is parsed as HTML: escape a literal `<`, `>` or `&` as `&lt;`, `&gt;`, `&amp;`.
 - Always run `abaplint` after every change. It must report 0 issues before committing.
 - Before starting app development, read all active rules in `abaplint.jsonc` and follow them throughout.
 
