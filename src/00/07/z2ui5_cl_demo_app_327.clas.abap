@@ -3,103 +3,152 @@ CLASS z2ui5_cl_demo_app_327 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF ty_s_value,
-             field1 TYPE i,
-             field2 TYPE string,
-           END OF ty_s_value.
-
-    TYPES: BEGIN OF ty_s_storage,
-             type   TYPE string,
-             prefix TYPE string,
-             key    TYPE string,
-             value  TYPE string,
-*             value  TYPE ty_s_value,
-           END OF ty_s_storage.
-
-    TYPES: BEGIN OF ty_s_storage_type,
-             type TYPE string,
-           END OF ty_s_storage_type.
-
-    DATA storage       TYPE ty_s_storage.
-    DATA stored_value  TYPE string.
-    DATA storage_types TYPE STANDARD TABLE OF ty_s_storage_type.
+    TYPES:
+      BEGIN OF ty_s_value,
+        field1 TYPE i,
+        field2 TYPE string,
+      END OF ty_s_value.
+    TYPES:
+      BEGIN OF ty_s_storage,
+        type   TYPE string,
+        prefix TYPE string,
+        key    TYPE string,
+        value  TYPE ty_s_value,
+      END OF ty_s_storage.
+    TYPES:
+      BEGIN OF ty_s_type,
+        type TYPE string,
+      END OF ty_s_type.
+    DATA s_storage TYPE ty_s_storage.
+    DATA s_stored_value TYPE ty_s_value.
+    DATA t_types TYPE STANDARD TABLE OF ty_s_type WITH EMPTY KEY.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_init.
+    METHODS on_event.
+    METHODS view_display.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_327 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_327 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
+    me->client = client.
     IF client->check_on_init( ).
-
-      storage_types = VALUE #( ( type = `local` )
-                               ( type = `session` ) ).
-      storage = VALUE #( type   = `local`
-                         prefix = `prefix1`
-                         key    = `key1`
-*                         value  = VALUE #( field1 = 1
-*                         field2 = 'textfld1' )
-                                           ).
-
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-      view->shell(
-        )->page( title          = `abap2UI5 - Storage`
-                 navbuttonpress = client->_event_nav_app_leave( )
-                 shownavbutton  = client->check_app_prev_stack( )
-
-        )->simple_form( title    = `Local/Session Storage`
-                        editable = abap_true
-            )->content( `form`
-                )->label( `Type`
-                      )->select( forceselection = abap_true
-                                 selectedkey    = client->_bind( storage-type )
-                                 items          = client->_bind( storage_types )
-                          )->item( key  = `{TYPE}`
-                                   text = `{TYPE}`
-                          )->get_parent(
-                )->label( `Prefix`
-                )->input( client->_bind( storage-prefix )
-                )->label( `Key`
-                )->input( client->_bind( storage-key )
-                )->label( `Value`
-                )->input( client->_bind( storage-value )
-                )->button( text  = `store`
-                           press = client->_event_client( val   = z2ui5_if_client=>cs_event-store_data
-                                                          t_arg = VALUE #( ( |${ client->_bind( storage ) }| ) ) )
-
-                )->button( text  = `get`
-                           press = client->_event( `GET_STORED_VALUE` )
-                                       )->get_parent(
-                                       )->get_parent(
-
-        )->_z2ui5( )->storage(
-            finished = client->_event(
-                val   = `LOCAL_STORAGE_LOADED`
-                t_arg = VALUE #( ( `${$parameters>/type}` ) ( `${$parameters>/prefix}` ) ( `${$parameters>/key}` ) ( `${$parameters>/value}` ) ) )
-            type     = client->_bind( storage-type )
-            prefix   = client->_bind( storage-prefix )
-            key      = client->_bind( storage-key )
-            value    = client->_bind( stored_value ) ).
-      client->view_display( view->stringify( ) ).
-
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
     ENDIF.
 
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    t_types   = VALUE #( ( type = `local` ) ( type = `session` ) ).
+    s_storage = VALUE #( type   = `local`
+                         prefix = `prefix1`
+                         key    = `key1`
+                         value  = VALUE #( field1 = 1
+                                           field2 = `textfld1` ) ).
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
     CASE client->get( )-event.
+
       WHEN `LOCAL_STORAGE_LOADED`.
-*        z2ui5_cl_ajson=>parse( client->get_event_arg( 4 ) )->to_abap( IMPORTING ev_container = storage-value ).
-        storage-value = client->get_event_arg( 4 ).
+        " The z2ui5:Storage control read a value out of the browser storage
+        " and reports it through its `finished` event. The payload is a whole
+        " structure, so it arrives as JSON and is parsed back into ABAP.
+        TRY.
+            z2ui5_cl_ajson=>parse( client->get_event_arg( 4 )
+              )->to_abap( IMPORTING ev_container = s_storage-value ).
+          CATCH z2ui5_cx_ajson_error INTO DATA(lx_load).
+            client->message_box_display( lx_load->get_text( ) ).
+        ENDTRY.
         client->view_model_update( ).
+
       WHEN `GET_STORED_VALUE`.
-*        z2ui5_cl_ajson=>parse( stored_value )->to_abap( IMPORTING ev_container = storage-value ).
-        storage-value = stored_value.
+        s_storage-value = s_stored_value.
         client->view_model_update( ).
+
     ENDCASE.
 
   ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Storage`
+                                       navbuttonpress = client->_event_nav_app_leave( )
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Reads and writes the browser's local or session storage. The ` &&
+                   `value is a whole ABAP structure, not just a string: the write ` &&
+                   `side sends it with the STORE_DATA frontend action, the invisible ` &&
+                   `z2ui5:Storage control reads it back and reports it as JSON.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( title    = `Local/Session Storage`
+                       editable = abap_true
+        )->content( `form`
+            )->label( `Type`
+            )->select( forceselection = abap_true
+                       selectedkey    = client->_bind( s_storage-type )
+                       items          = client->_bind( t_types )
+                )->item( key  = `{TYPE}`
+                         text = `{TYPE}` )->get_parent(
+            )->label( `Prefix`
+            )->input( client->_bind( s_storage-prefix )
+            )->label( `Key`
+            )->input( client->_bind( s_storage-key )
+            )->label( `Value - Field 1`
+            )->input( value = client->_bind( s_storage-value-field1 )
+                      type  = `Number`
+            )->label( `Value - Field 2`
+            )->input( client->_bind( s_storage-value-field2 )
+            )->label( ``
+            )->button( text  = `store`
+                       press = client->_event_client(
+                           val   = z2ui5_if_client=>cs_event-store_data
+                           t_arg = VALUE #( ( |${ client->_bind( s_storage ) }| ) ) )
+            )->button( text  = `get`
+                       press = client->_event( `GET_STORED_VALUE` ) ).
+
+    " Invisible companion control: it reads `key` out of the selected storage
+    " and fires `finished` when the stored value differs from `value`. The
+    " comparison is by value, so a structure does not re-trigger on every
+    " render.
+    page->_z2ui5( )->storage(
+        finished = client->_event( val   = `LOCAL_STORAGE_LOADED`
+                                   t_arg = VALUE #( ( `${$parameters>/type}` )
+                                                    ( `${$parameters>/prefix}` )
+                                                    ( `${$parameters>/key}` )
+                                                    ( `${$parameters>/value}` ) ) )
+        type     = client->_bind( s_storage-type )
+        prefix   = client->_bind( s_storage-prefix )
+        key      = client->_bind( s_storage-key )
+        value    = client->_bind( s_stored_value ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
 ENDCLASS.

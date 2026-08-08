@@ -5,66 +5,88 @@ CLASS z2ui5_cl_demo_app_099 DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_s_row,
-        title    TYPE string,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        selected TYPE abap_bool,
+        title TYPE string,
+        info  TYPE string,
+        descr TYPE string,
+        icon  TYPE string,
       END OF ty_s_row.
     TYPES:
-      BEGIN OF ty_s_sort,
-        text     TYPE string,
+      BEGIN OF ty_s_key,
         key      TYPE string,
+        text     TYPE string,
         selected TYPE abap_bool,
-      END OF ty_s_sort.
+      END OF ty_s_key.
+    TYPES ty_t_key TYPE STANDARD TABLE OF ty_s_key WITH EMPTY KEY.
+    TYPES:
+      BEGIN OF ty_s_filter,
+        key   TYPE string,
+        text  TYPE string,
+        items TYPE ty_t_key,
+      END OF ty_s_filter.
+    " Shape of one ViewSettingsItem as it arrives from the confirm event: the
+    " frontend marshals the control into its id plus its public properties.
+    TYPES:
+      BEGIN OF ty_s_event_item,
+        id       TYPE string,
+        key      TYPE string,
+        text     TYPE string,
+        selected TYPE abap_bool,
+      END OF ty_s_event_item.
+    TYPES ty_t_event_item TYPE STANDARD TABLE OF ty_s_event_item WITH EMPTY KEY.
 
-    DATA
-      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA
-      t_tab_sort TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
-    DATA
-      t_tab_group TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
-    DATA
-      t_tab_filter TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
-
-    DATA mv_sorter_group TYPE string.
-    DATA mv_filter TYPE string.
-    DATA mv_sort_descending TYPE abap_bool.
-    DATA mv_group_descending TYPE abap_bool.
-    DATA mv_group_desc_str TYPE string VALUE `false` ##NO_TEXT.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_sort TYPE ty_t_key.
+    DATA t_group TYPE ty_t_key.
+    DATA t_filter TYPE STANDARD TABLE OF ty_s_filter WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS set_data.
-    METHODS view_display.
-    METHODS view_display_sort_popup.
-    METHODS view_display_filter_popup.
-    METHODS view_display_group_popup.
-    METHODS view_display_settings_popup.
+    DATA group_field TYPE string.
+    DATA group_descending TYPE abap_bool.
+    DATA filter_expr TYPE string.
+
+    METHODS on_init.
     METHODS on_event.
+    METHODS on_event_confirm_sort.
+    METHODS on_event_confirm_group.
+    METHODS on_event_confirm_filter.
+    METHODS view_display.
+    METHODS popup_display_sort.
+    METHODS popup_display_group.
+    METHODS popup_display_filter.
+    METHODS event_items
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE ty_t_event_item.
+    METHODS data_read.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
-
-CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
-
+CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
     IF client->check_on_init( ).
-
-      set_data( ).
-
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
-
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    data_read( ).
+
+    view_display( ).
 
   ENDMETHOD.
 
@@ -72,269 +94,280 @@ CLASS Z2UI5_CL_DEMO_APP_099 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
-      WHEN `ALL`.
-        view_display_settings_popup( ).
       WHEN `SORT`.
-        view_display_sort_popup( ).
-      WHEN `FILTER`.
-        view_display_filter_popup( ).
+        popup_display_sort( ).
       WHEN `GROUP`.
-        view_display_group_popup( ).
+        popup_display_group( ).
+      WHEN `FILTER`.
+        popup_display_filter( ).
       WHEN `CONFIRM_SORT`.
-        DATA(lt_arg) = client->get( )-t_event_arg.
-
-        IF lt_arg IS NOT INITIAL.
-
-          DATA(sort_field) = lt_arg[ 1 ].
-
-          IF mv_sort_descending = abap_true.
-            SORT t_tab BY (sort_field) DESCENDING.
-
-          ELSE.
-            SORT t_tab BY (sort_field) ASCENDING.
-
-          ENDIF.
-
-          client->view_model_update( ).
-
-        ENDIF.
-
-      WHEN `CONFIRM_FILTER`.
-        mv_filter = VALUE #( ).
-        lt_arg = client->get( )-t_event_arg.
-
-        IF lt_arg IS NOT INITIAL.
-
-          DATA(filter_string) = lt_arg[ 1 ].
-          SPLIT filter_string AT `:` INTO DATA(lv_dummy) filter_string.
-          CONDENSE filter_string NO-GAPS.
-          SPLIT filter_string AT `(` INTO DATA(lv_field) DATA(lv_values).
-          TRANSLATE lv_field TO UPPER CASE.
-          DATA(lv_values_len) = strlen( lv_values ) - 1.
-          lv_values = lv_values+0(lv_values_len).
-          SPLIT lv_values AT `,` INTO TABLE DATA(lt_values) IN CHARACTER MODE.
-
-          IF sy-subrc = 0.
-            LOOP AT lt_values INTO DATA(lv_val).
-              mv_filter = mv_filter && `{path:'` && lv_field && `',operator: 'EQ',value1:'` && lv_val && `'},`.
-            ENDLOOP.
-          ENDIF.
-          DATA(mv_filter_len) = strlen( mv_filter ) - 1.
-          mv_filter = mv_filter+0(mv_filter_len).
-
-          view_display( ).
-
-        ENDIF.
-
+        on_event_confirm_sort( ).
       WHEN `CONFIRM_GROUP`.
-        lt_arg = client->get( )-t_event_arg.
-
-        IF lt_arg IS NOT INITIAL.
-
-          DATA(group_field) = lt_arg[ 1 ].
-
-          IF group_field IS NOT INITIAL.
-
-            IF mv_group_descending = abap_true.
-              SORT t_tab BY (group_field) DESCENDING.
-
-            ELSE.
-              SORT t_tab BY (group_field) ASCENDING.
-            ENDIF.
-
-            mv_sorter_group = group_field.
-            TRANSLATE mv_sorter_group TO UPPER CASE.
-
-          ELSE.
-
-            IF mv_group_descending = abap_true.
-              SORT t_tab BY (group_field) DESCENDING.
-
-            ELSE.
-              SORT t_tab BY (group_field) ASCENDING.
-            ENDIF.
-
-            mv_sorter_group = VALUE #( ).
-          ENDIF.
-
-          view_display( ).
-
-        ENDIF.
-
+        on_event_confirm_group( ).
+      WHEN `CONFIRM_FILTER`.
+        on_event_confirm_filter( ).
       WHEN `RESET_GROUP`.
+        group_field = ``.
+        view_display( ).
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD set_data.
+  METHOD on_event_confirm_sort.
 
-    t_tab = VALUE #(
-      ( title = `row_01`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-      ( title = `row_02`  info = `incompleted` descr = `this is a description` icon = `sap-icon://account` )
-      ( title = `row_03`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-      ( title = `row_04`  info = `working`     descr = `this is a description` icon = `sap-icon://account` )
-      ( title = `row_05`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` )
-      ( title = `row_06`  info = `completed`   descr = `this is a description` icon = `sap-icon://account` ) ).
+    " sortItem is a single ViewSettingsItem control. It arrives as one JSON
+    " object carrying the control's public properties - no reach into UI5
+    " internals (the former ${$parameters>/sortItem/mProperties/key}) needed.
+    DATA(t_items) = event_items( client->get_event_arg( ) ).
+    IF t_items IS INITIAL.
+      RETURN.
+    ENDIF.
 
-    t_tab_group = VALUE #(
-       ( text = `Title`       key = `title` )
-       ( text = `Info`        key = `info` )
-       ( text = `Description` key = `descr` ) ).
+    DATA(field) = t_items[ 1 ]-key.
+    IF client->get_event_arg( 2 ) = abap_true.
+      SORT t_tab BY (field) DESCENDING.
 
-    t_tab_sort = VALUE #(
-       ( text = `Title`       key = `title` )
-       ( text = `Info`        key = `info` )
-       ( text = `Description` key = `descr` ) ).
+    ELSE.
+      SORT t_tab BY (field) ASCENDING.
+    ENDIF.
 
-    t_tab_filter = VALUE #(
-      ( text = `Title`  key = `Title` )
-      ( text = `Descr`  key = `Descr` )
-      ( text = `Info`   key = `Info` ) ).
+    client->view_model_update( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event_confirm_group.
+
+    DATA(t_items) = event_items( client->get_event_arg( ) ).
+
+    group_field      = COND #( WHEN t_items IS INITIAL THEN `` ELSE t_items[ 1 ]-key ).
+    group_descending = boolc( client->get_event_arg( 2 ) = abap_true ).
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event_confirm_filter.
+
+    " filterItems is an ARRAY of the selected ViewSettingsItem controls. The
+    " frontend marshals every one of them, so the backend reads real keys.
+    " Parsing the localized `filterString` (the former approach) broke as soon
+    " as the logon language changed.
+    DATA(t_items) = event_items( client->get_event_arg( ) ).
+
+    " Selected values of the SAME filter category are OR-ed, the categories
+    " themselves AND-ed. The leaf key carries its category as `FIELD:value`,
+    " a contract this app owns.
+    DATA t_fields TYPE STANDARD TABLE OF string WITH EMPTY KEY.
+    LOOP AT t_items INTO DATA(s_item).
+      SPLIT s_item-key AT `:` INTO DATA(field) DATA(value).
+      IF NOT line_exists( t_fields[ table_line = field ] ).
+        APPEND field TO t_fields.
+      ENDIF.
+    ENDLOOP.
+
+    DATA(groups) = ``.
+    LOOP AT t_fields INTO field.
+      DATA(alternatives) = ``.
+      LOOP AT t_items INTO s_item.
+        SPLIT s_item-key AT `:` INTO DATA(item_field) value.
+        CHECK item_field = field.
+        alternatives = |{ alternatives }{ COND #( WHEN alternatives IS NOT INITIAL THEN `,` ) }| &&
+                       |\{ path: '{ field }', operator: 'EQ', value1: '{ value }' \}|.
+      ENDLOOP.
+      groups = |{ groups }{ COND #( WHEN groups IS NOT INITIAL THEN `,` ) }| &&
+               |\{ filters: [{ alternatives }], and: false \}|.
+    ENDLOOP.
+
+    filter_expr = groups.
+
+    view_display( ).
+
+  ENDMETHOD.
+
+
+  METHOD event_items.
+
+    " One ViewSettingsItem arrives as a JSON object, several as a JSON array -
+    " ajson reads both into the same table when the object is wrapped.
+    DATA(lv_json) = condense( val ).
+    IF lv_json IS INITIAL.
+      RETURN.
+    ENDIF.
+
+    IF lv_json(1) <> `[`.
+      lv_json = |[{ lv_json }]|.
+    ENDIF.
+
+    TRY.
+        z2ui5_cl_ajson=>parse( lv_json )->to_abap( IMPORTING ev_container = result ).
+      CATCH z2ui5_cx_ajson_error INTO DATA(lx).
+        client->message_box_display( lx->get_text( ) ).
+    ENDTRY.
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title           = `abap2UI5 - List`
-            navbuttonpress  = client->_event_nav_app_leave( )
-              shownavbutton = abap_true
-            )->header_content(
-                )->link(
-      )->get_parent( ).
+    DATA(items) = |\{ path: '{ client->_bind( val  = t_tab
+                                              path = abap_true ) }'|.
+    IF group_field IS NOT INITIAL.
+      items = items && |, sorter: \{ path: '{ group_field }', descending: | &&
+                       |{ COND string( WHEN group_descending = abap_true THEN `true` ELSE `false` ) }, group: true \}|.
+    ENDIF.
+    IF filter_expr IS NOT INITIAL.
+      items = items && |, filters: [{ filter_expr }]|.
+    ENDIF.
+    items = items && ` }`.
 
-    page->table(
-        headertext = `Table Output`
-        items      = `{path:'` && client->_bind( val = t_tab path = abap_true )
-                            && `',sorter:{path:'` && mv_sorter_group
-                            && `',group:` && `true` && `}`
-                            && `,filters:[` && mv_filter && `] }`
-       )->header_toolbar(
-        )->overflow_toolbar(
-          )->title( text  = `Table`
-                    level = `H2`
-          )->toolbar_spacer(
-          )->button( icon    = `sap-icon://sort`
-                     tooltip = `Sort`
-                     press   = client->_event( `SORT` )
-          )->button( icon    = `sap-icon://filter`
-                     tooltip = `Filter`
-                     press   = client->_event( `FILTER` )
-          )->button( icon    = `sap-icon://group-2`
-                     tooltip = `Group`
-                     press   = client->_event( `GROUP` )
-          )->button( icon    = `sap-icon://action-settings`
-                     tooltip = `Settings`
-                     press   = client->_event( `ALL` )
-         )->get_parent( )->get_parent(
-       )->columns(
-        )->column( )->text( `Title` )->get_parent(
-        )->column( )->text( `Info` )->get_parent(
-        )->column( )->text( `Descr` )->get_parent(
-        )->column( )->text( `Icon` )->get_parent(
-       )->get_parent(
-      )->items(
-        )->column_list_item( valign = `Middle`
-          )->cells(
-            )->text( `{TITLE}`
-            )->text( `{INFO}`
-            )->text( `{DESCR}`
-            )->icon( src = `{ICON}` ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - ViewSettingsDialog`
+                                       navbuttonpress = client->_event_nav_app_leave( )
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Sort, group and filter a table through a ViewSettingsDialog. The ` &&
+                   `confirm event hands over the selected ViewSettingsItem CONTROLS; ` &&
+                   `the frontend marshals them into JSON, so the backend reads their ` &&
+                   `keys instead of parsing the localized filterString.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->table( headertext = `Table Output`
+                 items      = items
+        )->header_toolbar(
+            )->overflow_toolbar(
+                )->title( text  = `Table`
+                          level = `H2`
+                )->toolbar_spacer(
+                )->button( icon    = `sap-icon://sort`
+                           tooltip = `Sort`
+                           press   = client->_event( `SORT` )
+                )->button( icon    = `sap-icon://filter`
+                           tooltip = `Filter`
+                           press   = client->_event( `FILTER` )
+                )->button( icon    = `sap-icon://group-2`
+                           tooltip = `Group`
+                           press   = client->_event( `GROUP` ) )->get_parent( )->get_parent(
+        )->columns(
+            )->column( )->text( `Title` )->get_parent(
+            )->column( )->text( `Info` )->get_parent(
+            )->column( )->text( `Description` )->get_parent(
+            )->column( )->text( `Icon` )->get_parent( )->get_parent(
+        )->items(
+            )->column_list_item( valign = `Middle`
+                )->cells(
+                    )->text( `{TITLE}`
+                    )->text( `{INFO}`
+                    )->text( `{DESCR}`
+                    )->icon( src = `{ICON}` ).
 
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_display_filter_popup.
+  METHOD popup_display_sort.
 
-    DATA(popup_filter) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(filter_view) = popup_filter->view_settings_dialog( filteritems = client->_bind( t_tab_filter )
-                                                            confirm     = client->_event( val = `CONFIRM_FILTER` t_arg = VALUE #( ( `${$parameters>/filterString}` ) ) )
-      )->filter_items(
-        )->view_settings_filter_item( multiselect = abap_true
-                                      text        = `{TEXT}`
-                                      key         = `{KEY}`
-          )->items(
-            )->view_settings_item( text = `{TEXT}`
-                                   key  = `{KEY}` )->get_parent(
-*            )->view_settings_item( text = `Completed` key = `Completed` )->get_parent(
-*            )->view_settings_item( text = `Incompleted` key = `Incompleted` )->get_parent(
-*            )->view_settings_item( text = `Working` key = `Working`
-        ).
+    popup->view_settings_dialog(
+        sortitems      = client->_bind( t_sort )
+        sortdescending = abap_false
+        confirm        = client->_event( val   = `CONFIRM_SORT`
+                                         t_arg = VALUE #( ( `${$parameters>/sortItem}` )
+                                                          ( `${$parameters>/sortDescending}` ) ) )
+        )->sort_items(
+            )->view_settings_item( key      = `{KEY}`
+                                   text     = `{TEXT}`
+                                   selected = `{SELECTED}` ).
 
-    client->popup_display( filter_view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_display_group_popup.
+  METHOD popup_display_group.
 
-    DATA(popup_group) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(group_view) = popup_group->view_settings_dialog( confirm         = client->_event( val = `CONFIRM_GROUP` t_arg = VALUE #( ( `${$parameters>/groupItem/mProperties/key}` ) ) )
-                                                          reset           = client->_event( `RESET_GROUP` )
-                                                          groupdescending = client->_bind( mv_group_descending )
-                                                          groupitems      = client->_bind( t_tab_group )
-                        )->group_items(
-                          )->view_settings_item( text     = `{TEXT}`
-                                                 key      = `{KEY}`
-                                                 selected = `{SELECTED}` ).
+    popup->view_settings_dialog(
+        groupitems      = client->_bind( t_group )
+        groupdescending = client->_bind( group_descending )
+        reset           = client->_event( `RESET_GROUP` )
+        confirm         = client->_event( val   = `CONFIRM_GROUP`
+                                          t_arg = VALUE #( ( `${$parameters>/groupItem}` )
+                                                           ( `${$parameters>/groupDescending}` ) ) )
+        )->group_items(
+            )->view_settings_item( key      = `{KEY}`
+                                   text     = `{TEXT}`
+                                   selected = `{SELECTED}` ).
 
-    client->popup_display( group_view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display_settings_popup.
-
-    DATA(popup_settings) = z2ui5_cl_xml_view=>factory_popup( ).
-
-    popup_settings = popup_settings->view_settings_dialog(
-                                    confirm     = client->_event( `ALL_EVENT` )
-                                    sortitems   = client->_bind( t_tab_sort )
-                                    groupitems  = client->_bind( t_tab_group )
-                                    filteritems = client->_bind( t_tab_filter )
-                        )->sort_items(
-                          )->view_settings_item( text     = `{TEXT}`
-                                                 key      = `{KEY}`
-                                                 selected = `{SELECTED}` )->get_parent( )->get_parent(
-                        )->group_items(
-                          )->view_settings_item( text     = `{TEXT}`
-                                                 key      = `{KEY}`
-                                                 selected = `{SELECTED}` )->get_parent( )->get_parent(
-                        )->filter_items(
-                          )->view_settings_filter_item( text        = `{TEXT}`
-                                                        key         = `{KEY}`
-                                                        multiselect = abap_true
-                            )->items(
-                              )->view_settings_item( text = `{TEXT}`
-                                                     key  = `{KEY}` ).
-
-    client->popup_display( popup_settings->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_display_sort_popup.
+  METHOD popup_display_filter.
 
-    DATA(popup_sort) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(sort_view) = popup_sort->view_settings_dialog(
-                                    confirm        = client->_event( val = `CONFIRM_SORT` t_arg = VALUE #( ( `${$parameters>/sortItem/mProperties/key}` ) ) )
-                                    sortitems      = client->_bind( t_tab_sort )
-                                    sortdescending = client->_bind( mv_sort_descending )
-                        )->sort_items(
-                          )->view_settings_item( text     = `{TEXT}`
-                                                 key      = `{KEY}`
-                                                 selected = `{SELECTED}` ).
+    popup->view_settings_dialog(
+        filteritems = client->_bind( t_filter )
+        confirm     = client->_event( val   = `CONFIRM_FILTER`
+                                      t_arg = VALUE #( ( `${$parameters>/filterItems}` ) ) )
+        )->filter_items(
+            )->view_settings_filter_item( key         = `{KEY}`
+                                          text        = `{TEXT}`
+                                          multiselect = abap_true
+                                          items       = `{ITEMS}`
+                )->items(
+                    )->view_settings_item( key      = `{KEY}`
+                                           text     = `{TEXT}`
+                                           selected = `{SELECTED}` ).
 
-    client->popup_display( sort_view->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
+
+
+  METHOD data_read.
+
+    t_tab = VALUE #( icon = `sap-icon://account`
+        ( title = `row_01` info = `completed`   descr = `initial load` )
+        ( title = `row_02` info = `incompleted` descr = `initial load` )
+        ( title = `row_03` info = `working`     descr = `manual entry` )
+        ( title = `row_04` info = `working`     descr = `manual entry` )
+        ( title = `row_05` info = `completed`   descr = `manual entry` )
+        ( title = `row_06` info = `completed`   descr = `initial load` ) ).
+
+    " The sort and group keys are ABAP field names - they are fed straight
+    " into SORT ... BY (field) and into the binding sorter path.
+    t_sort = VALUE #( ( key = `TITLE` text = `Title` )
+                      ( key = `INFO`  text = `Info` )
+                      ( key = `DESCR` text = `Description` ) ).
+
+    t_group = t_sort.
+
+    " A leaf key carries its category: `FIELD:value`. The confirm event
+    " reports the selected leaves only, so the category has to travel with
+    " them.
+    t_filter = VALUE #(
+        ( key   = `INFO`
+          text  = `Info`
+          items = VALUE #( ( key = `INFO:completed`   text = `Completed` )
+                           ( key = `INFO:incompleted` text = `Incompleted` )
+                           ( key = `INFO:working`     text = `Working` ) ) )
+        ( key   = `DESCR`
+          text  = `Description`
+          items = VALUE #( ( key = `DESCR:initial load` text = `Initial load` )
+                           ( key = `DESCR:manual entry` text = `Manual entry` ) ) ) ).
+
+  ENDMETHOD.
+
 ENDCLASS.
