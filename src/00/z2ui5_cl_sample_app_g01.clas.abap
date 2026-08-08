@@ -128,7 +128,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
-    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_g00|.
+    DATA(url_standard) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
     page->header_content( )->button(
         text  = `Basic Samples`
         icon  = `sap-icon://action`
@@ -140,8 +140,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
                  |The extended samples here can need a specific system, so check per sample | &&
                  |which ABAP stack (ABAP Cloud / on-premise), UI5 release and other prerequisites it requires.|.
 
-    IF class_exists( `Z2UI5_CL_SMP_APP_000` ) = abap_true.
-      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_smp_app_000|.
+    IF class_exists( `Z2UI5_CL_DEMO_APP_000` ) = abap_true.
+      DATA(url) = |{ client->get( )-s_config-origin }{ client->get( )-s_config-pathname }?app_start=z2ui5_cl_demo_app_000|.
       info = |{ info } Click <a href="{ url }" target="_blank">here</a> for the classic overview.|.
     ENDIF.
 
@@ -214,6 +214,10 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
+      ( group = `restricted - release - version` header = `Demo App` sub = `Main-Detail Overview` app = `z2ui5_cl_demo_app_085` )
+      ( group = `restricted - release - version` header = `Demo App` sub = `Selection Screen` app = `z2ui5_cl_smp_app_002` )
+      ( group = `restricted - release - version` header = `gantt` sub = `chart with tree table (sap.gantt)` app = `z2ui5_cl_demo_app_076` )
+      ( group = `restricted - release - version` header = `gantt` sub = `relationships between shapes` app = `z2ui5_cl_demo_app_179` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation I` app = `z2ui5_cl_demo_app_lp_03` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `cross app navigation II` app = `z2ui5_cl_demo_app_lp_04` )
       ( group = `restricted - release - version` header = `Launchpad` sub = `Set Title` app = `z2ui5_cl_demo_app_lp_02` )
@@ -231,6 +235,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - release - version` header = `Smart Controls` sub = `SmartFilterBar and SmartTable` app = `z2ui5_cl_demo_app_477` )
       ( group = `restricted - release - version` header = `Smart Controls` sub = `SmartForm, editable toggle` app = `z2ui5_cl_demo_app_476` )
       ( group = `restricted - release - version` header = `Smart Controls` sub = `Switch Default Model` app = `z2ui5_cl_demo_app_314` )
+      ( group = `restricted - release - version` header = `ViewSettingsDialog` sub = `sort, group and filter a table` app = `z2ui5_cl_demo_app_099` )
       ( group = `restricted - release - version` header = `visualization` sub = `bar chart` app = `z2ui5_cl_demo_app_016` )
       ( group = `restricted - release - version` header = `visualization` sub = `donut chart` app = `z2ui5_cl_smp_app_013` )
       ( group = `restricted - release - version` header = `visualization` sub = `Harvey Chart` app = `z2ui5_cl_demo_app_308` )
@@ -243,7 +248,8 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - abap standard` header = `News Feed over Websocket` sub = `` app = `z2ui5_cl_demo_app_s_05` )
       ( group = `restricted - abap standard` header = `Play Sound` sub = `` app = `z2ui5_cl_demo_app_s_03` )
       ( group = `restricted - abap standard` header = `Stateful Sessions` sub = `` app = `z2ui5_cl_demo_app_s_02` )
-      ( group = `restricted - abap standard` header = `Sticky Session with Locks` sub = `` app = `z2ui5_cl_demo_app_s_01` )
+      ( group = `restricted - abap standard` header = `Stateful Sessions` sub = `Locks` app = `z2ui5_cl_demo_app_s_01` )
+      ( group = `restricted - abap standard` header = `Stateful Sessions` sub = `Navigation and Locks` app = `z2ui5_cl_demo_app_s_06` )
       ( group = `restricted - testing` header = `App Calling App with REF` sub = `` app = `z2ui5_cl_demo_app_192` )
       ( group = `restricted - testing` header = `App in App` sub = `Main App` app = `z2ui5_cl_demo_app_338` )
       ( group = `restricted - testing` header = `App in App` sub = `Popup` app = `z2ui5_cl_demo_app_340` )
@@ -261,6 +267,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - testing` header = `Deep Structure Main App` sub = `` app = `z2ui5_cl_demo_app_195` )
       ( group = `restricted - testing` header = `Deep Structure Sub App` sub = `` app = `z2ui5_cl_demo_app_191` )
       ( group = `restricted - testing` header = `Deep Structure Sub App` sub = `` app = `z2ui5_cl_demo_app_194` )
+      ( group = `restricted - testing` header = `model update input editable with focus` sub = `` app = `z2ui5_cl_demo_app_443` )
       ( group = `restricted - testing` header = `Multiple Timers` sub = `` app = `z2ui5_cl_demo_app_353` )
       ( group = `restricted - testing` header = `Nested Apps I` sub = `Calling another app for rendering` app = `z2ui5_cl_demo_app_117` )
       ( group = `restricted - testing` header = `Nested Apps II` sub = `Use RTTI to render different Subapps` app = `z2ui5_cl_demo_app_131` )
@@ -275,33 +282,24 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `restricted - testing` header = `RTTI` sub = `Table with Ref in Object` app = `z2ui5_cl_demo_app_347` )
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_344` )
       ( group = `restricted - testing` header = `RTTI` sub = `with many Layouts` app = `z2ui5_cl_demo_app_345` )
-      ( group = `restricted - testing` header = `Sample App` sub = `Full View` app = `z2ui5_cl_demo_app_085` )
-      ( group = `restricted - testing` header = `Sample App` sub = `Selection Screen` app = `z2ui5_cl_smp_app_002` )
       ( group = `restricted - testing` header = `Type Ref to Data Table with refresh` sub = `` app = `z2ui5_cl_demo_app_199` )
       ( group = `restricted - testing` header = `unit test` sub = `long variable` app = `z2ui5_cl_demo_app_138` )
       ( group = `restricted - testing` header = `ZZZ Data Object for Sample 328` sub = `` app = `z2ui5_cl_demo_app_329` )
-      ( group = `restricted - experimental` header = `custom function in popup` sub = `` app = `z2ui5_cl_demo_app_141` )
-      ( group = `restricted - experimental` header = `extension` sub = `ext library` app = `z2ui5_cl_demo_app_040` )
-      ( group = `restricted - experimental` header = `gantt` sub = `test` app = `z2ui5_cl_demo_app_076` )
-      ( group = `restricted - experimental` header = `gantt II` sub = `` app = `z2ui5_cl_demo_app_179` )
       ( group = `restricted - experimental` header = `Navigation` sub = `app state` app = `z2ui5_cl_demo_app_321` )
       ( group = `restricted - experimental` header = `Navigation` sub = `app state share` app = `z2ui5_cl_demo_app_323` )
       ( group = `restricted - experimental` header = `Navigation` sub = `push state` app = `z2ui5_cl_demo_app_322` )
-      ( group = `restricted - experimental` header = `Navigation with app state change v1 and locking` sub = `` app = `z2ui5_cl_demo_app_350` )
-      ( group = `restricted - experimental` header = `popups` sub = `p13n Dialog` app = `z2ui5_cl_demo_app_090` )
-      ( group = `restricted - experimental` header = `Set Cursor Test` sub = `` app = `z2ui5_cl_demo_app_443` )
-      ( group = `restricted - experimental` header = `Storage` sub = `Store data inside localStorage or sessionStorage` app = `z2ui5_cl_demo_app_327` )
-      ( group = `restricted - experimental` header = `ViewSettingsDialog` sub = `` app = `z2ui5_cl_demo_app_099` )
+      ( group = `restricted - experimental` header = `Popup` sub = `change a popup control from the backend` app = `z2ui5_cl_demo_app_141` )
       ( group = `obsolet` header = `binding two way with ajson objects` sub = `` app = `z2ui5_cl_demo_app_153` )
       ( group = `obsolet` header = `Download CSV` sub = `Export Table as CSV` app = `z2ui5_cl_demo_app_057` )
       ( group = `obsolet` header = `ext` sub = `call custom function` app = `z2ui5_cl_demo_app_093` )
       ( group = `obsolet` header = `extension` sub = `canvas and svg` app = `z2ui5_cl_demo_app_036` )
       ( group = `obsolet` header = `extension` sub = `custom control` app = `z2ui5_cl_demo_app_037` )
+      ( group = `obsolet` header = `extension` sub = `ext library` app = `z2ui5_cl_demo_app_040` )
       ( group = `obsolet` header = `extension` sub = `html css js` app = `z2ui5_cl_demo_app_032` )
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309` )
       ( group = `obsolet` header = `follow_up_action with JS` sub = `` app = `z2ui5_cl_demo_app_309_0` )
       ( group = `obsolet` header = `History` sub = `` app = `z2ui5_cl_demo_app_139` )
-      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_smp_app_000` )
+      ( group = `obsolet` header = `landing page` sub = `` app = `z2ui5_cl_demo_app_000` )
       ( group = `obsolet` header = `Message Box & Input Functions` sub = `` app = `z2ui5_cl_demo_app_084` )
       ( group = `obsolet` header = `obsolete` sub = `custom control UploadSet` app = `z2ui5_cl_demo_app_354` )
       ( group = `obsolet` header = `obsolete` sub = `filter bar with variants, replaced by 478` app = `z2ui5_cl_demo_app_111` )
@@ -321,6 +319,7 @@ CLASS z2ui5_cl_sample_app_g01 IMPLEMENTATION.
       ( group = `obsolet` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_284` )
       ( group = `obsolet` header = `obsolete` sub = `uses deprecated sap.ui.table.AnalyticalTable` app = `z2ui5_cl_demo_app_285` )
       ( group = `obsolet` header = `obsolete tab` sub = `focus edit controls, replaced by 421` app = `z2ui5_cl_demo_app_346` )
+      ( group = `obsolet` header = `p13n` sub = `not implementable` app = `z2ui5_cl_demo_app_090` )
       ( group = `obsolet` header = `PDF Viewer` sub = `Display PDFs via iframe` app = `z2ui5_cl_demo_app_079` )
       ( group = `obsolet` header = `sap.m.ActionSheet`
         sub = `Action Sheet provides an easier way of showing a list of actions and allowing the user to select one. Title and Cancel button can be shown or hidden. Without an icon the entry will be left-aligned (see the last action in the list).`

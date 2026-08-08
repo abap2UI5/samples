@@ -6,7 +6,7 @@
 "! This demo wires that end to end: define conditions on "Product Type" via the
 "! value help, and the backend translates the returned ranges into an ABAP range
 "! table (r in ty_s_range -> SIGN/OPTION/LOW/HIGH) and filters a local product
-"! list with `... WHERE product_type IN <range>`. Both the derived SELECT-OPTIONS
+"! list with `... WHERE product_type IN r_product_type`. Both the derived SELECT-OPTIONS
 "! and the matching rows are shown, so the "UI condition -> ABAP range" mapping is
 "! visible.
 "!

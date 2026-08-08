@@ -129,7 +129,7 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 ## 3. The two overview apps
 
-`z2ui5_cl_sample_app_g01` and `z2ui5_cl_demo_app_g00` are **overview apps** —
+`z2ui5_cl_sample_app_g01` and `z2ui5_cl_smp_app_000` are **overview apps** —
 generated index pages that list all samples of an area. They are *not* Fiori
 Launchpad apps; do not confuse them with the launchpad samples in `src/00/00`,
 which are the demos that run inside a real Fiori Launchpad.
@@ -138,8 +138,8 @@ There is **one overview app per top-level package**, and they cross-link:
 
 | App class                | Lives in | Title                            | Mirrors     | Button → other |
 |--------------------------|----------|----------------------------------|-------------|----------------|
-| `z2ui5_cl_demo_app_g00`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_g01` |
-| `z2ui5_cl_sample_app_g01`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `demo_app_g00` |
+| `z2ui5_cl_smp_app_000`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_g01` |
+| `z2ui5_cl_sample_app_g01`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `smp_app_000` |
 
 Both are identical in shape: a `get_catalog( )` method returning a flat table of
 tiles, and a `view_display( )` that loops the catalog, emitting an H3 section
@@ -163,12 +163,12 @@ a block share the same width — the estimated render width of the widest header
 the block plus roughly one space, precomputed by `block_widths( )` /
 `header_width( )` — so the `sub` descriptions of a block line up exactly
 underneath each other in one column, directly next to the links. This
-blank-line-between-blocks applies to the **basic** overview (`demo_app_g00`)
+blank-line-between-blocks applies to the **basic** overview (`smp_app_000`)
 only; the **extended** overview (`sample_app_g01`) lists every sample directly
 under the previous one (no inter-block blank line), keeping only the per-group
 H3 titles and the column alignment.
 
-`z2ui5_cl_smp_app_000` is the old "classic" overview app (now under `00/99`,
+`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 
@@ -237,7 +237,7 @@ from the old catalog.
 
 ### Generation rules
 
-1. **One catalog per area.** Apps in `src/01/**` belong in `demo_app_g00`; apps in
+1. **One catalog per area.** Apps in `src/01/**` belong in `smp_app_000`; apps in
    `src/00/**` belong in `sample_app_g01`. Never list an app in the wrong overview app.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
@@ -261,7 +261,7 @@ from the old catalog.
    untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (moving a subpackage from
-   `src/01` to `src/00` lifts its entire tile group out of `demo_app_g00`
+   `src/01` to `src/00` lifts its entire tile group out of `smp_app_000`
    and into `sample_app_g01`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
@@ -821,7 +821,7 @@ follow these so new/edited samples stay consistent:
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
 
 - **A read-only info form disables its inputs** (`enabled = abap_false`) — do not
-  leave display-only values in editable inputs (see `z2ui5_cl_demo_app_122`).
+  leave display-only values in editable inputs (see `z2ui5_cl_smp_app_122`).
 
 - **No redundant footer Back button.** The `shell( )->page( )` already renders a
   nav-back button (`navbuttonpress` / `shownavbutton`); do not add a second

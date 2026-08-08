@@ -1,0 +1,194 @@
+CLASS z2ui5_cl_smp_app_081 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_tab,
+        selected TYPE abap_bool,
+        id       TYPE string,
+        name     TYPE string,
+      END OF ty_s_tab.
+
+    DATA product  TYPE string.
+    DATA quantity TYPE string.
+    DATA mv_placement TYPE string.
+
+    DATA mt_tab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_init.
+    METHODS on_event.
+    METHODS view_display.
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+    METHODS popover_list_display
+      IMPORTING
+        id TYPE string.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->popover(
+                  title     = `Popover Title`
+                  placement = mv_placement
+              )->footer( )->overflow_toolbar(
+                  )->toolbar_spacer(
+                  )->button(
+                      text  = `Cancel`
+                      press = client->_event( `BUTTON_CANCEL` )
+                  )->button(
+                      text  = `Confirm`
+                      press = client->_event( `BUTTON_CONFIRM` )
+                      type  = `Emphasized`
+                )->get_parent( )->get_parent(
+            )->text( `make an input here:`
+            )->input( `abcd` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD popover_list_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->popover(
+                  title     = `Popover Title`
+                  placement = mv_placement
+              )->list(
+                items           = client->_bind( mt_tab )
+                selectionchange = client->_event( val = `SEL_CHANGE` )
+                mode            = `SingleSelectMaster`
+                 )->standard_list_item(
+                  title       = `{ID}`
+                  description = `{NAME}`
+                  selected    = `{SELECTED}` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    DATA(page) = view->shell(
+        )->page(
+            title          = `abap2UI5 - Popover with List`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Opens a Popover anchored to a button, showing a selectable list inside it; the ` &&
+                   `segmented button chooses on which side the popover appears.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( `Popover`
+              )->content( `form`
+                  )->title( `Input`
+                  )->label( `Link`
+                  )->link( text = `Documentation UI5 Popover Control`
+                           href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
+                  )->label( `placement`
+                  )->segmented_button( client->_bind( mv_placement )
+                        )->items(
+                        )->segmented_button_item(
+                                key  = `Left`
+                                icon = `sap-icon://add-favorite`
+                                text = `Left`
+                        )->segmented_button_item(
+                                key  = `Top`
+                                icon = `sap-icon://accept`
+                                text = `Top`
+                        )->segmented_button_item(
+                                key  = `Bottom`
+                                icon = `sap-icon://accept`
+                                text = `Bottom`
+                        )->segmented_button_item(
+                                key  = `Right`
+                                icon = `sap-icon://attachment`
+                                text = `Right`
+                  )->get_parent( )->get_parent(
+                  )->label( `popover`
+                  )->button(
+                      text  = `show popover with list`
+                      press = client->_event( `POPOVER_LIST` )
+                      id    = `TEST` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+      on_init( ).
+      view_display( ).
+
+    ELSE.
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get( )-event.
+
+      WHEN `SEL_CHANGE`.
+        DATA(lt_sel) = mt_tab.
+        DELETE lt_sel WHERE selected IS INITIAL.
+
+      WHEN `POPOVER_LIST`.
+        popover_list_display( `TEST` ).
+
+      WHEN `POPOVER`.
+        popover_display( `TEST` ).
+
+      WHEN `BUTTON_CONFIRM`.
+        client->message_toast_display( |confirm| ).
+        client->popover_destroy( ).
+
+      WHEN `BUTTON_CANCEL`.
+        client->message_toast_display( |cancel| ).
+        client->popover_destroy( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    mv_placement = `Left`.
+    product      = `tomato`.
+    quantity     = `500`.
+
+    mt_tab = VALUE #(
+                      ( id = `1` name = `name1` )
+                      ( id = `2` name = `name2` )
+                      ( id = `3` name = `name3` )
+                      ( id = `4` name = `name4` ) ).
+
+  ENDMETHOD.
+
+ENDCLASS.

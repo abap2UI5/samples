@@ -25,7 +25,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
     IF check_popup = abap_true.
 
       check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_demo_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
       client->message_toast_display( |{ app->event } pressed| ).
     ENDIF.
 
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
       WHEN `BUTTON_POPUP_05`.
         check_popup = abap_true.
         client->view_destroy( ).
-        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
+        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
           i_text          = `(new app )this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
           i_cancel_text   = `Cancel`
           i_cancel_event  = `POPUP_DECIDE_CANCEL`
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
           ) ).
       WHEN `BUTTON_POPUP_06`.
         check_popup = abap_true.
-        client->nav_app_call( z2ui5_cl_demo_app_020=>factory(
+        client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
           i_text          = `(new app )this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
           i_cancel_text   = `Cancel`
           i_cancel_event  = `POPUP_DECIDE_CANCEL`
