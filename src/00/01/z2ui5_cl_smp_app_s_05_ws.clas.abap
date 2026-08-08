@@ -3,7 +3,7 @@ CLASS z2ui5_cl_smp_app_s_05_ws DEFINITION PUBLIC
 
   PUBLIC SECTION.
     CONSTANTS:
-      c_amc_application_id TYPE amc_application_id VALUE `Z2UI5_AMC_SMP` ##NO_TEXT,
+      c_amc_application_id TYPE amc_application_id VALUE `Z2UI5_AMC_SMP_01` ##NO_TEXT,
       c_channel_id         TYPE amc_channel_id VALUE `/news_feed` ##NO_TEXT,
       BEGIN OF c_msg,
         __new_connection__ TYPE string VALUE `__NEW_CONNECTION__` ##NO_TEXT,
