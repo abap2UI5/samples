@@ -73,7 +73,7 @@ function splitDescript(d) {
   return i === -1 ? { header: t, sub: '' } : { header: t.slice(0, i), sub: t.slice(i + 3) };
 }
 
-// Controls-section tiles (the 01/08 demo-kit rebuilds) are shown without their
+// Controls-section tiles (the 01/03 demo-kit rebuilds) are shown without their
 // namespace prefix - the group heading already states it (sap.m, sap.uxap, …) -
 // and with a one-line, truncated description so the overview never wraps.
 const CONTROLS_SUB_MAX = 90;
@@ -117,7 +117,7 @@ for (const abap of walk(SRC)) {
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
   if (rel.length < 3) continue;
   const area = rel[0];
-  // full subfolder path ("08" or nested "08/00") so nested subpackages form
+  // full subfolder path ("03" or nested "03/00") so nested subpackages form
   // their own group directly after their parent slot
   const subnum = rel.slice(1, -1).join('/');
   if (!(area in tiles)) continue;

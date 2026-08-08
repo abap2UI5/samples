@@ -35,7 +35,7 @@ src/
 ├── 01/  "basic"     cloud-ready & downportable — survives every build
 │   ├── 01/  Basic I
 │   ├── 02/  Basic II     framework actions, custom controls and use cases
-│   └── 08/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
+│   └── 03/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
 │       ├── 00/  controls - sap.m
 │       ├── 01/  controls - sap.uxap
 │       ├── 02/  controls - sap.f
@@ -47,8 +47,8 @@ src/
 └── 00/  "restricted"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 00/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
     ├── 01/  "restricted - on premise"          on-premise-only ABAP (not ABAP Cloud ready)
-    ├── 06/  "restricted - testing"             test / scaffolding apps, not demos
-    ├── 07/  "restricted - experimental"        work-in-progress / not finished
+    ├── 02/  "restricted - testing"             test / scaffolding apps, not demos
+    ├── 03/  "restricted - experimental"        work-in-progress / not finished
     └── 99/  "restricted - obsolet"             superseded, or built on a deprecated UI5 control
 ```
 
@@ -65,9 +65,9 @@ group name — keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
-Every sample in `01/08` is a faithful rebuild of one specific UI5 demo kit
+Every sample in `01/03` is a faithful rebuild of one specific UI5 demo kit
 sample, filed in the subpackage of the library its entity belongs to
-(`01/08/00` = sap.m, `01/08/01` = sap.uxap, …), and carries the demo kit URL
+(`01/03/00` = sap.m, `01/03/01` = sap.uxap, …), and carries the demo kit URL
 as an ABAP Doc line directly above its `CLASS ... DEFINITION`
 (`"! Rebuild of the UI5 demo kit sample: <url>`).
 Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
@@ -77,13 +77,13 @@ the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
 truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original do not belong in `01/08` — file them in
+Demos that have no demo kit original do not belong in `01/03` — file them in
 the framework package (`01/02`, actions / custom controls / use cases) or,
 when a restriction applies, in the matching `src/00` category.
 
 Machine-generated demo kit ports that have not been manually reviewed do not
 live in this repository — they are collected in the separate api repository
-of the abap2UI5 organization. Everything under `01/08` here is manually
+of the abap2UI5 organization. Everything under `01/03` here is manually
 reviewed.
 
 ---
@@ -109,8 +109,8 @@ The split is driven directly by the CI builds:
   applies:
 
   1. Deprecated control/property, or superseded → `00/99`
-  2. Test / scaffolding app → `00/06`
-  3. Experimental / work-in-progress → `00/07`
+  2. Test / scaffolding app → `00/02`
+  3. Experimental / work-in-progress → `00/03`
   4. Needs on-premise-only ABAP (not Cloud) → `00/01`
   5. Everything else → `00/00` — the catch-all for a sample that plain
      OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
@@ -248,12 +248,12 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/00` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
+   (`00/00` → `00/03` → `00/99`; `01/01` → `01/03/00` → `01/03/07`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. a new `00/02` group goes **after**
-   `restricted - on premise` (`00/01`) and **before**
-   `restricted - testing` (`00/06`)).
+   numeric slot (e.g. a new `00/04` group goes **after**
+   `restricted - experimental` (`00/03`) and **before**
+   `restricted - obsolet` (`00/99`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
