@@ -35,7 +35,7 @@ CLASS z2ui5_cl_demo_app_464 IMPLEMENTATION.
         " an uncaught exception from an event handler is NOT caught by the
         " framework - it propagates to a real runtime error, the roundtrip
         " comes back as HTTP 500 and the client shows the error popup
-        RAISE EXCEPTION TYPE z2ui5_cx_sample_error
+        RAISE EXCEPTION TYPE z2ui5_cx_smp_error
           EXPORTING val = `Intentional error to demonstrate the error popup`.
 
       WHEN `DIVIDE_BY_ZERO`.

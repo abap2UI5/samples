@@ -1,6 +1,6 @@
 "! Hash-based app routing (UI5 Router style), mode FRESH:
 "! client->set_nav_routing( client->cs_nav_mode-fresh ) makes the URL mirror the
-"! running app by CLASS only ('#/app/<CLASS>'). Browser Back/Forward - and a
+"! running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a
 "! reload or a bookmark - therefore start the app FRESH: the input and the
 "! counter are gone.
 "!
