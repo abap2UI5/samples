@@ -2,15 +2,13 @@
 <abapGit version="v1.0.0" serializer="LCL_OBJECT_SICF" serializer_version="v1.0.0">
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
-   <URL>/sap/bc/apc/sap/S4H100000002111/</URL>
+   <URL>/sap/bc/apc/sap/z2ui5_apc_smp_1/</URL>
    <ICFSERVICE>
-    <ICF_NAME>S4H100000002111</ICF_NAME>
-    <ORIG_NAME>S4H100000002111</ORIG_NAME>
-    <ICFALTNME>Z2UI5_APC_SMP_01</ICFALTNME>
-    <ICFALTNME_ORIG>z2ui5_apc_smp_01</ICFALTNME_ORIG>
+    <ICF_NAME>Z2UI5_APC_SMP_1</ICF_NAME>
+    <ORIG_NAME>z2ui5_apc_smp_1</ORIG_NAME>
    </ICFSERVICE>
    <ICFDOCU>
-    <ICF_NAME>S4H100000002111</ICF_NAME>
+    <ICF_NAME>Z2UI5_APC_SMP_1</ICF_NAME>
     <ICF_LANGU>E</ICF_LANGU>
     <ICF_DOCU>Generated APC WebSocket protocol service</ICF_DOCU>
    </ICFDOCU>
