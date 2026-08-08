@@ -45,7 +45,9 @@ CLASS z2ui5_cl_demo_app_179 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
+
+CLASS Z2UI5_CL_DEMO_APP_179 IMPLEMENTATION.
+
 
   METHOD z2ui5_if_app~main.
 
@@ -233,5 +235,4 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
                     endtime    = `2018-11-29T17:00:00` ) ) ) ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
