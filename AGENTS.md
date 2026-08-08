@@ -44,12 +44,12 @@ src/
 │       ├── 05/  controls - sap.tnt
 │       ├── 06/  controls - sap.ui.codeeditor
 │       └── 07/  controls - sap.ui.unified
-└── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
-    ├── 00/  "restricted - release - version"   needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
-    ├── 01/  "restricted - abap standard"       on-premise-only ABAP (not ABAP Cloud ready)
+└── 00/  "restricted"  restricted / special-purpose — STRIPPED from cloud & 702 builds
+    ├── 00/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
+    ├── 01/  "restricted - on premise"          on-premise-only ABAP (not ABAP Cloud ready)
     ├── 06/  "restricted - testing"             test / scaffolding apps, not demos
     ├── 07/  "restricted - experimental"        work-in-progress / not finished
-    └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control
+    └── 99/  "restricted - obsolet"             superseded, or built on a deprecated UI5 control
 ```
 
 This tree is machine-checked: `node scripts/check-agents-structure.js` compares
@@ -103,7 +103,7 @@ The split is driven directly by the CI builds:
 - **`src/01` ("basic")** — a sample may only live here if it is **ABAP Cloud
   ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
   restriction. These survive all three builds.
-- **`src/00` ("extended")** — anything with *any* restriction. It is deleted
+- **`src/00` ("restricted")** — anything with *any* restriction. It is deleted
   before the cloud and 702 builds, so it is only ever checked by
   `abap-standard`. Pick the subpackage by the **first** restriction that
   applies:
@@ -168,7 +168,7 @@ only; the **extended** overview (`sample_app_g01`) lists every sample directly
 under the previous one (no inter-block blank line), keeping only the per-group
 H3 titles and the column alignment.
 
-`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
+`z2ui5_cl_smp_app_000_0` is the old "classic" overview app (now under `00/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 
@@ -252,7 +252,7 @@ from the old catalog.
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
    numeric slot (e.g. a new `00/02` group goes **after**
-   `restricted - abap standard` (`00/01`) and **before**
+   `restricted - on premise` (`00/01`) and **before**
    `restricted - testing` (`00/06`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
@@ -633,7 +633,7 @@ root model — the one-way/two-way split disappeared with the `XX/` view-model
 node — so `_bind_edit` is only an obsolete alias and is slated for removal.
 The single exception is a mapping that differs per direction, because `_bind`
 has no `custom_mapper_back` / `custom_filter_back` parameters; the one sample
-that needs it (`z2ui5_cl_demo_app_153`) says so in a comment at the call.
+that needs it (`z2ui5_cl_smp_app_153`) says so in a comment at the call.
 
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and

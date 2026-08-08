@@ -1,0 +1,47 @@
+CLASS z2ui5_cl_smp_app_323 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_quantity TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_323 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display( view->shell(
+             )->page(
+                     title          = `abap2UI5 - Navigation with app state`
+                     navbuttonpress = client->_event( `BACK` )
+                     shownavbutton  = client->check_app_prev_stack( )
+          )->simple_form( title = `Form Title` editable = abap_true
+                     )->content( `form`
+                         )->title( `Input`
+                         )->label( `quantity`
+                         )->input( client->_bind( mv_quantity )
+                         )->button(
+                             text  = `share`
+                             press = client->_event( `BUTTON_POST` )
+              )->stringify( ) ).
+    ENDIF.
+
+    CASE client->get( )-event.
+
+      WHEN `BUTTON_POST`.
+        client->follow_up_action( z2ui5_if_client=>cs_event-clipboard_app_state ).
+        client->message_toast_display( `clipboard copied` ).
+
+      WHEN `BACK`.
+        client->nav_app_leave( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+ENDCLASS.

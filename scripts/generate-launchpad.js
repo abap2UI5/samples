@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
- * Generates the two overview apps' catalogs from the folder tree.
- * (These are the demo_app_g00 / sample_app_g01 index pages, not the Fiori
+ * Generates the overview apps' catalogs from the folder tree.
+ * (These are the smp_app_000 / sample_app_g01 index pages, not the Fiori
  * Launchpad samples in src/00/03.)
  *
  * Job (see AGENTS.md §4):
@@ -14,7 +14,7 @@
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
- *      overview app of each area (src/01 -> demo_app_g00, src/00 -> sample_app_g01):
+ *      overview app of each area (src/01 -> smp_app_000, src/00 -> sample_app_g01):
  *        - groups in folder-number order
  *        - tiles within a group sorted by header, then sub, then app
  *
@@ -107,10 +107,10 @@ for (const abap of walk(SRC)) {
   if (!abap.endsWith('.clas.abap')) continue;
   const cls = path.basename(abap, '.clas.abap');
   if (OVERVIEW_APPS.has(cls)) continue; // an overview app is never a tile
-  // smp is the token this repository owns (AGENTS.md §6); demo is the legacy
-  // one, still present until the migration to smp is complete. A class that
-  // matches neither is not a sample and never becomes a tile.
-  if (!cls.startsWith('z2ui5_cl_smp_app') && !cls.startsWith('z2ui5_cl_demo_app')) continue;
+  // smp is the token this repository owns (AGENTS.md §6) - the legacy demo
+  // token is fully migrated. A class that does not carry it is not a sample
+  // and never becomes a tile.
+  if (!cls.startsWith('z2ui5_cl_smp_app')) continue;
 
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
   if (rel.length < 3) continue;
@@ -204,6 +204,11 @@ function rewrite(file, list) {
 
 let total = 0;
 for (const [area, file] of Object.entries(TARGETS)) {
+  // an area without an overview app in the tree has no catalog to mirror
+  if (!fs.existsSync(file)) {
+    console.log(`src/${area}: no overview app, ${tiles[area].length} tiles not listed`);
+    continue;
+  }
   rewrite(file, tiles[area]);
   console.log(`${path.relative(path.join(__dirname, '..'), file)}: ${tiles[area].length} tiles`);
   total += tiles[area].length;

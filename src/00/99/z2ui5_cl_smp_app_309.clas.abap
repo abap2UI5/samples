@@ -1,0 +1,64 @@
+CLASS z2ui5_cl_smp_app_309 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_url TYPE string.
+
+    METHODS on_event.
+    METHODS view_display.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_309 IMPLEMENTATION.
+
+  METHOD on_event.
+
+    IF client->check_on_event( `CUSTOM_JS_FROM_EB` ).
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-z2ui5
+          t_arg = VALUE #( ( `afterBE` ) ) ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = () => { alert("afterBE triggered !!"); }` ).
+
+    DATA(page) = view->shell( )->page(
+        title          = `Client->FOLLOW_UP_ACTION use cases`
+        class          = `sapUiContentPadding`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( ) ).
+    page = page->vbox( ).
+    page->get_parent( )->hbox( class = `sapUiSmallMargin` ).
+    page->button( text  = `call custom JS from EB`
+                  press = client->_event( `CUSTOM_JS_FROM_EB` ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+
+    ENDIF.
+
+    on_event( ).
+
+  ENDMETHOD.
+
+ENDCLASS.
