@@ -125,7 +125,7 @@ CLASS z2ui5_cl_demo_app_099 IMPLEMENTATION.
     ENDIF.
 
     DATA(field) = t_items[ 1 ]-key.
-    IF client->get_event_arg( 2 ) = abap_true.
+    IF client->get_event_arg( 2 ) = `true`.
       SORT t_tab BY (field) DESCENDING.
 
     ELSE.
