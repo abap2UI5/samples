@@ -3,70 +3,47 @@ CLASS z2ui5_cl_demo_app_090 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    TYPES: BEGIN OF ty_s_items2,
-             columnkey TYPE string,
-             text      TYPE string,
-             visible   TYPE abap_bool,
-             index     TYPE i,
-           END OF ty_s_items2.
-    TYPES tt_items2 TYPE STANDARD TABLE OF ty_s_items2 WITH DEFAULT KEY.
+    TYPES:
+      BEGIN OF ty_s_column,
+        name    TYPE string,
+        label   TYPE string,
+        visible TYPE abap_bool,
+      END OF ty_s_column.
+    TYPES:
+      BEGIN OF ty_s_sort,
+        name       TYPE string,
+        label      TYPE string,
+        sorted     TYPE abap_bool,
+        descending TYPE abap_bool,
+      END OF ty_s_sort.
+    TYPES:
+      BEGIN OF ty_s_group,
+        name    TYPE string,
+        label   TYPE string,
+        grouped TYPE abap_bool,
+      END OF ty_s_group.
 
-    TYPES: BEGIN OF ty_s_items3,
-             columnkey     TYPE string,
-             operation     TYPE string,
-             showifgrouped TYPE abap_bool,
-             key           TYPE string,
-             text          TYPE string,
-           END OF ty_s_items3.
-    TYPES tt_items3 TYPE STANDARD TABLE OF ty_s_items3 WITH DEFAULT KEY.
-
-    "P13N
-
-    TYPES: BEGIN OF ty_s_items22,
-             visible TYPE abap_bool,
-             name    TYPE string,
-             label   TYPE string,
-           END OF ty_s_items22.
-    TYPES tt_items22 TYPE STANDARD TABLE OF ty_s_items22 WITH DEFAULT KEY.
-
-    TYPES: BEGIN OF ty_s_items32,
-             sorted     TYPE abap_bool,
-             name       TYPE string,
-             label      TYPE string,
-             descending TYPE abap_bool,
-           END OF ty_s_items32.
-    TYPES tt_items32 TYPE STANDARD TABLE OF ty_s_items32 WITH DEFAULT KEY.
-
-    TYPES: BEGIN OF ty_s_items33,
-             grouped TYPE abap_bool,
-             name    TYPE string,
-             label   TYPE string,
-           END OF ty_s_items33.
-    TYPES tt_items33 TYPE STANDARD TABLE OF ty_s_items33 WITH DEFAULT KEY.
-
-    DATA mt_columns TYPE tt_items2.
-    DATA mt_columns1 TYPE tt_items2.
-    DATA mt_groups TYPE tt_items3.
-
-    DATA mt_columns_p13n TYPE tt_items22.
-    DATA mt_sort_p13n TYPE tt_items32.
-    DATA mt_groups_p13n TYPE tt_items33.
+    DATA t_columns TYPE STANDARD TABLE OF ty_s_column WITH EMPTY KEY.
+    DATA t_sort TYPE STANDARD TABLE OF ty_s_sort WITH EMPTY KEY.
+    DATA t_group TYPE STANDARD TABLE OF ty_s_group WITH EMPTY KEY.
 
   PROTECTED SECTION.
+    CONSTANTS c_panel_columns TYPE string VALUE `columnsPanel`.
+    CONSTANTS c_panel_sort TYPE string VALUE `sortPanel`.
+    CONSTANTS c_panel_group TYPE string VALUE `groupPanel`.
+    CONSTANTS c_popup TYPE string VALUE `p13nPopup`.
+
     DATA client TYPE REF TO z2ui5_if_client.
 
-    DATA check_view_loaded TYPE abap_bool.
-
-    DATA mv_page TYPE string.
-
-    METHODS view_display.
-    METHODS view_display_p13n.
-    METHODS view_display_p13n_popup.
+    METHODS on_init.
     METHODS on_event.
-    METHODS init_data_set.
-    METHODS get_custom_js
-      RETURNING
-        VALUE(result) TYPE string.
+    METHODS on_event_open.
+    METHODS view_display.
+    METHODS panel_seed
+      IMPORTING
+        panel TYPE string
+        val   TYPE any.
+    METHODS data_read.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -77,19 +54,22 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
-      init_data_set( ).
-      client->nav_app_call( z2ui5_cl_pop_js_loader=>factory( get_custom_js( ) ) ).
-
-    ELSEIF check_view_loaded = abap_false.
-      check_view_loaded = abap_true.
-      init_data_set( ).
+      on_init( ).
+    ELSEIF client->check_on_navigated( ).
       view_display( ).
-
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD on_init.
+
+    data_read( ).
+
+    view_display( ).
 
   ENDMETHOD.
 
@@ -97,230 +77,154 @@ CLASS z2ui5_cl_demo_app_090 IMPLEMENTATION.
   METHOD on_event.
 
     CASE client->get( )-event.
+
       WHEN `P13N_OPEN`.
-        view_display_p13n( ).
+        on_event_open( ).
 
-      WHEN `P13N_POPUP`.
-        view_display_p13n_popup( ).
+      WHEN `COLUMNS_CHANGED`.
+        TRY.
+            z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap( IMPORTING ev_container = t_columns ).
+          CATCH z2ui5_cx_ajson_error INTO DATA(lx).
+            client->message_box_display( lx->get_text( ) ).
+        ENDTRY.
 
-      WHEN `OK` OR `CANCEL`.
-        client->popup_destroy( ).
+      WHEN `SORT_CHANGED`.
+        TRY.
+            z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap( IMPORTING ev_container = t_sort ).
+          CATCH z2ui5_cx_ajson_error INTO lx.
+            client->message_box_display( lx->get_text( ) ).
+        ENDTRY.
+
+      WHEN `GROUP_CHANGED`.
+        TRY.
+            z2ui5_cl_ajson=>parse( client->get_event_arg( )
+              )->to_abap( IMPORTING ev_container = t_group ).
+          CATCH z2ui5_cx_ajson_error INTO lx.
+            client->message_box_display( lx->get_text( ) ).
+        ENDTRY.
+
     ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD on_event_open.
+
+    " The p13n panels take their items ONLY through setP13nData - they expose
+    " no aggregation to bind against - so the list travels as one JSON payload
+    " through the control_by_id frontend action. The follow-up actions run in
+    " order after the response rendered, so the panels are filled before the
+    " popup opens.
+    panel_seed( panel = c_panel_columns
+                val   = t_columns ).
+    panel_seed( panel = c_panel_sort
+                val   = t_sort ).
+    panel_seed( panel = c_panel_group
+                val   = t_group ).
+
+    client->follow_up_action( val   = client->cs_event-control_by_id
+                              t_arg = VALUE #( ( c_popup ) ( `open` ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD panel_seed.
+
+    TRY.
+        DATA(json) = z2ui5_cl_ajson=>create_empty(
+            ii_custom_mapping = z2ui5_cl_ajson_mapping=>create_lower_case( )
+          )->set( iv_path = `/`
+                  iv_val  = val )->stringify( ).
+      CATCH z2ui5_cx_ajson_error INTO DATA(lx).
+        client->message_box_display( lx->get_text( ) ).
+        RETURN.
+    ENDTRY.
+
+    client->follow_up_action( val   = client->cs_event-control_by_id
+                              t_arg = VALUE #( ( panel ) ( `setP13nData` ) ( json ) ) ).
 
   ENDMETHOD.
 
 
   METHOD view_display.
 
-    client->_bind( val           = mt_columns_p13n
-                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind( val           = mt_sort_p13n
-                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
-    client->_bind( val           = mt_groups_p13n
-                        custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - P13N Dialog`
+                                       navbuttonpress = client->_event_nav_app_leave( )
+                                       shownavbutton  = client->check_app_prev_stack( )
+                                       class          = `sapUiContentPadding` ).
 
-    page = page->shell( )->page(
-        title          = `abap2UI5 - P13N Dialog`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
-        class          = `sapUiContentPadding` ).
+    page->message_strip(
+        text     = `A sap.m.p13n popup driven entirely from ABAP. Its panels are ` &&
+                   `filled with follow_up_action( control_by_id, setP13nData ) and ` &&
+                   `report the user's changes back through their own change event, ` &&
+                   `so the personalization state lives in the backend model. No ` &&
+                   `custom JavaScript is involved.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
-    page = page->vbox( ).
+    DATA(popup) = page->vbox(
+      )->_generic( name   = `Popup`
+                   ns     = `p13n`
+                   t_prop = VALUE #( ( n = `id`    v = c_popup )
+                                     ( n = `title` v = `My Custom View Settings` ) )
+        )->_generic( name = `panels`
+                     ns   = `p13n` ).
 
-    page->_generic( name         = `Popup`
-                    ns           = `p13n`
-                          t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
-                                            ( n = `close` v = `z2ui5.updateData(${$parameters>/reason})` )
-*                                            ( n = `warningText`  v = `Are you sure?` )
-                                            ( n = `id`  v = `p13nPopup` )
-*                                            ( n = `reset`  v = client->_event( `P13N_RESET` ) )
-                                          )
-                         )->_generic( name = `panels`
-                                      ns   = `p13n`
-                           )->_generic( name   = `SelectionPanel`
-                                        ns     = `p13n`
-                                        t_prop = VALUE #( ( n = `id`    v = `columnsPanel` )
-                                                          ( n = `title`  v = `Columns` )
-*                                                          ( n = `enableCount`  v = 'X' )
-*                                                          ( n = `showHeader` v = 'X' )
-                                                         ) )->get_parent(
-                          )->_generic( name   = `SortPanel`
-                                       ns     = `p13n`
-                                       t_prop = VALUE #( ( n = `id`  v = `sortPanel` )
-                                                         ( n = `title` v = `Sort` )
-                                                        )
-                                                    )->get_parent(
-                          )->_generic( name   = `P13nFilterPanel`
-                                       ns     = ``
-                                       t_prop = VALUE #( ( n = `id`  v = `filterPanel` )
-                                                         ( n = `title` v = `Filter` )
-                                                        )
-                                                    )->get_parent(
-                         )->_generic( name   = `GroupPanel`
-                                      ns     = `p13n`
-                                      t_prop = VALUE #( ( n = `id`  v = `groupPanel` )
-                                                        ( n = `title`  v = `Group` )
-                                                       )
-                                      )->get_parent( )->get_parent( )->get_parent(
-      )->get_parent( )->get_parent( ).
+    popup->_generic( name   = `SelectionPanel`
+                     ns     = `p13n`
+                     t_prop = VALUE #( ( n = `id`     v = c_panel_columns )
+                                       ( n = `title`  v = `Columns` )
+                                       ( n = `change` v = client->_event(
+                                             val   = `COLUMNS_CHANGED`
+                                             t_arg = VALUE #( ( `$event.oSource.getP13nData()` ) ) ) ) )
+      )->get_parent( ).
 
-    page->button( text  = `Open P13N Dialog`
+    popup->_generic( name   = `SortPanel`
+                     ns     = `p13n`
+                     t_prop = VALUE #( ( n = `id`     v = c_panel_sort )
+                                       ( n = `title`  v = `Sort` )
+                                       ( n = `change` v = client->_event(
+                                             val   = `SORT_CHANGED`
+                                             t_arg = VALUE #( ( `$event.oSource.getP13nData()` ) ) ) ) )
+      )->get_parent( ).
+
+    popup->_generic( name   = `GroupPanel`
+                     ns     = `p13n`
+                     t_prop = VALUE #( ( n = `id`     v = c_panel_group )
+                                       ( n = `title`  v = `Group` )
+                                       ( n = `change` v = client->_event(
+                                             val   = `GROUP_CHANGED`
+                                             t_arg = VALUE #( ( `$event.oSource.getP13nData()` ) ) ) ) )
+      )->get_parent( )->get_parent( )->get_parent( ).
+
+    page->button( text  = `Open P13N Popup`
+                  type  = `Emphasized`
                   press = client->_event( `P13N_OPEN` )
-                  class = `sapUiTinyMarginBeginEnd`
-      )->button( text  = `Open P13N.POPUP`
-                 press = `z2ui5.setInitialData()` )->get_parent( )->get_parent( ).
+                  class = `sapUiTinyMarginBeginEnd` ).
 
-    client->view_display( page->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 
-  METHOD view_display_p13n.
+  METHOD data_read.
 
-    DATA(p13n_dialog) = z2ui5_cl_xml_view=>factory_popup( ).
+    t_columns = VALUE #( ( name = `key1` label = `City`    visible = abap_true )
+                         ( name = `key2` label = `Country` visible = abap_false )
+                         ( name = `key3` label = `Region`  visible = abap_false ) ).
 
-    DATA(p13n) = p13n_dialog->_generic( name = `P13nDialog`
-      t_prop                                 = VALUE #(
-      ( n = `ok`                      v = client->_event( `OK` ) )
-      ( n = `cancel`                  v = client->_event( `CANCEL` ) )
-      ( n = `reset`                   v = client->_event( `RESET` ) )
-      ( n = `showReset`               v = `true` )
-      ( n = `initialVisiblePanelType` v = `sort` )
-      )
-      )->_generic( `panels`
-      )->_generic( name = `P13nColumnsPanel`
-      t_prop            = VALUE #(
-*     ( n = `title`   v = `Columns` )
-*     ( n = `visible` v = `true` )
-*     ( n = `type`    v = `Columns` )
-      ( n = `items`   v = |\{path:'{ client->_bind( val = mt_columns path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| )
-      ( n = `columnsItems`   v = |\{path:'{ client->_bind( val = mt_columns1 path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| ) )
-      )->items(
-         )->_generic( name = `P13nItem`
-           t_prop          = VALUE #( ( n = `columnKey` v = `{columnkey}` )
-                             ( n = `text`      v = `{text}` ) ) )->get_parent( )->get_parent(
-      )->_generic( `columnsItems`
-           )->_generic( name = `P13nColumnsItem`
-               t_prop        = VALUE #( ( n = `columnKey` v = `{columnkey}` )
-                                  ( n = `visible`   v = `{visible}` )
-                                   ( n = `index`    v = `{index}` ) ) )->get_parent( )->get_parent( )->get_parent(
-      )->_generic( name = `P13nGroupPanel`
-           t_prop       = VALUE #( ( n = `groupItems` v = |\{path:'{ client->_bind( val = mt_groups path = abap_true custom_mapper = z2ui5_cl_ajson_mapping=>create_lower_case( ) ) }'\}| ) )
-      )->items(
-      )->_generic( name = `P13nItem`
-           t_prop       = VALUE #( ( n = `columnKey` v = `{columnkey}` )
-                             ( n = `text`      v = `{text}` ) ) )->get_parent( )->get_parent(
-      )->_generic( `groupItems`
-        )->_generic( name = `P13nGroupItem`
-            t_prop        = VALUE #( ( n = `columnKey` v = `{columnkey}` )
-                              ( n = `operation` v = `{operation}` )
-                              ( n = `showIfGrouped` v = `{showifgrouped}` ) ) ).
+    t_sort = VALUE #( ( name = `key1` label = `City`    sorted = abap_true  descending = abap_true )
+                      ( name = `key2` label = `Country` sorted = abap_false descending = abap_false )
+                      ( name = `key3` label = `Region`  sorted = abap_false descending = abap_false ) ).
 
-    client->popup_display( p13n->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD view_display_p13n_popup.
-
-    DATA(p13n_popup) = z2ui5_cl_xml_view=>factory( ).
-
-    p13n_popup->_generic( name       = `Popup`
-                          ns         = `p13n`
-                              t_prop = VALUE #( ( n = `title` v = `My Custom View Settings` )
-*                                                ( n = `close` v = client->_event( `P13N_CLOSE` ) )
-*                                                ( n = `warningText`  v = `Are you sure?` )
-                                                ( n = `id`  v = `p13nPopup` )
-*                                                ( n = `reset`  v = client->_event( `P13N_RESET` ) )
-                                              )
-                             )->_generic( name = `panels`
-                                          ns   = `p13n`
-                               )->_generic( name   = `SelectionPanel`
-                                            ns     = `p13n`
-                                            t_prop = VALUE #( ( n = `id`    v = `columnsPanel` )
-                                                              ( n = `title`  v = `Columns` )
-*                                                              ( n = `enableCount`  v = 'X' )
-*                                                              ( n = `showHeader` v = 'X' )
-                                                             ) )->get_parent(
-                              )->_generic( name   = `SortPanel`
-                                           ns     = `p13n`
-                                           t_prop = VALUE #( ( n = `id`  v = `sortPanel` )
-                                                             ( n = `title` v = `Sort` )
-                                                            )
-                                                        )->get_parent(
-                             )->_generic( name   = `GroupPanel`
-                                          ns     = `p13n`
-                                          t_prop = VALUE #( ( n = `id`  v = `groupPanel` )
-                                                            ( n = `title`  v = `Group` )
-                                                           )
-                                          )->get_parent( )->get_parent( )->get_parent( ).
-
-    client->view_display( p13n_popup->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD init_data_set.
-
-    mt_columns = VALUE #( ( columnkey = `productId` text = `Product ID` )
-                                       ( columnkey = `name`      text = `Name` )
-                                       ( columnkey = `category`  text = `Category` )
-                                       ( columnkey = `supplierName` text = `Supplier Name` ) ).
-    mt_columns1 = VALUE #(
-                                         ( columnkey = `name`      visible = abap_true index = 0 )
-                                         ( columnkey = `category`  visible = abap_true index = 1 )
-                                         ( columnkey = `productId` visible = abap_false )
-                                         ( columnkey = `supplierName` visible = abap_false ) ).
-
-    mt_groups = VALUE #( ( columnkey = `name` text = `Name` showifgrouped = abap_true )
-                         ( columnkey = `category` text = `Category` showifgrouped = abap_true )
-                         ( columnkey = `productId` showifgrouped = abap_false )
-                         ( columnkey = `supplierName` showifgrouped = abap_false ) ).
-
-    mt_columns_p13n = VALUE #(
-                                ( visible = `true` name = `key1` label = `City` )
-                                ( visible = `false` name = `key2` label = `Country` )
-                                ( visible = `false` name = `key2` label = `Region` ) ).
-
-    mt_sort_p13n = VALUE #(
-                          ( sorted = `true` name = `key1` label = `City` descending = `true` )
-                          ( sorted = `false` name = `key2` label = `Country` descending = `false` )
-                          ( sorted = `false` name = `key2` label = `Region` descending = `false` ) ).
-
-    mt_groups_p13n = VALUE #(
-                          ( grouped = `true` name = `key1` label = `City` )
-                          ( grouped = `false` name = `key2` label = `Country` )
-                          ( grouped = `false` name = `key2` label = `Region` ) ).
-
-  ENDMETHOD.
-
-
-  METHOD get_custom_js.
-
-    result  = `z2ui5.setInitialData = () => {` && |\n| &&
-                    `    var oView = z2ui5.oView` && |\n| &&
-                    `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
-                    `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
-                    `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
-                    `    oSelectionPanel.setP13nData(oView.getModel().oData.XX.MT_COLUMNS_P13N);` && |\n| &&
-                    `    oSortPanel.setP13nData(oView.getModel().oData.XX.MT_SORT_P13N);` && |\n| &&
-                    `    oGroupPanel.setP13nData(oView.getModel().oData.XX.MT_GROUPS_P13N);` && |\n| &&
-                    `    var oPopup = oView.byId("p13nPopup");` && |\n| &&
-                    `    oPopup.open();` && |\n| &&
-                    `};` && |\n| &&
-                    `z2ui5.updateData = (oReason) => {` && |\n| &&
-                    `    if( oReason === "Ok" ) {` && |\n| &&
-                    `    var oView = z2ui5.oView` && |\n| &&
-                    `    var oSelectionPanel = oView.byId("columnsPanel");` && |\n| &&
-                    `    var oSortPanel = oView.byId("sortPanel");` && |\n| &&
-                    `    var oGroupPanel = oView.byId("groupPanel");` && |\n| &&
-                    `    oView.getModel().oData.XX.MT_COLUMNS_P13N = oSelectionPanel.getP13nData();` && |\n| &&
-                    `    oView.getModel().oData.XX.MT_SORT_P13N = oSortPanel.getP13nData();` && |\n| &&
-                    `    oView.getModel().oData.XX.MT_GROUPS_P13N = oGroupPanel.getP13nData();` && |\n| &&
-                    `  };` && |\n| &&
-                    `};`.
+    t_group = VALUE #( ( name = `key1` label = `City`    grouped = abap_true )
+                       ( name = `key2` label = `Country` grouped = abap_false )
+                       ( name = `key3` label = `Region`  grouped = abap_false ) ).
 
   ENDMETHOD.
 

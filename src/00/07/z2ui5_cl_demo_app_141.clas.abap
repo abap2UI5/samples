@@ -4,37 +4,20 @@ CLASS z2ui5_cl_demo_app_141 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     TYPES:
-      BEGIN OF ty_s_row,
-        selkz    TYPE abap_bool,
-        title    TYPE string,
-        value    TYPE string,
-        descr    TYPE string,
-        icon     TYPE string,
-        info     TYPE string,
-        checkbox TYPE abap_bool,
-      END OF ty_s_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-
-    DATA mv_textarea TYPE string.
-    DATA mv_stretch_active TYPE abap_bool.
-
-    DATA:
-      BEGIN OF ms_popup_input,
-        value1          TYPE string,
-        value2          TYPE string,
-        check_is_active TYPE abap_bool,
-        combo_key       TYPE string,
-      END OF ms_popup_input.
-
-    DATA t_bapiret TYPE bapirettab.
-
-    METHODS view_display.
-    METHODS popup_display.
-    METHODS on_event.
-    METHODS on_init.
+      BEGIN OF ty_s_input,
+        hint      TYPE string,
+        value1    TYPE string,
+        value2    TYPE string,
+        is_active TYPE abap_bool,
+      END OF ty_s_input.
+    DATA s_input TYPE ty_s_input.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS on_event.
+    METHODS view_display.
+    METHODS popup_display.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -42,27 +25,71 @@ ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
   METHOD on_event.
 
     CASE client->get( )-event.
 
-      WHEN `POPUP_TO_INPUT`.
-        ms_popup_input-value1 = `value1`.
+      WHEN `POPUP_OPEN`.
+        s_input = VALUE #( hint   = `this label was styled from ABAP`
+                           value1 = `value1` ).
         popup_display( ).
+
+      WHEN `POPUP_CONFIRM`.
+        client->popup_destroy( ).
+        client->message_toast_display( |{ s_input-value1 } / { s_input-value2 }| ).
+
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD on_init.
+  METHOD view_display.
 
-    t_bapiret = VALUE #(
-      ( message = `An empty Report field causes an empty XML Message to be sent` type = `E` id = `MSG1` number = `001` )
-      ( message = `Check was executed for wrong Scenario` type = `E` id = `MSG1` number = `002` )
-      ( message = `Request was handled without errors` type = `S` id = `MSG1` number = `003` )
-      ( message = `product activated` type = `S` id = `MSG4` number = `375` )
-      ( message = `check the input values` type = `W` id = `MSG2` number = `375` )
-      ( message = `product already in use` type = `I` id = `MSG2` number = `375` ) ).
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+
+    " A style class the app owns. There is no bindable property for "carry
+    " this CSS class", so the class itself is declared here and put on the
+    " control by a frontend action below - the one case where a control
+    " method beats a binding.
+    view->_generic( name = `style`
+                    ns   = `html`
+      )->_cc_plain_xml( `.demoHighlight { color: #bb0000 !important; font-size: 1.5rem !important; }`
+      )->get_parent( ).
+
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Popups`
+                                       navbuttonpress = client->_event_nav_app_leave( )
+                                       shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `Changes a control INSIDE an open popup from the backend. The ` &&
+                   `label text is an ordinary two-way binding; the style class has ` &&
+                   `no bindable equivalent and is applied with follow_up_action( ` &&
+                   `control_by_id ) scoped to the popup view. No custom JavaScript ` &&
+                   `is involved.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->simple_form( `Inputs` )->content( `form`
+        )->label( `01`
+        )->button( text  = `Popup Get Input Values`
+                   press = client->_event( `POPUP_OPEN` ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
@@ -71,93 +98,41 @@ CLASS z2ui5_cl_demo_app_141 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    DATA(dialog) = popup->dialog(
-       contentheight = `500px`
-       contentwidth  = `500px`
-       title         = `Title` ).
+    DATA(dialog) = popup->dialog( title         = `Title`
+                                  contentheight = `500px`
+                                  contentwidth  = `500px` ).
 
     dialog->content(
-           )->simple_form(
-               )->label( text = `Input1`
-                         id   = `lbl1`
-               )->input( client->_bind( ms_popup_input-value1 )
-               )->label( `Input2`
-               )->input( client->_bind( ms_popup_input-value2 )
-               )->label( `Checkbox`
-               )->checkbox(
-                   selected = client->_bind( ms_popup_input-check_is_active )
-                   text     = `this is a checkbox`
-                   enabled  = abap_true
-         )->get_parent( )->get_parent(
-         )->footer( )->overflow_toolbar(
-           )->toolbar_spacer(
-           )->button(
-               text  = `Cancel`
-               press = client->_event( `BUTTON_TEXTAREA_CANCEL` )
-           )->button(
-               text  = `Confirm`
-               press = client->_event_client( client->cs_event-popup_close )
-               type  = `Emphasized` ).
-
-    dialog->_generic( name   = `HTML`
-                      ns     = `core`
-                      t_prop = VALUE #( ( n = `content` v = `<script> z2ui5.setBlackColor();  </script>` )
-                                                                   ( n = `preferDOM`  v = `true` )
-                                                                  ) )->get_parent( ).
+        )->simple_form( editable = abap_true
+            )->content( `form`
+                )->label( id   = `lbl1`
+                          text = client->_bind( s_input-hint )
+                )->label( `Input1`
+                )->input( client->_bind( s_input-value1 )
+                )->label( `Input2`
+                )->input( client->_bind( s_input-value2 )
+                )->label( `Checkbox`
+                )->checkbox( selected = client->_bind( s_input-is_active )
+                             text     = `this is a checkbox`
+                             enabled  = abap_true )->get_parent( )->get_parent( )->get_parent(
+        )->footer( )->overflow_toolbar(
+            )->toolbar_spacer(
+            )->button( text  = `Cancel`
+                       press = client->_event_client( client->cs_event-popup_close )
+            )->button( text  = `Confirm`
+                       type  = `Emphasized`
+                       press = client->_event( `POPUP_CONFIRM` ) ).
 
     client->popup_display( popup->stringify( ) ).
 
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    DATA(css) = `` &&
-                `.lbl-color { color: red !important; font-size: 30px !important; }`.
-
-    DATA(script) = `` &&
-                   `z2ui5.setBlackColor = function() {` && |\n| &&
-                   `  var lbl = sap.ui.getCore().byId('popupId--lbl1');` && |\n| &&
-                   `  lbl.setText('changed from js');` && |\n| &&
-                   `  lbl.addStyleClass('lbl-color');` && |\n| &&
-                   `};`.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->_generic( name = `style`
-                    ns   = `html` )->_cc_plain_xml( css )->get_parent( ).
-    view->_generic( name = `script`
-                    ns   = `html` )->_cc_plain_xml( script )->get_parent( ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = `abap2UI5 - Popups`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
-
-    DATA(grid) = page->grid( `L8 M12 S12` )->content( `layout` ).
-
-    grid->simple_form( `Inputs` )->content( `form`
-        )->label( `01`
-        )->button(
-            text  = `Popup Get Input Values`
-            press = client->_event( `POPUP_TO_INPUT` ) ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-    ENDIF.
-
-    IF client->get( )-check_on_navigated = abap_true.
-      view_display( ).
-    ENDIF.
-
-    on_event( ).
+    " A follow-up action runs after the response has rendered - so after the
+    " popup of this same roundtrip is open. `view` scopes the id lookup to the
+    " popup, which is what makes `lbl1` resolvable at all.
+    client->follow_up_action( val   = client->cs_event-control_by_id
+                              view  = client->cs_view-popup
+                              t_arg = VALUE #( ( `lbl1` )
+                                               ( `addStyleClass` )
+                                               ( `demoHighlight` ) ) ).
 
   ENDMETHOD.
 

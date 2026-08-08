@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_090</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>popups - p13n Dialog</DESCRIPT>
+    <DESCRIPT>p13n - personalization popup driven from ABAP</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

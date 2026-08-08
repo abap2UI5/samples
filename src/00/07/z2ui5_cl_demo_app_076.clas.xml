@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_DEMO_APP_076</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>gantt - test</DESCRIPT>
+    <DESCRIPT>Gantt - chart with tree table (sap.gantt)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
