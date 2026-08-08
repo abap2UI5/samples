@@ -283,6 +283,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic II` header = `More` sub = `Multi Input (C)` app = `z2ui5_cl_smp_app_078` )
       ( group = `Basic II` header = `More` sub = `Panel, setExpanded (A)` app = `z2ui5_cl_smp_app_448` )
       ( group = `Basic II` header = `More` sub = `PDF Viewer Display (A)` app = `z2ui5_cl_smp_app_449` )
+      ( group = `Basic II` header = `More` sub = `Storage Local/Session (A)` app = `z2ui5_cl_smp_app_327` )
       ( group = `Basic II` header = `More` sub = `Wizard Control (A)` app = `z2ui5_cl_smp_app_202` )
       ( group = `Basic II` header = `NavContainer` sub = `Popup (A)` app = `z2ui5_cl_smp_app_170` )
       ( group = `Basic II` header = `NavContainer` sub = `Simple (A)` app = `z2ui5_cl_smp_app_088` )
