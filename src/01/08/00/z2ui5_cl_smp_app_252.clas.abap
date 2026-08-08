@@ -1,0 +1,123 @@
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxRenderType
+"! Flex items can be rendered differently. By default, they are wrapped in a div element. Optionally,
+"! the bare controls can be rendered directly. This can affect the resulting layout.
+CLASS z2ui5_cl_smp_app_252 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_252 IMPLEMENTATION.
+
+  METHOD view_display.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+         )->page(
+            title          = `abap2UI5 - Sample: Flex Box - Render Type`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->header_content(
+       )->button( id = `hint_icon`
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( `POPOVER` ) ).
+
+    page->header_content(
+       )->link(
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxRenderType` ).
+
+    DATA(layout) = page->vbox(
+                          )->panel( headertext = `Render Type - Div`
+                              )->flex_box( rendertype = `Div`
+                                  )->button( text  = `Some text`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `3` )->get_parent( )->get_parent(
+                                  )->input( value = `Some value`
+                                            width = `auto`
+                                            class = `sapUiSmallMarginEnd` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `2` )->get_parent( )->get_parent(
+                                  )->button( icon = `sap-icon://download` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `1` )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+                          )->panel( headertext = `Render Type - Bare`
+                              )->flex_box( rendertype = `Bare`
+                                  )->button( text  = `Some text`
+                                             type  = `Emphasized`
+                                             class = `sapUiSmallMarginEnd` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `3` )->get_parent( )->get_parent(
+                                  )->input( value = `Some value`
+                                            width = `auto`
+                                            class = `sapUiSmallMarginEnd` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `2` )->get_parent( )->get_parent(
+                                  )->button( icon = `sap-icon://download` )->get(
+                                      )->layout_data(
+                                          )->flex_item_data( growfactor = `1` )->get_parent( ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    IF client->check_on_event( `POPOVER` ).
+      popover_display( `hint_icon` ).
+    ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
+                                  description = `Flex items can be rendered differently. By default, they are wrapped in a div element. ` &&
+                                                `Optionally, the bare controls can be rendered directly. This can affect the resulting layout.` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      view_display( client ).
+    ENDIF.
+
+    on_event( client ).
+
+  ENDMETHOD.
+
+ENDCLASS.

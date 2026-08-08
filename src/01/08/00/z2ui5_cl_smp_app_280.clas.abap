@@ -1,0 +1,167 @@
+"! Rebuild of the UI5 demo kit sample: https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.HeaderContainer/sample/sap.m.sample.HeaderContainerVM
+"! The Header Container with a vertical layout and with divider lines.
+CLASS z2ui5_cl_smp_app_280 DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS on_event
+      IMPORTING
+        client TYPE REF TO z2ui5_if_client.
+    METHODS popover_display
+      IMPORTING
+        id TYPE string.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS z2ui5_cl_smp_app_280 IMPLEMENTATION.
+
+  METHOD view_display.
+
+    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
+         )->page(
+            title          = `abap2UI5 - Sample: Header Container - Vertical Mode`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->header_content(
+       )->button( id = `button_hint_id`
+           icon      = `sap-icon://hint`
+           tooltip   = `Sample information`
+           press     = client->_event( `CLICK_HINT_ICON` ) ).
+
+    page->header_content(
+       )->link(
+           text   = `UI5 Demo Kit`
+           target = `_blank`
+           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.HeaderContainer/sample/sap.m.sample.HeaderContainerVM` ).
+
+    page->header_container( scrollstep  = `124`
+                            scrolltime  = `500`
+                            orientation = `Vertical`
+                            height      = `400px`
+         )->numeric_content( scale      = `M`
+                             value      = `1.75`
+                             valuecolor = `Good`
+                             indicator  = `Up`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `0.57`
+                             valuecolor = `Error`
+                             indicator  = `Down`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `1.04`
+                             valuecolor = `Neutral`
+                             indicator  = `Up`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `3.65`
+                             valuecolor = `Good`
+                             indicator  = `Up`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `0.73`
+                             valuecolor = `Error`
+                             indicator  = `Down`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `1.01`
+                             valuecolor = `Critical`
+                             indicator  = `Down`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `1.42`
+                             valuecolor = `Good`
+                             indicator  = `Up`
+                             press      = client->_event( `press` ) )->get_parent(
+         )->numeric_content( scale      = `M`
+                             value      = `0.21`
+                             valuecolor = `Error`
+                             indicator  = `Down`
+                             press      = client->_event( `press` ) )->get_parent( )->get_parent(
+       )->header_container( scrollstep  = `200`
+                            orientation = `Vertical`
+                            height      = `400px`
+         )->tile_content( unit   = `EUR`
+                          footer = `Current Quarter`
+           )->content(
+             )->numeric_content( value      = `1.96`
+                                 valuecolor = `Error`
+                                 indicator  = `Down`
+                                 press      = client->_event( `press` ) )->get_parent( )->get_parent( )->get_parent(
+         )->tile_content( footer = `Leave Requests`
+           )->content(
+             )->numeric_content( value = `35`
+                                 icon  = `sap-icon://travel-expense` )->get_parent( )->get_parent( )->get_parent(
+         )->tile_content( footer = `Hours since last Activity`
+           )->content(
+             )->numeric_content( value = `9`
+                                 icon  = `sap-icon://horizontal-bar-chart` )->get_parent( )->get_parent( )->get_parent(
+         )->tile_content( unit   = `EUR`
+                          footer = `Current Quarter`
+           )->content(
+             )->numeric_content( scale      = `M`
+                                 value      = `88`
+                                 valuecolor = `Good`
+                                 indicator  = `Up` )->get_parent( )->get_parent( )->get_parent(
+         )->tile_content( unit   = `Unit`
+                          footer = `Footer Text`
+           )->content(
+             )->numeric_content( value = `1522`
+                                 icon  = `sap-icon://bubble-chart` ).
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+
+  METHOD on_event.
+
+    CASE client->get( )-event.
+      WHEN `CLICK_HINT_ICON`.
+        popover_display( `button_hint_id` ).
+      WHEN `press`.
+        client->message_toast_display( `Fire press` ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+
+  METHOD popover_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    view->quick_view( placement = `Bottom`
+                      width     = `auto`
+              )->quick_view_page( pageid      = `sampleInformationId`
+                                  header      = `Sample information`
+                                  description = `The Header Container with a vertical layout and with divider lines.` ).
+
+    client->popover_display(
+      xml   = view->stringify( )
+      by_id = id ).
+
+  ENDMETHOD.
+
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_init( ).
+      view_display( client ).
+    ENDIF.
+
+    on_event( client ).
+
+  ENDMETHOD.
+
+ENDCLASS.
