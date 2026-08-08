@@ -63,11 +63,11 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
 
   METHOD view_display.
 
-*    SELECT
-*      SINGLE FROM icfservloc
-*      FIELDS icfactive
-*      WHERE icf_name = `Z2UI5_APC_SMP_1`
-*      INTO @DATA(icfactive).
+    SELECT
+      SINGLE FROM icfservloc
+      FIELDS icfactive
+      WHERE icf_name = `Z2UI5_APC_SMP_1`
+      INTO @DATA(icfactive).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
@@ -82,12 +82,12 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
            tooltip   = `Sample information`
            press     = client->_event( `CLICK_HINT_ICON` ) ).
 
-*    IF icfactive = abap_false.
-*      page->message_strip(
-*          text    = `ICF Service '/sap/bc/apc/sap/z2ui5_apc_smp_1' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
-*          type    = `Warning`
-*          visible = abap_true ).
-*    ENDIF.
+    IF icfactive = abap_false.
+      page->message_strip(
+          text    = `ICF Service '/sap/bc/apc/sap/z2ui5_apc_smp_1' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
+          type    = `Warning`
+          visible = abap_true ).
+    ENDIF.
 
     DATA(form) = page->simple_form( editable = abap_true
                                     title    = `Publish news`
