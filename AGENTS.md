@@ -819,7 +819,7 @@ follow these so new/edited samples stay consistent:
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).
 
 - **A read-only info form disables its inputs** (`enabled = abap_false`) — do not
-  leave display-only values in editable inputs (see `z2ui5_cl_demo_app_122`).
+  leave display-only values in editable inputs (see `z2ui5_cl_smp_app_122`).
 
 - **No redundant footer Back button.** The `shell( )->page( )` already renders a
   nav-back button (`navbuttonpress` / `shownavbutton`); do not add a second

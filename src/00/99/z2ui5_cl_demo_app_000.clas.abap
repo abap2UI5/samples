@@ -114,19 +114,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Binding II`
                          subheader = `Structure Component Level`
-                         press     = client->_event( `z2ui5_cl_demo_app_166` )
+                         press     = client->_event( `z2ui5_cl_smp_app_166` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Binding III`
                          subheader = `Table Cell Level`
-                         press     = client->_event( `z2ui5_cl_demo_app_144` )
+                         press     = client->_event( `z2ui5_cl_smp_app_144` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `setSizeLimit`
 *                         subheader = 'Table Cell Level'
-                         press  = client->_event( `z2ui5_cl_demo_app_071` )
+                         press  = client->_event( `z2ui5_cl_smp_app_071` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -142,19 +142,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Event II`
                          subheader = `Call other apps & exchange data`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_024` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_024` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Event III`
                          subheader = `Additional Infos with t_args`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_167` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_167` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Event IV`
                          subheader = `Facet Filter - T_arg with Objects`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_197` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_197` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -164,47 +164,47 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Timer I`
                          subheader = `Wait n MS and call again the server`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_028` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_028` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Timer II`
                          subheader = `Set Loading Indicator while Server Request`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_064` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_064` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `New Tab`
                          subheader = `Open an URL in a new tab`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_073` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_073` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Clipboard`
                          subheader = `Copy & Paste Text`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_325` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_325` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Focus I`
-                         press  = client->_event( `z2ui5_cl_demo_app_133` )
+                         press  = client->_event( `z2ui5_cl_smp_app_133` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Focus II`
-                         press  = client->_event( `z2ui5_cl_demo_app_189` )
+                         press  = client->_event( `z2ui5_cl_smp_app_189` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Scroll to position`
                          subheader = `client->follow_up_action( SCROLL_TO )`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_362` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_362` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Scroll into view`
                          subheader = `client->follow_up_action( SCROLL_INTO_VIEW )`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_363` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_363` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -214,12 +214,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Data Loss Protection`
-                         press  = client->_event( `z2ui5_cl_demo_app_279` )
+                         press  = client->_event( `z2ui5_cl_smp_app_279` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Tab Title`
-                         press  = client->_event( `z2ui5_cl_demo_app_125` )
+                         press  = client->_event( `z2ui5_cl_smp_app_125` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -243,7 +243,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `System Logout`
                          subheader = `Trigger SYSTEM_LOGOUT client event`
-                         press     = client->_event( `z2ui5_cl_demo_app_361` )
+                         press     = client->_event( `z2ui5_cl_smp_app_361` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -271,7 +271,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Message View`
                          subheader = `Custom Popup, Popover & Output`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_038` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_038` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -287,7 +287,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Upload CSV`
                          subheader = `Import CSV as internal Table`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_074` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_074` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -299,7 +299,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `File Download`
                          subheader = `Download files to the Frontend`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_186` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_186` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -309,7 +309,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Dynamic Types`
                          subheader = `Use S-RTTI to send tables to the frontend`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_061` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_061` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -337,19 +337,19 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Geolocation`
                          subheader = ``
-                         press     = client->_event( `z2ui5_cl_demo_app_120` )
+                         press     = client->_event( `z2ui5_cl_smp_app_120` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Frontend Infos`
                          subheader = ``
-                         press     = client->_event( `z2ui5_cl_demo_app_122` )
+                         press     = client->_event( `z2ui5_cl_smp_app_122` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Camera`
                          subheader = ``
-                         press     = client->_event( `z2ui5_cl_demo_app_306` )
+                         press     = client->_event( `z2ui5_cl_smp_app_306` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -362,12 +362,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          headertext = `Output` ).
 
     panel->generic_tile( header = `Label`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_051` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_051` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Progress Indicator`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_022` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_022` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -379,61 +379,61 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Formatted Text`
                          subheader = `Display HTML`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_015` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_015` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Text`
                          subheader = `Max Lines`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_206` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_206` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `InfoLabel`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_209` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_209` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Busy Indicator`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_215` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_215` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Object Header`
                          subheader = `with Circle-shaped Image`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_272` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_272` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Object Page Header`
                          subheader = `with Header Container`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_303` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_303` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Object Marker in a table`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_289` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_289` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Link`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_293` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_293` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Object Status`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_300` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_300` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Object Attribute inside Table`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_302` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_302` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `ObjectPage `
                          subheader = `with Hidden Section Titles`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_330` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_330` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -467,45 +467,45 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Feed Input`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_101` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_101` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Radio Button`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_207` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_207` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Radio Button Group`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_208` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_208` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Input`
                          subheader = `Types`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_210` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_210` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Input`
                          subheader = `Password`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_213` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_213` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Rating Indicator`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_220` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_220` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `ComboBox`
                          subheader = `Suggestions wrapping`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_229` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_229` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Segmented Button in Input List Item`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_230` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_230` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -516,84 +516,84 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Multi Input`
                          subheader = `Suggestions wrapping`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_232` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_232` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Multi Combo Box`
                          subheader = `Suggestions wrapping`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_233` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_233` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Text Area`
                          subheader = `Value States`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_234` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_234` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Text Area`
                          subheader = `Growing`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_236` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_236` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Slider`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_237` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_237` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Checkbox`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_239` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_239` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Switch`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_240` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_240` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `HTML`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_242` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_242` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Input`
                          subheader = `Suggestions wrapping`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_246` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_246` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Input`
                          subheader = `Description`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_251` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_251` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Button`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_259` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_259` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Step Input`
                          subheader = `Value States`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_264` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_264` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Code Editor`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_265` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_265` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Toggle Button`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_266` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_266` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Multi Input`
                          subheader = `Value States`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_267` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_267` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -603,47 +603,47 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `InvisibleText`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_282` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_282` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Feed Input 2`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_283` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_283` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Select`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_288` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_288` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Date Picker`
                          subheader = `Value States`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_294` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_294` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Date Range Selection`
                          subheader = `Value States`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_295` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_295` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Select`
                          subheader = `with icons`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_297` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_297` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Select`
                          subheader = `Validation states`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_298` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_298` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Select`
                          subheader = `Wrapping text`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_299` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_299` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -658,36 +658,36 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Search Field I`
                          subheader = `Filter with enter`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_053` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_053` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Search Field II`
                          subheader = `Filter with Live Change Event`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_059` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_059` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Multi Input`
                          subheader = `Token & Range Handling`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_078` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_078` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Color Picker`
 *                         subheader = 'Token & Range Handling'
-                         press  = client->_event( `z2ui5_cl_demo_app_270` )
+                         press  = client->_event( `z2ui5_cl_smp_app_270` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Breadcrumbs`
                          subheader = `sample with current page link`
-                         press     = client->_event( `z2ui5_cl_demo_app_292` )
+                         press     = client->_event( `z2ui5_cl_smp_app_292` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Search Field`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_296` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_296` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -699,7 +699,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `URL Helper`
                          subheader = `Trigger a phone's native apps like Email, Telephone and SMS`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_316` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_316` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -709,25 +709,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Data Types`
                          subheader = `Use of Integer, Decimals, Dates & Time`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_047` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_047` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Formatting`
                          subheader = `Currencies`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_067` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_067` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Mask Input`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_110` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_110` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Expression Binding`
                          subheader = `Use calculations & more functions directly in views`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_027` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_027` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -737,49 +737,49 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Numeric Content Without Margins`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_228` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_228` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Tile Content`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_241` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_241` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `News Content`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_261` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_261` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Numeric Content of Different Colors`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_262` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_262` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Numeric Content with Icon`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_263` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_263` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Image Content`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_271` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_271` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Feed Content`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_275` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_275` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Monitor Tile`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_276` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_276` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -791,13 +791,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Feed and News Tile`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_278` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_278` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Tile`
                          subheader = `Statuses`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_281` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_281` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -817,7 +817,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Selection Modes`
                          subheader = `Single Select & Multi Select`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_019` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_019` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -839,25 +839,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Cell Coloring`
-                         press  = client->_event( `z2ui5_cl_demo_app_305` )
+                         press  = client->_event( `z2ui5_cl_smp_app_305` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `ui.Table I`
                          subheader = `Simple example`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_070` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_070` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `ui.Table II`
                          subheader = `Events on Cell Level`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_160` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_160` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Grid List`
                          subheader = `with Drag&Drop`
-                         press     = client->_event( `z2ui5_cl_demo_app_307` )
+                         press     = client->_event( `z2ui5_cl_smp_app_307` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -873,17 +873,17 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `List II`
                          subheader = `Events & Visualization`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_048` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_048` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Action List Item`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_216` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_216` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Input List Item`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_219` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_219` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -895,13 +895,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Standard List Item`
                          subheader = `Wrapping`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_287` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_287` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Object List Item`
                          subheader = `markers aggregation`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_290` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_290` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -937,7 +937,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Call Popup in Popup`
                          subheader = `Backend Popup Stack Handling`
-                         press     = client->_event( `z2ui5_cl_demo_app_161` )
+                         press     = client->_event( `z2ui5_cl_smp_app_161` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -948,7 +948,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `LightBox`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_273` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_273` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -958,31 +958,31 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Popover`
                          subheader = `Simple Example`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_026` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_026` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Popover Item Level`
                          subheader = `Create a Popover for a specific entry of a table`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_052` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_052` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Popover with List`
                          subheader = `List to select in Popover`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_081` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_081` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Popover with Quick View`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_109` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_109` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Popover with Menu`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_163` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_163` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1081,12 +1081,12 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Wizard Control II`
                          subheader = `Next step & SubSequentStep`
-                         press     = client->_event( `z2ui5_cl_demo_app_202` )
+                         press     = client->_event( `z2ui5_cl_smp_app_202` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Cards`
-                         press  = client->_event( `z2ui5_cl_demo_app_181` )
+                         press  = client->_event( `z2ui5_cl_smp_app_181` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1102,7 +1102,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Dynamic Page`
                          subheader = `Display items`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_030` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_030` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1113,37 +1113,37 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Splitting Container`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_103` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_103` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Flex Box`
                          subheader = `Basic Alignment`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_205` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_205` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Header`
                          subheader = `Standalone Icon Tab Header`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_214` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_214` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Overflow Toolbar`
                          subheader = `Placing a Title in OverflowToolbar/Toolbar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_217` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_217` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Flex Box`
                          subheader = `Opposing Alignment`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_218` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_218` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Standard Margins`
                          subheader = `Negative Margins`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_243` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_243` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1155,37 +1155,37 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Flex Box`
                          subheader = `Direction & Order`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_245` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_245` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Splitter Layout`
                          subheader = `2 areas`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_247` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_247` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Splitter Layout`
                          subheader = `2 non-resizable areas`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_248` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_248` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Splitter Layout`
                          subheader = `3 areas`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_249` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_249` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `OverflowToolbar`
                          subheader = `Alignment`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_250` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_250` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Flex Box`
                          subheader = `Render Type`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_252` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_252` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1203,7 +1203,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Flex Box`
                          subheader = `Navigation Examples`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_255` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_255` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1214,18 +1214,18 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Generic Tag with Different Configurations`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_257` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_257` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Nested Splitter Layouts`
                          subheader = `7 Areas`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_260` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_260` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Slide Tile`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_274` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_274` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1235,25 +1235,25 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Nested Views I`
                          subheader = `Basic Example`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_065` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_065` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Nested Views II`
                          subheader = `Head & Item Table`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_097` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_097` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Nested Views III`
                          subheader = `Head & Item Table & Detail`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_098` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_098` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Nested Views IV`
                          subheader = `Sub-App`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_104` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_104` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1262,72 +1262,72 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
                          headertext = `Navigation Container` ).
 
     panel->generic_tile( header = `Nav Container I`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_088` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_088` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Icons Only`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_221` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_221` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Text and Count`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_222` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_222` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Inline Mode`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_223` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_223` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Text Only`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_224` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_224` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Separator`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_225` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_225` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Icon Tab Bar`
                          subheader = `Sub tabs`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_226` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_226` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Bar`
                          subheader = `Page, Toolbar & Bar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_227` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_227` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Bar`
                          subheader = `Toolbar vs Bar vs OverflowToolbar`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_235` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_235` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header = `Message Strip`
-                         press  = client->_event( `Z2UI5_CL_DEMO_APP_238` )
+                         press  = client->_event( `Z2UI5_CL_SMP_APP_238` )
                          mode   = `LineMode`
                          class  = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Header Container`
                          subheader = `Vertical Mode`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_280` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_280` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Message Strip`
                          subheader = `with enableFormattedText`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_291` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_291` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1337,13 +1337,13 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Templating I`
                          subheader = `Basic Example`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_173` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_173` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Templating II`
                          subheader = `Nested Views`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_176` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_176` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1377,7 +1377,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Change CSS`
                          subheader = `Send your own CSS to the frontend`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_050` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_050` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1499,7 +1499,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Object Page with Avatar`
                          subheader = `Since 1.73`
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_017` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_017` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1656,7 +1656,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Table with different OData Models`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_315` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_315` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1710,7 +1710,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Hide/show Soft Keyboard`
                          subheader = ``
-                         press     = client->_event( `z2ui5_cl_demo_app_352` )
+                         press     = client->_event( `z2ui5_cl_smp_app_352` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1830,7 +1830,7 @@ CLASS z2ui5_cl_demo_app_000 IMPLEMENTATION.
 
     panel->generic_tile( header    = `more - System Logout`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_DEMO_APP_361` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_361` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
