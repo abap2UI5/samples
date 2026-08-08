@@ -11,7 +11,7 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 
 function actualPackages() {
-  const map = new Map(); // "src/00/01" -> CTEXT
+  const map = new Map(); // "src/01/02" -> CTEXT
   const walk = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
       const p = path.join(dir, entry.name);
@@ -36,7 +36,7 @@ function documentedPackages() {
   const fence = section.match(/```\n([\s\S]*?)```/);
   if (!fence) throw new Error("AGENTS.md: no fenced tree block in section 1");
 
-  const map = new Map(); // "src/00/01" -> CTEXT
+  const map = new Map(); // "src/01/02" -> CTEXT
   const stack = [];
   for (const line of fence[1].split("\n")) {
     const m = line.match(/^([│ ]*)(?:├──|└──) (\d+)\/ {2}(.*)$/);

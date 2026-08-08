@@ -2,7 +2,7 @@
 /*
  * Generates the overview apps' catalogs from the folder tree.
  * (This is the smp_app_000 index page, not the Fiori Launchpad samples
- * app_lp_* in src/00/00.)
+ * app_481..484 in src/01/01.)
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -14,7 +14,7 @@
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
- *      overview app of the area (src/01 -> smp_app_000):
+ *      overview app of the area (src/02 -> smp_app_000):
  *        - groups in folder-number order
  *        - tiles within a group sorted by header, then sub, then app
  *
@@ -30,11 +30,11 @@ const SRC = path.join(__dirname, '..', 'src');
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
-// src/00 is deliberately absent: it has no overview app since the extended
+// src/01 is deliberately absent: it has no overview app since the extended
 // samples were reorganised, so its tiles are counted but listed nowhere. Add
 // the entry back here the day an extended overview returns.
 const TARGETS = {
-  '01': path.join(SRC, '01', 'z2ui5_cl_smp_app_000.clas.abap'),
+  '02': path.join(SRC, '02', 'z2ui5_cl_smp_app_000.clas.abap'),
 };
 
 // The overview app lives under src/ too and shares the sample-app class-name
@@ -73,7 +73,7 @@ function splitDescript(d) {
   return i === -1 ? { header: t, sub: '' } : { header: t.slice(0, i), sub: t.slice(i + 3) };
 }
 
-// Controls-section tiles (the 01/03 demo-kit rebuilds) are shown without their
+// Controls-section tiles (the 02/03 demo-kit rebuilds) are shown without their
 // namespace prefix - the group heading already states it (sap.m, sap.uxap, …) -
 // and with a one-line, truncated description so the overview never wraps.
 const CONTROLS_SUB_MAX = 90;
@@ -102,7 +102,7 @@ function groupOf(dir) {
   return ctextCache[dir];
 }
 
-const tiles = { '00': [], '01': [] };
+const tiles = { '01': [], '02': [] };
 let hidden = 0;
 
 for (const abap of walk(SRC)) {
@@ -117,7 +117,7 @@ for (const abap of walk(SRC)) {
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
   if (rel.length < 3) continue;
   const area = rel[0];
-  // full subfolder path ("03" or nested "03/00") so nested subpackages form
+  // full subfolder path ("03" or nested "03/01") so nested subpackages form
   // their own group directly after their parent slot
   const subnum = rel.slice(1, -1).join('/');
   if (!(area in tiles)) continue;
