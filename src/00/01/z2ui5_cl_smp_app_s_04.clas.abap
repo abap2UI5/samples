@@ -4,7 +4,7 @@ CLASS z2ui5_cl_smp_app_s_04 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA unit              TYPE meins.
-    DATA numc              TYPE z2ui5_numc12.
+    DATA numc              TYPE z2ui5_e_smp_numc12.
     DATA numc_out          TYPE c LENGTH 12.
 
   PROTECTED SECTION.

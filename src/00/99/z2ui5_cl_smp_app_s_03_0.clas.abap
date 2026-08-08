@@ -41,8 +41,8 @@ CLASS z2ui5_cl_smp_app_s_03_0 IMPLEMENTATION.
     " They are NOT meant to use in production.
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml(
-                        |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_success.mp3").play(); \}|
-                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_demo_error.mp3").play(); \}| ).
+                        |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_success.mp3").play(); \}|
+                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_error.mp3").play(); \}| ).
 
     DATA(vbox) = view->page( `Play success and error sounds` )->vbox( `sapUiSmallMargin` ).
 

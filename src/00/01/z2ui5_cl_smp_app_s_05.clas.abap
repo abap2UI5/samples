@@ -66,7 +66,7 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
     SELECT
       SINGLE FROM icfservloc
       FIELDS icfactive
-      WHERE icf_name = `Z2UI5_SAMPLE`
+      WHERE icf_name = `Z2UI5_APC_SMP`
       INTO @DATA(icfactive).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
 
     IF icfactive = abap_false.
       page->message_strip(
-          text    = `ICF Service '/sap/bc/apc/sap/z2ui5_sample' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
+          text    = `ICF Service '/sap/bc/apc/sap/z2ui5_apc_smp' is not active. WebSocket communication will not work. Please activate the ICF Service in transaction SICF.`
           type    = `Warning`
           visible = abap_true ).
     ENDIF.
@@ -129,7 +129,7 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
                       ns   = `html`
          )->_cc_plain_xml(
             `(()=>{ ` &&
-            `  const ws_url = (window.location.origin + '/sap/bc/apc/sap/z2ui5_sample').replace('http','ws');` &&
+            `  const ws_url = (window.location.origin + '/sap/bc/apc/sap/z2ui5_apc_smp').replace('http','ws');` &&
             `  try { ` &&
             `    ws = new WebSocket(ws_url);` &&
             `  } catch (err) {` &&
