@@ -21,5 +21,5 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: rm -r src/00
+    - run: rm -r src/01
     - run: npx abaplint .github/abaplint/abap_cloud.jsonc

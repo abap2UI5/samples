@@ -2,7 +2,7 @@
   "global": {
     "files": "/src/**/*.*",
     "noIssues": [
-      "/src/00"
+      "/src/01"
     ]
   },
   "dependencies": [
@@ -34,13 +34,13 @@
     // ceiling and 25 keeps one character in reserve. A parallel
     // installation therefore never needs truncation patterns.
     // "Z2UI5_CL_SMP_" is 13 chars, so 12 remain for the object name.
-    // DEMO and SAMPLE are the legacy tokens. They are still accepted while
-    // the migration to SMP runs - drop them from the alternation once the
-    // last class is renamed, leaving "^(?=.{1,25}$)Z2UI5_C(L|X)_SMP_".
+    // The legacy tokens DEMO and SAMPLE are gone - the last classes carrying
+    // them (all of src/01) were renamed, so the alternation is dropped and
+    // only SMP is accepted.
     "object_naming": {
       "patternKind": "required",
       "severity": "Error",
-      "clas": "^(?=.{1,25}$)Z2UI5_C(L|X)_(SMP|DEMO|SAMPLE)_"
+      "clas": "^(?=.{1,25}$)Z2UI5_C(L|X)_SMP_"
     },
     "downport": true,
     "begin_end_names": true,

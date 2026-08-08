@@ -13,7 +13,7 @@ on:
         required: true
         type: string
       do_downport:
-        description: "Downport before pushing (702); otherwise only src/00 is removed (cloud)"
+        description: "Downport before pushing (702); otherwise only src/01 is removed (cloud)"
         required: false
         type: boolean
         default: false
@@ -43,7 +43,7 @@ jobs:
 
     - name: Remove restricted samples
       if: ${{ !inputs.do_downport }}
-      run: rm -rf src/00
+      run: rm -rf src/01
 
     - name: Downport
       if: inputs.do_downport

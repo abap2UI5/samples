@@ -32,24 +32,24 @@ apps directly in `src/` root** — every sample sits in a categorised subpackage
 
 ```
 src/
-├── 01/  "basic"     cloud-ready & downportable — survives every build
-│   ├── 01/  Basic I
-│   ├── 02/  Basic II     framework actions, custom controls and use cases
-│   └── 08/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
-│       ├── 00/  controls - sap.m
-│       ├── 01/  controls - sap.uxap
-│       ├── 02/  controls - sap.f
-│       ├── 03/  controls - sap.ui.core
-│       ├── 04/  controls - sap.ui.layout
-│       ├── 05/  controls - sap.tnt
-│       ├── 06/  controls - sap.ui.codeeditor
-│       └── 07/  controls - sap.ui.unified
-└── 00/  "extended"  restricted / special-purpose — STRIPPED from cloud & 702 builds
-    ├── 00/  "restricted - release - version"   needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
-    ├── 01/  "restricted - abap standard"       on-premise-only ABAP (not ABAP Cloud ready)
-    ├── 06/  "restricted - testing"             test / scaffolding apps, not demos
-    ├── 07/  "restricted - experimental"        work-in-progress / not finished
-    └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control
+├── 01/  "restricted"  restricted / special-purpose — STRIPPED from cloud & 702 builds
+│   ├── 01/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
+│   ├── 02/  "restricted - on premise"          on-premise-only ABAP (not ABAP Cloud ready)
+│   ├── 03/  "restricted - testing"             test / scaffolding apps, not demos
+│   ├── 04/  "restricted - experimental"        work-in-progress / not finished
+│   └── 99/  "restricted - obsolet"             superseded, or built on a deprecated UI5 control
+└── 02/  "basic"     cloud-ready & downportable — survives every build
+    ├── 01/  Basic I
+    ├── 02/  Basic II     framework actions, custom controls and use cases
+    └── 03/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
+        ├── 01/  controls - sap.m
+        ├── 02/  controls - sap.uxap
+        ├── 03/  controls - sap.f
+        ├── 04/  controls - sap.ui.core
+        ├── 05/  controls - sap.ui.layout
+        ├── 06/  controls - sap.tnt
+        ├── 07/  controls - sap.ui.codeeditor
+        └── 08/  controls - sap.ui.unified
 ```
 
 This tree is machine-checked: `node scripts/check-agents-structure.js` compares
@@ -65,9 +65,9 @@ group name — keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
-Every sample in `01/08` is a faithful rebuild of one specific UI5 demo kit
+Every sample in `02/03` is a faithful rebuild of one specific UI5 demo kit
 sample, filed in the subpackage of the library its entity belongs to
-(`01/08/00` = sap.m, `01/08/01` = sap.uxap, …), and carries the demo kit URL
+(`02/03/01` = sap.m, `02/03/02` = sap.uxap, …), and carries the demo kit URL
 as an ABAP Doc line directly above its `CLASS ... DEFINITION`
 (`"! Rebuild of the UI5 demo kit sample: <url>`).
 Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
@@ -77,53 +77,53 @@ the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
 truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original do not belong in `01/08` — file them in
-the framework package (`01/02`, actions / custom controls / use cases) or,
-when a restriction applies, in the matching `src/00` category.
+Demos that have no demo kit original do not belong in `02/03` — file them in
+the framework package (`02/02`, actions / custom controls / use cases) or,
+when a restriction applies, in the matching `src/01` category.
 
 Machine-generated demo kit ports that have not been manually reviewed do not
 live in this repository — they are collected in the separate api repository
-of the abap2UI5 organization. Everything under `01/08` here is manually
+of the abap2UI5 organization. Everything under `02/03` here is manually
 reviewed.
 
 ---
 
-## 2. Compatibility model — what belongs in `src/01` vs `src/00`
+## 2. Compatibility model — what belongs in `src/02` vs `src/01`
 
 The split is driven directly by the CI builds:
 
-| Build (workflow)   | What it does                                    | Sees `src/01` | Sees `src/00` |
+| Build (workflow)   | What it does                                    | Sees `src/02` | Sees `src/01` |
 |--------------------|-------------------------------------------------|:---:|:---:|
 | `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ |
-| `abap-cloud`       | `rm -r src/00` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
-| `abap-702`         | `npm run downport` (does `rm -rf src/00`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
+| `abap-cloud`       | `rm -r src/01` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/01`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
 
 **Consequence of the rule:**
 
-- **`src/01` ("basic")** — a sample may only live here if it is **ABAP Cloud
+- **`src/02` ("basic")** — a sample may only live here if it is **ABAP Cloud
   ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
   restriction. These survive all three builds.
-- **`src/00` ("extended")** — anything with *any* restriction. It is deleted
+- **`src/01` ("restricted")** — anything with *any* restriction. It is deleted
   before the cloud and 702 builds, so it is only ever checked by
   `abap-standard`. Pick the subpackage by the **first** restriction that
   applies:
 
-  1. Deprecated control/property, or superseded → `00/99`
-  2. Test / scaffolding app → `00/06`
-  3. Experimental / work-in-progress → `00/07`
-  4. Needs on-premise-only ABAP (not Cloud) → `00/01`
-  5. Everything else → `00/00` — the catch-all for a sample that plain
+  1. Deprecated control/property, or superseded → `01/99`
+  2. Test / scaffolding app → `01/03`
+  3. Experimental / work-in-progress → `01/04`
+  4. Needs on-premise-only ABAP (not Cloud) → `01/02`
+  5. Everything else → `01/01` — the catch-all for a sample that plain
      OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
      (`sap.suite.*`, `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
      `sap.ui.richtexteditor`, …), a control/property **introduced after UI5
      1.71**, or a **runtime the sample cannot ship** — the Fiori Launchpad, an
      OData service, native JavaScript / CSS / HTML.
 
-A sample qualifies for `src/01` **only if none** of the above restrictions
+A sample qualifies for `src/02` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native
-JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`);
-"non-deprecated" is not enough (post-1.71 → `00/00`).
+JS, not a test, finished and clean. "Old" is not enough (deprecated → `01/99`);
+"non-deprecated" is not enough (post-1.71 → `01/01`).
 
 ---
 
@@ -131,15 +131,15 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 `z2ui5_cl_sample_app_g01` and `z2ui5_cl_smp_app_000` are **overview apps** —
 generated index pages that list all samples of an area. They are *not* Fiori
-Launchpad apps; do not confuse them with the launchpad samples in `src/00/00`,
+Launchpad apps; do not confuse them with the launchpad samples in `src/01/01`,
 which are the demos that run inside a real Fiori Launchpad.
 
 There is **one overview app per top-level package**, and they cross-link:
 
 | App class                | Lives in | Title                            | Mirrors     | Button → other |
 |--------------------------|----------|----------------------------------|-------------|----------------|
-| `z2ui5_cl_smp_app_000`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_g01` |
-| `z2ui5_cl_sample_app_g01`| `src/00` | `abap2UI5 - Samples (restricted)`| `src/00/**` | "Basic Samples" → `smp_app_000` |
+| `z2ui5_cl_smp_app_000`| `src/02` | `abap2UI5 - Samples`             | `src/02/**` | "Extended Samples" → `sample_app_g01` |
+| `z2ui5_cl_sample_app_g01`| `src/01` | `abap2UI5 - Samples (restricted)`| `src/01/**` | "Basic Samples" → `smp_app_000` |
 
 Both are identical in shape: a `get_catalog( )` method returning a flat table of
 tiles, and a `view_display( )` that loops the catalog, emitting an H3 section
@@ -168,7 +168,7 @@ only; the **extended** overview (`sample_app_g01`) lists every sample directly
 under the previous one (no inter-block blank line), keeping only the per-group
 H3 titles and the column alignment.
 
-`z2ui5_cl_demo_app_000` is the old "classic" overview app (now under `00/99`,
+`z2ui5_cl_smp_app_000_0` is the old "classic" overview app (now under `01/99`,
 obsolete); `sample_app_g01` links to it from its info message strip. Do not
 extend it.
 
@@ -178,7 +178,7 @@ extend it.
 
 **Treat the two `get_catalog( )` tables as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
-or move a whole subpackage between `src/00` and `src/01`, or change a class's
+or move a whole subpackage between `src/01` and `src/02`, or change a class's
 description — regenerate the affected catalog(s) in the same change.
 
 A stale catalog blocks the pull request: the `publish-overview-apps` workflow
@@ -237,8 +237,8 @@ from the old catalog.
 
 ### Generation rules
 
-1. **One catalog per area.** Apps in `src/01/**` belong in `smp_app_000`; apps in
-   `src/00/**` belong in `sample_app_g01`. Never list an app in the wrong overview app.
+1. **One catalog per area.** Apps in `src/02/**` belong in `smp_app_000`; apps in
+   `src/01/**` belong in `sample_app_g01`. Never list an app in the wrong overview app.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
@@ -248,12 +248,12 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`00/00` → `00/07` → `00/99`; `01/01` → `01/08/00` → `01/08/07`) so the
+   (`01/01` → `01/04` → `01/99`; `02/01` → `02/03/01` → `02/03/08`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. a new `00/02` group goes **after**
-   `restricted - abap standard` (`00/01`) and **before**
-   `restricted - testing` (`00/06`)).
+   numeric slot (e.g. a new `01/05` group goes **after**
+   `restricted - experimental` (`01/04`) and **before**
+   `restricted - obsolet` (`01/99`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
@@ -261,7 +261,7 @@ from the old catalog.
    untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage = moving its whole tile group** between the two
    catalogs, inserted at the correct numeric slot (moving a subpackage from
-   `src/01` to `src/00` lifts its entire tile group out of `smp_app_000`
+   `src/02` to `src/01` lifts its entire tile group out of `smp_app_000`
    and into `sample_app_g01`).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
@@ -633,7 +633,7 @@ root model — the one-way/two-way split disappeared with the `XX/` view-model
 node — so `_bind_edit` is only an obsolete alias and is slated for removal.
 The single exception is a mapping that differs per direction, because `_bind`
 has no `custom_mapper_back` / `custom_filter_back` parameters; the one sample
-that needs it (`z2ui5_cl_demo_app_153`) says so in a comment at the call.
+that needs it (`z2ui5_cl_smp_app_153`) says so in a comment at the call.
 
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and
@@ -792,7 +792,7 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `01/01` (Basic I) and `01/02` (Basic II) packages —
+Learned while curating the `02/01` (Basic I) and `02/02` (Basic II) packages —
 follow these so new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
@@ -809,7 +809,7 @@ follow these so new/edited samples stay consistent:
   aligned under the first backtick). If the view is one uncaptured fluent chain,
   capture the page first (`DATA(page) = <view>->shell( )->page( ... ).`).
 
-- **`01/02` DESCRIPTs carry a capability marker** appended to the `<DESCRIPT>`
+- **`02/02` DESCRIPTs carry a capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
@@ -838,7 +838,7 @@ follow these so new/edited samples stay consistent:
     `dynamic_page_title( )` — sap.f `DynamicPageTitle` has that aggregation.)
   - `<footer>` on a popup `Dialog` — `sap.m.Dialog` only got a public `footer`
     aggregation ~1.110; a `page( )->footer( )` is fine (sap.m.Page always had
-    one). Every control/property in `src/01` must exist since 1.71 (§2); when in
+    one). Every control/property in `src/02` must exist since 1.71 (§2); when in
     doubt check "available since" in the demo kit.
 
 - **`sap.m.SimpleForm` needs `editable = abap_true`** for its label/input pairs
