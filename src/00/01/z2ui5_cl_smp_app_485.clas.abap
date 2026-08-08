@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_smp_app_s_01 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_485 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_smp_app_s_01 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_s_01 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_485 IMPLEMENTATION.
 
   METHOD initialize_view.
 

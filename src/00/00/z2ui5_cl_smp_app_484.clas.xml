@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_SMP_APP_S_03_0</CLSNAME>
+    <CLSNAME>Z2UI5_CL_SMP_APP_484</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>obsolete - superseded play-sound demo</DESCRIPT>
+    <DESCRIPT>Launchpad - cross app navigation II</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -1,17 +1,14 @@
-CLASS z2ui5_cl_smp_app_lp_02_0 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_481 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
-    DATA mv_title          TYPE string VALUE `my title`.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_lp_02_0 IMPLEMENTATION.
-
+CLASS z2ui5_cl_smp_app_481 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
@@ -20,21 +17,14 @@ CLASS z2ui5_cl_smp_app_lp_02_0 IMPLEMENTATION.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).
       ENDIF.
 
-      DATA(shell) = z2ui5_cl_xml_view=>factory( )->shell( ).
-
-      IF client->get( )-check_launchpad_active = abap_true.
-        DATA(page) = shell->page( showheader = abap_false ).
-        page->_z2ui5( )->lp_title( client->_bind( mv_title ) ).
-
-      ELSE.
-        page = shell->page( client->_bind( mv_title ) ).
-      ENDIF.
-
-      client->view_display( page->simple_form( title    = `Set Launchpad Title Dynamically`
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(page) = view->shell( )->page( showheader = abap_false ).
+      client->view_display( page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
                                                editable = abap_true
                      )->content( `form`
                          )->label( ``
-                         )->input( client->_bind( mv_title )
+                         )->button( text  = `Read Parameters`
+                                    press = client->_event( `READ_PARAMS` )
                          )->label( ``
                          )->button( text  = `Go Back`
                                     press = client->_event_nav_app_leave( ) )->stringify( ) ).

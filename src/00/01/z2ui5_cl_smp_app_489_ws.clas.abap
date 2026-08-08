@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_smp_app_s_05_ws DEFINITION PUBLIC
+CLASS z2ui5_cl_smp_app_489_ws DEFINITION PUBLIC
   INHERITING FROM cl_apc_wsp_ext_stateless_base.
 
   PUBLIC SECTION.
@@ -32,7 +32,7 @@ CLASS z2ui5_cl_smp_app_s_05_ws DEFINITION PUBLIC
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_s_05_ws IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_489_ws IMPLEMENTATION.
 
   METHOD get_producer.
 

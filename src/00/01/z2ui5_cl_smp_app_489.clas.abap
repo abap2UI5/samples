@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_smp_app_s_05 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_489 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -25,14 +25,14 @@ CLASS z2ui5_cl_smp_app_s_05 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
 
     IF client->check_on_init( ).
-      connections = z2ui5_cl_smp_app_s_05_ws=>get_active_connections( ).
+      connections = z2ui5_cl_smp_app_489_ws=>get_active_connections( ).
     ENDIF.
 
     IF client->get( )-event IS NOT INITIAL.
@@ -139,9 +139,9 @@ CLASS z2ui5_cl_smp_app_s_05 IMPLEMENTATION.
             `  ws.onmessage = (msg)=>{` &&
             `    const model = z2ui5.oController.oView.getModel();` &&
             `    const data = model.getData();` &&
-            `    if (msg.data === '` && z2ui5_cl_smp_app_s_05_ws=>c_msg-__new_connection__ && `') {` &&
+            `    if (msg.data === '` && z2ui5_cl_smp_app_489_ws=>c_msg-__new_connection__ && `') {` &&
             `      data.XX.CONNECTIONS += 1;` &&
-            `    } else if (msg.data === '` && z2ui5_cl_smp_app_s_05_ws=>c_msg-__closed__ && `') {` &&
+            `    } else if (msg.data === '` && z2ui5_cl_smp_app_489_ws=>c_msg-__closed__ && `') {` &&
             `      data.XX.CONNECTIONS -= 1;` &&
             `    } else {` &&
             `      data.XX.NEWS_LIST.push(JSON.parse(msg.data));` &&

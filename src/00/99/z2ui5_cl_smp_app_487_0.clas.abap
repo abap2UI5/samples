@@ -1,4 +1,4 @@
-CLASS z2ui5_cl_smp_app_s_03 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_487_0 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -19,12 +19,11 @@ CLASS z2ui5_cl_smp_app_s_03 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_smp_app_s_03 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_487_0 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
     IF client->check_on_init( ).
       view_display( ).
     ENDIF.
@@ -38,28 +37,20 @@ CLASS z2ui5_cl_smp_app_s_03 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    SELECT
-      SINGLE FROM icfservloc
-      FIELDS icfactive
-      WHERE icf_name = `MIME_DEMO`
-      INTO @DATA(icfactive).
-
     " Note, these are demo sounds and are part of the abap2UI5 sample repo.
     " They are NOT meant to use in production.
-    DATA(vbox) = view->page( title = `Play success and error sounds` )->vbox( class = `sapUiSmallMargin` ).
+    view->_generic( name = `script`
+                    ns   = `html` )->_cc_plain_xml(
+                        |function playSuccess() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_success.mp3").play(); \}|
+                     && |function playError() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_error.mp3").play(); \}| ).
 
-    IF icfactive = abap_false.
-      vbox->message_strip(
-          text    = `ICF Service '/SAP/PUBLIC/BC/ABAP/mime_demo' is not active. Sounds will not play. Please activate the ICF service first.`
-          type    = `Warning`
-          visible = abap_true ).
-    ENDIF.
+    DATA(vbox) = view->page( `Play success and error sounds` )->vbox( `sapUiSmallMargin` ).
 
     vbox->message_strip(
         text    = client->_bind( message-text )
         type    = client->_bind( message-type )
         visible = `{= !!$` && client->_bind( message-text ) && ` }` ).
-    vbox->text( text = `The magic key is: abap2UI5` ).
+    vbox->text( `The magic key is: abap2UI5` ).
     vbox->input( id          = `inputApp`
                  value       = client->_bind( magic_key )
                  placeholder = `Enter magic key`
@@ -68,7 +59,7 @@ CLASS z2ui5_cl_smp_app_s_03 IMPLEMENTATION.
                   type  = `accept`
                   press = client->_event( `enter` ) ).
 
-    view->_z2ui5( )->focus( focusid = `inputApp` ).
+    view->_z2ui5( )->focus( `inputApp` ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -79,16 +70,13 @@ CLASS z2ui5_cl_smp_app_s_03 IMPLEMENTATION.
     IF client->get( )-event = `enter`.
 
       IF magic_key = `abap2UI5`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-play_audio
-            t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_success.mp3` ) ) ).
+        client->follow_up_action( `playSuccess()` ).
         message-type = `Success`.
         message-text = `Hooray!`.
 
       ELSE.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-play_audio
-            t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/z2ui5_smp_error.mp3` ) ) ).
+
+        client->follow_up_action( `playError()` ).
         message-type = `Error`.
         message-text = `That wasn't the magic key`.
       ENDIF.

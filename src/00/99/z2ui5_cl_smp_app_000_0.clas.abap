@@ -225,13 +225,13 @@ CLASS z2ui5_cl_smp_app_000_0 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Session Stickyness I`
                          subheader = `Stateful mode`
-                         press     = client->_event( `z2ui5_cl_smp_app_s_02` )
+                         press     = client->_event( `z2ui5_cl_smp_app_486` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Session Stickyness II`
                          subheader = `Use Locks`
-                         press     = client->_event( `z2ui5_cl_smp_app_s_01` )
+                         press     = client->_event( `z2ui5_cl_smp_app_485` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -693,7 +693,7 @@ CLASS z2ui5_cl_smp_app_000_0 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Sound`
                          subheader = `Play success and error sounds`
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_03` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_487` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1383,7 +1383,7 @@ CLASS z2ui5_cl_smp_app_000_0 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Websocket`
                          subheader = `Consume APC-Messages with Websocket`
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_05` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_489` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1726,37 +1726,37 @@ CLASS z2ui5_cl_smp_app_000_0 IMPLEMENTATION.
 
     panel->generic_tile( header    = `Sticky session with locking`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_01` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_485` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `stateful session`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_02` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_486` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Play Sound`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_03` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_487` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Conversion Exits`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_04` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_488` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `News Feed over Websocket`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_05` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_489` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Navigation with app state change v2`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_S_06` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_490` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
@@ -1766,25 +1766,25 @@ CLASS z2ui5_cl_smp_app_000_0 IMPLEMENTATION.
 
     panel->generic_tile( header    = `launchpad I - Startup Parameters`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_LP_01` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_481` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `launchpad II - Set Title`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_LP_02` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_482` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Launchpad III - cross app navigation I`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_LP_03` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_483` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
     panel->generic_tile( header    = `Launchpad IV - cross app navigation II`
                          subheader = ``
-                         press     = client->_event( `Z2UI5_CL_SMP_APP_LP_04` )
+                         press     = client->_event( `Z2UI5_CL_SMP_APP_484` )
                          mode      = `LineMode`
                          class     = `sapUiTinyMarginEnd sapUiTinyMarginBottom` ).
 
