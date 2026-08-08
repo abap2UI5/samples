@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /*
  * Generates the overview apps' catalogs from the folder tree.
- * (These are the smp_app_000 / sample_app_g01 index pages, not the Fiori
- * Launchpad samples in src/00/03.)
+ * (This is the smp_app_000 index page, not the Fiori Launchpad samples
+ * app_lp_* in src/00/00.)
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -14,7 +14,7 @@
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
- *      overview app of each area (src/01 -> smp_app_000, src/00 -> sample_app_g01):
+ *      overview app of the area (src/01 -> smp_app_000):
  *        - groups in folder-number order
  *        - tiles within a group sorted by header, then sub, then app
  *
@@ -27,18 +27,20 @@ const path = require('path');
 
 const SRC = path.join(__dirname, '..', 'src');
 
-// area (top-level package under src) -> overview app file
+// area (top-level package under src) -> overview app file. Every area listed
+// here must have its overview app in the tree - a missing file is an error,
+// not something to skip, because it means the catalog stops being generated.
+// src/00 is deliberately absent: it has no overview app since the extended
+// samples were reorganised, so its tiles are counted but listed nowhere. Add
+// the entry back here the day an extended overview returns.
 const TARGETS = {
   '01': path.join(SRC, '01', 'z2ui5_cl_smp_app_000.clas.abap'),
-  '00': path.join(SRC, '00', 'z2ui5_cl_sample_app_g01.clas.abap'),
 };
 
-// The overview apps live under src/ too; the src/01 one (z2ui5_cl_smp_app_000)
-// even shares the sample-app class-name prefix. Skip both so an overview never
-// lists itself as a tile.
+// The overview app lives under src/ too and shares the sample-app class-name
+// prefix. Skip it so an overview never lists itself as a tile.
 const OVERVIEW_APPS = new Set([
   'z2ui5_cl_smp_app_000',
-  'z2ui5_cl_sample_app_g01',
 ]);
 
 function walk(dir, out = []) {
@@ -203,15 +205,17 @@ function rewrite(file, list) {
 }
 
 let total = 0;
-for (const [area, file] of Object.entries(TARGETS)) {
-  // an area without an overview app in the tree has no catalog to mirror
-  if (!fs.existsSync(file)) {
-    console.log(`src/${area}: no overview app, ${tiles[area].length} tiles not listed`);
+for (const [area, list] of Object.entries(tiles)) {
+  const file = TARGETS[area];
+  // an area with no overview app has no catalog to mirror - report what it
+  // holds so the tiles are not silently lost sight of
+  if (!file) {
+    console.log(`src/${area}: no overview app, ${list.length} tiles not listed`);
     continue;
   }
-  rewrite(file, tiles[area]);
-  console.log(`${path.relative(path.join(__dirname, '..'), file)}: ${tiles[area].length} tiles`);
-  total += tiles[area].length;
+  rewrite(file, list);
+  console.log(`${path.relative(path.join(__dirname, '..'), file)}: ${list.length} tiles`);
+  total += list.length;
 }
 console.log(`generated ${total} tiles, ${hidden} ZZZ helper app(s) hidden`);
 console.log('now run: npx abaplint  (expect 0 issues)');
