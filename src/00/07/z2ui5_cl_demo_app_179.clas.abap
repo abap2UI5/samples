@@ -68,7 +68,7 @@ CLASS z2ui5_cl_demo_app_179 IMPLEMENTATION.
     view->_generic_property( VALUE #( n = `core:require`
                                       v = `{Formatter:'z2ui5/model/formatter'}` ) ).
 
-    DATA(page) = view->page(
+    DATA(page) = view->shell( )->page(
         id             = `page_main`
         title          = `abap2UI5 - Gantt Chart with Relationships`
         navbuttonpress = client->_event_nav_app_leave( )
