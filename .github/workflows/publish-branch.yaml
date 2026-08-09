@@ -49,6 +49,12 @@ jobs:
       if: inputs.do_downport
       run: npm run downport
 
+    # The release-specific config is passed explicitly and never copied over
+    # the root abaplint.jsonc: the abaplint GitHub App picks the root config up
+    # on the derived branch, and it resolves dependencies from the installed
+    # repository's default branch - the `branch` field is a CLI feature. A v702
+    # root config there would check the downported samples against the
+    # un-downported abap2UI5@main. See AGENTS.md section 2.
     - name: Lint ${{ inputs.branch }} content
       run: npx abaplint ${{ inputs.lint_config }}
 
