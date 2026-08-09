@@ -98,6 +98,18 @@ The split is driven directly by the CI builds:
 | `abap-cloud`       | `rm -r src/01` → `abaplint abap_cloud.jsonc`    | ✅ | ❌ |
 | `abap-702`         | `npm run downport` (does `rm -rf src/01`) → `abaplint abap_702.jsonc` | ✅ | ❌ |
 
+The same two transformations produce the derived branches `cloud` and `702`
+(`publish-cloud` / `publish-702`, both via `publish-branch`). Those branches
+carry the root `abaplint.jsonc` of `standard` unchanged — the release-specific
+configs stay under `.github/abaplint/` and are passed to abaplint explicitly.
+Copying `abap_702.jsonc` over the root config would make the abaplint **GitHub
+App** lint the derived branch at syntax `v702`: the app resolves a dependency
+from the installed repository's default branch and ignores the `branch` field,
+so it would check the downported samples against the *un*-downported framework
+in `abap2UI5/abap2UI5@main` and report every type declared there with
+`WITH EMPTY KEY` as unknown. The 7.02 check itself is not lost — it runs in
+`abap-702` on every pull request, and again in `publish-branch` before the push.
+
 **Consequence of the rule:**
 
 - **`src/02` ("basic")** — a sample may only live here if it is **ABAP Cloud
