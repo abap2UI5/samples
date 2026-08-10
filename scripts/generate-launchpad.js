@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * Generates the overview apps' catalogs from the folder tree.
+ * Generates the overview app's catalog from the folder tree.
  * (This is the smp_app_000 index page, not the Fiori Launchpad samples
  * app_481..484 in src/02/01.)
  *

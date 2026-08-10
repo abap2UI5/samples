@@ -54,7 +54,7 @@ src/
 └── 02/  "restricted"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 01/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
     ├── 02/  "restricted - on premise"          on-premise-only ABAP (not ABAP Cloud ready)
-    └── 04/  "restricted - experimental"        work-in-progress / not finished
+    └── 03/  "restricted - experimental"        work-in-progress / not finished
 ```
 
 This tree is machine-checked: `node scripts/check-agents-structure.js` compares
@@ -138,7 +138,7 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
   1. Deprecated control/property, or superseded → `00/99`
   2. Test / scaffolding app → `00/98`
-  3. Experimental / work-in-progress → `02/04`
+  3. Experimental / work-in-progress → `02/03`
   4. Needs on-premise-only ABAP (not Cloud) → `02/02`
   5. Everything else → `02/01` — the catch-all for a sample that plain
      OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
@@ -155,28 +155,35 @@ JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`)
 
 ---
 
-## 3. The two overview apps
+## 3. The overview app
 
-`z2ui5_cl_sample_app_g01` and `z2ui5_cl_smp_app_000` are **overview apps** —
-generated index pages that list all samples of an area. They are *not* Fiori
-Launchpad apps; do not confuse them with the launchpad samples in `src/02/01`,
-which are the demos that run inside a real Fiori Launchpad.
+`z2ui5_cl_smp_app_000` is the **overview app** — a generated index page that
+lists every sample of the basic area. It is *not* a Fiori Launchpad app; do not
+confuse it with the launchpad samples in `src/02/01`, which are the demos that
+run inside a real Fiori Launchpad.
 
-There is **one overview app per top-level package**, and they cross-link:
+| App class              | Lives in | Title                | Mirrors     |
+|------------------------|----------|----------------------|-------------|
+| `z2ui5_cl_smp_app_000` | `src/01` | `abap2UI5 - Samples` | `src/01/**` |
 
-| App class                | Lives in | Title                            | Mirrors     | Button → other |
-|--------------------------|----------|----------------------------------|-------------|----------------|
-| `z2ui5_cl_smp_app_000`| `src/01` | `abap2UI5 - Samples`             | `src/01/**` | "Extended Samples" → `sample_app_g01` |
-| `z2ui5_cl_sample_app_g01`| `src/02` | `abap2UI5 - Samples (restricted)`| `src/02/**` | "Basic Samples" → `smp_app_000` |
+**It is the only one.** `src/02` ("restricted") and `src/00` (the system
+package) have no overview app: their samples are reachable by class name only,
+and the generator merely reports how many tiles they would hold (§4). An
+extended overview app existed once (`z2ui5_cl_sample_app_g01`, mirroring the
+restricted area, cross-linked with this one); it was removed when the extended
+samples were reorganised. Should it ever return, it comes back as a second
+`TARGETS` entry in `scripts/generate-launchpad.js` and a second row above.
 
-Both are identical in shape: a `get_catalog( )` method returning a flat table of
-tiles, and a `view_display( )` that loops the catalog, emitting an H3 section
-title whenever the `group` changes and one link (`header` + optional `sub`) per
-tile. Navigation is by class name: the tile press event is the `app` value,
-`on_event` does `to_upper( )` → `CREATE OBJECT TYPE (classname)` →
-`nav_app_call( )`. A `class_exists( )` guard keeps the view from breaking on a
-missing class — but that is a safety net, **not** a substitute for keeping the
-catalog correct.
+Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
+`view_display( )` that loops the catalog, emitting an H3 section title whenever
+the `group` changes and one link (`header` + optional `sub`) per tile.
+Navigation is by class name: the tile press event is the `app` value, `on_event`
+does `to_upper( )` → `CREATE OBJECT TYPE (classname)` → `nav_app_call( )`,
+wrapped in a `TRY`/`CATCH cx_root` so a catalog entry whose class is missing
+from the system does not dump — a safety net, **not** a substitute for keeping
+the catalog correct. `on_event` also records the scroll position, which
+`scroll_restore( )` replays via `follow_up_action( cs_event-scroll_to )` on
+`check_on_navigated( )`, so returning from a sample lands where the user left.
 
 Within a group, `view_display( )` also inserts a **blank line between blocks**:
 consecutive tiles whose `header` shares the same base name form one block, and a
@@ -190,35 +197,30 @@ render as one block, then a gap, then the `Event` block, and so on. All links of
 a block share the same width — the estimated render width of the widest header in
 the block plus roughly one space, precomputed by `block_widths( )` /
 `header_width( )` — so the `sub` descriptions of a block line up exactly
-underneath each other in one column, directly next to the links. This
-blank-line-between-blocks applies to the **basic** overview (`smp_app_000`)
-only; the **extended** overview (`sample_app_g01`) lists every sample directly
-under the previous one (no inter-block blank line), keeping only the per-group
-H3 titles and the column alignment.
+underneath each other in one column, directly next to the links.
 
-`z2ui5_cl_smp_app_000_0` is the old "classic" overview app (now under `00/99`,
-obsolete); `sample_app_g01` links to it from its info message strip. Do not
-extend it.
+`z2ui5_cl_smp_app_000_0` is the old "classic" overview app, retired to `00/99`.
+It is not generated and nothing links to it. Do not extend it.
 
 ---
 
 ## 4. The overview is ALWAYS (re)generated — schema & rules
 
-**Treat the two `get_catalog( )` tables as a generated mirror of the folder
+**Treat the `get_catalog( )` table as a generated mirror of the folder
 tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00`, `src/01` and `src/02`, or change a class's
-description — regenerate the affected catalog(s) in the same change.
+description — regenerate the catalog in the same change.
 
 A stale catalog blocks the pull request: the `publish-overview-apps` workflow
-regenerates both catalogs on every pull request and fails on any diff. It
-cannot fix them for you — `standard` is protected and no workflow can push to
-it — so regenerate them yourself and commit the result with the change that
-made them stale.
+regenerates the catalog on every pull request and fails on any diff. It
+cannot fix it for you — `standard` is protected and no workflow can push to
+it — so regenerate it yourself and commit the result with the change that
+made it stale.
 
 ### Regenerate with the generator
 
-Do not hand-edit the catalogs. Run the generator, which scans the folders and
-class descriptions and rewrites both `get_catalog( )` blocks:
+Do not hand-edit the catalog. Run the generator, which scans the folders and
+class descriptions and rewrites the `get_catalog( )` block:
 
 ```
 npm run launchpad      # → node scripts/generate-launchpad.js
@@ -265,9 +267,9 @@ from the old catalog.
 
 ### Generation rules
 
-1. **One catalog per area.** Apps in `src/01/**` belong in `smp_app_000`; apps in
-   `src/02/**` belong in `sample_app_g01`. Never list an app in the wrong overview app.
-   `src/00/**` has no overview app: an app moved to `src/00/98` ("testing") or
+1. **One catalog per area — and only `src/01` has one.** Apps in `src/01/**`
+   belong in `smp_app_000`. `src/02/**` and `src/00/**` have no overview app
+   (§3): an app moved to `src/02` ("restricted"), `src/00/98` ("testing") or
    `src/00/99` ("obsolet") gets **no** tile — the generator only reports how
    many those packages hold.
 2. **Each app appears exactly once**, and every demo app physically present in an
@@ -279,24 +281,23 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`01/01` → `01/03/01` → `01/03/08`; `02/01` → `02/04`) so the
+   (`01/01` → `01/03/01` → `01/03/08`; `02/01` → `02/03`) so the
    on-screen order mirrors the tree; a nested subpackage forms its own group
    directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. a new `02/05` group goes **after**
-   `restricted - experimental` (`02/04`)).
+   numeric slot (e.g. a new `02/04` group goes **after**
+   `restricted - experimental` (`02/03`)).
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
    likewise `Popover I…IV`, `Popup I…III`). The group order from rule 4 is
    untouched; only the tiles inside each group are ordered.
-6. **Moving a subpackage = moving its whole tile group** between the two
-   catalogs, inserted at the correct numeric slot (moving a subpackage from
-   `src/01` to `src/02` lifts its entire tile group out of `smp_app_000`
-   and into `sample_app_g01`). Moving apps to `src/00/98` or `src/00/99` drops
-   their tiles for good — there is no catalog on the other side.
+6. **Moving a subpackage out of `src/01` drops its whole tile group** — there
+   is no catalog on the other side, in `src/02` ("restricted") no more than in
+   `src/00/98` or `src/00/99`. Moving one *into* `src/01` adds its group at the
+   matching numeric slot (rule 4).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
-   overview, none missing. The safest way to regenerate is to rebuild each
+   overview, none missing. The safest way to regenerate is to rebuild the
    catalog straight from the physical tree (one tile per class, group = its
    folder CTEXT) and carry over the existing `header`/`sub` metadata.
 
@@ -312,12 +313,12 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 
 **Adding a sample**
 1. Create the class; place it in the correct folder per §2.
-2. Regenerate the overview catalogs: `npm run launchpad` (§4).
+2. Regenerate the overview catalog: `npm run launchpad` (§4).
 3. `abaplint` → 0 issues → commit (English message).
 
 **Moving a sample / subpackage**
 1. `git mv` the files (no rename needed — `FOLDER_LOGIC=PREFIX`).
-2. Regenerate the overview catalogs: `npm run launchpad` (§4).
+2. Regenerate the overview catalog: `npm run launchpad` (§4).
 3. If a subpackage was added/removed/renamed: update the §1 tree and run
    `node scripts/check-agents-structure.js`.
 4. `abaplint` → 0 issues → commit.
@@ -328,7 +329,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   tree and the actual `package.devc.xml` CTEXTs.
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
-- Overview catalogs still mirror the folder tree (§4).
+- The overview catalog still mirrors the folder tree (§4).
 
 ---
 
