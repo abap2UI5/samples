@@ -1,6 +1,7 @@
+[![abap min release](https://img.shields.io/badge/abap%20min%20release-7.02%20%2B%20Cloud-blue)](#installation)
+<br>
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
-[![abap min release](https://img.shields.io/badge/abap%20min%20release-7.02%20%2B%20Cloud-blue)](#installation)
 <br>
 <br>
 [![abap-standard](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/abap-standard.yaml)
