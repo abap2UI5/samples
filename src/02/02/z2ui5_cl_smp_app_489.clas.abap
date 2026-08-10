@@ -20,6 +20,7 @@ CLASS z2ui5_cl_smp_app_489 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
+
     METHODS on_init.
     METHODS on_event.
     METHODS on_event_post.
