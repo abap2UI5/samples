@@ -211,11 +211,16 @@ tree, never as free-form data.** Whenever you add, remove, or move a sample —
 or move a whole subpackage between `src/00`, `src/01` and `src/02`, or change a class's
 description — regenerate the catalog in the same change.
 
-A stale catalog blocks the pull request: the `publish-overview-apps` workflow
-regenerates the catalog on every pull request and fails on any diff. It
-cannot fix it for you — `standard` is protected and no workflow can push to
-it — so regenerate it yourself and commit the result with the change that
-made it stale.
+The `publish-overview-apps` workflow regenerates the catalog on every pull
+request. On a **same-repository** pull request it commits the result onto the
+branch itself, so a stale catalog no longer blocks anyone — but read that
+commit, it is a real change to what the overview offers (a class that stops
+matching the sample naming scheme shows up there as a deleted tile). It can
+only push where `GITHUB_TOKEN` reaches: on a pull request **from a fork**, and
+on **`standard`** (protected — `github-actions[bot]` can never be added to a
+bypass list), the job instead fails with the command to run. So regenerating
+yourself and committing the result with the change that made it stale is always
+the safe route, and on those two paths it is the only one.
 
 ### Regenerate with the generator
 

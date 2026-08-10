@@ -1,8 +1,8 @@
 name: publish-overview-apps
 
-# Keeps the two overview apps (get_catalog) mirroring the folder tree.
+# Keeps the overview app (get_catalog) mirroring the folder tree.
 #
-# The catalogs are generated entirely from the folder tree and the class
+# The catalog is generated entirely from the folder tree and the class
 # descriptions, so the fix for a stale catalog is always the same one command.
 # Rather than failing the pull request and asking for it, this regenerates and
 # pushes the result onto the pull request branch - a stale catalog no longer
@@ -57,16 +57,16 @@ jobs:
                       && github.event.pull_request.head.repo.full_name == github.repository }}
       run: |
         if git diff --quiet -- src; then
-          echo "Overview apps are up to date."
+          echo "The overview app is up to date."
           exit 0
         fi
         git diff --stat -- src
         if [ "$PUSHABLE" != "true" ]; then
-          echo "::error::The overview catalogs are out of date and this ref cannot be pushed to. Run 'npm run launchpad', commit the result and push (see AGENTS.md §4)."
+          echo "::error::The overview catalog is out of date and this ref cannot be pushed to. Run 'npm run launchpad', commit the result and push (see AGENTS.md §4)."
           exit 1
         fi
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
-        git commit -qm 'Regenerate the overview apps' -- src
+        git commit -qm 'Regenerate the overview app' -- src
         git push
-        echo "Overview apps regenerated and pushed onto the pull request branch."
+        echo "Overview app regenerated and pushed onto the pull request branch."

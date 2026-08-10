@@ -35,11 +35,6 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS get_catalog
       RETURNING
         VALUE(result) TYPE ty_t_tile.
-    METHODS class_exists
-      IMPORTING
-        name          TYPE clike
-      RETURNING
-        VALUE(result) TYPE abap_bool.
     METHODS block_widths
       IMPORTING
         t_catalog     TYPE ty_t_tile
@@ -177,19 +172,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     ENDLOOP.
 
     client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD class_exists.
-
-    TRY.
-        DATA li_app TYPE REF TO z2ui5_if_app.
-        CREATE OBJECT li_app TYPE (name).
-        result = xsdbool( li_app IS BOUND ).
-      CATCH cx_root.
-        result = abap_false.
-    ENDTRY.
 
   ENDMETHOD.
 
