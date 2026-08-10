@@ -9,6 +9,7 @@
 <br>
 [![check-abap2UI5](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-abap2UI5.yaml)
 [![check-rename](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-rename.yaml)
+[![check-docs](https://github.com/abap2UI5/samples/actions/workflows/check-docs.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/check-docs.yaml)
 <br>
 [![publish-cloud](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-cloud.yaml)
 [![publish-702](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml/badge.svg)](https://github.com/abap2UI5/samples/actions/workflows/publish-702.yaml)
@@ -16,7 +17,7 @@
 
 # abap2UI5-samples
 
-More than 330 ready-to-run apps for [abap2UI5](https://github.com/abap2UI5/abap2UI5) — from a two-line Hello World to 1:1 rebuilds of the UI5 demo kit. Install them, click through, read the source: the fastest way to learn abap2UI5 development.
+More than 340 ready-to-run apps for [abap2UI5](https://github.com/abap2UI5/abap2UI5) — from a two-line Hello World to 1:1 rebuilds of the UI5 demo kit. Over 200 of them are cloud-ready and downportable, so every branch below carries them. Install them, click through, read the source: the fastest way to learn abap2UI5 development.
 
 #### Installation
 

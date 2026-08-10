@@ -40,17 +40,17 @@ src/
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from cloud & 702 builds
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from cloud & 702 builds
 ├── 01/  "basic"     cloud-ready & downportable — survives every build
-│   ├── 01/  Basic I
-│   ├── 02/  Basic II     framework actions, custom controls and use cases
-│   └── 03/  Control Library     1:1 rebuilds of UI5 demo kit samples, split by library
-│       ├── 01/  controls - sap.m
-│       ├── 02/  controls - sap.uxap
-│       ├── 03/  controls - sap.f
-│       ├── 04/  controls - sap.ui.core
-│       ├── 05/  controls - sap.ui.layout
-│       ├── 06/  controls - sap.tnt
-│       ├── 07/  controls - sap.ui.codeeditor
-│       └── 08/  controls - sap.ui.unified
+│   ├── 01/  "Basic I"
+│   ├── 02/  "Basic II"                        framework actions, custom controls and use cases
+│   └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
+│       ├── 01/  "controls - sap.m"
+│       ├── 02/  "controls - sap.uxap"
+│       ├── 03/  "controls - sap.f"
+│       ├── 04/  "controls - sap.ui.core"
+│       ├── 05/  "controls - sap.ui.layout"
+│       ├── 06/  "controls - sap.tnt"
+│       ├── 07/  "controls - sap.ui.codeeditor"
+│       └── 08/  "controls - sap.ui.unified"
 └── 02/  "restricted"  restricted / special-purpose — STRIPPED from cloud & 702 builds
     ├── 01/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS)
     ├── 02/  "restricted - on premise"          on-premise-only ABAP (not ABAP Cloud ready)
@@ -62,8 +62,8 @@ it against the actual `package.devc.xml` `<CTEXT>` values and fails on any
 drift (runs in CI). **Whenever a subpackage is added, removed, or renamed,
 update this tree in the same change.**
 
-Each subpackage's `package.devc.xml` `<CTEXT>` is the human-readable name shown
-above (e.g. `only non-abap-cloud`). **That CTEXT string is also the overview
+Each subpackage's `package.devc.xml` `<CTEXT>` is the quoted name shown above
+(e.g. `restricted - on premise`). **That CTEXT string is also the overview
 group name — keep the two identical** (see §4).
 
 > Class names never encode the folder (`FOLDER_LOGIC=PREFIX`). Moving a sample
