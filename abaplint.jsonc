@@ -4,7 +4,7 @@
     "noIssues": [
       "/src/00/98",
       "/src/00/99",
-      "/src/01"
+      "/src/02"
     ]
   },
   "dependencies": [
@@ -37,7 +37,7 @@
     // installation therefore never needs truncation patterns.
     // "Z2UI5_CL_SMP_" is 13 chars, so 12 remain for the object name.
     // The legacy tokens DEMO and SAMPLE are gone - the last classes carrying
-    // them (all of src/01 and the obsolete package) were renamed, so the
+    // them (all of src/02 and the obsolete package) were renamed, so the
     // alternation is dropped and only SMP is accepted.
     "object_naming": {
       "patternKind": "required",
