@@ -10,22 +10,24 @@ CLASS z2ui5_cl_smp_app_489_ws DEFINITION PUBLIC
         __closed__         TYPE string VALUE `__CLOSED__` ##NO_TEXT,
       END OF c_msg.
 
-    CLASS-METHODS: get_active_connections
+    CLASS-METHODS get_active_connections
       RETURNING
         VALUE(result) TYPE i.
 
-    METHODS if_apc_wsp_extension~on_message REDEFINITION.
+    " Publishing is done from the app in ABAP - the browser only listens,
+    " so this handler never redefines on_message.
+    CLASS-METHODS send
+      IMPORTING
+        i_message TYPE string
+      RAISING
+        cx_amc_error.
+
     METHODS if_apc_wsp_extension~on_start REDEFINITION.
     METHODS if_apc_wsp_extension~on_close REDEFINITION.
   PROTECTED SECTION.
     CLASS-METHODS get_producer
       RETURNING
         VALUE(producer) TYPE REF TO if_amc_message_producer_text
-      RAISING
-        cx_amc_error.
-    CLASS-METHODS send
-      IMPORTING
-        i_message TYPE string
       RAISING
         cx_amc_error.
   PRIVATE SECTION.
@@ -38,17 +40,6 @@ CLASS z2ui5_cl_smp_app_489_ws IMPLEMENTATION.
 
     producer ?= cl_amc_channel_manager=>create_message_producer( i_application_id = c_amc_application_id
                                                                  i_channel_id     = c_channel_id ).
-
-  ENDMETHOD.
-
-
-  METHOD if_apc_wsp_extension~on_message.
-
-    TRY.
-        send( i_message->get_text( ) ).
-      CATCH cx_root INTO DATA(error).
-        RAISE SHORTDUMP error.
-    ENDTRY.
 
   ENDMETHOD.
 
