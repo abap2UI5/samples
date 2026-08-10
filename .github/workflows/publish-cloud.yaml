@@ -1,7 +1,8 @@
 name: publish-cloud
 
 # Rebuilds the cloud branch via publish-branch.yaml: removes the restricted
-# samples (src/01), lints with the cloud config and force-pushes.
+# (src/01) and obsolete (src/00/99) samples, lints with the cloud config and
+# force-pushes.
 
 on:
   push:

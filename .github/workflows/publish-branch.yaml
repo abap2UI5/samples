@@ -13,7 +13,7 @@ on:
         required: true
         type: string
       do_downport:
-        description: "Downport before pushing (702); otherwise only src/01 is removed (cloud)"
+        description: "Downport before pushing (702); otherwise only the stripped packages are removed (cloud)"
         required: false
         type: boolean
         default: false
@@ -41,9 +41,9 @@ jobs:
 
     - run: npm ci
 
-    - name: Remove restricted samples
+    - name: Remove restricted and obsolete samples
       if: ${{ !inputs.do_downport }}
-      run: rm -rf src/01
+      run: rm -rf src/01 src/00/99
 
     - name: Downport
       if: inputs.do_downport

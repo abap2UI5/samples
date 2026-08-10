@@ -35,7 +35,8 @@ More than 330 ready-to-run apps for [abap2UI5](https://github.com/abap2UI5/abap2
 #### What's inside
 
 * **`src/02` "basic"** — cloud-ready, downportable and plain OpenUI5 1.71: framework basics, actions and custom controls, plus the control library rebuilt per UI5 library (`sap.m`, `sap.f`, `sap.uxap`, …). Present on every branch.
-* **`src/01` "restricted"** — everything with a catch: SAPUI5-only controls, features newer than UI5 1.71, on-premise-only ABAP, Fiori Launchpad or OData, plus experimental and obsolete apps. Stripped from `cloud` and `702`.
+* **`src/01` "restricted"** — everything with a catch: SAPUI5-only controls, features newer than UI5 1.71, on-premise-only ABAP, Fiori Launchpad or OData, plus experimental apps. Stripped from `cloud` and `702`.
+* **`src/00` "system"** — no demo category: `00/01` holds the helper classes the samples share (present on every branch), `00/99` the retired apps. Obsolete samples are stripped from `cloud` and `702` just like `src/01`.
 
 Layout, naming and code conventions are documented in [AGENTS.md](AGENTS.md) — read it before contributing.
 

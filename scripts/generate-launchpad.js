@@ -4,6 +4,9 @@
  * (This is the smp_app_000 index page, not the Fiori Launchpad samples
  * app_481..484 in src/01/01.)
  *
+ * Note: only src/02 has an overview app. The obsolete package (src/00/99) and
+ * the restricted samples (src/01) are reported but not listed anywhere.
+ *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
  *      short text and the CTEXT of the subpackage it lives in.
@@ -30,9 +33,10 @@ const SRC = path.join(__dirname, '..', 'src');
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
-// src/01 is deliberately absent: it has no overview app since the extended
-// samples were reorganised, so its tiles are counted but listed nowhere. Add
-// the entry back here the day an extended overview returns.
+// src/00 and src/01 are deliberately absent: the obsolete package (src/00/99)
+// and the restricted samples have no overview app since the extended samples
+// were reorganised, so their tiles are counted but listed nowhere. Add an
+// entry back here the day an extended overview returns.
 const TARGETS = {
   '02': path.join(SRC, '02', 'z2ui5_cl_smp_app_000.clas.abap'),
 };
@@ -102,7 +106,7 @@ function groupOf(dir) {
   return ctextCache[dir];
 }
 
-const tiles = { '01': [], '02': [] };
+const tiles = { '00': [], '01': [], '02': [] };
 let hidden = 0;
 
 for (const abap of walk(SRC)) {
