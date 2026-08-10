@@ -1,5 +1,4 @@
 [![abap version](https://img.shields.io/badge/abap%20version-standard%20%28min.%207.02%29%20%2B%20cloud-blue)](#installation)
-<br>
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
 <br>
