@@ -1,5 +1,10 @@
 name: check-docs
 
+# Machine checks for the parts of AGENTS.md that describe the repository
+# rather than advise on it, and that therefore rot silently: the §1 package
+# tree against the actual package.devc.xml CTEXTs, and the §2 strip list
+# against the workflows and scripts that do the stripping.
+
 on:
   pull_request:
   push:
@@ -22,3 +27,13 @@ jobs:
       with:
         node-version: '22'
     - run: node scripts/check-agents-structure.js
+
+  strip_lists:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+    - run: node scripts/check-strip-lists.js

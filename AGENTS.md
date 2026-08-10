@@ -108,7 +108,10 @@ The split is driven directly by the CI builds:
 `src/00/99` are stripped exactly like `src/02`, so the `cloud` and `702`
 branches carry nothing obsolete and no scaffolding. Keep the three paths
 together whenever a build step lists them — `package.json` `downport`,
-`abap-cloud.yaml`, `publish-branch.yaml`. The rest of `src/00` — today
+`abap-cloud.yaml`, `publish-branch.yaml`, and the build table above. That is
+machine-checked: `node scripts/check-strip-lists.js` compares all four and
+fails if one names a different set, or a package that no longer exists (runs
+in CI). The rest of `src/00` — today
 `src/00/01` "context", the helper classes the samples share — survives every
 build and must stay free of references into any stripped package.
 
@@ -340,6 +343,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - `abaplint` reports 0 issues (config `abaplint.jsonc`).
 - `node scripts/check-agents-structure.js` reports no drift between the §1
   tree and the actual `package.devc.xml` CTEXTs.
+- `node scripts/check-strip-lists.js` reports no drift in the strip list (§2).
 - abapGit file format for all file types: UTF-8, LF only, final newline,
   2-space indent (§6).
 - The overview catalog still mirrors the folder tree (§4).
