@@ -107,11 +107,19 @@ The split is driven directly by the CI builds:
 **Test and obsolete samples never reach a derived branch.** `src/00/98` and
 `src/00/99` are stripped exactly like `src/02`, so the `cloud` and `702`
 branches carry nothing obsolete and no scaffolding. Keep the three paths
-together whenever a build step or a config lists them (`package.json`
-`downport`, `abap-cloud.yaml`, `publish-branch.yaml`, the `noIssues` list in
-`abaplint.jsonc`). The rest of `src/00` — today `src/00/01` "context", the
-helper classes the samples share — survives every build and must stay free of
-references into any stripped package.
+together whenever a build step lists them — `package.json` `downport`,
+`abap-cloud.yaml`, `publish-branch.yaml`. The rest of `src/00` — today
+`src/00/01` "context", the helper classes the samples share — survives every
+build and must stay free of references into any stripped package.
+
+**Stripped is not unchecked.** `abap-standard` lints the whole tree, the
+stripped packages included, and they pass. The one exception is the `noIssues`
+list in `abaplint.jsonc`, which holds `/src/02/02` alone: the on-premise
+samples reference ABAP objects no abaplint dependency can provide
+(`cl_apc_wsp_ext_stateless_base`, `icfservloc`, `VBELN_VA`, …), so every
+finding there would be an artefact of the missing objects rather than a
+defect. That list is **not** the strip list and must not be widened to match
+it — a path added there stops being checked at all, silently.
 
 The same two transformations produce the derived branches `cloud` and `702`
 (`publish-cloud` / `publish-702`, both via `publish-branch`). Those branches

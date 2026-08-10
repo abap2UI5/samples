@@ -1,10 +1,15 @@
 {
   "global": {
     "files": "/src/**/*.*",
+    // This is NOT the strip list (AGENTS.md section 2) - it is a targeted
+    // suppression. The on-premise samples reference ABAP objects no
+    // dependency above can provide (cl_apc_wsp_ext_stateless_base,
+    // icfservloc, VBELN_VA, ...), so abaplint reports errors there that are
+    // not defects. Everything else is really checked, the stripped testing,
+    // obsolete, release/version and experimental packages included - they
+    // pass. Keep this list as narrow as the unresolvable objects require.
     "noIssues": [
-      "/src/00/98",
-      "/src/00/99",
-      "/src/02"
+      "/src/02/02"
     ]
   },
   "dependencies": [
