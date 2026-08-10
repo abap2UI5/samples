@@ -2,6 +2,7 @@
   "global": {
     "files": "/src/**/*.*",
     "noIssues": [
+      "/src/00/98",
       "/src/00/99",
       "/src/01"
     ]

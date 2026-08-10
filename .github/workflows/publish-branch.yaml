@@ -41,9 +41,9 @@ jobs:
 
     - run: npm ci
 
-    - name: Remove restricted and obsolete samples
+    - name: Remove restricted, testing and obsolete samples
       if: ${{ !inputs.do_downport }}
-      run: rm -rf src/01 src/00/99
+      run: rm -rf src/01 src/00/98 src/00/99
 
     - name: Downport
       if: inputs.do_downport
