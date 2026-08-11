@@ -1,5 +1,9 @@
 name: abap-cloud
 
+# main runs on ABAP Cloud as it is - the whole tree is linted, nothing is
+# stripped first. There is no cloud branch anymore: a cloud system installs
+# main directly, so every sample in the repository has to pass here.
+
 on:
   pull_request:
 
@@ -21,5 +25,4 @@ jobs:
         node-version: '22'
         cache: 'npm'
     - run: npm ci
-    - run: rm -r src/02 src/00/98 src/00/99
     - run: npx abaplint .github/abaplint/abap_cloud.jsonc

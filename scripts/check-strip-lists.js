@@ -1,17 +1,23 @@
 #!/usr/bin/env node
-// Verifies that the strip list - the packages removed before the cloud and 702
-// builds (AGENTS.md §2) - is spelled identically everywhere it appears, and
-// that every path in it exists.
+// Verifies that the strip list - the packages removed before the 702 build
+// (AGENTS.md §2) - is spelled identically everywhere it appears, and that every
+// path in it exists.
 //
-// The list lives in four places that nothing else keeps in sync: the two
-// workflows that do the removal, the downport script, and the §2 build table
-// that documents them. A path added to one and forgotten in another does not
-// fail any build - it silently ships a package to a derived branch, or strips
-// one the branch was supposed to carry. Hence this check.
+// The list lives in two places that nothing else keeps in sync: the downport
+// script that does the removal, and the §2 build table that documents it. A
+// path added to one and forgotten in the other does not fail any build - it
+// silently ships a package to the 702 branch, or strips one that branch was
+// supposed to carry, and the documented build table stops describing the
+// build. A path that no longer exists is caught too: the `rm -rf` in the
+// downport is silent about it, so a package renamed elsewhere would go on
+// being "stripped" while it is really shipped. Hence this check.
 //
-// Not to be confused with the `noIssues` list in abaplint.jsonc: that one is a
-// targeted suppression for the on-premise samples and is deliberately narrower
-// (AGENTS.md §2, "Stripped is not unchecked").
+// Only 702 strips anything. main is published as it is and is checked in full
+// by both abap-standard and abap-cloud, so those two workflows carry no strip
+// list to compare.
+//
+// Stripped is not unchecked: abap-standard and abap-cloud lint the whole tree,
+// the stripped packages included, and they pass (AGENTS.md §2).
 //
 // Exits non-zero on any drift. Run: node scripts/check-strip-lists.js
 "use strict";
@@ -27,8 +33,6 @@ const RM = /rm\s+-r[a-z]*\s+((?:src\/[\d/]+[ \t]*)+)/g;
 
 const SOURCES = [
   "package.json",
-  ".github/workflows/abap-cloud.yaml",
-  ".github/workflows/publish-branch.yaml",
   "AGENTS.md",
 ];
 

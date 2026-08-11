@@ -1,16 +1,13 @@
 {
   "global": {
-    "files": "/src/**/*.*",
-    // This is NOT the strip list (AGENTS.md section 2) - it is a targeted
-    // suppression. The on-premise samples reference ABAP objects no
-    // dependency above can provide (cl_apc_wsp_ext_stateless_base,
-    // icfservloc, VBELN_VA, ...), so abaplint reports errors there that are
-    // not defects. Everything else is really checked, the stripped testing,
-    // obsolete, release/version and experimental packages included - they
-    // pass. Keep this list as narrow as the unresolvable objects require.
-    "noIssues": [
-      "/src/02/02"
-    ]
+    // Nothing is suppressed: every package under src/ is really checked, the
+    // release/version, experimental, testing and obsolete packages that the
+    // 702 build strips (AGENTS.md section 2) included - they pass. The
+    // on-premise samples that once needed a `noIssues` entry here, because
+    // they referenced objects no dependency below can provide
+    // (cl_apc_wsp_ext_stateless_base, icfservloc, VBELN_VA, ...), are gone:
+    // main runs on ABAP Cloud, so it carries no on-premise-only ABAP.
+    "files": "/src/**/*.*"
   },
   "dependencies": [
     {
@@ -42,7 +39,7 @@
     // installation therefore never needs truncation patterns.
     // "Z2UI5_CL_SMP_" is 13 chars, so 12 remain for the object name.
     // The legacy tokens DEMO and SAMPLE are gone - the last classes carrying
-    // them (all of src/02 and the obsolete package) were renamed, so the
+    // them (the restricted and the obsolete package) were renamed, so the
     // alternation is dropped and only SMP is accepted.
     "object_naming": {
       "patternKind": "required",

@@ -1,12 +1,16 @@
 name: publish-702
 
-# Rebuilds the 702 branch via publish-branch.yaml: downports the sources,
-# lints with the 702 config and force-pushes.
+# Rebuilds the 702 branch from main: downports the sources (which also removes
+# the restricted, experimental, testing and obsolete samples), lints the result
+# with the 702 config and force-pushes it.
+#
+# 702 is the only derived branch. main itself is installed on both standard and
+# ABAP Cloud systems and is published as-is, so nothing is generated for those.
 
 on:
   push:
-    branches: [standard]
-  # Manual rebuild, e.g. after a direct push to standard that started no run.
+    branches: [main]
+  # Manual rebuild, e.g. after a direct push to main that started no run.
   workflow_dispatch:
 
 permissions:
@@ -18,8 +22,36 @@ concurrency:
 
 jobs:
   publish-702:
-    uses: ./.github/workflows/publish-branch.yaml
-    with:
-      branch: '702'
-      do_downport: true
-      lint_config: .github/abaplint/abap_702.jsonc
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+    - name: Set up Node.js
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      with:
+        node-version: '22'
+        cache: 'npm'
+
+    - run: npm ci
+
+    - name: Downport
+      run: npm run downport
+
+    # The release-specific config is passed explicitly and never copied over
+    # the root abaplint.jsonc: the abaplint GitHub App picks the root config up
+    # on the derived branch, and it resolves dependencies from the installed
+    # repository's default branch - the `branch` field is a CLI feature. A v702
+    # root config there would check the downported samples against the
+    # un-downported abap2UI5@main. See AGENTS.md section 2.
+    - name: Lint 702 content
+      run: npx abaplint .github/abaplint/abap_702.jsonc
+
+    - name: Commit and push to 702
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add -A
+        git commit -m "generate 702 from ${GITHUB_SHA}"
+        git push --force origin HEAD:702

@@ -3,12 +3,12 @@ name: check-docs
 # Machine checks for the parts of AGENTS.md that describe the repository
 # rather than advise on it, and that therefore rot silently: the §1 package
 # tree against the actual package.devc.xml CTEXTs, and the §2 strip list
-# against the workflows and scripts that do the stripping.
+# against the downport script that does the stripping.
 
 on:
   pull_request:
   push:
-    branches: [standard]
+    branches: [main]
 
 permissions:
   contents: read
