@@ -222,6 +222,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic I` header = `More` sub = `Read Frontend Infos` app = `z2ui5_cl_smp_app_122` )
       ( group = `Basic I` header = `More` sub = `Require Object in XML View` app = `z2ui5_cl_smp_app_163` )
       ( group = `Basic I` header = `Navigation` sub = `Call and leave to apps` app = `z2ui5_cl_smp_app_024` )
+      ( group = `Basic I` header = `Navigation` sub = `Exchange Data and Event` app = `z2ui5_cl_smp_app_488` )
       ( group = `Basic I` header = `Navigation` sub = `Routing mode fresh` app = `z2ui5_cl_smp_app_468` )
       ( group = `Basic I` header = `Navigation` sub = `Routing mode keep` app = `z2ui5_cl_smp_app_480` )
       ( group = `Basic I` header = `Nested Views` sub = `Basic Example` app = `z2ui5_cl_smp_app_065` )
