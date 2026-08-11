@@ -22,7 +22,7 @@ name: publish-overview-apps
 on:
   pull_request:
   push:
-    branches: [standard]
+    branches: [main]
 
 permissions:
   contents: write

@@ -2,11 +2,11 @@
 /*
  * Generates the overview app's catalog from the folder tree.
  * (This is the smp_app_000 index page, not the Fiori Launchpad samples
- * app_481..484 in src/02/01.)
+ * app_481..484 in src/00/02.)
  *
- * Note: only src/01 has an overview app. The testing package (src/00/98), the
- * obsolete package (src/00/99) and the restricted samples (src/02) are
- * reported but not listed anywhere.
+ * Note: only src/01 has an overview app. Everything under src/00 - the
+ * restricted (src/00/02), experimental (src/00/97), testing (src/00/98) and
+ * obsolete (src/00/99) samples - is reported but not listed anywhere.
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -34,11 +34,11 @@ const SRC = path.join(__dirname, '..', 'src');
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
-// src/00 and src/02 are deliberately absent: the testing package (src/00/98),
-// the obsolete package (src/00/99) and the restricted samples have no overview
-// app since the extended samples were reorganised, so their tiles are counted
-// but listed nowhere. Add an entry back here the day an extended overview
-// returns.
+// src/00 is deliberately absent: the restricted (src/00/02), experimental
+// (src/00/97), testing (src/00/98) and obsolete (src/00/99) samples have no
+// overview app since the extended samples were reorganised, so their tiles are
+// counted but listed nowhere. Add an entry back here the day an extended
+// overview returns.
 const TARGETS = {
   '01': path.join(SRC, '01', 'z2ui5_cl_smp_app_000.clas.abap'),
 };
@@ -79,7 +79,7 @@ function splitDescript(d) {
   return i === -1 ? { header: t, sub: '' } : { header: t.slice(0, i), sub: t.slice(i + 3) };
 }
 
-// Controls-section tiles (the 02/03 demo-kit rebuilds) are shown without their
+// Controls-section tiles (the 01/03 demo-kit rebuilds) are shown without their
 // namespace prefix - the group heading already states it (sap.m, sap.uxap, …) -
 // and with a one-line, truncated description so the overview never wraps.
 const CONTROLS_SUB_MAX = 90;
@@ -108,7 +108,7 @@ function groupOf(dir) {
   return ctextCache[dir];
 }
 
-const tiles = { '00': [], '01': [], '02': [] };
+const tiles = { '00': [], '01': [] };
 let hidden = 0;
 
 for (const abap of walk(SRC)) {
