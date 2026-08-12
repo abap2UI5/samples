@@ -217,8 +217,21 @@ samples were reorganised. Should it ever return, it comes back as a second
 `TARGETS` entry in `scripts/generate-launchpad.js` and a second row above.
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
-`view_display( )` that loops the catalog, emitting an H3 section title whenever
-the `group` changes and one link (`header` + optional `sub`) per tile.
+`view_display( )` that loops the catalog, emitting one link (`header` + optional
+`sub`) per tile. Around that list it renders a fixed frame: a `GitHub` link in
+the page's `header_content( )` (top right, opens the repository in a new tab),
+an intro `MessageStrip` naming the tile count and the `(A)` / `(C)` markers, and
+an empty `vbox( height = 4rem )` after the last tile so the list does not end
+glued to the page bottom.
+
+An H3 section title is emitted whenever the `group` changes — but only when
+there is more than one group to tell apart. `group_titles_needed( )` decides
+that by comparing every tile's group against the first one; with the whole
+catalog in a single package the heading would only repeat the page title, so it
+is left out. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
+702 downport hoists them out of their guarding condition, so an `IS NOT INITIAL`
+guard around one does not survive the transformation.
+
 Navigation is by class name: the tile press event is the `app` value, `on_event`
 does `to_upper( )` → `CREATE OBJECT TYPE (classname)` → `nav_app_call( )`,
 wrapped in a `TRY`/`CATCH cx_root` so a catalog entry whose class is missing
