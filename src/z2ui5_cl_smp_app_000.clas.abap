@@ -3,6 +3,8 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    DATA search TYPE string.
+
     TYPES:
       BEGIN OF ty_s_tile,
         group  TYPE string,
@@ -33,6 +35,11 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS scroll_restore.
     METHODS view_display.
     METHODS get_catalog
+      RETURNING
+        VALUE(result) TYPE ty_t_tile.
+    METHODS catalog_filter
+      IMPORTING
+        t_catalog     TYPE ty_t_tile
       RETURNING
         VALUE(result) TYPE ty_t_tile.
     METHODS block_widths
@@ -88,14 +95,28 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD on_event.
 
-    TRY.
-        DATA(classname) = to_upper( client->get_event( ) ).
-        DATA li_app TYPE REF TO z2ui5_if_app.
-        CREATE OBJECT li_app TYPE (classname).
-        s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
-        client->nav_app_call( li_app ).
-      CATCH cx_root ##NO_HANDLER.
-    ENDTRY.
+    CASE client->get_event( ).
+      WHEN `SEARCH`.
+
+        view_display( ).
+        client->follow_up_action(
+            val   = z2ui5_if_client=>cs_event-set_focus
+            t_arg = VALUE #( ( `search` )
+                             ( |{ strlen( search ) }| )
+                             ( |{ strlen( search ) }| ) ) ).
+
+      WHEN OTHERS.
+
+        TRY.
+            DATA(classname) = to_upper( client->get_event( ) ).
+            DATA li_app TYPE REF TO z2ui5_if_app.
+            CREATE OBJECT li_app TYPE (classname).
+            s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).
+            client->nav_app_call( li_app ).
+          CATCH cx_root ##NO_HANDLER.
+        ENDTRY.
+
+    ENDCASE.
 
   ENDMETHOD.
 
@@ -117,7 +138,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(t_catalog) = get_catalog( ).
+    DATA(t_catalog_all) = get_catalog( ).
+    DATA(t_catalog) = catalog_filter( t_catalog_all ).
     DATA(t_blocks) = block_widths( t_catalog ).
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
@@ -135,12 +157,20 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
            href   = `https://github.com/abap2UI5/samples` ).
 
     page->message_strip(
-        text     = |All { lines( t_catalog ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
-                   `and framework actions. Select a link to open a sample, the back button returns here. ` &&
-                   `Markers: (A) frontend action, (C) custom control.`
+        text     = |All { lines( t_catalog_all ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
+                   `and framework actions. Filter with the search field, select a link to open a sample, the back ` &&
+                   `button returns here. Markers: (A) frontend action, (C) custom control.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
+
+    page->search_field(
+        id          = `search`
+        value       = client->_bind( search )
+        search      = client->_event( `SEARCH` )
+        width       = `17.5rem`
+        placeholder = `Filter samples`
+        class       = `sapUiSmallMarginBegin sapUiSmallMarginBottom` ).
 
     DATA(show_groups) = group_titles_needed( t_catalog ).
     DATA(prev_group) = ``.
@@ -194,6 +224,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     ENDLOOP.
 
+    IF t_catalog IS INITIAL.
+      page->text(
+          text  = `No sample matches the filter.`
+          class = `sapUiSmallMarginBegin` ).
+    ENDIF.
+
     " a few blank lines so the last tiles do not end glued to the page bottom
     page->vbox( height = `4rem` ).
 
@@ -211,22 +247,28 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Binding` sub = `Level Structure/Component` app = `z2ui5_cl_smp_app_166` )
       ( group = `samples` header = `Binding` sub = `Level Table/Cell` app = `z2ui5_cl_smp_app_144` )
       ( group = `samples` header = `Browser` sub = `Clipboard (A)` app = `z2ui5_cl_smp_app_325` )
-      ( group = `samples` header = `Browser` sub = `Hide/show Soft Keyboard (A)` app = `z2ui5_cl_smp_app_352` )
+      ( group = `samples` header = `Browser` sub = `Favicon (A)` app = `z2ui5_cl_smp_app_491` )
+      ( group = `samples` header = `Browser` sub = `Geolocation (C)` app = `z2ui5_cl_smp_app_120` )
+      ( group = `samples` header = `Browser` sub = `Hide/Show Soft Keyboard (A)` app = `z2ui5_cl_smp_app_352` )
       ( group = `samples` header = `Browser` sub = `Logout (A)` app = `z2ui5_cl_smp_app_361` )
       ( group = `samples` header = `Browser` sub = `Open an URL in a new tab (A)` app = `z2ui5_cl_smp_app_073` )
-      ( group = `samples` header = `Browser` sub = `Open Telephon, Email usw (A)` app = `z2ui5_cl_smp_app_316` )
+      ( group = `samples` header = `Browser` sub = `Open Telephone, Email etc. (A)` app = `z2ui5_cl_smp_app_316` )
+      ( group = `samples` header = `Browser` sub = `Reload Page (A)` app = `z2ui5_cl_smp_app_492` )
+      ( group = `samples` header = `Browser` sub = `Storage Local/Session (A,C)` app = `z2ui5_cl_smp_app_327` )
       ( group = `samples` header = `Browser` sub = `Title (A)` app = `z2ui5_cl_smp_app_125` )
       ( group = `samples` header = `Control` sub = `CameraSelector (C)` app = `z2ui5_cl_smp_app_306` )
       ( group = `samples` header = `Control` sub = `File Uploader (C)` app = `z2ui5_cl_smp_app_074` )
       ( group = `samples` header = `Control` sub = `Multi Input (C)` app = `z2ui5_cl_smp_app_078` )
+      ( group = `samples` header = `Control` sub = `NavContainer (A)` app = `z2ui5_cl_smp_app_088` )
+      ( group = `samples` header = `Control` sub = `NavContainer in Popup (A)` app = `z2ui5_cl_smp_app_170` )
       ( group = `samples` header = `Control` sub = `Panel, setExpanded (A)` app = `z2ui5_cl_smp_app_448` )
       ( group = `samples` header = `Control` sub = `PDF Viewer Display (A)` app = `z2ui5_cl_smp_app_449` )
       ( group = `samples` header = `Control` sub = `Wizard Control (A)` app = `z2ui5_cl_smp_app_202` )
       ( group = `samples` header = `CSS` sub = `Cell Coloring` app = `z2ui5_cl_smp_app_305` )
       ( group = `samples` header = `CSS` sub = `Flex Box with Navigation Examples` app = `z2ui5_cl_smp_app_255` )
       ( group = `samples` header = `CSS` sub = `Send your own CSS to the frontend` app = `z2ui5_cl_smp_app_050` )
-      ( group = `samples` header = `Event` sub = `Additional Infos with t_args` app = `z2ui5_cl_smp_app_167` )
-      ( group = `samples` header = `Event` sub = `Facet Filter T_arg with Objects` app = `z2ui5_cl_smp_app_197` )
+      ( group = `samples` header = `Event` sub = `Additional Info with t_arg` app = `z2ui5_cl_smp_app_167` )
+      ( group = `samples` header = `Event` sub = `Facet Filter t_arg with Objects` app = `z2ui5_cl_smp_app_197` )
       ( group = `samples` header = `Event` sub = `Handle events & change the view` app = `z2ui5_cl_smp_app_004` )
       ( group = `samples` header = `Focus` sub = `Focus Aggregations (A)` app = `z2ui5_cl_smp_app_421` )
       ( group = `samples` header = `Focus` sub = `Jump with the focus (A)` app = `z2ui5_cl_smp_app_189` )
@@ -238,12 +280,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Formatter` sub = `Thin frontend, computed in ABAP` app = `z2ui5_cl_smp_app_453` )
       ( group = `samples` header = `Function` sub = `Data Loss Protection (A,C)` app = `z2ui5_cl_smp_app_279` )
       ( group = `samples` header = `Function` sub = `File Download to the Frontend (A)` app = `z2ui5_cl_smp_app_186` )
-      ( group = `samples` header = `Function` sub = `Geoloaction (C)` app = `z2ui5_cl_smp_app_120` )
+      ( group = `samples` header = `Function` sub = `Keyboard Shortcuts (A)` app = `z2ui5_cl_smp_app_471` )
       ( group = `samples` header = `Function` sub = `Link with preventDefault (A)` app = `z2ui5_cl_smp_app_472` )
       ( group = `samples` header = `Function` sub = `Menu Item Path (A)` app = `z2ui5_cl_smp_app_473` )
       ( group = `samples` header = `Function` sub = `MessagePopover URL Policy (A)` app = `z2ui5_cl_smp_app_474` )
-      ( group = `samples` header = `Function` sub = `Read Frontend Infos` app = `z2ui5_cl_smp_app_122` )
-      ( group = `samples` header = `Function` sub = `Storage Local/Session (A,C)` app = `z2ui5_cl_smp_app_327` )
+      ( group = `samples` header = `Function` sub = `Read Frontend Info` app = `z2ui5_cl_smp_app_122` )
       ( group = `samples` header = `List` sub = `Events & Visualization` app = `z2ui5_cl_smp_app_048` )
       ( group = `samples` header = `List` sub = `Frontend Filter/Sort via Backend Event (A)` app = `z2ui5_cl_smp_app_454` )
       ( group = `samples` header = `List` sub = `Frontend Live Filter without Backend (A)` app = `z2ui5_cl_smp_app_455` )
@@ -255,13 +296,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Model` sub = `Device Model (A)` app = `z2ui5_cl_smp_app_445` )
       ( group = `samples` header = `Model` sub = `Set Size Limit (A)` app = `z2ui5_cl_smp_app_071` )
       ( group = `samples` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_smp_app_061` )
-      ( group = `samples` header = `More` sub = `Keyboard Shortcuts (A)` app = `z2ui5_cl_smp_app_471` )
       ( group = `samples` header = `More` sub = `Require Object in XML View` app = `z2ui5_cl_smp_app_163` )
-      ( group = `samples` header = `NavContainer` sub = `Popup (A)` app = `z2ui5_cl_smp_app_170` )
-      ( group = `samples` header = `NavContainer` sub = `Simple (A)` app = `z2ui5_cl_smp_app_088` )
-      ( group = `samples` header = `Navigation` sub = `Call and leave to apps` app = `z2ui5_cl_smp_app_024` )
+      ( group = `samples` header = `Navigation` sub = `Call and Leave Apps` app = `z2ui5_cl_smp_app_024` )
       ( group = `samples` header = `Navigation` sub = `Exchange Data and Event between Apps` app = `z2ui5_cl_smp_app_488` )
-      ( group = `samples` header = `Navigation` sub = `Uncatched Error` app = `z2ui5_cl_smp_app_464` )
+      ( group = `samples` header = `Navigation` sub = `Uncaught Error` app = `z2ui5_cl_smp_app_464` )
       ( group = `samples` header = `Nested Views` sub = `Basic Example` app = `z2ui5_cl_smp_app_065` )
       ( group = `samples` header = `Nested Views` sub = `Head & Item Table` app = `z2ui5_cl_smp_app_097` )
       ( group = `samples` header = `Nested Views` sub = `Head & Item Table & Detail` app = `z2ui5_cl_smp_app_098` )
@@ -287,8 +325,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Table` sub = `Table with ScrollContainer` app = `z2ui5_cl_smp_app_006` )
       ( group = `samples` header = `Templating` sub = `Basic Example` app = `z2ui5_cl_smp_app_173` )
       ( group = `samples` header = `Templating` sub = `Nested Views` app = `z2ui5_cl_smp_app_176` )
-      ( group = `samples` header = `Timer` sub = `Loading Indicator with WAIT UP Backend (A)` app = `z2ui5_cl_smp_app_064` )
-      ( group = `samples` header = `Timer` sub = `Wait n MS and call again the server (A)` app = `z2ui5_cl_smp_app_028` )
+      ( group = `samples` header = `Timer` sub = `Loading Indicator during Backend WAIT (A)` app = `z2ui5_cl_smp_app_064` )
+      ( group = `samples` header = `Timer` sub = `Wait n ms and call the server again (A)` app = `z2ui5_cl_smp_app_028` )
       ( group = `samples` header = `Tree` sub = `Drag and Drop (A,C)` app = `z2ui5_cl_smp_app_461` )
       ( group = `samples` header = `Tree` sub = `Editable with Custom Item (C)` app = `z2ui5_cl_smp_app_463` )
       ( group = `samples` header = `Tree` sub = `Inside Popup (C)` app = `z2ui5_cl_smp_app_462` )
@@ -296,6 +334,25 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `ui.Table` sub = `Default Filtering (C)` app = `z2ui5_cl_smp_app_143` )
       ( group = `samples` header = `ui.Table` sub = `Events on Cell Level` app = `z2ui5_cl_smp_app_160` )
       ( group = `samples` header = `ui.Table` sub = `Full Example` app = `z2ui5_cl_smp_app_070` ) ).
+
+  ENDMETHOD.
+
+
+  METHOD catalog_filter.
+
+    IF search IS INITIAL.
+      result = t_catalog.
+      RETURN.
+    ENDIF.
+
+    DATA(pattern) = to_upper( search ).
+    LOOP AT t_catalog INTO DATA(tile).
+
+      IF to_upper( |{ tile-header } { tile-sub } { tile-app }| ) CS pattern.
+        INSERT tile INTO TABLE result.
+      ENDIF.
+
+    ENDLOOP.
 
   ENDMETHOD.
 
