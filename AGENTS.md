@@ -76,9 +76,17 @@ every official sample against its original view and gates each port on that
 comparison — and keeping the same original rebuilt in both repositories was
 pure redundancy: 14 of the 32 were already ported there under the same demo kit
 sample id, and 12 of the rest carried no sample id at all, only an entity URL,
-so there was no original to be faithful to. The whole set was imported into
-ai-demokit's `todo/` for triage before the packages were removed here, so
-nothing is lost — see `todo/README.md` there for the per-sample verdict.
+so there was no original to be faithful to. The set was imported into
+ai-demokit's `todo/` for triage before the packages were removed here — see
+`todo/README.md` there for the per-sample verdict.
+
+The same change emptied **`src/00/02`** of its remaining 17 samples: 14 build on
+SAPUI5-only controls (`sap.suite.*`, `sap.viz`, `sap.gantt`, `sap.ndc`,
+`sap.ui.vbm`, `sap.ui.comp`) and went to `todo/` with the rest, and three were
+free-style OpenUI5 demos with no demo kit original (`app_002` selection screen,
+`app_085` main-detail, `app_099` ViewSettingsDialog). The four Launchpad samples
+that also sat there had already moved to samples-ext (#728). The category itself
+stays — see the note under the tree.
 
 **Do not re-create `01/03`, and do not add a demo kit rebuild to `01/01`.**
 A sample that rebuilds one specific demo kit original belongs in ai-demokit,
