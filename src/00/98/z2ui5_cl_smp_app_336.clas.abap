@@ -34,7 +34,6 @@ CLASS z2ui5_cl_smp_app_336 IMPLEMENTATION.
       view_display( client ).
 
     ENDIF.
-    client->view_model_update( ).
 
   ENDMETHOD.
 

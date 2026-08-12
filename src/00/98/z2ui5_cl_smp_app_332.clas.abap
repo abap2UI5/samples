@@ -36,8 +36,6 @@ CLASS z2ui5_cl_smp_app_332 IMPLEMENTATION.
       client->message_toast_display( `ERROR - MS_STRUC is initial!` ).
     ENDIF.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

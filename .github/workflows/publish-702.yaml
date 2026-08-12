@@ -1,8 +1,8 @@
 name: publish-702
 
 # Rebuilds the 702 branch from main: downports the sources (which also removes
-# the restricted, experimental, testing and obsolete samples), lints the result
-# with the 702 config and force-pushes it.
+# the experimental and testing samples), lints the result with the 702 config
+# and force-pushes it.
 #
 # 702 is the only derived branch. main itself is installed on both standard and
 # ABAP Cloud systems and is published as-is, so nothing is generated for those.

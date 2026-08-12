@@ -101,7 +101,6 @@ CLASS z2ui5_cl_smp_app_353 IMPLEMENTATION.
 
       client->message_toast_display( `Timer finished` ).
       start_timer( ).
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.
