@@ -530,7 +530,7 @@ ELSEIF client->check_on_event( `SAVE` ).
 ENDIF.
 ```
 
-Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. Only as an optional optimization, when the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), a `client->view_model_update( )` is sufficient — never rely on it when a full-screen sub-app can be called.
+Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it (`view_model_update( )` is an obsolete no-op kept for source compatibility) — but never rely on that when a full-screen sub-app can be called.
 
 ### Event checking — inline vs. CASE
 
@@ -552,17 +552,17 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 
 | Category | Methods | Purpose |
 |---|---|---|
-| Views | `view_display`, `view_destroy`, `view_model_update` | Main view lifecycle |
-| Nested views | `nest_view_display/destroy/model_update`, `nest2_view_*` | Embedded sub-views |
-| Popups | `popup_display`, `popup_destroy`, `popup_model_update` | Modal dialogs |
-| Popovers | `popover_display`, `popover_destroy`, `popover_model_update` | Context popovers |
+| Views | `view_display`, `view_destroy` | Main view lifecycle (`view_model_update` is an obsolete no-op — the model is pushed automatically) |
+| Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
+| Popups | `popup_display`, `popup_destroy` | Modal dialogs |
+| Popovers | `popover_display`, `popover_destroy` | Context popovers |
 | Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
 | Session | `set_session_stateful(val)`, `set_app_state_active(val)` | Session management |
-| Browser | `set_push_state(val)`, `set_nav_back(val)`, `follow_up_action(val)` | Browser interaction |
+| Browser | `set_push_state(val)`, `follow_up_action(val)` | Browser interaction (history back rides `follow_up_action( cs_event-history_back )`; routing via `cs_event-set_nav_routing`) |
 | Info | `get()`, `get_event_arg()`, `get_app(id)` | Request/context data |
 | Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
 
