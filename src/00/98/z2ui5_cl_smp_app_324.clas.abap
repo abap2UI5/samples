@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
                                     )->stringify( ) ).
         ENDIF.
 
-        CASE client->get( )-event.
+        CASE client->get_event( ).
           WHEN `PRESS`.
             call_dynpro( ).
         ENDCASE.

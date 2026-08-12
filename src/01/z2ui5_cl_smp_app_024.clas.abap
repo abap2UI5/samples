@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_SMP_APP_024 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `CALL_NEW_APP`.
         client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).

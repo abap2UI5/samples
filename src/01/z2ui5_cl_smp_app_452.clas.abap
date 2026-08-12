@@ -106,7 +106,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `POPUP`.
         popup_display( ).
       WHEN `POPOVER`.

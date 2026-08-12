@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `OPEN_RELATIVE_ONLY`.
         popover_open( `RELATIVE_ONLY` ).

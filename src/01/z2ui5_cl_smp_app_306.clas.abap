@@ -137,7 +137,7 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `CAPTURE`.
         INSERT VALUE #( data             = mv_picture_base
@@ -189,7 +189,7 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
   METHOD on_navigation.
 
     TRY.
-        DATA(lo_prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA(lo_prev) = client->get_app_prev( ).
         DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
 
         IF result-check_confirmed = abap_true.

@@ -89,7 +89,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD on_event.
 
     TRY.
-        DATA(classname) = to_upper( client->get( )-event ).
+        DATA(classname) = to_upper( client->get_event( ) ).
         DATA li_app TYPE REF TO z2ui5_if_app.
         CREATE OBJECT li_app TYPE (classname).
         s_scroll = CORRESPONDING #( client->get( )-s_scroll-main ).

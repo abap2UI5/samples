@@ -63,7 +63,7 @@ CLASS z2ui5_cl_smp_app_138 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ quantity } - send to the server| ).

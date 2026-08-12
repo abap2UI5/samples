@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `SHOW`.
         popup_components( client->get_event_arg( ) ).
     ENDCASE.

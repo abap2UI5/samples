@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `RAISE_EXCEPTION`.
         RAISE EXCEPTION TYPE z2ui5_cx_smp_error

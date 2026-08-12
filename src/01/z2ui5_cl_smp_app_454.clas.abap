@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_SMP_APP_454 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `SEARCH`.
         " apply a declarative filter to the list's items binding -
@@ -67,7 +67,7 @@ CLASS Z2UI5_CL_SMP_APP_454 IMPLEMENTATION.
                                                    ( `items` )
                                                    ( `sort` )
                                                    ( `NAME` )
-                                                   ( COND #( WHEN client->get( )-event = `SORT_DESC`
+                                                   ( COND #( WHEN client->get_event( ) = `SORT_DESC`
                                                              THEN `true`
                                                              ELSE `false` ) ) ) ).
 

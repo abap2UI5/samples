@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_446 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `TOAST`.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_global

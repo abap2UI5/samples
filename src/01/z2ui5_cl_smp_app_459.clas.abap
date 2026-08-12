@@ -43,7 +43,7 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `REORDER`.
         " the three event args arrive resolved client-side from the drop

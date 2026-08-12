@@ -45,7 +45,7 @@ CLASS Z2UI5_CL_SMP_APP_045 IMPLEMENTATION.
       refresh_data( ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `FILTER_INFO`.
         refresh_data( ).

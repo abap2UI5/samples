@@ -40,7 +40,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_ROUNDTRIP`.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
       WHEN `BUTTON_RESTART`.

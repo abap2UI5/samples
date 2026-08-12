@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BACK`.
         IF dirty = abap_true.
           security_check_popup( ).
@@ -122,7 +122,7 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
   METHOD on_navigation.
 
     TRY.
-        DATA(prev) = client->get_app( client->get( )-s_draft-id_prev_app ).
+        DATA(prev) = client->get_app_prev( ).
         DATA(confirm_leave) = CAST z2ui5_cl_pop_to_confirm( prev )->result( ).
 
       CATCH cx_root.

@@ -153,7 +153,7 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN 'NN_VIEW'.
         client->message_box_display(  `Event in nested nested view raised` ).

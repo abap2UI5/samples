@@ -74,7 +74,7 @@ CLASS Z2UI5_CL_SMP_APP_167 IMPLEMENTATION.
       set_view( ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `EVENT_FIX_VAL` OR `EVENT_MODEL_VALUE` OR `SOURCE_PROPERTY_TEXT` OR `EVENT_PROPERTY_VALUE` OR `PARENT_PROPERTY_ID`.
         client->message_box_display( |backend event: { client->get_event_arg( ) }| ).
     ENDCASE.

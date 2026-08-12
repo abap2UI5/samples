@@ -41,9 +41,9 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN cancel_event OR confirm_event.
-        event = client->get( )-event.
+        event = client->get_event( ).
         client->popup_destroy( ).
         client->nav_app_leave( ).
         RETURN.

@@ -46,7 +46,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       " t_arg is positional: id, method, params (the view defaults to
       " cs_view-main and can be omitted for a main-view control)

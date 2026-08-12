@@ -44,7 +44,7 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `CUSTOM`.
         client->message_box_display(
             text             = message
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
         client->message_box_display(
             text    = message
             title   = title
-            type    = client->get( )-event
+            type    = client->get_event( )
             details = details ).
     ENDCASE.
 

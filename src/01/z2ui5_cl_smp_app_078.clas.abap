@@ -81,7 +81,7 @@ CLASS Z2UI5_CL_SMP_APP_078 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `UPDATE_BACKEND`.
 

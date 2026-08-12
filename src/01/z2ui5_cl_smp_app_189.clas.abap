@@ -23,7 +23,7 @@ CLASS Z2UI5_CL_SMP_APP_189 IMPLEMENTATION.
 
   METHOD dispatch.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `one_enter`.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus

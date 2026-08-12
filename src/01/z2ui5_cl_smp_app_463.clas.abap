@@ -55,7 +55,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `SHOW_MODEL`.
         " the two-way bound inputs have already written the edits back into

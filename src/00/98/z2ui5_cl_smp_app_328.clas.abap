@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
       view_display( client ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `GO`.
 
         ASSIGN mt_table->* TO <tab>.

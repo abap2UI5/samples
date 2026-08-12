@@ -51,7 +51,7 @@ CLASS z2ui5_cl_smp_app_073 IMPLEMENTATION.
       view_display( ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_OPEN_NEW_TAB`.
 

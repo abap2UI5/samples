@@ -108,7 +108,7 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `POPUP_TABLE_VALUE`.
         t_suggestion_sel = t_suggestion.
         popup_value_suggestion( ).

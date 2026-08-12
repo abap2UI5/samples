@@ -57,7 +57,7 @@ CLASS Z2UI5_CL_SMP_APP_006 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `SORT_ASCENDING`.
         SORT t_tab BY count ASCENDING.
         client->message_toast_display( `sort ascending` ).
