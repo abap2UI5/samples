@@ -42,14 +42,13 @@ src/
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
 └── 01/  "basic"     cloud-ready & downportable — survives every build
-    ├── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
-    └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
-        ├── 01/  "controls - sap.m"
-        ├── 02/  "controls - sap.uxap"
-        ├── 05/  "controls - sap.ui.layout"
-        ├── 06/  "controls - sap.tnt"
-        └── 08/  "controls - sap.ui.unified"
+    └── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
 ```
+
+**`src/00/02` is currently empty** — a category with no members, not a dropped
+one. It stays in the tree and in the strip list because it is the designated
+home of the next restricted sample; the check below verifies the package
+exists, not that it holds anything.
 
 There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
@@ -68,49 +67,34 @@ group name — keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
-Every sample in `01/03` is a faithful rebuild of one specific UI5 demo kit
-sample, filed in the subpackage of the library its entity belongs to
-(`01/03/01` = sap.m, `01/03/02` = sap.uxap, …), and carries the demo kit URL
-as an ABAP Doc line directly above its `CLASS ... DEFINITION`
-(`"! Rebuild of the UI5 demo kit sample: <url>`).
-Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
-(e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
-entity is the control from the demo kit URL and the description comes from
-the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
-truncated to the 60-character DESCRIPT limit). The **full, untruncated**
-description is kept as additional ABAP Doc lines below the URL line; the
-overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original do not belong in `01/03` — file them in
-the basic package (`01/01`, actions / custom controls / use cases) or,
-when a restriction applies, in the matching `src/00` category (`src/00/02`
-release/version, `src/00/97` experimental, `src/00/98` when it is a test app,
-`src/00/99` once it is obsolete).
+### There is no Control Library package any more
 
-Machine-generated demo kit ports that have not been manually reviewed do not
-live in this repository — they are collected in the separate api repository
-of the abap2UI5 organization. Everything under `01/03` here is manually
-reviewed.
+**`01/03` "Control Library" is gone (2026-08-12), with all 32 of its samples.**
+1:1 rebuilds of UI5 demo kit samples are collected in
+[abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit) — which rebuilds
+every official sample against its original view and gates each port on that
+comparison — and keeping the same original rebuilt in both repositories was
+pure redundancy: 14 of the 32 were already ported there under the same demo kit
+sample id, and 12 of the rest carried no sample id at all, only an entity URL,
+so there was no original to be faithful to. The whole set was imported into
+ai-demokit's `todo/` for triage before the packages were removed here, so
+nothing is lost — see `todo/README.md` there for the per-sample verdict.
 
-**`01/03` is no longer the home of the pure control samples.** Those are
-collected in [abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit),
-which rebuilds every official demo kit sample 1:1 and gates each port against
-its original view. Keeping the same original rebuilt in both repositories is
-the redundancy that clean-up removed (2026-08-12), so **do not add a new
-`01/03` sample for an original ai-demokit already covers** — port it there.
-What stays here is only what cannot live there:
+**Do not re-create `01/03`, and do not add a demo kit rebuild to `01/01`.**
+A sample that rebuilds one specific demo kit original belongs in ai-demokit,
+full stop. What legitimately stays here is what cannot live there, and it goes
+into the basic package (`01/01`) as an ordinary sample:
 
 - a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
   members for 1:1 fidelity (declared `POST_171` there) — this repository is
   downported to 702, so the restriction matters here and does not there;
 - a sample in ai-demokit's **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
-- a **free-style control demo** with no single demo kit original (it carries no
-  `"! Rebuild of the UI5 demo kit sample:` line).
+- a **free-style control demo** with no single demo kit original.
 
-Three library subpackages (`01/03/03` sap.f, `01/03/04` sap.ui.core,
-`01/03/07` sap.ui.codeeditor) ran empty as a result and were deleted. Their
-numbers stay reserved for their libraries: a sample that does belong here brings
-its subpackage back at the same slot, and the tree above with it.
+A sample with a restriction still goes to the matching `src/00` category
+(`src/00/02` release/version, `src/00/97` experimental, `src/00/98` when it is
+a test app, `src/00/99` once it is obsolete) — that model is unchanged.
 
 ---
 
@@ -340,11 +324,10 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`01/01` → `01/03/01` → `01/03/08`) so the
-   on-screen order mirrors the tree; a nested subpackage forms its own group
-   directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. a new `01/04` group goes **after**
-   `Control Library` (`01/03`)).
+   so the on-screen order mirrors the tree; a nested subpackage forms its own
+   group directly after its parent slot. `src/01` holds a single subpackage
+   today (`01/01` "Basic"), so there is one slot — when a second one is added,
+   place its group at its numeric position rather than appending it.
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
