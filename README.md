@@ -1,4 +1,4 @@
-[![abap version](https://img.shields.io/badge/abap%20version-standard%20%28%E2%89%A5%207.02%29%20%2B%20cloud-blue)](#try-it-in-60-seconds)
+[![ABAP NW 7.02 to ABAP Cloud](https://img.shields.io/badge/ABAP-NW%207.02%20%E2%86%92%20Cloud-blue)](#try-it-in-60-seconds)
 [![namespace](https://img.shields.io/badge/namespace-z2ui5__cl__smp-blue)](abaplint.jsonc)
 [![dependency](https://img.shields.io/badge/dependency-abap2UI5-blue)](https://github.com/abap2UI5/abap2UI5)
 
