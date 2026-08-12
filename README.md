@@ -52,8 +52,8 @@ sample repositories take you further:
 |      | Repository | What you learn | Where to start |
 |------|------------|----------------|----------------|
 | 1️⃣ | **samples** — 📍 *you are here* | **the abap2UI5 basics** — bindings, events, popups, navigation, complete apps | run `Z2UI5_CL_SMP_APP_000` |
-| 2️⃣ | [**samples-controls**](https://github.com/abap2UI5/ai-demokit) | **how to use every UI5 control** — the UI5 Demo Kit rebuilt with abap2UI5 | run `z2ui5_cl_dmo_app_overview` |
-| 3️⃣ | [**samples-stack**](https://github.com/abap2UI5/samples-ext) | **how abap2UI5 plays with your stack** — OData, RAP, WebSockets, the Fiori Launchpad and more | pick your technology in its package table |
+| 2️⃣ | [**samples-controls**](https://github.com/abap2UI5/samples-controls) | **how to use every UI5 control** — the UI5 Demo Kit rebuilt with abap2UI5 | run `z2ui5_cl_dmo_app_overview` |
+| 3️⃣ | [**samples-stack**](https://github.com/abap2UI5/samples-stack) | **how abap2UI5 plays with your stack** — OData, RAP, WebSockets, the Fiori Launchpad and more | pick your technology in its package table |
 
 #### What's inside
 
@@ -61,7 +61,7 @@ sample repositories take you further:
   sample catalog (bindings, events, popups, framework actions, custom controls
   and use cases) plus a small curated set of control demos — the complete
   control reference lives in
-  [samples-controls](https://github.com/abap2UI5/ai-demokit). Present on both
+  [samples-controls](https://github.com/abap2UI5/samples-controls). Present on both
   branches.
 * **`src/00` "system"** — no demo category: `00/01` holds the helper classes
   the samples share (present on both branches), `00/02` the restricted samples
