@@ -52,7 +52,6 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
     box->info_label(
       text        = `dirty`
       colorscheme = `8`
-      icon        = `sap-icon://message-success`
       class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
       visible     = client->_bind( dirty ) ).
 

@@ -150,13 +150,11 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
     device_form( dialog->content( ) ).
 
-    dialog->footer(
-        )->overflow_toolbar(
-            )->toolbar_spacer(
-            )->button(
-                text  = `Close`
-                type  = `Emphasized`
-                press = client->_event_client( client->cs_event-popup_close ) ).
+    dialog->buttons(
+        )->button(
+            text  = `Close`
+            type  = `Emphasized`
+            press = client->_event_client( client->cs_event-popup_close ) ).
 
     client->popup_display( popup->stringify( ) ).
 

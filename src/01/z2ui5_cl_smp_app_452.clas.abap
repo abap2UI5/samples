@@ -219,7 +219,6 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
     popup->message_popover(
         items       = client->_bind( t_msg )
-        groupitems  = abap_true
         placement   = `Top`
         beforeclose = client->_event( `POPOVER_CLOSE` )
         )->message_item(

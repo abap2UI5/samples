@@ -41,14 +41,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
                                                         text = `Applications` )->get_parent(
                                     )->icon_tab_filter( key  = `page3`
                                                         text = `Users and Groups`
-                                      )->items(
-                                         )->icon_tab_filter( key  = `page11`
-                                                             text = `User 1` )->get_parent(
-                                         )->icon_tab_filter( key  = `page32`
-                                                             text = `User 2` )->get_parent(
-                                         )->icon_tab_filter( key  = `page33`
-                                                             text = `User 3`
-      )->get_parent( )->get_parent( )->get_parent( )->get_parent(
+      )->get_parent( )->get_parent(
                                         )->content( )->vbox( height = `100%`
                                          )->nav_container( id                    = `NavCon`
                                                            initialpage           = `page1`
@@ -67,8 +60,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
                                               title = `third page`
                                               id    = `page3` ).
 
-    dialog->get_parent( )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
+    dialog->get_parent( )->buttons(
                   )->button(
                       text  = `OK`
                       press = client->_event( `BTN_OK_1ND` )
@@ -89,8 +81,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
     DATA(content) = dialog->label( `this is a second popup` ).
 
-    dialog->get_parent( )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
+    dialog->get_parent( )->buttons(
                   )->button(
                       text  = `GOTO 1ST POPUP`
                       press = client->_event( `BTN_OK_2ND` )

@@ -121,11 +121,9 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
     page->text( `Make an input and press ENTER` ).
 
     DATA(table) = page->flex_box( height = `85vh`
-        )->ui_table( alternaterowcolors  = `true`
-                     selectionmode       = `None`
-                     visiblerowcountmode = `Auto`
-                     fixedrowcount       = `1`
-                     rows                = client->_bind( mt_output )
+        )->ui_table( alternaterowcolors = `true`
+                     selectionmode      = `None`
+                     rows               = client->_bind( mt_output )
     ).
 
     DATA(columns) = table->ui_columns( ).
