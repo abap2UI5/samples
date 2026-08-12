@@ -92,7 +92,9 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
                 press = client->_event( val = `UPDATE_MODEL` )
             )->label( `demo`
             )->combobox( items = client->_bind( t_combo )
-               )->item( key = `{KEY}` text = `{TEXT}` ).
+               )->item(
+                   key  = `{KEY}`
+                   text = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).
 

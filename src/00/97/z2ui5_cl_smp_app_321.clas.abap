@@ -28,7 +28,9 @@ CLASS z2ui5_cl_smp_app_321 IMPLEMENTATION.
               type     = `Information`
               showicon = abap_true
               class    = `sapUiSmallMargin`
-          )->simple_form( title = `Form Title` editable = abap_true
+          )->simple_form(
+              title    = `Form Title`
+              editable = abap_true
                      )->content( `form`
                          )->title( `Input`
                          )->label( `quantity`

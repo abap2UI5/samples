@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    page->link( text   = `More Infos..`
+    page->link( text   = `More information...`
                 target = `_blank`
                 href   = `https://sapui5.hana.ondemand.com/sdk/#/topic/b0fb4de7364f4bcbb053a99aa645affe` ).
 

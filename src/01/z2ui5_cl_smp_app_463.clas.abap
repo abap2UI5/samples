@@ -104,7 +104,9 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
     tree->_generic( `CustomTreeItem`
         )->content(
-            )->input( value = `{TEXT}` width = `24rem` ).
+            )->input(
+                value = `{TEXT}`
+                width = `24rem` ).
 
     " invisible companion: keeps the expanded nodes open across the roundtrip
     page->_z2ui5( )->tree( `tree1` ).
