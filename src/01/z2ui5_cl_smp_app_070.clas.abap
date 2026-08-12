@@ -165,7 +165,6 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
     lo_box->vbox( )->text( `Search` )->search_field(
          value  = client->_bind( mv_search_value )
          search = client->_event( `BUTTON_SEARCH` )
-         change = client->_event( `BUTTON_SEARCH` )
          width  = `17.5rem`
          id     = `SEARCH` ).
 
@@ -177,7 +176,6 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
     DATA(cont) = page->content( `f` ).
 
     DATA(tab) = cont->ui_table( rows               = client->_bind( val = mt_table )
-                                editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `2`
                                 fixedcolumncount   = `1`

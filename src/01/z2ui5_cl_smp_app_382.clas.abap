@@ -111,7 +111,7 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
                 press = client->_event( `information` )
             )->button(
                 text  = `Success`
-                type  = `Success`
+                type  = `Accept`
                 press = client->_event( `success` )
             )->button(
                 text  = `Warning`

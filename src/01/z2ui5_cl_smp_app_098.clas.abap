@@ -44,7 +44,6 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
     DATA(page) = lo_view_nested->page( `Nested View` ).
 
     DATA(tab) = page->ui_table( rows               = client->_bind( val = t_tab2 )
-                                editable           = abap_false
                                 alternaterowcolors = abap_true
                                 rowactioncount     = `1`
                                 fixedcolumncount   = `1`

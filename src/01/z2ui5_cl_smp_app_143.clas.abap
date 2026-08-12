@@ -69,8 +69,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true
-                                      headerpinned   = abap_true ).
+    DATA(page) = page1->dynamic_page( headerexpanded = abap_true ).
     page1->_z2ui5( )->uitableext( `Table1` ).
 
     DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
@@ -83,12 +82,10 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
     DATA(table) = cont->vbox(
                   )->ui_table( rows               = client->_bind( val = gt_data )
                                id                 = `Table1`
-                               editable           = abap_false
                                alternaterowcolors = abap_true
                                enablecellfilter   = abap_true
                                rowactioncount     = `1`
                                fixedcolumncount   = `1`
-                               visiblerowcount    = `7`
                                selectionmode      = `None` ).
 
     table->ui_columns(

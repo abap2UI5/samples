@@ -228,7 +228,7 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
             )->button(
                 text  = `Send to Server`
                 press = client->_event( `BUTTON_SEND` )
-                type  = `Success`
+                type  = `Accept`
                 icon  = `sap-icon://paper-plane` ).
 
     client->view_display( view->stringify( ) ).

@@ -51,9 +51,8 @@ CLASS Z2UI5_CL_SMP_APP_078 IMPLEMENTATION.
                             multiinputid  = `test` ).
 
       view->multi_input(
-                            id            = `test`
-                            tokens        = client->_bind( mt_token )
-                            showclearicon = abap_true
+                            id     = `test`
+                            tokens = client->_bind( mt_token )
                        )->tokens(
                            )->token( key      = `{KEY}`
                                      text     = `{TEXT}`

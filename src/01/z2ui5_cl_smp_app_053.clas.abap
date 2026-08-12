@@ -78,7 +78,6 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
     vbox->hbox( )->search_field(
          value  = client->_bind( mv_search_value )
          search = client->_event( `BUTTON_SEARCH` )
-         change = client->_event( `BUTTON_SEARCH` )
          width = `17.5rem`
          id    = `SEARCH` )->button(
          text  = `Go`
