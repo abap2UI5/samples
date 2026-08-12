@@ -21,6 +21,7 @@ CLASS z2ui5_cl_smp_app_483 IMPLEMENTATION.
     IF client->check_on_init( ).
 
       nav_params-product  = `102343333`.
+      nav_params-quantity = `500`.
 
       IF client->get( )-check_launchpad_active = abap_false.
         client->message_box_display( `No Launchpad Active, Sample not working!` ).
@@ -37,8 +38,9 @@ CLASS z2ui5_cl_smp_app_483 IMPLEMENTATION.
       page->message_strip(
           text     = `SENDER side of launchpad cross-app navigation: the button navigates to ` &&
                      `the receiver tile via _event_client( cs_event-cross_app_nav_to_ext ), ` &&
-                     `handing over the bound Product value as a navigation parameter - the ` &&
-                     `receiver (z2ui5_cl_smp_app_484) reads it from its startup parameters. ` &&
+                     `handing over the bound Product and Quantity values as navigation ` &&
+                     `parameters - the receiver (z2ui5_cl_smp_app_484) reads them from its ` &&
+                     `startup parameters. ` &&
                      `Only works inside a launchpad with both tiles configured.`
           type     = `Information`
           showicon = abap_true
@@ -49,11 +51,15 @@ CLASS z2ui5_cl_smp_app_483 IMPLEMENTATION.
           )->content( `form`
               )->label( `Product (sent as navigation parameter)`
               )->input( client->_bind( nav_params-product )
-              )->button( text  = `back to the previous app`
-                         press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
+              )->label( `Quantity (sent as navigation parameter)`
+              )->input( client->_bind( nav_params-quantity )
+              )->button( text    = `back to the previous app`
+                         visible = client->get( )-check_launchpad_active
+                         press   = client->_event_client( client->cs_event-cross_app_nav_to_prev_app )
               )->button(
-                  text  = `navigate to the receiver app`
-                  press = client->_event_client(
+                  text    = `navigate to the receiver app`
+                  visible = client->get( )-check_launchpad_active
+                  press   = client->_event_client(
                       val   = client->cs_event-cross_app_nav_to_ext
                       t_arg = VALUE #(
                           ( `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }` )

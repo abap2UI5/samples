@@ -196,7 +196,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic` header = `Event` sub = `Additional Infos with t_args` app = `z2ui5_cl_smp_app_167` )
       ( group = `Basic` header = `Event` sub = `Facet Filter T_arg with Objects` app = `z2ui5_cl_smp_app_197` )
       ( group = `Basic` header = `Event` sub = `Handle events & change the view` app = `z2ui5_cl_smp_app_004` )
-      ( group = `Basic` header = `Focus` sub = `Focus Aggregations` app = `z2ui5_cl_smp_app_421` )
+      ( group = `Basic` header = `Focus` sub = `Focus Aggregations (A)` app = `z2ui5_cl_smp_app_421` )
       ( group = `Basic` header = `Focus` sub = `Jump with the focus (A)` app = `z2ui5_cl_smp_app_189` )
       ( group = `Basic` header = `Focus` sub = `Set Focus in Textfield (A)` app = `z2ui5_cl_smp_app_133` )
       ( group = `Basic` header = `Formatter` sub = `ABAP date strings (DATS/TIMS)` app = `z2ui5_cl_smp_app_450` )
@@ -204,10 +204,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic` header = `Formatter` sub = `Date Objects for PlanningCalendar` app = `z2ui5_cl_smp_app_456` )
       ( group = `Basic` header = `Formatter` sub = `Inline Icons` app = `z2ui5_cl_smp_app_466` )
       ( group = `Basic` header = `Formatter` sub = `Thin frontend, computed in ABAP` app = `z2ui5_cl_smp_app_453` )
-      ( group = `Basic` header = `Launchpad` sub = `Cross-App Navigation - Receiver (A)` app = `z2ui5_cl_smp_app_484` )
-      ( group = `Basic` header = `Launchpad` sub = `Cross-App Navigation - Sender (A)` app = `z2ui5_cl_smp_app_483` )
-      ( group = `Basic` header = `Launchpad` sub = `Read Startup Parameters` app = `z2ui5_cl_smp_app_481` )
-      ( group = `Basic` header = `Launchpad` sub = `Set Shell Title (A)` app = `z2ui5_cl_smp_app_482` )
       ( group = `Basic` header = `List` sub = `Events & Visualization` app = `z2ui5_cl_smp_app_048` )
       ( group = `Basic` header = `List` sub = `Frontend Filter/Sort via Backend Event (A)` app = `z2ui5_cl_smp_app_454` )
       ( group = `Basic` header = `List` sub = `Frontend Live Filter without Backend (A)` app = `z2ui5_cl_smp_app_455` )
@@ -215,13 +211,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic` header = `Message` sub = `Message Model & Manager (C)` app = `z2ui5_cl_smp_app_467` )
       ( group = `Basic` header = `Message` sub = `MessageBox` app = `z2ui5_cl_smp_app_382` )
       ( group = `Basic` header = `Message` sub = `MessageToast` app = `z2ui5_cl_smp_app_381` )
-      ( group = `Basic` header = `Message` sub = `MessageView` app = `z2ui5_cl_smp_app_452` )
-      ( group = `Basic` header = `Model` sub = `Device Model` app = `z2ui5_cl_smp_app_445` )
-      ( group = `Basic` header = `Model` sub = `Set Size Limit` app = `z2ui5_cl_smp_app_071` )
+      ( group = `Basic` header = `Message` sub = `MessageView (A)` app = `z2ui5_cl_smp_app_452` )
+      ( group = `Basic` header = `Model` sub = `Device Model (A)` app = `z2ui5_cl_smp_app_445` )
+      ( group = `Basic` header = `Model` sub = `Set Size Limit (A)` app = `z2ui5_cl_smp_app_071` )
       ( group = `Basic` header = `More` sub = `CameraSelector (C)` app = `z2ui5_cl_smp_app_306` )
-      ( group = `Basic` header = `More` sub = `Data Loss Protection (C)` app = `z2ui5_cl_smp_app_279` )
+      ( group = `Basic` header = `More` sub = `Data Loss Protection (A,C)` app = `z2ui5_cl_smp_app_279` )
       ( group = `Basic` header = `More` sub = `Error Handling` app = `z2ui5_cl_smp_app_464` )
-      ( group = `Basic` header = `More` sub = `File Download to the Frontend` app = `z2ui5_cl_smp_app_186` )
+      ( group = `Basic` header = `More` sub = `File Download to the Frontend (A)` app = `z2ui5_cl_smp_app_186` )
       ( group = `Basic` header = `More` sub = `File Uploader (C)` app = `z2ui5_cl_smp_app_074` )
       ( group = `Basic` header = `More` sub = `Generic Data Reference` app = `z2ui5_cl_smp_app_061` )
       ( group = `Basic` header = `More` sub = `Geoloaction (C)` app = `z2ui5_cl_smp_app_120` )
@@ -234,7 +230,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic` header = `More` sub = `PDF Viewer Display (A)` app = `z2ui5_cl_smp_app_449` )
       ( group = `Basic` header = `More` sub = `Read Frontend Infos` app = `z2ui5_cl_smp_app_122` )
       ( group = `Basic` header = `More` sub = `Require Object in XML View` app = `z2ui5_cl_smp_app_163` )
-      ( group = `Basic` header = `More` sub = `Storage Local/Session (A)` app = `z2ui5_cl_smp_app_327` )
+      ( group = `Basic` header = `More` sub = `Storage Local/Session (A,C)` app = `z2ui5_cl_smp_app_327` )
       ( group = `Basic` header = `More` sub = `Wizard Control (A)` app = `z2ui5_cl_smp_app_202` )
       ( group = `Basic` header = `NavContainer` sub = `Popup (A)` app = `z2ui5_cl_smp_app_170` )
       ( group = `Basic` header = `NavContainer` sub = `Simple (A)` app = `z2ui5_cl_smp_app_088` )
@@ -250,8 +246,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `Basic` header = `Popover` sub = `List to select in Popover` app = `z2ui5_cl_smp_app_081` )
       ( group = `Basic` header = `Popover` sub = `Opened with the View Build` app = `z2ui5_cl_smp_app_490` )
       ( group = `Basic` header = `Popover` sub = `Simple Example` app = `z2ui5_cl_smp_app_026` )
-      ( group = `Basic` header = `Popup` sub = `Aggregation binding to the selected row` app = `z2ui5_cl_smp_app_470` )
-      ( group = `Basic` header = `Popup` sub = `Different ways of calling Popups` app = `z2ui5_cl_smp_app_012` )
+      ( group = `Basic` header = `Popup` sub = `Aggregation binding to the selected row (A)` app = `z2ui5_cl_smp_app_470` )
+      ( group = `Basic` header = `Popup` sub = `Different ways of calling Popups (A)` app = `z2ui5_cl_smp_app_012` )
       ( group = `Basic` header = `Popup` sub = `Popup in Popup - Backend Stack Handling` app = `z2ui5_cl_smp_app_161` )
       ( group = `Basic` header = `Popup` sub = `Value Help with Popups` app = `z2ui5_cl_smp_app_009` )
       ( group = `Basic` header = `Scroll` sub = `Scroll into view (A)` app = `z2ui5_cl_smp_app_363` )
@@ -457,8 +453,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " In the controls section a block groups all controls that share the same
     " first letter, so a blank line separates letter groups only (Button,
-    " ButtonGroup | Carousel). Elsewhere a block is the header without its
-    " trailing Roman numeral (Binding, Binding II, ...).
+    " ButtonGroup | Carousel). Elsewhere a block is the header without a
+    " trailing Roman numeral, if a header ever carries one - today every
+    " Basic header is its own block.
     IF group CP `controls -*`.
       result = to_upper( substring( val = header
                                     off = 0
