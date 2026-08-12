@@ -12,7 +12,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_325 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -39,14 +39,17 @@ CLASS Z2UI5_CL_SMP_APP_325 IMPLEMENTATION.
       DATA(header_title) = obj_page->header_title(
          )->object_page_dyn_header_title( ).
 
-      header_title->expanded_heading( )->hbox( )->title( text     = `Test`
-                                                         wrapping = abap_true ).
-      header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title( text     = `Test`
-                                                                                  wrapping = abap_true ).
+      header_title->expanded_heading( )->hbox( )->title(
+          text     = `Test`
+          wrapping = abap_true ).
+      header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title(
+          text     = `Test`
+          wrapping = abap_true ).
 
       DATA(sections) = obj_page->sections( ).
 
-      sections->object_page_section( titleuppercase = abap_false
+      sections->object_page_section(
+                                     titleuppercase = abap_false
                                      id             = `id_sec1`
                                      title          = `...`
         )->sub_sections( )->object_page_sub_section( id    = `id_input`

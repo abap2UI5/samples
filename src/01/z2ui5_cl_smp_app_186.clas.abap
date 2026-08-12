@@ -56,9 +56,16 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
     DATA(page) = view->shell(
          )->page(
-            title          = `abap2UI5 - More - File Download to the Frontend`
+            title          = `abap2UI5 - File Download to the Frontend`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `The download_b64_file front-end action hands a base64 encoded file to the browser, which saves it ` &&
+                   `under the given name - no ICF download service and no extra request needed.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
     page->flex_box( width          = `100%`
                     height         = `600px`

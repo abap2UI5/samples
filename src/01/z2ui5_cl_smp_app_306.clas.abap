@@ -35,16 +35,34 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
     DATA client           TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS edit_image.
-    METHODS on_navigation.
+    METHODS on_event.
     METHODS rebuild_output.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
+CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
-CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+
+      facing_modes = VALUE tt_combo( ( key = `` text = `` )
+                                     ( key = `environment` text = `environment` )
+                                     ( key = `user` text = `user` )
+                                     ( key = `left` text = `left` )
+                                     ( key = `right` text = `right` ) ).
+
+      view_display( ).
+
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
 
 
   METHOD view_display.
@@ -57,8 +75,8 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
                              shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `Capture photos from the device camera custom control; pick the facing mode and camera, then edit a ` &&
-                   `captured picture in the popup image editor.`
+        text     = `Capture photos from the device camera custom control; pick the facing mode and camera, then select ` &&
+                   `a captured picture from the list to display it in full resolution.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
@@ -105,9 +123,9 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
     lo_hbox->text( `{NAME}` ).
 
     IF mv_pic_display IS NOT INITIAL.
-      page->button( text  = `Edit`
-                    icon  = `sap-icon://edit`
-                    press = client->_event( `EDIT` ) ).
+      page->image( src    = client->_bind( mv_pic_display )
+                   height = `200px`
+                   class  = `sapUiSmallMargin` ).
     ENDIF.
 
     client->view_display( view->stringify( ) ).
@@ -115,36 +133,17 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-      facing_modes = VALUE tt_combo( ( key = `` text = `` )
-                                     ( key = `environment` text = `environment` )
-                                     ( key = `user` text = `user` )
-                                     ( key = `left` text = `left` )
-                                     ( key = `right` text = `right` ) ).
-
-      view_display( ).
-    ENDIF.
-
-    IF client->get( )-check_on_navigated = abap_true.
-
-      on_navigation( ).
-      rebuild_output( ).
-      view_display( ).
-      RETURN.
-    ENDIF.
+  METHOD on_event.
 
     CASE client->get_event( ).
-
       WHEN `CAPTURE`.
-        INSERT VALUE #( data             = mv_picture_base
-                        thumbnail        = mv_picture_thumb
-                        time             = sy-uzeit ) INTO TABLE mt_picture.
-                        mv_picture_base  = VALUE #( ).
-                        mv_picture_thumb = VALUE #( ).
+
+        INSERT VALUE #( data      = mv_picture_base
+                        thumbnail = mv_picture_thumb
+                        time      = sy-uzeit ) INTO TABLE mt_picture.
+        mv_picture_base  = VALUE #( ).
+        mv_picture_thumb = VALUE #( ).
+        rebuild_output( ).
 
       WHEN `DISPLAY`.
 
@@ -152,21 +151,8 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
         mv_pic_display   = mt_picture[ selected_picture-id ]-data.
         rebuild_output( ).
         view_display( ).
-        RETURN.
 
-      WHEN `EDIT`.
-
-        edit_image( ).
     ENDCASE.
-
-    rebuild_output( ).
-
-  ENDMETHOD.
-
-
-  METHOD edit_image.
-
-    client->nav_app_call( z2ui5_cl_pop_image_editor=>factory( mv_pic_display ) ).
 
   ENDMETHOD.
 
@@ -182,29 +168,6 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
                                           THEN abap_true ) )
              INTO TABLE mt_picture_out.
     ENDLOOP.
-
-  ENDMETHOD.
-
-
-  METHOD on_navigation.
-
-    TRY.
-        DATA(lo_prev) = client->get_app_prev( ).
-        DATA(result) = CAST z2ui5_cl_pop_image_editor( lo_prev )->result( ).
-
-        IF result-check_confirmed = abap_true.
-          mv_pic_display = result-image.
-          ASSIGN mt_picture[ selected_picture-id ] TO FIELD-SYMBOL(<picture>).
-
-          IF sy-subrc = 0.
-
-            <picture>-data      = mv_pic_display.
-            <picture>-thumbnail = mv_pic_display.
-          ENDIF.
-        ENDIF.
-
-      CATCH cx_root.
-    ENDTRY.
 
   ENDMETHOD.
 ENDCLASS.

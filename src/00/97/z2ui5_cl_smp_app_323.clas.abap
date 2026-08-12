@@ -21,7 +21,16 @@ CLASS z2ui5_cl_smp_app_323 IMPLEMENTATION.
                      title          = `abap2UI5 - Navigation with app state`
                      navbuttonpress = client->_event( `BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( title = `Form Title` editable = abap_true
+          )->message_strip(
+              text     = `The clipboard_app_state front-end action copies a link to the CURRENT app state `
+                      && `into the clipboard, so the state can be shared with someone else. Enter a `
+                      && `quantity, press share and open the copied link.`
+              type     = `Information`
+              showicon = abap_true
+              class    = `sapUiSmallMargin`
+          )->simple_form(
+              title    = `Form Title`
+              editable = abap_true
                      )->content( `form`
                          )->title( `Input`
                          )->label( `quantity`

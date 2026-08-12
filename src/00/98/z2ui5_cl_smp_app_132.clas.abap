@@ -81,8 +81,6 @@ CLASS z2ui5_cl_smp_app_132 IMPLEMENTATION.
 
     ENDIF.
 
-*    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-*                                          width = `100%` ).
     page->label( `ProgressIndicator`
         )->progress_indicator( percentvalue = mv_perc
                                displayvalue = `0,44GB of 32GB used`

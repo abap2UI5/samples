@@ -19,9 +19,9 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
 
     me->client = client.
 
-*    TRY.
         IF client->check_on_init( ).
           client->view_display( z2ui5_cl_xml_view=>factory(
+                                    )->shell(
                                     )->page( shownavbutton  = client->check_app_prev_stack( )
                                              navbuttonpress = client->_event_nav_app_leave( )
                                     )->button( text  = `Call dynpro`
@@ -34,9 +34,6 @@ CLASS z2ui5_cl_smp_app_324 IMPLEMENTATION.
             call_dynpro( ).
         ENDCASE.
 
-*      CATCH cx_root INTO DATA(x).
-*        client->message_box_display( x ).
-*    ENDTRY.
 
   ENDMETHOD.
 

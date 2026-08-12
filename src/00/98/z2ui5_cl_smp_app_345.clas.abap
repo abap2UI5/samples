@@ -4,18 +4,8 @@ CLASS z2ui5_cl_smp_app_345 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mt_data1       TYPE REF TO data.
-*    DATA mt_data2       TYPE REF TO data.
-*    DATA mt_data3       TYPE REF TO data.
-*    DATA mt_data4       TYPE REF TO data.
-*    DATA mt_data5       TYPE REF TO data.
-*    DATA mt_data6       TYPE REF TO data.
 
     DATA mo_layout_obj1 TYPE REF TO z2ui5_cl_smp_app_333.
-*    DATA mo_layout_obj2 TYPE REF TO z2ui5_cl_smp_app_333.
-*    DATA mo_layout_obj3 TYPE REF TO z2ui5_cl_smp_app_333.
-*    DATA mo_layout_obj4 TYPE REF TO z2ui5_cl_smp_app_333.
-*    DATA mo_layout_obj5 TYPE REF TO z2ui5_cl_smp_app_333.
-*    DATA mo_layout_obj6 TYPE REF TO z2ui5_cl_smp_app_333.
 
     METHODS get_data.
 
@@ -169,7 +159,7 @@ CLASS z2ui5_cl_smp_app_345 IMPLEMENTATION.
         client->nav_app_call( app ).
     ENDCASE.
 
-    IF client->get( )-check_on_navigated = abap_true
+    IF client->check_on_navigated( )     = abap_true
         AND client->check_on_init( )          = abap_false.
       view_display( client ).
     ENDIF.

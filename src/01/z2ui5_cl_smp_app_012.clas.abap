@@ -58,7 +58,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         check_popup = abap_true.
         client->view_destroy( ).
         client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
-          i_text          = `(new app )this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
+          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
           i_cancel_text   = `Cancel`
           i_cancel_event  = `POPUP_DECIDE_CANCEL`
           i_confirm_text  = `Continue`
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
       WHEN `BUTTON_POPUP_06`.
         check_popup = abap_true.
         client->nav_app_call( z2ui5_cl_smp_app_020=>factory(
-          i_text          = `(new app )this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
+          i_text          = `(new app) this is a popup to decide, the text is sent from the previous app and the answer will be sent back`
           i_cancel_text   = `Cancel`
           i_cancel_event  = `POPUP_DECIDE_CANCEL`
           i_confirm_text  = `Continue`
@@ -94,7 +94,10 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
-        )->simple_form( `Popup in same App` )->content( `form`
+        )->simple_form(
+            title    = `Popup in same App`
+            editable = abap_true
+            )->content( `form`
             )->label( `Demo`
             )->button(
                 text  = `popup rendering, no background rendering`
@@ -113,7 +116,10 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
                 press = client->_event( `BUTTON_POPUP_04` )
         )->get_parent( )->get_parent( ).
 
-    grid->simple_form( `Popup in new App` )->content( `form`
+    grid->simple_form(
+        title    = `Popup in new App`
+        editable = abap_true
+        )->content( `form`
         )->label( `Demo`
         )->button(
             text  = `popup rendering, no background`

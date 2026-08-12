@@ -11,15 +11,25 @@ CLASS z2ui5_cl_smp_app_279 DEFINITION PUBLIC.
 
     METHODS view_display.
     METHODS on_event.
-    METHODS security_check_popup.
-    METHODS on_navigation.
+    METHODS popup_confirm_display.
 
   PRIVATE SECTION.
 ENDCLASS.
 
 
+CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
-CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
 
 
   METHOD view_display.
@@ -45,7 +55,7 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
     box->input(
       id          = `input`
       value       = client->_bind( text_input )
-      submit      = client->_event( `submit` )
+      submit      = client->_event( `SUBMIT` )
       width       = `40rem`
       placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
 
@@ -57,7 +67,7 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
 
     box->button(
       text    = `Reset`
-      press   = client->_event( `reset` )
+      press   = client->_event( `RESET` )
       class   = `sapUiSmallMarginBegin`
       visible = client->_bind( dirty ) ).
 
@@ -76,63 +86,52 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
 
     CASE client->get_event( ).
       WHEN `BACK`.
+
         IF dirty = abap_true.
-          security_check_popup( ).
+          popup_confirm_display( ).
 
         ELSE.
           client->nav_app_leave( ).
         ENDIF.
-      WHEN `submit`.
+      WHEN `POPUP_LEAVE`.
+
+        client->popup_destroy( ).
+        dirty = VALUE #( ).
+        client->nav_app_leave( ).
+
+      WHEN `POPUP_CANCEL`.
+        client->popup_destroy( ).
+      WHEN `SUBMIT`.
         dirty = xsdbool( text_input IS NOT INITIAL ).
-      WHEN `reset`.
+      WHEN `RESET`.
+
         dirty      = VALUE #( ).
         text_input = VALUE #( ).
+
     ENDCASE.
 
   ENDMETHOD.
 
 
-  METHOD security_check_popup.
+  METHOD popup_confirm_display.
 
-    client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-                              i_question_text       = `Your entries will be lost when you leave this page.`
-                              i_title               = `Warning`
-                              i_icon                = `sap-icon://status-critical`
-                              i_button_text_confirm = `Leave Page`
-                              i_button_text_cancel  = `Cancel` ) ).
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    popup->dialog(
+        title = `Warning`
+        icon  = `sap-icon://status-critical`
+        )->vbox( `sapUiSmallMargin`
+            )->text( `Your entries will be lost when you leave this page.`
+        )->get_parent(
+        )->buttons(
+            )->button(
+                text  = `Cancel`
+                press = client->_event( `POPUP_CANCEL` )
+            )->button(
+                text  = `Leave Page`
+                press = client->_event( `POPUP_LEAVE` )
+                type  = `Emphasized` ).
 
-  ENDMETHOD.
-
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->get( )-check_on_navigated = abap_true.
-      on_navigation( ).
-    ENDIF.
-    on_event( ).
-    IF client->check_on_init( ).
-      view_display( ).
-    ENDIF.
-
-  ENDMETHOD.
-
-
-  METHOD on_navigation.
-
-    TRY.
-        DATA(prev) = client->get_app_prev( ).
-        DATA(confirm_leave) = CAST z2ui5_cl_pop_to_confirm( prev )->result( ).
-
-      CATCH cx_root.
-    ENDTRY.
-
-    IF confirm_leave = abap_true.
-
-      dirty = VALUE #( ).
-      client->nav_app_leave( ).
-    ENDIF.
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

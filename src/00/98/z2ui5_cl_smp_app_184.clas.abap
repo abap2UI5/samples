@@ -61,7 +61,6 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind( <tab> )
-*                               headertext = mv_table
                                ).
 
     DATA(columns) = table->columns( ).

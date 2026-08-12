@@ -21,7 +21,16 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
                      title          = `abap2UI5 - Navigation with app state`
                      navbuttonpress = client->follow_up_action( `HISTORY_BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form( title = `Form Title` editable = abap_true
+          )->message_strip(
+              text     = `set_push_state( ) pushes an app-owned suffix onto the browser URL, so the app can `
+                      && `write its own hash (here /head/pos/<draft id>) and the browser back button `
+                      && `navigates through those entries.`
+              type     = `Information`
+              showicon = abap_true
+              class    = `sapUiSmallMargin`
+          )->simple_form(
+              title    = `Form Title`
+              editable = abap_true
                      )->content( `form`
                          )->title( `Input`
                          )->label( `quantity`

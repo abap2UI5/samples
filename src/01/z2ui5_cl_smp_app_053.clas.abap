@@ -79,6 +79,7 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
          value  = client->_bind( mv_search_value )
          search = client->_event( `BUTTON_SEARCH` )
          width = `17.5rem`
+         placeholder = `Search products`
          id    = `SEARCH` )->button(
          text  = `Go`
          press = client->_event( `BUTTON_START` )

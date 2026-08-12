@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell(
         )->page(
-                title          = `Main View`
+                title          = `abap2UI5 - Nested Views - Basic Example`
                 id             = `test`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )

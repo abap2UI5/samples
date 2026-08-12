@@ -177,7 +177,9 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
 
     DATA(form) = page->grid( `L7 M7 S7`
         )->content( `layout`
-            )->simple_form( `Input with Value Help`
+            )->simple_form(
+                    title    = `Input with Value Help`
+                    editable = abap_true
                 )->content( `form` ).
 
     form->label( `Input with suggestion items`
@@ -271,7 +273,7 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
     DATA(dialog) = popup->dialog( `abap2UI5 - Value Help` ).
 
-    dialog->simple_form(
+    dialog->simple_form( editable = abap_true
         )->label( `Location`
         )->input(
             value           = client->_bind( s_screen-city )

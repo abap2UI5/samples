@@ -18,7 +18,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_024 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -92,7 +92,9 @@ CLASS Z2UI5_CL_SMP_APP_024 IMPLEMENTATION.
 
     page->grid( `L6 M12 S12`
         )->content( `layout`
-        )->simple_form( `Controller`
+        )->simple_form(
+            title    = `Controller`
+            editable = abap_true
         )->content( `form`
         )->label( `Demo`
         )->button(

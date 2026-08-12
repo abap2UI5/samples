@@ -20,7 +20,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_455 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -63,8 +63,9 @@ CLASS Z2UI5_CL_SMP_APP_455 IMPLEMENTATION.
     " against the liveChange event, so the current query reaches the filter
     " without any server contact.
     page->vbox( `sapUiSmallMargin`
-        )->search_field( width      = `30%`
-                         livechange = client->follow_up_action(
+        )->search_field( width       = `30%`
+                         placeholder = `Search products`
+                         livechange  = client->follow_up_action(
                              val   = z2ui5_if_client=>cs_event-binding_call
                              t_arg = VALUE #( ( `productList` )
                                               ( `items` )

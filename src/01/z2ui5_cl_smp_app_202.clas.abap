@@ -15,7 +15,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
 
 
   METHOD view_display.
@@ -41,11 +41,9 @@ CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
 
     lr_wiz_step2->message_strip( `STEP2` ).
     lr_wiz_step2->button(
-*      EXPORTING
         text  = `Press Step 2.2`
         press = client->_event( `STEP22` ) ).
     lr_wiz_step2->button(
-*      EXPORTING
         text  = `Press Step 2.3`
         press = client->_event( `STEP23` ) ).
 
@@ -66,7 +64,6 @@ CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
 
     lr_wiz_step3->message_strip( `STEP3` ).
 
-*
     client->view_display( lr_view->stringify( ) ).
 
   ENDMETHOD.

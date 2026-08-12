@@ -129,11 +129,21 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
     DATA(select_animation) = form->label( `animationTimingFunction`
                                  )->select( selectedkey = client->_bind( animation_timing ) ).
-    select_animation->item( key = `ease`        text = `ease`
-                 )->item( key = `linear`        text = `linear`
-                 )->item( key = `ease-in`       text = `ease-in`
-                 )->item( key = `ease-out`      text = `ease-out`
-                 )->item( key = `ease-in-out`   text = `ease-in-out` ).
+    select_animation->item(
+                     key  = `ease`
+                     text = `ease`
+                 )->item(
+                     key  = `linear`
+                     text = `linear`
+                 )->item(
+                     key  = `ease-in`
+                     text = `ease-in`
+                 )->item(
+                     key  = `ease-out`
+                     text = `ease-out`
+                 )->item(
+                     key  = `ease-in-out`
+                     text = `ease-in-out` ).
 
     form->label( `animationDuration (ms)`
         )->input(

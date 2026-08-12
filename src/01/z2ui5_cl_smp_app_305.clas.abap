@@ -30,6 +30,13 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
                       navbuttonpress = client->_event_nav_app_leave( )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Table cells are coloured from the backend: each cell carries a data-color attribute bound to the ` &&
+                   `row, and an inline html style element maps those values to a background colour.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->_generic(
             name = `style`
             ns   = `html`

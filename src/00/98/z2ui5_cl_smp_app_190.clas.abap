@@ -64,7 +64,6 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind( <tab> )
-*                               headertext = mv_table
                                ).
 
     DATA(columns) = table->columns( ).
@@ -137,7 +136,6 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
 
         CREATE DATA mt_table     TYPE HANDLE new_table_desc.
 
-*        CREATE DATA mt_table_tmp TYPE HANDLE new_table_desc.
 
         ASSIGN mt_table->* TO <table>.
 

@@ -180,6 +180,16 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
   1. Test / scaffolding app → `00/98`
   2. Experimental / work-in-progress → `00/97`
 
+  **What is in `src/00` stays in `src/00` — `00/97` included.** Neither
+  subpackage is a waiting room that samples graduate from: do not move a
+  sample out of `00/97` (or `00/98`) into `src/01`, and do not propose it
+  because the sample happens to lint clean against all three releases.
+  Passing the builds is a precondition for living in this repository at
+  all (§1), never on its own a reason to promote a sample. Only the
+  maintainer decides that a sample changes package, and only by saying so
+  (human decision 2026-08-12, on the routing and app-state samples in
+  `00/97`).
+
   A sample restricted by **UI5** — a SAPUI5-only control (`sap.suite.*`,
   `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
   `sap.ui.richtexteditor`, …), a control or property introduced after UI5 1.71,
@@ -232,9 +242,19 @@ Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
 `sub`) per tile. Around that list it renders a fixed frame: a `GitHub` link in
 the page's `header_content( )` (top right, opens the repository in a new tab),
-an intro `MessageStrip` naming the tile count and the `(A)` / `(C)` markers, and
-an empty `vbox( height = 4rem )` after the last tile so the list does not end
-glued to the page bottom.
+an intro `MessageStrip` naming the tile count and the `(A)` / `(C)` markers, a
+`SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
+last tile so the list does not end glued to the page bottom.
+
+The search field filters the tile list: its `search` event (Enter, or the
+clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
+applied — a case-insensitive contains-match against each tile's `header`, `sub`
+and `app` class name — and then replays the focus into the search field via a
+`set_focus` follow-up action with the cursor at the end, so typing can continue.
+The `MessageStrip` keeps naming the **total** tile count (the unfiltered
+catalog), an empty filter result renders a `No sample matches the filter.` text
+instead of tiles, and the filter value survives navigation into a sample and
+back (it is a serialized public attribute).
 
 An H3 section title is emitted whenever the `group` changes — but only when
 there is more than one group to tell apart. `group_titles_needed( )` decides
@@ -245,6 +265,7 @@ is left out. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
 guard around one does not survive the transformation.
 
 Navigation is by class name: the tile press event is the `app` value, `on_event`
+(after handling `SEARCH`, see above)
 does `to_upper( )` → `CREATE OBJECT TYPE (classname)` → `nav_app_call( )`,
 wrapped in a `TRY`/`CATCH cx_root` so a catalog entry whose class is missing
 from the system does not dump — a safety net, **not** a substitute for keeping
@@ -737,8 +758,9 @@ strings with the bare path from
 root model — the one-way/two-way split disappeared with the `XX/` view-model
 node — so `_bind_edit` is only an obsolete alias and is slated for removal.
 The single exception is a mapping that differs per direction, because `_bind`
-has no `custom_mapper_back` / `custom_filter_back` parameters; the one sample
-that needs it (`z2ui5_cl_smp_app_153`) says so in a comment at the call.
+has no `custom_mapper_back` / `custom_filter_back` parameters; no sample in
+this repository currently needs that — one that does must say so in a comment
+at the call.
 
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and
@@ -763,6 +785,14 @@ Key rules for `_generic( )`:
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any
 > sample — do not use it in new samples.
+
+> **The `z2ui5_cl_pop_*` helper popups are obsolete.** They live in the
+> framework's obsolete package (`src/99`) and must not be used any more: never
+> reference one from a sample, and never create a sample demonstrating one
+> (human decision 2026-08-12; the last two usages — `z2ui5_cl_pop_to_confirm`
+> in sample 279, `z2ui5_cl_pop_image_editor` in sample 306 — were removed the
+> same day). A sample that needs a dialog builds it itself with
+> `z2ui5_cl_xml_view=>factory_popup( )` + `client->popup_display( )`.
 
 #### VALUE #( ) formatting
 

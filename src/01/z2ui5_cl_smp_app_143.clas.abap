@@ -80,7 +80,8 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
     DATA(cont) = page->content( `f` ).
 
     DATA(table) = cont->vbox(
-                  )->ui_table( rows               = client->_bind( val = gt_data )
+                  )->ui_table(
+                               rows               = client->_bind( gt_data )
                                id                 = `Table1`
                                alternaterowcolors = abap_true
                                enablecellfilter   = abap_true

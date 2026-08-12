@@ -51,7 +51,7 @@ CLASS z2ui5_cl_smp_app_348 IMPLEMENTATION.
 
     ENDCASE.
 
-    IF     client->get( )-check_on_navigated = abap_true
+    IF     client->check_on_navigated( )     = abap_true
        AND client->check_on_init( )          = abap_false.
       view_display( client ).
     ENDIF.

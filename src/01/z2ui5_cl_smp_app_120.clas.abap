@@ -91,17 +91,29 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
                               editable = abap_false
                   )->content( `form`
                       )->label( `Longitude`
-                      )->input( value = client->_bind( longitude ) editable = abap_false
+                      )->input(
+                          value    = client->_bind( longitude )
+                          editable = abap_false
                       )->label( `Latitude`
-                      )->input( value = client->_bind( latitude ) editable = abap_false
+                      )->input(
+                          value    = client->_bind( latitude )
+                          editable = abap_false
                       )->label( `Altitude`
-                      )->input( value = client->_bind( altitude ) editable = abap_false
+                      )->input(
+                          value    = client->_bind( altitude )
+                          editable = abap_false
                       )->label( `Accuracy`
-                      )->input( value = client->_bind( accuracy ) editable = abap_false
+                      )->input(
+                          value    = client->_bind( accuracy )
+                          editable = abap_false
                       )->label( `AltitudeAccuracy`
-                      )->input( value = client->_bind( altitudeaccuracy ) editable = abap_false
+                      )->input(
+                          value    = client->_bind( altitudeaccuracy )
+                          editable = abap_false
                       )->label( `Speed`
-                      )->input( value = client->_bind( speed ) editable = abap_false ).
+                      )->input(
+                          value    = client->_bind( speed )
+                          editable = abap_false ).
 
     client->view_display( view->stringify( ) ).
 
