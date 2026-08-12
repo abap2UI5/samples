@@ -92,17 +92,17 @@ of the abap2UI5 organization. Everything under `01/03` here is manually
 reviewed.
 
 **`01/03` is no longer the home of the pure control samples.** Those are
-collected in [abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit),
+collected in [abap2UI5/samples-controls](https://github.com/abap2UI5/samples-controls),
 which rebuilds every official demo kit sample 1:1 and gates each port against
 its original view. Keeping the same original rebuilt in both repositories is
 the redundancy that clean-up removed (2026-08-12), so **do not add a new
-`01/03` sample for an original ai-demokit already covers** — port it there.
+`01/03` sample for an original samples-controls already covers** — port it there.
 What stays here is only what cannot live there:
 
-- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
+- a **1.71-safe** variant of a sample whose samples-controls port keeps post-1.71
   members for 1:1 fidelity (declared `POST_171` there) — this repository is
   downported to 702, so the restriction matters here and does not there;
-- a sample in ai-demokit's **hold-out set** (`ui5/holdout.json`), which is
+- a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
 - a **free-style control demo** with no single demo kit original (it carries no
   `"! Rebuild of the UI5 demo kit sample:` line).
@@ -189,7 +189,7 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
 **A sample that needs something the system provides does not belong here at
 all** — not in `src/00/02` either. Those live in
-[abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext), one package per
+[abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack), one package per
 technology: an OData service, smart controls, a RAP business object, a stateful
 session, an APC channel, the MIME repository, and the **Fiori Launchpad**
 (`src/09` there — the demos that read startup parameters, set the shell title and
@@ -212,7 +212,7 @@ repository (§1).
 lists every sample of the basic area. It is *not* a Fiori Launchpad app, despite
 the name of the generator that writes it (`npm run launchpad`, §4). The demos
 that run inside a real Fiori Launchpad are not in this repository at all — they
-live in [abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext) under
+live in [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) under
 `src/09` (§2).
 
 | App class              | Lives in | Title                | Mirrors     |
