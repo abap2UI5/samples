@@ -44,7 +44,6 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
   METHOD on_init.
 
-    " the original controller reuses the same long description text for every message
     DATA(description) = `First Error message description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ` &&
       `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ` &&
       `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ` &&
@@ -121,7 +120,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
   METHOD view_display.
 
-    " the original derives the footer button icon and text from the highest message severity via formatters - here Error
+    " the footer button shows the current number of error messages - counted here in the backend, no frontend formatter involved
     DATA(error_count) = 0.
     LOOP AT t_msg TRANSPORTING NO FIELDS WHERE type = `Error`.
       error_count = error_count + 1.
@@ -135,17 +134,12 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `This sample demonstrates the MessageView control listing grouped messages by ` &&
-                   `severity; the same messages also appear in a dialog and a MessagePopover.`
+        text     = `This free-style demo combines the sap.m message controls: one bound message table is rendered three ways - as a full-page MessageView with grouped items, ` &&
+                   `inside a dialog and as a MessagePopover. It is not a 1:1 demo kit rebuild (those live in the samples-controls repository) ` &&
+                   `and stays within the UI5 1.71 control set.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
-
-    page->header_content(
-       )->link(
-           text   = `UI5 Demo Kit`
-           target = `_blank`
-           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageView/sample/sap.m.sample.MessageViewWithGrouping` ).
 
     page->message_view(
         items      = client->_bind( t_msg )
@@ -161,7 +155,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
                 href   = `http://sap.com`
                 target = `_blank` ).
 
-    " the original renders the footer button with type 'Negative' - the type is only available since UI5 1.73, therefore omitted
+    " ButtonType 'Negative' would match the error state, but it is only available since UI5 1.73 - src/01 must run on plain 1.71, so the default type is kept
     page->footer( )->overflow_toolbar(
         )->button(
             icon  = `sap-icon://message-error`
@@ -182,7 +176,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
 
-    " the original hosts a back button for the message details in a custom header - here the dialog keeps the plain title
+    " the dialog keeps a plain title without a back button - closing and reopening it resets the MessageView to its list page
     DATA(dialog) = popup->dialog(
         title             = `Publish order`
         contentheight     = `50%`
