@@ -8,9 +8,9 @@
   // overview app in the src/ root package, plus the shared context classes
   // in src/00/01 the samples there reference. It is
   // the only namespace-clean area free of dependencies on the stripped
-  // packages (the restricted src/00/02, the experimental src/00/97, the
-  // testing src/00/98 and the obsolete src/00/99 are removed from the 702
-  // build and carry non-ABAP objects that are out of scope for renaming).
+  // packages (the experimental src/00/97 and the testing src/00/98 are removed
+  // from the 702 build and carry non-ABAP objects that are out of scope for
+  // renaming).
   // Runs standalone as well:
   //   npx abaplint .github/abaplint/rename_test.jsonc --rename
   "global": {
