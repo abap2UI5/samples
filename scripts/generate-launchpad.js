@@ -5,8 +5,8 @@
  * Launchpad - those demos live in abap2UI5/samples-stack, src/09.)
  *
  * Note: only src/01 has an overview app. Everything under src/00 - the
- * restricted (src/00/02), experimental (src/00/97), testing (src/00/98) and
- * obsolete (src/00/99) samples - is reported but not listed anywhere.
+ * experimental (src/00/97) and testing (src/00/98) samples - is reported but
+ * not listed anywhere.
  *
  * Job (see AGENTS.md §4):
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
@@ -34,11 +34,10 @@ const SRC = path.join(__dirname, '..', 'src');
 // area (top-level package under src) -> overview app file. Every area listed
 // here must have its overview app in the tree - a missing file is an error,
 // not something to skip, because it means the catalog stops being generated.
-// src/00 is deliberately absent: the restricted (src/00/02), experimental
-// (src/00/97), testing (src/00/98) and obsolete (src/00/99) samples have no
-// overview app since the extended samples were reorganised, so their tiles are
-// counted but listed nowhere. Add an entry back here the day an extended
-// overview returns.
+// src/00 is deliberately absent: the experimental (src/00/97) and testing
+// (src/00/98) samples have no overview app since the extended samples were
+// reorganised, so their tiles are counted but listed nowhere. Add an entry back
+// here the day an extended overview returns.
 const TARGETS = {
   '01': path.join(SRC, 'z2ui5_cl_smp_app_000.clas.abap'),
 };

@@ -57,17 +57,16 @@ sample repositories take you further:
 
 #### What's inside
 
-* **`src/01` "basic"** — cloud-ready, downportable and plain OpenUI5 1.71: the
+* **`src/01` "samples"** — cloud-ready, downportable and plain OpenUI5 1.71: the
   sample catalog (bindings, events, popups, framework actions, custom controls
   and use cases) plus a small curated set of control demos — the complete
   control reference lives in
   [samples-controls](https://github.com/abap2UI5/samples-controls). Present on both
   branches.
 * **`src/00` "system"** — no demo category: `00/01` holds the helper classes
-  the samples share (present on both branches), `00/02` the restricted samples
-  (SAPUI5-only controls, features newer than UI5 1.71), `00/97` the
-  experimental ones, `00/98` the test and scaffolding apps, `00/99` the retired
-  apps. Everything but `00/01` is stripped from `702`.
+  the samples share (present on both branches), `00/97` the experimental
+  samples and `00/98` the test and scaffolding apps. Everything but `00/01` is
+  stripped from `702`.
 
 Every sample runs on ABAP Cloud — that is why `main` needs no cloud-specific
 branch. `main` is the default branch and is checked against both ABAP Standard

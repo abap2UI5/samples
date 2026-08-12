@@ -56,6 +56,11 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         header        TYPE string
       RETURNING
         VALUE(result) TYPE string.
+    METHODS group_titles_needed
+      IMPORTING
+        t_catalog     TYPE ty_t_tile
+      RETURNING
+        VALUE(result) TYPE abap_bool.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -123,6 +128,21 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->header_content(
+       )->link(
+           text   = `GitHub`
+           target = `_blank`
+           href   = `https://github.com/abap2UI5/samples` ).
+
+    page->message_strip(
+        text     = |All { lines( t_catalog ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
+                   `and framework actions. Select a link to open a sample, the back button returns here. ` &&
+                   `Markers: (A) frontend action, (C) custom control.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    DATA(show_groups) = group_titles_needed( t_catalog ).
     DATA(prev_group) = ``.
     DATA(prev_base) = ``.
 
@@ -133,10 +153,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       DATA(new_block) = abap_false.
 
       IF tile-group <> prev_group.
-        page->title(
-            text  = tile-group
-            level = `H3`
-            class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+
+        IF show_groups = abap_true.
+          page->title(
+              text  = tile-group
+              level = `H3`
+              class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+        ENDIF.
         prev_group = tile-group.
 
       ELSEIF base <> prev_base.
@@ -152,8 +175,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
           alignitems = `Center`
           wrap       = `Wrap`
           class      = COND #( WHEN new_block = abap_true
-                               THEN `sapUiTinyMarginBegin sapUiSmallMarginTop`
-                               ELSE `sapUiTinyMarginBegin` ) ).
+                               THEN `sapUiSmallMarginBegin sapUiSmallMarginTop`
+                               ELSE `sapUiSmallMarginBegin` ) ).
 
       IF tile-sub IS INITIAL.
         row->link(
@@ -170,6 +193,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ENDIF.
 
     ENDLOOP.
+
+    " a few blank lines so the last tiles do not end glued to the page bottom
+    page->vbox( height = `4rem` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -353,6 +379,27 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     ELSE.
       result = header_base( header ).
     ENDIF.
+
+  ENDMETHOD.
+
+
+  METHOD group_titles_needed.
+
+    " A group heading only tells the reader something when there is more than
+    " one group to tell apart. With every sample in a single package it would
+    " just repeat the page title, so it is left out.
+    DATA first_group TYPE string.
+    LOOP AT t_catalog INTO DATA(tile).
+
+      IF sy-tabix = 1.
+        first_group = tile-group.
+
+      ELSEIF tile-group <> first_group.
+        result = abap_true.
+        RETURN.
+      ENDIF.
+
+    ENDLOOP.
 
   ENDMETHOD.
 
