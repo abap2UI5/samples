@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
       client->view_display( view->shell(
              )->page(
                      title          = `abap2UI5 - Navigation with app state`
-                     navbuttonpress = client->_event_client( `HISTORY_BACK` )
+                     navbuttonpress = client->follow_up_action( `HISTORY_BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
           )->simple_form( title = `Form Title` editable = abap_true
                      )->content( `form`
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
                              press = client->_event( `BUTTON_POST` )
                          )->button(
                              text  = `back`
-                             press = client->_event_client( `HISTORY_BACK` )
+                             press = client->follow_up_action( `HISTORY_BACK` )
               )->stringify( ) ).
 
       IF client->check_app_prev_stack( ).

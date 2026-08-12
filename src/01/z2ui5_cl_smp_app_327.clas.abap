@@ -135,7 +135,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
             )->input( client->_bind( s_storage-value-field2 )
             )->label( ``
             )->button( text  = `store`
-                       press = client->_event_client(
+                       press = client->follow_up_action(
                            val   = z2ui5_if_client=>cs_event-store_data
                            t_arg = VALUE #( ( |${ client->_bind( s_storage ) }| ) ) )
             )->button( text  = `get`

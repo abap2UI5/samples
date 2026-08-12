@@ -47,7 +47,7 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
     " the item's breadcrumb is resolved on the client and substituted into the
     " toast template ({0}); an argument starting with $ is a client-side
     " expression, everything else travels as a plain string
-    DATA(menu_selected) = client->_event_client(
+    DATA(menu_selected) = client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-control_global
         t_arg = VALUE #( ( `MESSAGE_TOAST` )
                          ( `show` )
