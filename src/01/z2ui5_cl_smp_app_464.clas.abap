@@ -32,18 +32,16 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
     CASE client->get( )-event.
 
       WHEN `RAISE_EXCEPTION`.
-        " an uncaught exception from an event handler is NOT caught by the
-        " framework - it propagates to a real runtime error, the roundtrip
-        " comes back as HTTP 500 and the client shows the error popup
         RAISE EXCEPTION TYPE z2ui5_cx_smp_error
-          EXPORTING val = `Intentional error to demonstrate the error popup`.
+          EXPORTING
+            val = `Intentional error to demonstrate the error popup`.
 
       WHEN `DIVIDE_BY_ZERO`.
-        " a genuine, unplanned runtime dump (CX_SY_ZERODIVIDE) - the same
-        " path: the app never handles it, so it surfaces in the popup
         DATA(lv_zero) = 0.
         DATA(lv_result) = 1 / lv_zero.
-        client->message_toast_display( |{ lv_result }| ).
+
+      WHEN `ASSERT`.
+        ASSERT 1 = 0.
 
     ENDCASE.
 
@@ -77,7 +75,12 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
         )->button( text  = `Trigger a runtime dump (divide by zero)`
                    icon  = `sap-icon://alert`
                    press = client->_event( `DIVIDE_BY_ZERO` )
-                   class = `sapUiTinyMarginTop` ).
+                   class = `sapUiTinyMarginTop`
+        )->button( text  = `Trigger an Assert`
+                   icon  = `sap-icon://alert`
+                   press = client->_event( `ASSERT` )
+                   class = `sapUiTinyMarginTop`
+                   ).
 
     client->view_display( view->stringify( ) ).
 

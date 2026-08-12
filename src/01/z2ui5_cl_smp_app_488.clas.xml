@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_488</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Navigation - Exchange Data and Event</DESCRIPT>
+    <DESCRIPT>Navigation - Exchange Data and Event between Apps</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
