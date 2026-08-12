@@ -26,6 +26,14 @@ CLASS z2ui5_cl_smp_app_482 IMPLEMENTATION.
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
+      page->message_strip(
+          text     = `Sets the launchpad shell title from the backend via follow_up_action( ` &&
+                     `cs_event-set_title_launchpad ) - type a title and press Set Title, the ` &&
+                     `header above changes without a view rebuild. Only works inside a launchpad.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
+
       page->simple_form(
               title    = `Set Launchpad Title Dynamically`
               editable = abap_true

@@ -28,7 +28,9 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DO 30 TIMES.
+      " enough rows that the table really scrolls - with a short list the
+      " scrollToIndex demo has nothing to do
+      DO 200 TIMES.
         INSERT VALUE #( index = sy-index
                         text  = |Row number { sy-index }| ) INTO TABLE mt_row.
       ENDDO.
@@ -57,7 +59,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `bigTable` )
                                                    ( `scrollToIndex` )
-                                                   ( `25` ) ) ).
+                                                   ( `150` ) ) ).
 
     ENDCASE.
 
@@ -91,7 +93,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
                    icon  = `sap-icon://edit`
                    press = client->_event( `FOCUS` )
                    class = `sapUiTinyMarginTop`
-        )->button( text  = `scrollToIndex( 25 ) on the table`
+        )->button( text  = `scrollToIndex( 150 ) on the table`
                    icon  = `sap-icon://down`
                    press = client->_event( `SCROLL` )
                    class = `sapUiTinyMarginTop` ).

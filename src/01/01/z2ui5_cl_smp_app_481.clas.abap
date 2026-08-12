@@ -19,7 +19,14 @@ CLASS z2ui5_cl_smp_app_481 IMPLEMENTATION.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell( )->page( showheader = abap_false ).
-      client->view_display( page->simple_form( title    = `Laucnhpad I - Read Startup Parameters`
+      page->message_strip(
+          text     = `Reads the startup parameters the Fiori Launchpad passed to this app ` &&
+                     `tile (the ComponentData) via client->get( )-t_comp_params - start the ` &&
+                     `tile with URL parameters to see them. Only works inside a launchpad.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
+      client->view_display( page->simple_form( title    = `Launchpad - Read Startup Parameters`
                                                editable = abap_true
                      )->content( `form`
                          )->label( ``
