@@ -52,11 +52,12 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(page) = view->page( id             = `page_main`
-                             title          = `Refresh`
-                             navbuttonpress = client->_event_nav_app_leave( )
-                             shownavbutton  = client->check_app_prev_stack( )
-                             class          = `sapUiContentPadding` ).
+    DATA(page) = view->shell( )->page(
+        id             = `page_main`
+        title          = `Refresh`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( )
+        class          = `sapUiContentPadding` ).
     DATA(table) = page->table( growing = `true`
                                width   = `auto`
                                items   = client->_bind( <tab> ) ).

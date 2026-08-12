@@ -21,6 +21,13 @@ CLASS z2ui5_cl_smp_app_321 IMPLEMENTATION.
                      title          = `abap2UI5 - Navigation with app state`
                      navbuttonpress = client->_event( `BACK` )
                      shownavbutton  = client->check_app_prev_stack( )
+          )->message_strip(
+              text     = `set_app_state_active( ) carries the app state id in the URL, so the page can be `
+                      && `bookmarked and the entered data is restored when the bookmark is opened again. `
+                      && `Enter a quantity, press the button and reload the page.`
+              type     = `Information`
+              showicon = abap_true
+              class    = `sapUiSmallMargin`
           )->simple_form( title = `Form Title` editable = abap_true
                      )->content( `form`
                          )->title( `Input`
