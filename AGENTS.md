@@ -27,9 +27,9 @@ titles, PR descriptions, and any other text must be written in English.
 ## 1. Repository layout
 
 Everything lives under `src/`, split into two top-level packages
-(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "Basic" holds the
-portable samples directly; `00` is the system package — shared code plus every
-sample that carries a restriction, and the retired ones. There
+(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "samples" holds
+the portable samples directly; `00` is the system package — shared code plus
+every sample that carries a restriction. There
 are **no demo apps directly in `src/` root** — every sample sits in a
 categorised subpackage. The only class in the root package is
 `z2ui5_cl_smp_app_000`, the overview app (§3), which is an index, not a sample.
@@ -40,9 +40,8 @@ src/
 │   ├── 01/  "context"                          helper classes the samples share (no demo apps) — survives every build
 │   ├── 02/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (native JS/CSS) — STRIPPED from the 702 build
 │   ├── 97/  "experimental"                     work-in-progress / not finished — STRIPPED from the 702 build
-│   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
-│   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
-└── 01/  "Basic"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
+│   └── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
+└── 01/  "samples"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
 ```
 
 The former wrapper level (`01` "basic" holding a single subpackage `01/01`
@@ -54,6 +53,10 @@ package.
 one. It stays in the tree and in the strip list because it is the designated
 home of the next restricted sample; the check below verifies the package
 exists, not that it holds anything.
+
+**`src/00/99` ("obsolet") was dropped on 2026-08-12**, together with the apps it
+held. A superseded or deprecated sample is now deleted outright instead of being
+retired into a package that nothing builds from — git history is the archive.
 
 There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
@@ -99,11 +102,11 @@ and it goes into the basic package (`src/01`) as an ordinary sample:
 
 A sample with a restriction still goes to the matching `src/00` category
 (`src/00/02` release/version, `src/00/97` experimental, `src/00/98` when it is
-a test app, `src/00/99` once it is obsolete) — that model is unchanged.
+a test app) — that model is unchanged.
 
 ---
 
-## 2. Compatibility model — what belongs in `src/01` vs `src/00/02` vs `src/00/97` vs `src/00/98` vs `src/00/99`
+## 2. Compatibility model — what belongs in `src/01` vs `src/00/02` vs `src/00/97` vs `src/00/98`
 
 `main` is the default branch and the only branch anyone commits to. It is
 installed **both** on standard on-premise systems and on ABAP Cloud, so it is
@@ -112,23 +115,23 @@ branch, generated from `main` by `publish-702`.
 
 The split is driven directly by the CI builds:
 
-| Build (workflow)   | What it does                                    | Sees `src/00/01` | Sees `src/00/02` | Sees `src/00/97` | Sees `src/00/98` | Sees `src/00/99` | Sees `src/01` |
-|--------------------|-------------------------------------------------|:---:|:---:|:---:|:---:|:---:|:---:|
-| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `abap-702`         | `npm run downport` (does `rm -rf src/00/02 src/00/97 src/00/98 src/00/99`) → `abaplint abap_702.jsonc` | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Build (workflow)   | What it does                                    | Sees `src/00/01` | Sees `src/00/02` | Sees `src/00/97` | Sees `src/00/98` | Sees `src/01` |
+|--------------------|-------------------------------------------------|:---:|:---:|:---:|:---:|:---:|
+| `abap-standard`    | `abaplint ./abaplint.jsonc` (syntax `v750`)     | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `abap-cloud`       | `abaplint abap_cloud.jsonc` (syntax `Cloud`)    | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `abap-702`         | `npm run downport` (does `rm -rf src/00/02 src/00/97 src/00/98`) → `abaplint abap_702.jsonc` | ✅ | ❌ | ❌ | ❌ | ✅ |
 
 **Only the 702 build strips anything.** `main` is published as it is and runs on
 both standard and ABAP Cloud systems, so `abap-standard` and `abap-cloud` lint
-the *whole* tree — restricted, experimental, testing and obsolete samples
+the *whole* tree — restricted, experimental and testing samples
 included — and all of it passes. The ABAP restriction that used to justify a
 strip for cloud is gone with the on-premise package (§1): what is left is
 restricted by UI5, by maturity or by purpose, never by ABAP release.
 
-**Test, obsolete, experimental and restricted samples never reach the 702
-branch.** `src/00/02`, `src/00/97`, `src/00/98` and `src/00/99` are all removed
+**Test, experimental and restricted samples never reach the 702
+branch.** `src/00/02`, `src/00/97` and `src/00/98` are all removed
 by the downport, so the `702` branch carries only the portable set. Keep the
-four paths together in the two places that name them — `package.json`
+three paths together in the two places that name them — `package.json`
 `downport` and the build table above. That is machine-checked: `node
 scripts/check-strip-lists.js` compares both and fails if one names a different
 set, or a package that no longer exists (runs in CI). The rest of `src/00` —
@@ -156,25 +159,28 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
 **Consequence of the rule:**
 
-- **`src/01` ("Basic")** — a sample may only live here if it is **ABAP Cloud
+- **`src/01` ("samples")** — a sample may only live here if it is **ABAP Cloud
   ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
   restriction. These survive all three builds.
 - **`src/00/02` ("restricted - release/version")**, **`src/00/97`
-  ("experimental")**, **`src/00/98` ("testing")** and **`src/00/99`
-  ("obsolet")** — anything with *any* restriction. All four are deleted before
+  ("experimental")** and **`src/00/98` ("testing")** — anything with *any*
+  restriction. All three are deleted before
   the 702 build, so they are only ever checked by `abap-standard` and
   `abap-cloud`. Pick the subpackage by the **first** restriction that
   applies:
 
-  1. Deprecated control/property, or superseded → `00/99`
-  2. Test / scaffolding app → `00/98`
-  3. Experimental / work-in-progress → `00/97`
-  4. Everything else → `00/02` — the catch-all for a sample that plain
+  1. Test / scaffolding app → `00/98`
+  2. Experimental / work-in-progress → `00/97`
+  3. Everything else → `00/02` — the catch-all for a sample that plain
      OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
      (`sap.suite.*`, `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
      `sap.ui.richtexteditor`, …), a control/property **introduced after UI5
      1.71**, or a **runtime the sample cannot ship** — native JavaScript /
      CSS / HTML.
+
+  A **deprecated or superseded** sample matches none of the three: it is
+  deleted, not filed away (§1). Only a live restriction earns a `src/00`
+  package.
 
 **A sample that needs something the system provides does not belong here at
 all** — not in `src/00/02` either. Those live in
@@ -188,7 +194,7 @@ keeps is restricted by UI5 alone.
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
 property available since UI5 1.71 (16 Jan 2020) **and** not deprecated, no native
-JS, not a test, finished and clean. "Old" is not enough (deprecated → `00/99`);
+JS, not a test, finished and clean. "Old" is not enough (deprecated → deleted);
 "non-deprecated" is not enough (post-1.71 → `00/02`). ABAP Cloud readiness is
 not a sorting criterion at all — it is a precondition for every sample in the
 repository (§1).
@@ -241,8 +247,6 @@ the block plus roughly one space, precomputed by `block_widths( )` /
 `header_width( )` — so the `sub` descriptions of a block line up exactly
 underneath each other in one column, directly next to the links.
 
-`z2ui5_cl_smp_app_000_0` is the old "classic" overview app, retired to `00/99`.
-It is not generated and nothing links to it. Do not extend it.
 
 ---
 
@@ -317,9 +321,8 @@ from the old catalog.
 1. **One catalog per area — and only `src/01` has one.** Apps in `src/01/**`
    belong in `smp_app_000`. `src/00/**` has no overview app
    (§3): an app moved to `src/00/02` ("restricted - release/version"),
-   `src/00/97` ("experimental"), `src/00/98` ("testing") or `src/00/99`
-   ("obsolet") gets **no** tile — the generator only reports how
-   many those packages hold.
+   `src/00/97` ("experimental") or `src/00/98` ("testing") gets **no** tile —
+   the generator only reports how many those packages hold.
 2. **Each app appears exactly once**, and every demo app physically present in an
    area is listed (no missing tiles) — **except hidden helper apps**: a class
    whose `<DESCRIPT>` header is `ZZZ` (e.g. `ZZZ - called by SubApp I`) is only
@@ -331,7 +334,7 @@ from the old catalog.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
    so the on-screen order mirrors the tree; a nested subpackage forms its own
    group directly after its parent slot. The samples live directly in `src/01`
-   today, so there is a single group ("Basic") — when a nested subpackage is
+   today, so there is a single group ("samples") — when a nested subpackage is
    added, place its group at its numeric position rather than appending it.
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
@@ -340,7 +343,7 @@ from the old catalog.
    untouched; only the tiles inside each group are ordered.
 6. **Moving a subpackage out of `src/01` drops its whole tile group** — there
    is no catalog on the other side, in `src/00/02` ("restricted") no more than
-   in `src/00/97`, `src/00/98` or `src/00/99`. Moving one *into* `src/01` adds its group at the
+   in `src/00/97` or `src/00/98`. Moving one *into* `src/01` adds its group at the
    matching numeric slot (rule 4).
 7. After every change, verify: `get_catalog( )` and the folder tree agree —
    same apps, same group names (== CTEXT), same grouping, no app in the wrong
@@ -872,7 +875,7 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `src/01` (Basic) package — follow these so
+Learned while curating the `src/01` (samples) package — follow these so
 new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
