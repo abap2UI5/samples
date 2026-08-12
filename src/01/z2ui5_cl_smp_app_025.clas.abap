@@ -89,7 +89,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
       WHEN `MAIN` OR ``.
         page->grid( `L6 M12 S12`
             )->content( `layout`
-            )->simple_form( `View: FIRST`
+            )->simple_form(
+                title    = `View: FIRST`
+                editable = abap_true
             )->content( `form`
             )->label( `Input set by previous app`
             )->input( input_previous_set
@@ -107,7 +109,9 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
       WHEN `SECOND`.
         page->grid( `L6 M12 S12`
             )->content( `layout`
-            )->simple_form( `View: SECOND`
+            )->simple_form(
+                title    = `View: SECOND`
+                editable = abap_true
             )->content( `form`
             )->label( `Demo`
             )->button(

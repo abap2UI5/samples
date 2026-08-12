@@ -94,7 +94,10 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
-        )->simple_form( `Popup in same App` )->content( `form`
+        )->simple_form(
+            title    = `Popup in same App`
+            editable = abap_true
+            )->content( `form`
             )->label( `Demo`
             )->button(
                 text  = `popup rendering, no background rendering`
@@ -113,7 +116,10 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
                 press = client->_event( `BUTTON_POPUP_04` )
         )->get_parent( )->get_parent( ).
 
-    grid->simple_form( `Popup in new App` )->content( `form`
+    grid->simple_form(
+        title    = `Popup in new App`
+        editable = abap_true
+        )->content( `form`
         )->label( `Demo`
         )->button(
             text  = `popup rendering, no background`

@@ -66,7 +66,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Controller`
+            title          = `abap2UI5 - Handle Events and Change the View`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -112,7 +112,7 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Controller`
+            title          = `abap2UI5 - Handle Events and Change the View`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

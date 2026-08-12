@@ -15,8 +15,8 @@ CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
     TYPES ty_t_table TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     DATA mt_table TYPE ty_t_table.
+    DATA mv_field TYPE string.
 
-    data mv_field type string.
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
 
@@ -28,19 +28,18 @@ CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-
 CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
 
-    me->client     = client.
-
+    me->client = client.
     IF client->check_on_init( ).
+
       set_data( ).
       view_display( ).
 
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -49,16 +48,14 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD on_event.
 
-    me->client = client.
-
     IF client->check_on_event( `BUTTON_SEARCH` ).
+
       set_data( ).
       z2ui5_cl_smp_context=>itab_filter_by_val(
-          EXPORTING
-              val = mv_field
-*              val = client->get_event_arg( )
-          CHANGING
-              tab = mt_table ).
+        EXPORTING
+          val = mv_field
+        CHANGING
+          tab = mt_table ).
 
     ENDIF.
 
@@ -67,7 +64,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
   METHOD set_data.
 
-    clear mt_table.
+    mt_table = VALUE #( ).
     DO 1000 TIMES.
       INSERT LINES OF VALUE ty_t_table(
           ( product = `table` create_date = `01.01.2023` create_by = `Peter` storage_location = `AREA_001` quantity = 400 )
@@ -87,37 +84,38 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page1) = view->shell( )->page( id = `page_main`
-            title                          = `abap2UI5 - Search Field with Backend Live Change`
-            navbuttonpress                 = client->_event_nav_app_leave( )
-            shownavbutton                  = client->check_app_prev_stack( ) ).
+    DATA(page1) = view->shell( )->page(
+        id             = `page_main`
+        title          = `abap2UI5 - Search Field with Backend Live Change`
+        navbuttonpress = client->_event_nav_app_leave( )
+        shownavbutton  = client->check_app_prev_stack( ) ).
 
     page1->message_strip(
-        text     = `In abap2UI5 only one backend request can be handled at the same time per default, the app is set Busy and all other requests are ignored until the processing is finished. IN some case eg search field (live search), paralle proces` &&
-`sing is needed beacause only the newest request is important and all older one can be ignored. you can set this up with the event in abap2UI5.`
+        text     = `By default abap2UI5 handles only one backend request at a time - the app is set busy and further ` &&
+                   `requests are ignored until the running one is finished. A live search needs the opposite: only the ` &&
+                   `newest request matters and older ones can be dropped. Set check_allow_multi_req on the event to ` &&
+                   `allow that - type in both fields and compare.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(lo_box) = page1->hbox( ).
-            lo_box->vbox( )->text( `Search disabled parallel (default)`
-        )->search_field( width      = `17.5rem`
-                            value = client->_bind( mv_field )
-                         livechange = client->_event(
-                            val        = `BUTTON_SEARCH`
-*                            t_arg      = VALUE #( ( `${$source>/value}` ) )
-*                         s_ctrl     = VALUE #( check_allow_multi_req = abap_true )
-                            ) ).
-     lo_box->vbox( )->text( `Search parallel`
-        )->search_field( width      = `17.5rem`
-                            value = client->_bind( mv_field )
-                         livechange = client->_event(
-                            val        = `BUTTON_SEARCH`
-*                            t_arg      = VALUE #( ( `${$source>/value}` ) )
-                         s_ctrl     = VALUE #( check_allow_multi_req = abap_true )
-                            ) ).
+    DATA(lo_box) = page1->hbox( class = `sapUiSmallMarginBegin` ).
 
+    lo_box->vbox( )->text( `Search disabled parallel (default)`
+        )->search_field(
+            width       = `17.5rem`
+            placeholder = `Search products`
+            value       = client->_bind( mv_field )
+            livechange  = client->_event( `BUTTON_SEARCH` ) ).
 
+    lo_box->vbox( )->text( `Search parallel`
+        )->search_field(
+            width       = `17.5rem`
+            placeholder = `Search products`
+            value       = client->_bind( mv_field )
+            livechange  = client->_event(
+                val    = `BUTTON_SEARCH`
+                s_ctrl = VALUE #( check_allow_multi_req = abap_true ) ) ).
 
     DATA(tab) = page1->table( client->_bind( mt_table ) ).
     DATA(lo_columns) = tab->columns( ).

@@ -21,7 +21,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_454 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
 
 
   METHOD z2ui5_if_app~main.
@@ -95,9 +95,10 @@ CLASS Z2UI5_CL_SMP_APP_454 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     page->vbox( `sapUiSmallMargin`
-        )->search_field( width  = `30%`
-                         search = client->_event( val   = `SEARCH`
-                                                  t_arg = VALUE #( ( `${$parameters>/query}` ) ) )
+        )->search_field( width       = `30%`
+                         placeholder = `Search products`
+                         search      = client->_event( val   = `SEARCH`
+                                                       t_arg = VALUE #( ( `${$parameters>/query}` ) ) )
         )->hbox( class = `sapUiTinyMarginTop`
             )->button( text  = `Sort ascending`
                        icon  = `sap-icon://sort-ascending`

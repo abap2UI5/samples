@@ -75,6 +75,13 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
+    page->message_strip(
+        text     = `Navigation layouts built with sap.m.FlexBox and own CSS classes: variable width, equal width with ` &&
+                   `a transition effect and a wrapping row. The hint button in the header explains each panel.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
     page->header_content(
        )->button( id = `hint_icon`
            icon      = `sap-icon://hint`

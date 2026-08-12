@@ -50,7 +50,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
 
 
   METHOD set_selkz.
@@ -166,6 +166,7 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
          value  = client->_bind( mv_search_value )
          search = client->_event( `BUTTON_SEARCH` )
          width  = `17.5rem`
+         placeholder = `Search products`
          id     = `SEARCH` ).
 
     lo_box->get_parent( )->hbox( justifycontent = `End` )->button(

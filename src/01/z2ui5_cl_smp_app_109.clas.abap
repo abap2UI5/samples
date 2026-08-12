@@ -81,7 +81,9 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    page->simple_form( `QuickView Popover`
+    page->simple_form(
+        title    = `QuickView Popover`
+        editable = abap_true
               )->content( `form`
                   )->title( `QuickView Popover`
                   )->label( `placement`

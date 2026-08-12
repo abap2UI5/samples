@@ -140,14 +140,12 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-
-    IF client->get( )-check_on_navigated = abap_true.
-
+    IF client->check_on_navigated( ).
       view_display( ).
-      RETURN.
-    ENDIF.
 
-    on_event( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
 
   ENDMETHOD.
 

@@ -100,7 +100,9 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    page->simple_form( `Popover`
+    page->simple_form(
+        title    = `Popover`
+        editable = abap_true
               )->content( `form`
                   )->title( `Input`
                   )->label( `Link`

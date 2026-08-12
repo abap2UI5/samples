@@ -34,7 +34,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_122 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
 
   METHOD read_frontend_info.
@@ -70,7 +70,7 @@ CLASS Z2UI5_CL_SMP_APP_122 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5`
+            title          = `abap2UI5 - Read Frontend Info`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

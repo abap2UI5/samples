@@ -26,14 +26,22 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
         client->message_toast_display( |{ product } { quantity } - send to the server| ).
     ENDCASE.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->shell(
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->shell(
         )->page(
-                title          = `abap2UI5 - Changed CSS`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( )
-            )->_generic( ns   = `html`
-                         name = `style` )->_cc_plain_xml(
+            title          = `abap2UI5 - Changed CSS`
+            navbuttonpress = client->_event_nav_app_leave( )
+            shownavbutton  = client->check_app_prev_stack( ) ).
+
+    page->message_strip(
+        text     = `An inline html style element is sent to the frontend with the view, so the sample can restyle ` &&
+                   `standard UI5 controls - here the inputs are enlarged and the post button turns red.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
+
+    page->_generic( ns   = `html`
+                    name = `style` )->_cc_plain_xml(
                     `.sapMInput {` && |\n| &&
                          `    height: 80px !important;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
@@ -72,21 +80,22 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
                         text  = `post`
                         press = client->_event( `BUTTON_POST` )
                         class = `mySuperRedButton`
-            )->input( value = client->_bind( quantity )
+            )->input( client->_bind( quantity )
             )->simple_form( title    = `Form Title`
                             editable = abap_true
                 )->content( `form`
                     )->title( `Input`
                     )->label( `quantity`
-                    )->input( value = client->_bind( quantity )
+                    )->input( client->_bind( quantity )
                     )->label( `product`
                     )->input(
                         value   = product
                         enabled = abap_false
                     )->button(
                         text  = `post`
-                        press = client->_event( `BUTTON_POST` )
-         )->stringify( ) ).
+                        press = client->_event( `BUTTON_POST` ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
