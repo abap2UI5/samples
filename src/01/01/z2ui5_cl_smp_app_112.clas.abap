@@ -9,7 +9,7 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
         info    TYPE string,
       END OF ty_s_item.
 
-    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_class_2 TYPE string.
     DATA mr_data TYPE REF TO data.
     DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
                        ( product = `Monitor 27"`  info = `2 weeks` )
                        ( product = `Dock Pro`     info = `sold out` ) ).
 
-    mo_view_parent->message_strip(
+    view_parent->message_strip(
         text     = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
                    `with different controls and its own data, embedded into the same detail ` &&
                    `column of the parent app.`
@@ -44,12 +44,12 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    mo_view_parent->list( headertext = `Class 2 - Products`
+    view_parent->list( headertext = `Class 2 - Products`
                           items      = client->_bind( t_items )
         )->standard_list_item( title = `{PRODUCT}`
                                info  = `{INFO}` ).
 
-    mo_view_parent->vbox( `sapUiSmallMargin`
+    view_parent->vbox( `sapUiSmallMargin`
         )->input( value       = client->_bind( mv_class_2 )
                   placeholder = `type here - the value lives in sub-app 2`
         )->button( text  = `raise event in sub-app 2`
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 

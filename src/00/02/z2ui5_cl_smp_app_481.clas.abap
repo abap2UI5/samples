@@ -27,15 +27,17 @@ CLASS z2ui5_cl_smp_app_481 IMPLEMENTATION.
           type     = `Information`
           showicon = abap_true
           class    = `sapUiSmallMargin` ).
-      client->view_display( page->simple_form( title    = `Launchpad - Read Startup Parameters`
-                                               editable = abap_true
-                     )->content( `form`
-                         )->label( ``
-                         )->button( text  = `Read Parameters`
-                                    press = client->_event( `READ_PARAMS` )
-                         )->label( ``
-                         )->button( text  = `Go Back`
-                                    press = client->_event_nav_app_leave( ) )->stringify( ) ).
+      page->simple_form( title    = `Launchpad - Read Startup Parameters`
+                         editable = abap_true
+          )->content( `form`
+              )->label( ``
+              )->button( text  = `Read Parameters`
+                         press = client->_event( `READ_PARAMS` )
+              )->label( ``
+              )->button( text  = `Go Back`
+                         press = client->_event_nav_app_leave( ) ).
+
+      client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `READ_PARAMS` ).
 

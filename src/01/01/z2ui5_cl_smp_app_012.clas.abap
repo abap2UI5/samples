@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popups`
+            title          = `abap2UI5 - Popup - Different ways of calling Popups`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

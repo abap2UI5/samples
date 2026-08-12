@@ -14,20 +14,14 @@ CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
         checkbox TYPE abap_bool,
       END OF ty_s_row.
 
-    DATA mo_app_sub TYPE REF TO object.
+    DATA app_sub   TYPE REF TO object.
     DATA classname TYPE string.
 
-    DATA
-      t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
-    DATA
-      t_tab2 TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
-    DATA mv_layout TYPE string.
-    DATA mv_title TYPE string.
-    DATA mv_check_enabled_01 TYPE abap_bool VALUE abap_true.
-    DATA mv_check_enabled_02 TYPE abap_bool.
-    DATA mo_grid_sub TYPE REF TO z2ui5_cl_xml_view.
-    DATA lo_view_nested TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout      TYPE string.
+    DATA grid_sub    TYPE REF TO z2ui5_cl_xml_view.
+    DATA view_nested TYPE REF TO z2ui5_cl_xml_view.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -45,11 +39,11 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
   METHOD on_event_sub.
 
-    IF mo_app_sub IS BOUND.
+    IF app_sub IS BOUND.
 
-      ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
-      <fs> = mo_grid_sub.
-      CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
+      ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
+      <fs> = grid_sub.
+      CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
     ENDIF.
 
@@ -59,25 +53,25 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
   METHOD on_init_sub.
 
     classname = to_upper( classname ).
-    CREATE OBJECT mo_app_sub TYPE (classname).
+    CREATE OBJECT app_sub TYPE (classname).
 
-    ASSIGN mo_app_sub->(`MO_VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
-    <fs> = mo_grid_sub.
-    CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
+    ASSIGN app_sub->(`VIEW_PARENT`) TO FIELD-SYMBOL(<fs>).
+    <fs> = grid_sub.
+    CALL METHOD app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
     " render explicitly: check_on_init( ) is the TOP app's lifecycle flag,
     " not the sub-app's - on this (SELCHANGE) roundtrip it is false, so the
     " sub-app's own main( ) would add nothing to the detail column
-    CALL METHOD mo_app_sub->(`VIEW_DISPLAY`).
+    CALL METHOD app_sub->(`VIEW_DISPLAY`).
 
   ENDMETHOD.
 
 
   METHOD view_display_detail.
 
-    lo_view_nested = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = lo_view_nested->page( `Nested View` ).
-    mo_grid_sub = page->grid( `L12 M12 S12`
+    view_nested = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view_nested->page( `Nested View` ).
+    grid_sub = page->grid( `L12 M12 S12`
         )->content( `layout` ).
 
   ENDMETHOD.
@@ -87,7 +81,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
        )->page(
-          title          = `abap2UI5 - Master Detail Page with Nested View`
+          title          = `abap2UI5 - Nested Views - Sub-App`
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -98,12 +92,12 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind( mv_layout )
+    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind( layout )
                                                      id     = `test` ).
 
-    DATA(lr_master) = col_layout->begin_column_pages( ).
+    DATA(master) = col_layout->begin_column_pages( ).
 
-    DATA(lr_list) = lr_master->list(
+    DATA(list) = master->list(
           headertext      = `List Output`
           items           = client->_bind( val = t_tab )
           mode            = `SingleSelectMaster`
@@ -116,7 +110,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
               press       = client->_event( `TEST` )
               selected    = `{SELECTED}` ).
 
-    client->view_display( lr_list->stringify( ) ).
+    client->view_display( list->stringify( ) ).
 
   ENDMETHOD.
 
@@ -131,38 +125,32 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
         ( title = `Class 1`  info = `z2ui5_cl_smp_app_105`   descr = `this is a description` icon = `sap-icon://account` )
         ( title = `Class 2`  info = `z2ui5_cl_smp_app_112` descr = `this is a description` icon = `sap-icon://account` ) ).
 
-      mv_layout = `OneColumn`.
+      layout = `OneColumn`.
       view_display_master( ).
       view_display_detail( ).
 
+    ELSEIF client->check_on_event( `SELCHANGE` ).
+
+      DATA(t_sel) = t_tab.
+      DELETE t_sel WHERE selected = abap_false.
+      READ TABLE t_sel INTO DATA(s_sel) INDEX 1.
+
+      IF classname IS NOT INITIAL.
+        view_display_master( ).
+      ENDIF.
+      classname = s_sel-info.
+
+      layout = `TwoColumnsMidExpanded`.
+      view_display_detail( ).
+      on_init_sub( ).
+
+      client->nest_view_display(
+        val            = view_nested->stringify( )
+        id             = `test`
+        method_insert  = `addMidColumnPage`
+        method_destroy = `removeAllMidColumnPages` ).
+
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN `SELCHANGE`.
-
-        DATA(lt_sel) = t_tab.
-        DELETE lt_sel WHERE selected = abap_false.
-
-        READ TABLE lt_sel INTO DATA(ls_sel) INDEX 1.
-        APPEND ls_sel TO t_tab2.
-
-        IF classname IS NOT INITIAL.
-          view_display_master( ).
-        ENDIF.
-        classname = ls_sel-info.
-
-        mv_layout = `TwoColumnsMidExpanded`.
-        client->view_model_update( ).
-        view_display_detail( ).
-        on_init_sub( ).
-
-        client->nest_view_display(
-          val            = lo_view_nested->stringify( )
-          id             = `test`
-          method_insert  = `addMidColumnPage`
-          method_destroy = `removeAllMidColumnPages` ).
-    ENDCASE.
 
     on_event_sub( ).
 

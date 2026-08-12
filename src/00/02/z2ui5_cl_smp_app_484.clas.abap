@@ -17,7 +17,6 @@ CLASS z2ui5_cl_smp_app_484 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
     check_launchpad_active = client->get( )-check_launchpad_active.
 
     DATA(t_params) = client->get( )-t_comp_params.
@@ -29,6 +28,7 @@ CLASS z2ui5_cl_smp_app_484 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
             )->page(
                     showheader     = xsdbool( abap_false = client->get( )-check_launchpad_active )
@@ -56,7 +56,7 @@ CLASS z2ui5_cl_smp_app_484 IMPLEMENTATION.
               )->label( `Quantity (received navigation parameter)`
               )->input( value   = client->_bind( quantity )
                         enabled = abap_false
-              )->label( `check_launchpad_active`
+              )->label( `Launchpad active`
               )->input( value   = check_launchpad_active
                         enabled = abap_false
               )->button( text    = `back to the previous app`

@@ -3,7 +3,7 @@ CLASS z2ui5_cl_smp_app_105 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA view_parent TYPE REF TO z2ui5_cl_xml_view.
     DATA mv_class_1 TYPE string.
     DATA mr_data TYPE REF TO data.
 
@@ -25,7 +25,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
 
     " Deliberately styled DIFFERENTLY from sub-app class 2 (a table), so the
     " parent demo 104 shows at a glance WHICH class is embedded right now.
-    mo_view_parent->message_strip(
+    view_parent->message_strip(
         text     = `SUB-APP CLASS 1 (z2ui5_cl_smp_app_105): a green FORM - it has no page of ` &&
                    `its own, its controls are injected into the detail column of the calling ` &&
                    `parent app through a shared view reference.`
@@ -33,7 +33,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    DATA(form) = mo_view_parent->panel( headertext = `Class 1 - Form`
+    DATA(form) = view_parent->panel( headertext = `Class 1 - Form`
         )->simple_form( editable = abap_true
         )->content( `form` ).
 
@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 

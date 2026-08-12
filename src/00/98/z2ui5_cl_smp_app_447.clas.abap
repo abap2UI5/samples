@@ -8,7 +8,7 @@ CLASS z2ui5_cl_smp_app_447 DEFINITION PUBLIC.
         index TYPE i,
         text  TYPE string,
       END OF ty_s_row.
-    DATA mt_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_rows TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,12 +32,12 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
       " scrollToIndex demo has nothing to do
       DO 200 TIMES.
         INSERT VALUE #( index = sy-index
-                        text  = |Row number { sy-index }| ) INTO TABLE mt_row.
+                        text  = |Row number { sy-index }| ) INTO TABLE t_rows.
       ENDDO.
 
       view_display( ).
 
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -99,7 +99,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
                    class = `sapUiTinyMarginTop` ).
 
     DATA(tab) = page->table( id    = `bigTable`
-                             items = client->_bind( mt_row ) ).
+                             items = client->_bind( t_rows ) ).
 
     tab->columns(
         )->column( )->text( `Index` )->get_parent(
