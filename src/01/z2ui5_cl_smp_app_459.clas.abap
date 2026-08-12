@@ -70,7 +70,6 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
         ELSE.
           INSERT ls_row INTO t_products INDEX lv_to + 1.
         ENDIF.
-        client->view_model_update( ).
 
     ENDCASE.
 
@@ -90,7 +89,7 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
     page->message_strip(
         text     = `Drag a row and drop it between two others: the dnd:DragDropInfo drop event ` &&
                    `sends the dragged/drop indexes and the drop position to the backend, ABAP ` &&
-                   `reorders the table, view_model_update refreshes the list.`
+                   `reorders the table and the refreshed model updates the list.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).

@@ -159,7 +159,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
             )->buttons(
                 )->button(
                     text  = `close`
-                    press = client->_event_client( client->cs_event-popup_close )
+                    press = client->follow_up_action( client->cs_event-popup_close )
                     type  = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).

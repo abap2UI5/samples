@@ -99,7 +99,6 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `RESET`.
         mt_table = mt_table_full.
-        client->view_model_update( ).
       WHEN `FILTER`.
 
         DATA(lt_arg) = client->get( )-t_event_arg.
@@ -127,7 +126,6 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
           ENDIF.
         ENDLOOP.
 
-        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.

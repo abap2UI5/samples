@@ -188,7 +188,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
         contentheight     = `50%`
         contentwidth      = `50%`
         verticalscrolling = abap_false
-        afterclose        = client->_event_client( client->cs_event-popup_close ) ).
+        afterclose        = client->follow_up_action( client->cs_event-popup_close ) ).
 
     dialog->message_view(
         items      = client->_bind( t_msg )
@@ -206,7 +206,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
     dialog->end_button( )->button(
         text  = `Close`
-        press = client->_event_client( client->cs_event-popup_close ) ).
+        press = client->follow_up_action( client->cs_event-popup_close ) ).
 
     client->popup_display( popup->stringify( ) ).
 

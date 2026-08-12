@@ -165,7 +165,6 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
           mv_title  = client->get_event_arg( ).
         ENDIF.
 
-        client->view_model_update( ).
         view_display_detail_detail( ).
 
       WHEN `SELCHANGE`.
@@ -178,8 +177,6 @@ CLASS z2ui5_cl_smp_app_098 IMPLEMENTATION.
         ENDIF.
 
         mv_layout = `TwoColumnsMidExpanded`.
-
-        client->view_model_update( ).
 
         view_display_detail( ).
     ENDCASE.

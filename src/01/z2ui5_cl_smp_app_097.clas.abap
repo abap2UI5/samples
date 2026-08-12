@@ -132,7 +132,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
       WHEN `ROW_DELETE`.
 
         DELETE t_tab2 WHERE uuid = client->get_event_arg( ).
-        client->view_model_update( ).
 
       WHEN `SELCHANGE`.
         DATA(lt_sel) = t_tab.
@@ -144,7 +143,6 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
         mv_layout = `TwoColumnsMidExpanded`.
 
-        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.

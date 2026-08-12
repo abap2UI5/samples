@@ -94,7 +94,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
                        width           = `100%` ).
 
     email_form->button( text  = `Trigger Email`
-                        press = client->_event_client( val   = client->cs_event-urlhelper
+                        press = client->follow_up_action( val   = client->cs_event-urlhelper
                         t_arg = VALUE #( ( `TRIGGER_EMAIL` )
                                                                         ( |${ client->_bind( email ) }| ) ) ) ).
 
@@ -109,7 +109,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
                            class       = `sapUiSmallMarginBottom` ).
     telephone_form->button(
         text  = `Trigger Telephone`
-        press = client->_event_client( val   = client->cs_event-urlhelper
+        press = client->follow_up_action( val   = client->cs_event-urlhelper
         t_arg = VALUE #( ( `TRIGGER_TEL` )
                                                         ( |${ client->_bind( phone ) }| ) ) ) ).
 
@@ -123,7 +123,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
                         placeholder = `Enter a number`
                         class       = `sapUiSmallMarginBottom` ).
     mobile_form->button( text  = `Trigger SMS`
-                         press = client->_event_client( val   = client->cs_event-urlhelper
+                         press = client->follow_up_action( val   = client->cs_event-urlhelper
                          t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind( mobile ) }| ) ) ) ).
 
     DATA(url_form) = layout->simple_form( `Redirect` ).
@@ -135,7 +135,7 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
                      placeholder = `Enter URL`
                      class       = `sapUiSmallMarginBottom` ).
     url_form->button( text  = `Redirect`
-                      press = client->_event_client( val   = client->cs_event-urlhelper
+                      press = client->follow_up_action( val   = client->cs_event-urlhelper
                       t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind( url ) }| ) ) ) ).
 
     client->view_display( page->stringify( ) ).

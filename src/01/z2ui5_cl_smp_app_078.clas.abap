@@ -95,7 +95,6 @@ CLASS Z2UI5_CL_SMP_APP_078 IMPLEMENTATION.
 
         mt_tokens_removed = VALUE #( ).
         mt_tokens_added   = VALUE #( ).
-        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.

@@ -52,7 +52,6 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         set_data( ).
         set_search( ).
-        client->view_model_update( ).
     ENDCASE.
 
   ENDMETHOD.

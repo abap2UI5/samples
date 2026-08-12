@@ -51,8 +51,6 @@ CLASS z2ui5_cl_smp_app_334 IMPLEMENTATION.
       client->message_toast_display( `ERROR - GUIDS!` ).
     ENDIF.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

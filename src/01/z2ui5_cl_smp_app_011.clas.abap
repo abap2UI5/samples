@@ -129,16 +129,13 @@ CLASS Z2UI5_CL_SMP_APP_011 IMPLEMENTATION.
       LOOP AT t_tab REFERENCE INTO DATA(lr_tab).
         lr_tab->editable = check_editable_active.
       ENDLOOP.
-      client->view_model_update( ).
 
     ELSEIF client->check_on_event( `BUTTON_DELETE` ).
       DELETE t_tab WHERE selkz = abap_true.
-      client->view_model_update( ).
 
     ELSEIF client->check_on_event( `BUTTON_ADD` ).
 
       INSERT VALUE #( ) INTO TABLE t_tab.
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.
