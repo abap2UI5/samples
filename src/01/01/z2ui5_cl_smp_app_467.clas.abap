@@ -60,7 +60,7 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Messages - central message model`
+            title          = `abap2UI5 - Message Model & Manager`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
                     ns     = `z2ui5`
                     t_prop = VALUE #( ( n = `items` v = client->_bind( t_messages ) ) ) ).
 
-    page->vbox(
+    page->vbox( `sapUiSmallMargin`
             )->label( `Name (message authored by the app)`
             )->input( client->_bind( name )
             )->label( `Amount (integer only - validation collected automatically)`

@@ -65,6 +65,11 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
     <fs> = mo_grid_sub.
     CALL METHOD mo_app_sub->(`Z2UI5_IF_APP~MAIN`) EXPORTING client = client.
 
+    " render explicitly: check_on_init( ) is the TOP app's lifecycle flag,
+    " not the sub-app's - on this (SELCHANGE) roundtrip it is false, so the
+    " sub-app's own main( ) would add nothing to the detail column
+    CALL METHOD mo_app_sub->(`VIEW_DISPLAY`).
+
   ENDMETHOD.
 
 

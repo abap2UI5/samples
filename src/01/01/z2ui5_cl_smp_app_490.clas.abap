@@ -9,7 +9,7 @@ CLASS z2ui5_cl_smp_app_490 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_counter TYPE i.
+    DATA counter TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -32,24 +32,17 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
       " popover anchored to a control of that very view
       view_display( ).
       popover_display( ).
-      RETURN.
+    ELSEIF client->check_on_event( `REBUILD_AND_OPEN` ).
+      " same pair on an event roundtrip: the view is REPLACED and the
+      " popover opens on the freshly built anchor
+      counter = counter + 1.
+      view_display( ).
+      popover_display( ).
+    ELSEIF client->check_on_event( `OPEN_ONLY` ).
+      " popover alone - the view stays as it is
+      counter = counter + 1.
+      popover_display( ).
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN `REBUILD_AND_OPEN`.
-        " same pair on an event roundtrip: the view is REPLACED and the
-        " popover opens on the freshly built anchor
-        mv_counter = mv_counter + 1.
-        view_display( ).
-        popover_display( ).
-
-      WHEN `OPEN_ONLY`.
-        " popover alone - the view stays as it is
-        mv_counter = mv_counter + 1.
-        popover_display( ).
-
-    ENDCASE.
 
   ENDMETHOD.
 
@@ -95,7 +88,7 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
         )->vbox( `sapUiSmallMargin`
             )->text( `This popover travelled in the SAME response as the view it is ` &&
                      `anchored to.`
-            )->object_status( text  = |roundtrips so far: { mv_counter }|
+            )->object_status( text  = |roundtrips so far: { counter }|
                               state = `Information` ).
 
     client->popover_display( xml   = popover->stringify( )

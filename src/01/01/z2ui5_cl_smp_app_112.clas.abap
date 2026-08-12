@@ -3,16 +3,16 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
-    DATA mv_class_2 TYPE string.
-    DATA mr_data TYPE REF TO data.
-
     TYPES:
       BEGIN OF ty_s_item,
         product TYPE string,
         info    TYPE string,
       END OF ty_s_item.
-    DATA mt_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
+
+    DATA mo_view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA mv_class_2 TYPE string.
+    DATA mr_data TYPE REF TO data.
+    DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
 
     METHODS on_event.
     METHODS view_display
@@ -32,11 +32,9 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
     " Deliberately styled DIFFERENTLY from sub-app class 1 (a form), so the
     " parent demo 104 shows at a glance WHICH class is embedded right now.
-    IF mt_items IS INITIAL.
-      mt_items = VALUE #( ( product = `Notebook 17"` info = `in stock` )
-                          ( product = `Monitor 27"`  info = `2 weeks` )
-                          ( product = `Dock Pro`     info = `sold out` ) ).
-    ENDIF.
+    t_items = VALUE #( ( product = `Notebook 17"` info = `in stock` )
+                       ( product = `Monitor 27"`  info = `2 weeks` )
+                       ( product = `Dock Pro`     info = `sold out` ) ).
 
     mo_view_parent->message_strip(
         text     = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
@@ -47,7 +45,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     mo_view_parent->list( headertext = `Class 2 - Products`
-                          items      = client->_bind( mt_items )
+                          items      = client->_bind( t_items )
         )->standard_list_item( title = `{PRODUCT}`
                                info  = `{INFO}` ).
 

@@ -34,7 +34,8 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     DATA(form) = mo_view_parent->panel( headertext = `Class 1 - Form`
-        )->simple_form( editable = abap_true )->content( `form` ).
+        )->simple_form( editable = abap_true
+        )->content( `form` ).
 
     form->label( `Embedded class`
         )->object_status( text  = `z2ui5_cl_smp_app_105`
