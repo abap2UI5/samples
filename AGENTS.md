@@ -42,14 +42,13 @@ src/
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
 └── 01/  "basic"     cloud-ready & downportable — survives every build
-    ├── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
-    └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
-        ├── 01/  "controls - sap.m"
-        ├── 02/  "controls - sap.uxap"
-        ├── 05/  "controls - sap.ui.layout"
-        ├── 06/  "controls - sap.tnt"
-        └── 08/  "controls - sap.ui.unified"
+    └── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
 ```
+
+**`src/00/02` is currently empty** — a category with no members, not a dropped
+one. It stays in the tree and in the strip list because it is the designated
+home of the next restricted sample; the check below verifies the package
+exists, not that it holds anything.
 
 There is **no on-premise-only package**: `main` is installed on ABAP Cloud
 systems as it is, so every sample in the repository must be ABAP Cloud ready.
@@ -104,13 +103,11 @@ What stays here is only what cannot live there:
   downported to 702, so the restriction matters here and does not there;
 - a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
-- a **free-style control demo** with no single demo kit original (it carries no
-  `"! Rebuild of the UI5 demo kit sample:` line).
+- a **free-style control demo** with no single demo kit original.
 
-Three library subpackages (`01/03/03` sap.f, `01/03/04` sap.ui.core,
-`01/03/07` sap.ui.codeeditor) ran empty as a result and were deleted. Their
-numbers stay reserved for their libraries: a sample that does belong here brings
-its subpackage back at the same slot, and the tree above with it.
+A sample with a restriction still goes to the matching `src/00` category
+(`src/00/02` release/version, `src/00/97` experimental, `src/00/98` when it is
+a test app, `src/00/99` once it is obsolete) — that model is unchanged.
 
 ---
 
@@ -340,11 +337,10 @@ from the old catalog.
    every tile's `group` to match. A tile's group must equal the CTEXT of the
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
-   (`01/01` → `01/03/01` → `01/03/08`) so the
-   on-screen order mirrors the tree; a nested subpackage forms its own group
-   directly after its parent slot. When inserting a new group, place it at its
-   numeric slot (e.g. a new `01/04` group goes **after**
-   `Control Library` (`01/03`)).
+   so the on-screen order mirrors the tree; a nested subpackage forms its own
+   group directly after its parent slot. `src/01` holds a single subpackage
+   today (`01/01` "Basic"), so there is one slot — when a second one is added,
+   place its group at its numeric position rather than appending it.
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
