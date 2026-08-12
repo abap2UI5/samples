@@ -3,7 +3,7 @@ CLASS z2ui5_cl_smp_app_482 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_title TYPE string VALUE `my title`.
+    DATA title TYPE string VALUE `my title`.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -21,17 +21,22 @@ CLASS z2ui5_cl_smp_app_482 IMPLEMENTATION.
       ENDIF.
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell( )->page(
-          showheader     = abap_false
-          navbuttonpress = client->_event_nav_app_leave( )
-          shownavbutton  = client->check_app_prev_stack( ) ).
+      DATA(page) = view->shell( )->page( showheader = abap_false ).
+
+      page->message_strip(
+          text     = `Sets the launchpad shell title from the backend via follow_up_action( ` &&
+                     `cs_event-set_title_launchpad ) - type a title and press Set Title, the ` &&
+                     `header above changes without a view rebuild. Only works inside a launchpad.`
+          type     = `Information`
+          showicon = abap_true
+          class    = `sapUiSmallMargin` ).
 
       page->simple_form(
-              title    = `Set Launchpad Title Dynamically`
+              title    = `Set Shell Title`
               editable = abap_true
           )->content( `form`
           )->label( ``
-          )->input( client->_bind( mv_title )
+          )->input( client->_bind( title )
           )->label( ``
           )->button(
               text  = `Set Title`
@@ -44,13 +49,13 @@ CLASS z2ui5_cl_smp_app_482 IMPLEMENTATION.
 
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_title_launchpad
-          t_arg = VALUE #( ( mv_title ) ) ).
+          t_arg = VALUE #( ( title ) ) ).
 
     ELSEIF client->check_on_event( `SET_TITLE` ).
 
       client->follow_up_action(
           val   = z2ui5_if_client=>cs_event-set_title_launchpad
-          t_arg = VALUE #( ( mv_title ) ) ).
+          t_arg = VALUE #( ( title ) ) ).
 
     ENDIF.
 

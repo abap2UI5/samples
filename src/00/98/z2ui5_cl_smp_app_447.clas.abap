@@ -8,7 +8,7 @@ CLASS z2ui5_cl_smp_app_447 DEFINITION PUBLIC.
         index TYPE i,
         text  TYPE string,
       END OF ty_s_row.
-    DATA mt_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_rows TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -28,14 +28,16 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DO 30 TIMES.
+      " enough rows that the table really scrolls - with a short list the
+      " scrollToIndex demo has nothing to do
+      DO 200 TIMES.
         INSERT VALUE #( index = sy-index
-                        text  = |Row number { sy-index }| ) INTO TABLE mt_row.
+                        text  = |Row number { sy-index }| ) INTO TABLE t_rows.
       ENDDO.
 
       view_display( ).
 
-    ELSE.
+    ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
 
@@ -57,7 +59,7 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-control_by_id
                                   t_arg = VALUE #( ( `bigTable` )
                                                    ( `scrollToIndex` )
-                                                   ( `25` ) ) ).
+                                                   ( `150` ) ) ).
 
     ENDCASE.
 
@@ -91,13 +93,13 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
                    icon  = `sap-icon://edit`
                    press = client->_event( `FOCUS` )
                    class = `sapUiTinyMarginTop`
-        )->button( text  = `scrollToIndex( 25 ) on the table`
+        )->button( text  = `scrollToIndex( 150 ) on the table`
                    icon  = `sap-icon://down`
                    press = client->_event( `SCROLL` )
                    class = `sapUiTinyMarginTop` ).
 
     DATA(tab) = page->table( id    = `bigTable`
-                             items = client->_bind( mt_row ) ).
+                             items = client->_bind( t_rows ) ).
 
     tab->columns(
         )->column( )->text( `Index` )->get_parent(

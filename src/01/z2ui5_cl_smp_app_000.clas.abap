@@ -381,8 +381,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " In the controls section a block groups all controls that share the same
     " first letter, so a blank line separates letter groups only (Button,
-    " ButtonGroup | Carousel). Elsewhere a block is the header without its
-    " trailing Roman numeral (Binding, Binding II, ...).
+    " ButtonGroup | Carousel). Elsewhere a block is the header without a
+    " trailing Roman numeral, if a header ever carries one - today every
+    " Basic header is its own block.
     IF group CP `controls -*`.
       result = to_upper( substring( val = header
                                     off = 0

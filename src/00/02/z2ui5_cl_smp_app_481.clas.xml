@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_481</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Launchpad - Startup Parameters</DESCRIPT>
+    <DESCRIPT>Launchpad - Read Startup Parameters</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

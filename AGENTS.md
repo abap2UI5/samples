@@ -42,8 +42,7 @@ src/
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
 └── 01/  "basic"     cloud-ready & downportable — survives every build
-    ├── 01/  "Basic I"
-    ├── 02/  "Basic II"                        framework actions, custom controls and use cases
+    ├── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
     └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
         ├── 01/  "controls - sap.m"
         ├── 02/  "controls - sap.uxap"
@@ -85,7 +84,7 @@ truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
 Demos that have no demo kit original do not belong in `01/03` — file them in
-the framework package (`01/02`, actions / custom controls / use cases) or,
+the basic package (`01/01`, actions / custom controls / use cases) or,
 when a restriction applies, in the matching `src/00` category (`src/00/02`
 release/version, `src/00/97` experimental, `src/00/98` when it is a test app,
 `src/00/99` once it is obsolete).
@@ -550,7 +549,7 @@ ELSEIF client->check_on_event( `SAVE` ).
 ENDIF.
 ```
 
-Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. Only as an optional optimization, when the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), a `client->view_model_update( )` is sufficient — never rely on it when a full-screen sub-app can be called.
+Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it (`view_model_update( )` is an obsolete no-op kept for source compatibility) — but never rely on that when a full-screen sub-app can be called.
 
 ### Event checking — inline vs. CASE
 
@@ -572,17 +571,17 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 
 | Category | Methods | Purpose |
 |---|---|---|
-| Views | `view_display`, `view_destroy`, `view_model_update` | Main view lifecycle |
-| Nested views | `nest_view_display/destroy/model_update`, `nest2_view_*` | Embedded sub-views |
-| Popups | `popup_display`, `popup_destroy`, `popup_model_update` | Modal dialogs |
-| Popovers | `popover_display`, `popover_destroy`, `popover_model_update` | Context popovers |
+| Views | `view_display`, `view_destroy` | Main view lifecycle (`view_model_update` is an obsolete no-op — the model is pushed automatically) |
+| Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
+| Popups | `popup_display`, `popup_destroy` | Modal dialogs |
+| Popovers | `popover_display`, `popover_destroy` | Context popovers |
 | Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
 | Session | `set_session_stateful(val)`, `set_app_state_active(val)` | Session management |
-| Browser | `set_push_state(val)`, `set_nav_back(val)`, `follow_up_action(val)` | Browser interaction |
+| Browser | `set_push_state(val)`, `follow_up_action(val)` | Browser interaction (history back rides `follow_up_action( cs_event-history_back )`; routing via `cs_event-set_nav_routing`) |
 | Info | `get()`, `get_event_arg()`, `get_app(id)` | Request/context data |
 | Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
 
@@ -876,8 +875,8 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `01/01` (Basic I) and `01/02` (Basic II) packages —
-follow these so new/edited samples stay consistent:
+Learned while curating the `01/01` (Basic) package — follow these so
+new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
   the page content** (right after the page is created, before the form/table),
@@ -893,7 +892,8 @@ follow these so new/edited samples stay consistent:
   aligned under the first backtick). If the view is one uncaptured fluent chain,
   capture the page first (`DATA(page) = <view>->shell( )->page( ... ).`).
 
-- **`01/02` DESCRIPTs carry a capability marker** appended to the `<DESCRIPT>`
+- **DESCRIPTs of framework-action / custom-control samples carry a
+  capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
