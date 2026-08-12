@@ -2,7 +2,7 @@
 /*
  * Generates the overview app's catalog from the folder tree.
  * (This is the smp_app_000 index page. It has nothing to do with the Fiori
- * Launchpad - those demos live in abap2UI5/samples-ext, src/09.)
+ * Launchpad - those demos live in abap2UI5/samples-stack, src/09.)
  *
  * Note: only src/01 has an overview app. Everything under src/00 - the
  * restricted (src/00/02), experimental (src/00/97), testing (src/00/98) and
