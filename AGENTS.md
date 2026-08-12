@@ -571,7 +571,7 @@ ELSEIF client->check_on_event( `SAVE` ).
 ENDIF.
 ```
 
-Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it (`view_model_update( )` is an obsolete no-op kept for source compatibility) — but never rely on that when a full-screen sub-app can be called.
+Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it — but never rely on that when a full-screen sub-app can be called.
 
 ### Event checking — inline vs. CASE
 
@@ -593,12 +593,12 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 
 | Category | Methods | Purpose |
 |---|---|---|
-| Views | `view_display`, `view_destroy` | Main view lifecycle (`view_model_update` is an obsolete no-op — the model is pushed automatically) |
+| Views | `view_display`, `view_destroy` | Main view lifecycle (the model itself is pushed automatically — there is no model-update call) |
 | Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |
 | Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
-| Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
+| Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
@@ -919,9 +919,9 @@ new/edited samples stay consistent:
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
-  - `(A)` — performs a **frontend action**: `client->_event_client( )`,
-    `client->follow_up_action( )` (including the `cs_event-control_by_id` /
-    `cs_event-control_global` / `cs_event-binding_call` events), or a
+  - `(A)` — performs a **frontend action**: `client->follow_up_action( )`
+    (including the `cs_event-control_by_id` / `cs_event-control_global` /
+    `cs_event-binding_call` events), or a
     client-side interaction like drag-and-drop. The ubiquitous back-button
     `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).

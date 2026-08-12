@@ -103,8 +103,6 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
             t_arg = VALUE #( ( `LOAD` ) ( `0` ) ) ).
       ENDIF.
 
-      client->view_model_update( ).
-
     ENDIF.
 
   ENDMETHOD.

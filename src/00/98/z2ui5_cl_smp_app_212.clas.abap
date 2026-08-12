@@ -3,12 +3,11 @@ CLASS z2ui5_cl_smp_app_212 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_view_display      TYPE abap_bool.
-    DATA mv_view_model_update TYPE abap_bool.
-    DATA mo_parent_view       TYPE REF TO z2ui5_cl_xml_view.
-    DATA mt_table             TYPE REF TO data.
-    DATA mt_table_tmp         TYPE REF TO data.
-    DATA ms_table_row         TYPE REF TO data.
+    DATA mv_view_display TYPE abap_bool.
+    DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    DATA mt_table        TYPE REF TO data.
+    DATA mt_table_tmp    TYPE REF TO data.
+    DATA ms_table_row    TYPE REF TO data.
 
     METHODS set_app_data
       IMPORTING

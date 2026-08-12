@@ -80,8 +80,6 @@ CLASS z2ui5_cl_smp_app_335 IMPLEMENTATION.
       client->message_toast_display( `ERROR - mo_layout_obj->mr_data->id  does not match ms_struc-id!` ).
     ENDIF.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

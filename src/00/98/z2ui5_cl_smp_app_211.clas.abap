@@ -166,14 +166,6 @@ CLASS z2ui5_cl_smp_app_211 IMPLEMENTATION.
       client->view_display( mo_main_page->stringify( ) ).
     ENDIF.
 
-    ASSIGN mo_app->(`MV_VIEW_MODEL_UPDATE`) TO FIELD-SYMBOL(<view_update>).
-
-    IF <view_update> = abap_true.
-
-      <view_update> = abap_false.
-      client->view_model_update( ).
-    ENDIF.
-
     IF mv_selectedkey <> mv_selectedkey_tmp.
 
       client->view_display( mo_main_page->stringify( ) ).

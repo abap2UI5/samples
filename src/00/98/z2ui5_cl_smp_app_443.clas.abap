@@ -49,7 +49,6 @@ CLASS z2ui5_cl_smp_app_443 IMPLEMENTATION.
       " blocks input while processing is running.
       enabled = abap_false.
       info    = `Field is locked - now run step 2.`.
-      client->view_model_update( ).
 
     ELSEIF client->check_on_event( `UNLOCK_AND_SET_CURSOR` ).
       " Exactly the bug scenario: the same response re-enables the field
@@ -60,7 +59,6 @@ CLASS z2ui5_cl_smp_app_443 IMPLEMENTATION.
       " FrontendAction.js the cursor position is therefore lost.
       enabled = abap_true.
       info    = `Field re-enabled - the cursor must now be in the field (characters 0-4 selected).`.
-      client->view_model_update( ).
       client->follow_up_action( val   = client->cs_event-set_focus
                                 t_arg = VALUE #( ( `inpDocNum` ) ( `0` ) ( `4` ) ) ).
 
@@ -68,7 +66,6 @@ CLASS z2ui5_cl_smp_app_443 IMPLEMENTATION.
       " Reference case without an enabled change: here the DOM input is
       " already editable, so SET_FOCUS works even without the fix.
       info = `SET_CURSOR without enabled change - always works.`.
-      client->view_model_update( ).
       client->follow_up_action( val   = client->cs_event-set_focus
                                 t_arg = VALUE #( ( `inpDocNum` ) ( `0` ) ( `4` ) ) ).
     ENDIF.
