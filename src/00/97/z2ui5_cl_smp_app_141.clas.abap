@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
         " 1.21.1 and right-aligns them the same way.
         )->buttons(
             )->button( text  = `Cancel`
-                       press = client->_event_client( client->cs_event-popup_close )
+                       press = client->follow_up_action( client->cs_event-popup_close )
             )->button( text  = `Confirm`
                        type  = `Emphasized`
                        press = client->_event( `POPUP_CONFIRM` ) ).
