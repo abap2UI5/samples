@@ -27,11 +27,12 @@ titles, PR descriptions, and any other text must be written in English.
 ## 1. Repository layout
 
 Everything lives under `src/`, split into two top-level packages
-(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "basic" holds the
-portable samples; `00` is the system package — shared code plus every sample
-that carries a restriction, and the retired ones. There
+(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "Basic" holds the
+portable samples directly; `00` is the system package — shared code plus every
+sample that carries a restriction, and the retired ones. There
 are **no demo apps directly in `src/` root** — every sample sits in a
-categorised subpackage.
+categorised subpackage. The only class in the root package is
+`z2ui5_cl_smp_app_000`, the overview app (§3), which is an index, not a sample.
 
 ```
 src/
@@ -41,9 +42,13 @@ src/
 │   ├── 97/  "experimental"                     work-in-progress / not finished — STRIPPED from the 702 build
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
-└── 01/  "basic"     cloud-ready & downportable — survives every build
-    └── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
+└── 01/  "Basic"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
 ```
+
+The former wrapper level (`01` "basic" holding a single subpackage `01/01`
+"Basic") was flattened on 2026-08-12: the samples now live directly in
+`src/01`, and the overview app moved from `src/01` into the `src/` root
+package.
 
 **`src/00/02` is currently empty** — a category with no members, not a dropped
 one. It stays in the tree and in the strip list because it is the designated
@@ -67,38 +72,25 @@ group name — keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
-Every sample in `01/03` is a faithful rebuild of one specific UI5 demo kit
-sample, filed in the subpackage of the library its entity belongs to
-(`01/03/01` = sap.m, `01/03/02` = sap.uxap, …), and carries the demo kit URL
-as an ABAP Doc line directly above its `CLASS ... DEFINITION`
-(`"! Rebuild of the UI5 demo kit sample: <url>`).
-Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
-(e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
-entity is the control from the demo kit URL and the description comes from
-the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
-truncated to the 60-character DESCRIPT limit). The **full, untruncated**
-description is kept as additional ABAP Doc lines below the URL line; the
-overview generator prefers those lines as the tile `sub` (§4).
-Demos that have no demo kit original do not belong in `01/03` — file them in
-the basic package (`01/01`, actions / custom controls / use cases) or,
-when a restriction applies, in the matching `src/00` category (`src/00/02`
-release/version, `src/00/97` experimental, `src/00/98` when it is a test app,
-`src/00/99` once it is obsolete).
+### There is no Control Library package any more
 
-Machine-generated demo kit ports that have not been manually reviewed do not
-live in this repository — they are collected in the separate api repository
-of the abap2UI5 organization. Everything under `01/03` here is manually
-reviewed.
+**`01/03` "Control Library" is gone (2026-08-12), with all 32 of its samples.**
+1:1 rebuilds of UI5 demo kit samples are collected in
+[abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit) — which rebuilds
+every official sample against its original view and gates each port on that
+comparison — and keeping the same original rebuilt in both repositories was
+pure redundancy: 14 of the 32 were already ported there under the same demo kit
+sample id, and 12 of the rest carried no sample id at all, only an entity URL,
+so there was no original to be faithful to. The whole set was imported into
+ai-demokit's `todo/` for triage before the packages were removed here, so
+nothing is lost — see `todo/README.md` there for the per-sample verdict.
 
-**`01/03` is no longer the home of the pure control samples.** Those are
-collected in [abap2UI5/samples-controls](https://github.com/abap2UI5/samples-controls),
-which rebuilds every official demo kit sample 1:1 and gates each port against
-its original view. Keeping the same original rebuilt in both repositories is
-the redundancy that clean-up removed (2026-08-12), so **do not add a new
-`01/03` sample for an original samples-controls already covers** — port it there.
-What stays here is only what cannot live there:
+**Do not re-create a Control Library package, and do not add a demo kit rebuild
+to `src/01`.** A sample that rebuilds one specific demo kit original belongs in
+ai-demokit, full stop. What legitimately stays here is what cannot live there,
+and it goes into the basic package (`src/01`) as an ordinary sample:
 
-- a **1.71-safe** variant of a sample whose samples-controls port keeps post-1.71
+- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
   members for 1:1 fidelity (declared `POST_171` there) — this repository is
   downported to 702, so the restriction matters here and does not there;
 - a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
@@ -164,7 +156,7 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
 **Consequence of the rule:**
 
-- **`src/01` ("basic")** — a sample may only live here if it is **ABAP Cloud
+- **`src/01` ("Basic")** — a sample may only live here if it is **ABAP Cloud
   ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
   restriction. These survive all three builds.
 - **`src/00/02` ("restricted - release/version")**, **`src/00/97`
@@ -212,9 +204,9 @@ that run inside a real Fiori Launchpad are not in this repository at all — the
 live in [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) under
 `src/09` (§2).
 
-| App class              | Lives in | Title                | Mirrors     |
-|------------------------|----------|----------------------|-------------|
-| `z2ui5_cl_smp_app_000` | `src/01` | `abap2UI5 - Samples` | `src/01/**` |
+| App class              | Lives in     | Title                | Mirrors     |
+|------------------------|--------------|----------------------|-------------|
+| `z2ui5_cl_smp_app_000` | `src/` root  | `abap2UI5 - Samples` | `src/01/**` |
 
 **It is the only one.** `src/00` (the system package, restricted samples
 included) has no overview app: their samples are reachable by class name only,
@@ -338,9 +330,9 @@ from the old catalog.
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
    so the on-screen order mirrors the tree; a nested subpackage forms its own
-   group directly after its parent slot. `src/01` holds a single subpackage
-   today (`01/01` "Basic"), so there is one slot — when a second one is added,
-   place its group at its numeric position rather than appending it.
+   group directly after its parent slot. The samples live directly in `src/01`
+   today, so there is a single group ("Basic") — when a nested subpackage is
+   added, place its group at its numeric position rather than appending it.
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
@@ -880,7 +872,7 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `01/01` (Basic) package — follow these so
+Learned while curating the `src/01` (Basic) package — follow these so
 new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
