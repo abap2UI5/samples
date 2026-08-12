@@ -37,7 +37,7 @@ categorised subpackage.
 src/
 ├── 00/  "system"     not a sample category — shared code and everything with a restriction
 │   ├── 01/  "context"                          helper classes the samples share (no demo apps) — survives every build
-│   ├── 02/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (Launchpad, an OData service, native JS/CSS) — STRIPPED from the 702 build
+│   ├── 02/  "restricted - release/version"     needs a UI5 release newer than 1.71, or a control outside OpenUI5 (sap.suite.*, sap.ui.comp.*, sap.viz.*, …), or a runtime the sample cannot ship (native JS/CSS) — STRIPPED from the 702 build
 │   ├── 97/  "experimental"                     work-in-progress / not finished — STRIPPED from the 702 build
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
@@ -46,11 +46,8 @@ src/
     └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
         ├── 01/  "controls - sap.m"
         ├── 02/  "controls - sap.uxap"
-        ├── 03/  "controls - sap.f"
-        ├── 04/  "controls - sap.ui.core"
         ├── 05/  "controls - sap.ui.layout"
         ├── 06/  "controls - sap.tnt"
-        ├── 07/  "controls - sap.ui.codeeditor"
         └── 08/  "controls - sap.ui.unified"
 ```
 
@@ -111,8 +108,9 @@ What stays here is only what cannot live there:
   `"! Rebuild of the UI5 demo kit sample:` line).
 
 Three library subpackages (`01/03/03` sap.f, `01/03/04` sap.ui.core,
-`01/03/07` sap.ui.codeeditor) are empty as a result. They are kept as slots;
-removing them is a structural change and belongs in its own pull request (§1).
+`01/03/07` sap.ui.codeeditor) ran empty as a result and were deleted. Their
+numbers stay reserved for their libraries: a sample that does belong here brings
+its subpackage back at the same slot, and the tree above with it.
 
 ---
 
@@ -186,8 +184,17 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
      OpenUI5 1.71 on a standalone stack cannot run: a **SAPUI5-only control**
      (`sap.suite.*`, `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
      `sap.ui.richtexteditor`, …), a control/property **introduced after UI5
-     1.71**, or a **runtime the sample cannot ship** — the Fiori Launchpad, an
-     OData service, native JavaScript / CSS / HTML.
+     1.71**, or a **runtime the sample cannot ship** — native JavaScript /
+     CSS / HTML.
+
+**A sample that needs something the system provides does not belong here at
+all** — not in `src/00/02` either. Those live in
+[abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext), one package per
+technology: an OData service, smart controls, a RAP business object, a stateful
+session, an APC channel, the MIME repository, and the **Fiori Launchpad**
+(`src/09` there — the demos that read startup parameters, set the shell title and
+navigate cross-app, moved out of `src/00/02` on 2026-08-12). What `src/00/02`
+keeps is restricted by UI5 alone.
 
 A sample qualifies for `src/01` **only if none** of the above restrictions
 apply: OpenUI5-compatible, ABAP-Cloud-ready, standalone, every control **and**
@@ -202,9 +209,11 @@ repository (§1).
 ## 3. The overview app
 
 `z2ui5_cl_smp_app_000` is the **overview app** — a generated index page that
-lists every sample of the basic area. It is *not* a Fiori Launchpad app; do not
-confuse it with the launchpad samples in `src/00/02`, which are the demos that
-run inside a real Fiori Launchpad.
+lists every sample of the basic area. It is *not* a Fiori Launchpad app, despite
+the name of the generator that writes it (`npm run launchpad`, §4). The demos
+that run inside a real Fiori Launchpad are not in this repository at all — they
+live in [abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext) under
+`src/09` (§2).
 
 | App class              | Lives in | Title                | Mirrors     |
 |------------------------|----------|----------------------|-------------|
