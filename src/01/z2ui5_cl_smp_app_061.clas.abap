@@ -15,7 +15,7 @@ ENDCLASS.
 
 
 
-CLASS Z2UI5_CL_SMP_APP_061 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
 
   METHOD set_view.
@@ -81,14 +81,16 @@ CLASS Z2UI5_CL_SMP_APP_061 IMPLEMENTATION.
 
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
         INTO TABLE <tab>.
-
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-          INTO TABLE <tab>.
+        INTO TABLE <tab>.
       INSERT VALUE z2ui5_t_01( id = `this is an uuid`  timestampl = `2023234243`  id_prev = `previous` )
-          INTO TABLE <tab>.
+        INTO TABLE <tab>.
 
+      set_view( ).
+
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 ENDCLASS.
