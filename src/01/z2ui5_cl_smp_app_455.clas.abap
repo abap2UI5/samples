@@ -52,7 +52,7 @@ CLASS Z2UI5_CL_SMP_APP_455 IMPLEMENTATION.
 
     page->message_strip(
         text     = `Every keystroke filters the list's items binding purely client-side ` &&
-                   `(cs_event-binding_call via _event_client) - no backend roundtrip, exactly like ` &&
+                   `(cs_event-binding_call via follow_up_action) - no backend roundtrip, exactly like ` &&
                    `the original UI5 controller's oBinding.filter(...). Clearing the field clears the filter.`
         type     = `Information`
         showicon = abap_true
@@ -64,7 +64,7 @@ CLASS Z2UI5_CL_SMP_APP_455 IMPLEMENTATION.
     " without any server contact.
     page->vbox( `sapUiSmallMargin`
         )->search_field( width      = `30%`
-                         livechange = client->_event_client(
+                         livechange = client->follow_up_action(
                              val   = z2ui5_if_client=>cs_event-binding_call
                              t_arg = VALUE #( ( `productList` )
                                               ( `items` )

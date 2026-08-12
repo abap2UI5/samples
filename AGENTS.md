@@ -573,7 +573,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |
 | Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
-| Events | `_event(val)`, `_event_client(val)`, `check_on_event(val)` | Event registration and checking |
+| Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
@@ -894,9 +894,9 @@ new/edited samples stay consistent:
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
-  - `(A)` — performs a **frontend action**: `client->_event_client( )`,
-    `client->follow_up_action( )` (including the `cs_event-control_by_id` /
-    `cs_event-control_global` / `cs_event-binding_call` events), or a
+  - `(A)` — performs a **frontend action**: `client->follow_up_action( )`
+    (including the `cs_event-control_by_id` / `cs_event-control_global` /
+    `cs_event-binding_call` events), or a
     client-side interaction like drag-and-drop. The ubiquitous back-button
     `client->_event_nav_app_leave( )` does **not** count.
   - `(A,C)` — both. Regenerate the overviews after changing any DESCRIPT (§4).

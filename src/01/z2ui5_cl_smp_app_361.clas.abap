@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
           icon  = `sap-icon://log`
           type  = `Reject`
           class = `sapUiSmallMargin`
-          press = client->_event_client( client->cs_event-system_logout ) ).
+          press = client->follow_up_action( client->cs_event-system_logout ) ).
 
       page->message_strip(
           text     = `Trigger SYSTEM_LOGOUT on the client and a redirect to google.com`
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
           icon  = `sap-icon://log`
           type  = `Reject`
           class = `sapUiSmallMargin`
-          press = client->_event_client(
+          press = client->follow_up_action(
                       val   = client->cs_event-system_logout
                       t_arg = VALUE #( ( `/sap/public/bc/icf/logoff?redirecturl=www.google.com` ) ) ) ).
 
