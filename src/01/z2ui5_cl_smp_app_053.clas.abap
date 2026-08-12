@@ -47,7 +47,7 @@ CLASS z2ui5_cl_smp_app_053 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         set_data( ).

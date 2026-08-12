@@ -34,7 +34,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_MESSAGE_BOX_SY`.
         DATA(ls_msg_sy) = z2ui5_cl_smp_context=>msg_get_by_msg(
             id = `NET`

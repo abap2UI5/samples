@@ -83,11 +83,11 @@ CLASS Z2UI5_CL_SMP_APP_133 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON01` OR `BUTTON02`.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( client->get( )-event ) ( selstart ) ( selend ) ) ).
+            t_arg = VALUE #( ( client->get_event( ) ) ( selstart ) ( selend ) ) ).
         client->message_toast_display( |focus changed| ).
     ENDCASE.
 

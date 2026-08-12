@@ -25,7 +25,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
     IF check_popup = abap_true.
 
       check_popup = abap_false.
-      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+      DATA(app) = CAST z2ui5_cl_smp_app_020( client->get_app_prev( ) ).
       client->message_toast_display( |{ app->event } pressed| ).
     ENDIF.
 
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_POPUP_01`.
         popup_decide( ).
         client->view_destroy( ).

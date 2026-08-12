@@ -81,7 +81,7 @@ CLASS z2ui5_cl_smp_app_342 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `SELECTION_CHANGE`.
 

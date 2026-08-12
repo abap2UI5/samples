@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_SMP_APP_325 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `COPY_INPUT`.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-clipboard_copy

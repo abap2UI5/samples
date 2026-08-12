@@ -35,7 +35,7 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `LINK_PRESS`.
 

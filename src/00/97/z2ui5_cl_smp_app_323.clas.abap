@@ -32,7 +32,7 @@ CLASS z2ui5_cl_smp_app_323 IMPLEMENTATION.
               )->stringify( ) ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_POST`.
         client->follow_up_action( z2ui5_if_client=>cs_event-clipboard_app_state ).

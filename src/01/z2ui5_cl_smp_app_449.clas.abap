@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `OPEN`.
         " open the popup-mode PDFViewer via the whitelisted open method -

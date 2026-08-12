@@ -604,7 +604,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Messages | `message_box_display(text)`, `message_toast_display(text)` | User notifications |
 | Session | `set_session_stateful(val)`, `set_app_state_active(val)` | Session management |
 | Browser | `set_push_state(val)`, `follow_up_action(val)` | Browser interaction (history back rides `follow_up_action( cs_event-history_back )`; routing via `cs_event-set_nav_routing`) |
-| Info | `get()`, `get_event_arg()`, `get_app(id)` | Request/context data |
+| Info | `get()`, `get_event()`, `get_event_arg()`, `get_app(id)` | Request/context data |
 | Constants | `cs_event`, `cs_view` | Predefined event IDs and view names |
 
 ### Navigation
@@ -631,7 +631,7 @@ Only use the manual pattern (handling `BACK` in `on_event`) when you need to do 
 ```abap
 METHOD on_event.
 
-  CASE client->get( )-event.
+  CASE client->get_event( ).
     WHEN `BACK`.
       " interact with previous app instance first
       CAST z2ui5_cl_app_parent( client->get_app_prev( ) )->set_result( s_result ).
@@ -851,7 +851,7 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `SAVE`.
         on_event_save( ).
       WHEN `BACK`.

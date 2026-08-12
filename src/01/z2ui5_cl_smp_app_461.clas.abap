@@ -49,7 +49,7 @@ CLASS Z2UI5_CL_SMP_APP_461 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `MOVE_NODE`.
         " both event args arrive resolved client-side: the binding context

@@ -117,7 +117,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_DETAILS`.
         client->popover_destroy( ).

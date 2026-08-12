@@ -73,7 +73,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `LOCAL_STORAGE_LOADED`.
         " The z2ui5:Storage control read a value out of the browser storage

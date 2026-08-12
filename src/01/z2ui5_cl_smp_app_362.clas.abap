@@ -60,7 +60,7 @@ CLASS Z2UI5_CL_SMP_APP_362 IMPLEMENTATION.
     " The SCROLL_TO client event sets scrollTop / scrollLeft by pixel.
     " args: ( control-id, scrollTop, scrollLeft, behavior )
     " behavior is one of: "auto" (default, instant), "smooth", "instant".
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `SCROLL_TOP`.
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-scroll_to

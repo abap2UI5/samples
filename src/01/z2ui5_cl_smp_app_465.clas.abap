@@ -29,7 +29,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `TOGGLE`.
         " toggle the popover open/closed, anchored to the pressed button's DOM

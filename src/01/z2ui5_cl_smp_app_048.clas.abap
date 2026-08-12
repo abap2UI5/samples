@@ -39,7 +39,7 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
 
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `EDIT`.
         DATA(lv_row_title) = client->get_event_arg( ).
         client->message_box_display( |EDIT - { lv_row_title }| ).

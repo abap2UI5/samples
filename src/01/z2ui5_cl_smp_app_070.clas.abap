@@ -79,7 +79,7 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_SEARCH` OR `BUTTON_START`.
         client->message_toast_display( `Search Entries` ).
         set_data( ).

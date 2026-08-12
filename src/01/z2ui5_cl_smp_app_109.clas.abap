@@ -131,7 +131,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `CLOSE_POPOVER`.
         client->popover_destroy( ).
       WHEN `POPOVER`.

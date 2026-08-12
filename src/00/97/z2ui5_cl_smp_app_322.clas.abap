@@ -40,7 +40,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_POST`.
         client->set_push_state( `/head/pos/` && client->get( )-s_draft-id ).
     ENDCASE.

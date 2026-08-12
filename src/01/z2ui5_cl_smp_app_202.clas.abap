@@ -80,7 +80,7 @@ CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `STEP22` OR `STEP23`.
         " the original wizard flow (discardProgress + setNextStep) as two
         " generic whitelisted control calls - t_arg is positional:
@@ -91,7 +91,7 @@ CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
             t_arg = VALUE #( ( `wiz` ) ( `discardProgress` ) ( `STEP2` ) ) ).
         client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-control_by_id
-            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get( )-event ) ) ).
+            t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get_event( ) ) ) ).
 
     ENDCASE.
 

@@ -43,7 +43,7 @@ CLASS Z2UI5_CL_SMP_APP_047 IMPLEMENTATION.
       client->_bind( mt_tab ).
     ENDIF.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
       WHEN `BUTTON_INT`.
         int_sum = int1 + int2.
       WHEN `BUTTON_DEC`.

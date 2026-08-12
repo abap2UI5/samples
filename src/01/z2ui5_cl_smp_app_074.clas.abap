@@ -37,7 +37,7 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
     TRY.
 
-        CASE client->get( )-event.
+        CASE client->get_event( ).
 
           WHEN `START` OR `CHANGE`.
             view_display( ).

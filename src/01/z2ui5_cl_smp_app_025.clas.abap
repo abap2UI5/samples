@@ -42,7 +42,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
 
   METHOD on_event.
 
-    CASE client->get( )-event.
+    CASE client->get_event( ).
 
       WHEN `BUTTON_ROUNDTRIP`.
         client->message_box_display( `server-client roundtrip, method on_event of the abap controller was called` ).
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_smp_app_025 IMPLEMENTATION.
         client->nav_app_call( NEW z2ui5_cl_smp_app_025( ) ).
 
       WHEN `BUTTON_READ_PREVIOUS`.
-        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app( client->get( )-s_draft-id_prev_app ) ).
+        DATA(app_024) = CAST z2ui5_cl_smp_app_024( client->get_app_prev( ) ).
         input_previous = app_024->input2.
         client->message_toast_display( `data of previous app read` ).
 

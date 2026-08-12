@@ -33,7 +33,7 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
 
   METHOD on_event.
 
-    DATA(target) = client->get( )-event.
+    DATA(target) = client->get_event( ).
     DATA(behavior) = `smooth`.
     DATA(block) = `start`.
 
