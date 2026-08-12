@@ -1,6 +1,6 @@
 "! Hash-based app routing (UI5 Router style), mode KEEP:
-"! client->set_nav_routing( client->cs_nav_mode-keep ) makes the URL carry the
-"! app-state draft as well ('#/app/[CLASS]/[DRAFT]'), so browser Back/Forward
+"! follow_up_action( cs_event-set_nav_routing ) with mode KEEP makes the URL
+"! carry the app-state draft as well ('#/app/[CLASS]/[DRAFT]'), so Back/Forward
 "! restore the EXACT state: the input and the counter come back unchanged.
 "!
 "! Put in some state (type / raise the counter), open the detail page
@@ -63,9 +63,13 @@ CLASS z2ui5_cl_smp_app_480 IMPLEMENTATION.
 
   METHOD view_display.
 
-    " assert the routing mode on every render, so THIS page's history entry - the
-    " one the browser Back button returns to - is written under it
-    client->set_nav_routing( client->cs_nav_mode-keep ).
+    " configure the routing mode once - the framework remembers it on the app
+    " and re-sends it whenever the frontend may not hold it (page load,
+    " Back/Forward restore, navigation hops)
+    IF client->check_on_init( ).
+      client->follow_up_action( val   = client->cs_event-set_nav_routing
+                                t_arg = VALUE #( ( client->cs_nav_mode-keep ) ) ).
+    ENDIF.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(

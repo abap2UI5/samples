@@ -1,6 +1,6 @@
 "! Hash-based app routing (UI5 Router style), mode FRESH:
-"! client->set_nav_routing( client->cs_nav_mode-fresh ) makes the URL mirror the
-"! running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a
+"! follow_up_action( cs_event-set_nav_routing ) with mode FRESH makes the URL
+"! mirror the running app by CLASS only ('#/app/[CLASS]'). Browser Back/Forward - and a
 "! reload or a bookmark - therefore start the app FRESH: the input and the
 "! counter are gone.
 "!
@@ -64,9 +64,13 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
 
   METHOD view_display.
 
-    " assert the routing mode on every render, so THIS page's history entry - the
-    " one the browser Back button returns to - is written under it
-    client->set_nav_routing( client->cs_nav_mode-fresh ).
+    " configure the routing mode once - the framework remembers it on the app
+    " and re-sends it whenever the frontend may not hold it (page load,
+    " Back/Forward restore, navigation hops)
+    IF client->check_on_init( ).
+      client->follow_up_action( val   = client->cs_event-set_nav_routing
+                                t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
+    ENDIF.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
