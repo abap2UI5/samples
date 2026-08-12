@@ -40,11 +40,11 @@ const SRC = path.join(__dirname, '..', 'src');
 // counted but listed nowhere. Add an entry back here the day an extended
 // overview returns.
 const TARGETS = {
-  '01': path.join(SRC, '01', 'z2ui5_cl_smp_app_000.clas.abap'),
+  '01': path.join(SRC, 'z2ui5_cl_smp_app_000.clas.abap'),
 };
 
-// The overview app lives under src/ too and shares the sample-app class-name
-// prefix. Skip it so an overview never lists itself as a tile.
+// The overview app lives in the src/ root package and shares the sample-app
+// class-name prefix. Skip it so an overview never lists itself as a tile.
 const OVERVIEW_APPS = new Set([
   'z2ui5_cl_smp_app_000',
 ]);
@@ -121,7 +121,7 @@ for (const abap of walk(SRC)) {
   if (!cls.startsWith('z2ui5_cl_smp_app')) continue;
 
   const rel = path.relative(SRC, abap).split(path.sep); // [ area, ...subfolders, file ]
-  if (rel.length < 3) continue;
+  if (rel.length < 2) continue; // a class directly in src/ root is never a tile
   const area = rel[0];
   // full subfolder path ("03" or nested "03/01") so nested subpackages form
   // their own group directly after their parent slot

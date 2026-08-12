@@ -27,11 +27,12 @@ titles, PR descriptions, and any other text must be written in English.
 ## 1. Repository layout
 
 Everything lives under `src/`, split into two top-level packages
-(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "basic" holds the
-portable samples; `00` is the system package — shared code plus every sample
-that carries a restriction, and the retired ones. There
+(abapGit `FOLDER_LOGIC=PREFIX`, `STARTING_FOLDER=/src/`). `01` "Basic" holds the
+portable samples directly; `00` is the system package — shared code plus every
+sample that carries a restriction, and the retired ones. There
 are **no demo apps directly in `src/` root** — every sample sits in a
-categorised subpackage.
+categorised subpackage. The only class in the root package is
+`z2ui5_cl_smp_app_000`, the overview app (§3), which is an index, not a sample.
 
 ```
 src/
@@ -41,9 +42,13 @@ src/
 │   ├── 97/  "experimental"                     work-in-progress / not finished — STRIPPED from the 702 build
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
-└── 01/  "basic"     cloud-ready & downportable — survives every build
-    └── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
+└── 01/  "Basic"     cloud-ready & downportable — the sample catalog: bindings, events, popups, framework actions, custom controls and use cases — survives every build
 ```
+
+The former wrapper level (`01` "basic" holding a single subpackage `01/01`
+"Basic") was flattened on 2026-08-12: the samples now live directly in
+`src/01`, and the overview app moved from `src/01` into the `src/` root
+package.
 
 **`src/00/02` is currently empty** — a category with no members, not a dropped
 one. It stays in the tree and in the strip list because it is the designated
@@ -80,10 +85,10 @@ so there was no original to be faithful to. The whole set was imported into
 ai-demokit's `todo/` for triage before the packages were removed here, so
 nothing is lost — see `todo/README.md` there for the per-sample verdict.
 
-**Do not re-create `01/03`, and do not add a demo kit rebuild to `01/01`.**
-A sample that rebuilds one specific demo kit original belongs in ai-demokit,
-full stop. What legitimately stays here is what cannot live there, and it goes
-into the basic package (`01/01`) as an ordinary sample:
+**Do not re-create a Control Library package, and do not add a demo kit rebuild
+to `src/01`.** A sample that rebuilds one specific demo kit original belongs in
+ai-demokit, full stop. What legitimately stays here is what cannot live there,
+and it goes into the basic package (`src/01`) as an ordinary sample:
 
 - a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
   members for 1:1 fidelity (declared `POST_171` there) — this repository is
@@ -151,7 +156,7 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
 **Consequence of the rule:**
 
-- **`src/01` ("basic")** — a sample may only live here if it is **ABAP Cloud
+- **`src/01` ("Basic")** — a sample may only live here if it is **ABAP Cloud
   ready AND downportable to 7.02** and runs on plain OpenUI5 1.71 without any
   restriction. These survive all three builds.
 - **`src/00/02` ("restricted - release/version")**, **`src/00/97`
@@ -199,9 +204,9 @@ that run inside a real Fiori Launchpad are not in this repository at all — the
 live in [abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext) under
 `src/09` (§2).
 
-| App class              | Lives in | Title                | Mirrors     |
-|------------------------|----------|----------------------|-------------|
-| `z2ui5_cl_smp_app_000` | `src/01` | `abap2UI5 - Samples` | `src/01/**` |
+| App class              | Lives in     | Title                | Mirrors     |
+|------------------------|--------------|----------------------|-------------|
+| `z2ui5_cl_smp_app_000` | `src/` root  | `abap2UI5 - Samples` | `src/01/**` |
 
 **It is the only one.** `src/00` (the system package, restricted samples
 included) has no overview app: their samples are reachable by class name only,
@@ -325,9 +330,9 @@ from the old catalog.
    folder the class physically lives in — never a neighbouring category.
 4. **Group blocks follow folder order.** Emit groups in ascending folder number
    so the on-screen order mirrors the tree; a nested subpackage forms its own
-   group directly after its parent slot. `src/01` holds a single subpackage
-   today (`01/01` "Basic"), so there is one slot — when a second one is added,
-   place its group at its numeric position rather than appending it.
+   group directly after its parent slot. The samples live directly in `src/01`
+   today, so there is a single group ("Basic") — when a nested subpackage is
+   added, place its group at its numeric position rather than appending it.
 5. **Within a group, sort tiles alphabetically (case-insensitive) by `header`,
    then by `sub`.** Sorting by `header` first keeps numbered series together and
    in order (`Binding I`, `Binding II`, `Binding III`, … underneath each other;
@@ -867,7 +872,7 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `01/01` (Basic) package — follow these so
+Learned while curating the `src/01` (Basic) package — follow these so
 new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
