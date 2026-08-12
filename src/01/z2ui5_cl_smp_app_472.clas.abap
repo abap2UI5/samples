@@ -44,7 +44,6 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
         ELSE.
           last_press = `Link pressed - the href was followed by the browser as usual.`.
         ENDIF.
-        client->view_model_update( ).
 
       WHEN `TOGGLE`.
         " the flag is part of the event registration, so the view has to be

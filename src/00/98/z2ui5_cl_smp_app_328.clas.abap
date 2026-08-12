@@ -32,10 +32,6 @@ CLASS z2ui5_cl_smp_app_328 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN `SELECTION_CHANGE`.
-
-        client->view_model_update( ).
-
       WHEN `GO`.
 
         ASSIGN mt_table->* TO <tab>.

@@ -115,8 +115,6 @@ CLASS Z2UI5_CL_SMP_APP_279 IMPLEMENTATION.
     on_event( ).
     IF client->check_on_init( ).
       view_display( ).
-    ELSE.
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.

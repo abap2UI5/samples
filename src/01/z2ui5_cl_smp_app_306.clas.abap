@@ -145,7 +145,6 @@ CLASS Z2UI5_CL_SMP_APP_306 IMPLEMENTATION.
                         time             = sy-uzeit ) INTO TABLE mt_picture.
                         mv_picture_base  = VALUE #( ).
                         mv_picture_thumb = VALUE #( ).
-        client->view_model_update( ).
 
       WHEN `DISPLAY`.
 

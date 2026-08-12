@@ -84,7 +84,6 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
         client->message_toast_display( `Search Entries` ).
         set_data( ).
         set_search( ).
-        client->view_model_update( ).
       WHEN `SORT`.
         DATA(lt_arg) = client->get( )-t_event_arg.
         client->message_toast_display( `Event SORT` ).
@@ -94,7 +93,6 @@ CLASS Z2UI5_CL_SMP_APP_070 IMPLEMENTATION.
       WHEN `SELKZ`.
         client->message_toast_display( |'Event SELKZ' { lv_selkz } | ).
         set_selkz( lv_selkz ).
-        client->view_model_update( ).
       WHEN `CUSTOMFILTER`.
         lt_arg = client->get( )-t_event_arg.
         client->message_toast_display( `Event CUSTOMFILTER` ).

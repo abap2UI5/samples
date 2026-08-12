@@ -58,12 +58,10 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
       WHEN `SAVE`.
         INSERT VALUE #( entry = `Ctrl+S - save triggered` ) INTO TABLE t_log.
         client->message_toast_display( `Ctrl+S: save triggered` ).
-        client->view_model_update( ).
 
       WHEN `DELETE`.
         INSERT VALUE #( entry = `Ctrl+D - delete triggered` ) INTO TABLE t_log.
         client->message_toast_display( `Ctrl+D: delete triggered` ).
-        client->view_model_update( ).
 
       WHEN `TOGGLE_REGISTRATION`.
         registered = xsdbool( registered = abap_false ).
@@ -80,7 +78,6 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
       WHEN `CLEAR`.
         t_log = VALUE #( ).
-        client->view_model_update( ).
 
     ENDCASE.
 

@@ -50,7 +50,7 @@ CLASS Z2UI5_CL_SMP_APP_454 IMPLEMENTATION.
       WHEN `SEARCH`.
         " apply a declarative filter to the list's items binding -
         " client-side after the response renders. The model data stays
-        " untouched (no table copy, no view_model_update); an empty query
+        " untouched (no table copy, no model change); an empty query
         " clears the filter again.
         " t_arg is positional: id, aggregation, method, params
         client->follow_up_action( val   = z2ui5_if_client=>cs_event-binding_call

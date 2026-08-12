@@ -73,8 +73,6 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
       client->message_toast_display( `timer deactivated` ).
     ENDIF.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 
