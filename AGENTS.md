@@ -42,8 +42,7 @@ src/
 │   ├── 98/  "testing"                          test / scaffolding apps, not demos — STRIPPED from the 702 build
 │   └── 99/  "obsolet"                          superseded, or built on a deprecated UI5 control — STRIPPED from the 702 build
 └── 01/  "basic"     cloud-ready & downportable — survives every build
-    ├── 01/  "Basic I"
-    ├── 02/  "Basic II"                        framework actions, custom controls and use cases
+    ├── 01/  "Basic"                           the sample catalog: bindings, events, popups, framework actions, custom controls and use cases
     └── 03/  "Control Library"                 1:1 rebuilds of UI5 demo kit samples, split by library
         ├── 01/  "controls - sap.m"
         ├── 02/  "controls - sap.uxap"
@@ -85,7 +84,7 @@ truncated to the 60-character DESCRIPT limit). The **full, untruncated**
 description is kept as additional ABAP Doc lines below the URL line; the
 overview generator prefers those lines as the tile `sub` (§4).
 Demos that have no demo kit original do not belong in `01/03` — file them in
-the framework package (`01/02`, actions / custom controls / use cases) or,
+the basic package (`01/01`, actions / custom controls / use cases) or,
 when a restriction applies, in the matching `src/00` category (`src/00/02`
 release/version, `src/00/97` experimental, `src/00/98` when it is a test app,
 `src/00/99` once it is obsolete).
@@ -94,6 +93,26 @@ Machine-generated demo kit ports that have not been manually reviewed do not
 live in this repository — they are collected in the separate api repository
 of the abap2UI5 organization. Everything under `01/03` here is manually
 reviewed.
+
+**`01/03` is no longer the home of the pure control samples.** Those are
+collected in [abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit),
+which rebuilds every official demo kit sample 1:1 and gates each port against
+its original view. Keeping the same original rebuilt in both repositories is
+the redundancy that clean-up removed (2026-08-12), so **do not add a new
+`01/03` sample for an original ai-demokit already covers** — port it there.
+What stays here is only what cannot live there:
+
+- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
+  members for 1:1 fidelity (declared `POST_171` there) — this repository is
+  downported to 702, so the restriction matters here and does not there;
+- a sample in ai-demokit's **hold-out set** (`ui5/holdout.json`), which is
+  deliberately never ported there because it measures its generator;
+- a **free-style control demo** with no single demo kit original (it carries no
+  `"! Rebuild of the UI5 demo kit sample:` line).
+
+Three library subpackages (`01/03/03` sap.f, `01/03/04` sap.ui.core,
+`01/03/07` sap.ui.codeeditor) are empty as a result. They are kept as slots;
+removing them is a structural change and belongs in its own pull request (§1).
 
 ---
 
@@ -856,8 +875,8 @@ ENDCLASS.
 
 ## 12. Sample content conventions
 
-Learned while curating the `01/01` (Basic I) and `01/02` (Basic II) packages —
-follow these so new/edited samples stay consistent:
+Learned while curating the `01/01` (Basic) package — follow these so
+new/edited samples stay consistent:
 
 - **Every sample opens with an intro `MessageStrip`.** As the **first control in
   the page content** (right after the page is created, before the form/table),
@@ -873,7 +892,8 @@ follow these so new/edited samples stay consistent:
   aligned under the first backtick). If the view is one uncaptured fluent chain,
   capture the page first (`DATA(page) = <view>->shell( )->page( ... ).`).
 
-- **`01/02` DESCRIPTs carry a capability marker** appended to the `<DESCRIPT>`
+- **DESCRIPTs of framework-action / custom-control samples carry a
+  capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
   - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
     `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).

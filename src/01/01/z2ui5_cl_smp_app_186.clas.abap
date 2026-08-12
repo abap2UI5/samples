@@ -52,13 +52,11 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA lv_script TYPE string.
-
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell(
          )->page(
-            title          = `abap2UI5 - Download Base64 File`
+            title          = `abap2UI5 - More - File Download to the Frontend`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
