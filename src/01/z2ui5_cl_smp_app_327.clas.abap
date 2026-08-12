@@ -89,11 +89,9 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
           CATCH z2ui5_cx_ajson_error INTO DATA(lx_load).
             client->message_box_display( lx_load->get_text( ) ).
         ENDTRY.
-        client->view_model_update( ).
 
       WHEN `GET_STORED_VALUE`.
         s_storage-value = s_stored_value.
-        client->view_model_update( ).
 
     ENDCASE.
 

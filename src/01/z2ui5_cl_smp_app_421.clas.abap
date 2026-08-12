@@ -90,8 +90,6 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
         focus( ).
     ENDCASE.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

@@ -34,8 +34,6 @@ CLASS Z2UI5_CL_SMP_APP_189 IMPLEMENTATION.
             t_arg = VALUE #( ( `IdThree` ) ) ).
     ENDCASE.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

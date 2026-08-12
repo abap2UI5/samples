@@ -89,10 +89,10 @@ CLASS Z2UI5_CL_SMP_APP_461 IMPLEMENTATION.
         ENDIF.
         DELETE <from>-nodes INDEX lv_from_child.
         APPEND ls_child TO <to>-nodes.
-        " full view rebuild instead of view_model_update: the z2ui5.cc.Tree
-        " companion re-applies the expand state (snapshotted before this
-        " roundtrip) only when it renders - a pure model refresh would leave
-        " the rebuilt tree binding collapsed
+        " full view rebuild instead of relying on the automatic model push:
+        " the z2ui5.cc.Tree companion re-applies the expand state (snapshotted
+        " before this roundtrip) only when it renders - a pure model refresh
+        " would leave the rebuilt tree binding collapsed
         view_display( ).
 
     ENDCASE.

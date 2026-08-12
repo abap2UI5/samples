@@ -74,8 +74,6 @@ CLASS z2ui5_cl_smp_app_337 IMPLEMENTATION.
       client->message_toast_display( `ERROR - mo_layout_obj_2->mr_data  <> ms_data!` ).
     ENDIF.
 
-    client->view_model_update( ).
-
   ENDMETHOD.
 
 

@@ -94,7 +94,6 @@ CLASS Z2UI5_CL_SMP_APP_202 IMPLEMENTATION.
             t_arg = VALUE #( ( `STEP2` ) ( `setNextStep` ) ( client->get( )-event ) ) ).
 
     ENDCASE.
-    client->view_model_update( ).
 
   ENDMETHOD.
 ENDCLASS.

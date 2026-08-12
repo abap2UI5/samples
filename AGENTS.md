@@ -546,7 +546,7 @@ ELSEIF client->check_on_event( `SAVE` ).
 ENDIF.
 ```
 
-Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it (`view_model_update( )` is an obsolete no-op kept for source compatibility) — but never rely on that when a full-screen sub-app can be called.
+Calling `view_display( )` in the `check_on_navigated( )` branch is **always safe** — even after a popup, where the main view stayed on screen, it simply re-renders the same view. Use it as the general rule. When the app returns exclusively from a popup (`z2ui5_cl_pop_*` / `popup_display`), doing nothing is sufficient — the framework pushes the model automatically whenever `main( )` changed it — but never rely on that when a full-screen sub-app can be called.
 
 ### Event checking — inline vs. CASE
 
@@ -568,7 +568,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 
 | Category | Methods | Purpose |
 |---|---|---|
-| Views | `view_display`, `view_destroy` | Main view lifecycle (`view_model_update` is an obsolete no-op — the model is pushed automatically) |
+| Views | `view_display`, `view_destroy` | Main view lifecycle (the model itself is pushed automatically — there is no model-update call) |
 | Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |

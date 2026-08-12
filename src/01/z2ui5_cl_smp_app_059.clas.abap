@@ -60,7 +60,6 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
           CHANGING
               tab = mt_table ).
 
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.

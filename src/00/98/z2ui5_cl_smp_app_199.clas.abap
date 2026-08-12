@@ -28,11 +28,9 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `CLEAR`.
         refresh_data( ).
-        client->view_model_update( ).
 
       WHEN `ADD`.
         add_data( ).
-        client->view_model_update( ).
 
     ENDCASE.
 
