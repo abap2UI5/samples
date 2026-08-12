@@ -7,6 +7,13 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
     DATA mv_class_2 TYPE string.
     DATA mr_data TYPE REF TO data.
 
+    TYPES:
+      BEGIN OF ty_s_item,
+        product TYPE string,
+        info    TYPE string,
+      END OF ty_s_item.
+    DATA mt_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
+
     METHODS on_event.
     METHODS view_display
       CHANGING
@@ -23,15 +30,33 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " Deliberately styled DIFFERENTLY from sub-app class 1 (a form), so the
+    " parent demo 104 shows at a glance WHICH class is embedded right now.
+    IF mt_items IS INITIAL.
+      mt_items = VALUE #( ( product = `Notebook 17"` info = `in stock` )
+                          ( product = `Monitor 27"`  info = `2 weeks` )
+                          ( product = `Dock Pro`     info = `sold out` ) ).
+    ENDIF.
+
     mo_view_parent->message_strip(
-        text     = `This is sub-app class 2: it has no page of its own - its view is injected into ` &&
-                   `a column of the calling parent app through a shared view reference.`
-        type     = `Information`
+        text     = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
+                   `with different controls and its own data, embedded into the same detail ` &&
+                   `column of the parent app.`
+        type     = `Warning`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    mo_view_parent->input( value       = client->_bind( mv_class_2 )
-                           placeholder = `Input From Class 2` ).
+    mo_view_parent->list( headertext = `Class 2 - Products`
+                          items      = client->_bind( mt_items )
+        )->standard_list_item( title = `{PRODUCT}`
+                               info  = `{INFO}` ).
+
+    mo_view_parent->vbox( `sapUiSmallMargin`
+        )->input( value       = client->_bind( mv_class_2 )
+                  placeholder = `type here - the value lives in sub-app 2`
+        )->button( text  = `raise event in sub-app 2`
+                   press = client->_event( `MESSAGE_SUB` )
+                   icon  = `sap-icon://table-view` ).
 
   ENDMETHOD.
 
@@ -39,7 +64,7 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `MESSAGE_SUB` ).
-      client->message_box_display( `event sub app` ).
+      client->message_box_display( `event raised in SUB-APP CLASS 2 (the list)` ).
     ENDIF.
 
   ENDMETHOD.

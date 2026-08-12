@@ -42,7 +42,6 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
         client->view_destroy( ).
       WHEN `POPUP_DECIDE_CONTINUE`.
         client->popup_destroy( ).
-        view_display( ).
         client->message_toast_display( `continue pressed` ).
       WHEN `POPUP_DECIDE_CANCEL`.
         client->popup_destroy( ).

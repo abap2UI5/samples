@@ -23,15 +23,31 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
 
   METHOD view_display.
 
+    " Deliberately styled DIFFERENTLY from sub-app class 2 (a table), so the
+    " parent demo 104 shows at a glance WHICH class is embedded right now.
     mo_view_parent->message_strip(
-        text     = `This is sub-app class 1: it has no page of its own - its view is injected into ` &&
-                   `a column of the calling parent app through a shared view reference.`
-        type     = `Information`
+        text     = `SUB-APP CLASS 1 (z2ui5_cl_smp_app_105): a green FORM - it has no page of ` &&
+                   `its own, its controls are injected into the detail column of the calling ` &&
+                   `parent app through a shared view reference.`
+        type     = `Success`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
 
-    mo_view_parent->input( value       = client->_bind( mv_class_1 )
-                           placeholder = `Input From Class 1` ).
+    DATA(form) = mo_view_parent->panel( headertext = `Class 1 - Form`
+        )->simple_form( editable = abap_true )->content( `form` ).
+
+    form->label( `Embedded class`
+        )->object_status( text  = `z2ui5_cl_smp_app_105`
+                          state = `Success` ).
+
+    form->label( `Input from class 1`
+        )->input( value       = client->_bind( mv_class_1 )
+                  placeholder = `type here - the value lives in sub-app 1` ).
+
+    form->label( `Event`
+        )->button( text  = `raise event in sub-app 1`
+                   press = client->_event( `MESSAGE_SUB` )
+                   icon  = `sap-icon://form` ).
 
   ENDMETHOD.
 
@@ -39,7 +55,7 @@ CLASS z2ui5_cl_smp_app_105 IMPLEMENTATION.
   METHOD on_event.
 
     IF client->check_on_event( `MESSAGE_SUB` ).
-      client->message_box_display( `event sub app` ).
+      client->message_box_display( `event raised in SUB-APP CLASS 1 (the form)` ).
     ENDIF.
 
   ENDMETHOD.

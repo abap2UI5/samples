@@ -13,6 +13,7 @@ CLASS z2ui5_cl_smp_app_467 DEFINITION PUBLIC.
       END OF ty_s_message.
     DATA t_messages TYPE STANDARD TABLE OF ty_s_message WITH EMPTY KEY.
     DATA name       TYPE string.
+    DATA amount     TYPE i.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -29,6 +30,8 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
+
+      amount = 42.
 
       " app-authored messages - the controller's MessageManager.addMessages
       " equivalent. The z2ui5.cc.MessageManager companion reconciles this
@@ -57,14 +60,17 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Messages - app-authored via z2ui5.cc.MessageManager`
+            title          = `abap2UI5 - Messages - central message model`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `The messages below are authored by the app (not collected from control validation) ` &&
-                   `and pushed into the central message model by the invisible z2ui5.cc.MessageManager ` &&
-                   `companion bound to an ABAP table - the Error targets the Name field and colours it.`
+        text     = `Both sources of the central message> model in one page: the Name messages ` &&
+                   `are AUTHORED BY THE APP (pushed from an ABAP table by the invisible ` &&
+                   `z2ui5.cc.MessageManager companion - the Error targets the Name field and ` &&
+                   `colours it), while typing letters into the Amount field collects the failed ` &&
+                   `Integer validation AUTOMATICALLY - no app code, no roundtrip. Both render ` &&
+                   `in the list below.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
@@ -77,15 +83,16 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
                     t_prop = VALUE #( ( n = `items` v = client->_bind( t_messages ) ) ) ).
 
     page->vbox(
-*            title    = `Registration`
-*                       editable = abap_true
-*                       class    = `sapUiSmallMargin`
-*        )->content(
-            )->label( `Name`
-            )->input( client->_bind( name ) ).
+            )->label( `Name (message authored by the app)`
+            )->input( client->_bind( name )
+            )->label( `Amount (integer only - validation collected automatically)`
+            )->input( width = `12rem`
+                      value = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
+                              |type: 'sap.ui.model.type.Integer' \}| ).
 
     page->list( headertext = `Collected messages (message> model)`
                 items      = `{message>/}`
+                nodatatext = `no messages`
                 class      = `sapUiSmallMargin`
         )->standard_list_item( title       = `{message>message}`
                                description = `{message>additionalText}`
