@@ -94,6 +94,26 @@ live in this repository — they are collected in the separate api repository
 of the abap2UI5 organization. Everything under `01/03` here is manually
 reviewed.
 
+**`01/03` is no longer the home of the pure control samples.** Those are
+collected in [abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit),
+which rebuilds every official demo kit sample 1:1 and gates each port against
+its original view. Keeping the same original rebuilt in both repositories is
+the redundancy that clean-up removed (2026-08-12), so **do not add a new
+`01/03` sample for an original ai-demokit already covers** — port it there.
+What stays here is only what cannot live there:
+
+- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
+  members for 1:1 fidelity (declared `POST_171` there) — this repository is
+  downported to 702, so the restriction matters here and does not there;
+- a sample in ai-demokit's **hold-out set** (`ui5/holdout.json`), which is
+  deliberately never ported there because it measures its generator;
+- a **free-style control demo** with no single demo kit original (it carries no
+  `"! Rebuild of the UI5 demo kit sample:` line).
+
+Three library subpackages (`01/03/03` sap.f, `01/03/04` sap.ui.core,
+`01/03/07` sap.ui.codeeditor) are empty as a result. They are kept as slots;
+removing them is a structural change and belongs in its own pull request (§1).
+
 ---
 
 ## 2. Compatibility model — what belongs in `src/01` vs `src/00/02` vs `src/00/97` vs `src/00/98` vs `src/00/99`
