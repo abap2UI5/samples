@@ -180,6 +180,16 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
   1. Test / scaffolding app → `00/98`
   2. Experimental / work-in-progress → `00/97`
 
+  **What is in `src/00` stays in `src/00` — `00/97` included.** Neither
+  subpackage is a waiting room that samples graduate from: do not move a
+  sample out of `00/97` (or `00/98`) into `src/01`, and do not propose it
+  because the sample happens to lint clean against all three releases.
+  Passing the builds is a precondition for living in this repository at
+  all (§1), never on its own a reason to promote a sample. Only the
+  maintainer decides that a sample changes package, and only by saying so
+  (human decision 2026-08-12, on the routing and app-state samples in
+  `00/97`).
+
   A sample restricted by **UI5** — a SAPUI5-only control (`sap.suite.*`,
   `sap.ui.comp.*`, `sap.viz.*`, `sap.ui.vk`/`vbm`, `sap.ndc`,
   `sap.ui.richtexteditor`, …), a control or property introduced after UI5 1.71,
