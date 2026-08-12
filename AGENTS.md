@@ -67,28 +67,41 @@ group name — keep the two identical** (see §4).
 > between packages needs **no rename** and keeps navigation intact — but the
 > overview catalog must be updated (§4).
 
-### There is no Control Library package any more
+Every sample in `01/03` is a faithful rebuild of one specific UI5 demo kit
+sample, filed in the subpackage of the library its entity belongs to
+(`01/03/01` = sap.m, `01/03/02` = sap.uxap, …), and carries the demo kit URL
+as an ABAP Doc line directly above its `CLASS ... DEFINITION`
+(`"! Rebuild of the UI5 demo kit sample: <url>`).
+Its `<DESCRIPT>` follows the convention `<entity> - <demo kit description>`
+(e.g. `sap.m.Switch - "Some say it is only a switch, I say it i`), where the
+entity is the control from the demo kit URL and the description comes from
+the library's `demokit/docuindex.json` in openui5 (HTML markup stripped,
+truncated to the 60-character DESCRIPT limit). The **full, untruncated**
+description is kept as additional ABAP Doc lines below the URL line; the
+overview generator prefers those lines as the tile `sub` (§4).
+Demos that have no demo kit original do not belong in `01/03` — file them in
+the basic package (`01/01`, actions / custom controls / use cases) or,
+when a restriction applies, in the matching `src/00` category (`src/00/02`
+release/version, `src/00/97` experimental, `src/00/98` when it is a test app,
+`src/00/99` once it is obsolete).
 
-**`01/03` "Control Library" is gone (2026-08-12), with all 32 of its samples.**
-1:1 rebuilds of UI5 demo kit samples are collected in
-[abap2UI5/ai-demokit](https://github.com/abap2UI5/ai-demokit) — which rebuilds
-every official sample against its original view and gates each port on that
-comparison — and keeping the same original rebuilt in both repositories was
-pure redundancy: 14 of the 32 were already ported there under the same demo kit
-sample id, and 12 of the rest carried no sample id at all, only an entity URL,
-so there was no original to be faithful to. The whole set was imported into
-ai-demokit's `todo/` for triage before the packages were removed here, so
-nothing is lost — see `todo/README.md` there for the per-sample verdict.
+Machine-generated demo kit ports that have not been manually reviewed do not
+live in this repository — they are collected in the separate api repository
+of the abap2UI5 organization. Everything under `01/03` here is manually
+reviewed.
 
-**Do not re-create `01/03`, and do not add a demo kit rebuild to `01/01`.**
-A sample that rebuilds one specific demo kit original belongs in ai-demokit,
-full stop. What legitimately stays here is what cannot live there, and it goes
-into the basic package (`01/01`) as an ordinary sample:
+**`01/03` is no longer the home of the pure control samples.** Those are
+collected in [abap2UI5/samples-controls](https://github.com/abap2UI5/samples-controls),
+which rebuilds every official demo kit sample 1:1 and gates each port against
+its original view. Keeping the same original rebuilt in both repositories is
+the redundancy that clean-up removed (2026-08-12), so **do not add a new
+`01/03` sample for an original samples-controls already covers** — port it there.
+What stays here is only what cannot live there:
 
-- a **1.71-safe** variant of a sample whose ai-demokit port keeps post-1.71
+- a **1.71-safe** variant of a sample whose samples-controls port keeps post-1.71
   members for 1:1 fidelity (declared `POST_171` there) — this repository is
   downported to 702, so the restriction matters here and does not there;
-- a sample in ai-demokit's **hold-out set** (`ui5/holdout.json`), which is
+- a sample in samples-controls' **hold-out set** (`ui5/holdout.json`), which is
   deliberately never ported there because it measures its generator;
 - a **free-style control demo** with no single demo kit original.
 
@@ -173,7 +186,7 @@ in `abap2UI5/abap2UI5@main` and report every type declared there with
 
 **A sample that needs something the system provides does not belong here at
 all** — not in `src/00/02` either. Those live in
-[abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext), one package per
+[abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack), one package per
 technology: an OData service, smart controls, a RAP business object, a stateful
 session, an APC channel, the MIME repository, and the **Fiori Launchpad**
 (`src/09` there — the demos that read startup parameters, set the shell title and
@@ -196,7 +209,7 @@ repository (§1).
 lists every sample of the basic area. It is *not* a Fiori Launchpad app, despite
 the name of the generator that writes it (`npm run launchpad`, §4). The demos
 that run inside a real Fiori Launchpad are not in this repository at all — they
-live in [abap2UI5/samples-ext](https://github.com/abap2UI5/samples-ext) under
+live in [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) under
 `src/09` (§2).
 
 | App class              | Lives in | Title                | Mirrors     |
