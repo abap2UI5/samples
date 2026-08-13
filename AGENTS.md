@@ -258,7 +258,7 @@ icon buttons, always in this order, each carrying its explanation as a tooltip:
 |------|--------|------------|
 | `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 |
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples |
-| `sap-icon://palette` | `z2ui5_cl_dmo_app_overview` | abap2UI5/samples-controls |
+| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://source-code` | — | the repository the app itself lives in |
@@ -277,6 +277,13 @@ Each repository is installed on its own, so every button decides for itself:
 - **the app you are in** (`here = abap_true`, the lightbulb here) → the button
   stays, disabled, tooltip `… - you are here`, so the row reads the same in
   every overview.
+
+A repository that **renames** its overview app is installed under both names in
+the wild for a while, so `header_button( )` takes an optional `class_old` and
+falls back to it when the current name is not on the system —
+`z2ui5_cl_dmo_app_overview` for samples-controls (renamed 2026-08),
+`z2ui5_cl_demo_app_g00` for this repository. Add the old name there when an
+overview app is renamed; drop it again once the rename is old enough.
 
 **Keep the three headers in sync.** A change to the order, the icons or the
 behaviour belongs in all three repositories in the same change.

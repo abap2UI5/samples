@@ -34,10 +34,13 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     " header asks per entry whether its overview app is on THIS system
     CONSTANTS:
       BEGIN OF cs_class,
-        startup  TYPE string VALUE `z2ui5_cl_app_startup`,
-        samples  TYPE string VALUE `z2ui5_cl_smp_app_000`,
-        controls TYPE string VALUE `z2ui5_cl_dmo_app_overview`,
-        stack    TYPE string VALUE `z2ui5_cl_smpe_app_00`,
+        startup      TYPE string VALUE `z2ui5_cl_app_startup`,
+        samples      TYPE string VALUE `z2ui5_cl_smp_app_000`,
+        controls     TYPE string VALUE `z2ui5_cl_smpc_app_overview`,
+        " the overview app of samples-controls before its 2026-08 rename - an
+        " installation that predates it still answers to this name
+        controls_old TYPE string VALUE `z2ui5_cl_dmo_app_overview`,
+        stack        TYPE string VALUE `z2ui5_cl_smpe_app_00`,
       END OF cs_class.
 
     CONSTANTS:
@@ -74,12 +77,16 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         page TYPE REF TO z2ui5_cl_xml_view.
     METHODS header_button
       IMPORTING
-        toolbar TYPE REF TO z2ui5_cl_xml_view
-        icon    TYPE string
-        tooltip TYPE string
-        href    TYPE string
-        class   TYPE string OPTIONAL
-        here    TYPE abap_bool DEFAULT abap_false.
+        toolbar   TYPE REF TO z2ui5_cl_xml_view
+        icon      TYPE string
+        tooltip   TYPE string
+        href      TYPE string
+        class     TYPE string OPTIONAL
+        "! the overview app's PREVIOUS name, tried when CLASS is not on the
+        "! system: a repository that renamed its overview app is installed
+        "! under both names in the wild for a while
+        class_old TYPE string OPTIONAL
+        here      TYPE abap_bool DEFAULT abap_false.
     "! the press wire of a button whose target is EXTERNAL: a Button carries no
     "! href, and cs_event-open_new_tab is same-origin only, so the new tab is
     "! opened by the URLHELPER frontend action - client-side, inside the click
@@ -325,11 +332,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    href    = cs_url-samples
                    here    = abap_true ).
 
-    header_button( toolbar = toolbar
-                   icon    = `sap-icon://palette`
-                   tooltip = `Controls - the UI5 Demo Kit, rebuilt with abap2UI5`
-                   class   = cs_class-controls
-                   href    = cs_url-controls ).
+    header_button( toolbar   = toolbar
+                   icon      = `sap-icon://palette`
+                   tooltip   = `Controls - the UI5 Demo Kit, rebuilt with abap2UI5`
+                   class     = cs_class-controls
+                   class_old = cs_class-controls_old
+                   href      = cs_url-controls ).
 
     header_button( toolbar = toolbar
                    icon    = `sap-icon://database`
@@ -364,14 +372,24 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     ENDIF.
 
+    DATA target TYPE string.
+
     IF class IS NOT INITIAL AND class_installed( class ) = abap_true.
+      target = class.
+
+    ELSEIF class_old IS NOT INITIAL AND class_installed( class_old ) = abap_true.
+      target = class_old.
+
+    ENDIF.
+
+    IF target IS NOT INITIAL.
 
       " installed on this system: jump right into it, the back button returns
       toolbar->button( icon    = icon
                        type    = `Transparent`
                        tooltip = tooltip
                        press   = client->_event( val   = cs_event-nav
-                                                 t_arg = VALUE #( ( class ) ) ) ).
+                                                 t_arg = VALUE #( ( target ) ) ) ).
       RETURN.
 
     ENDIF.
