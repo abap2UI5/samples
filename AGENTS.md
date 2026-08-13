@@ -240,15 +240,19 @@ ever return, it comes back as a second `TARGETS` entry in
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile, followed by a transparent `sap-icon://source-code` button that
+`sub`) per tile, followed by a `sap-icon://source-code` **`core:Icon`** that
 opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
 `path`, wired client-side through `open_url( )` like the header buttons — a
-`Button` carries no `href`). Around that list it renders a fixed frame: the
-**shared overview header** in the page's `header_content( )` (see below), an
-intro `MessageStrip` naming the tile count, the source-code icon, the
-**Ctrl+F12** developer tools and the `(A)` / `(C)` markers, a
-`SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
-last tile so the list does not end glued to the page bottom.
+`Button` carries no `href`). It is deliberately an icon and not a transparent
+`Button`: a `Button` brings its own height (2rem even in compact density) and
+would set the line height of every row, while the icon is as tall as the text
+beside it — which is what keeps the list tight. Around that list it renders a
+fixed frame: the **shared overview header** in the page's `header_content( )`
+(see below), an intro `MessageStrip` naming the tile count, the source-code
+icon, the **Ctrl+F12** developer tools and the `(A)` / `(C)` markers, and an
+empty `vbox( height = 4rem )` after the last tile so the list does not end
+glued to the page bottom. The `SearchField` is **part of the header**, ahead of
+the icon buttons — it stays in place while the list below it grows and shrinks.
 
 ### The shared overview header
 
@@ -265,7 +269,13 @@ icon buttons, always in this order, each carrying its explanation as a tooltip:
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
-| `sap-icon://source-code` | — | the repository the app itself lives in |
+| `sap-icon://chain-link` | — | the repository the app itself lives in |
+
+The first four entries lead to an app **inside** the system, the last two lead
+out of it, so a `ToolbarSpacer` (`width = 1rem`) separates the two groups. The
+GitHub entry is **not** `sap-icon://source-code`: in the shared header that
+icon is reserved for the per-sample source links an overview renders in its
+list.
 
 Each repository is installed on its own, so every button decides for itself:
 `class_installed( )` instantiates the target class, and

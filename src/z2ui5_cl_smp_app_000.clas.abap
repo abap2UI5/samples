@@ -250,22 +250,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     page->message_strip(
         text     = |All { lines( t_catalog_all ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
-                   `and framework actions. Filter with the search field, select a link to open a sample, the back ` &&
-                   `button returns here. New to abap2UI5? Start with the Basics samples at the top. ` &&
+                   `and framework actions. Filter with the search field in the header, select a link to open ` &&
+                   `a sample, the back button returns here. New to abap2UI5? Start with the Basics at the top. ` &&
                    `The source-code icon behind a sample opens its ABAP class on GitHub, and Ctrl+F12 ` &&
                    `opens the abap2UI5 Developer Tools - in this overview and inside every sample. ` &&
                    `Markers: (A) frontend action, (C) custom control.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
-
-    page->search_field(
-        id          = `search`
-        value       = client->_bind( search )
-        search      = client->_event( cs_event-search )
-        width       = `17.5rem`
-        placeholder = `Filter samples`
-        class       = `sapUiSmallMarginBegin sapUiSmallMarginBottom` ).
 
     DATA(show_groups) = group_titles_needed( t_catalog ).
     DATA(prev_group) = ``.
@@ -319,12 +311,18 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
       " straight to the ABAP behind the sample - the tile shows what it does,
       " this shows how. External target, so the same client-side URLHELPER
-      " wire as the header buttons (a Button carries no href)
-      row->button(
-          icon    = `sap-icon://source-code`
-          type    = `Transparent`
-          tooltip = |{ tile-app } - show the ABAP source on GitHub|
-          press   = open_url( source_url( tile ) ) ).
+      " wire as the header buttons (a Button carries no href).
+      " A core:Icon, not a Button: a Button brings its own height (2rem even in
+      " compact density) and would set the line height of every row - the icon
+      " is as tall as the text next to it, which is what keeps the list tight
+      row->_generic(
+          name   = `Icon`
+          ns     = `core`
+          t_prop = VALUE #( ( n = `src`     v = `sap-icon://source-code` )
+                            ( n = `size`    v = `0.875rem` )
+                            ( n = `class`   v = `sapUiTinyMarginBegin` )
+                            ( n = `tooltip` v = |{ tile-app } - show the ABAP source on GitHub| )
+                            ( n = `press`   v = open_url( source_url( tile ) ) ) ) ).
 
     ENDLOOP.
 
@@ -345,6 +343,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD render_header.
 
     DATA(toolbar) = page->header_content( ).
+
+    " the filter sits in the header, not above the list: it stays in place while
+    " the list below it grows and shrinks
+    toolbar->search_field(
+        id          = `search`
+        value       = client->_bind( search )
+        search      = client->_event( cs_event-search )
+        width       = `14rem`
+        placeholder = `Filter samples`
+        class       = `sapUiTinyMarginEnd` ).
 
     header_button( toolbar = toolbar
                    icon    = `sap-icon://home`
@@ -372,13 +380,18 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
+    " the four repository buttons above lead to an app, the two links below
+    " lead out of the system - a gap tells the two groups apart
+    toolbar->toolbar_spacer( width = `1rem` ).
+
     header_button( toolbar = toolbar
                    icon    = `sap-icon://learning-assistant`
                    tooltip = `Documentation - guides, tutorials and the API reference`
                    href    = cs_url-docs ).
 
+    " not source-code: that icon now belongs to the per-sample links in the list
     header_button( toolbar = toolbar
-                   icon    = `sap-icon://source-code`
+                   icon    = `sap-icon://chain-link`
                    tooltip = `GitHub - the source code of this repository`
                    href    = cs_url-samples ).
 
@@ -474,7 +487,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     result = VALUE #(
       ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` path = `src/01` app = `z2ui5_cl_smp_app_493` )
-      ( group = `samples` header = `Basics II` sub = `Two-Way Binding: Input and Button` keywords = `two way binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
+      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `two way binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
       ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
       ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics` path = `src/01` app = `z2ui5_cl_smp_app_004` )
       ( group = `samples` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` path = `src/01` app = `z2ui5_cl_smp_app_067` )
