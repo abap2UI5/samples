@@ -401,6 +401,53 @@ When regenerating, **re-read every class's `<DESCRIPT>`** — the descriptions a
 maintained on the classes and change there, so never carry `header`/`sub` over
 from the old catalog.
 
+### The `header` is the category — pick one from this list
+
+With the whole catalog in a single package there is no group heading (§3), so
+the `header` **is** the category a reader sees, repeated down the page as the
+link text. It is also the cheapest search term: typing `popup` filters the
+list to the popup samples. Keep the set small, and keep every entry a word a
+newcomer would actually type:
+
+| Header | What belongs in it |
+|--------|--------------------|
+| `Basics` | the entry point — first app, lifecycle, the minimum loop |
+| `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
+| `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
+| `Control` | one UI5 control is the topic, incl. calling its methods by ID |
+| `CSS` | own styles shipped with the view |
+| `Device` | camera, geolocation, device model, frontend info |
+| `Event` | `_event( )`, `t_arg`, keyboard shortcuts, event defaults |
+| `File` | upload and download |
+| `Focus` / `Scroll` | cursor and scroll position |
+| `Formatter` | the curated JS formatters abap2UI5 ships |
+| `Grid Table` | `sap.ui.table.Table` — never `ui.Table` |
+| `List` / `Table` / `Tree` | `sap.m.List` / `sap.m.Table` / `sap.m.Tree` |
+| `Menu` / `Popover` / `Popup` | menus, popovers, dialogs |
+| `Message` | MessageBox, MessageToast, MessageView, message model |
+| `Navigation` | `nav_app_call( )` / `nav_app_leave( )` between apps |
+| `Nested View` | `nest_view_display( )`, FlexibleColumnLayout |
+| `Templating` | views generated at runtime (`template:repeat`) |
+| `Timer` | client timers driving the backend |
+
+**Do not invent a catch-all** (`More`, `Function`, `Misc`, `Other`) — those
+existed and were dissolved on 2026-08-13 because nobody searches for them. A
+new header is justified when at least two samples share a topic none of the
+above covers; add it to the table in the same change.
+
+Rules for the `sub`:
+
+- **Title Case, a short noun phrase**, max 60 characters for the whole
+  DESCRIPT — that is the hard limit of the ABAP class short text.
+- **Name the control or the API the sample is about** (`FlexibleColumnLayout`,
+  `SearchField`, `CustomTreeItem`, `setSizeLimit`, `nav_app_call`,
+  `template:repeat`). This is what makes the sample findable — the search
+  matches `header`, `sub` and the class name, nothing else.
+- **Do not echo the header** (`Control - Wizard Control`,
+  `Popup - Value Help with Popups`).
+- Describe **what the sample shows**, not the mechanism it happens to use, when
+  the two differ — a Menu demo is `Menu - …`, even if its point is `core:require`.
+
 ### Generation rules
 
 1. **One catalog per area — and only `src/01` has one.** Apps in `src/01/**`
@@ -1028,11 +1075,13 @@ new/edited samples stay consistent:
   product's category) use `description` — a left-aligned subtitle — instead; the
   far-right float looks disconnected on wide screens (fixed in `454`/`455`).
 
-- **The page title should carry the `<DESCRIPT>` text.** A user clicks a tile in
-  the overview (which shows the DESCRIPT) and the opened sample's
-  `page( title = … )` should name the same thing so it is recognisably the right
-  sample — e.g. `045` had a copy-pasted "Scroll Container" title on a "Backend
-  Filter" sample.
+- **The page title carries the `<DESCRIPT>` text**, in the form
+  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — all 93 samples in
+  `src/01` follow it since 2026-08-13. A user clicks a tile in the overview
+  (which shows the DESCRIPT) and the opened sample must name the same thing, so
+  it is recognisably the right sample. Change the two together: renaming a
+  DESCRIPT without the page title puts them out of sync again (they had drifted
+  to "Focus II" and "Table Filters Reset after view Update").
 
 - **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
   so all samples share the same outer frame (fixed in `143`).
