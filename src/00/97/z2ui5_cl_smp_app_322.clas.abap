@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
       client->view_display( view->shell(
              )->page(
                      title          = `abap2UI5 - Navigation with app state`
-                     navbuttonpress = client->follow_up_action( `HISTORY_BACK` )
+                     navbuttonpress = client->_event_nav_app_leave( )
                      shownavbutton  = client->check_app_prev_stack( )
           )->message_strip(
               text     = `set_push_state( ) pushes an app-owned suffix onto the browser URL, so the app can `
@@ -40,7 +40,7 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
                              press = client->_event( `BUTTON_POST` )
                          )->button(
                              text  = `back`
-                             press = client->follow_up_action( `HISTORY_BACK` )
+                             press = client->_event( `BUTTON_BACK` )
               )->stringify( ) ).
 
       IF client->check_app_prev_stack( ).
@@ -52,8 +52,16 @@ CLASS z2ui5_cl_smp_app_322 IMPLEMENTATION.
     CASE client->get_event( ).
       WHEN `BUTTON_POST`.
         client->set_push_state( `/head/pos/` && client->get( )-s_draft-id ).
+        client->message_toast_display( `data updated` ).
+
+      WHEN `BUTTON_BACK`.
+        " step back through the entries set_push_state( ) pushed - the same
+        " thing the browser back button does. follow_up_action( ) runs a raw
+        " JavaScript expression when what it gets is not a framework event
+        " name, which is how a browser capability without its own event is
+        " reached
+        client->follow_up_action( |history.back()| ).
     ENDCASE.
-    client->message_toast_display( `data updated` ).
 
   ENDMETHOD.
 
