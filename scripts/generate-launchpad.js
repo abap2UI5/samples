@@ -17,6 +17,8 @@
  *        - sub      = DESCRIPT part after the first " - " (empty if none)
  *        - keywords = the class's " @keywords ... comment line (optional),
  *                     searched but never rendered
+ *        - path     = the class's folder relative to the repository root, for
+ *                     the source-code link on GitHub
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
@@ -168,7 +170,12 @@ for (const abap of walk(SRC)) {
   if ((header + sub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
   if (keywords.includes('`')) throw new Error(`backtick in @keywords of ${cls}`);
 
-  tiles[area].push({ subnum, group, header, sub, keywords, app: cls });
+  // repository-relative folder of the class, so the overview can link the
+  // source on GitHub - the class name does not encode the folder
+  // (FOLDER_LOGIC=PREFIX), so only the generator knows where a sample lives
+  const dir = ['src', area, ...rel.slice(1, -1)].join('/');
+
+  tiles[area].push({ subnum, group, header, sub, keywords, path: dir, app: cls });
 }
 
 // --- 2. sort --------------------------------------------------------------
@@ -209,14 +216,14 @@ function rewrite(file, list) {
   };
   const rows = list.map((t) => {
     const kw = t.keywords ? ` keywords = \`${t.keywords}\`` : '';
-    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\`${kw} app = \`${t.app}\` )`;
+    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\`${kw} path = \`${t.path}\` app = \`${t.app}\` )`;
     if (one.length <= MAX_LINE) return one;
     const fieldIndent = `${indent}  `;
     return [
       `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
       ...chunked('sub', t.sub, fieldIndent),
       ...(t.keywords ? chunked('keywords', t.keywords, fieldIndent) : []),
-      `${fieldIndent}app = \`${t.app}\` )`,
+      `${fieldIndent}path = \`${t.path}\` app = \`${t.app}\` )`,
     ].join('\n');
   });
   // the last row additionally closes the constructor + statement

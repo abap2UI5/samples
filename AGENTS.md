@@ -240,9 +240,13 @@ ever return, it comes back as a second `TARGETS` entry in
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile. Around that list it renders a fixed frame: the **shared
-overview header** in the page's `header_content( )` (see below), an intro
-`MessageStrip` naming the tile count and the `(A)` / `(C)` markers, a
+`sub`) per tile, followed by a transparent `sap-icon://source-code` button that
+opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
+`path`, wired client-side through `open_url( )` like the header buttons — a
+`Button` carries no `href`). Around that list it renders a fixed frame: the
+**shared overview header** in the page's `header_content( )` (see below), an
+intro `MessageStrip` naming the tile count, the source-code icon, the
+**Ctrl+F12** developer tools and the `(A)` / `(C)` markers, a
 `SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
 last tile so the list does not end glued to the page bottom.
 
@@ -373,7 +377,7 @@ One row per app; `group`, `header`, `sub` and `app` are always present,
 `keywords` only when the class carries the comment line:
 
 ```abap
-( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` app = `<class name, lowercase>` )
+( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` path = `<folder>` app = `<class name, lowercase>` )
 ```
 
 | Field    | Meaning / rule |
@@ -382,6 +386,7 @@ One row per app; `group`, `header`, `sub` and `app` are always present,
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
 | `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). |
+| `path`   | The class's folder relative to the repository root (`src/01`). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
 
 **`keywords` comes from a plain comment line on the class**, the first line of
