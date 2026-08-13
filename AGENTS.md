@@ -240,32 +240,112 @@ ever return, it comes back as a second `TARGETS` entry in
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile, followed by a transparent `sap-icon://source-code` button that
+`sub`) per tile, followed by a `sap-icon://source-code` **`core:Icon`** that
 opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
 `path`, wired client-side through `open_url( )` like the header buttons — a
-`Button` carries no `href`). Around that list it renders a fixed frame: the
-**shared overview header** in the page's `header_content( )` (see below), an
-intro `MessageStrip` naming the tile count, the source-code icon, the
-**Ctrl+F12** developer tools and the `(A)` / `(C)` markers, a
-`SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
-last tile so the list does not end glued to the page bottom.
+`Button` carries no `href`). It is deliberately an icon and not a transparent
+`Button`: a `Button` brings its own height (2rem even in compact density) and
+would set the line height of every row, while the icon is as tall as the text
+beside it — which is what keeps the list tight. Around that list it renders a
+fixed frame: **two header rows** (below) and an empty `vbox( height = 4rem )`
+after the last tile so the list does not end glued to the page bottom.
+
+### The two header rows
+
+The page carries no content header of its own — both rows are built by hand:
+
+1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, so the
+   row can be split into a left and a right half:
+   - `contentLeft` — the back button and the app title, i.e. what the stock
+     header would render on its own. A `Page` renders either its own
+     header or a custom one, so `title` / `navbuttonpress` / `shownavbutton`
+     are gone from the `page( )` call and the back `Button`
+     (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
+     `press = _event_nav_app_leave( )`) is built here.
+   - `contentRight` — the three sample repositories of the abap2UI5 family,
+     then a `ToolbarSeparator` (`header_separator( )`,
+     `sapUiSmallMarginBegin sapUiSmallMarginEnd`), then the two entries that
+     leave the system: documentation and GitHub. The separator is the point:
+     the three open an app, the two open a site.
+2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader` and
+   holds the `SearchField` (`24rem`).
+
+**There is no intro text on the page.** It used to be a `MessageStrip` above
+the list — tile count, the source-code icon, the **Ctrl+F12** developer tools,
+the `(A)` / `(C)` markers — which pushed the first samples off the screen; it
+then moved behind an info icon in the header, and on 2026-08-13 it was dropped
+altogether with that icon. The page explains itself through its tooltips.
 
 ### The shared overview header
 
-Every abap2UI5 overview app renders the **same** header — here
+Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
-[samples-stack](https://github.com/abap2UI5/samples-stack). Six transparent
-icon buttons, always in this order, each carrying its explanation as a tooltip:
+[samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
+in this order. `header_button( )` takes each entry's `name` and `descr`
+separately: the tooltip is `<name> - <descr>`, and the name alone titles the
+popover of an uninstalled repository. The names are the *italic* ones below.
+There used to be a sixth entry in front, `sap-icon://home` for the framework's
+start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
+2026-08-13: they list samples, and the start page is not one.
 
 | Icon | Target | Repository |
 |------|--------|------------|
-| `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 |
-| `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples |
-| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
-| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
+| `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
+| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls — *Control Samples* |
+| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
-| `sap-icon://source-code` | — | the repository the app itself lives in |
+| `sap-icon://globe` | — | the repository the app itself lives in |
+
+The repository entries lead to an app **inside** the system, the last two lead
+out of it, and every overview shows that split — this one by a
+`ToolbarSeparator` between the groups in its header Bar's `contentRight`
+(above), samples-controls and samples-stack by a `ToolbarSpacer`
+(`width = 1rem`) between the groups in their single-row `headerContent`. The
+GitHub entry is **not** `sap-icon://source-code`: in the shared header that
+icon is reserved for the per-sample source links an overview renders in its
+list.
+
+**Here the entries are `core:Icon`s, not `Button`s** (`header_button( )`), and
+the reason is the colour: an icon carries one (`color`), a `Button` on 1.71
+does not — the coloured `sap.m.ButtonType` values (`Critical`, `Neutral`, …)
+are 1.73+. There are **two states, active and inactive**, and nothing in
+between:
+
+| Entry | Colour | Press |
+|-------|--------|-------|
+| the overview app is on this system | default (active) | `cs_event-nav` into it |
+| it is **not** on this system | default (active) | `cs_event-install` → `install_display( )` |
+| documentation / GitHub (no `class`) | default (active) | opens the site |
+| the app you are in (`here`) | `Neutral` (inactive) | none |
+
+Grey therefore marks exactly one entry — the overview you are already in,
+which is the only one with nowhere to go. A repository that is not installed
+looks like any other: it *is* a destination, the press just explains what has
+to happen first. The tooltip says so before the click does.
+
+**A missing repository stays clickable.** Instead of dropping the user on
+GitHub without a word, the press fires `cs_event-install` carrying the class,
+the GitHub URL and the repository name; `install_display( )`
+opens a `Popover` on the pressed icon — hence every repository icon carries
+its class name as `id` — that says what is missing, that abapGit installs it,
+and links to the repository. Only entries **without** a `class` (documentation,
+GitHub) still open their site directly through `open_url( )`.
+
+**All three overviews carry this header, layout included** (2026-08-13): the
+`Bar` in the page's `customHeader`, back button and title on the left, the
+five icons with their separator on the right, the two colour states and the
+install popover. samples-controls builds it in
+`scripts/generate-overview.mjs` (its overview class is generated — never edit
+the class), samples-stack in `z2ui5_cl_smps_app_00`, both with
+`z2ui5_cl_ai_xml` instead of `z2ui5_cl_xml_view`; in that builder an empty
+attribute is still rendered (`color=""` is no valid `IconColor`), so the
+optional ones are added under an `IF`. What stays local to a repository is
+what sits *around* the family entries — this one's `SearchField` sub-header,
+samples-controls' filter toolbar, samples-stack's Regenerate Demo Data button
+(first in its `contentRight`, before a separator). **A change to an icon, the
+order, the colours or the press behaviour belongs in all three repositories in
+the same change.**
 
 Each repository is installed on its own, so every button decides for itself:
 `class_installed( )` instantiates the target class, and
@@ -296,9 +376,16 @@ The search field filters the tile list: its `search` event (Enter, or the
 clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
 applied — a case-insensitive contains-match against each tile's `header`, `sub`,
 `keywords` (never rendered, §4) and `app` class name — and then replays the
-focus into the search field via a
-`set_focus` follow-up action with the cursor at the end, so typing can continue.
-The `MessageStrip` keeps naming the **total** tile count (the unfiltered
+focus into the search field.
+
+That focus wire is `focus_search( )`, a `set_focus` follow-up action with the
+cursor at the end of what is already typed, and it runs on **every** display of
+the page: the overview opens with the cursor in the filter, so the first key
+you press searches, and after a filter roundtrip typing simply continues. On
+the way back from a sample it is queued **before** `scroll_restore( )` —
+focusing a control can scroll it into view, and the restored scroll position is
+the one that must survive.
+The info popover keeps naming the **total** tile count (the unfiltered
 catalog), an empty filter result renders a `No sample matches the filter.` text
 instead of tiles, and the filter value survives navigation into a sample and
 back (it is a serialized public attribute).
@@ -307,7 +394,9 @@ An H3 section title is emitted whenever the `group` changes — but only when
 there is more than one group to tell apart. `group_titles_needed( )` decides
 that by comparing every tile's group against the first one; with the whole
 catalog in a single package the heading would only repeat the page title, so it
-is left out. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
+is left out — and because nothing then separates the first block from the
+header rows above it, that first block opens with the same `sapUiSmallMarginTop`
+the other blocks carry. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
 702 downport hoists them out of their guarding condition, so an `IS NOT INITIAL`
 guard around one does not survive the transformation.
 
