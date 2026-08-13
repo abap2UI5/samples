@@ -1,12 +1,11 @@
+" @keywords t100 message class number exception cx_root error abend
 CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
-    DATA client             TYPE REF TO z2ui5_if_client.
-    DATA check_strip_active TYPE abap_bool.
-    DATA strip_type         TYPE string.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -63,18 +62,21 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Messages`
+            title          = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(
                 )->link(
             )->get_parent( ).
 
-    IF check_strip_active = abap_true.
-      page->message_strip(
-          text = `This is a Message Strip`
-          type = strip_type ).
-    ENDIF.
+    page->message_strip(
+        text     = `The three buttons feed a MessageBox with the message objects ABAP ` &&
+                   `produces: a SY message read from T100, a BAPIRET2 structure and a ` &&
+                   `caught CX_ROOT exception. message_box_display( ) accepts each of them ` &&
+                   `directly, no conversion in the app.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
     page->grid( `L6 M12 S12`
         )->content( `layout`

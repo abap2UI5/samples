@@ -1,3 +1,4 @@
+" @keywords toggleby open close control_by_id whitelisted
 CLASS z2ui5_cl_smp_app_465 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -53,7 +54,7 @@ CLASS z2ui5_cl_smp_app_465 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popover - Toggle via CONTROL_BY_ID`
+            title          = `abap2UI5 - Popover - Toggle by ID (toggleBy)`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

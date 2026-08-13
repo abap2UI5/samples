@@ -1,3 +1,4 @@
+" @keywords wizard step branching discardprogress setnextstep control_by_id
 CLASS z2ui5_cl_smp_app_202 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -23,9 +24,18 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
     lr_view        = lr_view->shell( )->page( id = `page_main`
-    title          = `abap2UI5 - Demo Wizard Control`
+    title          = `abap2UI5 - Control - Wizard with Steps`
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = client->check_app_prev_stack( ) ).
+
+    lr_view->message_strip(
+        text     = `A sap.m.Wizard guides through numbered steps. Branching is enabled: ` &&
+                   `step 2 offers two follow-up steps, and the button pressed there picks ` &&
+                   `the branch - the backend calls discardProgress and setNextStep by id ` &&
+                   `(follow_up_action with cs_event-control_by_id).`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
     DATA(lr_wizard) = lr_view->wizard( id              = `wiz`
                                        enablebranching = abap_true ).

@@ -1,3 +1,4 @@
+" @keywords live search parallel requests busy queue typing
 CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -86,7 +87,7 @@ CLASS z2ui5_cl_smp_app_059 IMPLEMENTATION.
 
     DATA(page1) = view->shell( )->page(
         id             = `page_main`
-        title          = `abap2UI5 - Search Field with Backend Live Change`
+        title          = `abap2UI5 - Table - Live Search with Parallel Requests`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 

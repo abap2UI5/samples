@@ -240,9 +240,13 @@ ever return, it comes back as a second `TARGETS` entry in
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile. Around that list it renders a fixed frame: the **shared
-overview header** in the page's `header_content( )` (see below), an intro
-`MessageStrip` naming the tile count and the `(A)` / `(C)` markers, a
+`sub`) per tile, followed by a transparent `sap-icon://source-code` button that
+opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
+`path`, wired client-side through `open_url( )` like the header buttons — a
+`Button` carries no `href`). Around that list it renders a fixed frame: the
+**shared overview header** in the page's `header_content( )` (see below), an
+intro `MessageStrip` naming the tile count, the source-code icon, the
+**Ctrl+F12** developer tools and the `(A)` / `(C)` markers, a
 `SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
 last tile so the list does not end glued to the page bottom.
 
@@ -290,8 +294,9 @@ behaviour belongs in all three repositories in the same change.
 
 The search field filters the tile list: its `search` event (Enter, or the
 clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
-applied — a case-insensitive contains-match against each tile's `header`, `sub`
-and `app` class name — and then replays the focus into the search field via a
+applied — a case-insensitive contains-match against each tile's `header`, `sub`,
+`keywords` (never rendered, §4) and `app` class name — and then replays the
+focus into the search field via a
 `set_focus` follow-up action with the cursor at the end, so typing can continue.
 The `MessageStrip` keeps naming the **total** tile count (the unfiltered
 catalog), an empty filter result renders a `No sample matches the filter.` text
@@ -368,10 +373,11 @@ the generated ABAP) if a rule changes.
 
 ### Tile schema
 
-One row per app, all four fields always present:
+One row per app; `group`, `header`, `sub` and `app` are always present,
+`keywords` only when the class carries the comment line:
 
 ```abap
-( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` app = `<class name, lowercase>` )
+( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` path = `<folder>` app = `<class name, lowercase>` )
 ```
 
 | Field    | Meaning / rule |
@@ -379,7 +385,26 @@ One row per app, all four fields always present:
 | `group`  | **Exactly** the CTEXT of the subpackage the app physically lives in. Becomes the H3 section title (rendered once, when the group changes). |
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
+| `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). |
+| `path`   | The class's folder relative to the repository root (`src/01`). Generated, because the class name does **not** encode the folder — `source_url( )` builds the GitHub link of the sample from it. |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
+
+**`keywords` comes from a plain comment line on the class**, the first line of
+the `*.clas.abap` (above an ABAP Doc block, if the class has one), lowercase and
+space-separated:
+
+```abap
+" @keywords f4 search help suggestion input dialog select
+CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
+```
+
+It is a plain `"` comment on purpose — an unknown `"! @tag` is reported by the
+extended check (SLIN/ATC). Put there what a newcomer would type but the visible
+text cannot hold: **synonyms** (`f4` for value help, `alv` for the grid table),
+**control names** the sample uses (`combobox`, `facetfilter`, `progressindicator`),
+and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
+`control_by_id`). Four to eight terms, no backticks. The line is optional — a
+sample without one is simply found by its header, sub and class name.
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its
@@ -400,6 +425,53 @@ line:
 When regenerating, **re-read every class's `<DESCRIPT>`** — the descriptions are
 maintained on the classes and change there, so never carry `header`/`sub` over
 from the old catalog.
+
+### The `header` is the category — pick one from this list
+
+With the whole catalog in a single package there is no group heading (§3), so
+the `header` **is** the category a reader sees, repeated down the page as the
+link text. It is also the cheapest search term: typing `popup` filters the
+list to the popup samples. Keep the set small, and keep every entry a word a
+newcomer would actually type:
+
+| Header | What belongs in it |
+|--------|--------------------|
+| `Basics I` … `IV` | the entry point — first app, lifecycle, the minimum loop. The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
+| `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
+| `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
+| `Control` | one UI5 control is the topic, incl. calling its methods by ID |
+| `CSS` | own styles shipped with the view |
+| `Device` | camera, geolocation, device model, frontend info |
+| `Event` | `_event( )`, `t_arg`, keyboard shortcuts, event defaults |
+| `File` | upload and download |
+| `Focus` / `Scroll` | cursor and scroll position |
+| `Formatter` | the curated JS formatters abap2UI5 ships |
+| `Grid Table` | `sap.ui.table.Table` — never `ui.Table` |
+| `List` / `Table` / `Tree` | `sap.m.List` / `sap.m.Table` / `sap.m.Tree` |
+| `Menu` / `Popover` / `Popup` | menus, popovers, dialogs |
+| `Message` | MessageBox, MessageToast, MessageView, message model |
+| `Navigation` | `nav_app_call( )` / `nav_app_leave( )` between apps |
+| `Nested View` | `nest_view_display( )`, FlexibleColumnLayout |
+| `Templating` | views generated at runtime (`template:repeat`) |
+| `Timer` | client timers driving the backend |
+
+**Do not invent a catch-all** (`More`, `Function`, `Misc`, `Other`) — those
+existed and were dissolved on 2026-08-13 because nobody searches for them. A
+new header is justified when at least two samples share a topic none of the
+above covers; add it to the table in the same change.
+
+Rules for the `sub`:
+
+- **Title Case, a short noun phrase**, max 60 characters for the whole
+  DESCRIPT — that is the hard limit of the ABAP class short text.
+- **Name the control or the API the sample is about** (`FlexibleColumnLayout`,
+  `SearchField`, `CustomTreeItem`, `setSizeLimit`, `nav_app_call`,
+  `template:repeat`). This is what makes the sample findable — the search
+  matches `header`, `sub` and the class name, nothing else.
+- **Do not echo the header** (`Control - Wizard Control`,
+  `Popup - Value Help with Popups`).
+- Describe **what the sample shows**, not the mechanism it happens to use, when
+  the two differ — a Menu demo is `Menu - …`, even if its point is `core:require`.
 
 ### Generation rules
 
@@ -1028,11 +1100,13 @@ new/edited samples stay consistent:
   product's category) use `description` — a left-aligned subtitle — instead; the
   far-right float looks disconnected on wide screens (fixed in `454`/`455`).
 
-- **The page title should carry the `<DESCRIPT>` text.** A user clicks a tile in
-  the overview (which shows the DESCRIPT) and the opened sample's
-  `page( title = … )` should name the same thing so it is recognisably the right
-  sample — e.g. `045` had a copy-pasted "Scroll Container" title on a "Backend
-  Filter" sample.
+- **The page title carries the `<DESCRIPT>` text**, in the form
+  `` `abap2UI5 - <DESCRIPT without the (A)/(C) marker>` `` — all 93 samples in
+  `src/01` follow it since 2026-08-13. A user clicks a tile in the overview
+  (which shows the DESCRIPT) and the opened sample must name the same thing, so
+  it is recognisably the right sample. Change the two together: renaming a
+  DESCRIPT without the page title puts them out of sync again (they had drifted
+  to "Focus II" and "Table Filters Reset after view Update").
 
 - **Start every view from `view->shell( )->page( … )`** (not `view->page( … )`)
   so all samples share the same outer frame (fixed in `143`).

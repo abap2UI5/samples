@@ -1,3 +1,4 @@
+" @keywords amount decimals leading zeros number format
 CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -26,7 +27,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
 
     ENDIF.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( title          = `abap2UI5 - Currency Format`
+         )->page( title          = `abap2UI5 - Binding - Currency Amounts (sap.ui.model.type.Currency)`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 

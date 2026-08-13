@@ -1,3 +1,4 @@
+" @keywords toast notification duration position animation
 CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -78,7 +79,7 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page(
-            title          = `abap2UI5 - Sample: Message Toast`
+            title          = `abap2UI5 - Message - MessageToast, Text and Duration`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

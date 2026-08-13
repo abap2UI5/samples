@@ -1,3 +1,4 @@
+" @keywords export save base64 attachment xstring document
 CLASS z2ui5_cl_smp_app_186 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -56,7 +57,7 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
 
     DATA(page) = view->shell(
          )->page(
-            title          = `abap2UI5 - File Download to the Frontend`
+            title          = `abap2UI5 - File - Download to the Browser`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

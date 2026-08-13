@@ -1,3 +1,4 @@
+" @keywords navcontainer dialog pages back forward
 CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -97,7 +98,7 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = `abap2UI5 - Popup To Popup`
+                title          = `abap2UI5 - Popup - Navigate between Dialogs (NavContainer)`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -1,3 +1,4 @@
+" @keywords cell enter row index event grid alv
 CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -104,7 +105,7 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
     DATA(page) = view->shell(
       )->page(
-        title          = `abap2UI5 - Event on cell level`
+        title          = `abap2UI5 - Grid Table - Events on Cell Level`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( )
         )->header_content(

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_053</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Table - Search via Backend</DESCRIPT>
+    <DESCRIPT>Table - Search in the Backend (SearchField)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

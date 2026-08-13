@@ -1,3 +1,4 @@
+" @keywords hierarchy nodes nested json items
 CLASS z2ui5_cl_smp_app_460 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -58,7 +59,7 @@ CLASS z2ui5_cl_smp_app_460 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Tree - nested model`
+            title          = `abap2UI5 - Tree - Nested ABAP Table in a sap.m.Tree`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

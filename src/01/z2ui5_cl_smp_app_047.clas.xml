@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_047</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Binding - Formatting Integers, Decimals, Dates &amp; Time</DESCRIPT>
+    <DESCRIPT>Binding - Types for Integer, Decimal, Date and Time</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

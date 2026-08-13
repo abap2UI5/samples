@@ -1,3 +1,4 @@
+" @keywords binding_call live search client side no roundtrip filter
 CLASS z2ui5_cl_smp_app_455 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -46,7 +47,7 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Binding Call - live filter, no roundtrip`
+            title          = `abap2UI5 - List - Live Filter on the Client, No Roundtrip`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

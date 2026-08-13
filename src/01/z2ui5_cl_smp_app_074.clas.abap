@@ -1,3 +1,4 @@
+" @keywords fileuploader base64 attachment import picture document
 CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -74,7 +75,7 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Upload a File`
+        title          = `abap2UI5 - File - Upload to the Backend`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 

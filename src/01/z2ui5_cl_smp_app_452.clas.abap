@@ -1,3 +1,4 @@
+" @keywords messagepopover messageitem dialog grouped message list
 CLASS z2ui5_cl_smp_app_452 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -129,7 +130,7 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Message - MessageView`
+            title          = `abap2UI5 - Message - MessageView and MessagePopover`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

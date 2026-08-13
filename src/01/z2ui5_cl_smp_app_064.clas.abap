@@ -1,3 +1,4 @@
+" @keywords progressindicator busy wait long running backend
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -122,7 +123,7 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
 
     temp5          = client->check_app_prev_stack( ).
     page1          = view->shell( )->page( id = `page_main`
-    title          = `abap2UI5 - Progress Bar while Server Request`
+    title          = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = temp5
     class          = `sapUiContentPadding` ).

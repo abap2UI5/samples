@@ -1,3 +1,4 @@
+" @keywords f4 search help suggestion input dialog select
 CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -164,7 +165,7 @@ CLASS z2ui5_cl_smp_app_009 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Value Help Examples`
+            title          = `abap2UI5 - Popup - Value Help: Suggestions and F4 Dialog`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

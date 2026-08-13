@@ -1,3 +1,4 @@
+" @keywords popup expand state hierarchy nodes
 CLASS z2ui5_cl_smp_app_462 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -107,7 +108,7 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Tree - inside a popup`
+            title          = `abap2UI5 - Tree - Inside a Dialog`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

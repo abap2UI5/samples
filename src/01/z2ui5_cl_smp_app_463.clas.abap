@@ -1,3 +1,4 @@
+" @keywords customtreeitem rename input two way write back
 CLASS z2ui5_cl_smp_app_463 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -78,7 +79,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Tree - editable nodes`
+            title          = `abap2UI5 - Tree - Editable Nodes with CustomTreeItem`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

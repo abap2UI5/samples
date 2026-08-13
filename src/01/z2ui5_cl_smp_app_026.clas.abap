@@ -1,3 +1,4 @@
+" @keywords placement anchor button confirm cancel popover_display
 CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -83,7 +84,7 @@ CLASS z2ui5_cl_smp_app_026 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popover Examples`
+            title          = `abap2UI5 - Popover - Basic Example with Placement`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

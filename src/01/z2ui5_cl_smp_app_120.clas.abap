@@ -1,3 +1,4 @@
+" @keywords gps position latitude longitude altitude location
 CLASS z2ui5_cl_smp_app_120 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -65,7 +66,7 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
 
     DATA(page) = view->shell(
           )->page(
-                  title          = `abap2UI5 - Geolocation`
+                  title          = `abap2UI5 - Device - Geolocation from the Browser`
                   navbuttonpress = client->_event_nav_app_leave( )
                   shownavbutton  = client->check_app_prev_stack( ) ).
 

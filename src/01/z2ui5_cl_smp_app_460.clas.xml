@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_460</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Tree - Simple</DESCRIPT>
+    <DESCRIPT>Tree - Nested ABAP Table in a sap.m.Tree</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

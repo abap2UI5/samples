@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_059</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Table - Live Search via Backend</DESCRIPT>
+    <DESCRIPT>Table - Live Search with Parallel Requests</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

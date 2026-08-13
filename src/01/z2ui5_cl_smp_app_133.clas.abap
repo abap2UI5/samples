@@ -1,3 +1,4 @@
+" @keywords cursor set_focus selection position textfield
 CLASS z2ui5_cl_smp_app_133 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -27,7 +28,7 @@ CLASS z2ui5_cl_smp_app_133 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Focus`
+            title          = `abap2UI5 - Focus - Set Focus and Select Text in an Input`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

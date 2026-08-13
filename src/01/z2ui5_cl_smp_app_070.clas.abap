@@ -1,3 +1,4 @@
+" @keywords grid alv dynamicpage column row action currency search sort filter
 CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -139,7 +140,7 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->shell( )->page( id = `page_main`
-            title                = `abap2UI5 - sap.ui.table.Table Features`
+            title                = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( )
             class                = `sapUiContentPadding` ).

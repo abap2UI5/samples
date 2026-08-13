@@ -1,3 +1,4 @@
+" @keywords initial render one roundtrip anchor button
 "! View and popover in ONE roundtrip: view_display( ) and popover_display( )
 "! from the same main( ) call. The popover anchors to a button of the view
 "! that is built in this very response - the framework runs the display
@@ -53,7 +54,7 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popover - opened with the view build`
+            title          = `abap2UI5 - Popover - Open Together with the View Build`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

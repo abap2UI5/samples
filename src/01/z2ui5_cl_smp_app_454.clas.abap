@@ -1,3 +1,4 @@
+" @keywords binding_call getbinding sorter filter follow_up_action
 CLASS z2ui5_cl_smp_app_454 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -82,7 +83,7 @@ CLASS z2ui5_cl_smp_app_454 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Binding Call - filter and sort`
+            title          = `abap2UI5 - List - Filter and Sort the Binding from ABAP`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_197</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Event - Facet Filter t_arg with Objects</DESCRIPT>
+    <DESCRIPT>Event - Control Objects in t_arg (FacetFilter)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

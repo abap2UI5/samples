@@ -1,3 +1,4 @@
+" @keywords reload refresh restart location_reload url
 CLASS z2ui5_cl_smp_app_492 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -23,7 +24,7 @@ CLASS z2ui5_cl_smp_app_492 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = `abap2UI5 - Reload Page`
+              title          = `abap2UI5 - Browser - Reload the Page`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -1,3 +1,4 @@
+" @keywords nest_view_display rerender model refresh sub view
 CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -20,7 +21,7 @@ CLASS z2ui5_cl_smp_app_065 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell(
         )->page(
-                title          = `abap2UI5 - Nested Views - Basic Example`
+                title          = `abap2UI5 - Nested View - Basic Example (nest_view_display)`
                 id             = `test`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( )

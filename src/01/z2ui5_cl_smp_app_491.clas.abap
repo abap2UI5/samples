@@ -1,3 +1,4 @@
+" @keywords favicon icon tab image data uri
 CLASS z2ui5_cl_smp_app_491 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -19,7 +20,7 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = `abap2UI5 - Change Browser Favicon`
+              title          = `abap2UI5 - Browser - Set the Tab Favicon`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

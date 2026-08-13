@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_006</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Table - Table with ScrollContainer</DESCRIPT>
+    <DESCRIPT>Table - Large Table with Growing and ScrollContainer</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

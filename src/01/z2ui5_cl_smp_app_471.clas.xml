@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_471</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Function - Keyboard Shortcuts (A)</DESCRIPT>
+    <DESCRIPT>Event - Keyboard Shortcuts, Ctrl+S (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

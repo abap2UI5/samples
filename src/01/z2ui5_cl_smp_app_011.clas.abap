@@ -1,3 +1,4 @@
+" @keywords edit input add row delete multiselect toolbar
 CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -35,7 +36,7 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Tables and editable`
+            title          = `abap2UI5 - Table - Editable Cells, Add and Delete Rows`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             id             = `test2` ).

@@ -1,3 +1,4 @@
+" @keywords url policy link security validator relative allow deny
 CLASS z2ui5_cl_smp_app_474 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -76,7 +77,7 @@ CLASS z2ui5_cl_smp_app_474 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - MessagePopover URL Policy`
+            title          = `abap2UI5 - Message - MessagePopover URL Policy`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

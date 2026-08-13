@@ -1,3 +1,4 @@
+" @keywords cell input internal table row field level
 CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -26,7 +27,7 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = `abap2UI5 - Binding Cell Level`
+                title          = `abap2UI5 - Binding - Single Table Cell (tab_index)`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

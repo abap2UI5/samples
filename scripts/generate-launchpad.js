@@ -12,9 +12,13 @@
  *   1. Scan every demo app class under src/ and read its abapGit <DESCRIPT>
  *      short text and the CTEXT of the subpackage it lives in.
  *   2. Derive each tile from that:
- *        - group  = subpackage CTEXT
- *        - header = DESCRIPT part before the first " - "
- *        - sub    = DESCRIPT part after the first " - " (empty if none)
+ *        - group    = subpackage CTEXT
+ *        - header   = DESCRIPT part before the first " - "
+ *        - sub      = DESCRIPT part after the first " - " (empty if none)
+ *        - keywords = the class's " @keywords ... comment line (optional),
+ *                     searched but never rendered
+ *        - path     = the class's folder relative to the repository root, for
+ *                     the source-code link on GitHub
  *      Apps whose header is "ZZZ" are helper apps (called only by other apps)
  *      and are skipped.
  *   3. Rewrite the result = VALUE #( ... ) block of get_catalog( ) in the
@@ -137,7 +141,15 @@ for (const abap of walk(SRC)) {
   // the 60-char DESCRIPT
   // the Rebuild line may be preceded by marker lines (e.g. the generated-port
   // marker), hence the multiline match
-  const doc = fs.readFileSync(abap, 'utf8')
+  const source = fs.readFileSync(abap, 'utf8');
+
+  // extra search terms, taken from the class's " @keywords line - they widen
+  // the overview's search without lengthening anything that is rendered
+  // (AGENTS.md §4). Plain comment, not ABAP Doc: an unknown "! @tag is
+  // reported by the extended check.
+  const keywords = (source.match(/^" @keywords (.+?)\r?$/m) || [, ''])[1].trim();
+
+  const doc = source
     .match(/^"! Rebuild of the UI5 demo kit sample: \S+\r?\n((?:"! .*\r?\n)+)/m);
   if (doc) {
     sub = doc[1].split(/\r?\n/)
@@ -156,8 +168,14 @@ for (const abap of walk(SRC)) {
   }
 
   if ((header + sub).includes('`')) throw new Error(`backtick in DESCRIPT of ${cls}`);
+  if (keywords.includes('`')) throw new Error(`backtick in @keywords of ${cls}`);
 
-  tiles[area].push({ subnum, group, header, sub, app: cls });
+  // repository-relative folder of the class, so the overview can link the
+  // source on GitHub - the class name does not encode the folder
+  // (FOLDER_LOGIC=PREFIX), so only the generator knows where a sample lives
+  const dir = ['src', area, ...rel.slice(1, -1)].join('/');
+
+  tiles[area].push({ subnum, group, header, sub, keywords, path: dir, app: cls });
 }
 
 // --- 2. sort --------------------------------------------------------------
@@ -184,21 +202,28 @@ function rewrite(file, list) {
   // ABAP sources are limited to 255 characters per line — longer lines break
   // the abapGit import ("Literals across more than one line are not allowed")
   const MAX_LINE = 255;
-  const rows = list.map((t) => {
-    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\` app = \`${t.app}\` )`;
-    if (one.length <= MAX_LINE) return one;
-    // split the sub literal into && chunks so no line exceeds the limit
-    const subIndent = `${indent}  `;
-    const contIndent = `${subIndent}      `; // aligns under the first chunk's opening backtick
+  // one field on its own line(s), the literal split into && chunks so no line
+  // exceeds the limit; continuation lines align under the opening backtick
+  const chunked = (name, value, fieldIndent) => {
+    const first = `${fieldIndent}${name} = `;
+    const contIndent = ' '.repeat(first.length);
     const chunkSize = MAX_LINE - contIndent.length - 6;
     const chunks = [];
-    for (let s = t.sub; s.length; s = s.slice(chunkSize)) chunks.push(s.slice(0, chunkSize));
-    const subLines = chunks.map((c, i) =>
-      `${i === 0 ? `${subIndent}sub = ` : contIndent}\`${c}\`${i < chunks.length - 1 ? ' &&' : ''}`);
+    for (let s = value; s.length; s = s.slice(chunkSize)) chunks.push(s.slice(0, chunkSize));
+    if (chunks.length === 0) chunks.push('');
+    return chunks.map((c, i) =>
+      `${i === 0 ? first : contIndent}\`${c}\`${i < chunks.length - 1 ? ' &&' : ''}`);
+  };
+  const rows = list.map((t) => {
+    const kw = t.keywords ? ` keywords = \`${t.keywords}\`` : '';
+    const one = `${indent}( group = \`${t.group}\` header = \`${t.header}\` sub = \`${t.sub}\`${kw} path = \`${t.path}\` app = \`${t.app}\` )`;
+    if (one.length <= MAX_LINE) return one;
+    const fieldIndent = `${indent}  `;
     return [
       `${indent}( group = \`${t.group}\` header = \`${t.header}\``,
-      ...subLines,
-      `${subIndent}app = \`${t.app}\` )`,
+      ...chunked('sub', t.sub, fieldIndent),
+      ...(t.keywords ? chunked('keywords', t.keywords, fieldIndent) : []),
+      `${fieldIndent}path = \`${t.path}\` app = \`${t.app}\` )`,
     ].join('\n');
   });
   // the last row additionally closes the constructor + statement

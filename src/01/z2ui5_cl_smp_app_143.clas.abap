@@ -1,3 +1,4 @@
+" @keywords column filter reset refresh uitableext grid alv
 CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -57,7 +58,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page1) = view->shell( )->page( id = `page_main`
-            title                = `Table Filters Reset after view Update`
+            title                = `abap2UI5 - Grid Table - Keep Column Filters on Refresh`
             class                = `sapUiContentPadding`
             navbuttonpress       = client->_event_nav_app_leave( )
             shownavbutton        = client->check_app_prev_stack( ) ).

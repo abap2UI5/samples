@@ -1,3 +1,4 @@
+" @keywords icon glyph placeholder text status expandinlineicons
 CLASS z2ui5_cl_smp_app_466 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -47,7 +48,7 @@ CLASS z2ui5_cl_smp_app_466 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - MessageStrip - inline icons via Formatter`
+            title          = `abap2UI5 - Formatter - Inline Icons in a Text`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_454</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>List - Frontend Filter/Sort via Backend Event (A)</DESCRIPT>
+    <DESCRIPT>List - Filter and Sort the Binding from ABAP (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -1,3 +1,4 @@
+" @keywords document.title tab caption headline set_title
 CLASS z2ui5_cl_smp_app_125 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -21,7 +22,7 @@ CLASS z2ui5_cl_smp_app_125 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = `abap2UI5 - Change Browser Title`
+              title          = `abap2UI5 - Browser - Set the Tab Title`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

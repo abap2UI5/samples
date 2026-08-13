@@ -1,3 +1,4 @@
+" @keywords generic data reference create data ddic dynamic itab
 CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -23,7 +24,7 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = `abap2UI5 - Generic Data Reference`
+                title          = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_470</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Popup - Aggregation binding to the selected row (A)</DESCRIPT>
+    <DESCRIPT>Popup - Element Binding to the Selected Row (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -1,3 +1,4 @@
+" @keywords type conversion sum amount number field
 CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -52,7 +53,7 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-                title          = `abap2UI5 - Integer and Decimals`
+                title          = `abap2UI5 - Binding - Types for Integer, Decimal, Date and Time`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

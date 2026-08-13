@@ -1,3 +1,4 @@
+" @keywords table cell column row aggregation set_focus
 CLASS z2ui5_cl_smp_app_421 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -99,7 +100,7 @@ CLASS z2ui5_cl_smp_app_421 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Focus a Table Cell`
+            title          = `abap2UI5 - Focus - Focus a Table Cell by Column and Row`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -1,3 +1,4 @@
+" @keywords quickview contact card links grouped fields
 CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -70,7 +71,7 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popover Quickview Examples`
+            title          = `abap2UI5 - Popover - QuickView Contact Card`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

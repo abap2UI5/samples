@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_452</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Message - MessageView (A)</DESCRIPT>
+    <DESCRIPT>Message - MessageView and MessagePopover (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

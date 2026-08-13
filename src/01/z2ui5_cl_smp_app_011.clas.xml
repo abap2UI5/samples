@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_011</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Table - Editable</DESCRIPT>
+    <DESCRIPT>Table - Editable Cells, Add and Delete Rows</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

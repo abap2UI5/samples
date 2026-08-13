@@ -1,3 +1,4 @@
+" @keywords sub app class embed instantiate another app rtti
 CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -81,7 +82,7 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
        )->page(
-          title          = `abap2UI5 - Nested Views - Sub-App`
+          title          = `abap2UI5 - Nested View - Embed Another App's View`
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 
