@@ -35,6 +35,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
       BEGIN OF cs_event,
         search TYPE string VALUE `SEARCH`,
         nav    TYPE string VALUE `NAV_APP`,
+        info   TYPE string VALUE `INFO`,
       END OF cs_event.
 
     " the three sample repositories and the framework, in the order the shared
@@ -74,15 +75,29 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         classname TYPE string.
     METHODS scroll_restore.
     METHODS view_display.
-    "! The header every abap2UI5 overview app shares: one icon button per
-    "! sibling repository - it jumps into that repository's overview app when
-    "! the app is on this system and opens the repository on GitHub when it is
-    "! not - followed by the documentation and this repository. The entry of
-    "! the repository you are looking at stays visible but disabled, so the
-    "! header reads the same everywhere.
+    "! The first header row, a Bar in the page's CUSTOM HEADER so the family
+    "! links can sit in the middle - the stock page header offers its
+    "! HEADER_CONTENT on the right only. Left the app title and, inside a call
+    "! stack, the back button the stock header would render on its own; in the
+    "! middle one icon button per repository of the abap2UI5 family - it jumps
+    "! into that repository's overview app when the app is on this system and
+    "! opens the repository on GitHub when it is not, and the entry of the
+    "! repository you are looking at stays visible but disabled; on the right
+    "! what leaves the system: the documentation and this repository.
     METHODS render_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
+    "! The second header row: the filter over the tile list and the button that
+    "! shows the intro text. The text used to sit above the list as a
+    "! MessageStrip and pushed the first samples off the screen - behind a
+    "! button it is there when it is wanted and gone the rest of the time.
+    METHODS render_sub_header
+      IMPORTING
+        page TYPE REF TO z2ui5_cl_xml_view.
+    METHODS info_display.
+    METHODS info_text
+      RETURNING
+        VALUE(result) TYPE string.
     METHODS header_button
       IMPORTING
         toolbar   TYPE REF TO z2ui5_cl_xml_view
@@ -192,6 +207,9 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         " a header button - the app to jump to travels as the event argument
         app_call( client->get_event_arg( ) ).
 
+      WHEN cs_event-info.
+        info_display( ).
+
       WHEN OTHERS.
 
         " a tile - the event IS the class name of the sample
@@ -240,24 +258,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page(
-        id             = `page`
-        title          = `abap2UI5 - Samples`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    " title and back button come with the custom header (render_header), not
+    " with the page - a Page renders either its own header or a custom one
+    DATA(page) = view->shell( )->page( id = `page` ).
 
     render_header( page ).
-
-    page->message_strip(
-        text     = |All { lines( t_catalog_all ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
-                   `and framework actions. Filter with the search field in the header, select a link to open ` &&
-                   `a sample, the back button returns here. New to abap2UI5? Start with the Basics at the top. ` &&
-                   `The source-code icon behind a sample opens its ABAP class on GitHub, and Ctrl+F12 ` &&
-                   `opens the abap2UI5 Developer Tools - in this overview and inside every sample. ` &&
-                   `Markers: (A) frontend action, (C) custom control.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+    render_sub_header( page ).
 
     DATA(show_groups) = group_titles_needed( t_catalog ).
     DATA(prev_group) = ``.
@@ -342,58 +348,118 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD render_header.
 
-    DATA(toolbar) = page->header_content( ).
+    DATA(bar) = page->custom_header( )->bar( ).
 
-    " the filter sits in the header, not above the list: it stays in place while
-    " the list below it grows and shrinks
-    toolbar->search_field(
-        id          = `search`
-        value       = client->_bind( search )
-        search      = client->_event( cs_event-search )
-        width       = `14rem`
-        placeholder = `Filter samples`
-        class       = `sapUiTinyMarginEnd` ).
+    " left: what the stock page header would render on its own
+    DATA(left) = bar->content_left( ).
 
-    header_button( toolbar = toolbar
+    left->button( icon    = `sap-icon://nav-back`
+                  type    = `Transparent`
+                  tooltip = `Back`
+                  visible = client->check_app_prev_stack( )
+                  press   = client->_event_nav_app_leave( ) ).
+
+    left->title( text  = `abap2UI5 - Samples`
+                 level = `H2` ).
+
+    " middle: the abap2UI5 family, one button per repository
+    DATA(middle) = bar->content_middle( ).
+
+    header_button( toolbar = middle
                    icon    = `sap-icon://home`
                    tooltip = `abap2UI5 - the start page of the framework`
                    class   = cs_class-startup
                    href    = cs_url-framework ).
 
-    header_button( toolbar = toolbar
+    header_button( toolbar = middle
                    icon    = `sap-icon://lightbulb`
                    tooltip = `Samples - binding, events, popups, tables and much more`
                    class   = cs_class-samples
                    href    = cs_url-samples
                    here    = abap_true ).
 
-    header_button( toolbar   = toolbar
+    header_button( toolbar   = middle
                    icon      = `sap-icon://palette`
                    tooltip   = `Controls - the UI5 Demo Kit, rebuilt with abap2UI5`
                    class     = cs_class-controls
                    class_old = cs_class-controls_old
                    href      = cs_url-controls ).
 
-    header_button( toolbar = toolbar
+    header_button( toolbar = middle
                    icon    = `sap-icon://database`
                    tooltip = `Stack - OData, RAP, WebSockets and the Fiori Launchpad`
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
-    " the four repository buttons above lead to an app, the two links below
-    " lead out of the system - a gap tells the two groups apart
-    toolbar->toolbar_spacer( width = `1rem` ).
+    " right: the two entries that leave the system
+    DATA(right) = bar->content_right( ).
 
-    header_button( toolbar = toolbar
+    header_button( toolbar = right
                    icon    = `sap-icon://learning-assistant`
                    tooltip = `Documentation - guides, tutorials and the API reference`
                    href    = cs_url-docs ).
 
     " not source-code: that icon now belongs to the per-sample links in the list
-    header_button( toolbar = toolbar
+    header_button( toolbar = right
                    icon    = `sap-icon://chain-link`
                    tooltip = `GitHub - the source code of this repository`
                    href    = cs_url-samples ).
+
+  ENDMETHOD.
+
+
+  METHOD render_sub_header.
+
+    DATA(toolbar) = page->sub_header( )->overflow_toolbar( ).
+
+    " the filter sits in the header, not above the list: it stays in place
+    " while the list below it grows and shrinks
+    toolbar->search_field(
+        id          = `search`
+        value       = client->_bind( search )
+        search      = client->_event( cs_event-search )
+        width       = `17.5rem`
+        placeholder = `Filter samples` ).
+
+    toolbar->toolbar_spacer( ).
+
+    " the anchor of the popover in info_display( ) - hence the id
+    toolbar->button(
+        id      = `info`
+        text    = `Info`
+        icon    = `sap-icon://hint`
+        type    = `Transparent`
+        tooltip = `What this page shows and how to use it`
+        press   = client->_event( cs_event-info ) ).
+
+  ENDMETHOD.
+
+
+  METHOD info_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+
+    view->popover(
+            title        = `About this overview`
+            placement    = `Bottom`
+            contentwidth = `30rem`
+        )->vbox( `sapUiSmallMargin`
+            )->text( info_text( ) ).
+
+    client->popover_display( xml   = view->stringify( )
+                             by_id = `info` ).
+
+  ENDMETHOD.
+
+
+  METHOD info_text.
+
+    result = |All { lines( get_catalog( ) ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
+             `and framework actions. Filter with the search field in the second header row, select a link ` &&
+             `to open a sample, the back button returns here. New to abap2UI5? Start with the Basics at ` &&
+             `the top. The source-code icon behind a sample opens its ABAP class on GitHub, and Ctrl+F12 ` &&
+             `opens the abap2UI5 Developer Tools - in this overview and inside every sample. ` &&
+             `Markers: (A) frontend action, (C) custom control.`.
 
   ENDMETHOD.
 

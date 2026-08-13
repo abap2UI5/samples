@@ -247,16 +247,39 @@ opens **that sample's ABAP class on GitHub** (`source_url( )` over the tile's
 `Button`: a `Button` brings its own height (2rem even in compact density) and
 would set the line height of every row, while the icon is as tall as the text
 beside it — which is what keeps the list tight. Around that list it renders a
-fixed frame: the **shared overview header** in the page's `header_content( )`
-(see below), an intro `MessageStrip` naming the tile count, the source-code
-icon, the **Ctrl+F12** developer tools and the `(A)` / `(C)` markers, and an
-empty `vbox( height = 4rem )` after the last tile so the list does not end
-glued to the page bottom. The `SearchField` is **part of the header**, ahead of
-the icon buttons — it stays in place while the list below it grows and shrinks.
+fixed frame: **two header rows** (below) and an empty `vbox( height = 4rem )`
+after the last tile so the list does not end glued to the page bottom.
+
+### The two header rows
+
+The page carries no content header of its own — both rows are built by hand:
+
+1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, because
+   the stock page header offers its `header_content( )` on the **right** only
+   and the family links belong in the middle:
+   - `contentLeft` — the app title and the back button, i.e. exactly what the
+     stock header would render on its own. A `Page` renders either its own
+     header or a custom one, so `title` / `navbuttonpress` / `shownavbutton`
+     are gone from the `page( )` call and the back `Button`
+     (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
+     `press = _event_nav_app_leave( )`) is built here.
+   - `contentMiddle` — the four repository buttons of the abap2UI5 family.
+   - `contentRight` — the two entries that leave the system: documentation
+     and GitHub.
+2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader`: the
+   `SearchField` on the left (it stays in place while the list below it grows
+   and shrinks), a `ToolbarSpacer`, and an **Info** button on the right.
+
+The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
+tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
+any more: it lives in `info_text( )` and `info_display( )` shows it in a
+`Popover` anchored to that Info button (`popover_display( by_id = 'info' )`,
+hence the button's `id`). Permanently on the page it pushed the first samples
+off the screen; behind a button it is there when it is wanted.
 
 ### The shared overview header
 
-Every abap2UI5 overview app renders the **same** header — here
+Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
 [samples-stack](https://github.com/abap2UI5/samples-stack). Six transparent
@@ -272,10 +295,19 @@ icon buttons, always in this order, each carrying its explanation as a tooltip:
 | `sap-icon://chain-link` | — | the repository the app itself lives in |
 
 The first four entries lead to an app **inside** the system, the last two lead
-out of it, so a `ToolbarSpacer` (`width = 1rem`) separates the two groups. The
+out of it, and every overview shows that split — this one by putting the four
+into the header Bar's `contentMiddle` and the two into its `contentRight`
+(above), samples-controls and samples-stack by a `ToolbarSpacer`
+(`width = 1rem`) between the groups in their single-row `headerContent`. The
 GitHub entry is **not** `sap-icon://source-code`: in the shared header that
 icon is reserved for the per-sample source links an overview renders in its
 list.
+
+**What is shared is the entry list, its order and its behaviour — not the
+layout.** This overview arranges the buttons in a two-row custom header
+(above); the other two keep the single `header_content( )` row. A change to
+the icons, the order or the press behaviour belongs in all three repositories
+in the same change; a change to this repository's row layout does not.
 
 Each repository is installed on its own, so every button decides for itself:
 `class_installed( )` instantiates the target class, and
@@ -308,7 +340,7 @@ applied — a case-insensitive contains-match against each tile's `header`, `sub
 `keywords` (never rendered, §4) and `app` class name — and then replays the
 focus into the search field via a
 `set_focus` follow-up action with the cursor at the end, so typing can continue.
-The `MessageStrip` keeps naming the **total** tile count (the unfiltered
+The info popover keeps naming the **total** tile count (the unfiltered
 catalog), an empty filter result renders a `No sample matches the filter.` text
 instead of tiles, and the filter value survives navigation into a sample and
 back (it is a serialized public attribute).
