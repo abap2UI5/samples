@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Read Frontend Info`
+            title          = `abap2UI5 - Device - Frontend Info: UI5 Version, Theme, OS, Browser`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_161</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Popup - Popup in Popup - Backend Stack Handling</DESCRIPT>
+    <DESCRIPT>Popup - Dialog inside a Dialog</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

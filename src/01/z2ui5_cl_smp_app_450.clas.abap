@@ -49,7 +49,7 @@ CLASS z2ui5_cl_smp_app_450 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Formatter - ABAP date strings`
+            title          = `abap2UI5 - Formatter - ABAP Date and Time Strings (DATS/TIMS)`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

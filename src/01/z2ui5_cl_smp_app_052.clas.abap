@@ -68,7 +68,7 @@ CLASS z2ui5_cl_smp_app_052 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(page) = view->shell( )->page( id = `page_main`
-            title               = `abap2UI5 - Popover on Table Item Level`
+            title               = `abap2UI5 - Popover - Open from a Table Row`
             navbuttonpress      = client->_event_nav_app_leave( )
             shownavbutton       = client->check_app_prev_stack( ) ).
 

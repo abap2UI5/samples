@@ -44,7 +44,7 @@ CLASS z2ui5_cl_smp_app_352 IMPLEMENTATION.
 
     DATA(page) = view->shell(
              )->page(
-                 title          = `abap2UI5 - Softkeyboard on/off`
+                 title          = `abap2UI5 - Browser - Soft Keyboard Mode on Mobile`
                  navbuttonpress = client->_event_nav_app_leave( )
                  shownavbutton  = client->check_app_prev_stack( ) ).
 

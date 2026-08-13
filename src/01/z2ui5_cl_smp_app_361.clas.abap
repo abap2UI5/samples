@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_361 IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(page) = view->shell(
           )->page(
-              title          = `abap2UI5 - System Logout`
+              title          = `abap2UI5 - Browser - Logout from the Client`
               navbuttonpress = client->_event_nav_app_leave( )
               shownavbutton  = client->check_app_prev_stack( ) ).
 

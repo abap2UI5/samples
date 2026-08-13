@@ -90,7 +90,7 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Device Model`
+            title          = `abap2UI5 - Device - Device Model: Phone, Tablet, Desktop`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

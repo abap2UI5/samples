@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_450</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Formatter - ABAP date strings (DATS/TIMS)</DESCRIPT>
+    <DESCRIPT>Formatter - ABAP Date and Time Strings (DATS/TIMS)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

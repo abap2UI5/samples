@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_327</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Browser - Storage Local/Session (A,C)</DESCRIPT>
+    <DESCRIPT>Browser - Local and Session Storage (A,C)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

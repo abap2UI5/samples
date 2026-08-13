@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_070</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>ui.Table - Full Example</DESCRIPT>
+    <DESCRIPT>Grid Table - Full Example with sap.ui.table</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

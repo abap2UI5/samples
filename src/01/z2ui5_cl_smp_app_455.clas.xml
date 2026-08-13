@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_455</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>List - Frontend Live Filter without Backend (A)</DESCRIPT>
+    <DESCRIPT>List - Live Filter on the Client, No Roundtrip (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

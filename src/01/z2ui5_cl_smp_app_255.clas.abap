@@ -71,7 +71,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
     DATA(page) = view->shell(
          )->page(
-            title          = `abap2UI5 - Flex Box - Navigation Examples`
+            title          = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

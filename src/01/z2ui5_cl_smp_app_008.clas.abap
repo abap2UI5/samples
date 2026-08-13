@@ -63,7 +63,7 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Messages`
+            title          = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(

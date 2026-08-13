@@ -67,7 +67,7 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Model - Set Size Limit`
+            title          = `abap2UI5 - Binding - Model setSizeLimit for Large Tables`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

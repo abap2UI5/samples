@@ -31,7 +31,7 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
             )->page(
-                title          = `abap2UI5 - Table with different Selection Modes`
+                title          = `abap2UI5 - Table - Selection Modes: Single and Multi Select`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

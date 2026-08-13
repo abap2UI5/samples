@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_470 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-            title          = `abap2UI5 - Popup - Aggregation binding to the selected row`
+            title          = `abap2UI5 - Popup - Element Binding to the Selected Row`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

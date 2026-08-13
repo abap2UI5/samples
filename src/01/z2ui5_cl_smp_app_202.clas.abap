@@ -23,7 +23,7 @@ CLASS z2ui5_cl_smp_app_202 IMPLEMENTATION.
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
 
     lr_view        = lr_view->shell( )->page( id = `page_main`
-    title          = `abap2UI5 - Demo Wizard Control`
+    title          = `abap2UI5 - Control - Wizard with Steps`
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = client->check_app_prev_stack( ) ).
 

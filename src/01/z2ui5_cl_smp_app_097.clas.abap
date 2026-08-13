@@ -72,7 +72,7 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
        )->page(
-          title          = `abap2UI5 - Master Detail Page with Nested View`
+          title          = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`
           navbuttonpress = client->_event_nav_app_leave( )
           shownavbutton  = client->check_app_prev_stack( ) ).
 

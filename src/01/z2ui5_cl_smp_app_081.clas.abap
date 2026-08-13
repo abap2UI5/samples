@@ -89,7 +89,7 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Popover with List`
+            title          = `abap2UI5 - Popover - Select from a List`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

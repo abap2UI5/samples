@@ -43,7 +43,7 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
     DATA(page) = lo_view->shell(
         )->page(
-                title          = `abap2UI5 - Templating - Nested Views`
+                title          = `abap2UI5 - Templating - Dynamic Content in a Nested View`
                 id             = `test`
                 navbuttonpress = i_client->_event_nav_app_leave( )
                 shownavbutton  = i_client->check_app_prev_stack( ) ).

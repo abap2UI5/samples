@@ -42,7 +42,7 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
     view           = view->shell( )->page( id    = `page_main`
     class          = `sapUiContentPadding`
-    title          = `abap2UI5 - Sample Templating I`
+    title          = `abap2UI5 - Templating - Build Columns Dynamically (template:repeat)`
     navbuttonpress = client->_event_nav_app_leave( )
     shownavbutton  = client->check_app_prev_stack( ) ).
 

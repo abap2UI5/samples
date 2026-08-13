@@ -37,7 +37,7 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory(
                    )->shell(
                    )->page(
-                      title          = `abap2UI5 - data loss protection`
+                      title          = `abap2UI5 - Navigation - Data Loss Protection on Leaving`
                       navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( ) ).
 

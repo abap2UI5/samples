@@ -91,7 +91,7 @@ CLASS z2ui5_cl_smp_app_028 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - CL_GUI_TIMER - Monitor`
+            title          = `abap2UI5 - Timer - Refresh the View Every n Seconds`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

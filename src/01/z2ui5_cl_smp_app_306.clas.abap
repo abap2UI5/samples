@@ -70,7 +70,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
     DATA(cont) = view->shell( ).
-    DATA(page) = cont->page( title          = `abap2UI5 - Device Camera Picture`
+    DATA(page) = cont->page( title          = `abap2UI5 - Device - Camera, Take Photos`
                              navbuttonpress = client->_event_nav_app_leave( )
                              shownavbutton  = client->check_app_prev_stack( ) ).
 

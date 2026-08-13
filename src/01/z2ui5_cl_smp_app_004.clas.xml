@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_004</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Event - Handle events &amp; change the view</DESCRIPT>
+    <DESCRIPT>Basics - First App: Events, Views and Roundtrips</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

@@ -108,7 +108,7 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Keyboard Shortcuts`
+            title          = `abap2UI5 - Event - Keyboard Shortcuts, Ctrl+S`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

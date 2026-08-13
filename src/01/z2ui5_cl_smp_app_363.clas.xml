@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_363</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Scroll - Scroll into view (A)</DESCRIPT>
+    <DESCRIPT>Scroll - Scroll a Control into View (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

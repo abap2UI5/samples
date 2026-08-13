@@ -102,7 +102,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Storage`
+    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Browser - Local and Session Storage`
                                        navbuttonpress = client->_event_nav_app_leave( )
                                        shownavbutton  = client->check_app_prev_stack( ) ).
 

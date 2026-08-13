@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_189</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Focus - Jump with the focus (A)</DESCRIPT>
+    <DESCRIPT>Focus - Jump to the Next Input on Enter (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

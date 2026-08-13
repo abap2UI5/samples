@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_067</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Binding - Formatting Currencies</DESCRIPT>
+    <DESCRIPT>Binding - Currency Amounts (sap.ui.model.type.Currency)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

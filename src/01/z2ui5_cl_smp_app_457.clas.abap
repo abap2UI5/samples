@@ -41,7 +41,7 @@ CLASS z2ui5_cl_smp_app_457 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Formatter - Date object minimal`
+            title          = `abap2UI5 - Formatter - Date Object for the DatePicker`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

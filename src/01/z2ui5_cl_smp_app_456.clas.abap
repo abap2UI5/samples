@@ -66,7 +66,7 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Formatter - Date objects for the PlanningCalendar`
+            title          = `abap2UI5 - Formatter - Date Objects for the PlanningCalendar`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

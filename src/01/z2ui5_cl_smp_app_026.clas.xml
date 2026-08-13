@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_026</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Popover - Simple Example</DESCRIPT>
+    <DESCRIPT>Popover - Basic Example with Placement</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

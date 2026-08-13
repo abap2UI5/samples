@@ -88,7 +88,7 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Scroll Container with Table and Toolbar`
+            title          = `abap2UI5 - Table - Large Table with Growing and ScrollContainer`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

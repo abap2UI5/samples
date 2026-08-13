@@ -79,7 +79,7 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - flow logic - APP 01`
+            title          = `abap2UI5 - Navigation - Call and Leave Apps (nav_app_call)`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

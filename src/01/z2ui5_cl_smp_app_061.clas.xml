@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_061</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>More - Generic Data Reference</DESCRIPT>
+    <DESCRIPT>Binding - Dynamic Table Typed at Runtime (RTTI)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

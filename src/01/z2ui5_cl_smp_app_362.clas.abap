@@ -113,7 +113,7 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
     DATA(page) = view->shell(
         )->page(
             id             = `id_page`
-            title          = `scroll_to - set & restore scroll position`
+            title          = `abap2UI5 - Scroll - Scroll to a Pixel Position`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

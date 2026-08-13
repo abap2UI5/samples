@@ -51,7 +51,7 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - PDF Viewer - Display via CONTROL_BY_ID`
+            title          = `abap2UI5 - Control - Open the PDF Viewer by ID`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

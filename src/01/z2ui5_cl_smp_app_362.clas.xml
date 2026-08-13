@@ -5,7 +5,7 @@
    <VSEOCLASS>
     <CLSNAME>Z2UI5_CL_SMP_APP_362</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Scroll - Scroll to position (A)</DESCRIPT>
+    <DESCRIPT>Scroll - Scroll to a Pixel Position (A)</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

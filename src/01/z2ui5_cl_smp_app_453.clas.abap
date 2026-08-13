@@ -113,7 +113,7 @@ CLASS z2ui5_cl_smp_app_453 IMPLEMENTATION.
     " field the backend already finished
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Formatter - thin frontend`
+            title          = `abap2UI5 - Formatter - When Not to Use One: Compute in ABAP`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

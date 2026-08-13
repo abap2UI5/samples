@@ -59,7 +59,7 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
         )->page(
-            title          = `abap2UI5 - Table - Backend Filter`
+            title          = `abap2UI5 - Table - Filter Rows in the Backend`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( )
             )->header_content(

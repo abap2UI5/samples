@@ -23,7 +23,7 @@ CLASS z2ui5_cl_smp_app_167 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-                title          = `abap2UI5 - Event with add Information and t_arg`
+                title          = `abap2UI5 - Event - Extra Arguments with t_arg`
                 navbuttonpress = client->_event_nav_app_leave( )
                 shownavbutton  = client->check_app_prev_stack( ) ).
 

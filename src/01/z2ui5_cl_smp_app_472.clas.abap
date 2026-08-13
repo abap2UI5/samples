@@ -61,7 +61,7 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Event with preventDefault`
+            title          = `abap2UI5 - Event - Link with preventDefault`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

@@ -59,7 +59,7 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Binding Syntax`
+            title          = `abap2UI5 - Binding - Expression Binding, Types and Composite Parts`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 

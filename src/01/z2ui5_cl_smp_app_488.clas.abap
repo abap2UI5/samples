@@ -76,7 +76,7 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Exchange Data and Event`
+        title          = `abap2UI5 - Navigation - Return Data and Events to the Caller`
         navbuttonpress = client->_event_nav_app_leave( )
         shownavbutton  = client->check_app_prev_stack( ) ).
 

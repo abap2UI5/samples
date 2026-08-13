@@ -82,7 +82,7 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
     DATA(page) = view->shell(
         )->page(
-            title          = `abap2UI5 - Drag and Drop - Table reorder`
+            title          = `abap2UI5 - Table - Drag and Drop Rows`
             navbuttonpress = client->_event_nav_app_leave( )
             shownavbutton  = client->check_app_prev_stack( ) ).
 
