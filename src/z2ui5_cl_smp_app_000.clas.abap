@@ -282,6 +282,12 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
               text  = tile-group
               level = `H3`
               class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+
+        ELSE.
+          " no heading that could set the first block apart from the header
+          " rows above it - the block margin does it instead
+          new_block = abap_true.
+
         ENDIF.
         prev_group = tile-group.
 
@@ -362,37 +368,39 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     left->title( text  = `abap2UI5 - Samples`
                  level = `H2` ).
 
-    " middle: the abap2UI5 family, one button per repository
-    DATA(middle) = bar->content_middle( ).
+    " right: the abap2UI5 family, one button per repository ...
+    DATA(right) = bar->content_right( ).
 
-    header_button( toolbar = middle
+    header_button( toolbar = right
                    icon    = `sap-icon://home`
                    tooltip = `abap2UI5 - the start page of the framework`
                    class   = cs_class-startup
                    href    = cs_url-framework ).
 
-    header_button( toolbar = middle
+    header_button( toolbar = right
                    icon    = `sap-icon://lightbulb`
                    tooltip = `Samples - binding, events, popups, tables and much more`
                    class   = cs_class-samples
                    href    = cs_url-samples
                    here    = abap_true ).
 
-    header_button( toolbar   = middle
+    header_button( toolbar   = right
                    icon      = `sap-icon://palette`
                    tooltip   = `Controls - the UI5 Demo Kit, rebuilt with abap2UI5`
                    class     = cs_class-controls
                    class_old = cs_class-controls_old
                    href      = cs_url-controls ).
 
-    header_button( toolbar = middle
+    header_button( toolbar = right
                    icon    = `sap-icon://database`
                    tooltip = `Stack - OData, RAP, WebSockets and the Fiori Launchpad`
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
-    " right: the two entries that leave the system
-    DATA(right) = bar->content_right( ).
+    " ... and then, clearly set apart by a separator line, the two entries that
+    " leave the system: the four buttons above open an app, these open a site
+    right->_generic( name   = `ToolbarSeparator`
+                     t_prop = VALUE #( ( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd` ) ) ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://learning-assistant`
@@ -421,15 +429,15 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         width       = `17.5rem`
         placeholder = `Filter samples` ).
 
-    toolbar->toolbar_spacer( ).
-
-    " the anchor of the popover in info_display( ) - hence the id
+    " right next to the search field, so what the page is about is where the
+    " eye already is. The id is the anchor of the popover in info_display( )
     toolbar->button(
         id      = `info`
         text    = `Info`
         icon    = `sap-icon://hint`
         type    = `Transparent`
         tooltip = `What this page shows and how to use it`
+        class   = `sapUiTinyMarginBegin`
         press   = client->_event( cs_event-info ) ).
 
   ENDMETHOD.

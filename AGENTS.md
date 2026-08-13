@@ -254,21 +254,20 @@ after the last tile so the list does not end glued to the page bottom.
 
 The page carries no content header of its own — both rows are built by hand:
 
-1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, because
-   the stock page header offers its `header_content( )` on the **right** only
-   and the family links belong in the middle:
+1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, so the
+   row can be split into a left and a right half:
    - `contentLeft` — the app title and the back button, i.e. exactly what the
      stock header would render on its own. A `Page` renders either its own
      header or a custom one, so `title` / `navbuttonpress` / `shownavbutton`
      are gone from the `page( )` call and the back `Button`
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
-   - `contentMiddle` — the four repository buttons of the abap2UI5 family.
-   - `contentRight` — the two entries that leave the system: documentation
-     and GitHub.
+   - `contentRight` — the four repository buttons of the abap2UI5 family,
+     then a `ToolbarSeparator` (`sapUiSmallMarginBegin sapUiSmallMarginEnd`),
+     then the two entries that leave the system: documentation and GitHub.
+     The separator is the point: the four open an app, the two open a site.
 2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader`: the
-   `SearchField` on the left (it stays in place while the list below it grows
-   and shrinks), a `ToolbarSpacer`, and an **Info** button on the right.
+   `SearchField`, and right next to it the **Info** button.
 
 The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
 tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
@@ -295,8 +294,8 @@ icon buttons, always in this order, each carrying its explanation as a tooltip:
 | `sap-icon://chain-link` | — | the repository the app itself lives in |
 
 The first four entries lead to an app **inside** the system, the last two lead
-out of it, and every overview shows that split — this one by putting the four
-into the header Bar's `contentMiddle` and the two into its `contentRight`
+out of it, and every overview shows that split — this one by a
+`ToolbarSeparator` between the groups in its header Bar's `contentRight`
 (above), samples-controls and samples-stack by a `ToolbarSpacer`
 (`width = 1rem`) between the groups in their single-row `headerContent`. The
 GitHub entry is **not** `sap-icon://source-code`: in the shared header that
@@ -349,7 +348,9 @@ An H3 section title is emitted whenever the `group` changes — but only when
 there is more than one group to tell apart. `group_titles_needed( )` decides
 that by comparing every tile's group against the first one; with the whole
 catalog in a single package the heading would only repeat the page title, so it
-is left out. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
+is left out — and because nothing then separates the first block from the
+header rows above it, that first block opens with the same `sapUiSmallMarginTop`
+the other blocks carry. Keep that check free of table expressions (`t_catalog[ 1 ]`): the
 702 downport hoists them out of their guarding condition, so an `IS NOT INITIAL`
 guard around one does not survive the transformation.
 
