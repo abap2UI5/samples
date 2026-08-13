@@ -282,15 +282,17 @@ Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
 [samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
-in this order, each carrying its explanation as a tooltip — this overview
-shows five of them, see the note below the table:
+in this order. `header_button( )` takes each entry's `name` and `descr`
+separately: the tooltip is `<name> - <descr>`, and the name alone titles the
+popover of an uninstalled repository. The names are the *italic* ones below —
+this overview shows five of the six entries, see the note under the table:
 
 | Icon | Target | Repository |
 |------|--------|------------|
 | `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 — **not here**, see below |
-| `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples |
-| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
-| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
+| `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
+| `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls — *Control Samples* |
+| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://globe` | — | the repository the app itself lives in |
 
@@ -323,8 +325,7 @@ to happen first. The tooltip says so before the click does.
 
 **A missing repository stays clickable.** Instead of dropping the user on
 GitHub without a word, the press fires `cs_event-install` carrying the class,
-the GitHub URL and the repository name (`repository_name( )` cuts it out of
-the tooltip, which reads `<repository> - <what it is>`); `install_display( )`
+the GitHub URL and the repository name; `install_display( )`
 opens a `Popover` on the pressed icon — hence every repository icon carries
 its class name as `id` — that says what is missing, that abapGit installs it,
 and links to the repository. Only entries **without** a `class` (documentation,

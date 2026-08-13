@@ -105,16 +105,14 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         anchor TYPE string
         href   TYPE string
         name   TYPE string.
-    METHODS repository_name
-      IMPORTING
-        tooltip       TYPE string
-      RETURNING
-        VALUE(result) TYPE string.
     METHODS header_button
       IMPORTING
         toolbar   TYPE REF TO z2ui5_cl_xml_view
         icon      TYPE string
-        tooltip   TYPE string
+        "! the entry's name - the tooltip opens with it and the popover of an
+        "! uninstalled repository is titled after it
+        name      TYPE string
+        descr     TYPE string
         href      TYPE string
         class     TYPE string OPTIONAL
         "! the overview app's PREVIOUS name, tried when CLASS is not on the
@@ -402,21 +400,24 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     header_button( toolbar = right
                    icon    = `sap-icon://lightbulb`
-                   tooltip = `Samples - binding, events, popups, tables and much more`
+                   name    = `Samples`
+                   descr   = `binding, events, popups, tables and much more`
                    class   = cs_class-samples
                    href    = cs_url-samples
                    here    = abap_true ).
 
     header_button( toolbar   = right
                    icon      = `sap-icon://palette`
-                   tooltip   = `Controls - the UI5 Demo Kit, rebuilt with abap2UI5`
+                   name      = `Control Samples`
+                   descr     = `the UI5 Demo Kit, rebuilt with abap2UI5`
                    class     = cs_class-controls
                    class_old = cs_class-controls_old
                    href      = cs_url-controls ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://database`
-                   tooltip = `Stack - OData, RAP, WebSockets and the Fiori Launchpad`
+                   name    = `Stack Samples`
+                   descr   = `OData, RAP, WebSockets and the Fiori Launchpad`
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
@@ -426,13 +427,15 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     header_button( toolbar = right
                    icon    = `sap-icon://learning-assistant`
-                   tooltip = `Documentation - guides, tutorials and the API reference`
+                   name    = `Documentation`
+                   descr   = `guides, tutorials and the API reference`
                    href    = cs_url-docs ).
 
     " not source-code: that icon now belongs to the per-sample links in the list
     header_button( toolbar = right
                    icon    = `sap-icon://globe`
-                   tooltip = `GitHub - the source code of this repository`
+                   name    = `GitHub`
+                   descr   = `the source code of this repository`
                    href    = cs_url-samples ).
 
   ENDMETHOD.
@@ -460,6 +463,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     DATA hint   TYPE string.
     DATA color  TYPE string.
     DATA press  TYPE string.
+
+    DATA(tooltip) = |{ name } - { descr }|.
 
     IF here = abap_true.
 
@@ -501,7 +506,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         press = client->_event( val   = cs_event-install
                                 t_arg = VALUE #( ( class )
                                                  ( href )
-                                                 ( repository_name( tooltip ) ) ) ).
+                                                 ( name ) ) ).
 
       ENDIF.
 
@@ -532,16 +537,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     toolbar->_generic(
         name   = `ToolbarSeparator`
         t_prop = VALUE #( ( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd` ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD repository_name.
-
-    " the tooltips read "<repository> - <what it is>", and the popover only
-    " wants the name in front
-    DATA rest TYPE string ##NEEDED.
-    SPLIT tooltip AT ` - ` INTO result rest.
 
   ENDMETHOD.
 
