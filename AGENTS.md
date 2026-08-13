@@ -262,19 +262,21 @@ The page carries no content header of its own — both rows are built by hand:
      are gone from the `page( )` call and the back `Button`
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
-   - `contentRight` — the four repository entries of the abap2UI5 family,
-     then a `ToolbarSeparator` (`sapUiSmallMarginBegin sapUiSmallMarginEnd`),
-     then the two entries that leave the system: documentation and GitHub.
-     The separator is the point: the four open an app, the two open a site.
-2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader`: the
-   `SearchField` (`24rem`), and right next to it the **Info** button.
+   - `contentRight` — three groups, each set apart by a `ToolbarSeparator`
+     (`header_separator( )`, `sapUiSmallMarginBegin sapUiSmallMarginEnd`): the
+     four repository entries of the abap2UI5 family, then the icon-only
+     **Info** entry (`sap-icon://hint`, `id = info`), then the two entries
+     that leave the system, documentation and GitHub. The grouping is the
+     point: the four open an app, the last two open a site.
+2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader` and
+   holds the `SearchField` (`24rem`).
 
 The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
 tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
 any more: it lives in `info_text( )` and `info_display( )` shows it in a
-`Popover` anchored to that Info button (`popover_display( by_id = 'info' )`,
-hence the button's `id`). Permanently on the page it pushed the first samples
-off the screen; behind a button it is there when it is wanted.
+`Popover` anchored to the Info icon (`popover_display( by_id = 'info' )`,
+hence that icon's `id`). Permanently on the page it pushed the first samples
+off the screen; behind an icon it is there when it is wanted.
 
 ### The shared overview header
 
@@ -310,13 +312,22 @@ are 1.73+. What the colour says:
 | State | Colour | Press |
 |-------|--------|-------|
 | the overview app is on this system | default | `cs_event-nav` into it |
-| it is **not** on this system | `Neutral` (greyed out) | opens its GitHub repository |
+| it is **not** on this system | `Neutral` (greyed out) | `cs_event-install` → `install_display( )` |
 | the app you are in (`here`) | `Neutral` (greyed out) | none |
 | documentation / GitHub (no `class`) | default | opens the site |
 
 Grey therefore means the same thing throughout the row: **not a destination
 inside this system** — either because it is not installed or because you are
 already there. The tooltip spells out which of the two it is.
+
+**A missing repository stays clickable.** Instead of dropping the user on
+GitHub without a word, the press fires `cs_event-install` carrying the class,
+the GitHub URL and the repository name (`repository_name( )` cuts it out of
+the tooltip, which reads `<repository> - <what it is>`); `install_display( )`
+opens a `Popover` on the pressed icon — hence every repository icon carries
+its class name as `id` — that says what is missing, that abapGit installs it,
+and links to the repository. Only entries **without** a `class` (documentation,
+GitHub) still open their site directly through `open_url( )`.
 
 **What is shared is the entry list, its order and its behaviour — not the
 layout.** This overview arranges the buttons in a two-row custom header

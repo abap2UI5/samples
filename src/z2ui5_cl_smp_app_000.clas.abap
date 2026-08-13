@@ -33,9 +33,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
 
     CONSTANTS:
       BEGIN OF cs_event,
-        search TYPE string VALUE `SEARCH`,
-        nav    TYPE string VALUE `NAV_APP`,
-        info   TYPE string VALUE `INFO`,
+        search  TYPE string VALUE `SEARCH`,
+        nav     TYPE string VALUE `NAV_APP`,
+        info    TYPE string VALUE `INFO`,
+        install TYPE string VALUE `INSTALL`,
       END OF cs_event.
 
     " the three sample repositories and the framework, in the order the shared
@@ -94,6 +95,24 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         page TYPE REF TO z2ui5_cl_xml_view.
     METHODS info_display.
     METHODS info_text
+      RETURNING
+        VALUE(result) TYPE string.
+    "! the vertical line that groups the header row: the repositories, then
+    "! what this page is about, then what leaves the system
+    METHODS header_separator
+      IMPORTING
+        toolbar TYPE REF TO z2ui5_cl_xml_view.
+    "! A repository that is not on this system stays clickable and says what is
+    "! missing - a popover on the icon that was pressed, with the GitHub link
+    "! to install it from.
+    METHODS install_display
+      IMPORTING
+        anchor TYPE string
+        href   TYPE string
+        name   TYPE string.
+    METHODS repository_name
+      IMPORTING
+        tooltip       TYPE string
       RETURNING
         VALUE(result) TYPE string.
     METHODS header_button
@@ -207,6 +226,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
       WHEN cs_event-info.
         info_display( ).
+
+      WHEN cs_event-install.
+
+        " a header icon whose repository is not on this system - anchor class,
+        " GitHub URL and repository name travel as the event arguments
+        install_display( anchor = client->get_event_arg( 1 )
+                         href   = client->get_event_arg( 2 )
+                         name   = client->get_event_arg( 3 ) ).
 
       WHEN OTHERS.
 
@@ -395,10 +422,23 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
-    " ... and then, clearly set apart by a separator line, the two entries that
-    " leave the system: the four buttons above open an app, these open a site
-    right->_generic( name   = `ToolbarSeparator`
-                     t_prop = VALUE #( ( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd` ) ) ).
+    " ... then, between separator lines, what this page is about ...
+    header_separator( right ).
+
+    " the id is the anchor of the popover in info_display( )
+    right->_generic(
+        name   = `Icon`
+        ns     = `core`
+        t_prop = VALUE #( ( n = `src`     v = `sap-icon://hint` )
+                          ( n = `id`      v = `info` )
+                          ( n = `size`    v = `1.125rem` )
+                          ( n = `class`   v = `sapUiTinyMarginBeginEnd` )
+                          ( n = `tooltip` v = `What this page shows and how to use it` )
+                          ( n = `press`   v = client->_event( cs_event-info ) ) ) ).
+
+    " ... and last the two entries that leave the system: the four icons above
+    " open an app, these open a site
+    header_separator( right ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://learning-assistant`
@@ -426,17 +466,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         search      = client->_event( cs_event-search )
         width       = `24rem`
         placeholder = `Filter samples` ).
-
-    " right next to the search field, so what the page is about is where the
-    " eye already is. The id is the anchor of the popover in info_display( )
-    toolbar->button(
-        id      = `info`
-        text    = `Info`
-        icon    = `sap-icon://hint`
-        type    = `Transparent`
-        tooltip = `What this page shows and how to use it`
-        class   = `sapUiTinyMarginBegin`
-        press   = client->_event( cs_event-info ) ).
 
   ENDMETHOD.
 
@@ -501,19 +530,24 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         press = client->_event( val   = cs_event-nav
                                 t_arg = VALUE #( ( target ) ) ).
 
+      ELSEIF class IS INITIAL.
+
+        " no CLASS to look for: the documentation and GitHub entries are no
+        " destination inside the system to begin with, they open their site
+        hint  = tooltip.
+        press = open_url( href ).
+
       ELSE.
 
-        " a repository that is not on this system reads as greyed out before
-        " the tooltip explains it - the documentation and GitHub entries carry
-        " no CLASS at all, they are no destination inside the system and keep
-        " the normal colour
-        hint  = COND #( WHEN class IS INITIAL
-                        THEN tooltip
-                        ELSE |{ tooltip } - not installed, opens GitHub| ).
-        color = COND #( WHEN class IS INITIAL
-                        THEN ``
-                        ELSE `Neutral` ).
-        press = open_url( href ).
+        " a repository that is not on this system stays clickable - the press
+        " says what is missing and where to get it (install_display), instead
+        " of dropping the user on GitHub without a word
+        hint  = |{ tooltip } - not installed on this system|.
+        color = `Neutral`.
+        press = client->_event( val   = cs_event-install
+                                t_arg = VALUE #( ( class )
+                                                 ( href )
+                                                 ( repository_name( tooltip ) ) ) ).
 
       ENDIF.
 
@@ -521,16 +555,60 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " a core:Icon, not a Button: on 1.71 a Button cannot carry a colour - the
     " coloured sap.m.ButtonType values (Critical, Neutral, ...) are 1.73+ - and
-    " the colour is what tells a repository you can enter from one you cannot
+    " the colour is what tells a repository you can enter from one you cannot.
+    " The class name doubles as the icon id, so install_display( ) can anchor
+    " its popover to the very icon that was pressed
     toolbar->_generic(
         name   = `Icon`
         ns     = `core`
         t_prop = VALUE #( ( n = `src`     v = icon )
+                          ( n = `id`      v = class )
                           ( n = `size`    v = `1.125rem` )
                           ( n = `class`   v = `sapUiTinyMarginBeginEnd` )
                           ( n = `color`   v = color )
                           ( n = `tooltip` v = hint )
                           ( n = `press`   v = press ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD header_separator.
+
+    toolbar->_generic(
+        name   = `ToolbarSeparator`
+        t_prop = VALUE #( ( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd` ) ) ).
+
+  ENDMETHOD.
+
+
+  METHOD repository_name.
+
+    " the tooltips read "<repository> - <what it is>", and the popover only
+    " wants the name in front
+    DATA rest TYPE string ##NEEDED.
+    SPLIT tooltip AT ` - ` INTO result rest.
+
+  ENDMETHOD.
+
+
+  METHOD install_display.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+
+    view->popover(
+            title        = |{ name } - not installed|
+            placement    = `Bottom`
+            contentwidth = `26rem`
+        )->vbox( `sapUiSmallMargin`
+            )->text( |This system does not have { name } installed, so there is no app to jump to. | &&
+                     |Install the repository with abapGit, then this icon opens it right here.|
+            )->link( text   = href
+                     href   = href
+                     target = `_blank`
+                     class  = `sapUiSmallMarginTop` ).
+
+    client->popover_display( xml   = view->stringify( )
+                             by_id = anchor ).
 
   ENDMETHOD.
 
