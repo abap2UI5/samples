@@ -1,3 +1,4 @@
+" @keywords edit input add row delete multiselect toolbar
 CLASS z2ui5_cl_smp_app_011 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

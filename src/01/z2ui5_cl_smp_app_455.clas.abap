@@ -1,3 +1,4 @@
+" @keywords binding_call live search client side no roundtrip filter
 CLASS z2ui5_cl_smp_app_455 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

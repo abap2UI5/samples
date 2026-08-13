@@ -1,3 +1,4 @@
+" @keywords multiinput token tokens suggestion custom control
 CLASS z2ui5_cl_smp_app_078 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

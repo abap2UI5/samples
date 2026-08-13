@@ -1,3 +1,4 @@
+" @keywords fcl master detail list report two column split
 CLASS z2ui5_cl_smp_app_097 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

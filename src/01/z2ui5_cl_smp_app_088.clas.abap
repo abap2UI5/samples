@@ -1,3 +1,4 @@
+" @keywords navcontainer icontabbar icontabheader page switch control_by_id whitelisted
 CLASS z2ui5_cl_smp_app_088 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

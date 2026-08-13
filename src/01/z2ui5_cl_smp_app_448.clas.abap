@@ -1,3 +1,4 @@
+" @keywords panel collapse expand setexpanded control_by_id whitelisted
 CLASS z2ui5_cl_smp_app_448 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

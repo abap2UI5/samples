@@ -1,3 +1,4 @@
+" @keywords toggleby open close control_by_id whitelisted
 CLASS z2ui5_cl_smp_app_465 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

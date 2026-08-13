@@ -1,3 +1,4 @@
+" @keywords template repeat runtime generated nested nest_view_display
 CLASS z2ui5_cl_smp_app_176 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

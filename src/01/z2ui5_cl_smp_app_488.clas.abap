@@ -1,3 +1,4 @@
+" @keywords r_data result get_app_prev return event payload
 "! Calls a second app (z2ui5_cl_smp_app_489) via client->nav_app_call( ). The
 "! called app comes back with client->nav_app_leave( event = ... r_data = ... ),
 "! handing an event name and a data payload to its caller without knowing who

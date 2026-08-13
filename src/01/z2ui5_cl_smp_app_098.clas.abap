@@ -1,3 +1,4 @@
+" @keywords fcl three column detail detail deep navigation
 CLASS z2ui5_cl_smp_app_098 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

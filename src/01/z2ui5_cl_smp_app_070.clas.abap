@@ -1,3 +1,4 @@
+" @keywords grid alv dynamicpage column row action currency search sort filter
 CLASS z2ui5_cl_smp_app_070 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

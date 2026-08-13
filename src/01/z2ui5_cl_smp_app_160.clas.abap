@@ -1,3 +1,4 @@
+" @keywords cell enter row index event grid alv
 CLASS z2ui5_cl_smp_app_160 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

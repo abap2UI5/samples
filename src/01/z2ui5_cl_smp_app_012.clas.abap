@@ -1,3 +1,4 @@
+" @keywords dialog sub app destroy rerender background view
 CLASS z2ui5_cl_smp_app_012 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

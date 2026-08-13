@@ -1,3 +1,4 @@
+" @keywords mailto tel sms urlhelper redirect native link
 CLASS z2ui5_cl_smp_app_316 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,3 +1,4 @@
+" @keywords clipboard paste copy text area
 CLASS z2ui5_cl_smp_app_325 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

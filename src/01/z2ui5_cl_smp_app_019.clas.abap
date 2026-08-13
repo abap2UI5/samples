@@ -1,3 +1,4 @@
+" @keywords selectionmode none single multi segmentedbutton checkbox
 CLASS z2ui5_cl_smp_app_019 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

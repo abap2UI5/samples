@@ -1,3 +1,4 @@
+" @keywords dnd move node hierarchy binding context
 CLASS z2ui5_cl_smp_app_461 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

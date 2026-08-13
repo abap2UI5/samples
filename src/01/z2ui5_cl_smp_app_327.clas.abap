@@ -1,3 +1,4 @@
+" @keywords localstorage sessionstorage persist store_data offline
 CLASS z2ui5_cl_smp_app_327 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

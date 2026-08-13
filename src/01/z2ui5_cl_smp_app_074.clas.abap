@@ -1,3 +1,4 @@
+" @keywords fileuploader base64 attachment import picture document
 CLASS z2ui5_cl_smp_app_074 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

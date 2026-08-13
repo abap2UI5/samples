@@ -1,3 +1,4 @@
+" @keywords amount decimals leading zeros number format
 CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

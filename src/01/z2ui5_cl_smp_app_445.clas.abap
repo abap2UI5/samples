@@ -1,3 +1,4 @@
+" @keywords sap.ui.device responsive orientation resize media model
 CLASS z2ui5_cl_smp_app_445 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

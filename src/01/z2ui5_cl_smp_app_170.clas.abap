@@ -1,3 +1,4 @@
+" @keywords navcontainer dialog pages back forward
 CLASS z2ui5_cl_smp_app_170 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

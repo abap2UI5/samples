@@ -1,3 +1,4 @@
+" @keywords dnd dragdropinfo reorder rows move
 CLASS z2ui5_cl_smp_app_459 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

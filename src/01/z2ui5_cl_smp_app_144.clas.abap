@@ -1,3 +1,4 @@
+" @keywords cell input internal table row field level
 CLASS z2ui5_cl_smp_app_144 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

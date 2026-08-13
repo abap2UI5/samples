@@ -1,3 +1,4 @@
+" @keywords formatter parts conditional regexp visible enabled syntax
 CLASS z2ui5_cl_smp_app_027 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

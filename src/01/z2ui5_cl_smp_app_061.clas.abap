@@ -1,3 +1,4 @@
+" @keywords generic data reference create data ddic dynamic itab
 CLASS z2ui5_cl_smp_app_061 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

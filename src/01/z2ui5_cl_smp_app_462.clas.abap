@@ -1,3 +1,4 @@
+" @keywords popup expand state hierarchy nodes
 CLASS z2ui5_cl_smp_app_462 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

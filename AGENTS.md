@@ -290,8 +290,9 @@ behaviour belongs in all three repositories in the same change.
 
 The search field filters the tile list: its `search` event (Enter, or the
 clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
-applied — a case-insensitive contains-match against each tile's `header`, `sub`
-and `app` class name — and then replays the focus into the search field via a
+applied — a case-insensitive contains-match against each tile's `header`, `sub`,
+`keywords` (never rendered, §4) and `app` class name — and then replays the
+focus into the search field via a
 `set_focus` follow-up action with the cursor at the end, so typing can continue.
 The `MessageStrip` keeps naming the **total** tile count (the unfiltered
 catalog), an empty filter result renders a `No sample matches the filter.` text
@@ -368,10 +369,11 @@ the generated ABAP) if a rule changes.
 
 ### Tile schema
 
-One row per app, all four fields always present:
+One row per app; `group`, `header`, `sub` and `app` are always present,
+`keywords` only when the class carries the comment line:
 
 ```abap
-( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` app = `<class name, lowercase>` )
+( group = `<subpackage CTEXT>` header = `<display title>` sub = `<short description>` keywords = `<extra search terms>` app = `<class name, lowercase>` )
 ```
 
 | Field    | Meaning / rule |
@@ -379,7 +381,25 @@ One row per app, all four fields always present:
 | `group`  | **Exactly** the CTEXT of the subpackage the app physically lives in. Becomes the H3 section title (rendered once, when the group changes). |
 | `header` | Link text shown to the user. **Derived from the class short text** (see below). |
 | `sub`    | Short description shown next to the link. **Derived from the class short text** (see below). May be empty (`` `` ``) → then only the link is rendered. |
+| `keywords` | **Never rendered — search only.** Extra terms so a sample is found by words that do not fit into the 60 characters of its DESCRIPT (see below). |
 | `app`    | The app's class name in **lowercase** (folder-independent). Drives navigation. |
+
+**`keywords` comes from a plain comment line on the class**, the first line of
+the `*.clas.abap` (above an ABAP Doc block, if the class has one), lowercase and
+space-separated:
+
+```abap
+" @keywords f4 search help suggestion input dialog select
+CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
+```
+
+It is a plain `"` comment on purpose — an unknown `"! @tag` is reported by the
+extended check (SLIN/ATC). Put there what a newcomer would type but the visible
+text cannot hold: **synonyms** (`f4` for value help, `alv` for the grid table),
+**control names** the sample uses (`combobox`, `facetfilter`, `progressindicator`),
+and the **abap2UI5 API** it demonstrates (`nav_app_call`, `binding_call`,
+`control_by_id`). Four to eight terms, no backticks. The line is optional — a
+sample without one is simply found by its header, sub and class name.
 
 **`header` and `sub` come from the class, not from hand-written labels.** The
 source of truth is the app class's abapGit short text `<DESCRIPT>` in its

@@ -1,3 +1,4 @@
+" @keywords column filter reset refresh uitableext grid alv
 CLASS z2ui5_cl_smp_app_143 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,3 +1,4 @@
+" @keywords f4 search help suggestion input dialog select
 CLASS z2ui5_cl_smp_app_009 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

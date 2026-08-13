@@ -1,3 +1,4 @@
+" @keywords wizard step branching discardprogress setnextstep control_by_id
 CLASS z2ui5_cl_smp_app_202 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

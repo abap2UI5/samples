@@ -1,3 +1,4 @@
+" @keywords live search parallel requests busy queue typing
 CLASS z2ui5_cl_smp_app_059 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

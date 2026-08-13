@@ -1,3 +1,4 @@
+" @keywords cursor enter tab next field form set_focus
 CLASS z2ui5_cl_smp_app_189 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

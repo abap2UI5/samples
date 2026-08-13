@@ -1,3 +1,4 @@
+" @keywords url window open_new_tab link target
 CLASS z2ui5_cl_smp_app_073 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

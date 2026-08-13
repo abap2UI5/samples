@@ -1,3 +1,4 @@
+" @keywords customtreeitem rename input two way write back
 CLASS z2ui5_cl_smp_app_463 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

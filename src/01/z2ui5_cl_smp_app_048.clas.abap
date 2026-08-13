@@ -1,3 +1,4 @@
+" @keywords sap.m.list standardlistitem highlight infostate press selection
 CLASS z2ui5_cl_smp_app_048 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

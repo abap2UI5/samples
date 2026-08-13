@@ -1,3 +1,4 @@
+" @keywords shortcut hotkey ctrl key combination keyboard_shortcut
 CLASS z2ui5_cl_smp_app_471 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

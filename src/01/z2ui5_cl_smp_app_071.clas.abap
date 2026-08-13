@@ -1,3 +1,4 @@
+" @keywords combobox jsonmodel size limit large itab 100 entries
 CLASS z2ui5_cl_smp_app_071 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

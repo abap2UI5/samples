@@ -1,3 +1,4 @@
+" @keywords menuitem nested submenu textpath controller path
 CLASS z2ui5_cl_smp_app_473 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,3 +1,4 @@
+" @keywords growing 10000 rows sticky toolbar sort performance
 CLASS z2ui5_cl_smp_app_006 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

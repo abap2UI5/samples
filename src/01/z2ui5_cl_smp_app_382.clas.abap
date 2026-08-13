@@ -1,3 +1,4 @@
+" @keywords confirm warning error success information dialog action
 CLASS z2ui5_cl_smp_app_382 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

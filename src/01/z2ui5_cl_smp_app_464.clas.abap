@@ -1,3 +1,4 @@
+" @keywords exception dump error handling debugtool restart retry
 CLASS z2ui5_cl_smp_app_464 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

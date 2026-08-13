@@ -1,3 +1,4 @@
+" @keywords template repeat runtime generated columns if then else
 CLASS z2ui5_cl_smp_app_173 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

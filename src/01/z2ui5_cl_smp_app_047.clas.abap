@@ -1,3 +1,4 @@
+" @keywords type conversion sum amount number field
 CLASS z2ui5_cl_smp_app_047 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

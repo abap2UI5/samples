@@ -1,3 +1,4 @@
+" @keywords messagemanager validation target field state central model
 CLASS z2ui5_cl_smp_app_467 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,3 +1,4 @@
+" @keywords list report dynamicpage row link details table
 CLASS z2ui5_cl_smp_app_052 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

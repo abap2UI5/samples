@@ -1,3 +1,4 @@
+" @keywords nest_view_display rerender model refresh sub view
 CLASS z2ui5_cl_smp_app_065 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

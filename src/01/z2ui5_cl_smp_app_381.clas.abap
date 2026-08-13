@@ -1,3 +1,4 @@
+" @keywords toast notification duration position animation
 CLASS z2ui5_cl_smp_app_381 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

@@ -1,3 +1,4 @@
+" @keywords document.title tab caption headline set_title
 CLASS z2ui5_cl_smp_app_125 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

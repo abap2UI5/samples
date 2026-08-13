@@ -1,3 +1,4 @@
+" @keywords element binding relative path aggregation dialog row
 "! Aggregation binding on a popup via an element bind. The main table is bound
 "! to the product aggregation ({/T_PRODUCT}); pressing a row's "components"
 "! button opens a popup that uses RELATIVE bindings only ({NAME}, {CATEGORY}, and

@@ -1,3 +1,4 @@
+" @keywords camera photo picture webcam capture facing mode
 CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

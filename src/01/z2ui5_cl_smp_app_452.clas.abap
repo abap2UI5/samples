@@ -1,3 +1,4 @@
+" @keywords messagepopover messageitem dialog grouped message list
 CLASS z2ui5_cl_smp_app_452 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

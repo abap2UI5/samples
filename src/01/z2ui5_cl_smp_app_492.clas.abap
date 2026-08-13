@@ -1,3 +1,4 @@
+" @keywords reload refresh restart location_reload url
 CLASS z2ui5_cl_smp_app_492 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

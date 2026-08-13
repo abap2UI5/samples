@@ -1,3 +1,4 @@
+" @keywords style stylesheet inline html class own design
 CLASS z2ui5_cl_smp_app_050 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

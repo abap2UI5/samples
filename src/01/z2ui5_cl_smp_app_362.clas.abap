@@ -1,3 +1,4 @@
+" @keywords position pixel scroll_to restore refresh toolbar
 CLASS z2ui5_cl_smp_app_362 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

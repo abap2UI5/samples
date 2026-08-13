@@ -1,3 +1,4 @@
+" @keywords quickview contact card links grouped fields
 CLASS z2ui5_cl_smp_app_109 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

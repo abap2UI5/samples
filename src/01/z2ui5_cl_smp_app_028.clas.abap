@@ -1,3 +1,4 @@
+" @keywords interval polling auto refresh follow_up_action seconds
 CLASS z2ui5_cl_smp_app_028 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

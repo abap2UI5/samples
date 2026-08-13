@@ -1,3 +1,4 @@
+" @keywords placement anchor button confirm cancel popover_display
 CLASS z2ui5_cl_smp_app_026 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

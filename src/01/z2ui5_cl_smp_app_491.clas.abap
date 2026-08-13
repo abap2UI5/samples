@@ -1,3 +1,4 @@
+" @keywords favicon icon tab image data uri
 CLASS z2ui5_cl_smp_app_491 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

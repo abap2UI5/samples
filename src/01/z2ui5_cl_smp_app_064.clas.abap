@@ -1,3 +1,4 @@
+" @keywords progressindicator busy wait long running backend
 CLASS z2ui5_cl_smp_app_064 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

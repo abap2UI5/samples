@@ -1,3 +1,4 @@
+" @keywords logoff signout icf session end fiori launchpad
 CLASS z2ui5_cl_smp_app_361 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

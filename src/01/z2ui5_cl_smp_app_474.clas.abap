@@ -1,3 +1,4 @@
+" @keywords url policy link security validator relative allow deny
 CLASS z2ui5_cl_smp_app_474 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

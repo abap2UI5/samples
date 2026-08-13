@@ -1,3 +1,4 @@
+" @keywords structure component include flat form level
 CLASS z2ui5_cl_smp_app_166 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

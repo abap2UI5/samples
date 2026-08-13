@@ -1,3 +1,4 @@
+" @keywords initial render one roundtrip anchor button
 "! View and popover in ONE roundtrip: view_display( ) and popover_display( )
 "! from the same main( ) call. The popover anchors to a button of the view
 "! that is built in this very response - the framework runs the display

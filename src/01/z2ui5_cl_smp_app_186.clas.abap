@@ -1,3 +1,4 @@
+" @keywords export save base64 attachment xstring document
 CLASS z2ui5_cl_smp_app_186 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

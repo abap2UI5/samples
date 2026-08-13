@@ -1,3 +1,4 @@
+" @keywords sub app class embed instantiate another app rtti
 CLASS z2ui5_cl_smp_app_104 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

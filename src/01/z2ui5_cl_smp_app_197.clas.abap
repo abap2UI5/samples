@@ -1,3 +1,4 @@
+" @keywords facetfilter filter object marshalling selected items
 CLASS z2ui5_cl_smp_app_197 DEFINITION PUBLIC.
 
   PUBLIC SECTION.

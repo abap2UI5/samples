@@ -1,3 +1,4 @@
+" @keywords search go enter server side where
 CLASS z2ui5_cl_smp_app_053 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
