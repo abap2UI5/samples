@@ -309,18 +309,20 @@ list.
 **Here the entries are `core:Icon`s, not `Button`s** (`header_button( )`), and
 the reason is the colour: an icon carries one (`color`), a `Button` on 1.71
 does not — the coloured `sap.m.ButtonType` values (`Critical`, `Neutral`, …)
-are 1.73+. What the colour says:
+are 1.73+. There are **two states, active and inactive**, and nothing in
+between:
 
-| State | Colour | Press |
+| Entry | Colour | Press |
 |-------|--------|-------|
-| the overview app is on this system | default | `cs_event-nav` into it |
-| it is **not** on this system | `Neutral` (greyed out) | `cs_event-install` → `install_display( )` |
-| the app you are in (`here`) | `Neutral` (greyed out) | none |
-| documentation / GitHub (no `class`) | default | opens the site |
+| the overview app is on this system | default (active) | `cs_event-nav` into it |
+| it is **not** on this system | default (active) | `cs_event-install` → `install_display( )` |
+| documentation / GitHub (no `class`) | default (active) | opens the site |
+| the app you are in (`here`) | `Neutral` (inactive) | none |
 
-Grey therefore means the same thing throughout the row: **not a destination
-inside this system** — either because it is not installed or because you are
-already there. The tooltip spells out which of the two it is.
+Grey therefore marks exactly one entry — the overview you are already in,
+which is the only one with nowhere to go. A repository that is not installed
+looks like any other: it *is* a destination, the press just explains what has
+to happen first. The tooltip says so before the click does.
 
 **A missing repository stays clickable.** Instead of dropping the user on
 GitHub without a word, the press fires `cs_event-install` carrying the class,

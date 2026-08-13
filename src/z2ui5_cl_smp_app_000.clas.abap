@@ -82,12 +82,12 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS view_display.
     "! The first header row, a Bar in the page's CUSTOM HEADER. Left the app
     "! title with the info icon beside it and, inside a call stack, the back
-    "! button the stock page header would render on its own. Right one icon
-    "! per repository of the abap2UI5
-    "! family - it jumps into that repository's overview app when the app is on
-    "! this system and opens the repository on GitHub when it is not, and the
-    "! entry of the repository you are looking at stays, greyed out - then a
-    "! separator and what leaves the system: the documentation and GitHub.
+    "! button the stock page header would render on its own. Right one icon per
+    "! repository of the abap2UI5 family - it jumps into that repository's
+    "! overview app when the app is on this system and says how to install it
+    "! when it is not - then a separator and what leaves the system: the
+    "! documentation and GitHub. Exactly one entry of the row is inactive: the
+    "! repository you are looking at, there is nowhere to go from it.
     METHODS render_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
@@ -554,11 +554,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
       ELSE.
 
-        " a repository that is not on this system stays clickable - the press
-        " says what is missing and where to get it (install_display), instead
-        " of dropping the user on GitHub without a word
+        " a repository that is not on this system is a normal, active entry -
+        " the press says what is missing and where to get it (install_display),
+        " instead of dropping the user on GitHub without a word
         hint  = |{ tooltip } - not installed on this system|.
-        color = `Neutral`.
         press = client->_event( val   = cs_event-install
                                 t_arg = VALUE #( ( class )
                                                  ( href )
@@ -570,9 +569,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " a core:Icon, not a Button: on 1.71 a Button cannot carry a colour - the
     " coloured sap.m.ButtonType values (Critical, Neutral, ...) are 1.73+ - and
-    " the colour is what tells a repository you can enter from one you cannot.
-    " The class name doubles as the icon id, so install_display( ) can anchor
-    " its popover to the very icon that was pressed
+    " the colour is what marks the ONE inactive entry, the overview you are
+    " already in. Everything else is active, whether its repository is on this
+    " system or not. The class name doubles as the icon id, so
+    " install_display( ) can anchor its popover to the very icon pressed
     toolbar->_generic(
         name   = `Icon`
         ns     = `core`
