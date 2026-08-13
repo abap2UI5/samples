@@ -1,4 +1,4 @@
-" @keywords hello world getting started first app roundtrip lifecycle check_on_event
+" @keywords roundtrip restart second view uncaught error controller basics
 CLASS z2ui5_cl_smp_app_004 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
