@@ -402,10 +402,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD class_installed.
 
     " the same question the framework's start page asks: an absent, inactive
-    " or not-activatable class raises here, it does not return a flag
+    " or not-activatable class raises here, it does not return a flag. The name
+    " has to be upper case - the repository stores it that way, and the class
+    " constants above follow the repository's lower-case spelling rule.
+    DATA(name) = to_upper( val ).
+
     TRY.
         DATA obj TYPE REF TO object ##NEEDED.
-        CREATE OBJECT obj TYPE (val).
+        CREATE OBJECT obj TYPE (name).
         result = abap_true.
       CATCH cx_root ##CATCH_ALL.
         result = abap_false.
