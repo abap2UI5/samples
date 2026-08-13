@@ -257,28 +257,24 @@ The page carries no content header of its own — both rows are built by hand:
 1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, so the
    row can be split into a left and a right half:
    - `contentLeft` — the back button and the app title, i.e. what the stock
-     header would render on its own, plus the icon-only **Info** entry right
-     beside the name (`sap-icon://hint`, `id = info`), because that is what it
-     explains. A `Page` renders either its own
+     header would render on its own. A `Page` renders either its own
      header or a custom one, so `title` / `navbuttonpress` / `shownavbutton`
      are gone from the `page( )` call and the back `Button`
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
-   - `contentRight` — the four repository entries of the abap2UI5 family,
+   - `contentRight` — the three sample repositories of the abap2UI5 family,
      then a `ToolbarSeparator` (`header_separator( )`,
      `sapUiSmallMarginBegin sapUiSmallMarginEnd`), then the two entries that
      leave the system: documentation and GitHub. The separator is the point:
-     the four open an app, the two open a site.
+     the three open an app, the two open a site.
 2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader` and
    holds the `SearchField` (`24rem`).
 
-The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
-tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
-any more: it lives in `info_text( )` and `info_display( )` shows it in a
-`Popover` anchored to the Info icon next to the app name
-(`popover_display( by_id = 'info' )`, hence that icon's `id`). Permanently on
-the page it pushed the first samples off the screen; behind an icon it is
-there when it is wanted.
+**There is no intro text on the page.** It used to be a `MessageStrip` above
+the list — tile count, the source-code icon, the **Ctrl+F12** developer tools,
+the `(A)` / `(C)` markers — which pushed the first samples off the screen; it
+then moved behind an info icon in the header, and on 2026-08-13 it was dropped
+altogether with that icon. The page explains itself through its tooltips.
 
 ### The shared overview header
 
@@ -286,18 +282,19 @@ Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
 [samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
-in this order, each carrying its explanation as a tooltip:
+in this order, each carrying its explanation as a tooltip — this overview
+shows five of them, see the note below the table:
 
 | Icon | Target | Repository |
 |------|--------|------------|
-| `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 |
+| `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 — **not here**, see below |
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples |
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
 | `sap-icon://globe` | — | the repository the app itself lives in |
 
-The first four entries lead to an app **inside** the system, the last two lead
+The repository entries lead to an app **inside** the system, the last two lead
 out of it, and every overview shows that split — this one by a
 `ToolbarSeparator` between the groups in its header Bar's `contentRight`
 (above), samples-controls and samples-stack by a `ToolbarSpacer`
@@ -333,11 +330,15 @@ its class name as `id` — that says what is missing, that abapGit installs it,
 and links to the repository. Only entries **without** a `class` (documentation,
 GitHub) still open their site directly through `open_url( )`.
 
-**What is shared is the entry list, its order and its behaviour — not the
-layout.** This overview arranges the buttons in a two-row custom header
-(above); the other two keep the single `header_content( )` row. A change to
-the icons, the order or the press behaviour belongs in all three repositories
-in the same change; a change to this repository's row layout does not.
+**What is shared is the order and the behaviour of the entries — not the
+layout, and here not the full list either.** This overview arranges its icons
+in a two-row custom header (above) and, since 2026-08-13, leaves the
+`sap-icon://home` entry (the framework's start page,
+`z2ui5_cl_app_startup`) out: it lists samples, and the start page is not one.
+samples-controls and samples-stack still render all six in a single
+`header_content( )` row. A change to an icon, to the order or to the press
+behaviour belongs in all three repositories in the same change; this
+repository's layout and its dropped entry do not travel.
 
 Each repository is installed on its own, so every button decides for itself:
 `class_installed( )` instantiates the target class, and

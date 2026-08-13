@@ -35,16 +35,14 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
       BEGIN OF cs_event,
         search  TYPE string VALUE `SEARCH`,
         nav     TYPE string VALUE `NAV_APP`,
-        info    TYPE string VALUE `INFO`,
         install TYPE string VALUE `INSTALL`,
       END OF cs_event.
 
-    " the three sample repositories and the framework, in the order the shared
-    " overview header renders them - each one is installed on its own, so the
-    " header asks per entry whether its overview app is on THIS system
+    " the three sample repositories, in the order the header renders them -
+    " each one is installed on its own, so the header asks per entry whether
+    " its overview app is on THIS system
     CONSTANTS:
       BEGIN OF cs_class,
-        startup      TYPE string VALUE `z2ui5_cl_app_startup`,
         samples      TYPE string VALUE `z2ui5_cl_smp_app_000`,
         controls     TYPE string VALUE `z2ui5_cl_smpc_app_overview`,
         " the overview app of samples-controls before its 2026-08 rename - an
@@ -56,7 +54,6 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     CONSTANTS:
       BEGIN OF cs_url,
         docs      TYPE string VALUE `https://abap2UI5.org`,
-        framework TYPE string VALUE `https://github.com/abap2UI5/abap2UI5`,
         samples   TYPE string VALUE `https://github.com/abap2UI5/samples`,
         controls  TYPE string VALUE `https://github.com/abap2UI5/samples-controls`,
         stack     TYPE string VALUE `https://github.com/abap2UI5/samples-stack`,
@@ -81,8 +78,8 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS focus_search.
     METHODS view_display.
     "! The first header row, a Bar in the page's CUSTOM HEADER. Left the app
-    "! title with the info icon beside it and, inside a call stack, the back
-    "! button the stock page header would render on its own. Right one icon per
+    "! title and, inside a call stack, the back button the stock page header
+    "! would render on its own. Right one icon per sample
     "! repository of the abap2UI5 family - it jumps into that repository's
     "! overview app when the app is on this system and says how to install it
     "! when it is not - then a separator and what leaves the system: the
@@ -91,17 +88,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS render_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
-    "! The second header row: the filter over the tile list. The intro text
-    "! used to sit above that list as a MessageStrip and pushed the first
-    "! samples off the screen - it hides behind the info icon of the first row
-    "! now, there when it is wanted and gone the rest of the time.
+    "! The second header row: the filter over the tile list.
     METHODS render_sub_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
-    METHODS info_display.
-    METHODS info_text
-      RETURNING
-        VALUE(result) TYPE string.
     "! the vertical line that groups the header row: the repositories of the
     "! family first, then what leaves the system
     METHODS header_separator
@@ -229,9 +219,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         " a header button - the app to jump to travels as the event argument
         app_call( client->get_event_arg( ) ).
-
-      WHEN cs_event-info.
-        info_display( ).
 
       WHEN cs_event-install.
 
@@ -410,26 +397,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     left->title( text  = `abap2UI5 - Samples`
                  level = `H2` ).
 
-    " right beside the name, because that is what it explains - and the id is
-    " the anchor of the popover in info_display( )
-    left->_generic(
-        name   = `Icon`
-        ns     = `core`
-        t_prop = VALUE #( ( n = `src`     v = `sap-icon://hint` )
-                          ( n = `id`      v = `info` )
-                          ( n = `size`    v = `1.125rem` )
-                          ( n = `class`   v = `sapUiTinyMarginBegin` )
-                          ( n = `tooltip` v = `What this page shows and how to use it` )
-                          ( n = `press`   v = client->_event( cs_event-info ) ) ) ).
-
-    " right: the abap2UI5 family, one button per repository ...
+    " right: the sample repositories of the abap2UI5 family, one icon each ...
     DATA(right) = bar->content_right( ).
-
-    header_button( toolbar = right
-                   icon    = `sap-icon://home`
-                   tooltip = `abap2UI5 - the start page of the framework`
-                   class   = cs_class-startup
-                   href    = cs_url-framework ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://lightbulb`
@@ -452,7 +421,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    href    = cs_url-stack ).
 
     " ... and then, set apart by a separator line, the two entries that leave
-    " the system: the four icons above open an app, these open a site
+    " the system: the three icons above open an app, these open a site
     header_separator( right ).
 
     header_button( toolbar = right
@@ -481,35 +450,6 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         search      = client->_event( cs_event-search )
         width       = `24rem`
         placeholder = `Filter samples` ).
-
-  ENDMETHOD.
-
-
-  METHOD info_display.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-
-    view->popover(
-            title        = `About this overview`
-            placement    = `Bottom`
-            contentwidth = `30rem`
-        )->vbox( `sapUiSmallMargin`
-            )->text( info_text( ) ).
-
-    client->popover_display( xml   = view->stringify( )
-                             by_id = `info` ).
-
-  ENDMETHOD.
-
-
-  METHOD info_text.
-
-    result = |All { lines( get_catalog( ) ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
-             `and framework actions. Filter with the search field in the second header row, select a link ` &&
-             `to open a sample, the back button returns here. New to abap2UI5? Start with the Basics at ` &&
-             `the top. The source-code icon behind a sample opens its ABAP class on GitHub, and Ctrl+F12 ` &&
-             `opens the abap2UI5 Developer Tools - in this overview and inside every sample. ` &&
-             `Markers: (A) frontend action, (C) custom control.`.
 
   ENDMETHOD.
 
