@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z2UI5_CL_SMP_APP_004</CLSNAME>
+    <CLSNAME>Z2UI5_CL_SMP_APP_494</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Basics IV - Events, Views and Roundtrips</DESCRIPT>
+    <DESCRIPT>Basics II - Two-Way Binding: Input and Button</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>

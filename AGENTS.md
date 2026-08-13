@@ -431,7 +431,7 @@ newcomer would actually type:
 
 | Header | What belongs in it |
 |--------|--------------------|
-| `Basics` | the entry point — first app, lifecycle, the minimum loop |
+| `Basics I` … `IV` | the entry point — first app, lifecycle, the minimum loop. The only numbered series: the Roman numeral orders them as a learning path (rule 5 sorts by `header`), and `header_base( )` still renders them as one block |
 | `Binding` | `_bind( )`, binding syntax, UI5 model types, the model itself |
 | `Browser` | the browser page and tab: URL, title, favicon, reload, clipboard, storage, logout |
 | `Control` | one UI5 control is the topic, incl. calling its methods by ID |

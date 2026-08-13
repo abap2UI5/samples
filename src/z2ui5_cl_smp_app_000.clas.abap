@@ -240,7 +240,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     page->message_strip(
         text     = |All { lines( t_catalog_all ) } abap2UI5 samples - bindings, events, popups, tables, trees | &&
                    `and framework actions. Filter with the search field, select a link to open a sample, the back ` &&
-                   `button returns here. Markers: (A) frontend action, (C) custom control.`
+                   `button returns here. New to abap2UI5? Start with the Basics samples at the top. ` &&
+                   `Markers: (A) frontend action, (C) custom control.`
         type     = `Information`
         showicon = abap_true
         class    = `sapUiSmallMargin` ).
@@ -443,7 +444,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
   METHOD get_catalog.
 
     result = VALUE #(
-      ( group = `samples` header = `Basics` sub = `First App: Events, Views and Roundtrips` keywords = `hello world getting started first app roundtrip lifecycle check_on_event` app = `z2ui5_cl_smp_app_004` )
+      ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` app = `z2ui5_cl_smp_app_493` )
+      ( group = `samples` header = `Basics II` sub = `Two-Way Binding: Input and Button` keywords = `two way binding _bind model attribute value input button serialize` app = `z2ui5_cl_smp_app_494` )
+      ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` app = `z2ui5_cl_smp_app_495` )
+      ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `hello world getting started first app roundtrip lifecycle check_on_event` app = `z2ui5_cl_smp_app_004` )
       ( group = `samples` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` app = `z2ui5_cl_smp_app_067` )
       ( group = `samples` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab` app = `z2ui5_cl_smp_app_061` )
       ( group = `samples` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` app = `z2ui5_cl_smp_app_027` )
