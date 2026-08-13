@@ -4,9 +4,7 @@ CLASS z2ui5_cl_smp_app_008 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
   PROTECTED SECTION.
-    DATA client             TYPE REF TO z2ui5_if_client.
-    DATA check_strip_active TYPE abap_bool.
-    DATA strip_type         TYPE string.
+    DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS on_event.
     METHODS view_display.
@@ -70,11 +68,14 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
                 )->link(
             )->get_parent( ).
 
-    IF check_strip_active = abap_true.
-      page->message_strip(
-          text = `This is a Message Strip`
-          type = strip_type ).
-    ENDIF.
+    page->message_strip(
+        text     = `The three buttons feed a MessageBox with the message objects ABAP ` &&
+                   `produces: a SY message read from T100, a BAPIRET2 structure and a ` &&
+                   `caught CX_ROOT exception. message_box_display( ) accepts each of them ` &&
+                   `directly, no conversion in the app.`
+        type     = `Information`
+        showicon = abap_true
+        class    = `sapUiSmallMargin` ).
 
     page->grid( `L6 M12 S12`
         )->content( `layout`
