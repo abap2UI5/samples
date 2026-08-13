@@ -262,12 +262,12 @@ The page carries no content header of its own — both rows are built by hand:
      are gone from the `page( )` call and the back `Button`
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
-   - `contentRight` — the four repository buttons of the abap2UI5 family,
+   - `contentRight` — the four repository entries of the abap2UI5 family,
      then a `ToolbarSeparator` (`sapUiSmallMarginBegin sapUiSmallMarginEnd`),
      then the two entries that leave the system: documentation and GitHub.
      The separator is the point: the four open an app, the two open a site.
 2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader`: the
-   `SearchField`, and right next to it the **Info** button.
+   `SearchField` (`24rem`), and right next to it the **Info** button.
 
 The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
 tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
@@ -281,8 +281,8 @@ off the screen; behind a button it is there when it is wanted.
 Every abap2UI5 overview app renders the same **entries** — here
 (`render_header( )` / `header_button( )`), in
 [samples-controls](https://github.com/abap2UI5/samples-controls) and in
-[samples-stack](https://github.com/abap2UI5/samples-stack). Six transparent
-icon buttons, always in this order, each carrying its explanation as a tooltip:
+[samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
+in this order, each carrying its explanation as a tooltip:
 
 | Icon | Target | Repository |
 |------|--------|------------|
@@ -291,7 +291,7 @@ icon buttons, always in this order, each carrying its explanation as a tooltip:
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
 | `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
-| `sap-icon://chain-link` | — | the repository the app itself lives in |
+| `sap-icon://globe` | — | the repository the app itself lives in |
 
 The first four entries lead to an app **inside** the system, the last two lead
 out of it, and every overview shows that split — this one by a
@@ -301,6 +301,22 @@ out of it, and every overview shows that split — this one by a
 GitHub entry is **not** `sap-icon://source-code`: in the shared header that
 icon is reserved for the per-sample source links an overview renders in its
 list.
+
+**Here the entries are `core:Icon`s, not `Button`s** (`header_button( )`), and
+the reason is the colour: an icon carries one (`color`), a `Button` on 1.71
+does not — the coloured `sap.m.ButtonType` values (`Critical`, `Neutral`, …)
+are 1.73+. What the colour says:
+
+| State | Colour | Press |
+|-------|--------|-------|
+| the overview app is on this system | default | `cs_event-nav` into it |
+| it is **not** on this system | `Neutral` (greyed out) | opens its GitHub repository |
+| the app you are in (`here`) | `Neutral` (greyed out) | none |
+| documentation / GitHub (no `class`) | default | opens the site |
+
+Grey therefore means the same thing throughout the row: **not a destination
+inside this system** — either because it is not installed or because you are
+already there. The tooltip spells out which of the two it is.
 
 **What is shared is the entry list, its order and its behaviour — not the
 layout.** This overview arranges the buttons in a two-row custom header

@@ -75,15 +75,13 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         classname TYPE string.
     METHODS scroll_restore.
     METHODS view_display.
-    "! The first header row, a Bar in the page's CUSTOM HEADER so the family
-    "! links can sit in the middle - the stock page header offers its
-    "! HEADER_CONTENT on the right only. Left the app title and, inside a call
-    "! stack, the back button the stock header would render on its own; in the
-    "! middle one icon button per repository of the abap2UI5 family - it jumps
-    "! into that repository's overview app when the app is on this system and
-    "! opens the repository on GitHub when it is not, and the entry of the
-    "! repository you are looking at stays visible but disabled; on the right
-    "! what leaves the system: the documentation and this repository.
+    "! The first header row, a Bar in the page's CUSTOM HEADER. Left the app
+    "! title and, inside a call stack, the back button the stock page header
+    "! would render on its own. Right one icon per repository of the abap2UI5
+    "! family - it jumps into that repository's overview app when the app is on
+    "! this system and opens the repository on GitHub when it is not, and the
+    "! entry of the repository you are looking at stays, greyed out - then a
+    "! separator and what leaves the system: the documentation and GitHub.
     METHODS render_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
@@ -409,7 +407,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " not source-code: that icon now belongs to the per-sample links in the list
     header_button( toolbar = right
-                   icon    = `sap-icon://chain-link`
+                   icon    = `sap-icon://globe`
                    tooltip = `GitHub - the source code of this repository`
                    href    = cs_url-samples ).
 
@@ -426,7 +424,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         id          = `search`
         value       = client->_bind( search )
         search      = client->_event( cs_event-search )
-        width       = `17.5rem`
+        width       = `24rem`
         placeholder = `Filter samples` ).
 
     " right next to the search field, so what the page is about is where the
@@ -474,47 +472,65 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD header_button.
 
+    DATA target TYPE string.
+    DATA hint   TYPE string.
+    DATA color  TYPE string.
+    DATA press  TYPE string.
+
     IF here = abap_true.
 
-      " where you are: the button stays, so every overview shows the same row,
-      " but there is nowhere to go
-      toolbar->button( icon    = icon
-                       type    = `Transparent`
-                       enabled = abap_false
-                       tooltip = |{ tooltip } - you are here| ).
-      RETURN.
+      " where you are: the entry stays, so every overview shows the same row,
+      " but there is nowhere to go - and no press
+      hint  = |{ tooltip } - you are here|.
+      color = `Neutral`.
+
+    ELSE.
+
+      IF class IS NOT INITIAL AND class_installed( class ) = abap_true.
+        target = class.
+
+      ELSEIF class_old IS NOT INITIAL AND class_installed( class_old ) = abap_true.
+        target = class_old.
+
+      ENDIF.
+
+      IF target IS NOT INITIAL.
+
+        " installed on this system: jump right into it, the back button returns
+        hint  = tooltip.
+        press = client->_event( val   = cs_event-nav
+                                t_arg = VALUE #( ( target ) ) ).
+
+      ELSE.
+
+        " a repository that is not on this system reads as greyed out before
+        " the tooltip explains it - the documentation and GitHub entries carry
+        " no CLASS at all, they are no destination inside the system and keep
+        " the normal colour
+        hint  = COND #( WHEN class IS INITIAL
+                        THEN tooltip
+                        ELSE |{ tooltip } - not installed, opens GitHub| ).
+        color = COND #( WHEN class IS INITIAL
+                        THEN ``
+                        ELSE `Neutral` ).
+        press = open_url( href ).
+
+      ENDIF.
 
     ENDIF.
 
-    DATA target TYPE string.
-
-    IF class IS NOT INITIAL AND class_installed( class ) = abap_true.
-      target = class.
-
-    ELSEIF class_old IS NOT INITIAL AND class_installed( class_old ) = abap_true.
-      target = class_old.
-
-    ENDIF.
-
-    IF target IS NOT INITIAL.
-
-      " installed on this system: jump right into it, the back button returns
-      toolbar->button( icon    = icon
-                       type    = `Transparent`
-                       tooltip = tooltip
-                       press   = client->_event( val   = cs_event-nav
-                                                 t_arg = VALUE #( ( target ) ) ) ).
-      RETURN.
-
-    ENDIF.
-
-    toolbar->button(
-        icon    = icon
-        type    = `Transparent`
-        tooltip = COND #( WHEN class IS INITIAL
-                          THEN tooltip
-                          ELSE |{ tooltip } - not installed, opens GitHub| )
-        press   = open_url( href ) ).
+    " a core:Icon, not a Button: on 1.71 a Button cannot carry a colour - the
+    " coloured sap.m.ButtonType values (Critical, Neutral, ...) are 1.73+ - and
+    " the colour is what tells a repository you can enter from one you cannot
+    toolbar->_generic(
+        name   = `Icon`
+        ns     = `core`
+        t_prop = VALUE #( ( n = `src`     v = icon )
+                          ( n = `size`    v = `1.125rem` )
+                          ( n = `class`   v = `sapUiTinyMarginBeginEnd` )
+                          ( n = `color`   v = color )
+                          ( n = `tooltip` v = hint )
+                          ( n = `press`   v = press ) ) ).
 
   ENDMETHOD.
 
