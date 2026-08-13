@@ -366,8 +366,15 @@ The search field filters the tile list: its `search` event (Enter, or the
 clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
 applied — a case-insensitive contains-match against each tile's `header`, `sub`,
 `keywords` (never rendered, §4) and `app` class name — and then replays the
-focus into the search field via a
-`set_focus` follow-up action with the cursor at the end, so typing can continue.
+focus into the search field.
+
+That focus wire is `focus_search( )`, a `set_focus` follow-up action with the
+cursor at the end of what is already typed, and it runs on **every** display of
+the page: the overview opens with the cursor in the filter, so the first key
+you press searches, and after a filter roundtrip typing simply continues. On
+the way back from a sample it is queued **before** `scroll_restore( )` —
+focusing a control can scroll it into view, and the restored scroll position is
+the one that must survive.
 The info popover keeps naming the **total** tile count (the unfiltered
 catalog), an empty filter result renders a `No sample matches the filter.` text
 instead of tiles, and the filter value survives navigation into a sample and

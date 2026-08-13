@@ -75,6 +75,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
       IMPORTING
         classname TYPE string.
     METHODS scroll_restore.
+    "! The page opens with the cursor in the filter, so the first key you press
+    "! searches - and it is replayed after every filter roundtrip, with the
+    "! cursor at the end of what is already typed, so typing can continue.
+    METHODS focus_search.
     METHODS view_display.
     "! The first header row, a Bar in the page's CUSTOM HEADER. Left the app
     "! title with the info icon beside it and, inside a call stack, the back
@@ -194,10 +198,15 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     me->client = client.
     IF client->check_on_init( ).
+
       view_display( ).
+      focus_search( ).
 
     ELSEIF client->check_on_navigated( ).
 
+      " focus first, scroll second: focusing a control can scroll it into view,
+      " and the restored scroll position is the one that must survive
+      focus_search( ).
       scroll_restore( ).
       view_display( ).
 
@@ -214,11 +223,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       WHEN cs_event-search.
 
         view_display( ).
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-set_focus
-            t_arg = VALUE #( ( `search` )
-                             ( |{ strlen( search ) }| )
-                             ( |{ strlen( search ) }| ) ) ).
+        focus_search( ).
 
       WHEN cs_event-nav.
 
@@ -257,6 +262,17 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
         client->nav_app_call( li_app ).
       CATCH cx_root ##NO_HANDLER.
     ENDTRY.
+
+  ENDMETHOD.
+
+
+  METHOD focus_search.
+
+    client->follow_up_action(
+        val   = z2ui5_if_client=>cs_event-set_focus
+        t_arg = VALUE #( ( `search` )
+                         ( |{ strlen( search ) }| )
+                         ( |{ strlen( search ) }| ) ) ).
 
   ENDMETHOD.
 
