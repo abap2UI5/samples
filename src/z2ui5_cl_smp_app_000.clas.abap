@@ -31,6 +31,16 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
       END OF ty_s_block.
     TYPES ty_t_block TYPE STANDARD TABLE OF ty_s_block WITH DEFAULT KEY.
 
+    " sap.ui.core.IconColor knows no blue - Positive, Critical, Negative and
+    " Neutral are the semantic four - so the interactive icons of the header
+    " carry the accent of the sap_horizon theme as a plain CSS colour, and the
+    " one that leads nowhere keeps the semantic grey
+    CONSTANTS:
+      BEGIN OF cs_color,
+        active   TYPE string VALUE `#0064D9`,
+        inactive TYPE string VALUE `Neutral`,
+      END OF cs_color.
+
     CONSTANTS:
       BEGIN OF cs_event,
         search  TYPE string VALUE `SEARCH`,
@@ -222,7 +232,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
         " a header icon whose repository is not on this system - anchor class,
         " GitHub URL and repository name travel as the event arguments
-        install_display( anchor = client->get_event_arg( 1 )
+        install_display( anchor = client->get_event_arg( )
                          href   = client->get_event_arg( 2 )
                          name   = client->get_event_arg( 3 ) ).
 
@@ -471,9 +481,11 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       " where you are: the entry stays, so every overview shows the same row,
       " but there is nowhere to go - and no press
       hint  = |{ tooltip } - you are here|.
-      color = `Neutral`.
+      color = cs_color-inactive.
 
     ELSE.
+
+      color = cs_color-active.
 
       IF class IS NOT INITIAL AND class_installed( class ) = abap_true.
         target = class.
@@ -514,10 +526,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     " a core:Icon, not a Button: on 1.71 a Button cannot carry a colour - the
     " coloured sap.m.ButtonType values (Critical, Neutral, ...) are 1.73+ - and
-    " the colour is what marks the ONE inactive entry, the overview you are
-    " already in. Everything else is active, whether its repository is on this
-    " system or not. The class name doubles as the icon id, so
-    " install_display( ) can anchor its popover to the very icon pressed
+    " the colour is what separates the active entries from the ONE inactive
+    " one, the overview you are already in. Everything else is active, whether
+    " its repository is on this system or not. The class name doubles as the
+    " icon id, so install_display( ) can anchor its popover to the icon pressed
     toolbar->_generic(
         name   = `Icon`
         ns     = `core`

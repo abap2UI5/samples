@@ -284,12 +284,13 @@ Every abap2UI5 overview app renders the same **entries** — here
 [samples-stack](https://github.com/abap2UI5/samples-stack). Six icons, always
 in this order. `header_button( )` takes each entry's `name` and `descr`
 separately: the tooltip is `<name> - <descr>`, and the name alone titles the
-popover of an uninstalled repository. The names are the *italic* ones below —
-this overview shows five of the six entries, see the note under the table:
+popover of an uninstalled repository. The names are the *italic* ones below.
+There used to be a sixth entry in front, `sap-icon://home` for the framework's
+start page (`z2ui5_cl_app_startup`) — dropped from all three overviews on
+2026-08-13: they list samples, and the start page is not one.
 
 | Icon | Target | Repository |
 |------|--------|------------|
-| `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 — **not here**, see below |
 | `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples — *Samples* |
 | `sap-icon://palette` | `z2ui5_cl_smpc_app_overview` | abap2UI5/samples-controls — *Control Samples* |
 | `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack — *Stack Samples* |
@@ -331,15 +332,20 @@ its class name as `id` — that says what is missing, that abapGit installs it,
 and links to the repository. Only entries **without** a `class` (documentation,
 GitHub) still open their site directly through `open_url( )`.
 
-**What is shared is the order and the behaviour of the entries — not the
-layout, and here not the full list either.** This overview arranges its icons
-in a two-row custom header (above) and, since 2026-08-13, leaves the
-`sap-icon://home` entry (the framework's start page,
-`z2ui5_cl_app_startup`) out: it lists samples, and the start page is not one.
-samples-controls and samples-stack still render all six in a single
-`header_content( )` row. A change to an icon, to the order or to the press
-behaviour belongs in all three repositories in the same change; this
-repository's layout and its dropped entry do not travel.
+**All three overviews carry this header, layout included** (2026-08-13): the
+`Bar` in the page's `customHeader`, back button and title on the left, the
+five icons with their separator on the right, the two colour states and the
+install popover. samples-controls builds it in
+`scripts/generate-overview.mjs` (its overview class is generated — never edit
+the class), samples-stack in `z2ui5_cl_smps_app_00`, both with
+`z2ui5_cl_ai_xml` instead of `z2ui5_cl_xml_view`; in that builder an empty
+attribute is still rendered (`color=""` is no valid `IconColor`), so the
+optional ones are added under an `IF`. What stays local to a repository is
+what sits *around* the family entries — this one's `SearchField` sub-header,
+samples-controls' filter toolbar, samples-stack's Regenerate Demo Data button
+(first in its `contentRight`, before a separator). **A change to an icon, the
+order, the colours or the press behaviour belongs in all three repositories in
+the same change.**
 
 Each repository is installed on its own, so every button decides for itself:
 `class_installed( )` instantiates the target class, and
