@@ -240,11 +240,46 @@ ever return, it comes back as a second `TARGETS` entry in
 
 Its shape: a `get_catalog( )` method returning a flat table of tiles, and a
 `view_display( )` that loops the catalog, emitting one link (`header` + optional
-`sub`) per tile. Around that list it renders a fixed frame: a `GitHub` link in
-the page's `header_content( )` (top right, opens the repository in a new tab),
-an intro `MessageStrip` naming the tile count and the `(A)` / `(C)` markers, a
+`sub`) per tile. Around that list it renders a fixed frame: the **shared
+overview header** in the page's `header_content( )` (see below), an intro
+`MessageStrip` naming the tile count and the `(A)` / `(C)` markers, a
 `SearchField` below the strip, and an empty `vbox( height = 4rem )` after the
 last tile so the list does not end glued to the page bottom.
+
+### The shared overview header
+
+Every abap2UI5 overview app renders the **same** header — here
+(`render_header( )` / `header_button( )`), in
+[samples-controls](https://github.com/abap2UI5/samples-controls) and in
+[samples-stack](https://github.com/abap2UI5/samples-stack). Six transparent
+icon buttons, always in this order, each carrying its explanation as a tooltip:
+
+| Icon | Target | Repository |
+|------|--------|------------|
+| `sap-icon://home` | `z2ui5_cl_app_startup` | abap2UI5/abap2UI5 |
+| `sap-icon://lightbulb` | `z2ui5_cl_smp_app_000` | abap2UI5/samples |
+| `sap-icon://palette` | `z2ui5_cl_dmo_app_overview` | abap2UI5/samples-controls |
+| `sap-icon://database` | `z2ui5_cl_smpe_app_00` | abap2UI5/samples-stack |
+| `sap-icon://learning-assistant` | — | <https://abap2UI5.org> |
+| `sap-icon://source-code` | — | the repository the app itself lives in |
+
+Each repository is installed on its own, so every button decides for itself:
+`class_installed( )` instantiates the target class, and
+
+- **on this system** → the press is `cs_event-nav` with the class name as its
+  event argument; `on_event` hands it to `app_call( )`, which navigates with
+  `nav_app_call( )` — the back button returns to the overview.
+- **not on this system** → the press opens that repository on GitHub, and the
+  tooltip says why (`… - not installed, opens GitHub`). A `Button` carries no
+  `href` and `cs_event-open_new_tab` is same-origin only, so the new tab comes
+  from the `URLHELPER` `REDIRECT` frontend action (`open_url( )`) — client-side,
+  inside the click handler, which is what keeps the popup blocker quiet.
+- **the app you are in** (`here = abap_true`, the lightbulb here) → the button
+  stays, disabled, tooltip `… - you are here`, so the row reads the same in
+  every overview.
+
+**Keep the three headers in sync.** A change to the order, the icons or the
+behaviour belongs in all three repositories in the same change.
 
 The search field filters the tile list: its `search` event (Enter, or the
 clear button) fires `SEARCH`, which re-renders the view with `catalog_filter( )`
