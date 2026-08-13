@@ -256,27 +256,29 @@ The page carries no content header of its own — both rows are built by hand:
 
 1. **`render_header( )`** puts a `Bar` into the page's `customHeader`, so the
    row can be split into a left and a right half:
-   - `contentLeft` — the app title and the back button, i.e. exactly what the
-     stock header would render on its own. A `Page` renders either its own
+   - `contentLeft` — the back button and the app title, i.e. what the stock
+     header would render on its own, plus the icon-only **Info** entry right
+     beside the name (`sap-icon://hint`, `id = info`), because that is what it
+     explains. A `Page` renders either its own
      header or a custom one, so `title` / `navbuttonpress` / `shownavbutton`
      are gone from the `page( )` call and the back `Button`
      (`sap-icon://nav-back`, `visible = check_app_prev_stack( )`,
      `press = _event_nav_app_leave( )`) is built here.
-   - `contentRight` — three groups, each set apart by a `ToolbarSeparator`
-     (`header_separator( )`, `sapUiSmallMarginBegin sapUiSmallMarginEnd`): the
-     four repository entries of the abap2UI5 family, then the icon-only
-     **Info** entry (`sap-icon://hint`, `id = info`), then the two entries
-     that leave the system, documentation and GitHub. The grouping is the
-     point: the four open an app, the last two open a site.
+   - `contentRight` — the four repository entries of the abap2UI5 family,
+     then a `ToolbarSeparator` (`header_separator( )`,
+     `sapUiSmallMarginBegin sapUiSmallMarginEnd`), then the two entries that
+     leave the system: documentation and GitHub. The separator is the point:
+     the four open an app, the two open a site.
 2. **`render_sub_header( )`** puts an `OverflowToolbar` into `subHeader` and
    holds the `SearchField` (`24rem`).
 
 The intro text — tile count, the source-code icon, the **Ctrl+F12** developer
 tools, the `(A)` / `(C)` markers — is **not** a `MessageStrip` above the list
 any more: it lives in `info_text( )` and `info_display( )` shows it in a
-`Popover` anchored to the Info icon (`popover_display( by_id = 'info' )`,
-hence that icon's `id`). Permanently on the page it pushed the first samples
-off the screen; behind an icon it is there when it is wanted.
+`Popover` anchored to the Info icon next to the app name
+(`popover_display( by_id = 'info' )`, hence that icon's `id`). Permanently on
+the page it pushed the first samples off the screen; behind an icon it is
+there when it is wanted.
 
 ### The shared overview header
 

@@ -77,8 +77,9 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS scroll_restore.
     METHODS view_display.
     "! The first header row, a Bar in the page's CUSTOM HEADER. Left the app
-    "! title and, inside a call stack, the back button the stock page header
-    "! would render on its own. Right one icon per repository of the abap2UI5
+    "! title with the info icon beside it and, inside a call stack, the back
+    "! button the stock page header would render on its own. Right one icon
+    "! per repository of the abap2UI5
     "! family - it jumps into that repository's overview app when the app is on
     "! this system and opens the repository on GitHub when it is not, and the
     "! entry of the repository you are looking at stays, greyed out - then a
@@ -86,10 +87,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS render_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
-    "! The second header row: the filter over the tile list and the button that
-    "! shows the intro text. The text used to sit above the list as a
-    "! MessageStrip and pushed the first samples off the screen - behind a
-    "! button it is there when it is wanted and gone the rest of the time.
+    "! The second header row: the filter over the tile list. The intro text
+    "! used to sit above that list as a MessageStrip and pushed the first
+    "! samples off the screen - it hides behind the info icon of the first row
+    "! now, there when it is wanted and gone the rest of the time.
     METHODS render_sub_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
@@ -97,8 +98,8 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS info_text
       RETURNING
         VALUE(result) TYPE string.
-    "! the vertical line that groups the header row: the repositories, then
-    "! what this page is about, then what leaves the system
+    "! the vertical line that groups the header row: the repositories of the
+    "! family first, then what leaves the system
     METHODS header_separator
       IMPORTING
         toolbar TYPE REF TO z2ui5_cl_xml_view.
@@ -393,6 +394,18 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     left->title( text  = `abap2UI5 - Samples`
                  level = `H2` ).
 
+    " right beside the name, because that is what it explains - and the id is
+    " the anchor of the popover in info_display( )
+    left->_generic(
+        name   = `Icon`
+        ns     = `core`
+        t_prop = VALUE #( ( n = `src`     v = `sap-icon://hint` )
+                          ( n = `id`      v = `info` )
+                          ( n = `size`    v = `1.125rem` )
+                          ( n = `class`   v = `sapUiTinyMarginBegin` )
+                          ( n = `tooltip` v = `What this page shows and how to use it` )
+                          ( n = `press`   v = client->_event( cs_event-info ) ) ) ).
+
     " right: the abap2UI5 family, one button per repository ...
     DATA(right) = bar->content_right( ).
 
@@ -422,22 +435,8 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
-    " ... then, between separator lines, what this page is about ...
-    header_separator( right ).
-
-    " the id is the anchor of the popover in info_display( )
-    right->_generic(
-        name   = `Icon`
-        ns     = `core`
-        t_prop = VALUE #( ( n = `src`     v = `sap-icon://hint` )
-                          ( n = `id`      v = `info` )
-                          ( n = `size`    v = `1.125rem` )
-                          ( n = `class`   v = `sapUiTinyMarginBeginEnd` )
-                          ( n = `tooltip` v = `What this page shows and how to use it` )
-                          ( n = `press`   v = client->_event( cs_event-info ) ) ) ).
-
-    " ... and last the two entries that leave the system: the four icons above
-    " open an app, these open a site
+    " ... and then, set apart by a separator line, the two entries that leave
+    " the system: the four icons above open an app, these open a site
     header_separator( right ).
 
     header_button( toolbar = right
@@ -658,6 +657,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `two way binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
       ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
       ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics` path = `src/01` app = `z2ui5_cl_smp_app_004` )
+      ( group = `samples` header = `Basics V`
+        sub = `The Developer Tools (Ctrl+F12)`
+        keywords = `developer tools devtools ctrl f12 debug inspect payload previous request response view xml view model source code log error adt export`
+        path = `src/01` app = `z2ui5_cl_smp_app_496` )
       ( group = `samples` header = `Binding` sub = `Currency Amounts (sap.ui.model.type.Currency)` keywords = `amount decimals leading zeros number format` path = `src/01` app = `z2ui5_cl_smp_app_067` )
       ( group = `samples` header = `Binding` sub = `Dynamic Table Typed at Runtime (RTTI)` keywords = `generic data reference create data ddic dynamic itab` path = `src/01` app = `z2ui5_cl_smp_app_061` )
       ( group = `samples` header = `Binding` sub = `Expression Binding, Types and Composite Parts` keywords = `formatter parts conditional regexp visible enabled syntax` path = `src/01` app = `z2ui5_cl_smp_app_027` )
