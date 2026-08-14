@@ -25,26 +25,26 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(css) = `.navigationExamples .code {`                    &&
+    DATA(css) = `.navigationExamples .code \{`                    &&
                 `    margin: 0 5%;`                              &&
                 `    font-family: Consolas, Courier, monospace;` &&
-                `}`                                              &&
+                `\}`                                              &&
                 `.navigationExamples .ne-flexbox1,`              &&
-                `.navigationExamples .ne-flexbox2 {`             &&
+                `.navigationExamples .ne-flexbox2 \{`             &&
                 `    padding: 0;`                                &&
-                `}`                                              &&
-                `.navigationExamples .ne-flexbox1 li {`          &&
+                `\}`                                              &&
+                `.navigationExamples .ne-flexbox1 li \{`          &&
                 `    margin: 0.4em;`                             &&
                 `    padding: 0.4em 1.3em;`                      &&
                 `    list-style-type: none;`                     &&
                 `    text-align: center;`                        &&
                 `    background-color: #193441;`                 &&
                 `    cursor: pointer;`                           &&
-                `}`                                              &&
-      `.navigationExamples .ne-flexbox1 li:hover {`    &&
+                `\}`                                              &&
+      `.navigationExamples .ne-flexbox1 li:hover \{`    &&
                 `    background-color: orange;`                  &&
-                `}`                                              &&
-      `.navigationExamples .ne-flexbox2 li {`          &&
+                `\}`                                              &&
+      `.navigationExamples .ne-flexbox2 li \{`          &&
                 `    margin: 0.5em;`                             &&
                 `    width: 25%;`                                &&
                 `    min-width: 15%;`                            &&
@@ -54,17 +54,17 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
                 `    padding: 0.4em;`                            &&
                 `    transition: width 0.5s ease-out, background-color 0.5s ease-out, flex-basis 0.5s ease-out;` &&
                 `    cursor: pointer;`                           &&
-                `}`                                              &&
-      `.navigationExamples .ne-flexbox2 li:hover {`    &&
+                `\}`                                              &&
+      `.navigationExamples .ne-flexbox2 li:hover \{`    &&
                 `    flex-basis: 35% !important;`                &&
                 `    background-color: orange;`                  &&
-                `}`                                              &&
+                `\}`                                              &&
       `.navigationExamples .ne-flexbox1 li a,`         &&
-                `.navigationExamples .ne-flexbox2 li a {`        &&
+                `.navigationExamples .ne-flexbox2 li a \{`        &&
                 `    color: #fff;`                               &&
                 `    text-decoration: none;`                     &&
                 `    font-size: 0.875rem;`                       &&
-                `}`.
+                `\}`.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
         )->a( n = `displayBlock` v = `true`
@@ -88,13 +88,16 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
         )->a( n = `showIcon` b = abap_true
         )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->ele( `headerContent` )->tag( `Button`
+    " ONE headerContent with both children: an aggregation opened twice is not
+    " merged, the second tag REPLACES the first - written as two blocks the
+    " hint Button silently disappeared and only the Link ever rendered
+    page->ele( `headerContent`
+           )->tag( `Button`
            )->a( n = `press`   v = client->_event( `POPOVER` )
            )->a( n = `icon`    v = `sap-icon://hint`
            )->a( n = `id`      v = `hint_icon`
-           )->a( n = `tooltip` v = `Sample information` ).
-
-    page->ele( `headerContent` )->tag( `Link`
+           )->a( n = `tooltip` v = `Sample information`
+           )->tag( `Link`
            )->a( n = `text`   v = `UI5 Demo Kit`
            )->a( n = `target` v = `_blank`
            )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.FlexBox/sample/sap.m.sample.FlexBoxNav` ).

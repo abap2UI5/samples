@@ -49,39 +49,39 @@ CLASS z2ui5_cl_smp_app_050 IMPLEMENTATION.
     " raw markup travels in the content attribute of a core:HTML leaf - the
     " builder re-escapes it on stringify, so the literal markup is written here
     page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && |\n| &&
-                         `.sapMInput {` && |\n| &&
+                         `.sapMInput \{` && |\n| &&
                          `    height: 80px !important;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `input {` && |\n| &&
+                         `input \{` && |\n| &&
                          `    height: 80% !important;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `input[role="textbox"] {` && |\n| &&
+                         `input[role="textbox"] \{` && |\n| &&
                          `    height: 80px !important;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `input[role="text"] {` && |\n| &&
+                         `input[role="text"] \{` && |\n| &&
                          `    height: 80px !important;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `.sapUiSearchField {` && |\n| &&
+                         `.sapUiSearchField \{` && |\n| &&
                          `    height: 35px;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `.sapUiTfCombo:hover {` && |\n| &&
+                         `.sapUiTfCombo:hover \{` && |\n| &&
                          `    height: 2rem;` && |\n| &&
                          `    font-size: 2.5rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          |\n| &&
-                         `.sapMInputBaseInner::placeholder {` && |\n| &&
+                         `.sapMInputBaseInner::placeholder \{` && |\n| &&
                          `    font-size: 1.4rem !important;` && |\n| &&
-                         `}` && |\n| &&
+                         `\}` && |\n| &&
                          `</style>` )->tag( `Button`
                 )->a( n = `press` v = client->_event( `BUTTON_POST` )
                 )->a( n = `text`  v = `post`
