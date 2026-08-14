@@ -14,5 +14,61 @@
   "ui5": "1.71",
   "distribution": "openui5",
 
+  // Adoption-time debt. The corpus only became readable by the linter when it
+  // moved onto z2ui5_cl_ui5_view_builder (#752) — before that every class built
+  // its view with the retired builder and the linter found nothing to check, so
+  // the whole backlog arrived in one run and check-abap2UI5 merged red. The
+  // baseline freezes exactly what existed at that moment: those findings are
+  // suppressed (counted, never listed), a NEW one fails normally, and an entry
+  // whose finding is gone is stale and fails too — so this file only shrinks.
+  // Refresh it with `npx abap2ui5lint --update-baseline` after fixing things.
+  "baseline": "abap2ui5lint-baseline.json",
+
+  // A render error carries no line and its message text is unstable, so it
+  // cannot be baselined — naming the file is the only instrument. Two groups,
+  // and they are NOT the same thing:
+  //
+  // (a) what the static harness cannot serve. abap2UI5's own custom controls
+  //     (z2ui5/cc/*.js) are delivered by the framework at runtime, and the
+  //     SAPUI5 template namespace (…/core/template/1/repeat.js) is not part of
+  //     OpenUI5. Nothing to fix in the app.
+  //
+  // (b) what the RECONSTRUCTION or the sample's own intent makes unjudgeable.
+  //     Neither of these is a defect — both were on this list as unresolved
+  //     debt and both turned out to be the gate judging something other than
+  //     the app. Anything that lands here needs the same treatment: find out
+  //     which of the two it is before it is either fixed or excused.
+  //       * 343 binds a TYPE REF TO table ON
+  //         PURPOSE, inside a TRY, to demonstrate that the framework refuses a
+  //         reference ("success - reference not allowed for binding thrown").
+  //         The items aggregation therefore gets no template and the render
+  //         gate says so - which is the sample's point, not a fault
+  //       * 421 is NOT a defect: it builds its ids and paths inside a LOOP,
+  //         from the loop variable, so the reconstruction cannot compute them.
+  //         The static rules stopped judging that guess in linter 241787b and
+  //         a guessed id is made unique, but the guessed BINDING still
+  //         resolves to an object in the mock model, which strict property
+  //         validation then rejects. The render gate is judging the guess -
+  //         nothing here to fix in the app
+  //     Take an entry off this list with a fix, or with a reason as specific
+  //     as these two.
+  //
+  // (c) the reconstructor cannot rebuild a view these classes build through a
+  //     helper, so there is nothing to render. A gate can say nothing about
+  //     them either way.
+  "rules": {
+    "render-error": {
+      "exclude": [
+        // (a) not served by the harness
+        "z2ui5_cl_smp_app_(074|120|143|279|306|327|461|462|463)\\.",
+        "z2ui5_cl_smp_app_(173|176)\\.",
+        // (b) UNRESOLVED — see above
+        "z2ui5_cl_smp_app_(343|421)\\.",
+        // (c) helper-built, not reconstructable
+        "z2ui5_cl_smp_app_(117|131|185|191|195|211|338)\\."
+      ]
+    }
+  },
+
   "failOn": "warning"
 }

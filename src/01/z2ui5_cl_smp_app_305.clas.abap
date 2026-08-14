@@ -45,29 +45,29 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
     " raw markup travels in the content attribute of a core:HTML leaf - the
     " builder re-escapes it on stringify, so the literal markup is written here
     page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>`
-        && `td:has([data-color="red"]){ `
+        && `td:has([data-color="red"])\{ `
         && `    background-color: red;`
-        && `}`
+        && `\}`
         && ``
-        && `td:has([data-color="green"]){`
+        && `td:has([data-color="green"])\{`
         && `    background-color: green;`
-        && `}`
+        && `\}`
         && ``
-        && `td:has([data-color="blue"]){`
+        && `td:has([data-color="blue"])\{`
         && `    background-color: blue;`
-        && `}`
+        && `\}`
         && ``
-        && `td:has([data-color="orange"]){`
+        && `td:has([data-color="orange"])\{`
         && `    background-color: orange;`
-        && `}`
+        && `\}`
         && ``
-        && `td:has([data-color="grey"]){`
+        && `td:has([data-color="grey"])\{`
         && `    background-color: grey;`
-        && `}`
+        && `\}`
         && ``
-        && `td:has([data-color="yellow"]){`
+        && `td:has([data-color="yellow"])\{`
         && `    background-color: yellow;`
-        && `}`
+        && `\}`
         && `</style>` ).
 
     DATA(tab) = page->ele( `Table`

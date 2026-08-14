@@ -170,7 +170,11 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
     header_title->ele( n = `expandedContent` ns = `f` ).
     header_title->ele( n = `snappedContent` ns = `f` ).
 
-    DATA(lo_box) = page->ele( `header` )->ele( n = `DynamicPageHeader` ns = `f`
+    " ns = `f` like every other DynamicPage aggregation here: without it the
+    " tag renders as <header xmlns="sap.m"/>, and UI5 looks for a DEFAULT
+    " aggregation on sap.f.DynamicPage - which has none - so the view dies with
+    " "Cannot add direct child without default aggregation defined"
+    DATA(lo_box) = page->ele( n = `header` ns = `f` )->ele( n = `DynamicPageHeader` ns = `f`
         )->a( n = `pinnable` b = abap_true )->ele( `FlexBox`
              )->a( n = `alignItems`     v = `Start`
              )->a( n = `justifyContent` v = `SpaceBetween` )->ele( `FlexBox`

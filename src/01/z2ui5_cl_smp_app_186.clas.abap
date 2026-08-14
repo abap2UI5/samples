@@ -81,7 +81,7 @@ CLASS z2ui5_cl_smp_app_186 IMPLEMENTATION.
           )->a( n = `value`    v = client->_bind( file_content_64 )
           )->a( n = `rows`     v = `20`
           )->a( n = `width`    v = `800px`
-          )->a( n = `wrapping` b = abap_true )->end( )->ele( `VBox`
+          )->a( n = `wrapping` v = `Soft` )->end( )->ele( `VBox`
           )->a( n = `justifyContent` v = `Center`
           )->a( n = `alignItems`     v = `Center` )->tag( `Text`
           )->a( n = `text` v = `fill filename:` )->tag( `Input`
