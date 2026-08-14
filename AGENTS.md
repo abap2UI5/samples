@@ -682,8 +682,9 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   failure repeating itself — and now it says so instead of printing
   "Success! No findings detected."
 - **The README badge** (`.github/badges/abap2ui5lint.json`, a shields.io
-  endpoint file) carries the same statement, in the reach of the check:
-  *148 apps · 172 views · 2,176 controls · clean*. Every run rewrites it,
+  endpoint file) carries the same statement: the grey half is the reach —
+  *abap2UI5-linter 148 apps · 172 views · 2,176 controls* — and the green (or
+  red) half next to it is the verdict, *clean*. Every run rewrites it,
   `check-abap2UI5` commits it onto the pull request branch, and main picks it
   up when that pull request merges — so the numbers next to "clean" are what
   the last run actually checked. **A sample added or
