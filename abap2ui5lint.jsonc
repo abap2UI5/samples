@@ -39,9 +39,13 @@
   //       * 255 opens headerContent twice and carries a core:HTML content
   //       * 343 binds a TYPE REF TO table, so the items aggregation gets no
   //         template
-  //       * 421 builds its ids from a string template the reconstructor cannot
-  //         evaluate, which MAY make its duplicate-id a false positive — the
-  //         one entry here that needs verifying before it is fixed
+  //       * 421 is NOT a defect: it builds its ids and paths inside a LOOP,
+  //         from the loop variable, so the reconstruction cannot compute them.
+  //         The static rules stopped judging that guess in linter 241787b and
+  //         a guessed id is made unique, but the guessed BINDING still
+  //         resolves to an object in the mock model, which strict property
+  //         validation then rejects. The render gate is judging the guess -
+  //         nothing here to fix in the app
   //     Take one off this list with the fix, not with a comment.
   //
   // (c) the reconstructor cannot rebuild a view these classes build through a
