@@ -50,30 +50,35 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Popover - Open Together with the View Build`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popover - Open Together with the View Build`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This response built the page AND opened the popover in one roundtrip - ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This response built the page AND opened the popover in one roundtrip - ` &&
                    `the popover anchors to the button below, which only exists once this ` &&
                    `view is rendered. Both buttons re-open it: the first rebuilds the view ` &&
                    `with it, the second opens it alone.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->button( id    = `btnAnchor`
-                   text  = `rebuild view + open popover`
-                   icon  = `sap-icon://refresh`
-                   press = client->_event( `REBUILD_AND_OPEN` )
-        )->button( text  = `open popover only (view untouched)`
-                   press = client->_event( `OPEN_ONLY` ) ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `REBUILD_AND_OPEN` )
+            )->a( n = `text`  v = `rebuild view + open popover`
+            )->a( n = `icon`  v = `sap-icon://refresh`
+            )->a( n = `id`    v = `btnAnchor` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `OPEN_ONLY` )
+            )->a( n = `text`  v = `open popover only (view untouched)` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -82,15 +87,18 @@ CLASS z2ui5_cl_smp_app_490 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(popover) = z2ui5_cl_xml_view=>factory_popup( ).
-    popover->popover( title        = `Opened with the view`
-                      placement    = `Bottom`
-                      contentwidth = `20rem`
-        )->vbox( `sapUiSmallMargin`
-            )->text( `This popover travelled in the SAME response as the view it is ` &&
-                     `anchored to.`
-            )->object_status( text  = |roundtrips so far: { counter }|
-                              state = `Information` ).
+    DATA(popover) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    popover->ele( `Popover`
+        )->a( n = `title`        v = `Opened with the view`
+        )->a( n = `placement`    v = `Bottom`
+        )->a( n = `contentWidth` v = `20rem` )->ele( `VBox`
+            )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Text`
+                )->a( n = `text` v = `This popover travelled in the SAME response as the view it is ` &&
+                     `anchored to.` )->ele( `ObjectStatus`
+                )->a( n = `state` v = `Information`
+                )->a( n = `text`  v = |roundtrips so far: { counter }| ).
 
     client->popover_display( xml   = popover->stringify( )
                              by_id = `btnAnchor` ).

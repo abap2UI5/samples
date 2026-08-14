@@ -77,86 +77,90 @@ CLASS z2ui5_cl_smp_app_381 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = `abap2UI5 - Message - MessageToast, Text and Duration`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+             )->a( n = `title`          v = `abap2UI5 - Message - MessageToast, Text and Duration`
+             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This sample demonstrates MessageToast: configure the text, duration, position ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample demonstrates MessageToast: configure the text, duration, position ` &&
                    `and animation, then show a short, non-blocking toast notification.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->header_content(
-       )->link(
-           text   = `UI5 Demo Kit`
-           target = `_blank`
-           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
+    page->ele( `headerContent` )->tag( `Link`
+           )->a( n = `text`   v = `UI5 Demo Kit`
+           )->a( n = `target` v = `_blank`
+           )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageToast/sample/sap.m.sample.MessageToast` ).
 
-    DATA(form) = page->panel( headertext = `Message Toast Configuration`
-                          )->simple_form(
-                              title    = `Settings`
-                              editable = abap_true
-                              )->content( `form` ).
+    DATA(form) = page->ele( `Panel`
+        )->a( n = `headerText` v = `Message Toast Configuration` )->ele( n = `SimpleForm` ns = `form`
+                              )->a( n = `title`    v = `Settings`
+                              )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->label( `Message`
-        )->input( client->_bind( message )
-        )->label( `Duration (ms)`
-        )->input(
-            value = client->_bind( duration )
-            type  = `Number`
-        )->label( `Width`
-        )->input( client->_bind( width ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Message` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( message ) )->tag( `Label`
+            )->a( n = `text` v = `Duration (ms)` )->tag( `Input`
+            )->a( n = `type`  v = `Number`
+            )->a( n = `value` v = client->_bind( duration ) )->tag( `Label`
+            )->a( n = `text` v = `Width` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( width ) ).
 
-    DATA(select_my) = form->label( `my`
-                          )->select( selectedkey = client->_bind( my ) ).
-    DATA(select_at) = form->label( `at`
-                          )->select( selectedkey = client->_bind( at ) ).
+    DATA(select_my) = form->tag( `Label`
+        )->a( n = `text` v = `my` )->ele( `Select`
+                              )->a( n = `selectedKey` v = client->_bind( my ) ).
+    DATA(select_at) = form->tag( `Label`
+        )->a( n = `text` v = `at` )->ele( `Select`
+                              )->a( n = `selectedKey` v = client->_bind( at ) ).
 
     LOOP AT get_positions( ) INTO DATA(position).
-      select_my->item(
-          key  = position
-          text = position ).
-      select_at->item(
-          key  = position
-          text = position ).
+      select_my->tag( n = `Item` ns = `core`
+          )->a( n = `key`  v = position
+          )->a( n = `text` v = position ).
+      select_at->tag( n = `Item` ns = `core`
+          )->a( n = `key`  v = position
+          )->a( n = `text` v = position ).
     ENDLOOP.
 
-    form->label( `offset` ).
-    form->input( client->_bind( offset ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `offset` ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( offset ) ).
 
-    DATA(select_animation) = form->label( `animationTimingFunction`
-                                 )->select( selectedkey = client->_bind( animation_timing ) ).
-    select_animation->item(
-                     key  = `ease`
-                     text = `ease`
-                 )->item(
-                     key  = `linear`
-                     text = `linear`
-                 )->item(
-                     key  = `ease-in`
-                     text = `ease-in`
-                 )->item(
-                     key  = `ease-out`
-                     text = `ease-out`
-                 )->item(
-                     key  = `ease-in-out`
-                     text = `ease-in-out` ).
+    DATA(select_animation) = form->tag( `Label`
+        )->a( n = `text` v = `animationTimingFunction` )->ele( `Select`
+                                     )->a( n = `selectedKey` v = client->_bind( animation_timing ) ).
+    select_animation->tag( n = `Item` ns = `core`
+        )->a( n = `key`  v = `ease`
+        )->a( n = `text` v = `ease` )->tag( n = `Item` ns = `core`
+                     )->a( n = `key`  v = `linear`
+                     )->a( n = `text` v = `linear` )->tag( n = `Item` ns = `core`
+                     )->a( n = `key`  v = `ease-in`
+                     )->a( n = `text` v = `ease-in` )->tag( n = `Item` ns = `core`
+                     )->a( n = `key`  v = `ease-out`
+                     )->a( n = `text` v = `ease-out` )->tag( n = `Item` ns = `core`
+                     )->a( n = `key`  v = `ease-in-out`
+                     )->a( n = `text` v = `ease-in-out` ).
 
-    form->label( `animationDuration (ms)`
-        )->input(
-            value = client->_bind( animation_duration )
-            type  = `Number`
-        )->label( `autoClose`
-        )->checkbox( client->_bind( autoclose ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `animationDuration (ms)` )->tag( `Input`
+            )->a( n = `type`  v = `Number`
+            )->a( n = `value` v = client->_bind( animation_duration ) )->tag( `Label`
+            )->a( n = `text` v = `autoClose` )->tag( `CheckBox`
+            )->a( n = `selected` v = client->_bind( autoclose ) ).
 
-    form->button(
-        text  = `Show Message Toast`
-        type  = `Emphasized`
-        press = client->_event( `SHOW` ) ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `SHOW` )
+        )->a( n = `text`  v = `Show Message Toast`
+        )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( page->stringify( ) ).
 

@@ -21,48 +21,44 @@ CLASS z2ui5_cl_smp_app_061 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Dynamic Table Typed at Runtime (RTTI)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     FIELD-SYMBOLS <tab> TYPE table.
     ASSIGN t_tab->* TO <tab>.
 
-    page->message_strip(
-        text     = `A table typed dynamically at runtime via RTTI from a DDIC table type, with editable ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A table typed dynamically at runtime via RTTI from a DDIC table type, with editable ` &&
                    `multi-select rows bound directly to the dynamically created data.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->table(
-            items = client->_bind( <tab> )
-            mode  = `MultiSelect`
-        )->header_toolbar(
-            )->overflow_toolbar(
-                )->title( `Dynamic typed table`
-                )->toolbar_spacer(
-                )->button(
-                    text  = `server <-> client`
-                    press = client->_event( `SEND` )
-        )->get_parent( )->get_parent( ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( <tab> )
+        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                    )->a( n = `text` v = `Dynamic typed table` )->tag( `ToolbarSpacer` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `SEND` )
+                    )->a( n = `text`  v = `server <-> client` )->end( )->end( ).
 
-    tab->columns(
-        )->column(
-            )->text( `uuid` )->get_parent(
-        )->column(
-            )->text( `time` )->get_parent(
-        )->column(
-            )->text( `previous` )->get_parent( ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `uuid` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `time` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `previous` )->end( ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
-      )->cells(
-          )->input( `{ID}`
-          )->input( `{TIMESTAMPL}`
-          )->input( `{ID_PREV}` ).
+    tab->ele( `items` )->ele( `ColumnListItem`
+        )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Input`
+              )->a( n = `value` v = `{ID}` )->tag( `Input`
+              )->a( n = `value` v = `{TIMESTAMPL}` )->tag( `Input`
+              )->a( n = `value` v = `{ID_PREV}` ).
 
     client->view_display( view->stringify( ) ).
 

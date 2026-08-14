@@ -27,7 +27,7 @@ CLASS z2ui5_cl_smp_app_094 DEFINITION PUBLIC.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
-    DATA page TYPE REF TO z2ui5_cl_xml_view.
+    DATA page TYPE REF TO z2ui5_cl_ui5_view_builder.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -71,48 +71,52 @@ CLASS z2ui5_cl_smp_app_094 IMPLEMENTATION.
 
     ASSIGN mr_screen->* TO <screen>.
 
-    page = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page( title          = `test`
-                   navbuttonpress = client->_event_nav_app_leave( )
-                   shownavbutton  = client->check_app_prev_stack( ) ).
+    page = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` )->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `test`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    DATA(o_grid) = page->grid( `L6 M12 S12`
-        )->content( `layout` ).
+    DATA(o_grid) = page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` ).
 
-    DATA(content) = o_grid->simple_form( `Input`
-          )->content( `form` ).
+    DATA(content) = o_grid->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Input` )->ele( n = `content` ns = `form` ).
 
-    content->label( `structure level 01`
-      )->input( client->_bind( ms_screen-input )
-      )->label( `ref data`
-      )->input( client->_bind( <input> )
-      )->label( `ref data struc field`
-      )->input( client->_bind( <screen>-input )
-      )->label( `struc deep dissolve`
-      )->input( client->_bind( ms_screen-ty_s_02-input )
-      )->label( `struc deep switch guid name`
-      )->input( client->_bind( ms_screen-ty_s_02-ty_s_03-ty_s_04-input )
-      )->label( `instance attribute val`
-      )->input( client->_bind( mo_app->mv_val )
-      )->label( `instance attribute struc`
-      )->input( client->_bind( mo_app->ms_screen-input ) ).
+    content->tag( `Label`
+        )->a( n = `text` v = `structure level 01` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( ms_screen-input ) )->tag( `Label`
+          )->a( n = `text` v = `ref data` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( <input> ) )->tag( `Label`
+          )->a( n = `text` v = `ref data struc field` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( <screen>-input ) )->tag( `Label`
+          )->a( n = `text` v = `struc deep dissolve` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( ms_screen-ty_s_02-input ) )->tag( `Label`
+          )->a( n = `text` v = `struc deep switch guid name` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( ms_screen-ty_s_02-ty_s_03-ty_s_04-input ) )->tag( `Label`
+          )->a( n = `text` v = `instance attribute val` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( mo_app->mv_val ) )->tag( `Label`
+          )->a( n = `text` v = `instance attribute struc` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( mo_app->ms_screen-input ) ).
 
-    page->footer( )->overflow_toolbar(
-                   )->toolbar_spacer(
-                   )->button(
-                       text  = `Delete`
-                       press = client->_event( `BUTTON_DELETE` )
-                       type  = `Reject`
-                       icon  = `sap-icon://delete`
-                   )->button(
-                       text  = `Add`
-                       press = client->_event( `BUTTON_ADD` )
-                       type  = `Default`
-                       icon  = `sap-icon://add`
-                   )->button(
-                       text  = `Save`
-                       press = client->_event( `BUTTON_SAVE` )
-                       type  = `Success` ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` )->tag( `Button`
+                       )->a( n = `press` v = client->_event( `BUTTON_DELETE` )
+                       )->a( n = `text`  v = `Delete`
+                       )->a( n = `icon`  v = `sap-icon://delete`
+                       )->a( n = `type`  v = `Reject` )->tag( `Button`
+                       )->a( n = `press` v = client->_event( `BUTTON_ADD` )
+                       )->a( n = `text`  v = `Add`
+                       )->a( n = `icon`  v = `sap-icon://add`
+                       )->a( n = `type`  v = `Default` )->tag( `Button`
+                       )->a( n = `press` v = client->_event( `BUTTON_SAVE` )
+                       )->a( n = `text`  v = `Save`
+                       )->a( n = `type`  v = `Success` ).
 
     client->view_display( page->stringify( ) ).
 

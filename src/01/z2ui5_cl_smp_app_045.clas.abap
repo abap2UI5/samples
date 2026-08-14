@@ -58,64 +58,58 @@ CLASS z2ui5_cl_smp_app_045 IMPLEMENTATION.
         client->message_box_display( `button post was pressed` ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-            title          = `abap2UI5 - Table - Filter Rows in the Backend`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-            )->header_content(
-                )->link(
-      )->get_parent( ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Table - Filter Rows in the Backend`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `headerContent` )->tag( `Link` )->end( ).
 
-    page->message_strip(
-        text     = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A growing, scrollable table filtered on the backend: entering a value in the form and ` &&
                    `pressing filter deletes the non-matching rows server-side before re-rendering.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( title    = `Form Title`
-                       editable = abap_true
-                )->content( `form`
-                    )->title( `Filter`
-                    )->label( `info`
-                    )->input( client->_bind( mv_info_filter )
-                    )->button(
-                        text  = `filter`
-                        press = client->_event( `FILTER_INFO` ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Form Title`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+                        )->a( n = `text` v = `Filter` )->tag( `Label`
+                        )->a( n = `text` v = `info` )->tag( `Input`
+                        )->a( n = `value` v = client->_bind( mv_info_filter ) )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `FILTER_INFO` )
+                        )->a( n = `text`  v = `filter` ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
-                                        vertical = abap_true
-        )->table(
-            growing             = abap_true
-            growingthreshold    = `20`
-            growingscrolltoload = abap_true
-            items               = client->_bind( t_tab )
-            sticky              = `ColumnHeaders,HeaderToolbar` ).
+    DATA(tab) = page->ele( `ScrollContainer`
+        )->a( n = `height`   v = `70%`
+        )->a( n = `vertical` b = abap_true )->ele( `Table`
+            )->a( n = `items`               v = client->_bind( t_tab )
+            )->a( n = `growing`             b = abap_true
+            )->a( n = `growingThreshold`    v = `20`
+            )->a( n = `growingScrollToLoad` b = abap_true
+            )->a( n = `sticky`              v = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
-        )->overflow_toolbar(
-            )->toolbar_spacer( ).
+    tab->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` ).
 
-    tab->columns(
-        )->column(
-            )->text( `Color` )->get_parent(
-        )->column(
-            )->text( `Info` )->get_parent(
-        )->column(
-            )->text( `Description` )->get_parent(
-        )->column(
-            )->text( `Checkbox` )->get_parent(
-         )->column(
-            )->text( `Counter` ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Checkbox` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Counter` ).
 
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{VALUE}`
-       )->text( `{INFO}`
-       )->text( `{DESCR}`
-       )->checkbox( selected = `{CHECKBOX}`
-                    enabled  = abap_false
-       )->text( `{COUNT}` ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+           )->a( n = `text` v = `{VALUE}` )->tag( `Text`
+           )->a( n = `text` v = `{INFO}` )->tag( `Text`
+           )->a( n = `text` v = `{DESCR}` )->tag( `CheckBox`
+           )->a( n = `selected` v = `{CHECKBOX}`
+           )->a( n = `enabled`  b = abap_false )->tag( `Text`
+           )->a( n = `text` v = `{COUNT}` ).
 
     client->view_display( page->stringify( ) ).
 

@@ -26,37 +26,35 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->quick_view( placement = mv_placement
-              )->quick_view_page( pageid      = `employeePageId`
-                                  header      = `Employee Info`
-                                  title       = `choper725`
-                                  titleurl    = `https://github.com/abap2UI5/abap2UI5`
-                                  description = `Enjoy`
-                            )->quick_view_group( heading = `Contact Details`
-                              )->quick_view_group_element( label = `Mobile`
-                                                           value = `123-456-789`
-                                                           type  = `mobile`
-                                                         )->get_parent(
-                              )->quick_view_group_element( label = `Phone`
-                                                           value = `789-456-123`
-                                                           type  = `phone`
-                                                         )->get_parent(
-                              )->quick_view_group_element( label        = `Email`
-                                                           value        = `thisisemail@email.com`
-                                                           emailsubject = `Subject`
-                                                           type         = `email`
-                                                         )->get_parent(
-                              )->get_parent(
-                           )->quick_view_group( heading = `Company`
-                            )->quick_view_group_element( label   = `Name`
-                                                           value = `Adventure Company`
-                                                           url   = `https://github.com/abap2UI5/abap2UI5`
-                                                           type  = `link`
-                                                         )->get_parent(
-                            )->quick_view_group_element( label   = `Address`
-                                                           value = `Here"`
-                                                         )->get_parent( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    view->ele( `QuickView`
+        )->a( n = `placement` v = mv_placement )->ele( `QuickViewPage`
+                  )->a( n = `description` v = `Enjoy`
+                  )->a( n = `header`      v = `Employee Info`
+                  )->a( n = `pageId`      v = `employeePageId`
+                  )->a( n = `title`       v = `choper725`
+                  )->a( n = `titleUrl`    v = `https://github.com/abap2UI5/abap2UI5` )->ele( `QuickViewGroup`
+                                )->a( n = `heading` v = `Contact Details` )->ele( `QuickViewGroupElement`
+                                  )->a( n = `label` v = `Mobile`
+                                  )->a( n = `type`  v = `mobile`
+                                  )->a( n = `value` v = `123-456-789` )->end( )->ele( `QuickViewGroupElement`
+                                  )->a( n = `label` v = `Phone`
+                                  )->a( n = `type`  v = `phone`
+                                  )->a( n = `value` v = `789-456-123` )->end( )->ele( `QuickViewGroupElement`
+                                  )->a( n = `emailSubject` v = `Subject`
+                                  )->a( n = `label`        v = `Email`
+                                  )->a( n = `type`         v = `email`
+                                  )->a( n = `value`        v = `thisisemail@email.com` )->end( )->end( )->ele( `QuickViewGroup`
+                               )->a( n = `heading` v = `Company` )->ele( `QuickViewGroupElement`
+                                )->a( n = `label` v = `Name`
+                                )->a( n = `type`  v = `link`
+                                )->a( n = `url`   v = `https://github.com/abap2UI5/abap2UI5`
+                                )->a( n = `value` v = `Adventure Company` )->end( )->ele( `QuickViewGroupElement`
+                                )->a( n = `label` v = `Address`
+                                )->a( n = `value` v = `Here"` )->end( ).
 
     client->popover_display(
       xml   = view->stringify( )
@@ -67,52 +65,49 @@ CLASS z2ui5_cl_smp_app_109 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Popover - QuickView Contact Card`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popover - QuickView Contact Card`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Opens a QuickView popover, a compact contact card with grouped fields and links, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Opens a QuickView popover, a compact contact card with grouped fields and links, ` &&
                    `anchored to a button; the segmented button sets its placement.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form(
-        title    = `QuickView Popover`
-        editable = abap_true
-              )->content( `form`
-                  )->title( `QuickView Popover`
-                  )->label( `placement`
-                  )->segmented_button( client->_bind( mv_placement )
-                        )->items(
-                        )->segmented_button_item(
-                                key  = `Left`
-                                icon = `sap-icon://add-favorite`
-                                text = `Left`
-                        )->segmented_button_item(
-                                key  = `Top`
-                                icon = `sap-icon://accept`
-                                text = `Top`
-                        )->segmented_button_item(
-                                key  = `Bottom`
-                                icon = `sap-icon://accept`
-                                text = `Bottom`
-                        )->segmented_button_item(
-                                key  = `Right`
-                                icon = `sap-icon://attachment`
-                                text = `Right`
-                  )->get_parent( )->get_parent(
-                    )->label( `popover`
-                    )->button(
-                        text  = `show`
-                        press = client->_event( `POPOVER` )
-                        id    = `TEST`
-                        width = `10rem` ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `QuickView Popover`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+                      )->a( n = `text` v = `QuickView Popover` )->tag( `Label`
+                      )->a( n = `text` v = `placement` )->ele( `SegmentedButton`
+                      )->a( n = `selectedKey` v = client->_bind( mv_placement ) )->ele( `items` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://add-favorite`
+                            )->a( n = `key`  v = `Left`
+                            )->a( n = `text` v = `Left` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://accept`
+                            )->a( n = `key`  v = `Top`
+                            )->a( n = `text` v = `Top` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://accept`
+                            )->a( n = `key`  v = `Bottom`
+                            )->a( n = `text` v = `Bottom` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://attachment`
+                            )->a( n = `key`  v = `Right`
+                            )->a( n = `text` v = `Right` )->end( )->end( )->tag( `Label`
+                        )->a( n = `text` v = `popover` )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `POPOVER` )
+                        )->a( n = `text`  v = `show`
+                        )->a( n = `id`    v = `TEST`
+                        )->a( n = `width` v = `10rem` ).
 
     client->view_display( view->stringify( ) ).
 

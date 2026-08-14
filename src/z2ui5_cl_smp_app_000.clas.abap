@@ -97,11 +97,11 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     "! repository you are looking at, there is nowhere to go from it.
     METHODS render_header
       IMPORTING
-        page TYPE REF TO z2ui5_cl_xml_view.
+        page TYPE REF TO z2ui5_cl_ui5_view_builder.
     "! The second header row: the filter over the tile list.
     METHODS render_sub_header
       IMPORTING
-        page TYPE REF TO z2ui5_cl_xml_view.
+        page TYPE REF TO z2ui5_cl_ui5_view_builder.
     "! A repository that is not on this system stays clickable and says what is
     "! missing - a popover on the icon that was pressed, with the GitHub link
     "! to install it from.
@@ -121,7 +121,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     "!                          two groups apart - see render_header( )
     METHODS header_button
       IMPORTING
-        toolbar     TYPE REF TO z2ui5_cl_xml_view
+        toolbar     TYPE REF TO z2ui5_cl_ui5_view_builder
         icon        TYPE string
         name        TYPE string
         descr       TYPE string
@@ -293,11 +293,17 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     DATA(t_catalog) = catalog_filter( t_catalog_all ).
     DATA(t_blocks) = block_widths( t_catalog ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     " title and back button come with the custom header (render_header), not
     " with the page - a Page renders either its own header or a custom one
-    DATA(page) = view->shell( )->page( id = `page` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `id` v = `page` ).
 
     render_header( page ).
     render_sub_header( page ).
@@ -315,10 +321,10 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       IF tile-group <> prev_group.
 
         IF show_groups = abap_true.
-          page->title(
-              text  = tile-group
-              level = `H3`
-              class = `sapUiSmallMarginTop sapUiTinyMarginBottom` ).
+          page->tag( `Title`
+              )->a( n = `text`  v = tile-group
+              )->a( n = `class` v = `sapUiSmallMarginTop sapUiTinyMarginBottom`
+              )->a( n = `level` v = `H3` ).
 
         ELSE.
           " no heading that could set the first block apart from the header
@@ -337,25 +343,25 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       " widest header of the block plus roughly one space, in 1/100 em
       DATA(tenths) = ( t_blocks[ group = tile-group base = base ]-width + 45 ) DIV 10.
       DATA(width) = |{ tenths DIV 10 }.{ tenths MOD 10 }em|.
-      DATA(row) = page->hbox(
-          alignitems = `Center`
-          wrap       = `Wrap`
-          class      = COND #( WHEN new_block = abap_true
+      DATA(row) = page->ele( `HBox`
+          )->a( n = `class`      v = COND #( WHEN new_block = abap_true
                                THEN `sapUiSmallMarginBegin sapUiSmallMarginTop`
-                               ELSE `sapUiSmallMarginBegin` ) ).
+                               ELSE `sapUiSmallMarginBegin` )
+          )->a( n = `alignItems` v = `Center`
+          )->a( n = `wrap`       v = `Wrap` ).
 
       IF tile-sub IS INITIAL.
-        row->link(
-            text  = tile-header
-            width = width
-            press = client->_event( tile-app ) ).
+        row->tag( `Link`
+            )->a( n = `text`  v = tile-header
+            )->a( n = `press` v = client->_event( tile-app )
+            )->a( n = `width` v = width ).
 
       ELSE.
-        row->link(
-            text  = tile-header
-            width = width
-            press = client->_event( tile-app )
-            )->text( tile-sub ).
+        row->tag( `Link`
+            )->a( n = `text`  v = tile-header
+            )->a( n = `press` v = client->_event( tile-app )
+            )->a( n = `width` v = width )->tag( `Text`
+                )->a( n = `text` v = tile-sub ).
       ENDIF.
 
       " straight to the ABAP behind the sample - the tile shows what it does,
@@ -364,25 +370,24 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       " A core:Icon, not a Button: a Button brings its own height (2rem even in
       " compact density) and would set the line height of every row - the icon
       " is as tall as the text next to it, which is what keeps the list tight
-      row->_generic(
-          name   = `Icon`
-          ns     = `core`
-          t_prop = VALUE #( ( n = `src`     v = `sap-icon://source-code` )
-                            ( n = `size`    v = `0.875rem` )
-                            ( n = `class`   v = `sapUiTinyMarginBegin` )
-                            ( n = `tooltip` v = |{ tile-app } - show the ABAP source on GitHub| )
-                            ( n = `press`   v = open_url( source_url( tile ) ) ) ) ).
+      row->ele( n = `Icon` ns = `core`
+          )->a( n = `src`     v = `sap-icon://source-code`
+          )->a( n = `size`    v = `0.875rem`
+          )->a( n = `class`   v = `sapUiTinyMarginBegin`
+          )->a( n = `tooltip` v = |{ tile-app } - show the ABAP source on GitHub|
+          )->a( n = `press`   v = open_url( source_url( tile ) ) ).
 
     ENDLOOP.
 
     IF t_catalog IS INITIAL.
-      page->text(
-          text  = `No sample matches the filter.`
-          class = `sapUiSmallMarginBegin` ).
+      page->tag( `Text`
+          )->a( n = `text`  v = `No sample matches the filter.`
+          )->a( n = `class` v = `sapUiSmallMarginBegin` ).
     ENDIF.
 
     " a few blank lines so the last tiles do not end glued to the page bottom
-    page->vbox( height = `4rem` ).
+    page->ele( `VBox`
+        )->a( n = `height` v = `4rem` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -401,22 +406,24 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " 3rem. This row used to put a ToolbarSeparator between its two groups and
     " lost the documentation and GitHub icons on 1.71 because of it; the gap
     " now rides on the first icon of the second group (group_start).
-    DATA(bar) = page->custom_header( )->bar( ).
+    DATA(bar) = page->ele( `customHeader` )->ele( `Bar` ).
 
     " left: what the stock page header would render on its own
-    DATA(left) = bar->content_left( ).
+    DATA(left) = bar->ele( `contentLeft` ).
 
-    left->button( icon    = `sap-icon://nav-back`
-                  type    = `Transparent`
-                  tooltip = `Back`
-                  visible = client->check_app_prev_stack( )
-                  press   = client->_event_nav_app_leave( ) ).
+    left->tag( `Button`
+        )->a( n = `press`   v = client->_event_nav_app_leave( )
+        )->a( n = `visible` b = client->check_app_prev_stack( )
+        )->a( n = `icon`    v = `sap-icon://nav-back`
+        )->a( n = `type`    v = `Transparent`
+        )->a( n = `tooltip` v = `Back` ).
 
-    left->title( text  = `abap2UI5 - Samples`
-                 level = `H2` ).
+    left->tag( `Title`
+        )->a( n = `text`  v = `abap2UI5 - Samples`
+        )->a( n = `level` v = `H2` ).
 
     " right: the sample repositories of the abap2UI5 family, one icon each ...
-    DATA(right) = bar->content_right( ).
+    DATA(right) = bar->ele( `contentRight` ).
 
     header_button( toolbar = right
                    icon    = `sap-icon://lightbulb`
@@ -462,16 +469,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD render_sub_header.
 
-    DATA(toolbar) = page->sub_header( )->overflow_toolbar( ).
+    DATA(toolbar) = page->ele( `subHeader` )->ele( `OverflowToolbar` ).
 
     " the filter sits in the header, not above the list: it stays in place
     " while the list below it grows and shrinks
-    toolbar->search_field(
-        id          = `search`
-        value       = client->_bind( search )
-        search      = client->_event( cs_event-search )
-        width       = `24rem`
-        placeholder = `Filter samples` ).
+    toolbar->tag( `SearchField`
+        )->a( n = `width`       v = `24rem`
+        )->a( n = `search`      v = client->_event( cs_event-search )
+        )->a( n = `value`       v = client->_bind( search )
+        )->a( n = `id`          v = `search`
+        )->a( n = `placeholder` v = `Filter samples` ).
 
   ENDMETHOD.
 
@@ -545,35 +552,35 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                                    THEN `sapUiMediumMarginBegin sapUiTinyMarginEnd`
                                    ELSE `sapUiTinyMarginBeginEnd` ).
 
-    toolbar->_generic(
-        name   = `Icon`
-        ns     = `core`
-        t_prop = VALUE #( ( n = `src`     v = icon )
-                          ( n = `id`      v = class )
-                          ( n = `size`    v = `1.125rem` )
-                          ( n = `class`   v = css_class )
-                          ( n = `color`   v = color )
-                          ( n = `tooltip` v = hint )
-                          ( n = `press`   v = press ) ) ).
+    toolbar->ele( n = `Icon` ns = `core`
+        )->a( n = `src`     v = icon
+        )->a( n = `id`      v = class
+        )->a( n = `size`    v = `1.125rem`
+        )->a( n = `class`   v = css_class
+        )->a( n = `color`   v = color
+        )->a( n = `tooltip` v = hint
+        )->a( n = `press`   v = press ).
 
   ENDMETHOD.
 
 
   METHOD install_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    view->popover(
-            title        = |{ name } - not installed|
-            placement    = `Bottom`
-            contentwidth = `26rem`
-        )->vbox( `sapUiSmallMargin`
-            )->text( |This system does not have { name } installed, so there is no app to jump to. | &&
-                     |Install the repository with abapGit, then this icon opens it right here.|
-            )->link( text   = href
-                     href   = href
-                     target = `_blank`
-                     class  = `sapUiSmallMarginTop` ).
+    view->ele( `Popover`
+        )->a( n = `title`        v = |{ name } - not installed|
+        )->a( n = `placement`    v = `Bottom`
+        )->a( n = `contentWidth` v = `26rem` )->ele( `VBox`
+            )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Text`
+                )->a( n = `text` v = |This system does not have { name } installed, so there is no app to jump to. | &&
+                     |Install the repository with abapGit, then this icon opens it right here.| )->tag( `Link`
+                )->a( n = `text`   v = href
+                )->a( n = `target` v = `_blank`
+                )->a( n = `href`   v = href
+                )->a( n = `class`  v = `sapUiSmallMarginTop` ).
 
     client->popover_display( xml   = view->stringify( )
                              by_id = anchor ).

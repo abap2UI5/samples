@@ -51,33 +51,38 @@ CLASS z2ui5_cl_smp_app_353 IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page(
-              title          = `abap2UI5 - Multiple Timers`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `abap2UI5 - Multiple Timers`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    DATA(form) = page->simple_form(
-                      editable = abap_true
-                 )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->label( `device_browser`
-        )->input( client->_bind( device_browser )
-        )->label( `device_os`
-        )->input( client->_bind( device_os )
-        )->label( `device_systemtype`
-        )->input( client->_bind( device_systemtype )
-        )->label( `device_height`
-        )->input( client->_bind( device_height )
-        )->label( `device_width`
-        )->input( client->_bind( device_width )
-        )->label( `ui5_version`
-        )->input( client->_bind( ui5_version )
-        )->label( `ui5_theme`
-        )->input( client->_bind( ui5_theme )
-        )->label( `Cursor here ->` )->input(
-            id    = `IdOne`
-            value = client->_bind( one ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `device_browser` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_browser ) )->tag( `Label`
+            )->a( n = `text` v = `device_os` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_os ) )->tag( `Label`
+            )->a( n = `text` v = `device_systemtype` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_systemtype ) )->tag( `Label`
+            )->a( n = `text` v = `device_height` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_height ) )->tag( `Label`
+            )->a( n = `text` v = `device_width` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( device_width ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_version` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( ui5_version ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_theme` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( ui5_theme ) )->tag( `Label`
+            )->a( n = `text` v = `Cursor here ->` )->tag( `Input`
+            )->a( n = `id`    v = `IdOne`
+            )->a( n = `value` v = client->_bind( one ) ).
 
     client->view_display( page->stringify( ) ).
 

@@ -40,21 +40,26 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
 
   METHOD main_view.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock`   v = `true`
+        )->a( n = `height`         v = `100%`
+        )->a( n = `xmlns`          v = `sap.m`
+        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`     v = `sap.ui.core`
+        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    DATA(page) = lo_view->shell(
-        )->page(
-                title          = `abap2UI5 - Templating - Dynamic Content in a Nested View`
-                id             = `test`
-                navbuttonpress = i_client->_event_nav_app_leave( )
-                shownavbutton  = i_client->check_app_prev_stack( ) ).
+    DATA(page) = lo_view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Templating - Dynamic Content in a Nested View`
+            )->a( n = `showNavButton`  b = i_client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = i_client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `test` ).
 
-    page->message_strip(
-        text     = `This sample renders a main view and then embeds a second view into it as ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample renders a main view and then embeds a second view into it as ` &&
                    `nested content via nest_view_display.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     i_client->view_display( lo_view->stringify( ) ).
 
@@ -72,22 +77,25 @@ CLASS z2ui5_cl_smp_app_176 IMPLEMENTATION.
                          ( fname = `DATE` merge = `false` visible = `true`  binding = `{DATE}` )
                          ( fname = `AGE`  merge = `false` visible = `false` binding = `{AGE}` ) ).
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock`   v = `true`
+        )->a( n = `height`         v = `100%`
+        )->a( n = `xmlns`          v = `sap.m`
+        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`     v = `sap.ui.core`
+        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    lo_view_nested->shell( )->page( `Nested View`
-      )->table( i_client->_bind( mt_data )
-      )->columns(
-        )->template_repeat( list = `{template>/MT_LAYOUT}`
-                            var  = `LO`
-          )->column( mergeduplicates = `{LO>MERGE}`
-                     visible         = `{LO>VISIBLE}` )->get_parent(
-        )->get_parent( )->get_parent(
-        )->items(
-          )->column_list_item(
-            )->cells(
-              )->template_repeat( list = `{template>/MT_LAYOUT}`
-                                  var  = `LO2`
-                )->object_identifier( text = `{= '{' + ${LO2>FNAME} + '}' }` ).
+    lo_view_nested->ele( `Shell` )->ele( `Page`
+        )->a( n = `title` v = `Nested View` )->ele( `Table`
+          )->a( n = `items` v = i_client->_bind( mt_data ) )->ele( `columns` )->ele( n = `repeat` ns = `template`
+            )->a( n = `list` v = `{template>/MT_LAYOUT}`
+            )->a( n = `var`  v = `LO` )->ele( `Column`
+              )->a( n = `mergeDuplicates` v = `{LO>MERGE}`
+              )->a( n = `visible`         v = `{LO>VISIBLE}` )->end( )->end( )->end( )->ele( `items` )->ele( `ColumnListItem` 
+              )->ele( `cells` )->ele( n = `repeat` ns = `template`
+                  )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                  )->a( n = `var`  v = `LO2` )->ele( `ObjectIdentifier`
+                    )->a( n = `text` v = `{= '{' + ${LO2>FNAME} + '}' }` ).
 
     i_client->nest_view_display( val           = lo_view_nested->stringify( )
                                  id            = `test`

@@ -77,45 +77,45 @@ CLASS z2ui5_cl_smp_app_024 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Navigation - Call and Leave Apps (nav_app_call)`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Navigation - Call and Leave Apps (nav_app_call)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `App-to-app navigation: calls a second app in different ways - open a view, raise ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `App-to-app navigation: calls a second app in different ways - open a view, raise ` &&
                    `an event or pass data - and reads the input it returns.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->grid( `L6 M12 S12`
-        )->content( `layout`
-        )->simple_form(
-            title    = `Controller`
-            editable = abap_true
-        )->content( `form`
-        )->label( `Demo`
-        )->button(
-            text  = `call new app (first View)`
-            press = client->_event( `CALL_NEW_APP` )
-        )->label( `Demo`
-        )->button(
-            text  = `call new app (second View)`
-            press = client->_event( `CALL_NEW_APP_VIEW` )
-        )->label( `Demo`
-        )->button(
-            text  = `call new app (set Event)`
-            press = client->_event( `CALL_NEW_APP_EVENT` )
-        )->label( `Demo`
-        )->input( client->_bind( input )
-        )->button(
-            text  = `call new app (set data)`
-            press = client->_event( `CALL_NEW_APP_READ` )
-        )->label( `some data, you can read in the next app`
-        )->input( client->_bind( input2 ) ).
+    page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title`    v = `Controller`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CALL_NEW_APP` )
+            )->a( n = `text`  v = `call new app (first View)` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CALL_NEW_APP_VIEW` )
+            )->a( n = `text`  v = `call new app (second View)` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CALL_NEW_APP_EVENT` )
+            )->a( n = `text`  v = `call new app (set Event)` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input ) )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CALL_NEW_APP_READ` )
+            )->a( n = `text`  v = `call new app (set data)` )->tag( `Label`
+            )->a( n = `text` v = `some data, you can read in the next app` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input2 ) ).
 
     client->view_display( view->stringify( ) ).
 

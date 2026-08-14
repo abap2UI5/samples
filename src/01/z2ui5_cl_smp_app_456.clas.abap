@@ -54,7 +54,13 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
     " calendar date properties (CalendarAppointment startDate/endDate,
     " PlanningCalendar startDate) are typed "object" - they demand a real JS
@@ -62,42 +68,36 @@ CLASS z2ui5_cl_smp_app_456 IMPLEMENTATION.
     " JavaScript or UI5Date date object"). Formatter.DateCreateObject from
     " the curated module converts the model's ISO strings at the point of
     " use - the model itself stays plain strings everywhere.
-    view->_generic_property( VALUE #( n = `core:require`
-                                      v = `{Formatter: 'z2ui5/model/formatter'}` ) ).
+    view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Formatter - Date Objects for the PlanningCalendar`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Formatter - Date Objects for the PlanningCalendar`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The model carries plain ISO strings; Formatter.DateCreateObject turns them into ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The model carries plain ISO strings; Formatter.DateCreateObject turns them into ` &&
                    `the real JS Date objects the object-typed calendar properties require - only at ` &&
                    `the bindings that need them.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " the startDate path must come from _bind - a hardcoded binding
     " path is never registered in the model, the frontend then receives no
     " data and the formatter passes a non-Date into the object property
-    page->planning_calendar(
-        id        = `PC1`
-        class     = `sapUiSmallMargin`
-        startdate = |\{ path: '{ client->_bind( val = start_date path = abap_true ) }', | &&
+    page->ele( `PlanningCalendar`
+        )->a( n = `rows`      v = client->_bind( t_people )
+        )->a( n = `startDate` v = |\{ path: '{ client->_bind( val = start_date path = abap_true ) }', | &&
                     |formatter: 'Formatter.DateCreateObject' \}|
-        rows      = client->_bind( t_people )
-        )->rows(
-        )->planning_calendar_row(
-            title        = `{NAME}`
-            appointments = `{path: 'T_APPOINTMENTS', templateShareable: true}`
-            )->appointments(
-            )->calendar_appointment(
-                startdate = `{ path: 'START_AT', formatter: 'Formatter.DateCreateObject' }`
-                enddate   = `{ path: 'END_AT', formatter: 'Formatter.DateCreateObject' }`
-                title     = `{TITLE}`
-                type      = `{TYPE}` ).
+        )->a( n = `id`        v = `PC1`
+        )->a( n = `class`     v = `sapUiSmallMargin` )->ele( `rows` )->ele( `PlanningCalendarRow`
+            )->a( n = `appointments` v = `{path: 'T_APPOINTMENTS', templateShareable: true}`
+            )->a( n = `title`        v = `{NAME}` )->ele( `appointments` )->ele( n = `CalendarAppointment` ns = `u`
+                )->a( n = `startDate` v = `{ path: 'START_AT', formatter: 'Formatter.DateCreateObject' }`
+                )->a( n = `endDate`   v = `{ path: 'END_AT', formatter: 'Formatter.DateCreateObject' }`
+                )->a( n = `title`     v = `{TITLE}`
+                )->a( n = `type`      v = `{TYPE}` ).
 
     client->view_display( view->stringify( ) ).
 

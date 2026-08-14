@@ -51,37 +51,41 @@ CLASS z2ui5_cl_smp_app_464 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Navigation - Uncaught Error and Error Popup`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Navigation - Uncaught Error and Error Popup`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Trigger an unexpected error. The client shows a popup "An unexpected error ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Trigger an unexpected error. The client shows a popup "An unexpected error ` &&
                    `occurred" with two buttons: Details jumps into the DebugTool's Error tab (full ` &&
                    `error text plus Retry/Refresh/Logout), Restart reloads the app. Open the ` &&
                    `DebugTool any time with Ctrl+F12.`
-        type     = `Warning`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Warning`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->button( text  = `Raise an exception`
-                   icon  = `sap-icon://error`
-                   type  = `Reject`
-                   press = client->_event( `RAISE_EXCEPTION` )
-        )->button( text  = `Trigger a runtime dump (divide by zero)`
-                   icon  = `sap-icon://alert`
-                   press = client->_event( `DIVIDE_BY_ZERO` )
-                   class = `sapUiTinyMarginTop`
-        )->button( text  = `Trigger an Assert`
-                   icon  = `sap-icon://alert`
-                   press = client->_event( `ASSERT` )
-                   class = `sapUiTinyMarginTop`
-                   ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `RAISE_EXCEPTION` )
+            )->a( n = `text`  v = `Raise an exception`
+            )->a( n = `icon`  v = `sap-icon://error`
+            )->a( n = `type`  v = `Reject` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `DIVIDE_BY_ZERO` )
+            )->a( n = `text`  v = `Trigger a runtime dump (divide by zero)`
+            )->a( n = `icon`  v = `sap-icon://alert`
+            )->a( n = `class` v = `sapUiTinyMarginTop` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `ASSERT` )
+            )->a( n = `text`  v = `Trigger an Assert`
+            )->a( n = `icon`  v = `sap-icon://alert`
+            )->a( n = `class` v = `sapUiTinyMarginTop` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -38,22 +38,20 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->popover(
-                  title     = `Popover Title`
-                  placement = mv_placement
-              )->footer( )->overflow_toolbar(
-                  )->toolbar_spacer(
-                  )->button(
-                      text  = `Cancel`
-                      press = client->_event( `BUTTON_CANCEL` )
-                  )->button(
-                      text  = `Confirm`
-                      press = client->_event( `BUTTON_CONFIRM` )
-                      type  = `Emphasized`
-                )->get_parent( )->get_parent(
-            )->text( `make an input here:`
-            )->input( `abcd` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    view->ele( `Popover`
+        )->a( n = `title`     v = `Popover Title`
+        )->a( n = `placement` v = mv_placement )->ele( `footer` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `BUTTON_CANCEL` )
+                      )->a( n = `text`  v = `Cancel` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `BUTTON_CONFIRM` )
+                      )->a( n = `text`  v = `Confirm`
+                      )->a( n = `type`  v = `Emphasized` )->end( )->end( )->tag( `Text`
+                )->a( n = `text` v = `make an input here:` )->tag( `Input`
+                )->a( n = `value` v = `abcd` ).
 
     client->popover_display(
       xml   = view->stringify( )
@@ -64,18 +62,19 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD popover_list_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory_popup( ).
-    view->popover(
-                  title     = `Popover Title`
-                  placement = mv_placement
-              )->list(
-                items           = client->_bind( mt_tab )
-                selectionchange = client->_event( val = `SEL_CHANGE` )
-                mode            = `SingleSelectMaster`
-                 )->standard_list_item(
-                  title       = `{ID}`
-                  description = `{NAME}`
-                  selected    = `{SELECTED}` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+    view->ele( `Popover`
+        )->a( n = `title`     v = `Popover Title`
+        )->a( n = `placement` v = mv_placement )->ele( `List`
+                  )->a( n = `items`           v = client->_bind( mt_tab )
+                  )->a( n = `mode`            v = `SingleSelectMaster`
+                  )->a( n = `selectionChange` v = client->_event( val = `SEL_CHANGE` ) )->tag( `StandardListItem`
+                     )->a( n = `title`       v = `{ID}`
+                     )->a( n = `description` v = `{NAME}`
+                     )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->popover_display(
       xml   = view->stringify( )
@@ -86,54 +85,51 @@ CLASS z2ui5_cl_smp_app_081 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Popover - Select from a List`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popover - Select from a List`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Opens a Popover anchored to a button, showing a selectable list inside it; the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Opens a Popover anchored to a button, showing a selectable list inside it; the ` &&
                    `segmented button chooses on which side the popover appears.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form(
-        title    = `Popover`
-        editable = abap_true
-              )->content( `form`
-                  )->title( `Input`
-                  )->label( `Link`
-                  )->link( text = `Documentation UI5 Popover Control`
-                           href = `https://openui5.hana.ondemand.com/entity/sap.m.Popover`
-                  )->label( `placement`
-                  )->segmented_button( client->_bind( mv_placement )
-                        )->items(
-                        )->segmented_button_item(
-                                key  = `Left`
-                                icon = `sap-icon://add-favorite`
-                                text = `Left`
-                        )->segmented_button_item(
-                                key  = `Top`
-                                icon = `sap-icon://accept`
-                                text = `Top`
-                        )->segmented_button_item(
-                                key  = `Bottom`
-                                icon = `sap-icon://accept`
-                                text = `Bottom`
-                        )->segmented_button_item(
-                                key  = `Right`
-                                icon = `sap-icon://attachment`
-                                text = `Right`
-                  )->get_parent( )->get_parent(
-                  )->label( `popover`
-                  )->button(
-                      text  = `show popover with list`
-                      press = client->_event( `POPOVER_LIST` )
-                      id    = `TEST` ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Popover`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+                      )->a( n = `text` v = `Input` )->tag( `Label`
+                      )->a( n = `text` v = `Link` )->tag( `Link`
+                      )->a( n = `text` v = `Documentation UI5 Popover Control`
+                      )->a( n = `href` v = `https://openui5.hana.ondemand.com/entity/sap.m.Popover` )->tag( `Label`
+                      )->a( n = `text` v = `placement` )->ele( `SegmentedButton`
+                      )->a( n = `selectedKey` v = client->_bind( mv_placement ) )->ele( `items` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://add-favorite`
+                            )->a( n = `key`  v = `Left`
+                            )->a( n = `text` v = `Left` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://accept`
+                            )->a( n = `key`  v = `Top`
+                            )->a( n = `text` v = `Top` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://accept`
+                            )->a( n = `key`  v = `Bottom`
+                            )->a( n = `text` v = `Bottom` )->tag( `SegmentedButtonItem`
+                            )->a( n = `icon` v = `sap-icon://attachment`
+                            )->a( n = `key`  v = `Right`
+                            )->a( n = `text` v = `Right` )->end( )->end( )->tag( `Label`
+                      )->a( n = `text` v = `popover` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `POPOVER_LIST` )
+                      )->a( n = `text`  v = `show popover with list`
+                      )->a( n = `id`    v = `TEST` ).
 
     client->view_display( view->stringify( ) ).
 

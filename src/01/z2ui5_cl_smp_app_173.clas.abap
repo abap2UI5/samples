@@ -39,47 +39,53 @@ CLASS z2ui5_cl_smp_app_173 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock`   v = `true`
+        )->a( n = `height`         v = `100%`
+        )->a( n = `xmlns`          v = `sap.m`
+        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`     v = `sap.ui.core`
+        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1` ).
 
-    view           = view->shell( )->page( id    = `page_main`
-    class          = `sapUiContentPadding`
-    title          = `abap2UI5 - Templating - Build Columns Dynamically (template:repeat)`
-    navbuttonpress = client->_event_nav_app_leave( )
-    shownavbutton  = client->check_app_prev_stack( ) ).
+    view           = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Templating - Build Columns Dynamically (template:repeat)`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `class`          v = `sapUiContentPadding`
+        )->a( n = `id`             v = `page_main` ).
 
-    view->message_strip(
-        text     = `This sample builds table columns and cells dynamically from a layout table ` &&
+    view->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample builds table columns and cells dynamically from a layout table ` &&
                    `using template repeat, plus a template if/then/else that re-renders on a switch.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    view->table( client->_bind( mt_data )
-      )->columns(
-        )->template_repeat( list = `{template>/MT_LAYOUT}`
-                            var  = `L0`
-          )->column( mergeduplicates = `{L0>MERGE}`
-                     visible         = `{L0>VISIBLE}` )->text( `{L0>FNAME}` )->get_parent(
-        )->get_parent( )->get_parent(
-        )->items(
-          )->column_list_item(
-            )->cells(
-              )->template_repeat( list = `{template>/MT_LAYOUT}`
-                                  var  = `L1`
-                )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
+    view->ele( `Table`
+        )->a( n = `items` v = client->_bind( mt_data ) )->ele( `columns` )->ele( n = `repeat` ns = `template`
+            )->a( n = `list` v = `{template>/MT_LAYOUT}`
+            )->a( n = `var`  v = `L0` )->ele( `Column`
+              )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
+              )->a( n = `visible`         v = `{L0>VISIBLE}` )->tag( `Text`
+                         )->a( n = `text` v = `{L0>FNAME}` )->end( )->end( )->end( )->ele( `items` )->ele( `ColumnListItem` 
+                         )->ele( `cells` )->ele( n = `repeat` ns = `template`
+                  )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                  )->a( n = `var`  v = `L1` )->ele( `ObjectIdentifier`
+                    )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
 
-    view->label( `IF Template (with re-rendering)` ).
-    view->switch( state  = client->_bind( mv_flag )
-                  change = client->_event( `CHANGE_FLAG` ) ).
-                  view   = view->vbox( ).
+    view->tag( `Label`
+        )->a( n = `text` v = `IF Template (with re-rendering)` ).
+    view->tag( `Switch`
+        )->a( n = `state`  v = client->_bind( mv_flag )
+        )->a( n = `change` v = client->_event( `CHANGE_FLAG` ) ).
+                  view   = view->ele( `VBox` ).
 
-    view->template_if( `{template>/MV_FLAG}`
-      )->template_then(
-        )->icon( src   = `sap-icon://accept`
-                 color = `green` )->get_parent(
-      )->template_else(
-        )->icon( src   = `sap-icon://decline`
-                 color = `red` ).
+    view->ele( n = `if` ns = `template`
+        )->a( n = `test` v = `{template>/MV_FLAG}` )->ele( n = `then` ns = `template` )->tag( n = `Icon` ns = `core`
+            )->a( n = `color` v = `green`
+            )->a( n = `src`   v = `sap-icon://accept` )->end( )->ele( n = `else` ns = `template` )->tag( n = `Icon` ns = `core`
+            )->a( n = `color` v = `red`
+            )->a( n = `src`   v = `sap-icon://decline` ).
 
     client->view_display( view->stringify( ) ).
 

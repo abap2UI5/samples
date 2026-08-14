@@ -137,99 +137,146 @@ CLASS z2ui5_cl_smp_app_070 IMPLEMENTATION.
       (   n = `!<leer>` v = `!(<leer>)` )
       (   n = `<leer>`  v = `<leer>` ) ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:f`      v = `sap.f`
+        )->a( n = `xmlns:table`  v = `sap.ui.table`
+        )->a( n = `xmlns:u`      v = `sap.ui.unified` ).
 
-    DATA(page1) = view->shell( )->page( id = `page_main`
-            title                = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
-            navbuttonpress       = client->_event_nav_app_leave( )
-            shownavbutton        = client->check_app_prev_stack( )
-            class                = `sapUiContentPadding` ).
+    DATA(page1) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Grid Table - Full Example with sap.ui.table`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `class`          v = `sapUiContentPadding`
+        )->a( n = `id`             v = `page_main` ).
 
-    page1->message_strip(
-        text     = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
+    page1->tag( `MessageStrip`
+        )->a( n = `text`     v = `A full sap.ui.table.Table inside a DynamicPage: fixed column, row-action buttons, ` &&
                    `progress-indicator and currency cells, plus backend-driven search, sort and filter events.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(page) = page1->dynamic_page( headerexpanded = abap_true ).
+    DATA(page) = page1->ele( n = `DynamicPage` ns = `f`
+        )->a( n = `headerExpanded` b = abap_true ).
 
-    DATA(header_title) = page->title( ns = `f` )->get( )->dynamic_page_title( ).
-    header_title->heading( `f` )->hbox( )->title( `Search Field` ).
-    header_title->expanded_content( `f` ).
-    header_title->snapped_content( `f` ).
+    DATA(header_title) = page->ele( n = `title` ns = `f` )->ele( n = `DynamicPageTitle` ns = `f` ).
+    header_title->ele( n = `heading` ns = `f` )->ele( `HBox` )->tag( `Title`
+        )->a( n = `text` v = `Search Field` ).
+    header_title->ele( n = `expandedContent` ns = `f` ).
+    header_title->ele( n = `snappedContent` ns = `f` ).
 
-    DATA(lo_box) = page->header( )->dynamic_page_header( abap_true
-         )->flex_box( alignitems     = `Start`
-                      justifycontent = `SpaceBetween` )->flex_box( alignitems = `Start` ).
+    DATA(lo_box) = page->ele( `header` )->ele( n = `DynamicPageHeader` ns = `f`
+        )->a( n = `pinnable` b = abap_true )->ele( `FlexBox`
+             )->a( n = `alignItems`     v = `Start`
+             )->a( n = `justifyContent` v = `SpaceBetween` )->ele( `FlexBox`
+                          )->a( n = `alignItems` v = `Start` ).
 
-    lo_box->vbox( )->text( `Search` )->search_field(
-         value  = client->_bind( mv_search_value )
-         search = client->_event( `BUTTON_SEARCH` )
-         width  = `17.5rem`
-         placeholder = `Search products`
-         id     = `SEARCH` ).
+    lo_box->ele( `VBox` )->tag( `Text`
+        )->a( n = `text` v = `Search` )->tag( `SearchField`
+        )->a( n = `width`       v = `17.5rem`
+        )->a( n = `search`      v = client->_event( `BUTTON_SEARCH` )
+        )->a( n = `value`       v = client->_bind( mv_search_value )
+        )->a( n = `id`          v = `SEARCH`
+        )->a( n = `placeholder` v = `Search products` ).
 
-    lo_box->get_parent( )->hbox( justifycontent = `End` )->button(
-        text  = `Go`
-        press = client->_event( `BUTTON_START` )
-        type  = `Emphasized` ).
+    lo_box->end( )->ele( `HBox`
+        )->a( n = `justifyContent` v = `End` )->tag( `Button`
+        )->a( n = `press` v = client->_event( `BUTTON_START` )
+        )->a( n = `text`  v = `Go`
+        )->a( n = `type`  v = `Emphasized` ).
 
-    DATA(cont) = page->content( `f` ).
+    DATA(cont) = page->ele( n = `content` ns = `f` ).
 
-    DATA(tab) = cont->ui_table( rows               = client->_bind( val = mt_table )
-                                alternaterowcolors = abap_true
-                                rowactioncount     = `2`
-                                fixedcolumncount   = `1`
-                                selectionmode      = `None`
-                                sort               = client->_event( `SORT` )
-                                filter             = client->_event( `FILTER` )
-                                customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
-    DATA(lo_columns) = tab->ui_columns( ).
-    lo_columns->ui_column( `4rem` )->checkbox( selected = client->_bind( lv_selkz )
-                                                       enabled  = abap_true
-                                                       select   = client->_event( `SELKZ` ) )->ui_template( )->checkbox( `{SELKZ}` ).
-    lo_columns->ui_column( width          = `5rem`
-                           sortproperty   = `ROW_ID`
-                           filterproperty = `ROW_ID` )->text( `Index` )->ui_template( )->text( `{ROW_ID}` ).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `PROCESS`
-                           filterproperty = `PROCESS` )->text( `Process Indicator`
-      )->ui_template( )->progress_indicator( class        = `sapUiSmallMarginBottom`
-                                             percentvalue = `{PROCESS}`
-                                             displayvalue = `{PROCESS} %`
-                                             showvalue    = `true`
-                                             state        = `{PROCESS_STATE}` ).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `PRODUCT`
-                           filterproperty = `PRODUCT` )->text( `Product` )->ui_template( )->input( value    = `{PRODUCT}`
-                           editable       = abap_false ).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `CREATE_DATE`
-                           filterproperty = `CREATE_DATE` )->text( `Date` )->ui_template( )->text( `{CREATE_DATE}` ).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `CREATE_BY`
-                           filterproperty = `CREATE_BY`)->text( `Name` )->ui_template( )->text( `{CREATE_BY}` ).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `STORAGE_LOCATION`
-                           filterproperty = `STORAGE_LOCATION` )->text( `Location` )->ui_template( )->text( `{STORAGE_LOCATION}`).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `QUANTITY`
-                           filterproperty = `QUANTITY` )->text( `Quantity` )->ui_template( )->text( `{QUANTITY}`).
-    lo_columns->ui_column( width          = `6rem`
-                           sortproperty   = `MEINS`
-                           filterproperty = `MEINS` )->text( `Unit` )->ui_template( )->text( `{MEINS}`).
-    lo_columns->ui_column( width          = `11rem`
-                           sortproperty   = `PRICE`
-                           filterproperty = `PRICE` )->text( `Price` )->ui_template( )->currency( value    = `{PRICE}`
-                           currency       = `{WAERS}` ).
-    lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
-      )->ui_row_action_item( type = `Navigation`
-                           press  = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) )
-                          )->get_parent( )->ui_row_action_item( icon  = `sap-icon://edit`
-                                                                text  = `Edit`
-                                                                press = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
+    DATA(tab) = cont->ele( n = `Table` ns = `table`
+        )->a( n = `rows`               v = client->_bind( val = mt_table )
+        )->a( n = `alternateRowColors` b = abap_true
+        )->a( n = `fixedColumnCount`   v = `1`
+        )->a( n = `rowActionCount`     v = `2`
+        )->a( n = `selectionMode`      v = `None`
+        )->a( n = `filter`             v = client->_event( `FILTER` )
+        )->a( n = `sort`               v = client->_event( `SORT` )
+        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+    tab->ele( n = `extension` ns = `table` )->ele( `OverflowToolbar` )->tag( `Title`
+        )->a( n = `text` v = `Products` ).
+    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width` v = `4rem` )->tag( `CheckBox`
+        )->a( n = `selected` v = client->_bind( lv_selkz )
+        )->a( n = `enabled`  b = abap_true
+        )->a( n = `select`   v = client->_event( `SELKZ` ) )->ele( n = `template` ns = `table` )->tag( `CheckBox`
+                                                           )->a( n = `selected` v = `{SELKZ}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `5rem`
+        )->a( n = `sortProperty`   v = `ROW_ID`
+        )->a( n = `filterProperty` v = `ROW_ID` )->tag( `Text`
+                               )->a( n = `text` v = `Index` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{ROW_ID}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `PROCESS`
+        )->a( n = `filterProperty` v = `PROCESS` )->tag( `Text`
+                               )->a( n = `text` v = `Process Indicator` )->ele( n = `template` ns = `table` )->tag( `ProgressIndicator`
+          )->a( n = `class`        v = `sapUiSmallMarginBottom`
+          )->a( n = `percentValue` v = `{PROCESS}`
+          )->a( n = `displayValue` v = `{PROCESS} %`
+          )->a( n = `showValue`    v = `true`
+          )->a( n = `state`        v = `{PROCESS_STATE}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `PRODUCT`
+        )->a( n = `filterProperty` v = `PRODUCT` )->tag( `Text`
+                               )->a( n = `text` v = `Product` )->ele( n = `template` ns = `table` )->tag( `Input`
+                               )->a( n = `editable` b = abap_false
+                               )->a( n = `value`    v = `{PRODUCT}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `CREATE_DATE`
+        )->a( n = `filterProperty` v = `CREATE_DATE` )->tag( `Text`
+                               )->a( n = `text` v = `Date` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{CREATE_DATE}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `CREATE_BY`
+        )->a( n = `filterProperty` v = `CREATE_BY` )->tag( `Text`
+                               )->a( n = `text` v = `Name` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{CREATE_BY}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `STORAGE_LOCATION`
+        )->a( n = `filterProperty` v = `STORAGE_LOCATION` )->tag( `Text`
+                               )->a( n = `text` v = `Location` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{STORAGE_LOCATION}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `QUANTITY`
+        )->a( n = `filterProperty` v = `QUANTITY` )->tag( `Text`
+                               )->a( n = `text` v = `Quantity` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{QUANTITY}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `6rem`
+        )->a( n = `sortProperty`   v = `MEINS`
+        )->a( n = `filterProperty` v = `MEINS` )->tag( `Text`
+                               )->a( n = `text` v = `Unit` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{MEINS}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `11rem`
+        )->a( n = `sortProperty`   v = `PRICE`
+        )->a( n = `filterProperty` v = `PRICE` )->tag( `Text`
+                               )->a( n = `text` v = `Price` )->ele( n = `template` ns = `table` )->ele( n = `Currency` ns = `u`
+                               )->a( n = `value`    v = `{PRICE}`
+                               )->a( n = `currency` v = `{WAERS}` ).
+    lo_columns->end( )->ele( n = `rowActionTemplate` ns = `table` )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
+          )->a( n = `type`  v = `Navigation`
+          )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_NAVIGATION` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) 
+          )->end( )->ele( n = `RowActionItem` ns = `table`
+                              )->a( n = `icon`  v = `sap-icon://edit`
+                              )->a( n = `text`  v = `Edit`
+                              )->a( n = `press` v = client->_event( val = `ROW_ACTION_ITEM_EDIT` t_arg = VALUE #( ( `${ROW_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -5,7 +5,9 @@ CLASS z2ui5_cl_smp_app_126 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display TYPE abap_bool.
-    DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    "! the Page this app renders into when it is embedded in another app's
+    "! view; left empty the app builds a view of its own and displays it
+    DATA mo_parent_page  TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     DATA mv_perc         TYPE string.
     DATA mt_table        TYPE REF TO data.
@@ -120,26 +122,32 @@ CLASS z2ui5_cl_smp_app_126 IMPLEMENTATION.
 
   METHOD view_display.
 
-    IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    IF mo_parent_page IS INITIAL.
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      page = mo_parent_page.
     ENDIF.
 
-    page->message_strip(
-        text     = `This sample shows the ProgressIndicator control, which renders a ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample shows the ProgressIndicator control, which renders a ` &&
                    `completion percentage as a labeled progress bar.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->label( `ProgressIndicator`
-        )->progress_indicator( percentvalue = mv_perc
-                               displayvalue = `0,44GB of 32GB used`
-                               showvalue    = abap_true
-                               state        = `Success` ).
+    page->tag( `Label`
+        )->a( n = `text` v = `ProgressIndicator` )->tag( `ProgressIndicator`
+            )->a( n = `percentValue` v = mv_perc
+            )->a( n = `displayValue` v = `0,44GB of 32GB used`
+            )->a( n = `showValue`    b = abap_true
+            )->a( n = `state`        v = `Success` ).
 
-    IF mo_parent_view IS INITIAL.
+    IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).
 
     ELSE.

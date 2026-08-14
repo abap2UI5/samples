@@ -50,46 +50,45 @@ CLASS z2ui5_cl_smp_app_048 IMPLEMENTATION.
         client->message_box_display( |SELECTION_CHANGED - { lt_sel[ 1 ]-title }| ).
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-            title          = `abap2UI5 - List - StandardListItem, Highlight and Events`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-            ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - List - StandardListItem, Highlight and Events`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A List of generic StandardListItems showing highlight bars, colored infoState and ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A List of generic StandardListItems showing highlight bars, colored infoState and ` &&
                    `wrapping texts; the detail button and selection changes raise backend events with message boxes.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->list(
-        headertext      = `List Output`
-        items           = client->_bind( t_tab )
-        mode            = `SingleSelectMaster`
-        selectionchange = client->_event( `SELCHANGE` )
-      )->_generic(
-         name   = `StandardListItem`
-         t_prop = VALUE #(
-                ( n = `title`       v = `{TITLE}` )
-                ( n = `description` v = `{DESCR}` )
-                ( n = `icon`        v = `{ICON}` )
-                ( n = `iconInset`   v = `false` )
-                ( n = `highlight`   v = `{HIGHLIGHT}` )
-                ( n = `info`        v = `{INFO}` )
-                ( n = `infoState`   v = `{HIGHLIGHT}` )
-                ( n = `type`        v = `Detail` )
-                ( n = `wrapping`    v = `true` )
-                ( n = `selected`    v = `{SELECTED}` )
-                ( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
+    page->ele( `List`
+        )->a( n = `headerText`      v = `List Output`
+        )->a( n = `items`           v = client->_bind( t_tab )
+        )->a( n = `mode`            v = `SingleSelectMaster`
+        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` ) )->ele( `StandardListItem`
+          )->a( n = `title`       v = `{TITLE}`
+          )->a( n = `description` v = `{DESCR}`
+          )->a( n = `icon`        v = `{ICON}`
+          )->a( n = `iconInset`   v = `false`
+          )->a( n = `highlight`   v = `{HIGHLIGHT}`
+          )->a( n = `info`        v = `{INFO}`
+          )->a( n = `infoState`   v = `{HIGHLIGHT}`
+          )->a( n = `type`        v = `Detail`
+          )->a( n = `wrapping`    v = `true`
+          )->a( n = `selected`    v = `{SELECTED}`
+          )->a( n = `detailPress` v = client->_event( val = `EDIT` t_arg = VALUE #( ( `${TITLE}` )
                                                                                       ( `${DESCR}` )
                                                                                       ( `${ICON}` )
                                                                                       ( `${HIGHLIGHT}` )
                                                                                       ( `${INFO}` )
                                                                                       ( `${SELECTED}` )
-                                                                                     ) ) )
-      ) ).
+                                                                                     ) ) ).
 
     client->view_display( page->stringify( ) ).
 

@@ -19,7 +19,7 @@ CLASS z2ui5_cl_smp_app_344 DEFINITION PUBLIC.
   PROTECTED SECTION.
     METHODS xml_table
       IMPORTING
-        i_page   TYPE REF TO z2ui5_cl_xml_view
+        i_page   TYPE REF TO z2ui5_cl_ui5_view_builder
         i_client TYPE REF TO z2ui5_if_client
         i_data   TYPE REF TO data
         i_layout TYPE REF TO z2ui5_cl_smp_app_333.
@@ -88,13 +88,20 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
-                                                                navbuttonpress = client->_event_nav_app_leave( )
-                                                                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `RTTI IV`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->button( text  = `CALL Next App`
-                  press = client->_event( `GO` )
-                  type  = `Success` ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `GO` )
+        )->a( n = `text`  v = `CALL Next App`
+        )->a( n = `type`  v = `Success` ).
 
     xml_table( i_page   = page
                i_client = client
@@ -114,32 +121,35 @@ CLASS z2ui5_cl_smp_app_344 IMPLEMENTATION.
   METHOD xml_table.
 
     ASSIGN i_data->* TO FIELD-SYMBOL(<table>).
-    DATA(table) = i_page->table( width = `auto`
-                                 items = i_client->_bind( val = <table> ) ).
+    DATA(table) = i_page->ele( `Table`
+        )->a( n = `items` v = i_client->_bind( val = <table> )
+        )->a( n = `width` v = `auto` ).
 
-    DATA(columns) = table->columns( ).
+    DATA(columns) = table->ele( `columns` ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
-      columns->column( visible = i_client->_bind( val       = layout->visible
+      columns->ele( `Column`
+          )->a( n = `visible` v = i_client->_bind( val       = layout->visible
                                                   tab       = i_layout->ms_data-t_layout
-                                                  tab_index = lv_index )
-        )->text( layout->name ).
+                                                  tab_index = lv_index ) )->tag( `Text`
+            )->a( n = `text` v = layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = `Middle`
-                                                            type   = `Inactive` ).
+    DATA(column_list_item) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
+                                           )->a( n = `vAlign` v = `Middle`
+                                           )->a( n = `type`   v = `Inactive` ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA(cells) = column_list_item->ele( `cells` ).
 
     LOOP AT i_layout->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
-      cells->object_identifier( text = |\{{ layout->name }\}| ).
+      cells->ele( `ObjectIdentifier`
+          )->a( n = `text` v = |\{{ layout->name }\}| ).
 
     ENDLOOP.
 

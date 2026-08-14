@@ -59,38 +59,37 @@ CLASS z2ui5_cl_smp_app_008 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-            )->header_content(
-                )->link(
-            )->get_parent( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Message - MessageBox from SY, BAPIRET2 or Exception`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `headerContent` )->tag( `Link` )->end( ).
 
-    page->message_strip(
-        text     = `The three buttons feed a MessageBox with the message objects ABAP ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The three buttons feed a MessageBox with the message objects ABAP ` &&
                    `produces: a SY message read from T100, a BAPIRET2 structure and a ` &&
                    `caught CX_ROOT exception. message_box_display( ) accepts each of them ` &&
                    `directly, no conversion in the app.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->grid( `L6 M12 S12`
-        )->content( `layout`
-            )->simple_form( `Message Box from ABAP Object`
-                )->content( `form`
-                )->button(
-                    text  = `SY Message`
-                    press = client->_event( `BUTTON_MESSAGE_BOX_SY` )
-                )->button(
-                    text  = `BAPIRET2`
-                    press = client->_event( `BUTTON_MESSAGE_BOX_BAPIRET` )
-                )->button(
-                    text  = `CX_ROOT`
-                    press = client->_event( `BUTTON_MESSAGE_BOX_CX_ROOT` ) ).
+    page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+                )->a( n = `title` v = `Message Box from ABAP Object` )->ele( n = `content` ns = `form` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_MESSAGE_BOX_SY` )
+                    )->a( n = `text`  v = `SY Message` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_MESSAGE_BOX_BAPIRET` )
+                    )->a( n = `text`  v = `BAPIRET2` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_MESSAGE_BOX_CX_ROOT` )
+                    )->a( n = `text`  v = `CX_ROOT` ).
 
     client->view_display( view->stringify( ) ).
 

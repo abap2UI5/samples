@@ -17,9 +17,9 @@ CLASS z2ui5_cl_smp_app_445 DEFINITION PUBLIC.
     "! device is rotated - no backend round-trip is involved.
     METHODS device_form
       IMPORTING
-        parent        TYPE REF TO z2ui5_cl_xml_view
+        parent        TYPE REF TO z2ui5_cl_ui5_view_builder
       RETURNING
-        VALUE(result) TYPE REF TO z2ui5_cl_xml_view.
+        VALUE(result) TYPE REF TO z2ui5_cl_ui5_view_builder.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -51,34 +51,37 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD device_form.
 
-    DATA(form) = parent->simple_form( editable = abap_false
-                                      layout   = `ResponsiveGridLayout` ).
+    DATA(form) = parent->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`   v = `ResponsiveGridLayout`
+        )->a( n = `editable` b = abap_false ).
 
     " a readable label per system type instead of the raw booleans
-    form->label( `System type`
-        )->object_status(
-            text  = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }`
-            state = `Information` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `System type` )->ele( `ObjectStatus`
+            )->a( n = `state` v = `Information`
+            )->a( n = `text`  v = `{= ${device>/system/phone} ? 'Phone' : (${device>/system/tablet} ? 'Tablet' : (${device>/system/desktop} ? 'Desktop' : 'Other')) }` ).
 
-    form->label( `Orientation`
-        )->object_status(
-            text = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Orientation` )->ele( `ObjectStatus`
+            )->a( n = `text` v = `{= ${device>/orientation/landscape} ? 'Landscape' : 'Portrait' }` ).
 
     " resize/width and resize/height are updated live by UI5
-    form->label( `Window size`
-        )->object_status(
-            text = `{device>/resize/width} x {device>/resize/height} px` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Window size` )->ele( `ObjectStatus`
+            )->a( n = `text` v = `{device>/resize/width} x {device>/resize/height} px` ).
 
-    form->label( `Touch support`
-        )->object_status(
-            text  = `{= ${device>/support/touch} ? 'Yes' : 'No' }`
-            state = `{= ${device>/support/touch} ? 'Success' : 'None' }` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Touch support` )->ele( `ObjectStatus`
+            )->a( n = `state` v = `{= ${device>/support/touch} ? 'Success' : 'None' }`
+            )->a( n = `text`  v = `{= ${device>/support/touch} ? 'Yes' : 'No' }` ).
 
-    form->label( `Browser`
-        )->text( `{device>/browser/name} {device>/browser/version}` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Browser` )->tag( `Text`
+            )->a( n = `text` v = `{device>/browser/name} {device>/browser/version}` ).
 
-    form->label( `Operating system`
-        )->text( `{device>/os/name} {device>/os/version}` ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Operating system` )->tag( `Text`
+            )->a( n = `text` v = `{device>/os/name} {device>/os/version}` ).
 
     result = form.
 
@@ -87,53 +90,64 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Device - Device Model: Phone, Tablet, Desktop`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Device - Device Model: Phone, Tablet, Desktop`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The 'device>' model is a one-way JSONModel over sap.ui.Device. ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The 'device>' model is a one-way JSONModel over sap.ui.Device. ` &&
                    `Resize the window or rotate your device and the values update live - ` &&
                    `no backend round-trip. It is available in this view and in the dialog below.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " 1) the raw device state, bound field by field
-    device_form( page->panel( headertext = `Live device properties`
-                              class      = `sapUiSmallMargin` ) ).
+    device_form( page->ele( `Panel`
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->a( n = `headerText` v = `Live device properties` ) ).
 
     " 2) an expression binding that reacts to the device type
-    page->message_strip(
-        text     = `{= ${device>/system/phone} ? 'Compact layout - you are on a phone.' : 'Full layout - tablet or desktop.' }`
-        type     = `{= ${device>/system/phone} ? 'Warning' : 'Success' }`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `{= ${device>/system/phone} ? 'Compact layout - you are on a phone.' : 'Full layout - tablet or desktop.' }`
+        )->a( n = `type`     v = `{= ${device>/system/phone} ? 'Warning' : 'Success' }`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " 3) a control whose content collapses on a phone: expanded = !phone
-    DATA(tabs) = page->panel( headertext = `Responsive IconTabBar (expanded only when it is not a phone)`
-                              class      = `sapUiSmallMargin`
-        )->icon_tab_bar(
-            expanded = `{= !${device>/system/phone} }`
-            class    = `sapUiResponsiveContentPadding`
-        )->items( ).
+    DATA(tabs) = page->ele( `Panel`
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->a( n = `headerText` v = `Responsive IconTabBar (expanded only when it is not a phone)` )->ele( `IconTabBar`
+            )->a( n = `class`    v = `sapUiResponsiveContentPadding`
+            )->a( n = `expanded` v = `{= !${device>/system/phone} }` )->ele( `items` ).
 
-    tabs->icon_tab_filter( text = `Sales` key = `sales` icon = `sap-icon://money-bills`
-        )->text( `On a phone the tab content is collapsed to save space; on tablet/desktop it stays expanded.` ).
+    tabs->ele( `IconTabFilter`
+        )->a( n = `icon` v = `sap-icon://money-bills`
+        )->a( n = `text` v = `Sales`
+        )->a( n = `key`  v = `sales` )->tag( `Text`
+            )->a( n = `text` v = `On a phone the tab content is collapsed to save space; on tablet/desktop it stays expanded.` ).
 
-    tabs->icon_tab_filter( text = `Stock` key = `stock` icon = `sap-icon://product`
-        )->text( `Everything here is driven purely by the device> model - no event handler.` ).
+    tabs->ele( `IconTabFilter`
+        )->a( n = `icon` v = `sap-icon://product`
+        )->a( n = `text` v = `Stock`
+        )->a( n = `key`  v = `stock` )->tag( `Text`
+            )->a( n = `text` v = `Everything here is driven purely by the device> model - no event handler.` ).
 
     " 4) the same device state, but inside a popup (device> now reaches popups too)
-    page->button(
-        text  = `Open dialog (device model inside a popup)`
-        icon  = `sap-icon://sys-monitor`
-        press = client->_event( `OPEN_POPUP` )
-        class = `sapUiSmallMargin` ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `OPEN_POPUP` )
+        )->a( n = `text`  v = `Open dialog (device model inside a popup)`
+        )->a( n = `icon`  v = `sap-icon://sys-monitor`
+        )->a( n = `class` v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -142,20 +156,22 @@ CLASS z2ui5_cl_smp_app_445 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
     " the dialog width itself is driven by the device model
-    DATA(dialog) = popup->dialog(
-        title        = `Device model inside a popup`
-        contentwidth = `{= ${device>/system/phone} ? '95%' : '420px' }` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title`        v = `Device model inside a popup`
+        )->a( n = `contentWidth` v = `{= ${device>/system/phone} ? '95%' : '420px' }` ).
 
-    device_form( dialog->content( ) ).
+    device_form( dialog->ele( `content` ) ).
 
-    dialog->buttons(
-        )->button(
-            text  = `Close`
-            type  = `Emphasized`
-            press = client->follow_up_action( client->cs_event-popup_close ) ).
+    dialog->ele( `buttons` )->tag( `Button`
+            )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
+            )->a( n = `text`  v = `Close`
+            )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

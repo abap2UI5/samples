@@ -59,11 +59,18 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Popups`
-                                       navbuttonpress = client->_event_nav_app_leave( )
-                                       shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Popups`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     " A style class the app owns. There is no bindable property for "carry
     " this CSS class", so the class itself is declared here and put on the
@@ -78,25 +85,24 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
     " The literal CSS braces must be escaped \{ \} in a BACKTICK literal - the
     " XMLView binding parser reads an unescaped { in any attribute value as a
     " binding and crashes, and a |...| template would collapse \{ back to {.
-    page->_generic( name   = `HTML`
-                    ns     = `core`
-                    t_prop = VALUE #( ( n = `content`
-                                        v = `<style>.demoHighlight \{ color: #bb0000 !important; font-size: 1.5rem !important; \}</style>` ) ) ).
+    page->ele( n = `HTML` ns = `core`
+        )->a( n = `content` v = `<style>.demoHighlight \{ color: #bb0000 !important; font-size: 1.5rem !important; \}</style>` ).
 
-    page->message_strip(
-        text     = `Changes a control INSIDE an open popup from the backend. The ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Changes a control INSIDE an open popup from the backend. The ` &&
                    `label text is an ordinary binding; the style class has ` &&
                    `no bindable equivalent and is applied with follow_up_action( ` &&
                    `control_by_id ) scoped to the popup view. No custom JavaScript ` &&
                    `is involved.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( `Inputs` )->content( `form`
-        )->label( `01`
-        )->button( text  = `Popup Get Input Values`
-                   press = client->_event( `POPUP_OPEN` ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Inputs` )->ele( n = `content` ns = `form` )->tag( `Label`
+            )->a( n = `text` v = `01` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `POPUP_OPEN` )
+            )->a( n = `text`  v = `Popup Get Input Values` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -105,36 +111,33 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(dialog) = popup->dialog( title         = `Title`
-                                  contentheight = `500px`
-                                  contentwidth  = `500px` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title`         v = `Title`
+        )->a( n = `contentWidth`  v = `500px`
+        )->a( n = `contentHeight` v = `500px` ).
 
-    dialog->content(
-        )->simple_form( editable = abap_true
-            )->content( `form`
-                )->label( id   = `lbl1`
-                          text = client->_bind( s_input-hint )
-                )->label( `Input1`
-                )->input( client->_bind( s_input-value1 )
-                )->label( `Input2`
-                )->input( client->_bind( s_input-value2 )
-                )->label( `Checkbox`
-                )->checkbox( selected = client->_bind( s_input-is_active )
-                             text     = `this is a checkbox`
-                             enabled  = abap_true )->get_parent( )->get_parent( )->get_parent(
-        " the `buttons` aggregation, not `footer`: sap.m.Dialog only got a
-        " public footer around UI5 1.110, and an aggregation tag the parent
-        " does not have is resolved as a CONTROL CLASS - it 404s and takes the
-        " whole view with it (abap2UI5 AGENTS rule 15). `buttons` exists since
-        " 1.21.1 and right-aligns them the same way.
-        )->buttons(
-            )->button( text  = `Cancel`
-                       press = client->follow_up_action( client->cs_event-popup_close )
-            )->button( text  = `Confirm`
-                       type  = `Emphasized`
-                       press = client->_event( `POPUP_CONFIRM` ) ).
+    dialog->ele( `content` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                    )->a( n = `text` v = client->_bind( s_input-hint )
+                    )->a( n = `id`   v = `lbl1` )->tag( `Label`
+                    )->a( n = `text` v = `Input1` )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( s_input-value1 ) )->tag( `Label`
+                    )->a( n = `text` v = `Input2` )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( s_input-value2 ) )->tag( `Label`
+                    )->a( n = `text` v = `Checkbox` )->tag( `CheckBox`
+                    )->a( n = `text`     v = `this is a checkbox`
+                    )->a( n = `selected` v = client->_bind( s_input-is_active )
+                    )->a( n = `enabled`  b = abap_true )->end( )->end( )->end( )->ele( `buttons` )->tag( `Button`
+                )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
+                )->a( n = `text`  v = `Cancel` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `POPUP_CONFIRM` )
+                )->a( n = `text`  v = `Confirm`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

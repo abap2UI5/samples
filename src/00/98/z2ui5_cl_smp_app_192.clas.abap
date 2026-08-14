@@ -47,12 +47,16 @@ CLASS z2ui5_cl_smp_app_192 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page( title          = `xxx`
-                 navbuttonpress = client->_event_nav_app_leave( )
-                 shownavbutton  = client->check_app_prev_stack( )
-            )->header_content( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `xxx`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `headerContent` ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

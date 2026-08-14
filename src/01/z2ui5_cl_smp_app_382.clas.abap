@@ -67,64 +67,58 @@ CLASS z2ui5_cl_smp_app_382 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page(
-            title          = `abap2UI5 - Message - MessageBox, Types and Custom Actions`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+             )->a( n = `title`          v = `abap2UI5 - Message - MessageBox, Types and Custom Actions`
+             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This sample demonstrates MessageBox: open confirm, information, success, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample demonstrates MessageBox: open confirm, information, success, ` &&
                    `warning, error, or a custom dialog with your own actions.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->header_content(
-       )->link(
-           text   = `UI5 Demo Kit`
-           target = `_blank`
-           href   = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageBox/sample/sap.m.sample.MessageBox` ).
+    page->ele( `headerContent` )->tag( `Link`
+           )->a( n = `text`   v = `UI5 Demo Kit`
+           )->a( n = `target` v = `_blank`
+           )->a( n = `href`   v = `https://sapui5.hana.ondemand.com/sdk/#/entity/sap.m.MessageBox/sample/sap.m.sample.MessageBox` ).
 
-    page->panel( headertext = `Message Box Configuration`
-             )->simple_form(
-                 title    = `Settings`
-                 editable = abap_true
-                 )->content( `form`
-                 )->label( `Title`
-                 )->input( client->_bind( title )
-                 )->label( `Message`
-                 )->input( client->_bind( message )
-                 )->label( `Details`
-                 )->text_area(
-                     value = client->_bind( details )
-                     rows  = `3` ).
+    page->ele( `Panel`
+        )->a( n = `headerText` v = `Message Box Configuration` )->ele( n = `SimpleForm` ns = `form`
+                 )->a( n = `title`    v = `Settings`
+                 )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                     )->a( n = `text` v = `Title` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( title ) )->tag( `Label`
+                     )->a( n = `text` v = `Message` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( message ) )->tag( `Label`
+                     )->a( n = `text` v = `Details` )->tag( `TextArea`
+                     )->a( n = `value` v = client->_bind( details )
+                     )->a( n = `rows`  v = `3` ).
 
-    page->footer(
-        )->overflow_toolbar(
-            )->text( `Open Message Box:`
-            )->toolbar_spacer(
-            )->button(
-                text  = `Confirm`
-                press = client->_event( `confirm` )
-            )->button(
-                text  = `Information`
-                press = client->_event( `information` )
-            )->button(
-                text  = `Success`
-                type  = `Accept`
-                press = client->_event( `success` )
-            )->button(
-                text  = `Warning`
-                press = client->_event( `warning` )
-            )->button(
-                text  = `Error`
-                type  = `Reject`
-                press = client->_event( `error` )
-            )->button(
-                text  = `Custom`
-                type  = `Emphasized`
-                press = client->_event( `CUSTOM` ) ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `Text`
+                )->a( n = `text` v = `Open Message Box:` )->tag( `ToolbarSpacer` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `confirm` )
+                )->a( n = `text`  v = `Confirm` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `information` )
+                )->a( n = `text`  v = `Information` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `success` )
+                )->a( n = `text`  v = `Success`
+                )->a( n = `type`  v = `Accept` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `warning` )
+                )->a( n = `text`  v = `Warning` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `error` )
+                )->a( n = `text`  v = `Error`
+                )->a( n = `type`  v = `Reject` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `CUSTOM` )
+                )->a( n = `text`  v = `Custom`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( page->stringify( ) ).
 

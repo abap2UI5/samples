@@ -58,42 +58,45 @@ CLASS z2ui5_cl_smp_app_472 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Event - Link with preventDefault`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Event - Link with preventDefault`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A sap.m.Link normally follows its href when pressed. Registered with ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A sap.m.Link normally follows its href when pressed. Registered with ` &&
                    `s_ctrl-check_prevent_default the event cancels that built-in default ` &&
                    `(oEvent.preventDefault()) before the roundtrip - the event still reaches the ` &&
                    `backend, so the app decides what happens instead. Flip the switch to compare.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->simple_form(
-        title    = `Link with a cancelled default`
-        editable = abap_true
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Link with a cancelled default`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->label( `Cancel the browser navigation`
-        )->switch(
-            state  = client->_bind( block_navigation )
-            change = client->_event( `TOGGLE` )
-        )->label( `Link`
-        )->link(
-            text   = `Open abap2ui5.org`
-            href   = `https://abap2ui5.org`
-            target = `_blank`
-            press  = client->_event(
+    form->tag( `Label`
+        )->a( n = `text` v = `Cancel the browser navigation` )->tag( `Switch`
+            )->a( n = `state`  v = client->_bind( block_navigation )
+            )->a( n = `change` v = client->_event( `TOGGLE` ) )->tag( `Label`
+            )->a( n = `text` v = `Link` )->tag( `Link`
+            )->a( n = `text`   v = `Open abap2ui5.org`
+            )->a( n = `target` v = `_blank`
+            )->a( n = `href`   v = `https://abap2ui5.org`
+            )->a( n = `press`  v = client->_event(
                 val    = `LINK_PRESS`
-                s_ctrl = VALUE #( check_prevent_default = block_navigation ) )
-        )->label( `Result`
-        )->text( client->_bind( last_press ) ).
+                s_ctrl = VALUE #( check_prevent_default = block_navigation ) ) )->tag( `Label`
+            )->a( n = `text` v = `Result` )->tag( `Text`
+            )->a( n = `text` v = client->_bind( last_press ) ).
 
     client->view_display( view->stringify( ) ).
 

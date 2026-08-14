@@ -43,30 +43,35 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - List - Live Filter on the Client, No Roundtrip`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - List - Live Filter on the Client, No Roundtrip`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Every keystroke filters the list's items binding purely client-side ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Every keystroke filters the list's items binding purely client-side ` &&
                    `(cs_event-binding_call via follow_up_action) - no backend roundtrip, exactly like ` &&
                    `the original UI5 controller's oBinding.filter(...). Clearing the field clears the filter.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " t_arg order: control id, aggregation, method, then the filter params
     " path / operator / value - the ${...} argument is resolved client-side
     " against the liveChange event, so the current query reaches the filter
     " without any server contact.
-    page->vbox( `sapUiSmallMargin`
-        )->search_field( width       = `30%`
-                         placeholder = `Search products`
-                         livechange  = client->follow_up_action(
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `SearchField`
+            )->a( n = `width`       v = `30%`
+            )->a( n = `placeholder` v = `Search products`
+            )->a( n = `liveChange`  v = client->follow_up_action(
                              val   = z2ui5_if_client=>cs_event-binding_call
                              t_arg = VALUE #( ( `productList` )
                                               ( `items` )
@@ -75,12 +80,13 @@ CLASS z2ui5_cl_smp_app_455 IMPLEMENTATION.
                                               ( `Contains` )
                                               ( `${$parameters>/newValue}` ) ) ) ).
 
-    page->list( id         = `productList`
-                headertext = `Products`
-                items      = client->_bind( t_products )
-                class      = `sapUiSmallMargin`
-        )->standard_list_item( title       = `{NAME}`
-                               description = `{CATEGORY}` ).
+    page->ele( `List`
+        )->a( n = `headerText` v = `Products`
+        )->a( n = `items`      v = client->_bind( t_products )
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->a( n = `id`         v = `productList` )->tag( `StandardListItem`
+            )->a( n = `title`       v = `{NAME}`
+            )->a( n = `description` v = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).
 

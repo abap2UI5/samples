@@ -48,34 +48,38 @@ CLASS z2ui5_cl_smp_app_449 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Control - Open the PDF Viewer by ID`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Control - Open the PDF Viewer by ID`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     " a popup-mode PDFViewer kept as a dependent of the page; opened
     " imperatively from the backend, like a controller calling oViewer.open()
-    page->dependents(
-        )->_generic( name   = `PDFViewer`
-                     t_prop = VALUE #( ( n = `id`     v = `demoPdf` )
-                                       ( n = `title`  v = `Sample PDF` )
-                                       ( n = `source` v = `https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/sample/PDFViewerPopup/sample1.pdf` )
-                                       ( n = `height` v = `100%` ) ) ).
+    page->ele( `dependents` )->ele( `PDFViewer`
+            )->a( n = `id`     v = `demoPdf`
+            )->a( n = `title`  v = `Sample PDF`
+            )->a( n = `source` v = `https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/sample/PDFViewerPopup/sample1.pdf`
+            )->a( n = `height` v = `100%` ).
 
-    page->message_strip(
-        text     = `The button opens the popup-mode PDFViewer via the whitelisted open method ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The button opens the popup-mode PDFViewer via the whitelisted open method ` &&
                    `(follow_up_action with cs_event-control_by_id), client-side after render.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->button( text  = `Open PDF`
-                   icon  = `sap-icon://pdf-attachment`
-                   press = client->_event( `OPEN` ) ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `OPEN` )
+            )->a( n = `text`  v = `Open PDF`
+            )->a( n = `icon`  v = `sap-icon://pdf-attachment` ).
 
     client->view_display( view->stringify( ) ).
 

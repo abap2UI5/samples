@@ -9,7 +9,7 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
         info    TYPE string,
       END OF ty_s_item.
 
-    DATA view_parent TYPE REF TO z2ui5_cl_xml_view.
+    DATA view_parent TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_class_2 TYPE string.
     DATA mr_data TYPE REF TO data.
     DATA t_items TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
@@ -17,7 +17,7 @@ CLASS z2ui5_cl_smp_app_112 DEFINITION PUBLIC.
     METHODS on_event.
     METHODS view_display
       CHANGING
-        xml TYPE REF TO z2ui5_cl_xml_view OPTIONAL.
+        xml TYPE REF TO z2ui5_cl_ui5_view_builder OPTIONAL.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -36,25 +36,27 @@ CLASS z2ui5_cl_smp_app_112 IMPLEMENTATION.
                        ( product = `Monitor 27"`  info = `2 weeks` )
                        ( product = `Dock Pro`     info = `sold out` ) ).
 
-    view_parent->message_strip(
-        text     = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
+    view_parent->tag( `MessageStrip`
+        )->a( n = `text`     v = `SUB-APP CLASS 2 (z2ui5_cl_smp_app_112): an orange LIST - a different class ` &&
                    `with different controls and its own data, embedded into the same detail ` &&
                    `column of the parent app.`
-        type     = `Warning`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Warning`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    view_parent->list( headertext = `Class 2 - Products`
-                          items      = client->_bind( t_items )
-        )->standard_list_item( title = `{PRODUCT}`
-                               info  = `{INFO}` ).
+    view_parent->ele( `List`
+        )->a( n = `headerText` v = `Class 2 - Products`
+        )->a( n = `items`      v = client->_bind( t_items ) )->tag( `StandardListItem`
+            )->a( n = `title` v = `{PRODUCT}`
+            )->a( n = `info`  v = `{INFO}` ).
 
-    view_parent->vbox( `sapUiSmallMargin`
-        )->input( value       = client->_bind( mv_class_2 )
-                  placeholder = `type here - the value lives in sub-app 2`
-        )->button( text  = `raise event in sub-app 2`
-                   press = client->_event( `MESSAGE_SUB` )
-                   icon  = `sap-icon://table-view` ).
+    view_parent->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Input`
+            )->a( n = `placeholder` v = `type here - the value lives in sub-app 2`
+            )->a( n = `value`       v = client->_bind( mv_class_2 ) )->tag( `Button`
+            )->a( n = `press` v = client->_event( `MESSAGE_SUB` )
+            )->a( n = `text`  v = `raise event in sub-app 2`
+            )->a( n = `icon`  v = `sap-icon://table-view` ).
 
   ENDMETHOD.
 

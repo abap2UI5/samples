@@ -52,41 +52,51 @@ CLASS z2ui5_cl_smp_app_489 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Data Input App`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Navigation - Data Input App`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Change the data and return: 'confirm' leaves with event DATA_CONFIRMED plus the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Change the data and return: 'confirm' leaves with event DATA_CONFIRMED plus the ` &&
                    `entered data as r_data, 'cancel' leaves with event DATA_CANCELLED and no data. ` &&
                    `The nav-back button of the page leaves without an event.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->grid( `L6 M12 S12`
-        )->content( `layout`
-        )->simple_form(
-            title    = `Data returned to the caller`
-            editable = abap_true
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title`    v = `Data returned to the caller`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->label( `Product` ).
-    form->input( client->_bind( s_result-product ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Product` ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( s_result-product ) ).
 
-    form->label( `Quantity` ).
-    form->input( client->_bind( s_result-quantity ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Quantity` ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( s_result-quantity ) ).
 
-    form->label( `Return to the caller` ).
-    form->button(
-        text  = `confirm (event + r_data)`
-        type  = `Emphasized`
-        press = client->_event( `CONFIRM` ) ).
-    form->button(
-        text  = `cancel (event only)`
-        press = client->_event( `CANCEL` ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Return to the caller` ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `CONFIRM` )
+        )->a( n = `text`  v = `confirm (event + r_data)`
+        )->a( n = `type`  v = `Emphasized` ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `CANCEL` )
+        )->a( n = `text`  v = `cancel (event only)` ).
 
     client->view_display( view->stringify( ) ).
 

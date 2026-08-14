@@ -40,29 +40,36 @@ CLASS z2ui5_cl_smp_app_189 IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-          )->page(
-              title          = `abap2UI5 - Focus - Jump to the Next Input on Enter`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `abap2UI5 - Focus - Jump to the Next Input on Enter`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Pressing Enter in an input field jumps the cursor to the next one via the set_focus follow-up action.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Pressing Enter in an input field jumps the cursor to the next one via the set_focus follow-up action.`
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form(
-        editable = abap_true
-       )->content( `form`
-       )->label( `One (Press Enter)` )->input( id     = `IdOne`
-                                               value  = client->_bind( one )
-                                               submit = client->_event( `one_enter` )
-       )->label( `Two` )->input( id     = `IdTwo`
-                                 value  = client->_bind( two )
-                                 submit = client->_event( `two_enter` )
-       )->label( `Three` )->input( id    = `IdThree`
-                                   value = client->_bind( three ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+           )->a( n = `text` v = `One (Press Enter)` )->tag( `Input`
+           )->a( n = `id`     v = `IdOne`
+           )->a( n = `value`  v = client->_bind( one )
+           )->a( n = `submit` v = client->_event( `one_enter` ) )->tag( `Label`
+           )->a( n = `text` v = `Two` )->tag( `Input`
+           )->a( n = `id`     v = `IdTwo`
+           )->a( n = `value`  v = client->_bind( two )
+           )->a( n = `submit` v = client->_event( `two_enter` ) )->tag( `Label`
+           )->a( n = `text` v = `Three` )->tag( `Input`
+           )->a( n = `id`    v = `IdThree`
+           )->a( n = `value` v = client->_bind( three ) ).
 
     client->view_display( page->stringify( ) ).
 

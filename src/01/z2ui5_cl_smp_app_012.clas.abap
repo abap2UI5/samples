@@ -80,55 +80,52 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Popup - Ways to Open a Dialog`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popup - Ways to Open a Dialog`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Shows different ways to open a popup - inside the same app or as a sub-app - ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Shows different ways to open a popup - inside the same app or as a sub-app - ` &&
                    `and how the background view is kept, destroyed or re-rendered.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(grid) = page->grid( `L7 M12 S12` )->content( `layout`
-        )->simple_form(
-            title    = `Popup in same App`
-            editable = abap_true
-            )->content( `form`
-            )->label( `Demo`
-            )->button(
-                text  = `popup rendering, no background rendering`
-                press = client->_event( `BUTTON_POPUP_01` )
-            )->label( `Demo`
-            )->button(
-                text  = `popup rendering, background destroyed and rerendering`
-                press = client->_event( `BUTTON_POPUP_02` )
-            )->label( `Demo`
-            )->button(
-                text  = `popup, background unchanged (default) - close (no roundtrip)`
-                press = client->_event( `BUTTON_POPUP_03` )
-            )->label( `Demo`
-            )->button(
-                text  = `popup, background unchanged (default) - close with server`
-                press = client->_event( `BUTTON_POPUP_04` )
-        )->get_parent( )->get_parent( ).
+    DATA(grid) = page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L7 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title`    v = `Popup in same App`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                )->a( n = `text` v = `Demo` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_POPUP_01` )
+                )->a( n = `text`  v = `popup rendering, no background rendering` )->tag( `Label`
+                )->a( n = `text` v = `Demo` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_POPUP_02` )
+                )->a( n = `text`  v = `popup rendering, background destroyed and rerendering` )->tag( `Label`
+                )->a( n = `text` v = `Demo` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_POPUP_03` )
+                )->a( n = `text`  v = `popup, background unchanged (default) - close (no roundtrip)` )->tag( `Label`
+                )->a( n = `text` v = `Demo` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_POPUP_04` )
+                )->a( n = `text`  v = `popup, background unchanged (default) - close with server` )->end( )->end( ).
 
-    grid->simple_form(
-        title    = `Popup in new App`
-        editable = abap_true
-        )->content( `form`
-        )->label( `Demo`
-        )->button(
-            text  = `popup rendering, no background`
-            press = client->_event( `BUTTON_POPUP_05` )
-        )->label( `Demo`
-        )->button(
-            text  = `popup rendering, hold previous view`
-            press = client->_event( `BUTTON_POPUP_06` ) ).
+    grid->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Popup in new App`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `BUTTON_POPUP_05` )
+            )->a( n = `text`  v = `popup rendering, no background` )->tag( `Label`
+            )->a( n = `text` v = `Demo` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `BUTTON_POPUP_06` )
+            )->a( n = `text`  v = `popup rendering, hold previous view` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -137,19 +134,19 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD popup_decide.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    popup->dialog( `Popup - Decide`
-            )->vbox(
-                )->text( `this is a popup to decide, you have to make a decision now...`
-            )->get_parent(
-            )->buttons(
-                )->button(
-                    text  = `Cancel`
-                    press = client->_event( `POPUP_DECIDE_CANCEL` )
-                )->button(
-                    text  = `Continue`
-                    press = client->_event( `POPUP_DECIDE_CONTINUE` )
-                    type  = `Emphasized` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    popup->ele( `Dialog`
+        )->a( n = `title` v = `Popup - Decide` )->ele( `VBox` )->tag( `Text`
+                    )->a( n = `text` v = `this is a popup to decide, you have to make a decision now...` )->end( )->ele( `buttons` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `POPUP_DECIDE_CANCEL` )
+                    )->a( n = `text`  v = `Cancel` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `POPUP_DECIDE_CONTINUE` )
+                    )->a( n = `text`  v = `Continue`
+                    )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -158,16 +155,18 @@ CLASS z2ui5_cl_smp_app_012 IMPLEMENTATION.
 
   METHOD popup_info.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    popup->dialog( `Popup - Info`
-            )->vbox(
-                )->text( `this is an information, press close to go back to the main view without a server roundtrip`
-            )->get_parent(
-            )->buttons(
-                )->button(
-                    text  = `close`
-                    press = client->follow_up_action( client->cs_event-popup_close )
-                    type  = `Emphasized` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    popup->ele( `Dialog`
+        )->a( n = `title` v = `Popup - Info` )->ele( `VBox` )->tag( `Text`
+                    )->a( n = `text` v = `this is an information, press close to go back to the main view without a server roundtrip` 
+                    )->end( )->ele( `buttons` )->tag( `Button`
+                    )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
+                    )->a( n = `text`  v = `close`
+                    )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

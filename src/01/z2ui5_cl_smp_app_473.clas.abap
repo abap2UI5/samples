@@ -27,23 +27,27 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Menu - Full Path of the Selected Item`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Menu - Full Path of the Selected Item`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The toast shows the full path of the selected menu item ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The toast shows the full path of the selected menu item ` &&
                    `("Create New Site > Official Store"), not only its own text. ` &&
                    `$controller.textPath( ) walks the item's parent chain in the control tree ` &&
                    `and joins the texts - a walk no binding path can express. Everything happens ` &&
                    `on the client, the menu selection needs no roundtrip at all.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " the item's breadcrumb is resolved on the client and substituted into the
     " toast template ({0}); an argument starting with $ is a client-side
@@ -55,24 +59,24 @@ CLASS z2ui5_cl_smp_app_473 IMPLEMENTATION.
                          ( `Action triggered on item: {0}` )
                          ( `$controller.textPath(${$parameters>/item})` ) ) ).
 
-    DATA(menu) = page->hbox( class = `sapUiSmallMargin`
-        )->menu_button( text = `Actions`
-            )->menu( itemselected = menu_selected ).
+    DATA(menu) = page->ele( `HBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->ele( `MenuButton`
+            )->a( n = `text` v = `Actions` )->ele( `Menu`
+                )->a( n = `itemSelected` v = menu_selected ).
 
-    menu->_generic(
-        name   = `MenuItem`
-        t_prop = VALUE #( ( n = `text` v = `Create New Site` ) )
-        )->menu_item( text = `Official Store`
-        )->menu_item( text = `Franchise Store`
-        )->menu_item( text = `Pop-up Store` ).
+    menu->ele( `MenuItem`
+        )->a( n = `text` v = `Create New Site` )->tag( `MenuItem`
+            )->a( n = `text` v = `Official Store` )->tag( `MenuItem`
+            )->a( n = `text` v = `Franchise Store` )->tag( `MenuItem`
+            )->a( n = `text` v = `Pop-up Store` ).
 
-    menu->_generic(
-        name   = `MenuItem`
-        t_prop = VALUE #( ( n = `text` v = `Manage Users` ) )
-        )->menu_item( text = `Add User`
-        )->menu_item( text = `Remove User` ).
+    menu->ele( `MenuItem`
+        )->a( n = `text` v = `Manage Users` )->tag( `MenuItem`
+            )->a( n = `text` v = `Add User` )->tag( `MenuItem`
+            )->a( n = `text` v = `Remove User` ).
 
-    menu->menu_item( text = `Log Out` ).
+    menu->tag( `MenuItem`
+        )->a( n = `text` v = `Log Out` ).
 
     client->view_display( view->stringify( ) ).
 

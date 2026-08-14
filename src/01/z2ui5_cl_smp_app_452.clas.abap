@@ -127,46 +127,45 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
       error_count = error_count + 1.
     ENDLOOP.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Message - MessageView and MessagePopover`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Message - MessageView and MessagePopover`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This free-style demo combines the sap.m message controls: one bound message table is rendered three ways - as a full-page MessageView with grouped items, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This free-style demo combines the sap.m message controls: one bound message table is rendered three ways - as a full-page MessageView with grouped items, ` &&
                    `inside a dialog and as a MessagePopover. It is not a 1:1 demo kit rebuild (those live in the samples-controls repository) ` &&
                    `and stays within the UI5 1.71 control set.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->message_view(
-        items      = client->_bind( t_msg )
-        groupitems = abap_true
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}`
-            )->link(
-                text   = `Show more information`
-                href   = `http://sap.com`
-                target = `_blank` ).
+    page->ele( `MessageView`
+        )->a( n = `items`      v = client->_bind( t_msg )
+        )->a( n = `groupItems` b = abap_true )->ele( `MessageItem`
+            )->a( n = `type`        v = `{TYPE}`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `subtitle`    v = `{SUBTITLE}`
+            )->a( n = `description` v = `{DESCRIPTION}`
+            )->a( n = `groupName`   v = `{GROUP}` )->tag( `Link`
+                )->a( n = `text`   v = `Show more information`
+                )->a( n = `target` v = `_blank`
+                )->a( n = `href`   v = `http://sap.com` ).
 
     " ButtonType 'Negative' would match the error state, but it is only available since UI5 1.73 - src/01 must run on plain 1.71, so the default type is kept
-    page->footer( )->overflow_toolbar(
-        )->button(
-            icon  = `sap-icon://message-error`
-            text  = |{ error_count }|
-            press = client->_event( `POPUP` )
-        )->toolbar_spacer(
-        )->button(
-            id    = `messagePopoverBtn`
-            text  = `Message Popover`
-            press = client->_event( `POPOVER` ) ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `POPUP` )
+            )->a( n = `text`  v = |{ error_count }|
+            )->a( n = `icon`  v = `sap-icon://message-error` )->tag( `ToolbarSpacer` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `POPOVER` )
+            )->a( n = `text`  v = `Message Popover`
+            )->a( n = `id`    v = `messagePopoverBtn` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -175,33 +174,33 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
     " the dialog keeps a plain title without a back button - closing and reopening it resets the MessageView to its list page
-    DATA(dialog) = popup->dialog(
-        title             = `Publish order`
-        contentheight     = `50%`
-        contentwidth      = `50%`
-        verticalscrolling = abap_false
-        afterclose        = client->follow_up_action( client->cs_event-popup_close ) ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title`             v = `Publish order`
+        )->a( n = `contentWidth`      v = `50%`
+        )->a( n = `contentHeight`     v = `50%`
+        )->a( n = `verticalScrolling` b = abap_false
+        )->a( n = `afterClose`        v = client->follow_up_action( client->cs_event-popup_close ) ).
 
-    dialog->message_view(
-        items      = client->_bind( t_msg )
-        groupitems = abap_true
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}`
-            )->link(
-                text   = `Show more information`
-                href   = `http://sap.com`
-                target = `_blank` ).
+    dialog->ele( `MessageView`
+        )->a( n = `items`      v = client->_bind( t_msg )
+        )->a( n = `groupItems` b = abap_true )->ele( `MessageItem`
+            )->a( n = `type`        v = `{TYPE}`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `subtitle`    v = `{SUBTITLE}`
+            )->a( n = `description` v = `{DESCRIPTION}`
+            )->a( n = `groupName`   v = `{GROUP}` )->tag( `Link`
+                )->a( n = `text`   v = `Show more information`
+                )->a( n = `target` v = `_blank`
+                )->a( n = `href`   v = `http://sap.com` ).
 
-    dialog->end_button( )->button(
-        text  = `Close`
-        press = client->follow_up_action( client->cs_event-popup_close ) ).
+    dialog->ele( `endButton` )->tag( `Button`
+        )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close )
+        )->a( n = `text`  v = `Close` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -210,22 +209,22 @@ CLASS z2ui5_cl_smp_app_452 IMPLEMENTATION.
 
   METHOD popover_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    popup->message_popover(
-        items       = client->_bind( t_msg )
-        placement   = `Top`
-        beforeclose = client->_event( `POPOVER_CLOSE` )
-        )->message_item(
-            type        = `{TYPE}`
-            title       = `{TITLE}`
-            subtitle    = `{SUBTITLE}`
-            description = `{DESCRIPTION}`
-            groupname   = `{GROUP}`
-            )->link(
-                text   = `Show more information`
-                href   = `http://sap.com`
-                target = `_blank` ).
+    popup->ele( `MessagePopover`
+        )->a( n = `items`       v = client->_bind( t_msg )
+        )->a( n = `placement`   v = `Top`
+        )->a( n = `beforeClose` v = client->_event( `POPOVER_CLOSE` ) )->ele( `MessageItem`
+            )->a( n = `type`        v = `{TYPE}`
+            )->a( n = `title`       v = `{TITLE}`
+            )->a( n = `subtitle`    v = `{SUBTITLE}`
+            )->a( n = `description` v = `{DESCRIPTION}`
+            )->a( n = `groupName`   v = `{GROUP}` )->tag( `Link`
+                )->a( n = `text`   v = `Show more information`
+                )->a( n = `target` v = `_blank`
+                )->a( n = `href`   v = `http://sap.com` ).
 
     client->popover_display( xml   = popup->stringify( )
                              by_id = id ).

@@ -4,7 +4,9 @@ CLASS z2ui5_cl_smp_app_184 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display TYPE abap_bool.
-    DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    "! the Page this app renders into when it is embedded in another app's
+    "! view; left empty the app builds a view of its own and displays it
+    DATA mo_parent_page  TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     DATA mv_table        TYPE string.
     DATA mt_table        TYPE REF TO data.
@@ -49,38 +51,44 @@ CLASS z2ui5_cl_smp_app_184 IMPLEMENTATION.
 
     FIELD-SYMBOLS <tab> TYPE data.
 
-    IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    IF mo_parent_page IS INITIAL.
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      page = mo_parent_page.
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = `true`
-                               width   = `auto`
-                               items   = client->_bind( <tab> )
-                               ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items`   v = client->_bind( <tab> )
+        )->a( n = `growing` v = `true`
+        )->a( n = `width`   v = `auto` ).
 
-    DATA(columns) = table->columns( ).
+    DATA(columns) = table->ele( `columns` ).
 
     LOOP AT mt_comp INTO DATA(comp).
 
-      columns->column( )->text( comp-name ).
+      columns->ele( `Column` )->tag( `Text`
+          )->a( n = `text` v = comp-name ).
 
     ENDLOOP.
 
-    DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = `Middle`
-                                                            type   = `Navigation`
-                                       )->cells( ).
+    DATA(cells) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
+                                           )->a( n = `vAlign` v = `Middle`
+                                           )->a( n = `type`   v = `Navigation` )->ele( `cells` ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = |\{{ comp-name }\}| ).
+      cells->ele( `ObjectIdentifier`
+          )->a( n = `text` v = |\{{ comp-name }\}| ).
     ENDLOOP.
 
-    IF mo_parent_view IS INITIAL.
+    IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).
 
     ELSE.

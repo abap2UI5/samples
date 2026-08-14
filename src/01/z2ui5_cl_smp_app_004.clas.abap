@@ -64,42 +64,42 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
     view_main = `MAIN`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Controller basics: the buttons trigger a server roundtrip, restart the app, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Controller basics: the buttons trigger a server roundtrip, restart the app, ` &&
                    `switch to a second view, or raise an uncaught error.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->grid( `L6 M12 S12`
-        )->content( `layout`
-        )->simple_form(
-            title    = `Controller`
-            editable = abap_true
-            )->content( `form`
-            )->label( `Roundtrip`
-            )->button(
-                text  = `Client/Server Interaction`
-                press = client->_event( `BUTTON_ROUNDTRIP` )
-            )->label( `System`
-            )->button(
-                text  = `Restart App`
-                press = client->_event( `BUTTON_RESTART` )
-            )->label( `Change View`
-            )->button(
-                text  = `Display View SECOND`
-                press = client->_event( `BUTTON_CHANGE_VIEW` )
-            )->label( `CX_SY_ZERO_DIVIDE`
-            )->button(
-                text  = `Error not catched by the user`
-                press = client->_event( `BUTTON_ERROR` ) ).
+    page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title`    v = `Controller`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                )->a( n = `text` v = `Roundtrip` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_ROUNDTRIP` )
+                )->a( n = `text`  v = `Client/Server Interaction` )->tag( `Label`
+                )->a( n = `text` v = `System` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_RESTART` )
+                )->a( n = `text`  v = `Restart App` )->tag( `Label`
+                )->a( n = `text` v = `Change View` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
+                )->a( n = `text`  v = `Display View SECOND` )->tag( `Label`
+                )->a( n = `text` v = `CX_SY_ZERO_DIVIDE` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_ERROR` )
+                )->a( n = `text`  v = `Error not catched by the user` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -110,21 +110,25 @@ CLASS z2ui5_cl_smp_app_004 IMPLEMENTATION.
 
     view_main = `SECOND`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Basics IV - Events, Views and Roundtrips`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->grid( `L12 M12 S12`
-        )->content( `layout`
-        )->simple_form( `View Second`
-            )->content( `form`
-            )->label( `Change View`
-            )->button(
-                text  = `Display View MAIN`
-                press = client->_event( `BUTTON_CHANGE_VIEW` ) ).
+    page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L12 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title` v = `View Second` )->ele( n = `content` ns = `form` )->tag( `Label`
+                )->a( n = `text` v = `Change View` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_CHANGE_VIEW` )
+                )->a( n = `text`  v = `Display View MAIN` ).
 
     client->view_display( view->stringify( ) ).
 
