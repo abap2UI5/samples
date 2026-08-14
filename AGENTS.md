@@ -337,10 +337,10 @@ GitHub) still open their site directly through `open_url( )`.
 five icons with their separator on the right, the two colour states and the
 install popover. samples-controls builds it in
 `scripts/generate-overview.mjs` (its overview class is generated — never edit
-the class), samples-stack in `z2ui5_cl_smps_app_00`, both with
-`z2ui5_cl_ai_xml` instead of `z2ui5_cl_xml_view`; in that builder an empty
-attribute is still rendered (`color=""` is no valid `IconColor`), so the
-optional ones are added under an `IF`. What stays local to a repository is
+the class), samples-stack in `z2ui5_cl_smps_app_00`. All three build it with
+`z2ui5_cl_ui5_view_builder`, which renders an empty attribute rather than
+skipping it (`color=""` is no valid `IconColor`), so the optional ones are
+added under an `IF`. What stays local to a repository is
 what sits *around* the family entries — this one's `SearchField` sub-header,
 samples-controls' filter toolbar, samples-stack's Regenerate Demo Data button
 (first in its `contentRight`, before a separator). **A change to an icon, the
@@ -659,11 +659,15 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
-- **It currently reports nothing in this repository.** It inspects classes
-  built with `z2ui5_cl_ai_xml`, while every sample here still uses
-  `z2ui5_cl_xml_view` (§10). The gate becomes effective as samples move to
-  the new builder — until then a green `abap2UI5` badge means "nothing
-  was checkable", not "the apps are clean".
+- **It currently reports nothing in this repository.** The samples are on
+  `z2ui5_cl_ui5_view_builder` (§10), but the pinned linter still looks for the
+  builder's former name `z2ui5_cl_ai_xml`, so it finds no checkable file. The
+  gate becomes effective when the pin moves to a version that reads the
+  released builder **and** spells its attribute verb `a( )` (the first version
+  that reads the new builder at all still spelled it `att( )`, which drops
+  every attribute including the namespace declarations — see
+  abap2UI5/samples-controls#89). Until then a green `abap2UI5` badge means
+  "nothing was checkable", not "the apps are clean".
 
 ### abapGit file consistency
 
@@ -838,12 +842,17 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 ```abap
 METHOD view_display.
 
-  DATA(view) = z2ui5_cl_xml_view=>factory( ).
-  DATA(page) = view->shell(
-      )->page(
-          title          = `My App`
-          shownavbutton  = client->check_app_prev_stack( )
-          navbuttonpress = client->_event_nav_app_leave( ) ).
+  DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+      )->a( n = `displayBlock` v = `true`
+      )->a( n = `height`       v = `100%`
+      )->a( n = `xmlns`        v = `sap.m`
+      )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+      )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+
+  DATA(page) = view->ele( `Shell` )->ele( `Page`
+      )->a( n = `title`          v = `My App`
+      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
   " ...
   client->view_display( view->stringify( ) ).
 
@@ -869,83 +878,113 @@ ENDMETHOD.
 
 ## 10. Building Views
 
-Views are XML strings passed to `client->view_display()`, built with the
-`z2ui5_cl_xml_view` fluent API — typed methods where they exist, `_generic( )`
-for the rest.
+Views are XML strings passed to `client->view_display()`, built with
+`z2ui5_cl_ui5_view_builder` — the released builder in the framework's `src/02`.
+It is generic: eight methods build any UI5 view 1:1, so there is no list of
+supported controls and nothing to wait for when UI5 adds one. Element and
+property names come straight from the
+[UI5 API Reference](https://ui5.sap.com/#/api) and are written exactly as
+documented there.
 
-### 1. `z2ui5_cl_xml_view` — typed fluent API
-Pre-built methods for common UI5 controls (`shell`, `page`, `simple_form`, `input`, `button`, etc.). Use this for standard layouts.
+### 1. The builder — `factory`, `ele`, `tag`, `a`, `end`, `stringify`
+
+- `factory( )` returns an **empty root**. Unlike the retired builder it opens
+  no `mvc:View` for you: you open it and declare the namespaces yourself, which
+  is why they are visible in every sample.
+- `ele( n = ns = )` adds a child element and **descends into it** — the chain
+  now points at the new element.
+- `tag( n = ns = )` adds a child element and **stays** on the current one, so
+  the next `tag( )`/`ele( )` becomes its sibling and no `end( )` is needed.
+  This is the form for a leaf, whatever its attributes are.
+- `a( n = v = )` sets an attribute on the element the chain points at — the
+  child just added by `ele( )`/`tag( )`, or the node itself while it has no
+  children. So `a( )` always follows the control it belongs to.
+- `a( n = b = )` takes an **ABAP boolean** and renders `true`/`false` itself:
+  write `a( n = `editable` b = mv_edit_mode )`, never a conversion of your own.
+  Pass either `v` or `b`, never both.
+- `end( )` ascends to the parent element.
+- `stringify( )` renders the whole view, always from the root, no matter which
+  element the reference currently points at.
+
+#### Empty attributes are rendered
+
+The builder writes every attribute you add, including an empty one — and
+`type=""` or `color=""` is not a valid UI5 enum value. An attribute whose value
+may be empty at runtime therefore goes under an `IF`, it is not simply passed:
+
+```abap
+DATA(button) = toolbar->tag( `Button` )->a( n = `text` v = name ).
+IF icon IS NOT INITIAL.
+  button->a( n = `icon` v = icon ).
+ENDIF.
+```
 
 #### View structure and indentation
 
-Always add 1 blank line before `DATA(view) = z2ui5_cl_xml_view=>factory( ).` to visually separate view construction from preceding logic.
+Always add 1 blank line before `DATA(view) = z2ui5_cl_ui5_view_builder=>factory( ).`
+to visually separate view construction from preceding logic.
 
-Always build the view in `view_display` and call `client->view_display( view->stringify( ) )` as a **standalone statement at the end** — never nested inside the chain.
+Always build the view in `view_display` and call
+`client->view_display( view->stringify( ) )` as a **standalone statement at the
+end** — never nested inside the chain.
 
-Indent the fluent chain to reflect the XML hierarchy:
-- Each method that **navigates into a child element** (returns a child node) is indented **4 spaces deeper** than its parent call.
-- Methods that **add a sibling** within the same container (and return the container) stay at the **same indentation level**.
-
-#### Parameter formatting
-
-- **Single parameter**: write inline — `)->label( `Quantity` )` or `)->input( client->_bind( qty ) )`.
-- **More than one parameter**: always split across multiple lines — one parameter per line, aligned below the opening `(`, closing `)` on its own line:
-
-```abap
-)->input(
-    value   = product
-    enabled = abap_false
-)->button(
-    text  = `Post`
-    press = client->_event( `POST` ) ).
-```
-
-Never put two or more named parameters on the same line.
+The chain layout carries the XML hierarchy: the closing paren rides with the
+next arrow, one indent level per container, and the `v =` column is aligned.
 
 ```abap
 METHOD view_display.
 
-  DATA(view) = z2ui5_cl_xml_view=>factory( ).
-  view->shell(
-      )->page(
-          title          = `My App`
-          navbuttonpress = client->_event_nav_app_leave( )
-          shownavbutton  = client->check_app_prev_stack( )
-          )->simple_form(
-              title    = `Form Title`
-              editable = abap_true
-              )->content( `form`
-              )->label( `Quantity`
-              )->input( client->_bind( quantity )
-              )->label( `Product`
-              )->input(
-                  value   = product
-                  enabled = abap_false
-              )->button(
-                  text  = `Post`
-                  press = client->_event( `POST` ) ).
+  DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+      )->a( n = `displayBlock` v = `true`
+      )->a( n = `height`       v = `100%`
+      )->a( n = `xmlns`        v = `sap.m`
+      )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+      )->a( n = `xmlns:core`   v = `sap.ui.core`
+      )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+
+  view->ele( `Shell` )->ele( `Page`
+      )->a( n = `title`          v = `My App`
+      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+      )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+          )->ele( n = `SimpleForm` ns = `form`
+              )->a( n = `title`    v = `Form Title`
+              )->a( n = `editable` b = abap_true
+              )->ele( n = `content` ns = `form`
+                  )->tag( `Label` )->a( n = `text` v = `Quantity`
+                  )->tag( `Input` )->a( n = `value` v = client->_bind( quantity )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `Post`
+                      )->a( n = `press` v = client->_event( `POST` ) ).
+
   client->view_display( view->stringify( ) ).
 
 ENDMETHOD.
 ```
 
-The hierarchy above is: `shell` → `page` → `simple_form` → `content` → (leaf elements).
-`label`, `input`, `button` are siblings inside `content`, so they stay at the same indent level as `)->content(`.
+The hierarchy is `mvc:View` → `Shell` → `Page` → `form:SimpleForm` →
+`form:content` → leaves. `Label`, `Input` and `Button` are siblings inside
+`content`, so they are added with `tag( )` and stay at the same indent.
 
-### 2. `_generic( )` — controls without a typed method
+#### Namespaces
 
-When a control or aggregation has no typed wrapper method (yet), stay inside
-the `z2ui5_cl_xml_view` chain and add the element generically. **Look up the
-control in the [UI5 API Reference](https://ui5.sap.com/#/api) and translate
-1:1** — element name, namespace and properties exactly as documented:
+Every namespace prefix a view uses must be declared on the view element —
+the builder does not collect them for you. Declare only the ones the view
+actually uses, and use the prefixes the UI5 documentation uses
+(`form` for `sap.ui.layout.form`, `layout` for `sap.ui.layout`, `f` for
+`sap.f`, `table` for `sap.ui.table`).
+
+#### Popups
+
+A popup is a `core:FragmentDefinition` root you build the same way, and hand
+to `client->popup_display( )`:
 
 ```abap
-header_title->_generic(
-    name   = `breadcrumbs`
-    ns     = `f`
-    )->breadcrumbs(
-        )->link( text = `Home` ).
+DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+    )->a( n = `xmlns`      v = `sap.m`
+    )->a( n = `xmlns:core` v = `sap.ui.core` ).
 ```
+
+### 2. Bindings
 
 **Binding paths always come from a bind call — never hardcode them.** Every
 model value a view references must be registered through
@@ -973,25 +1012,22 @@ nothing and makes readers look for a second mode that does not exist. Say
 "One-way" is correct only for a real UI5 one-way model that is not `_bind( )`
 — the `device>` JSONModel in `z2ui5_cl_smp_app_445`, for example.
 
-Key rules for `_generic( )`:
-- `_generic( name = ... ns = ... t_prop = ... )` adds one element and
-  navigates **into** it; typed methods continue the chain below it.
-- **Navigation is per-method, not uniform — check `result =` in
-  `z2ui5_cl_xml_view` before chaining siblings.** Methods returning
-  `result = me` stay on the current node (leaf controls like `text`,
-  `button`, `object_number`, `search_field`, `standard_list_item`,
-  `message_strip`) — siblings chain directly. Methods returning
-  `result = _generic( ... )` navigate INTO the new element (all containers
-  and aggregations, but also child-less controls like `object_status`) —
-  a following sibling needs `->get_parent( )` first, or it silently nests
-  inside and UI5 fails view creation with "Cannot add direct child
-  without default aggregation" (bit sample 453: two chained
-  `object_status` cells).
-- Attributes go into `t_prop = VALUE #( ( n = `...` v = `...` ) ... )`.
-- `ns` is registered on the view automatically — only pass namespaces that
-  are actually used.
-- Raw embedded content (e.g. an inline `<style>` body) goes through
-  `_cc_plain_xml( )`.
+### 3. Two things the builder does not do
+
+- **There is no raw-text node.** An element cannot carry text content, so an
+  inline `<style>` body or any other raw markup goes into the `content`
+  attribute of a `core:HTML` leaf. Write the **decoded** markup — the builder
+  escapes it on stringify:
+
+  ```abap
+  page->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && css && `</style>` ).
+  ```
+
+- **There is no way back up to a named ancestor.** `end( )` climbs exactly one
+  level, so a view is built the way it nests. When a helper method needs a
+  container the caller owns, the caller passes that reference — see the
+  nested-view samples in `src/00/98`, which take the Page they render into
+  (`mo_parent_page`) rather than searching for it.
 
 > The former standalone XML builder `z2ui5_cl_util_xml` is retired in the
 > framework (obsolete package, no new consumers) and is no longer used by any
@@ -1003,7 +1039,8 @@ Key rules for `_generic( )`:
 > (human decision 2026-08-12; the last two usages — `z2ui5_cl_pop_to_confirm`
 > in sample 279, `z2ui5_cl_pop_image_editor` in sample 306 — were removed the
 > same day). A sample that needs a dialog builds it itself with
-> `z2ui5_cl_xml_view=>factory_popup( )` + `client->popup_display( )`.
+> `z2ui5_cl_ui5_view_builder=>factory( )` with a `core:FragmentDefinition`
+> root + `client->popup_display( )`.
 
 #### VALUE #( ) formatting
 
@@ -1111,7 +1148,7 @@ CLASS z2ui5_cl_app_xxx IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( ).
     " ...
     client->view_display( view->stringify( ) ).
 
@@ -1158,8 +1195,8 @@ new/edited samples stay consistent:
 - **DESCRIPTs of framework-action / custom-control samples carry a
   capability marker** appended to the `<DESCRIPT>`
   (leading space), surfaced in the overview:
-  - `(C)` — uses an abap2UI5 **custom control** (`view->_z2ui5( )->…`, or the
-    `z2ui5` cc namespace: `_generic( … ns = `z2ui5` … )`, `z2ui5.cc`, `xmlns:z2ui5`).
+  - `(C)` — uses an abap2UI5 **custom control** (the `z2ui5` cc namespace:
+    `ele( n = … ns = `z2ui5` )`, `z2ui5.cc`, `xmlns:z2ui5`).
   - `(A)` — performs a **frontend action**: `client->follow_up_action( )`
     (including the `cs_event-control_by_id` / `cs_event-control_global` /
     `cs_event-binding_call` events), or a

@@ -71,10 +71,10 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:html`   v = `http://www.w3.org/1999/xhtml` ).
-    view->ele( n = `style` ns = `html` )->tag( n = `ZZPLAIN` ns = `html`
-                        )->a( n = `VALUE` v = css )->end( ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    " raw markup travels in the content attribute of a core:HTML leaf - the
+    " builder re-escapes it on stringify, so the literal markup is written here
+    view->tag( n = `HTML` ns = `core` )->a( n = `content` v = `<style>` && css && `</style>` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
              )->a( n = `title`          v = `abap2UI5 - CSS - FlexBox Layouts with Custom Classes`
@@ -142,8 +142,7 @@ CLASS z2ui5_cl_smp_app_255 IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
         )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core`
-        )->a( n = `xmlns:html` v = `http://www.w3.org/1999/xhtml` ).
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
     view->ele( `QuickView`
         )->a( n = `placement` v = `Bottom`
         )->a( n = `width`     v = `auto` )->ele( `QuickViewPage`
