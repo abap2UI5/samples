@@ -41,103 +41,129 @@ CLASS z2ui5_cl_smp_app_316 IMPLEMENTATION.
     body       = `body`
     new_window = `true` ).
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
-        )->shell(
-            )->page( title          = `abap2UI5 - Browser - Open Mail, Phone and SMS Links`
-                     navbuttonpress = client->_event_nav_app_leave( )
-                     shownavbutton  = client->check_app_prev_stack( )
-                      ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` )->ele( `Shell` )->ele( `Page`
+                )->a( n = `title`          v = `abap2UI5 - Browser - Open Mail, Phone and SMS Links`
+                )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The URL helper triggers native browser actions from ABAP: open e-mail, telephone and SMS links, or ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The URL helper triggers native browser actions from ABAP: open e-mail, telephone and SMS links, or ` &&
                    `redirect the browser to a URL.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(layout) = page->vertical_layout( class = `sapUiContentPadding`
-                                          width = `100%` ).
+    DATA(layout) = page->ele( n = `VerticalLayout` ns = `layout`
+        )->a( n = `class` v = `sapUiContentPadding`
+        )->a( n = `width` v = `100%` ).
 
-    DATA(email_form) = layout->simple_form( `Trigger E-Mail` ).
+    DATA(email_form) = layout->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Trigger E-Mail` ).
 
-    email_form->label( text     = `E-Mail`
-                       labelfor = `inputEmail` ).
-    email_form->input( id          = `inputEmail`
-                       value       = client->_bind( email-email )
-                       type        = `Email`
-                       placeholder = `Enter email`
-                       class       = `sapUiSmallMarginBottom` ).
+    email_form->tag( `Label`
+        )->a( n = `text`     v = `E-Mail`
+        )->a( n = `labelFor` v = `inputEmail` ).
+    email_form->tag( `Input`
+        )->a( n = `id`          v = `inputEmail`
+        )->a( n = `placeholder` v = `Enter email`
+        )->a( n = `type`        v = `Email`
+        )->a( n = `value`       v = client->_bind( email-email )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
-    email_form->input( id          = `inputCcEmail`
-                       value       = client->_bind( email-cc )
-                       type        = `Email`
-                       placeholder = `Enter cc email`
-                       class       = `sapUiSmallMarginBottom` ).
+    email_form->tag( `Input`
+        )->a( n = `id`          v = `inputCcEmail`
+        )->a( n = `placeholder` v = `Enter cc email`
+        )->a( n = `type`        v = `Email`
+        )->a( n = `value`       v = client->_bind( email-cc )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
-    email_form->input( id          = `inputBccEmail`
-                       value       = client->_bind( email-bcc )
-                       type        = `Email`
-                       placeholder = `Enter bcc email`
-                       class       = `sapUiSmallMarginBottom` ).
+    email_form->tag( `Input`
+        )->a( n = `id`          v = `inputBccEmail`
+        )->a( n = `placeholder` v = `Enter bcc email`
+        )->a( n = `type`        v = `Email`
+        )->a( n = `value`       v = client->_bind( email-bcc )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
-    email_form->label( text     = `Subject`
-                       labelfor = `inputText` ).
-    email_form->input( id          = `inputText`
-                       value       = client->_bind( email-subject )
-                       placeholder = `Enter text`
-                       class       = `sapUiSmallMarginBottom` ).
+    email_form->tag( `Label`
+        )->a( n = `text`     v = `Subject`
+        )->a( n = `labelFor` v = `inputText` ).
+    email_form->tag( `Input`
+        )->a( n = `id`          v = `inputText`
+        )->a( n = `placeholder` v = `Enter text`
+        )->a( n = `value`       v = client->_bind( email-subject )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
 
-    email_form->label( `Mail Body`
-         )->text_area( valueliveupdate = abap_true
-                       value           = client->_bind( email-body )
-                       growing         = abap_true
-                       growingmaxlines = `7`
-                       width           = `100%` ).
+    email_form->tag( `Label`
+        )->a( n = `text` v = `Mail Body` )->tag( `TextArea`
+             )->a( n = `value`           v = client->_bind( email-body )
+             )->a( n = `width`           v = `100%`
+             )->a( n = `valueLiveUpdate` b = abap_true
+             )->a( n = `growing`         b = abap_true
+             )->a( n = `growingMaxLines` v = `7` ).
 
-    email_form->button( text  = `Trigger Email`
-                        press = client->follow_up_action( val   = client->cs_event-urlhelper
+    email_form->tag( `Button`
+        )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
                         t_arg = VALUE #( ( `TRIGGER_EMAIL` )
-                                                                        ( |${ client->_bind( email ) }| ) ) ) ).
+                                                                        ( |${ client->_bind( email ) }| ) ) )
+        )->a( n = `text`  v = `Trigger Email` ).
 
-    DATA(telephone_form) = layout->simple_form( `Trigger Telephone` ).
+    DATA(telephone_form) = layout->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Trigger Telephone` ).
 
-    telephone_form->label( text     = `Telephone`
-                           labelfor = `inputTel` ).
-    telephone_form->input( id          = `inputTel`
-                           value       = client->_bind( phone )
-                           type        = `Tel`
-                           placeholder = `Enter telephone number`
-                           class       = `sapUiSmallMarginBottom` ).
-    telephone_form->button(
-        text  = `Trigger Telephone`
-        press = client->follow_up_action( val   = client->cs_event-urlhelper
+    telephone_form->tag( `Label`
+        )->a( n = `text`     v = `Telephone`
+        )->a( n = `labelFor` v = `inputTel` ).
+    telephone_form->tag( `Input`
+        )->a( n = `id`          v = `inputTel`
+        )->a( n = `placeholder` v = `Enter telephone number`
+        )->a( n = `type`        v = `Tel`
+        )->a( n = `value`       v = client->_bind( phone )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
+    telephone_form->tag( `Button`
+        )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
         t_arg = VALUE #( ( `TRIGGER_TEL` )
-                                                        ( |${ client->_bind( phone ) }| ) ) ) ).
+                                                        ( |${ client->_bind( phone ) }| ) ) )
+        )->a( n = `text`  v = `Trigger Telephone` ).
 
-    DATA(mobile_form) = layout->simple_form( `Trigger SMS` ).
+    DATA(mobile_form) = layout->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Trigger SMS` ).
 
-    mobile_form->label( text     = `Number`
-                        labelfor = `inputNumber` ).
-    mobile_form->input( id          = `inputNumber`
-                        value       = client->_bind( mobile )
-                        type        = `Number`
-                        placeholder = `Enter a number`
-                        class       = `sapUiSmallMarginBottom` ).
-    mobile_form->button( text  = `Trigger SMS`
-                         press = client->follow_up_action( val   = client->cs_event-urlhelper
-                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind( mobile ) }| ) ) ) ).
+    mobile_form->tag( `Label`
+        )->a( n = `text`     v = `Number`
+        )->a( n = `labelFor` v = `inputNumber` ).
+    mobile_form->tag( `Input`
+        )->a( n = `id`          v = `inputNumber`
+        )->a( n = `placeholder` v = `Enter a number`
+        )->a( n = `type`        v = `Number`
+        )->a( n = `value`       v = client->_bind( mobile )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
+    mobile_form->tag( `Button`
+        )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
+                         t_arg = VALUE #( ( `TRIGGER_SMS` ) ( |${ client->_bind( mobile ) }| ) ) )
+        )->a( n = `text`  v = `Trigger SMS` ).
 
-    DATA(url_form) = layout->simple_form( `Redirect` ).
-    url_form->label( text     = `URL`
-                     labelfor = `inputUrl` ).
-    url_form->input( id          = `inputUrl`
-                     value       = client->_bind( url-url )
-                     type        = `Url`
-                     placeholder = `Enter URL`
-                     class       = `sapUiSmallMarginBottom` ).
-    url_form->button( text  = `Redirect`
-                      press = client->follow_up_action( val   = client->cs_event-urlhelper
-                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind( url ) }| ) ) ) ).
+    DATA(url_form) = layout->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title` v = `Redirect` ).
+    url_form->tag( `Label`
+        )->a( n = `text`     v = `URL`
+        )->a( n = `labelFor` v = `inputUrl` ).
+    url_form->tag( `Input`
+        )->a( n = `id`          v = `inputUrl`
+        )->a( n = `placeholder` v = `Enter URL`
+        )->a( n = `type`        v = `Url`
+        )->a( n = `value`       v = client->_bind( url-url )
+        )->a( n = `class`       v = `sapUiSmallMarginBottom` ).
+    url_form->tag( `Button`
+        )->a( n = `press` v = client->follow_up_action( val   = client->cs_event-urlhelper
+                      t_arg = VALUE #( ( `REDIRECT` ) ( |${ client->_bind( url ) }| ) ) )
+        )->a( n = `text`  v = `Redirect` ).
 
     client->view_display( page->stringify( ) ).
 

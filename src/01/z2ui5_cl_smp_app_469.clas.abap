@@ -46,25 +46,30 @@ CLASS z2ui5_cl_smp_app_469 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Detail Page`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Navigation - Detail Page`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `You navigated here from a routing-mode hub via nav_app_call. Now press your ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `You navigated here from a routing-mode hub via nav_app_call. Now press your ` &&
                    `BROWSER Back button and watch the hub: mode keep restores its state, mode fresh ` &&
                    `restarts it empty.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->button(
-        text  = `back (in-app)`
-        icon  = `sap-icon://nav-back`
-        press = client->_event_nav_app_leave( )
-        class = `sapUiSmallMargin` ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event_nav_app_leave( )
+        )->a( n = `text`  v = `back (in-app)`
+        )->a( n = `icon`  v = `sap-icon://nav-back`
+        )->a( n = `class` v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
 

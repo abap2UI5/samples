@@ -47,40 +47,48 @@ CLASS z2ui5_cl_smp_app_199 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     FIELD-SYMBOLS <tab> TYPE data.
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(page) = view->shell( )->page(
-        id             = `page_main`
-        title          = `Refresh`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
-        class          = `sapUiContentPadding` ).
-    DATA(table) = page->table( growing = `true`
-                               width   = `auto`
-                               items   = client->_bind( <tab> ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `Refresh`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `class`          v = `sapUiContentPadding`
+        )->a( n = `id`             v = `page_main` ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items`   v = client->_bind( <tab> )
+        )->a( n = `growing` v = `true`
+        )->a( n = `width`   v = `auto` ).
 
-    DATA(columns) = table->columns( ).
+    DATA(columns) = table->ele( `columns` ).
 
     LOOP AT mt_comp INTO DATA(comp).
-      columns->column( )->text( comp-name ).
+      columns->ele( `Column` )->tag( `Text`
+          )->a( n = `text` v = comp-name ).
     ENDLOOP.
 
-    DATA(cells) = columns->get_parent( )->items(
-                                       )->column_list_item( valign = `Middle`
-                                                            type   = `Navigation`
-                                       )->cells( ).
+    DATA(cells) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
+                                           )->a( n = `vAlign` v = `Middle`
+                                           )->a( n = `type`   v = `Navigation` )->ele( `cells` ).
 
     LOOP AT mt_comp INTO comp.
-      cells->object_identifier( text = |\{{ comp-name }\}| ).
+      cells->ele( `ObjectIdentifier`
+          )->a( n = `text` v = |\{{ comp-name }\}| ).
     ENDLOOP.
 
-    page->button( text  = `Clear`
-                  press = client->_event( `CLEAR` )
-                  )->button( text  = `Add`
-                             press = client->_event( `ADD` ) ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `CLEAR` )
+        )->a( n = `text`  v = `Clear` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `ADD` )
+                      )->a( n = `text`  v = `Add` ).
 
     client->view_display( page->stringify( ) ).
 

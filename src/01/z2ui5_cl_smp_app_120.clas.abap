@@ -62,59 +62,57 @@ CLASS z2ui5_cl_smp_app_120 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-          )->page(
-                  title          = `abap2UI5 - Device - Geolocation from the Browser`
-                  navbuttonpress = client->_event_nav_app_leave( )
-                  shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `abap2UI5 - Device - Geolocation from the Browser`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The geolocation custom control reads the device position from the browser and binds ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The geolocation custom control reads the device position from the browser and binds ` &&
                    `longitude, latitude, altitude, accuracy and speed into the read-only form below.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->_z2ui5( )->geolocation(
-                                        finished         = client->_event( `GEOLOCATION_LOADED` )
-                                        error            = client->_event( val   = `GEOLOCATION_ERROR`
+    page->tag( n = `Geolocation` ns = `z2ui5`
+        )->a( n = `finished`         v = client->_event( `GEOLOCATION_LOADED` )
+        )->a( n = `error`            v = client->_event( val   = `GEOLOCATION_ERROR`
                                                                            t_arg = VALUE #( ( `${$parameters>/code}` )
                                                                                             ( `${$parameters>/message}` ) ) )
-                                        longitude        = client->_bind( longitude )
-                                        latitude         = client->_bind( latitude )
-                                        altitude         = client->_bind( altitude )
-                                        altitudeaccuracy = client->_bind( altitudeaccuracy )
-                                        accuracy         = client->_bind( accuracy )
-                                        speed            = client->_bind( speed )
-              )->simple_form( title    = `Geolocation`
-                              editable = abap_false
-                  )->content( `form`
-                      )->label( `Longitude`
-                      )->input(
-                          value    = client->_bind( longitude )
-                          editable = abap_false
-                      )->label( `Latitude`
-                      )->input(
-                          value    = client->_bind( latitude )
-                          editable = abap_false
-                      )->label( `Altitude`
-                      )->input(
-                          value    = client->_bind( altitude )
-                          editable = abap_false
-                      )->label( `Accuracy`
-                      )->input(
-                          value    = client->_bind( accuracy )
-                          editable = abap_false
-                      )->label( `AltitudeAccuracy`
-                      )->input(
-                          value    = client->_bind( altitudeaccuracy )
-                          editable = abap_false
-                      )->label( `Speed`
-                      )->input(
-                          value    = client->_bind( speed )
-                          editable = abap_false ).
+        )->a( n = `longitude`        v = client->_bind( longitude )
+        )->a( n = `latitude`         v = client->_bind( latitude )
+        )->a( n = `altitude`         v = client->_bind( altitude )
+        )->a( n = `accuracy`         v = client->_bind( accuracy )
+        )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
+        )->a( n = `speed`            v = client->_bind( speed ) )->ele( n = `SimpleForm` ns = `form`
+                  )->a( n = `title`    v = `Geolocation`
+                  )->a( n = `editable` b = abap_false )->ele( n = `content` ns = `form` )->tag( `Label`
+                          )->a( n = `text` v = `Longitude` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( longitude ) )->tag( `Label`
+                          )->a( n = `text` v = `Latitude` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( latitude ) )->tag( `Label`
+                          )->a( n = `text` v = `Altitude` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( altitude ) )->tag( `Label`
+                          )->a( n = `text` v = `Accuracy` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( accuracy ) )->tag( `Label`
+                          )->a( n = `text` v = `AltitudeAccuracy` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( altitudeaccuracy ) )->tag( `Label`
+                          )->a( n = `text` v = `Speed` )->tag( `Input`
+                          )->a( n = `editable` b = abap_false
+                          )->a( n = `value`    v = client->_bind( speed ) ).
 
     client->view_display( view->stringify( ) ).
 

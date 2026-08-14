@@ -29,74 +29,62 @@ CLASS z2ui5_cl_smp_app_019 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-            )->page(
-                title          = `abap2UI5 - Table - Selection Modes: Single and Multi Select`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+                )->a( n = `title`          v = `abap2UI5 - Table - Selection Modes: Single and Multi Select`
+                )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A SegmentedButton switches the table's selection mode (None, Single, Multi) at ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A SegmentedButton switches the table's selection mode (None, Single, Multi) at ` &&
                    `runtime; a second table below collects the rows selected in the first.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->segmented_button(
-            selected_key     = client->_bind( sel_mode )
-            selection_change = client->_event( `BUTTON_SEGMENT_CHANGE` ) )->get(
-                )->items( )->get(
-                    )->segmented_button_item(
-                        key  = `None`
-                        text = `None`
-                    )->segmented_button_item(
-                        key  = `SingleSelect`
-                        text = `SingleSelect`
-                    )->segmented_button_item(
-                        key  = `SingleSelectLeft`
-                        text = `SingleSelectLeft`
-                    )->segmented_button_item(
-                        key  = `SingleSelectMaster`
-                        text = `SingleSelectMaster`
-                    )->segmented_button_item(
-                        key  = `MultiSelect`
-                        text = `MultiSelect` ).
+    page->ele( `SegmentedButton`
+        )->a( n = `selectedKey`     v = client->_bind( sel_mode )
+        )->a( n = `selectionChange` v = client->_event( `BUTTON_SEGMENT_CHANGE` ) )->ele( `items` )->tag( `SegmentedButtonItem`
+                        )->a( n = `key`  v = `None`
+                        )->a( n = `text` v = `None` )->tag( `SegmentedButtonItem`
+                        )->a( n = `key`  v = `SingleSelect`
+                        )->a( n = `text` v = `SingleSelect` )->tag( `SegmentedButtonItem`
+                        )->a( n = `key`  v = `SingleSelectLeft`
+                        )->a( n = `text` v = `SingleSelectLeft` )->tag( `SegmentedButtonItem`
+                        )->a( n = `key`  v = `SingleSelectMaster`
+                        )->a( n = `text` v = `SingleSelectMaster` )->tag( `SegmentedButtonItem`
+                        )->a( n = `key`  v = `MultiSelect`
+                        )->a( n = `text` v = `MultiSelect` ).
 
-    page->table(
-            headertext = `Table`
-            mode       = sel_mode
-            items      = client->_bind( t_tab )
-            )->columns(
-                )->column( )->text( `Title` )->get_parent(
-                )->column( )->text( `Value` )->get_parent(
-                )->column( )->text( `Description`
-            )->get_parent( )->get_parent(
-            )->items(
-                )->column_list_item( selected = `{SELKZ}`
-                    )->cells(
-                        )->text( `{TITLE}`
-                        )->text( `{VALUE}`
-                        )->text( `{DESCR}` ).
+    page->ele( `Table`
+        )->a( n = `items`      v = client->_bind( t_tab )
+        )->a( n = `headerText` v = `Table`
+        )->a( n = `mode`       v = sel_mode )->ele( `columns` )->ele( `Column` )->tag( `Text`
+                    )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+                    )->a( n = `text` v = `Value` )->end( )->ele( `Column` )->tag( `Text`
+                    )->a( n = `text` v = `Description` )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
+                    )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Text`
+                            )->a( n = `text` v = `{TITLE}` )->tag( `Text`
+                            )->a( n = `text` v = `{VALUE}` )->tag( `Text`
+                            )->a( n = `text` v = `{DESCR}` ).
 
-    page->table( client->_bind( t_tab_sel )
-            )->header_toolbar(
-                )->overflow_toolbar(
-                    )->title( `Selected Entries`
-                    )->button(
-                        icon  = `sap-icon://pull-down`
-                        text  = `copy selected entries`
-                        press = client->_event( `BUTTON_READ_SEL` )
-          )->get_parent( )->get_parent(
-          )->columns(
-            )->column( )->text( `Title` )->get_parent(
-            )->column( )->text( `Value` )->get_parent(
-            )->column( )->text( `Description`
-            )->get_parent( )->get_parent(
-            )->items( )->column_list_item( )->cells(
-                )->text( `{TITLE}`
-                )->text( `{VALUE}`
-                )->text( `{DESCR}` ).
+    page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_tab_sel ) )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                        )->a( n = `text` v = `Selected Entries` )->tag( `Button`
+                        )->a( n = `press` v = client->_event( `BUTTON_READ_SEL` )
+                        )->a( n = `text`  v = `copy selected entries`
+                        )->a( n = `icon`  v = `sap-icon://pull-down` )->end( )->end( )->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Value` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Description` )->end( )->end( )->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+                    )->a( n = `text` v = `{TITLE}` )->tag( `Text`
+                    )->a( n = `text` v = `{VALUE}` )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}` ).
 
     client->view_display( view->stringify( ) ).
 

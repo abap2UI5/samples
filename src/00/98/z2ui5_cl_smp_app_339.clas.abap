@@ -4,7 +4,9 @@ CLASS z2ui5_cl_smp_app_339 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display TYPE abap_bool.
-    DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    "! the Page this app renders into when it is embedded in another app's
+    "! view; left empty the app builds a view of its own and displays it
+    DATA mo_parent_page  TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mv_table        TYPE string.
 
     DATA mt_table_tmp    TYPE REF TO data.
@@ -98,11 +100,16 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
 
   METHOD view_display.
 
-    IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    IF mo_parent_page IS INITIAL.
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      page = mo_parent_page.
 
     ENDIF.
 
@@ -110,39 +117,42 @@ CLASS z2ui5_cl_smp_app_339 IMPLEMENTATION.
                                                 vis_cols = 5 ).
     ASSIGN mt_table->* TO FIELD-SYMBOL(<table>).
 
-    DATA(table) = page->table( width           = `auto`
-                               mode            = `SingleSelectLeft`
-                               selectionchange = client->_event( `SELECTION_CHANGE` )
-                               items           = client->_bind( val = <table> ) ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items`           v = client->_bind( val = <table> )
+        )->a( n = `mode`            v = `SingleSelectLeft`
+        )->a( n = `width`           v = `auto`
+        )->a( n = `selectionChange` v = client->_event( `SELECTION_CHANGE` ) ).
 
-    DATA(columns) = table->columns( ).
+    DATA(columns) = table->ele( `columns` ).
 
     LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO DATA(layout).
       DATA(lv_index) = sy-tabix.
 
-      columns->column( visible = client->_bind( val       = layout->visible
+      columns->ele( `Column`
+          )->a( n = `visible` v = client->_bind( val       = layout->visible
                                                 tab       = mo_layout->ms_data-t_layout
-                                                tab_index = lv_index )
-       )->text( layout->name ).
+                                                tab_index = lv_index ) )->tag( `Text`
+           )->a( n = `text` v = layout->name ).
 
     ENDLOOP.
 
-    DATA(column_list_item) = columns->get_parent( )->items(
-                                       )->column_list_item( valign   = `Middle`
-                                                            type     = `Inactive`
-                                                            selected = `{SELKZ}` ).
+    DATA(column_list_item) = columns->end( )->ele( `items` )->ele( `ColumnListItem`
+                                           )->a( n = `vAlign`   v = `Middle`
+                                           )->a( n = `selected` v = `{SELKZ}`
+                                           )->a( n = `type`     v = `Inactive` ).
 
-    DATA(cells) = column_list_item->cells( ).
+    DATA(cells) = column_list_item->ele( `cells` ).
 
     LOOP AT mo_layout->ms_data-t_layout REFERENCE INTO layout.
 
       lv_index = sy-tabix.
 
-      cells->object_identifier( text = |\{{ layout->name }\}| ).
+      cells->ele( `ObjectIdentifier`
+          )->a( n = `text` v = |\{{ layout->name }\}| ).
 
     ENDLOOP.
 
-    IF mo_parent_view IS INITIAL.
+    IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).
 
     ELSE.

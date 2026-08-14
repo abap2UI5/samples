@@ -91,52 +91,69 @@ CLASS z2ui5_cl_smp_app_197 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` ).
 
-    DATA(page) = view->page( id = `page_main`
-            title               = `abap2UI5 - Event - Control Objects in t_arg (FacetFilter)`
-            navbuttonpress      = client->_event_nav_app_leave( )
-            shownavbutton       = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Event - Control Objects in t_arg (FacetFilter)`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `id`             v = `page_main` ).
 
-    page->message_strip(
-        text     = `This sample shows a list-report table with a FacetFilter: selecting products ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample shows a list-report table with a FacetFilter: selecting products ` &&
                    `filters the rows, and Reset restores the full list. The listClose event sends ` &&
                    `the selected FacetFilterItem controls as event arguments - the framework ` &&
                    `marshals each one into a JSON object of its properties.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->facet_filter( id                  = `idFacetFilter`
-                        type                = `Light`
-                        showpersonalization = abap_true
-                        showreset           = abap_true
-                        reset               = client->_event( `RESET` )
-      )->facet_filter_list( title     = `Products`
-                            mode      = `MultiSelect`
-                            items     = client->_bind( mt_table_products )
-                            listclose = client->_event( val   = `FILTER`
+    page->ele( `FacetFilter`
+        )->a( n = `id`                  v = `idFacetFilter`
+        )->a( n = `showPersonalization` b = abap_true
+        )->a( n = `showReset`           b = abap_true
+        )->a( n = `type`                v = `Light`
+        )->a( n = `reset`               v = client->_event( `RESET` ) )->ele( `FacetFilterList`
+          )->a( n = `mode`      v = `MultiSelect`
+          )->a( n = `title`     v = `Products`
+          )->a( n = `listClose` v = client->_event( val   = `FILTER`
                                                         t_arg = VALUE #( ( `$event.mParameters.selectedItems` ) ) )
-        )->facet_filter_item(
-            key  = `{PRODUCT}`
-            text = `{PRODUCT}` ).
+          )->a( n = `items`     v = client->_bind( mt_table_products ) )->ele( `FacetFilterItem`
+            )->a( n = `key`  v = `{PRODUCT}`
+            )->a( n = `text` v = `{PRODUCT}` ).
 
-    DATA(tab) = page->table( id    = `tab`
-                             items = client->_bind( val = mt_table ) ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( val = mt_table )
+        )->a( n = `id`    v = `tab` ).
 
-    DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( `Product` ).
-    lo_columns->column( )->text( `Date` ).
-    lo_columns->column( )->text( `Name` ).
-    lo_columns->column( )->text( `Location` ).
-    lo_columns->column( )->text( `Quantity` ).
+    DATA(lo_columns) = tab->ele( `columns` ).
+    lo_columns->ele( `Column` )->tag( `Text`
+        )->a( n = `text` v = `Product` ).
+    lo_columns->ele( `Column` )->tag( `Text`
+        )->a( n = `text` v = `Date` ).
+    lo_columns->ele( `Column` )->tag( `Text`
+        )->a( n = `text` v = `Name` ).
+    lo_columns->ele( `Column` )->tag( `Text`
+        )->a( n = `text` v = `Location` ).
+    lo_columns->ele( `Column` )->tag( `Text`
+        )->a( n = `text` v = `Quantity` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{PRODUCT}` ).
-    lo_cells->text( `{CREATE_DATE}` ).
-    lo_cells->text( `{CREATE_BY}` ).
-    lo_cells->text( `{STORAGE_LOCATION}` ).
-    lo_cells->text( `{QUANTITY}` ).
+    DATA(lo_cells) = tab->ele( `items` )->ele( `ColumnListItem` ).
+    lo_cells->tag( `Text`
+        )->a( n = `text` v = `{PRODUCT}` ).
+    lo_cells->tag( `Text`
+        )->a( n = `text` v = `{CREATE_DATE}` ).
+    lo_cells->tag( `Text`
+        )->a( n = `text` v = `{CREATE_BY}` ).
+    lo_cells->tag( `Text`
+        )->a( n = `text` v = `{STORAGE_LOCATION}` ).
+    lo_cells->tag( `Text`
+        )->a( n = `text` v = `{QUANTITY}` ).
 
     client->view_display( view->stringify( ) ).
 

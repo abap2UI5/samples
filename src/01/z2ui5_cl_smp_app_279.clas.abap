@@ -35,44 +35,49 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory(
-                   )->shell(
-                   )->page(
-                      title          = `abap2UI5 - Navigation - Data Loss Protection on Leaving`
-                      navbuttonpress = client->_event( `BACK` )
-                      shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:tnt`    v = `sap.tnt` )->ele( `Shell` )->ele( `Page`
+                       )->a( n = `title`          v = `abap2UI5 - Navigation - Data Loss Protection on Leaving`
+                       )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                       )->a( n = `navButtonPress` v = client->_event( `BACK` ) ).
 
-    page->message_strip(
-        text     = `Unsaved input marks the page dirty via a custom control; navigating back then opens a confirmation ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Unsaved input marks the page dirty via a custom control; navigating back then opens a confirmation ` &&
                    `popup instead of leaving and losing the data.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(box) = page->flex_box( direction  = `Row`
-                                alignitems = `Start`
-                                class      = `sapUiTinyMargin` ).
+    DATA(box) = page->ele( `FlexBox`
+        )->a( n = `class`      v = `sapUiTinyMargin`
+        )->a( n = `alignItems` v = `Start`
+        )->a( n = `direction`  v = `Row` ).
 
-    box->input(
-      id          = `input`
-      value       = client->_bind( text_input )
-      submit      = client->_event( `SUBMIT` )
-      width       = `40rem`
-      placeholder = `Enter data, submit and navigate back to trigger data loss protection` ).
+    box->tag( `Input`
+        )->a( n = `id`          v = `input`
+        )->a( n = `placeholder` v = `Enter data, submit and navigate back to trigger data loss protection`
+        )->a( n = `value`       v = client->_bind( text_input )
+        )->a( n = `submit`      v = client->_event( `SUBMIT` )
+        )->a( n = `width`       v = `40rem` ).
 
-    box->info_label(
-      text        = `dirty`
-      colorscheme = `8`
-      class       = `sapUiSmallMarginBegin sapUiTinyMarginTop`
-      visible     = client->_bind( dirty ) ).
+    box->ele( n = `InfoLabel` ns = `tnt`
+        )->a( n = `class`       v = `sapUiSmallMarginBegin sapUiTinyMarginTop`
+        )->a( n = `text`        v = `dirty`
+        )->a( n = `colorScheme` v = `8`
+        )->a( n = `visible`     v = client->_bind( dirty ) ).
 
-    box->button(
-      text    = `Reset`
-      press   = client->_event( `RESET` )
-      class   = `sapUiSmallMarginBegin`
-      visible = client->_bind( dirty ) ).
+    box->tag( `Button`
+        )->a( n = `press`   v = client->_event( `RESET` )
+        )->a( n = `text`    v = `Reset`
+        )->a( n = `visible` v = client->_bind( dirty )
+        )->a( n = `class`   v = `sapUiSmallMarginBegin` ).
 
-    page->_z2ui5( )->dirty( client->_bind( dirty ) ).
+    page->tag( n = `Dirty` ns = `z2ui5` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -116,21 +121,20 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
 
   METHOD popup_confirm_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    popup->dialog(
-        title = `Warning`
-        icon  = `sap-icon://status-critical`
-        )->vbox( `sapUiSmallMargin`
-            )->text( `Your entries will be lost when you leave this page.`
-        )->get_parent(
-        )->buttons(
-            )->button(
-                text  = `Cancel`
-                press = client->_event( `POPUP_CANCEL` )
-            )->button(
-                text  = `Leave Page`
-                press = client->_event( `POPUP_LEAVE` )
-                type  = `Emphasized` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:tnt`  v = `sap.tnt` ).
+    popup->ele( `Dialog`
+        )->a( n = `title` v = `Warning`
+        )->a( n = `icon`  v = `sap-icon://status-critical` )->ele( `VBox`
+            )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Text`
+                )->a( n = `text` v = `Your entries will be lost when you leave this page.` )->end( )->ele( `buttons` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `POPUP_CANCEL` )
+                )->a( n = `text`  v = `Cancel` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `POPUP_LEAVE` )
+                )->a( n = `text`  v = `Leave Page`
+                )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

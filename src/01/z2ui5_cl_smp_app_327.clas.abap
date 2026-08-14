@@ -101,61 +101,68 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell( )->page( title          = `abap2UI5 - Browser - Local and Session Storage`
-                                       navbuttonpress = client->_event_nav_app_leave( )
-                                       shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Browser - Local and Session Storage`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Reads and writes the browser's local or session storage. The ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Reads and writes the browser's local or session storage. The ` &&
                    `value is a whole ABAP structure, not just a string: the write ` &&
                    `side sends it with the STORE_DATA frontend action, the invisible ` &&
                    `z2ui5:Storage control reads it back and reports it as JSON.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( title    = `Local/Session Storage`
-                       editable = abap_true
-        )->content( `form`
-            )->label( `Type`
-            )->select( forceselection = abap_true
-                       selectedkey    = client->_bind( s_storage-type )
-                       items          = client->_bind( t_types )
-                )->item( key  = `{TYPE}`
-                         text = `{TYPE}` )->get_parent(
-            )->label( `Prefix`
-            )->input( client->_bind( s_storage-prefix )
-            )->label( `Key`
-            )->input( client->_bind( s_storage-key )
-            )->label( `Value - Field 1`
-            )->input( value = client->_bind( s_storage-value-field1 )
-                      type  = `Number`
-            )->label( `Value - Field 2`
-            )->input( client->_bind( s_storage-value-field2 )
-            )->label( ``
-            )->button( text  = `store`
-                       press = client->follow_up_action(
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Local/Session Storage`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                )->a( n = `text` v = `Type` )->ele( `Select`
+                )->a( n = `forceSelection` b = abap_true
+                )->a( n = `selectedKey`    v = client->_bind( s_storage-type )
+                )->a( n = `items`          v = client->_bind( t_types ) )->tag( n = `Item` ns = `core`
+                    )->a( n = `key`  v = `{TYPE}`
+                    )->a( n = `text` v = `{TYPE}` )->end( )->tag( `Label`
+                )->a( n = `text` v = `Prefix` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( s_storage-prefix ) )->tag( `Label`
+                )->a( n = `text` v = `Key` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( s_storage-key ) )->tag( `Label`
+                )->a( n = `text` v = `Value - Field 1` )->tag( `Input`
+                )->a( n = `type`  v = `Number`
+                )->a( n = `value` v = client->_bind( s_storage-value-field1 ) )->tag( `Label`
+                )->a( n = `text` v = `Value - Field 2` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( s_storage-value-field2 ) )->tag( `Label`
+                )->a( n = `text` v = `` )->tag( `Button`
+                )->a( n = `press` v = client->follow_up_action(
                            val   = z2ui5_if_client=>cs_event-store_data
                            t_arg = VALUE #( ( |${ client->_bind( s_storage ) }| ) ) )
-            )->button( text  = `get`
-                       press = client->_event( `GET_STORED_VALUE` ) ).
+                )->a( n = `text`  v = `store` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `GET_STORED_VALUE` )
+                )->a( n = `text`  v = `get` ).
 
     " Invisible companion control: it reads `key` out of the selected storage
     " and fires `finished` when the stored value differs from `value`. The
     " comparison is by value, so a structure does not re-trigger on every
     " render.
-    page->_z2ui5( )->storage(
-        finished = client->_event( val   = `LOCAL_STORAGE_LOADED`
+    page->tag( n = `Storage` ns = `z2ui5`
+        )->a( n = `finished` v = client->_event( val   = `LOCAL_STORAGE_LOADED`
                                    t_arg = VALUE #( ( `${$parameters>/type}` )
                                                     ( `${$parameters>/prefix}` )
                                                     ( `${$parameters>/key}` )
                                                     ( `${$parameters>/value}` ) ) )
-        type     = client->_bind( s_storage-type )
-        prefix   = client->_bind( s_storage-prefix )
-        key      = client->_bind( s_storage-key )
-        value    = client->_bind( s_stored_value ) ).
+        )->a( n = `type`     v = client->_bind( s_storage-type )
+        )->a( n = `prefix`   v = client->_bind( s_storage-prefix )
+        )->a( n = `key`      v = client->_bind( s_storage-key )
+        )->a( n = `value`    v = client->_bind( s_stored_value ) ).
 
     client->view_display( view->stringify( ) ).
 

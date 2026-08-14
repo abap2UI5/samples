@@ -33,75 +33,61 @@ CLASS z2ui5_cl_smp_app_011 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Table - Editable Cells, Add and Delete Rows`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( )
-            id             = `test2` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Table - Editable Cells, Add and Delete Rows`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `test2` ).
 
-    page->message_strip(
-        text     = `A MultiSelect table whose input cells switch between display and edit mode via the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A MultiSelect table whose input cells switch between display and edit mode via the ` &&
                    `toolbar, which also adds new rows and deletes the currently selected ones.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->table(
-            items = |\{path: '{ client->_bind( val = t_tab path = abap_true ) }', templateShareable: false\}|
-            mode  = `MultiSelect`
-        )->header_toolbar(
-            )->overflow_toolbar(
-                )->title( `title of the table`
-                )->button(
-                    text  = `test`
-                    press = client->_event( `BUTTON_TEST` )
-                )->toolbar_spacer(
-                )->button(
-                    icon  = `sap-icon://delete`
-                    text  = `delete selected row`
-                    press = client->_event( `BUTTON_DELETE` )
-                )->button(
-                    icon  = `sap-icon://add`
-                    text  = `add`
-                    press = client->_event( `BUTTON_ADD` )
-                )->button(
-                    icon  = `sap-icon://edit`
-                    text  = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
-                    press = client->_event( `BUTTON_EDIT` )
-        )->get_parent( )->get_parent( ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = |\{path: '{ client->_bind( val = t_tab path = abap_true ) }', templateShareable: false\}|
+        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                    )->a( n = `text` v = `title of the table` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_TEST` )
+                    )->a( n = `text`  v = `test` )->tag( `ToolbarSpacer` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_DELETE` )
+                    )->a( n = `text`  v = `delete selected row`
+                    )->a( n = `icon`  v = `sap-icon://delete` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_ADD` )
+                    )->a( n = `text`  v = `add`
+                    )->a( n = `icon`  v = `sap-icon://add` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( `BUTTON_EDIT` )
+                    )->a( n = `text`  v = SWITCH #( check_editable_active WHEN abap_true THEN `display` ELSE `edit` )
+                    )->a( n = `icon`  v = `sap-icon://edit` )->end( )->end( ).
 
-    tab->columns(
-        )->column(
-            )->text( `Title` )->get_parent(
-        )->column(
-            )->text( `Color` )->get_parent(
-        )->column(
-            )->text( `Info` )->get_parent(
-        )->column(
-            )->text( `Description` )->get_parent(
-        )->column(
-            )->text( `Checkbox` ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Checkbox` ).
 
-    tab->items( )->column_list_item( selected = `{SELKZ}`
-        )->cells(
-            )->input(
-                value   = `{TITLE}`
-                enabled = `{EDITABLE}`
-                id      = `test`
-            )->input(
-                value   = `{VALUE}`
-                enabled = `{EDITABLE}`
-            )->input(
-                value   = `{INFO}`
-                enabled = `{EDITABLE}`
-            )->input(
-                value   = `{DESCR}`
-                enabled = `{EDITABLE}`
-            )->checkbox(
-                selected = `{CHECKBOX}`
-                enabled  = `{EDITABLE}` ).
+    tab->ele( `items` )->ele( `ColumnListItem`
+        )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Input`
+                )->a( n = `id`      v = `test`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{TITLE}` )->tag( `Input`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{VALUE}` )->tag( `Input`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{INFO}` )->tag( `Input`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{DESCR}` )->tag( `CheckBox`
+                )->a( n = `selected` v = `{CHECKBOX}`
+                )->a( n = `enabled`  v = `{EDITABLE}` ).
 
     client->view_display( view->stringify( ) ).
 

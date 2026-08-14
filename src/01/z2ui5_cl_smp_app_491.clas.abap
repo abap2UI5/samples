@@ -17,29 +17,32 @@ CLASS z2ui5_cl_smp_app_491 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
-          )->page(
-              title          = `abap2UI5 - Browser - Set the Tab Favicon`
-              navbuttonpress = client->_event_nav_app_leave( )
-              shownavbutton  = client->check_app_prev_stack( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+      DATA(page) = view->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `abap2UI5 - Browser - Set the Tab Favicon`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-      page->message_strip(
-          text     = `Enter an image URL (or data URI) and press the button to run the set_favicon front-end action, ` &&
+      page->tag( `MessageStrip`
+          )->a( n = `text`     v = `Enter an image URL (or data URI) and press the button to run the set_favicon front-end action, ` &&
                      `which updates the browser tab icon (the link rel="icon" tag) without reloading the page.`
-          type     = `Information`
-          showicon = abap_true
-          class    = `sapUiSmallMargin` ).
+          )->a( n = `type`     v = `Information`
+          )->a( n = `showIcon` b = abap_true
+          )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-      page->simple_form(
-          title    = `Favicon`
-          editable = abap_true
-          )->content( `form`
-          )->label( `favicon url`
-          )->input( client->_bind( favicon )
-          )->button(
-              text  = `Set Favicon`
-              press = client->_event( `SET_FAVICON` ) ).
+      page->ele( n = `SimpleForm` ns = `form`
+          )->a( n = `title`    v = `Favicon`
+          )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+              )->a( n = `text` v = `favicon url` )->tag( `Input`
+              )->a( n = `value` v = client->_bind( favicon ) )->tag( `Button`
+              )->a( n = `press` v = client->_event( `SET_FAVICON` )
+              )->a( n = `text`  v = `Set Favicon` ).
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `SET_FAVICON` ).

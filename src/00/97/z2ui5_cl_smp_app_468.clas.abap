@@ -72,44 +72,54 @@ CLASS z2ui5_cl_smp_app_468 IMPLEMENTATION.
                                 t_arg = VALUE #( ( client->cs_nav_mode-fresh ) ) ).
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Routing Mode fresh`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Navigation - Routing Mode fresh`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Add some state (type / raise the counter), open the detail page, then press your ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Add some state (type / raise the counter), open the detail page, then press your ` &&
                    `BROWSER Back button and watch this page.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->grid( `L6 M12 S12`
-        )->content( `layout`
-        )->simple_form( `Routing mode fresh`
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title` v = `Routing mode fresh` )->ele( n = `content` ns = `form` ).
 
-    form->label( `1. Some state - type here` ).
-    form->input( client->_bind( input ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `1. Some state - type here` ).
+    form->tag( `Input`
+        )->a( n = `value` v = client->_bind( input ) ).
 
-    form->label( `and raise a counter` ).
-    form->button(
-        text  = |increment ({ counter })|
-        press = client->_event( `INC` ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `and raise a counter` ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `INC` )
+        )->a( n = `text`  v = |increment ({ counter })| ).
 
-    form->label( `2. Navigate forward` ).
-    form->button(
-        text  = `go to the detail page (nav_app_call)`
-        type  = `Emphasized`
-        press = client->_event( `GO_DETAIL` ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `2. Navigate forward` ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `GO_DETAIL` )
+        )->a( n = `text`  v = `go to the detail page (nav_app_call)`
+        )->a( n = `type`  v = `Emphasized` ).
 
-    page->message_strip(
-        text     = `fresh: the URL carries the class only (#/app/<CLASS>). After the detail page, the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `fresh: the URL carries the class only (#/app/<CLASS>). After the detail page, the ` &&
                    `browser Back button starts this app FRESH - input and counter are reset.`
-        type     = `Success`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Success`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     client->view_display( view->stringify( ) ).
 

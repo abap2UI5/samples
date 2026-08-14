@@ -24,25 +24,27 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-                    )->page(
-                      title          = `abap2UI5 - CSS - Color Table Cells from the Backend`
-                      navbuttonpress = client->_event_nav_app_leave( )
-                      shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:html`   v = `http://www.w3.org/1999/xhtml` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+                        )->a( n = `title`          v = `abap2UI5 - CSS - Color Table Cells from the Backend`
+                        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Table cells are coloured from the backend: each cell carries a data-color attribute bound to the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Table cells are coloured from the backend: each cell carries a data-color attribute bound to the ` &&
                    `row, and an inline html style element maps those values to a background colour.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->_generic(
-            name = `style`
-            ns   = `html`
-       )->_cc_plain_xml(
-           `td:has([data-color="red"]){ `
+    page->ele( n = `style` ns = `html` )->tag( n = `ZZPLAIN` ns = `html`
+           )->a( n = `VALUE` v = `td:has([data-color="red"]){ `
         && `    background-color: red;`
         && `}`
         && ``
@@ -66,32 +68,22 @@ CLASS z2ui5_cl_smp_app_305 IMPLEMENTATION.
         && `    background-color: yellow;`
         && `}` ).
 
-    DATA(tab) = page->table(
-            items = client->_bind( t_tab )
-            mode  = `MultiSelect`
-        )->header_toolbar(
-            )->overflow_toolbar(
-                )->title( `change cell color`
-        )->get_parent( )->get_parent( ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_tab )
+        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                    )->a( n = `text` v = `change cell color` )->end( )->end( ).
 
-    tab->columns(
-        )->column(
-            )->text( `Title` )->get_parent(
-        )->column(
-            )->text( `Color` )->get_parent( ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Color` )->end( ).
 
-    tab->items( )->column_list_item(
-      )->cells(
-        )->text( `{TITLE}`
-          )->get(
-            )->custom_data(
-              )->core_custom_data( key        = `color`
-                                   value      = `{VALUE}`
-                                   writetodom = abap_true
-            )->get_parent(
-          )->get_parent(
-        )->input( value   = `{VALUE}`
-                  enabled = abap_true ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->ele( `Text`
+            )->a( n = `text` v = `{TITLE}` )->ele( `customData` )->tag( n = `CustomData` ns = `core`
+                  )->a( n = `value`      v = `{VALUE}`
+                  )->a( n = `key`        v = `color`
+                  )->a( n = `writeToDom` b = abap_true )->end( )->end( )->tag( `Input`
+            )->a( n = `enabled` b = abap_true
+            )->a( n = `value`   v = `{VALUE}` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -101,55 +101,71 @@ CLASS z2ui5_cl_smp_app_160 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = view->shell(
-      )->page(
-        title          = `abap2UI5 - Grid Table - Events on Cell Level`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
-        )->header_content(
-            )->link(
-      )->get_parent( ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+          )->a( n = `title`          v = `abap2UI5 - Grid Table - Events on Cell Level`
+          )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+          )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `headerContent` )->tag( `Link` )->end( ).
 
-    page->message_strip(
-        text     = `Pressing ENTER in a sap.ui.table cell input fires a backend event that carries the cell id, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Pressing ENTER in a sap.ui.table cell input fires a backend event that carries the cell id, ` &&
                    `its row index and the parent row id as event arguments, shown here in a message box.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->text( `Make an input and press ENTER` ).
+    page->tag( `Text`
+        )->a( n = `text` v = `Make an input and press ENTER` ).
 
-    DATA(table) = page->flex_box( height = `85vh`
-        )->ui_table( alternaterowcolors = `true`
-                     selectionmode      = `None`
-                     rows               = client->_bind( mt_output )
-    ).
+    DATA(table) = page->ele( `FlexBox`
+        )->a( n = `height` v = `85vh` )->ele( n = `Table` ns = `table`
+            )->a( n = `rows`               v = client->_bind( mt_output )
+            )->a( n = `alternateRowColors` v = `true`
+            )->a( n = `selectionMode`      v = `None` ).
 
-    DATA(columns) = table->ui_columns( ).
+    DATA(columns) = table->ele( n = `columns` ns = `table` ).
 
-    columns->ui_column( width          = `5.2rem`
-                        sortproperty   = `SET_SK`
-                        filterproperty = `SET_SK` )->text( `Column 1` )->ui_template( )->text( `{SET_SK}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `MATNR`
-                        filterproperty = `MATNR` )->text( `Column 2` )->ui_template( )->text( `{MATNR}` ).
-    columns->ui_column( width          = `5rem`
-                        sortproperty   = `PL_TOTAL`
-                        filterproperty = `PL_TOTAL` )->text( `Column 5` )->ui_template( )->input(
-                        value          = `{PL_TOTAL}`
-                        submit         = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
+    columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `5.2rem`
+        )->a( n = `sortProperty`   v = `SET_SK`
+        )->a( n = `filterProperty` v = `SET_SK` )->tag( `Text`
+                            )->a( n = `text` v = `Column 1` )->ele( n = `template` ns = `table` )->tag( `Text`
+                            )->a( n = `text` v = `{SET_SK}` ).
+    columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `5rem`
+        )->a( n = `sortProperty`   v = `MATNR`
+        )->a( n = `filterProperty` v = `MATNR` )->tag( `Text`
+                            )->a( n = `text` v = `Column 2` )->ele( n = `template` ns = `table` )->tag( `Text`
+                            )->a( n = `text` v = `{MATNR}` ).
+    columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `5rem`
+        )->a( n = `sortProperty`   v = `PL_TOTAL`
+        )->a( n = `filterProperty` v = `PL_TOTAL` )->tag( `Text`
+                            )->a( n = `text` v = `Column 5` )->ele( n = `template` ns = `table` )->tag( `Input`
+                            )->a( n = `type`     v = `Number`
+                            )->a( n = `editable` b = abap_true
+                            )->a( n = `value`    v = `{PL_TOTAL}`
+                            )->a( n = `submit`   v = client->_event( val = `PL_TOTAL_CHANGE` t_arg = VALUE #(
         ( `${$source>/id}` )
         ( `$event.oSource.sId` )
         ( `${INDEX}` )
         ( `$event.oSource.oParent.sId` )
         ( `${$parameters>/value}` )
-         ) ) editable = abap_true type = `Number` ).
+         ) ) ).
 
-    columns->ui_column( width          = `4rem`
-                        sortproperty   = `per_cent_total`
-                        filterproperty = `per_cent_total` )->text( `Column 6` )->ui_template( )->text( `{PL_TOTAL} %` ).
+    columns->ele( n = `Column` ns = `table`
+        )->a( n = `width`          v = `4rem`
+        )->a( n = `sortProperty`   v = `per_cent_total`
+        )->a( n = `filterProperty` v = `per_cent_total` )->tag( `Text`
+                            )->a( n = `text` v = `Column 6` )->ele( n = `template` ns = `table` )->tag( `Text`
+                            )->a( n = `text` v = `{PL_TOTAL} %` ).
 
     client->view_display( view->stringify( ) ).
 

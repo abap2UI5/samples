@@ -37,18 +37,26 @@ CLASS z2ui5_cl_smp_app_331 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
-                                                                navbuttonpress = client->_event_nav_app_leave( )
-                                                                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `RTTI IV`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->button( text  = `GO`
-                  press = client->_event( `GO` )
-                  type  = `Success` ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `GO` )
+        )->a( n = `text`  v = `GO`
+        )->a( n = `type`  v = `Success` ).
 
-    DATA(form) = page->simple_form( editable        = abap_true
-                                    layout          = `ResponsiveGridLayout`
-                                    adjustlabelspan = abap_true
-                              )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`          v = `ResponsiveGridLayout`
+        )->a( n = `adjustLabelSpan` b = abap_true
+        )->a( n = `editable`        b = abap_true )->ele( n = `content` ns = `form` ).
 
     ASSIGN mo_table_obj->mr_data->* TO FIELD-SYMBOL(<val>).
     ASSIGN COMPONENT `ID` OF STRUCTURE <val> TO FIELD-SYMBOL(<value>).
@@ -57,10 +65,12 @@ CLASS z2ui5_cl_smp_app_331 IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    DATA(line) = form->label( wrapping = abap_false
-                              text     = `ID` ).
+    DATA(line) = form->tag( `Label`
+        )->a( n = `text`     v = `ID`
+        )->a( n = `wrapping` b = abap_false ).
 
-    line->input( client->_bind( <value> ) ).
+    line->tag( `Input`
+        )->a( n = `value` v = client->_bind( <value> ) ).
 
     client->view_display( page->stringify( ) ).
 

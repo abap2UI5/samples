@@ -75,42 +75,46 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Tree - Editable Nodes with CustomTreeItem`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Tree - Editable Nodes with CustomTreeItem`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Each node is a CustomTreeItem holding an Input bound to the node text. ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Each node is a CustomTreeItem holding an Input bound to the node text. ` &&
                    `Rename any node and press "Show model": the edits have already written back into ` &&
                    `the nested ABAP table. The expand state is preserved across the roundtrip.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->button( text  = `Show model`
-                   icon  = `sap-icon://show`
-                   press = client->_event( `SHOW_MODEL` ) ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `SHOW_MODEL` )
+            )->a( n = `text`  v = `Show model`
+            )->a( n = `icon`  v = `sap-icon://show` ).
 
     " CustomTreeItem is not a typed builder method - build it via _generic;
     " its content aggregation holds the editable Input, bound to
     " {TEXT} because the items aggregation itself is bound with _bind
-    DATA(tree) = page->tree( id         = `tree1`
-                             headertext = `Files (editable)`
-                             items      = client->_bind( t_nodes ) ).
+    DATA(tree) = page->ele( `Tree`
+        )->a( n = `id`         v = `tree1`
+        )->a( n = `items`      v = client->_bind( t_nodes )
+        )->a( n = `headerText` v = `Files (editable)` ).
 
-    tree->_generic( `CustomTreeItem`
-        )->content(
-            )->input(
-                value = `{TEXT}`
-                width = `24rem` ).
+    tree->ele( `CustomTreeItem` )->ele( `content` )->tag( `Input`
+                )->a( n = `value` v = `{TEXT}`
+                )->a( n = `width` v = `24rem` ).
 
     " invisible companion: keeps the expanded nodes open across the roundtrip
-    page->_z2ui5( )->tree( `tree1` ).
+    page->tag( n = `Tree` ns = `z2ui5` ).
 
     client->view_display( view->stringify( ) ).
 

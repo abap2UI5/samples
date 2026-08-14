@@ -49,26 +49,26 @@ CLASS z2ui5_cl_smp_app_020 IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( `abap2UI5 - Popup to decide` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title` v = `abap2UI5 - Popup to decide` ).
 
-    dialog->message_strip(
-        text     = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&
+    dialog->tag( `MessageStrip`
+        )->a( n = `text`     v = `A reusable decision popup opened as a sub-app: its text, button labels and events ` &&
                    `are passed in by the caller, and the pressed event is sent back.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    dialog->vbox(
-            )->text( text )->get_parent(
-        )->buttons(
-                )->button(
-                    text  = cancel_text
-                    press = client->_event( cancel_event )
-                )->button(
-                    text  = confirm_text
-                    press = client->_event( confirm_event )
-                    type  = `Emphasized` ).
+    dialog->ele( `VBox` )->tag( `Text`
+                )->a( n = `text` v = text )->end( )->ele( `buttons` )->tag( `Button`
+                    )->a( n = `press` v = client->_event( cancel_event )
+                    )->a( n = `text`  v = cancel_text )->tag( `Button`
+                    )->a( n = `press` v = client->_event( confirm_event )
+                    )->a( n = `text`  v = confirm_text
+                    )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 

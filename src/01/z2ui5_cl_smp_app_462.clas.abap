@@ -78,24 +78,28 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
   METHOD popup_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( `abap2UI5 - Tree in a dialog` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title` v = `abap2UI5 - Tree in a dialog` ).
 
     " the popup view slot gets its own copy of the model - the nested table
     " bound here renders in the dialog exactly like in a main view
-    dialog->tree( id         = `treePopup`
-                  headertext = `Documents`
-                  items      = client->_bind( t_nodes )
-        )->standard_tree_item( title = `{TEXT}` ).
+    dialog->ele( `Tree`
+        )->a( n = `id`         v = `treePopup`
+        )->a( n = `items`      v = client->_bind( t_nodes )
+        )->a( n = `headerText` v = `Documents` )->tag( `StandardTreeItem`
+            )->a( n = `title` v = `{TEXT}` ).
 
     " invisible companion: snapshots the tree's expand state before each
     " roundtrip and re-applies it after rendering - reopening the dialog
     " shows the same nodes expanded as when it was closed
-    dialog->_z2ui5( )->tree( `treePopup` ).
+    dialog->tag( n = `Tree` ns = `z2ui5` ).
 
-    dialog->buttons(
-        )->button( text  = `Close`
-                   press = client->_event( `CLOSE_POPUP` ) ).
+    dialog->ele( `buttons` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CLOSE_POPUP` )
+            )->a( n = `text`  v = `Close` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -104,26 +108,31 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Tree - Inside a Dialog`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Tree - Inside a Dialog`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
                    `table. Expand some nodes, close and reopen: the z2ui5.cc.Tree companion ` &&
                    `preserves the expand state across the roundtrips.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->button( text  = `Open tree popup`
-                   icon  = `sap-icon://tree`
-                   press = client->_event( `OPEN_POPUP` ) ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `OPEN_POPUP` )
+            )->a( n = `text`  v = `Open tree popup`
+            )->a( n = `icon`  v = `sap-icon://tree` ).
 
     client->view_display( view->stringify( ) ).
 

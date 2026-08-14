@@ -20,65 +20,70 @@ CLASS z2ui5_cl_smp_app_325 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(page) = view->shell(
-          )->page( title          = `abap2UI5 - Browser - Copy to Clipboard`
-                   navbuttonpress = client->_event_nav_app_leave( )
-                   shownavbutton  = client->check_app_prev_stack( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+          )->a( n = `xmlns:uxap`   v = `sap.uxap` ).
+      DATA(page) = view->ele( `Shell` )->ele( `Page`
+              )->a( n = `title`          v = `abap2UI5 - Browser - Copy to Clipboard`
+              )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+              )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-      page->message_strip(
-          text     = `Copy the input field or text-area content to the system clipboard via the clipboard_copy follow-up action.`
-          type     = `Information`
-          showicon = abap_true
-          class    = `sapUiSmallMargin` ).
+      page->tag( `MessageStrip`
+          )->a( n = `text`     v = `Copy the input field or text-area content to the system clipboard via the clipboard_copy follow-up action.`
+          )->a( n = `type`     v = `Information`
+          )->a( n = `showIcon` b = abap_true
+          )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-      DATA(obj_page) = page->object_page_layout(
-          showtitleinheadercontent = abap_true
-          showeditheaderbutton     = abap_true
-          uppercaseanchorbar       = abap_false ).
+      DATA(obj_page) = page->ele( n = `ObjectPageLayout` ns = `uxap`
+          )->a( n = `showTitleInHeaderContent` b = abap_true
+          )->a( n = `showEditHeaderButton`     b = abap_true
+          )->a( n = `upperCaseAnchorBar`       b = abap_false ).
 
-      DATA(header_title) = obj_page->header_title(
-         )->object_page_dyn_header_title( ).
+      DATA(header_title) = obj_page->ele( n = `headerTitle` ns = `uxap` )->ele( n = `ObjectPageDynamicHeaderTitle` ns = `uxap` ).
 
-      header_title->expanded_heading( )->hbox( )->title(
-          text     = `Test`
-          wrapping = abap_true ).
-      header_title->snapped_heading( )->flex_box( alignitems = `Center` )->title(
-          text     = `Test`
-          wrapping = abap_true ).
+      header_title->ele( n = `expandedHeading` ns = `uxap` )->ele( `HBox` )->tag( `Title`
+          )->a( n = `text`     v = `Test`
+          )->a( n = `wrapping` b = abap_true ).
+      header_title->ele( n = `snappedHeading` ns = `uxap` )->ele( `FlexBox`
+          )->a( n = `alignItems` v = `Center` )->tag( `Title`
+          )->a( n = `text`     v = `Test`
+          )->a( n = `wrapping` b = abap_true ).
 
-      DATA(sections) = obj_page->sections( ).
+      DATA(sections) = obj_page->ele( n = `sections` ns = `uxap` ).
 
-      sections->object_page_section(
-                                     titleuppercase = abap_false
-                                     id             = `id_sec1`
-                                     title          = `...`
-        )->sub_sections( )->object_page_sub_section( id    = `id_input`
-                                                     title = `Input field`
-        )->blocks( )->vbox(
-        )->input( value = client->_bind( input )
-                  width = `50%`
-        )->button( text  = `Copy input`
-                   type  = `Emphasized`
-                   press = client->_event( `COPY_INPUT` ) ).
+      sections->ele( n = `ObjectPageSection` ns = `uxap`
+          )->a( n = `titleUppercase` b = abap_false
+          )->a( n = `title`          v = `...`
+          )->a( n = `id`             v = `id_sec1` )->ele( n = `subSections` ns = `uxap` )->ele( n = `ObjectPageSubSection` ns = `uxap`
+            )->a( n = `id`    v = `id_input`
+            )->a( n = `title` v = `Input field` )->ele( n = `blocks` ns = `uxap` )->ele( `VBox` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input )
+            )->a( n = `width` v = `50%` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `COPY_INPUT` )
+            )->a( n = `text`  v = `Copy input`
+            )->a( n = `type`  v = `Emphasized` ).
 
-      sections->object_page_section( titleuppercase = abap_false
-                                     id             = `id_sec2`
-                                     title          = `...`
-        )->sub_sections( )->object_page_sub_section( id    = `id_text_area`
-                                                     title = `Text area`
-        )->blocks( )->vbox(
-        )->button( text  = `Copy text area`
-                   type  = `Emphasized`
-                   press = client->_event( `COPY_TEXT_AREA` )
-        )->text_area( valueliveupdate = abap_true
-                      editable        = abap_true
-                      value           = client->_bind( text )
-                      growing         = abap_true
-                      growingmaxlines = `50`
-                      width           = `100%`
-                      rows            = `15`
-                      id              = `text_id` ).
+      sections->ele( n = `ObjectPageSection` ns = `uxap`
+          )->a( n = `titleUppercase` b = abap_false
+          )->a( n = `title`          v = `...`
+          )->a( n = `id`             v = `id_sec2` )->ele( n = `subSections` ns = `uxap` )->ele( n = `ObjectPageSubSection` ns = `uxap`
+            )->a( n = `id`    v = `id_text_area`
+            )->a( n = `title` v = `Text area` )->ele( n = `blocks` ns = `uxap` )->ele( `VBox` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `COPY_TEXT_AREA` )
+            )->a( n = `text`  v = `Copy text area`
+            )->a( n = `type`  v = `Emphasized` )->tag( `TextArea`
+            )->a( n = `value`           v = client->_bind( text )
+            )->a( n = `rows`            v = `15`
+            )->a( n = `width`           v = `100%`
+            )->a( n = `valueLiveUpdate` b = abap_true
+            )->a( n = `editable`        b = abap_true
+            )->a( n = `id`              v = `text_id`
+            )->a( n = `growing`         b = abap_true
+            )->a( n = `growingMaxLines` v = `50` ).
 
       client->view_display( view->stringify( ) ).
 

@@ -70,46 +70,50 @@ CLASS z2ui5_cl_smp_app_447 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Action - CONTROL_BY_ID`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Action - CONTROL_BY_ID`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The backend calls a whitelisted method on a control resolved by id via ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The backend calls a whitelisted method on a control resolved by id via ` &&
                    `follow_up_action( cs_event-control_by_id ), after the response renders: ` &&
                    `focus() on the input, scrollToIndex() on the table.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->vbox( `sapUiSmallMargin`
-        )->input( id          = `nameInput`
-                  placeholder = `this input can be focused from the backend`
-        )->button( text  = `focus( ) the input`
-                   icon  = `sap-icon://edit`
-                   press = client->_event( `FOCUS` )
-                   class = `sapUiTinyMarginTop`
-        )->button( text  = `scrollToIndex( 150 ) on the table`
-                   icon  = `sap-icon://down`
-                   press = client->_event( `SCROLL` )
-                   class = `sapUiTinyMarginTop` ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Input`
+            )->a( n = `id`          v = `nameInput`
+            )->a( n = `placeholder` v = `this input can be focused from the backend` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `FOCUS` )
+            )->a( n = `text`  v = `focus( ) the input`
+            )->a( n = `icon`  v = `sap-icon://edit`
+            )->a( n = `class` v = `sapUiTinyMarginTop` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `SCROLL` )
+            )->a( n = `text`  v = `scrollToIndex( 150 ) on the table`
+            )->a( n = `icon`  v = `sap-icon://down`
+            )->a( n = `class` v = `sapUiTinyMarginTop` ).
 
-    DATA(tab) = page->table( id    = `bigTable`
-                             items = client->_bind( t_rows ) ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_rows )
+        )->a( n = `id`    v = `bigTable` ).
 
-    tab->columns(
-        )->column( )->text( `Index` )->get_parent(
-        )->column( )->text( `Text` )->get_parent( ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Index` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Text` )->end( ).
 
-    tab->items(
-        )->column_list_item(
-            )->cells(
-                )->text( `{INDEX}`
-                )->text( `{TEXT}` ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+                    )->a( n = `text` v = `{INDEX}` )->tag( `Text`
+                    )->a( n = `text` v = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).
 

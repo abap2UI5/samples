@@ -20,7 +20,7 @@ CLASS z2ui5_cl_smp_app_338 DEFINITION PUBLIC.
   PROTECTED SECTION.
     DATA client            TYPE REF TO z2ui5_if_client.
 
-    DATA mo_main_page      TYPE REF TO z2ui5_cl_xml_view.
+    DATA mo_main_page      TYPE REF TO z2ui5_cl_ui5_view_builder.
 
     METHODS on_init.
     METHODS on_event.
@@ -65,23 +65,30 @@ CLASS z2ui5_cl_smp_app_338 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( ).
-    DATA(page) = view->page( id             = `page_main`
-                             title          = `Main App calling Subapps`
-                             navbuttonpress = client->_event_nav_app_leave( )
-                             shownavbutton  = client->check_app_prev_stack( )
-                             class          = `sapUiContentPadding` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` ).
+    DATA(page) = view->ele( `Page`
+        )->a( n = `title`          v = `Main App calling Subapps`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `class`          v = `sapUiContentPadding`
+        )->a( n = `id`             v = `page_main` ).
 
-    DATA(lo_items) = page->icon_tab_bar( class       = `sapUiResponsiveContentPadding`
-                                         selectedkey = client->_bind( mv_selectedkey )
-                                         select      = client->_event( `ONSELECTICONTABBAR` )
-                                                       )->items( ).
+    DATA(lo_items) = page->ele( `IconTabBar`
+        )->a( n = `class`       v = `sapUiResponsiveContentPadding`
+        )->a( n = `select`      v = client->_event( `ONSELECTICONTABBAR` )
+        )->a( n = `selectedKey` v = client->_bind( mv_selectedkey ) )->ele( `items` ).
 
     LOOP AT mt_t002 REFERENCE INTO DATA(line).
-      lo_items->icon_tab_filter( text  = line->class
-                                 count = line->count
-                                 key   = line->id ).
-      lo_items->icon_tab_separator( ).
+      lo_items->ele( `IconTabFilter`
+          )->a( n = `count` v = line->count
+          )->a( n = `text`  v = line->class
+          )->a( n = `key`   v = line->id ).
+      lo_items->ele( `IconTabSeparator` ).
     ENDLOOP.
 
     mo_main_page = lo_items.

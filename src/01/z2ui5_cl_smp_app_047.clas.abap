@@ -51,60 +51,63 @@ CLASS z2ui5_cl_smp_app_047 IMPLEMENTATION.
         dec_sum = dec1 + dec2.
     ENDCASE.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-        )->page(
-                title          = `abap2UI5 - Binding - Types for Integer, Decimal, Date and Time`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Types for Integer, Decimal, Date and Time`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Numeric and date/time binding: integer and decimal fields use automatic type ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Numeric and date/time binding: integer and decimal fields use automatic type ` &&
                    `conversion, buttons calculate the sums, and a growing table lists the values.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( title    = `Integer and Decimals`
-                       editable = abap_true
-             )->content( `form`
-                 )->title( `Input`
-                 )->label( `integer`
-                 )->input( client->_bind( int1 )
-                 )->input( client->_bind( int2 )
-                 )->input( enabled = abap_false
-                           value   = client->_bind( int_sum )
-                 )->button( text  = `calc sum`
-                            press = client->_event( `BUTTON_INT` )
-                 )->label( `decimals`
-                 )->input( client->_bind( dec1 )
-                 )->input( client->_bind( dec2 )
-                 )->input( enabled = abap_false
-                           value   = client->_bind( dec_sum )
-                 )->button( text  = `calc sum`
-                            press = client->_event( `BUTTON_DEC` )
-                 )->label( `date`
-                 )->input( client->_bind( date )
-                 )->label( `time`
-                 )->input( client->_bind( time ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Integer and Decimals`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+                     )->a( n = `text` v = `Input` )->tag( `Label`
+                     )->a( n = `text` v = `integer` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( int1 ) )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( int2 ) )->tag( `Input`
+                     )->a( n = `enabled` b = abap_false
+                     )->a( n = `value`   v = client->_bind( int_sum ) )->tag( `Button`
+                     )->a( n = `press` v = client->_event( `BUTTON_INT` )
+                     )->a( n = `text`  v = `calc sum` )->tag( `Label`
+                     )->a( n = `text` v = `decimals` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( dec1 ) )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( dec2 ) )->tag( `Input`
+                     )->a( n = `enabled` b = abap_false
+                     )->a( n = `value`   v = client->_bind( dec_sum ) )->tag( `Button`
+                     )->a( n = `press` v = client->_event( `BUTTON_DEC` )
+                     )->a( n = `text`  v = `calc sum` )->tag( `Label`
+                     )->a( n = `text` v = `date` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( date ) )->tag( `Label`
+                     )->a( n = `text` v = `time` )->tag( `Input`
+                     )->a( n = `value` v = client->_bind( time ) ).
 
-    DATA(tab) = page->scroll_container( height   = `70%`
-                                        vertical = abap_true
-        )->table(
-            growing             = abap_true
-            growingthreshold    = `20`
-            growingscrolltoload = abap_true
-            items               = client->_bind( mt_tab )
-            sticky              = `ColumnHeaders,HeaderToolbar` ).
+    DATA(tab) = page->ele( `ScrollContainer`
+        )->a( n = `height`   v = `70%`
+        )->a( n = `vertical` b = abap_true )->ele( `Table`
+            )->a( n = `items`               v = client->_bind( mt_tab )
+            )->a( n = `growing`             b = abap_true
+            )->a( n = `growingThreshold`    v = `20`
+            )->a( n = `growingScrollToLoad` b = abap_true
+            )->a( n = `sticky`              v = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->columns(
-        )->column(
-            )->text( `Date` )->get_parent(
-        )->column(
-            )->text( `Time` )->get_parent( ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Date` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Time` )->end( ).
 
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{DATE}`
-       )->text( `{TIME}` ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+           )->a( n = `text` v = `{DATE}` )->tag( `Text`
+           )->a( n = `text` v = `{TIME}` ).
 
     client->view_display( page->stringify( ) ).
 

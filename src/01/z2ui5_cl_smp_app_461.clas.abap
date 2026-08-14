@@ -103,44 +103,47 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Tree - Drag and Drop Nodes`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Tree - Drag and Drop Nodes`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Drag a file onto another folder: the drop event ships the binding context ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Drag a file onto another folder: the drop event ships the binding context ` &&
                    `paths of both tree items, ABAP moves the node inside the nested table and ` &&
                    `redraws the view - the z2ui5.cc.Tree companion keeps the expanded nodes open.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tree) = page->tree( id         = `tree1`
-                             headertext = `Folders`
-                             items      = client->_bind( t_nodes ) ).
+    DATA(tree) = page->ele( `Tree`
+        )->a( n = `id`         v = `tree1`
+        )->a( n = `items`      v = client->_bind( t_nodes )
+        )->a( n = `headerText` v = `Folders` ).
 
-    tree->drag_drop_config( ``
-        )->_generic(
-            name   = `DragDropInfo`
-            ns     = `dnd`
-            t_prop = VALUE #( ( n = `sourceAggregation` v = `items` )
-                              ( n = `targetAggregation` v = `items` )
-                              ( n = `dropPosition`      v = `On` )
-                              ( n = `drop`              v = client->_event(
+    tree->ele( `dragDropConfig` )->ele( n = `DragDropInfo` ns = `dnd`
+            )->a( n = `sourceAggregation` v = `items`
+            )->a( n = `targetAggregation` v = `items`
+            )->a( n = `dropPosition`      v = `On`
+            )->a( n = `drop`              v = client->_event(
                                   val   = `MOVE_NODE`
                                   t_arg = VALUE #(
                                       ( `${$parameters>/draggedControl}.getBindingContext().getPath()` )
-                                      ( `${$parameters>/droppedControl}.getBindingContext().getPath()` ) ) ) ) ) ).
+                                      ( `${$parameters>/droppedControl}.getBindingContext().getPath()` ) ) ) ).
 
-    tree->standard_tree_item( title = `{TEXT}` ).
+    tree->tag( `StandardTreeItem`
+        )->a( n = `title` v = `{TEXT}` ).
 
     " invisible companion: preserves the tree's expand state across the
     " move roundtrips (snapshot before the request, re-apply after render)
-    page->_z2ui5( )->tree( `tree1` ).
+    page->tag( n = `Tree` ns = `z2ui5` ).
 
     client->view_display( view->stringify( ) ).
 

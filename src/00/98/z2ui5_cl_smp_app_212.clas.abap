@@ -4,7 +4,9 @@ CLASS z2ui5_cl_smp_app_212 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_view_display TYPE abap_bool.
-    DATA mo_parent_view  TYPE REF TO z2ui5_cl_xml_view.
+    "! the Page this app renders into when it is embedded in another app's
+    "! view; left empty the app builds a view of its own and displays it
+    DATA mo_parent_page  TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA mt_table        TYPE REF TO data.
     DATA mt_table_tmp    TYPE REF TO data.
     DATA ms_table_row    TYPE REF TO data.
@@ -118,12 +120,15 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
     FIELD-SYMBOLS <row> TYPE any.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(content) = popup->dialog( contentwidth = `60%`
-          )->simple_form( layout   = `ResponsiveGridLayout`
-                          editable = abap_true
-          )->content( `form` ).
+    DATA(content) = popup->ele( `Dialog`
+        )->a( n = `contentWidth` v = `60%` )->ele( n = `SimpleForm` ns = `form`
+              )->a( n = `layout`   v = `ResponsiveGridLayout`
+              )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
     " Walk through all comps — in edit mode the key fields are not editable.
     LOOP AT mt_dfies REFERENCE INTO DATA(dfies).
@@ -135,11 +140,13 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      content->label( `text` ).
+      content->tag( `Label`
+          )->a( n = `text` v = `text` ).
 
-      content->input( value       = client->_bind( <val> )
-                    enabled       = abap_false
-                    showvaluehelp = abap_false ).
+      content->tag( `Input`
+          )->a( n = `enabled`       b = abap_false
+          )->a( n = `value`         v = client->_bind( <val> )
+          )->a( n = `showValueHelp` b = abap_false ).
 
     ENDLOOP.
 
@@ -163,24 +170,29 @@ CLASS z2ui5_cl_smp_app_212 IMPLEMENTATION.
 
     FIELD-SYMBOLS <tab> TYPE data.
 
-    IF mo_parent_view IS INITIAL.
-      DATA(page) = z2ui5_cl_xml_view=>factory( ).
+    IF mo_parent_page IS INITIAL.
+      DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+          )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
     ELSE.
-      page = mo_parent_view->get( `Page` ).
+      page = mo_parent_page.
     ENDIF.
 
     ASSIGN mt_table->* TO <tab>.
 
-    DATA(table) = page->table( growing = `true`
-                               width   = `auto`
-                               items   = client->_bind( val = <tab> ) ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items`   v = client->_bind( val = <tab> )
+        )->a( n = `growing` v = `true`
+        )->a( n = `width`   v = `auto` ).
 
-    DATA(headder) = table->header_toolbar(
-               )->overflow_toolbar(
-                 )->toolbar_spacer( ).
+    DATA(headder) = table->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `ToolbarSpacer` ).
 
-    IF mo_parent_view IS INITIAL.
+    IF mo_parent_page IS INITIAL.
       client->view_display( page->stringify( ) ).
 
     ELSE.

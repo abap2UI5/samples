@@ -22,50 +22,44 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
   METHOD simple_popup1.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    DATA(dialog) = popup->dialog( stretch = abap_true
-            afterclose                    = client->_event( `BTN_OK_1ND` )
-         )->content( ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `stretch`    b = abap_true
+        )->a( n = `afterClose` v = client->_event( `BTN_OK_1ND` ) )->ele( `content` ).
 
-    DATA(content) = dialog->icon_tab_bar( selectedkey        = client->_bind( mv_selected_key )
-                                                  select     = client->follow_up_action( val   = client->cs_event-control_by_id
+    DATA(content) = dialog->ele( `IconTabBar`
+        )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
                                                                                          view  = client->cs_view-popup
                                                                                          t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
-                                                  headermode = `Inline`
-                                                  expanded   = abap_true
-                                                  expandable = abap_false
-                                  )->items(
-                                    )->icon_tab_filter( key  = `page1`
-                                                        text = `Home` )->get_parent(
-                                    )->icon_tab_filter( key  = `page2`
-                                                        text = `Applications` )->get_parent(
-                                    )->icon_tab_filter( key  = `page3`
-                                                        text = `Users and Groups`
-      )->get_parent( )->get_parent(
-                                        )->content( )->vbox( height = `100%`
-                                         )->nav_container( id                    = `NavCon`
-                                                           initialpage           = `page1`
-                                                           defaulttransitionname = `flip`
-                                                           height                = `400px`
-                                           )->pages(
-                                            )->page(
-                                              title = `first page`
-                                              id    = `page1`
-                                           )->get_parent(
-                                            )->page(
-                                              title = `second page`
-                                              id    = `page2`
-                                           )->get_parent(
-                                            )->page(
-                                              title = `third page`
-                                              id    = `page3` ).
+        )->a( n = `expandable`  b = abap_false
+        )->a( n = `expanded`    b = abap_true
+        )->a( n = `headerMode`  v = `Inline`
+        )->a( n = `selectedKey` v = client->_bind( mv_selected_key ) )->ele( `items` )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Home`
+                                        )->a( n = `key`  v = `page1` )->end( )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Applications`
+                                        )->a( n = `key`  v = `page2` )->end( )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Users and Groups`
+                                        )->a( n = `key`  v = `page3` )->end( )->end( )->ele( `content` )->ele( `VBox`
+                                            )->a( n = `height` v = `100%` )->ele( `NavContainer`
+                                             )->a( n = `initialPage`           v = `page1`
+                                             )->a( n = `id`                    v = `NavCon`
+                                             )->a( n = `height`                v = `400px`
+                                             )->a( n = `defaultTransitionName` v = `flip` )->ele( `pages` )->ele( `Page`
+                                                )->a( n = `title` v = `first page`
+                                                )->a( n = `id`    v = `page1` )->end( )->ele( `Page`
+                                                )->a( n = `title` v = `second page`
+                                                )->a( n = `id`    v = `page2` )->end( )->ele( `Page`
+                                                )->a( n = `title` v = `third page`
+                                                )->a( n = `id`    v = `page3` ).
 
-    dialog->get_parent( )->buttons(
-                  )->button(
-                      text  = `OK`
-                      press = client->_event( `BTN_OK_1ND` )
-                      type  = `Emphasized` ).
+    dialog->end( )->ele( `buttons` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `BTN_OK_1ND` )
+                      )->a( n = `text`  v = `OK`
+                      )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -74,19 +68,20 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
   METHOD simple_popup2.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core` ).
 
-    DATA(dialog) = popup->dialog(
-        afterclose = client->_event( `BTN_OK_2ND` )
-         )->content( ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `afterClose` v = client->_event( `BTN_OK_2ND` ) )->ele( `content` ).
 
-    DATA(content) = dialog->label( `this is a second popup` ).
+    DATA(content) = dialog->tag( `Label`
+        )->a( n = `text` v = `this is a second popup` ).
 
-    dialog->get_parent( )->buttons(
-                  )->button(
-                      text  = `GOTO 1ST POPUP`
-                      press = client->_event( `BTN_OK_2ND` )
-                      type  = `Emphasized` ).
+    dialog->end( )->ele( `buttons` )->tag( `Button`
+                      )->a( n = `press` v = client->_event( `BTN_OK_2ND` )
+                      )->a( n = `text`  v = `GOTO 1ST POPUP`
+                      )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -95,23 +90,27 @@ CLASS z2ui5_cl_smp_app_170 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = `abap2UI5 - Popup - Navigate between Dialogs (NavContainer)`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Popup - Navigate between Dialogs (NavContainer)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Press the button to open a dialog; from there a second popup can be opened and navigated ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Press the button to open a dialog; from there a second popup can be opened and navigated ` &&
                    `back to the first, demonstrating popup-to-popup navigation.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->button(
-        text  = `Open Popup...`
-        press = client->_event( `POPUP` ) ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `POPUP` )
+        )->a( n = `text`  v = `Open Popup...` ).
 
     client->view_display( view->stringify( ) ).
 

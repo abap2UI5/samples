@@ -57,47 +57,52 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Message - Message Model and MessageManager`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Message - Message Model and MessageManager`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Both sources of the central message> model in one page: the Name messages ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Both sources of the central message> model in one page: the Name messages ` &&
                    `are AUTHORED BY THE APP (pushed from an ABAP table by the invisible ` &&
                    `z2ui5.cc.MessageManager companion - the Error targets the Name field and ` &&
                    `colours it), while typing letters into the Amount field collects the failed ` &&
                    `Integer validation AUTOMATICALLY - no app code, no roundtrip. Both render ` &&
                    `in the list below.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     " invisible companion control: reconciles /T_MESSAGES into the message
     " manager (adds the app's messages, removes its own when they drop out,
     " leaves auto-collected validation untouched)
-    page->_generic( name   = `MessageManager`
-                    ns     = `z2ui5`
-                    t_prop = VALUE #( ( n = `items` v = client->_bind( t_messages ) ) ) ).
+    page->ele( n = `MessageManager` ns = `z2ui5`
+        )->a( n = `items` v = client->_bind( t_messages ) ).
 
-    page->vbox( `sapUiSmallMargin`
-            )->label( `Name (message authored by the app)`
-            )->input( client->_bind( name )
-            )->label( `Amount (integer only - validation collected automatically)`
-            )->input( width = `12rem`
-                      value = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
-                              |type: 'sap.ui.model.type.Integer' \}| ).
+    page->ele( `VBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
+                )->a( n = `text` v = `Name (message authored by the app)` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( name ) )->tag( `Label`
+                )->a( n = `text` v = `Amount (integer only - validation collected automatically)` )->tag( `Input`
+                )->a( n = `value` v = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
+                              |type: 'sap.ui.model.type.Integer' \}|
+                )->a( n = `width` v = `12rem` ).
 
-    page->list( headertext = `Collected messages (message> model)`
-                items      = `{message>/}`
-                nodatatext = `no messages`
-                class      = `sapUiSmallMargin`
-        )->standard_list_item( title       = `{message>message}`
-                               description = `{message>additionalText}`
-                               info        = `{message>type}` ).
+    page->ele( `List`
+        )->a( n = `headerText` v = `Collected messages (message> model)`
+        )->a( n = `items`      v = `{message>/}`
+        )->a( n = `class`      v = `sapUiSmallMargin`
+        )->a( n = `noDataText` v = `no messages` )->tag( `StandardListItem`
+            )->a( n = `title`       v = `{message>message}`
+            )->a( n = `description` v = `{message>additionalText}`
+            )->a( n = `info`        v = `{message>type}` ).
 
     client->view_display( view->stringify( ) ).
 

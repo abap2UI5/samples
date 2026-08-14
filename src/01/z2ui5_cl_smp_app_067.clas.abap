@@ -26,90 +26,91 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
       currency = `USD`.
 
     ENDIF.
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-         )->page( title          = `abap2UI5 - Binding - Currency Amounts (sap.ui.model.type.Currency)`
-                  navbuttonpress = client->_event_nav_app_leave( )
-                  shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+             )->a( n = `title`          v = `abap2UI5 - Binding - Currency Amounts (sap.ui.model.type.Currency)`
+             )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Formats amounts with the sap.ui.model.type.Currency type and its format options, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Formats amounts with the sap.ui.model.type.Currency type and its format options, ` &&
                    `and shows how to strip the leading zeros from a numeric field.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( title    = `Currency`
-                       editable = abap_true
-      )->content( `form`
-         )->title( `Input`
-         )->label( `Documentation`
-         )->link( text = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
-                  href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
-         )->label( `One field`
-         )->input(
-             |\{ parts: [ '{ client->_bind( val  = amount
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Currency`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+             )->a( n = `text` v = `Input` )->tag( `Label`
+             )->a( n = `text` v = `Documentation` )->tag( `Link`
+             )->a( n = `text` v = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
+             )->a( n = `href` v = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency` )->tag( `Label`
+             )->a( n = `text` v = `One field` )->tag( `Input`
+             )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
-         )->label( `Two field`
-         )->input(
-             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}| )->tag( `Label`
+             )->a( n = `text` v = `Two field` )->tag( `Input`
+             )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
-         )->input(
-             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}| 
+                                                     )->tag( `Input`
+             )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
-         )->label( `Default`
-         )->text(
-             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}| 
+                                                     )->tag( `Label`
+             )->a( n = `text` v = `Default` )->tag( `Text`
+             )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}|
-         )->label( `preserveDecimals:false`
-         )->text( |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' \}| )->tag( `Label`
+             )->a( n = `text` v = `preserveDecimals:false` )->tag( `Text`
+             )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                       path = abap_true ) }', '| && client->_bind(
                                                       val  = currency
                                                       path = abap_true ) &&
-                     |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
-         )->label( `currencyCode:false`
-         )->text( |\{ parts: [ '{ client->_bind( val  = amount
+                     |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}| )->tag( `Label`
+             )->a( n = `text` v = `currencyCode:false` )->tag( `Text`
+             )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                       path = abap_true ) }', '| && client->_bind(
                                                       val  = currency
                                                       path = abap_true ) &&
-                         |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
-         )->label( `style:'short'`
-         )->text(
-             |\{ parts: [ '{ client->_bind( val  = amount
+                         |'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}| )->tag( `Label`
+             )->a( n = `text` v = `style:'short'` )->tag( `Text`
+             )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
-         )->label( `style:'long'`
-         )->text(
-             |\{ parts: [ '{ client->_bind( val  = amount
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}| 
+                                                     )->tag( `Label`
+             )->a( n = `text` v = `style:'long'` )->tag( `Text`
+             )->a( n = `text` v = |\{ parts: [ '{ client->_bind( val  = amount
                                                  path = abap_true ) }', '{ client->_bind(
                                                  val  = currency
-                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
-         )->label( `event`
-         )->button( text  = `send`
-                    press = client->_event( `BUTTON` ) ).
+                                                 path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}| 
+                                                     )->tag( `Label`
+             )->a( n = `text` v = `event` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `BUTTON` )
+             )->a( n = `text`  v = `send` ).
 
-    page->simple_form( title    = `No Zeros`
-                       editable = abap_true
-      )->content( `form`
-      )->title( `Input`
-      )->label( `Documentation`
-      )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-         href       = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-      )->label( `Numeric`
-      )->input( client->_bind( val = numeric )
-
-      )->label( `Without leading Zeros`
-
-      )->text(
-      |\{path : '{ client->_bind(
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `No Zeros`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Title`
+          )->a( n = `text` v = `Input` )->tag( `Label`
+          )->a( n = `text` v = `Documentation` )->tag( `Link`
+          )->a( n = `text` v = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
+          )->a( n = `href` v = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue` )->tag( `Label`
+          )->a( n = `text` v = `Numeric` )->tag( `Input`
+          )->a( n = `value` v = client->_bind( val = numeric ) )->tag( `Label`
+          )->a( n = `text` v = `Without leading Zeros` )->tag( `Text`
+          )->a( n = `text` v = |\{path : '{ client->_bind(
                             val  = numeric
                             path = abap_true ) }', type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 

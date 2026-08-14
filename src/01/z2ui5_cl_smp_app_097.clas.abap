@@ -35,30 +35,49 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_detail.
 
-    DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
+    DATA(lo_view_nested) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:f`      v = `sap.f`
+        )->a( n = `xmlns:table`  v = `sap.ui.table` ).
 
-    DATA(page) = lo_view_nested->page( `Nested View` ).
+    DATA(page) = lo_view_nested->ele( `Page`
+        )->a( n = `title` v = `Nested View` ).
 
-    DATA(tab) = page->ui_table( rows               = client->_bind( val = t_tab2 )
-                                alternaterowcolors = abap_true
-                                rowactioncount     = `1`
-                                fixedcolumncount   = `1`
-                                selectionmode      = `None`
-                                sort               = client->_event( `SORT` )
-                                filter             = client->_event( `FILTER` )
-                                customfilter       = client->_event( `CUSTOMFILTER` ) ).
-    tab->ui_extension( )->overflow_toolbar( )->title( `Products` ).
-    DATA(lo_columns) = tab->ui_columns( ).
+    DATA(tab) = page->ele( n = `Table` ns = `table`
+        )->a( n = `rows`               v = client->_bind( val = t_tab2 )
+        )->a( n = `alternateRowColors` b = abap_true
+        )->a( n = `fixedColumnCount`   v = `1`
+        )->a( n = `rowActionCount`     v = `1`
+        )->a( n = `selectionMode`      v = `None`
+        )->a( n = `filter`             v = client->_event( `FILTER` )
+        )->a( n = `sort`               v = client->_event( `SORT` )
+        )->a( n = `customFilter`       v = client->_event( `CUSTOMFILTER` ) ).
+    tab->ele( n = `extension` ns = `table` )->ele( `OverflowToolbar` )->tag( `Title`
+        )->a( n = `text` v = `Products` ).
+    DATA(lo_columns) = tab->ele( n = `columns` ns = `table` ).
 
-    lo_columns->ui_column( sortproperty                  = `TITLE`
-                                          filterproperty = `TITLE` )->text( `Index` )->ui_template( )->text( `{TITLE}` ).
-    lo_columns->ui_column( sortproperty   = `DESCR`
-                           filterproperty = `DESCR` )->text( `DESCR` )->ui_template( )->text( `{DESCR}` ).
-    lo_columns->ui_column( sortproperty   = `INFO`
-                           filterproperty = `INFO` )->text( `INFO` )->ui_template( )->text( `{INFO}` ).
-    lo_columns->get_parent( )->ui_row_action_template( )->ui_row_action(
-       )->ui_row_action_item( icon = `sap-icon://delete`
-                           press   = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `sortProperty`   v = `TITLE`
+        )->a( n = `filterProperty` v = `TITLE` )->tag( `Text`
+                                              )->a( n = `text` v = `Index` )->ele( n = `template` ns = `table` )->tag( `Text`
+                                              )->a( n = `text` v = `{TITLE}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `sortProperty`   v = `DESCR`
+        )->a( n = `filterProperty` v = `DESCR` )->tag( `Text`
+                               )->a( n = `text` v = `DESCR` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{DESCR}` ).
+    lo_columns->ele( n = `Column` ns = `table`
+        )->a( n = `sortProperty`   v = `INFO`
+        )->a( n = `filterProperty` v = `INFO` )->tag( `Text`
+                               )->a( n = `text` v = `INFO` )->ele( n = `template` ns = `table` )->tag( `Text`
+                               )->a( n = `text` v = `{INFO}` ).
+    lo_columns->end( )->ele( n = `rowActionTemplate` ns = `table` )->ele( n = `RowAction` ns = `table` )->ele( n = `RowActionItem` ns = `table`
+           )->a( n = `icon`  v = `sap-icon://delete`
+           )->a( n = `press` v = client->_event( val = `ROW_DELETE` t_arg = VALUE #( ( `${UUID}` ) ) ) ).
 
     client->nest_view_display(
       val            = lo_view_nested->stringify( )
@@ -71,36 +90,42 @@ CLASS z2ui5_cl_smp_app_097 IMPLEMENTATION.
 
   METHOD view_display_master.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-       )->page(
-          title          = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`
-          navbuttonpress = client->_event_nav_app_leave( )
-          shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:f`      v = `sap.f`
+        )->a( n = `xmlns:table`  v = `sap.ui.table` )->ele( `Shell` )->ele( `Page`
+           )->a( n = `title`          v = `abap2UI5 - Nested View - Master-Detail with FlexibleColumnLayout`
+           )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+           )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A master-detail screen built with FlexibleColumnLayout: select a list row and its ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A master-detail screen built with FlexibleColumnLayout: select a list row and its ` &&
                    `detail opens in a second column as a nested view with a table.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(col_layout) = page->flexible_column_layout( layout = client->_bind( mv_layout )
-                                                     id     = `test` ).
+    DATA(col_layout) = page->ele( n = `FlexibleColumnLayout` ns = `f`
+        )->a( n = `layout` v = client->_bind( mv_layout )
+        )->a( n = `id`     v = `test` ).
 
-    DATA(lr_master) = col_layout->begin_column_pages( ).
+    DATA(lr_master) = col_layout->ele( n = `beginColumnPages` ns = `f` ).
 
-    DATA(lr_list) = lr_master->list(
-          headertext      = `List Output`
-          items           = client->_bind( val = t_tab )
-          mode            = `SingleSelectMaster`
-          selectionchange = client->_event( `SELCHANGE` )
-          )->standard_list_item(
-              title       = `{TITLE}`
-              description = `{DESCR}`
-              icon        = `{ICON}`
-              info        = `{INFO}`
-              press       = client->_event( `TEST` )
-              selected    = `{SELECTED}` ).
+    DATA(lr_list) = lr_master->ele( `List`
+        )->a( n = `headerText`      v = `List Output`
+        )->a( n = `items`           v = client->_bind( val = t_tab )
+        )->a( n = `mode`            v = `SingleSelectMaster`
+        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` ) )->tag( `StandardListItem`
+              )->a( n = `title`       v = `{TITLE}`
+              )->a( n = `description` v = `{DESCR}`
+              )->a( n = `icon`        v = `{ICON}`
+              )->a( n = `info`        v = `{INFO}`
+              )->a( n = `press`       v = client->_event( `TEST` )
+              )->a( n = `selected`    v = `{SELECTED}` ).
 
     client->view_display( lr_list->stringify( ) ).
 

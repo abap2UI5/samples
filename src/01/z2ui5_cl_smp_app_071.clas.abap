@@ -64,38 +64,41 @@ CLASS z2ui5_cl_smp_app_071 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Binding - Model setSizeLimit for Large Tables`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Model setSizeLimit for Large Tables`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A ComboBox bound to a large internal table: adjust the model's setSizeLimit to ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A ComboBox bound to a large internal table: adjust the model's setSizeLimit to ` &&
                    `control how many of the entries the control actually renders.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form( title = `Set Size Limit` editable = abap_true
-        )->content( `form`
-            )->label( `setSizeLimit`
-            )->input( client->_bind( set_size_limit )
-            )->button(
-                text  = `update size limit`
-                press = client->_event( val = `UPDATE` )
-            )->label( `Number of Entries`
-            )->input( client->_bind( combo_number )
-            )->button(
-                text  = `update number entries`
-                press = client->_event( val = `UPDATE_MODEL` )
-            )->label( `demo`
-            )->combobox( items = client->_bind( t_combo )
-               )->item(
-                   key  = `{KEY}`
-                   text = `{TEXT}` ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Set Size Limit`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+                )->a( n = `text` v = `setSizeLimit` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( set_size_limit ) )->tag( `Button`
+                )->a( n = `press` v = client->_event( val = `UPDATE` )
+                )->a( n = `text`  v = `update size limit` )->tag( `Label`
+                )->a( n = `text` v = `Number of Entries` )->tag( `Input`
+                )->a( n = `value` v = client->_bind( combo_number ) )->tag( `Button`
+                )->a( n = `press` v = client->_event( val = `UPDATE_MODEL` )
+                )->a( n = `text`  v = `update number entries` )->tag( `Label`
+                )->a( n = `text` v = `demo` )->ele( `ComboBox`
+                )->a( n = `items` v = client->_bind( t_combo ) )->tag( n = `Item` ns = `core`
+                   )->a( n = `key`  v = `{KEY}`
+                   )->a( n = `text` v = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -57,66 +57,62 @@ CLASS z2ui5_cl_smp_app_027 IMPLEMENTATION.
     bind_input51  = client->_bind( val = input51 path = abap_true ).
     bind_input52  = client->_bind( val = input52 path = abap_true ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Binding - Expression Binding, Types and Composite Parts`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Expression Binding, Types and Composite Parts`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Advanced binding syntax: expression binding, typed bindings, conditional enabling ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Advanced binding syntax: expression binding, typed bindings, conditional enabling ` &&
                    `with RegExp checks, and composite (parts) bindings.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->simple_form(
-        title    = `Binding Syntax`
-        editable = abap_true
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Binding Syntax`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->title( `Expression Binding`
-        )->label( `Documentation`
-        )->link(
-            text = `Expression Binding`
-            href = `https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0`
-        )->label( `input in uppercase`
-        )->input( client->_bind( input2 )
-        )->input(
-            value   = |\{= ${ client->_bind( input2 ) }.toUpperCase() \}|
-            enabled = abap_false
-        )->label( `max value of the first two inputs`
-        )->input(
-            `{ type : "sap.ui.model.type.Integer",` &&
-            `  path:"` && bind_input31 && `" }`
-        )->input(
-            `{ type : "sap.ui.model.type.Integer",` && |\n| &&
-            `  path:"` && bind_input32 && `" }`
-        )->input(
-            value   = |\{= Math.max(${ client->_bind( input31 ) }, ${ client->_bind( input32 ) }) \}|
-            enabled = abap_false
-        )->label( `only enabled when the quantity equals 500`
-        )->input(
-            `{ type : "sap.ui.model.type.Integer",` &&
-            `  path:"` && bind_quantity && `" }`
-        )->input(
-            value   = product
-            enabled = |\{= 500===${ client->_bind( quantity ) } \}|
-        )->label( `RegExp Set to enabled if the input contains VIP, ignoring the case.`
-        )->input( client->_bind( input41 )
-        )->button(
-            text    = `VIP`
-            enabled = |\{= RegExp('vip', 'i').test(${ client->_bind( input41 ) }) \}|
-        )->label( `concatenate both inputs`
-        )->input( client->_bind( input51 )
-        )->input( client->_bind( input52 )
-        )->input(
-            value   = `{ parts: [` && |\n| &&
+    form->tag( `Title`
+        )->a( n = `text` v = `Expression Binding` )->tag( `Label`
+            )->a( n = `text` v = `Documentation` )->tag( `Link`
+            )->a( n = `text` v = `Expression Binding`
+            )->a( n = `href` v = `https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0` )->tag( `Label`
+            )->a( n = `text` v = `input in uppercase` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input2 ) )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = |\{= ${ client->_bind( input2 ) }.toUpperCase() \}| )->tag( `Label`
+            )->a( n = `text` v = `max value of the first two inputs` )->tag( `Input`
+            )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
+            `  path:"` && bind_input31 && `" }` )->tag( `Input`
+            )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` && |\n| &&
+            `  path:"` && bind_input32 && `" }` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = |\{= Math.max(${ client->_bind( input31 ) }, ${ client->_bind( input32 ) }) \}| )->tag( `Label`
+            )->a( n = `text` v = `only enabled when the quantity equals 500` )->tag( `Input`
+            )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
+            `  path:"` && bind_quantity && `" }` )->tag( `Input`
+            )->a( n = `enabled` v = |\{= 500===${ client->_bind( quantity ) } \}|
+            )->a( n = `value`   v = product )->tag( `Label`
+            )->a( n = `text` v = `RegExp Set to enabled if the input contains VIP, ignoring the case.` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input41 ) )->tag( `Button`
+            )->a( n = `text`    v = `VIP`
+            )->a( n = `enabled` v = |\{= RegExp('vip', 'i').test(${ client->_bind( input41 ) }) \}| )->tag( `Label`
+            )->a( n = `text` v = `concatenate both inputs` )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input51 ) )->tag( `Input`
+            )->a( n = `value` v = client->_bind( input52 ) )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = `{ parts: [` && |\n| &&
                       `                "` && bind_input51 && `",` && |\n| &&
                       `                "` && bind_input52 && `"` && |\n| &&
-                      `               ]  }`
-            enabled = abap_false ).
+                      `               ]  }` ).
 
     client->view_display( view->stringify( ) ).
 

@@ -49,47 +49,51 @@ CLASS z2ui5_cl_smp_app_088 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( )
-        title          = `abap2UI5 - Control - Switch NavContainer Page by ID`
-       )->content( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Control - Switch NavContainer Page by ID`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )->ele( `content` ).
 
-    page->message_strip(
-        text     = `Selecting a tab in the IconTabHeader switches the NavContainer page on the client via the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Selecting a tab in the IconTabHeader switches the NavContainer page on the client via the ` &&
                    `generic CONTROL_BY_ID front-end action (whitelisted method 'to'), without a backend roundtrip.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->icon_tab_header( selectedkey                   = client->_bind( mv_selected_key )
-                                                  select = client->follow_up_action( val   = client->cs_event-control_by_id
+    page->ele( `IconTabHeader`
+        )->a( n = `selectedKey` v = client->_bind( mv_selected_key )
+        )->a( n = `select`      v = client->follow_up_action( val   = client->cs_event-control_by_id
                                                                                      t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
-                                                  mode   = `Inline`
-                                  )->items(
-                                    )->icon_tab_filter( key  = `page1`
-                                                        text = `Home` )->get_parent(
-                                    )->icon_tab_filter( key  = `page2`
-                                                        text = `Applications` )->get_parent(
-                                    )->icon_tab_filter( key  = `page3`
-                                                        text = `Users and Groups` ).
+        )->a( n = `mode`        v = `Inline` )->ele( `items` )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Home`
+                                        )->a( n = `key`  v = `page1` )->end( )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Applications`
+                                        )->a( n = `key`  v = `page2` )->end( )->ele( `IconTabFilter`
+                                        )->a( n = `text` v = `Users and Groups`
+                                        )->a( n = `key`  v = `page3` ).
 
-    page->nav_container( id                    = `NavCon`
-                         initialpage           = `page1`
-                         defaulttransitionname = `flip`
-                                     )->pages(
-                                     )->page(
-                                       title = `first page`
-                                       id    = `page1`
-                                    )->get_parent(
-                                     )->page(
-                                       title = `second page`
-                                       id    = `page2`
-                                    )->get_parent(
-                                     )->page(
-                                       title = `third page`
-                                       id    = `page3` ).
+    page->ele( `NavContainer`
+        )->a( n = `initialPage`           v = `page1`
+        )->a( n = `id`                    v = `NavCon`
+        )->a( n = `defaultTransitionName` v = `flip` )->ele( `pages` )->ele( `Page`
+                                         )->a( n = `title` v = `first page`
+                                         )->a( n = `id`    v = `page1` )->end( )->ele( `Page`
+                                         )->a( n = `title` v = `second page`
+                                         )->a( n = `id`    v = `page2` )->end( )->ele( `Page`
+                                         )->a( n = `title` v = `third page`
+                                         )->a( n = `id`    v = `page3` ).
 
     client->view_display( page->stringify( ) ).
 

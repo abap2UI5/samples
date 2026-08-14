@@ -31,52 +31,55 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+          )->a( n = `displayBlock` v = `true`
+          )->a( n = `height`       v = `100%`
+          )->a( n = `xmlns`        v = `sap.m`
+          )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-      view           = view->shell( )->page( id = `page_main`
-      title          = `abap2UI5 - Control - MultiInput with Tokens`
-      navbuttonpress = client->_event_nav_app_leave( )
-      shownavbutton  = client->check_app_prev_stack( ) ).
+      view           = view->ele( `Shell` )->ele( `Page`
+          )->a( n = `title`          v = `abap2UI5 - Control - MultiInput with Tokens`
+          )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+          )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+          )->a( n = `id`             v = `page_main` ).
 
-      view->message_strip(
-          text     = `The multiinput_ext custom control extends a sap.m.MultiInput so that added and removed ` &&
+      view->tag( `MessageStrip`
+          )->a( n = `text`     v = `The multiinput_ext custom control extends a sap.m.MultiInput so that added and removed ` &&
                      `tokens are reported back to ABAP, where the token table and the linked list are updated.`
-          type     = `Information`
-          showicon = abap_true
-          class    = `sapUiSmallMargin` ).
+          )->a( n = `type`     v = `Information`
+          )->a( n = `showIcon` b = abap_true
+          )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-      view->_z2ui5( )->multiinput_ext(
-                            addedtokens   = client->_bind( mt_tokens_added )
-                            removedtokens = client->_bind( mt_tokens_removed )
-                            change        = client->_event( `UPDATE_BACKEND` )
-                            multiinputid  = `test` ).
+      view->tag( n = `MultiInputExt` ns = `z2ui5`
+          )->a( n = `MultiInputId`  v = `test`
+          )->a( n = `change`        v = client->_event( `UPDATE_BACKEND` )
+          )->a( n = `addedTokens`   v = client->_bind( mt_tokens_added )
+          )->a( n = `removedTokens` v = client->_bind( mt_tokens_removed ) ).
 
-      view->multi_input(
-                            id     = `test`
-                            tokens = client->_bind( mt_token )
-                       )->tokens(
-                           )->token( key      = `{KEY}`
-                                     text     = `{TEXT}`
-                                     visible  = `{VISIBLE}`
-                                     selected = `{SELKZ}`
-                                     editable = `{EDITABLE}` ).
+      view->ele( `MultiInput`
+          )->a( n = `tokens` v = client->_bind( mt_token )
+          )->a( n = `id`     v = `test` )->ele( `tokens` )->tag( `Token`
+                               )->a( n = `key`      v = `{KEY}`
+                               )->a( n = `text`     v = `{TEXT}`
+                               )->a( n = `selected` v = `{SELKZ}`
+                               )->a( n = `visible`  v = `{VISIBLE}`
+                               )->a( n = `editable` v = `{EDITABLE}` ).
 
-      DATA(tab) = view->table(
-        items = client->_bind( mt_token )
-        mode  = `MultiSelect` ).
+      DATA(tab) = view->ele( `Table`
+          )->a( n = `items` v = client->_bind( mt_token )
+          )->a( n = `mode`  v = `MultiSelect` ).
 
-      tab->columns(
-        )->column(
-           )->text( `KEY` )->get_parent(
-        )->column(
-           )->text( `TEXT` ).
+      tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+               )->a( n = `text` v = `KEY` )->end( )->ele( `Column` )->tag( `Text`
+               )->a( n = `text` v = `TEXT` ).
 
-      tab->items( )->column_list_item( selected = `{SELKZ}`
-        )->cells(
-            )->input( value   = `{KEY}`
-                      enabled = `{EDITABLE}`
-            )->input( value   = `{TEXT}`
-                      enabled = `{EDITABLE}`).
+      tab->ele( `items` )->ele( `ColumnListItem`
+          )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Input`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{KEY}` )->tag( `Input`
+                )->a( n = `enabled` v = `{EDITABLE}`
+                )->a( n = `value`   v = `{TEXT}` ).
 
       client->view_display( view->stringify( ) ).
 

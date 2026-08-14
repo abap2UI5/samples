@@ -67,101 +67,86 @@ CLASS z2ui5_cl_smp_app_122 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Device - Frontend Info: UI5 Version, Theme, OS, Browser`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Device - Frontend Info: UI5 Version, Theme, OS, Browser`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Reads frontend information from the client - UI5 version and theme plus device, ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Reads frontend information from the client - UI5 version and theme plus device, ` &&
                    `OS and browser details - and shows each value in a read-only form.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->simple_form(
-        title    = `Information`
-        editable = abap_true
-        )->content( `form`
-        )->label( `device_browser`
-        )->input(
-            value   = client->_bind( device_browser )
-            enabled = abap_false
-        )->label( `device_browser_version`
-        )->input(
-            value   = client->_bind( device_browser_version )
-            enabled = abap_false
-        )->label( `device_os`
-        )->input(
-            value   = client->_bind( device_os )
-            enabled = abap_false
-        )->label( `device_os_version`
-        )->input(
-            value   = client->_bind( device_os_version )
-            enabled = abap_false
-        )->label( `device_systemtype`
-        )->input(
-            value   = client->_bind( device_systemtype )
-            enabled = abap_false
-        )->label( `device_orientation`
-        )->input(
-            value   = client->_bind( device_orientation )
-            enabled = abap_false
-        )->label( `device_height`
-        )->input(
-            value   = client->_bind( device_height )
-            enabled = abap_false
-        )->label( `device_width`
-        )->input(
-            value   = client->_bind( device_width )
-            enabled = abap_false
-        )->label( `device_phone`
-        )->input(
-            value   = client->_bind( device_phone )
-            enabled = abap_false
-        )->label( `device_desktop`
-        )->input(
-            value   = client->_bind( device_desktop )
-            enabled = abap_false
-        )->label( `device_tablet`
-        )->input(
-            value   = client->_bind( device_tablet )
-            enabled = abap_false
-        )->label( `device_combi`
-        )->input(
-            value   = client->_bind( device_combi )
-            enabled = abap_false
-        )->label( `device_touch`
-        )->input(
-            value   = client->_bind( device_touch )
-            enabled = abap_false
-        )->label( `device_pointer`
-        )->input(
-            value   = client->_bind( device_pointer )
-            enabled = abap_false
-        )->label( `device_retina`
-        )->input(
-            value   = client->_bind( device_retina )
-            enabled = abap_false
-        )->label( `ui5_version`
-        )->input(
-            value   = client->_bind( ui5_version )
-            enabled = abap_false
-        )->label( `ui5_theme`
-        )->input(
-            value   = client->_bind( ui5_theme )
-            enabled = abap_false
-        )->label( `ui5_gav`
-        )->input(
-            value   = client->_bind( ui5_gav )
-            enabled = abap_false
-        )->label( `ui5_build_timestamp`
-        )->input(
-            value   = client->_bind( ui5_build_timestamp )
-            enabled = abap_false ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Information`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+            )->a( n = `text` v = `device_browser` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_browser ) )->tag( `Label`
+            )->a( n = `text` v = `device_browser_version` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_browser_version ) )->tag( `Label`
+            )->a( n = `text` v = `device_os` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_os ) )->tag( `Label`
+            )->a( n = `text` v = `device_os_version` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_os_version ) )->tag( `Label`
+            )->a( n = `text` v = `device_systemtype` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_systemtype ) )->tag( `Label`
+            )->a( n = `text` v = `device_orientation` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_orientation ) )->tag( `Label`
+            )->a( n = `text` v = `device_height` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_height ) )->tag( `Label`
+            )->a( n = `text` v = `device_width` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_width ) )->tag( `Label`
+            )->a( n = `text` v = `device_phone` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_phone ) )->tag( `Label`
+            )->a( n = `text` v = `device_desktop` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_desktop ) )->tag( `Label`
+            )->a( n = `text` v = `device_tablet` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_tablet ) )->tag( `Label`
+            )->a( n = `text` v = `device_combi` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_combi ) )->tag( `Label`
+            )->a( n = `text` v = `device_touch` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_touch ) )->tag( `Label`
+            )->a( n = `text` v = `device_pointer` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_pointer ) )->tag( `Label`
+            )->a( n = `text` v = `device_retina` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( device_retina ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_version` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( ui5_version ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_theme` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( ui5_theme ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_gav` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( ui5_gav ) )->tag( `Label`
+            )->a( n = `text` v = `ui5_build_timestamp` )->tag( `Input`
+            )->a( n = `enabled` b = abap_false
+            )->a( n = `value`   v = client->_bind( ui5_build_timestamp ) ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

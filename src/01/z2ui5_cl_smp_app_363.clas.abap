@@ -68,58 +68,73 @@ CLASS z2ui5_cl_smp_app_363 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Scroll - Scroll a Control into View`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Scroll - Scroll a Control into View`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text = `Use the toolbar to scroll to a control by id, or press Validate - if the middle field is empty it scrolls to it automatically.`
-        type = `Information` ).
+    page->tag( `MessageStrip`
+        )->a( n = `text` v = `Use the toolbar to scroll to a control by id, or press Validate - if the middle field is empty it scrolls to it automatically.`
+        )->a( n = `type` v = `Information` ).
 
-    DATA(form) = page->simple_form( editable = abap_true
-                                    title    = `Long form`
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Long form`
+        )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
     " Top section
-    form->label( `Top field (id = top_input)` ).
-    form->input( id    = `top_input`
-                 value = client->_bind( field_01 ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Top field (id = top_input)` ).
+    form->tag( `Input`
+        )->a( n = `id`    v = `top_input`
+        )->a( n = `value` v = client->_bind( field_01 ) ).
 
     " spacer
     DO 25 TIMES.
-      form->label( `spacer` ).
-      form->text( | spacer line { sy-index }| ).
+      form->tag( `Label`
+          )->a( n = `text` v = `spacer` ).
+      form->tag( `Text`
+          )->a( n = `text` v = | spacer line { sy-index }| ).
     ENDDO.
 
     " Middle section (required)
-    form->label( `Middle field - required (id = middle_input)` ).
-    form->input( id    = `middle_input`
-                 value = client->_bind( field_02 ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Middle field - required (id = middle_input)` ).
+    form->tag( `Input`
+        )->a( n = `id`    v = `middle_input`
+        )->a( n = `value` v = client->_bind( field_02 ) ).
 
     " spacer
     DO 25 TIMES.
-      form->label( `spacer` ).
-      form->text( | spacer line { sy-index }| ).
+      form->tag( `Label`
+          )->a( n = `text` v = `spacer` ).
+      form->tag( `Text`
+          )->a( n = `text` v = | spacer line { sy-index }| ).
     ENDDO.
 
     " Bottom section
-    form->label( `Bottom field (id = bottom_input)` ).
-    form->input( id    = `bottom_input`
-                 value = client->_bind( field_03 ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Bottom field (id = bottom_input)` ).
+    form->tag( `Input`
+        )->a( n = `id`    v = `bottom_input`
+        )->a( n = `value` v = client->_bind( field_03 ) ).
 
-    page->footer( )->overflow_toolbar(
-         )->button( text  = `Jump to Top`
-                    press = client->_event( `JUMP_TOP` )
-         )->button( text  = `Jump to Middle`
-                    press = client->_event( `JUMP_MIDDLE` )
-         )->button( text  = `Jump to Bottom`
-                    press = client->_event( `JUMP_BOTTOM` )
-         )->button( text  = `Validate`
-                    press = client->_event( `VALIDATE` )
-                    type  = `Emphasized` ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `JUMP_TOP` )
+             )->a( n = `text`  v = `Jump to Top` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `JUMP_MIDDLE` )
+             )->a( n = `text`  v = `Jump to Middle` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `JUMP_BOTTOM` )
+             )->a( n = `text`  v = `Jump to Bottom` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `VALIDATE` )
+             )->a( n = `text`  v = `Validate`
+             )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( view->stringify( ) ).
 

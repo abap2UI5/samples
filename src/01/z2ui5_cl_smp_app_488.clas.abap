@@ -75,47 +75,56 @@ CLASS z2ui5_cl_smp_app_488 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Navigation - Return Data and Events to the Caller`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Navigation - Return Data and Events to the Caller`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Calls a second app that returns via nav_app_leave with an event and a data ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Calls a second app that returns via nav_app_leave with an event and a data ` &&
                    `payload (r_data). On return this app reads both from client->get( ) in its ` &&
                    `check_on_navigated( ) branch and shows them below.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(form) = page->grid( `L6 M12 S12`
-        )->content( `layout`
-        )->simple_form(
-            title    = `Result returned by the called app`
-            editable = abap_true
-        )->content( `form` ).
+    DATA(form) = page->ele( n = `Grid` ns = `layout`
+        )->a( n = `defaultSpan` v = `L6 M12 S12` )->ele( n = `content` ns = `layout` )->ele( n = `SimpleForm` ns = `form`
+            )->a( n = `title`    v = `Result returned by the called app`
+            )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` ).
 
-    form->label( `Open the input app` ).
-    form->button(
-        text  = `call app (nav_app_call)`
-        type  = `Emphasized`
-        press = client->_event( `CALL_APP` ) ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Open the input app` ).
+    form->tag( `Button`
+        )->a( n = `press` v = client->_event( `CALL_APP` )
+        )->a( n = `text`  v = `call app (nav_app_call)`
+        )->a( n = `type`  v = `Emphasized` ).
 
-    form->label( `Returned event` ).
-    form->input(
-        value   = client->_bind( returned_event )
-        enabled = abap_false ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Returned event` ).
+    form->tag( `Input`
+        )->a( n = `enabled` b = abap_false
+        )->a( n = `value`   v = client->_bind( returned_event ) ).
 
-    form->label( `Returned product` ).
-    form->input(
-        value   = client->_bind( s_result-product )
-        enabled = abap_false ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Returned product` ).
+    form->tag( `Input`
+        )->a( n = `enabled` b = abap_false
+        )->a( n = `value`   v = client->_bind( s_result-product ) ).
 
-    form->label( `Returned quantity` ).
-    form->input(
-        value   = client->_bind( s_result-quantity )
-        enabled = abap_false ).
+    form->tag( `Label`
+        )->a( n = `text` v = `Returned quantity` ).
+    form->tag( `Input`
+        )->a( n = `enabled` b = abap_false
+        )->a( n = `value`   v = client->_bind( s_result-quantity ) ).
 
     client->view_display( view->stringify( ) ).
 

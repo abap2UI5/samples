@@ -55,25 +55,30 @@ CLASS z2ui5_cl_smp_app_460 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Tree - Nested ABAP Table in a sap.m.Tree`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Tree - Nested ABAP Table in a sap.m.Tree`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A nested ABAP table (three levels of NODES) serializes into nested JSON arrays; ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A nested ABAP table (three levels of NODES) serializes into nested JSON arrays; ` &&
                    `sap.m.Tree binds them directly - no flattening, no extra code.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->tree( id         = `tree1`
-                headertext = `Files`
-                items      = client->_bind( t_nodes )
-        )->standard_tree_item( title = `{TEXT}` ).
+    page->ele( `Tree`
+        )->a( n = `id`         v = `tree1`
+        )->a( n = `items`      v = client->_bind( t_nodes )
+        )->a( n = `headerText` v = `Files` )->tag( `StandardTreeItem`
+            )->a( n = `title` v = `{TEXT}` ).
 
     client->view_display( view->stringify( ) ).
 

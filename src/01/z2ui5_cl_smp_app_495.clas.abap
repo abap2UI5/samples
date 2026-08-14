@@ -62,40 +62,42 @@ CLASS z2ui5_cl_smp_app_495 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Basics III - Lifecycle: Init, Event, Navigated`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Basics III - Lifecycle: Init, Event, Navigated`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `main( ) runs on every roundtrip - the three checks tell it what the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `main( ) runs on every roundtrip - the three checks tell it what the ` &&
                    `roundtrip is about. The list logs each call, and it survives them all: ` &&
                    `every public attribute is serialized between the roundtrips, so the app ` &&
                    `keeps its state without a database. Press Log - only the model is pushed, ` &&
                    `the view is not rebuilt. Call the sub-app and come back with its back ` &&
                    `button - that is the roundtrip check_on_navigated( ) answers.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->hbox( class = `sapUiSmallMargin`
-        )->button(
-            text  = `Log an Event`
-            press = client->_event( `LOG` )
-        )->button(
-            text  = `Call a Sub-App`
-            press = client->_event( `CALL` )
-            class = `sapUiTinyMarginBegin` ).
+    page->ele( `HBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `LOG` )
+            )->a( n = `text`  v = `Log an Event` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CALL` )
+            )->a( n = `text`  v = `Call a Sub-App`
+            )->a( n = `class` v = `sapUiTinyMarginBegin` ).
 
-    page->list(
-        headertext = `Calls of main( )`
-        items      = client->_bind( t_log )
-        class      = `sapUiSmallMargin`
-        )->standard_list_item(
-            title       = `{CHECK}`
-            description = `call {NO}` ).
+    page->ele( `List`
+        )->a( n = `headerText` v = `Calls of main( )`
+        )->a( n = `items`      v = client->_bind( t_log )
+        )->a( n = `class`      v = `sapUiSmallMargin` )->tag( `StandardListItem`
+            )->a( n = `title`       v = `{CHECK}`
+            )->a( n = `description` v = `call {NO}` ).
 
     client->view_display( view->stringify( ) ).
 

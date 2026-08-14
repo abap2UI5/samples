@@ -41,18 +41,26 @@ CLASS z2ui5_cl_smp_app_332 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
-                                                                navbuttonpress = client->_event_nav_app_leave( )
-                                                                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `RTTI IV`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->button( text  = `GO`
-                  press = client->_event( `GO` )
-                  type  = `Success` ).
+    page->tag( `Button`
+        )->a( n = `press` v = client->_event( `GO` )
+        )->a( n = `text`  v = `GO`
+        )->a( n = `type`  v = `Success` ).
 
-    DATA(form) = page->simple_form( editable        = abap_true
-                                    layout          = `ResponsiveGridLayout`
-                                    adjustlabelspan = abap_true
-                              )->content( `form` ).
+    DATA(form) = page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `layout`          v = `ResponsiveGridLayout`
+        )->a( n = `adjustLabelSpan` b = abap_true
+        )->a( n = `editable`        b = abap_true )->ele( n = `content` ns = `form` ).
 
     DATA(index) = 0.
 
@@ -68,14 +76,16 @@ CLASS z2ui5_cl_smp_app_332 IMPLEMENTATION.
         RETURN.
       ENDIF.
 
-      DATA(line) = form->label( wrapping = abap_false
-                                text     = layout->name ).
+      DATA(line) = form->tag( `Label`
+          )->a( n = `text`     v = layout->name
+          )->a( n = `wrapping` b = abap_false ).
 
-      line->input( value   = client->_bind( <value> )
-                   visible = client->_bind( val       = layout->visible
+      line->tag( `Input`
+          )->a( n = `enabled` b = abap_false
+          )->a( n = `visible` v = client->_bind( val       = layout->visible
                                             tab       = mo_table_obj->ms_data-t_layout
                                             tab_index = index )
-                   enabled = abap_false ).
+          )->a( n = `value`   v = client->_bind( <value> ) ).
     ENDLOOP.
 
     client->view_display( page->stringify( ) ).

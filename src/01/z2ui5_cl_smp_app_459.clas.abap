@@ -79,51 +79,51 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Table - Drag and Drop Rows`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Table - Drag and Drop Rows`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Drag a row and drop it between two others: the dnd:DragDropInfo drop event ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Drag a row and drop it between two others: the dnd:DragDropInfo drop event ` &&
                    `sends the dragged/drop indexes and the drop position to the backend, ABAP ` &&
                    `reorders the table and the refreshed model updates the list.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->table( id    = `reorderTable`
-                             items = client->_bind( t_products ) ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_products )
+        )->a( n = `id`    v = `reorderTable` ).
 
     " dragDropConfig is a plain sap.m aggregation here (ns = ``); the
     " DragDropInfo goes through _generic because the typed builder method
     " has no dropPosition parameter
-    tab->drag_drop_config( ``
-        )->_generic(
-            name   = `DragDropInfo`
-            ns     = `dnd`
-            t_prop = VALUE #( ( n = `sourceAggregation` v = `items` )
-                              ( n = `targetAggregation` v = `items` )
-                              ( n = `dropPosition`      v = `Between` )
-                              ( n = `drop`              v = client->_event(
+    tab->ele( `dragDropConfig` )->ele( n = `DragDropInfo` ns = `dnd`
+            )->a( n = `sourceAggregation` v = `items`
+            )->a( n = `targetAggregation` v = `items`
+            )->a( n = `dropPosition`      v = `Between`
+            )->a( n = `drop`              v = client->_event(
                                   val   = `REORDER`
                                   t_arg = VALUE #(
                                       ( `${$parameters>/draggedControl/oParent}.indexOfItem(${$parameters>/draggedControl})` )
                                       ( `${$parameters>/droppedControl/oParent}.indexOfItem(${$parameters>/droppedControl})` )
-                                      ( `${$parameters>/dropPosition}` ) ) ) ) ) ).
+                                      ( `${$parameters>/dropPosition}` ) ) ) ).
 
-    tab->columns(
-        )->column( )->text( `Product` )->get_parent(
-        )->column( )->text( `Category` )->get_parent( ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Product` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Category` )->end( ).
 
-    tab->items(
-        )->column_list_item(
-            )->cells(
-                )->text( `{NAME}`
-                )->text( `{CATEGORY}` ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+                    )->a( n = `text` v = `{NAME}` )->tag( `Text`
+                    )->a( n = `text` v = `{CATEGORY}` ).
 
     client->view_display( view->stringify( ) ).
 

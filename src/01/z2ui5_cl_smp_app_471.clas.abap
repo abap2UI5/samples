@@ -105,48 +105,49 @@ CLASS z2ui5_cl_smp_app_471 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Event - Keyboard Shortcuts, Ctrl+S`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Event - Keyboard Shortcuts, Ctrl+S`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `Ctrl+S and Ctrl+D fire the backend events SAVE and DELETE - the same events the ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `Ctrl+S and Ctrl+D fire the backend events SAVE and DELETE - the same events the ` &&
                    `buttons below send, but from the keyboard and without a control. The binding is ` &&
                    `pure data (cs_event-keyboard_shortcut with the combination and the event name), ` &&
                    `the browser default for the combination is suppressed.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->hbox( class = `sapUiSmallMargin`
-        )->button(
-            text  = COND #( WHEN registered = abap_true
+    page->ele( `HBox`
+        )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `TOGGLE_REGISTRATION` )
+            )->a( n = `text`  v = COND #( WHEN registered = abap_true
                             THEN `Unregister the shortcuts`
                             ELSE `Register the shortcuts` )
-            icon  = `sap-icon://keyboard-and-mouse`
-            press = client->_event( `TOGGLE_REGISTRATION` )
-        )->button(
-            text  = `Save (Ctrl+S)`
-            type  = `Emphasized`
-            class = `sapUiTinyMarginBegin`
-            press = client->_event( `SAVE` )
-        )->button(
-            text  = `Delete (Ctrl+D)`
-            class = `sapUiTinyMarginBegin`
-            press = client->_event( `DELETE` )
-        )->button(
-            text  = `Clear log`
-            class = `sapUiTinyMarginBegin`
-            press = client->_event( `CLEAR` ) ).
+            )->a( n = `icon`  v = `sap-icon://keyboard-and-mouse` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `SAVE` )
+            )->a( n = `text`  v = `Save (Ctrl+S)`
+            )->a( n = `type`  v = `Emphasized`
+            )->a( n = `class` v = `sapUiTinyMarginBegin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `DELETE` )
+            )->a( n = `text`  v = `Delete (Ctrl+D)`
+            )->a( n = `class` v = `sapUiTinyMarginBegin` )->tag( `Button`
+            )->a( n = `press` v = client->_event( `CLEAR` )
+            )->a( n = `text`  v = `Clear log`
+            )->a( n = `class` v = `sapUiTinyMarginBegin` ).
 
-    page->list(
-        headertext = `Triggered events`
-        items      = client->_bind( t_log )
-        )->standard_list_item( title = `{ENTRY}` ).
+    page->ele( `List`
+        )->a( n = `headerText` v = `Triggered events`
+        )->a( n = `items`      v = client->_bind( t_log ) )->tag( `StandardListItem`
+            )->a( n = `title` v = `{ENTRY}` ).
 
     client->view_display( view->stringify( ) ).
 

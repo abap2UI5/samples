@@ -86,80 +86,65 @@ CLASS z2ui5_cl_smp_app_006 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            title          = `abap2UI5 - Table - Large Table with Growing and ScrollContainer`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Table - Large Table with Growing and ScrollContainer`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `A large table (10,000 rows) is rendered inside a ScrollContainer using growing / ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `A large table (10,000 rows) is rendered inside a ScrollContainer using growing / ` &&
                    `scroll-to-load, with a sticky header toolbar offering sort buttons and a segmented button.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    DATA(tab) = page->scroll_container(
-        height   = `70%`
-        vertical = abap_true
-        )->table(
-            growing             = abap_true
-            growingthreshold    = `20`
-            growingscrolltoload = abap_true
-            items               = client->_bind( t_tab )
-            sticky              = `ColumnHeaders,HeaderToolbar` ).
+    DATA(tab) = page->ele( `ScrollContainer`
+        )->a( n = `height`   v = `70%`
+        )->a( n = `vertical` b = abap_true )->ele( `Table`
+            )->a( n = `items`               v = client->_bind( t_tab )
+            )->a( n = `growing`             b = abap_true
+            )->a( n = `growingThreshold`    v = `20`
+            )->a( n = `growingScrollToLoad` b = abap_true
+            )->a( n = `sticky`              v = `ColumnHeaders,HeaderToolbar` ).
 
-    tab->header_toolbar(
-        )->toolbar(
-            )->title( `title of the table`
-            )->button(
-                text  = `left side button`
-                icon  = `sap-icon://account`
-                press = client->_event( `BUTTON_SORT` )
-            )->segmented_button( key
-                )->items(
-                    )->segmented_button_item(
-                        key  = `BLUE`
-                        icon = `sap-icon://accept`
-                        text = `blue`
-                    )->segmented_button_item(
-                        key  = `GREEN`
-                        icon = `sap-icon://add-favorite`
-                        text = `green`
-            )->get_parent( )->get_parent(
-            )->toolbar_spacer(
-            )->button(
-                icon  = `sap-icon://sort-descending`
-                press = client->_event( `SORT_DESCENDING` )
-            )->button(
-                icon  = `sap-icon://sort-ascending`
-                press = client->_event( `SORT_ASCENDING` ) ).
+    tab->ele( `headerToolbar` )->ele( `Toolbar` )->tag( `Title`
+                )->a( n = `text` v = `title of the table` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `BUTTON_SORT` )
+                )->a( n = `text`  v = `left side button`
+                )->a( n = `icon`  v = `sap-icon://account` )->ele( `SegmentedButton`
+                )->a( n = `selectedKey` v = key )->ele( `items` )->tag( `SegmentedButtonItem`
+                        )->a( n = `icon` v = `sap-icon://accept`
+                        )->a( n = `key`  v = `BLUE`
+                        )->a( n = `text` v = `blue` )->tag( `SegmentedButtonItem`
+                        )->a( n = `icon` v = `sap-icon://add-favorite`
+                        )->a( n = `key`  v = `GREEN`
+                        )->a( n = `text` v = `green` )->end( )->end( )->tag( `ToolbarSpacer` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `SORT_DESCENDING` )
+                )->a( n = `icon`  v = `sap-icon://sort-descending` )->tag( `Button`
+                )->a( n = `press` v = client->_event( `SORT_ASCENDING` )
+                )->a( n = `icon`  v = `sap-icon://sort-ascending` ).
 
-    tab->columns(
-        )->column(
-            )->text( `Color` )->get_parent(
-        )->column(
-            )->text( `Info` )->get_parent(
-        )->column(
-            )->text( `Description` )->get_parent(
-        )->column(
-            )->text( `Checkbox` )->get_parent(
-        )->column(
-            )->text( `Counter` )->get_parent(
-        )->column(
-            )->text( `Radial Micro Chart` ).
+    tab->ele( `columns` )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Description` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Checkbox` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Counter` )->end( )->ele( `Column` )->tag( `Text`
+                )->a( n = `text` v = `Radial Micro Chart` ).
 
-    tab->items(
-        )->column_list_item(
-            )->cells(
-                )->text( `{VALUE}`
-                )->text( `{INFO}`
-                )->text( `{DESCR}`
-                )->checkbox(
-                    selected = `{CHECKBOX}`
-                    enabled  = abap_false
-                )->text( `{COUNT}` ).
+    tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+                    )->a( n = `text` v = `{VALUE}` )->tag( `Text`
+                    )->a( n = `text` v = `{INFO}` )->tag( `Text`
+                    )->a( n = `text` v = `{DESCR}` )->tag( `CheckBox`
+                    )->a( n = `selected` v = `{CHECKBOX}`
+                    )->a( n = `enabled`  b = abap_false )->tag( `Text`
+                    )->a( n = `text` v = `{COUNT}` ).
 
     client->view_display( view->stringify( ) ).
 

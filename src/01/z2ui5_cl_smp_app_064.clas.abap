@@ -112,41 +112,49 @@ CLASS z2ui5_cl_smp_app_064 IMPLEMENTATION.
   METHOD on_init.
 
     DATA temp1 TYPE z2ui5_if_types=>ty_t_name_value.
-    DATA view TYPE REF TO z2ui5_cl_xml_view.
-    DATA page1 TYPE REF TO z2ui5_cl_xml_view.
+    DATA view TYPE REF TO z2ui5_cl_ui5_view_builder.
+    DATA page1 TYPE REF TO z2ui5_cl_ui5_view_builder.
     DATA temp5 TYPE abap_bool.
-    DATA layout TYPE REF TO z2ui5_cl_xml_view.
+    DATA layout TYPE REF TO z2ui5_cl_ui5_view_builder.
     temp1 = VALUE #( ).
 
     mv_check_enabled = abap_true.
-    view             = z2ui5_cl_xml_view=>factory( ).
+    view             = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
 
     temp5          = client->check_app_prev_stack( ).
-    page1          = view->shell( )->page( id = `page_main`
-    title          = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
-    navbuttonpress = client->_event_nav_app_leave( )
-    shownavbutton  = temp5
-    class          = `sapUiContentPadding` ).
+    page1          = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - Timer - Progress Indicator during a Backend Call`
+        )->a( n = `showNavButton`  b = temp5
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+        )->a( n = `class`          v = `sapUiContentPadding`
+        )->a( n = `id`             v = `page_main` ).
 
-    page1->message_strip(
-        text     = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
+    page1->tag( `MessageStrip`
+        )->a( n = `text`     v = `A ProgressIndicator driven from the backend: pressing Load runs a WAIT-delayed server ` &&
                    `step and re-arms a client timer (follow_up_action), advancing the bar in 25% steps until it completes.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    layout = page1->vertical_layout( class = `sapuicontentpadding`
-    width  = `100%` ).
-    layout->vbox( )->progress_indicator(
-      percentvalue = client->_bind( mv_percent )
-      displayvalue = client->_bind( screen-display_value )
-      showvalue    = abap_true
-      state        = `Success` ).
+    layout = page1->ele( n = `VerticalLayout` ns = `layout`
+        )->a( n = `class` v = `sapuicontentpadding`
+        )->a( n = `width` v = `100%` ).
+    layout->ele( `VBox` )->tag( `ProgressIndicator`
+        )->a( n = `percentValue` v = client->_bind( mv_percent )
+        )->a( n = `displayValue` v = client->_bind( screen-display_value )
+        )->a( n = `showValue`    b = abap_true
+        )->a( n = `state`        v = `Success` ).
 
-    layout->button(
-        text    = `Load`
-        press   = client->_event( `LOAD` )
-        enabled = client->_bind( mv_check_enabled ) ).
+    layout->tag( `Button`
+        )->a( n = `press`   v = client->_event( `LOAD` )
+        )->a( n = `text`    v = `Load`
+        )->a( n = `enabled` v = client->_bind( mv_check_enabled ) ).
 
     client->view_display( view->stringify( ) ).
 

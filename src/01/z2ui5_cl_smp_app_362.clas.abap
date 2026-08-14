@@ -110,46 +110,51 @@ CLASS z2ui5_cl_smp_app_362 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-            id             = `id_page`
-            title          = `abap2UI5 - Scroll - Scroll to a Pixel Position`
-            navbuttonpress = client->_event_nav_app_leave( )
-            shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Scroll - Scroll to a Pixel Position`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `id`             v = `id_page` ).
 
-    page->message_strip(
-        text = `Toolbar buttons scroll the page to a specific pixel position. Refresh keeps the current position by reading client->get( )-s_scroll-main and pushing it back via SCROLL_TO.`
-        type = `Information` ).
+    page->tag( `MessageStrip`
+        )->a( n = `text` v = `Toolbar buttons scroll the page to a specific pixel position. Refresh keeps the current position by reading client->get( )-s_scroll-main and pushing it back via SCROLL_TO.`
+        )->a( n = `type` v = `Information` ).
 
-    DATA(table) = page->table( sticky     = `ColumnHeaders,HeaderToolbar`
-                               headertext = `100 entries`
-                               items      = client->_bind( t_tab ) ).
+    DATA(table) = page->ele( `Table`
+        )->a( n = `items`      v = client->_bind( t_tab )
+        )->a( n = `headerText` v = `100 entries`
+        )->a( n = `sticky`     v = `ColumnHeaders,HeaderToolbar` ).
 
-    table->columns(
-        )->column( )->text( `Title` )->get_parent(
-        )->column( )->text( `Color` )->get_parent(
-        )->column( )->text( `Info` )->get_parent(
-        )->column( )->text( `Description` ).
+    table->ele( `columns` )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Color` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Info` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Description` ).
 
-    table->items( )->column_list_item( )->cells(
-       )->text( `{TITLE}`
-       )->text( `{VALUE}`
-       )->text( `{INFO}`
-       )->text( `{DESCR}` ).
+    table->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` )->tag( `Text`
+           )->a( n = `text` v = `{TITLE}` )->tag( `Text`
+           )->a( n = `text` v = `{VALUE}` )->tag( `Text`
+           )->a( n = `text` v = `{INFO}` )->tag( `Text`
+           )->a( n = `text` v = `{DESCR}` ).
 
-    page->footer( )->overflow_toolbar(
-         )->button( text  = `Top (smooth)`
-                    press = client->_event( `SCROLL_TOP` )
-         )->button( text  = `Middle (smooth)`
-                    press = client->_event( `SCROLL_MIDDLE` )
-         )->button( text  = `Bottom (smooth)`
-                    press = client->_event( `SCROLL_BOTTOM` )
-         )->button( text  = `Middle (jump)`
-                    press = client->_event( `SCROLL_JUMP` )
-         )->button( text  = `Refresh (keep position)`
-                    press = client->_event( `REFRESH` )
-                    type  = `Emphasized` ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `SCROLL_TOP` )
+             )->a( n = `text`  v = `Top (smooth)` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `SCROLL_MIDDLE` )
+             )->a( n = `text`  v = `Middle (smooth)` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `SCROLL_BOTTOM` )
+             )->a( n = `text`  v = `Bottom (smooth)` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `SCROLL_JUMP` )
+             )->a( n = `text`  v = `Middle (jump)` )->tag( `Button`
+             )->a( n = `press` v = client->_event( `REFRESH` )
+             )->a( n = `text`  v = `Refresh (keep position)`
+             )->a( n = `type`  v = `Emphasized` ).
 
     client->view_display( view->stringify( ) ).
 

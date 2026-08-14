@@ -38,31 +38,44 @@ CLASS z2ui5_cl_smp_app_166 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = `abap2UI5 - Binding - Structure Fields and INCLUDEs`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Structure Fields and INCLUDEs`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This sample demonstrates structure-level binding: each input is bound to a ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample demonstrates structure-level binding: each input is bound to a ` &&
                    `field of a flat structure, including fields pulled in via INCLUDE.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
-    page->input( client->_bind( val = ms_struc-title ) ).
-    page->input( client->_bind( val = ms_struc-value ) ).
-    page->input( client->_bind( val = ms_struc-value2 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc-title ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc-value ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc-value2 ) ).
 
-    page->input( client->_bind( val = ms_struc2-title ) ).
-    page->input( client->_bind( val = ms_struc2-value ) ).
-    page->input( client->_bind( val = ms_struc2-value2 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-title ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-value ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-value2 ) ).
 
-    page->input( client->_bind( val = ms_struc2-incl_title ) ).
-    page->input( client->_bind( val = ms_struc2-incl_value ) ).
-    page->input( client->_bind( val = ms_struc2-incl_value2 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_title ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_value ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = ms_struc2-incl_value2 ) ).
 
     client->view_display( view->stringify( ) ).
 

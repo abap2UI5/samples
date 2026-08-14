@@ -72,50 +72,52 @@ CLASS z2ui5_cl_smp_app_074 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
 
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - File - Upload to the Backend`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `abap2UI5 - File - Upload to the Backend`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `The file_uploader custom control returns the picked file as a base64 data URL; the backend ` &&
                    `strips the prefix, decodes the payload and shows the file content in a message box.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     IF table IS NOT INITIAL.
 
       FIELD-SYMBOLS <table> TYPE table.
       ASSIGN table->* TO <table>.
 
-      DATA(tab) = page->table( client->_bind( <table> )
-          )->header_toolbar(
-              )->overflow_toolbar(
-                  )->title( `CSV Content`
-                  )->toolbar_spacer(
-          )->get_parent( )->get_parent( ).
+      DATA(tab) = page->ele( `Table`
+          )->a( n = `items` v = client->_bind( <table> ) )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                      )->a( n = `text` v = `CSV Content` )->tag( `ToolbarSpacer` )->end( )->end( ).
 
       DATA(fields)  = z2ui5_cl_smp_context=>rtti_get_t_attri_by_any( <table> ).
-      DATA(columns) = tab->columns( ).
-      DATA(cells)   = tab->items( )->column_list_item( )->cells( ).
+      DATA(columns) = tab->ele( `columns` ).
+      DATA(cells)   = tab->ele( `items` )->ele( `ColumnListItem` )->ele( `cells` ).
 
       LOOP AT fields REFERENCE INTO DATA(field).
-        columns->column( )->text( field->name ).
-        cells->text( |\{{ field->name }\}| ).
+        columns->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = field->name ).
+        cells->tag( `Text`
+            )->a( n = `text` v = |\{{ field->name }\}| ).
       ENDLOOP.
 
     ENDIF.
 
-    page->footer(
-        )->overflow_toolbar(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind( file )
-                path        = client->_bind( filepath )
-                placeholder = `filepath here...`
-                upload      = client->_event( `UPLOAD` ) ).
+    page->ele( `footer` )->ele( `OverflowToolbar` )->tag( n = `FileUploader` ns = `z2ui5`
+                )->a( n = `placeholder` v = `filepath here...`
+                )->a( n = `upload`      v = client->_event( `UPLOAD` )
+                )->a( n = `path`        v = client->_bind( filepath )
+                )->a( n = `value`       v = client->_bind( file ) ).
 
     client->view_display( view->stringify( ) ).
 

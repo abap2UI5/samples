@@ -24,45 +24,50 @@ CLASS z2ui5_cl_smp_app_144 IMPLEMENTATION.
 
   METHOD set_view.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell(
-        )->page(
-                title          = `abap2UI5 - Binding - Single Table Cell (tab_index)`
-                navbuttonpress = client->_event_nav_app_leave( )
-                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+    DATA(page) = view->ele( `Shell` )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Binding - Single Table Cell (tab_index)`
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
-    page->message_strip(
-        text     = `This sample demonstrates cell-level binding: each input is bound to one ` &&
+    page->tag( `MessageStrip`
+        )->a( n = `text`     v = `This sample demonstrates cell-level binding: each input is bound to one ` &&
                    `cell of an internal table via tab_index, so edits target exactly that row and field.`
-        type     = `Information`
-        showicon = abap_true
-        class    = `sapUiSmallMargin` ).
+        )->a( n = `type`     v = `Information`
+        )->a( n = `showIcon` b = abap_true
+        )->a( n = `class`    v = `sapUiSmallMargin` ).
 
     LOOP AT t_tab REFERENCE INTO DATA(lr_row).
       DATA(lv_tabix) = sy-tabix.
-      page->input( client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
-      page->input( client->_bind( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
+      page->tag( `Input`
+          )->a( n = `value` v = client->_bind( val = lr_row->title tab = t_tab tab_index = lv_tabix ) ).
+      page->tag( `Input`
+          )->a( n = `value` v = client->_bind( val = lr_row->value tab = t_tab tab_index = lv_tabix ) ).
     ENDLOOP.
 
-    DATA(tab) = page->table(
-            items = client->_bind( t_tab )
-            mode  = `MultiSelect`
-        )->header_toolbar(
-            )->overflow_toolbar(
-                )->title( `title of the table`
-        )->get_parent( )->get_parent(
-      )->columns(
-        )->column( )->text( `Title` )->get_parent(
-        )->column( )->text( `Value` )->get_parent( )->get_parent(
-      )->items( )->column_list_item( selected = `{SELKZ}`
-      )->cells(
-          )->input( `{TITLE}`
-          )->input( `{VALUE}` ).
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_tab )
+        )->a( n = `mode`  v = `MultiSelect` )->ele( `headerToolbar` )->ele( `OverflowToolbar` )->tag( `Title`
+                    )->a( n = `text` v = `title of the table` )->end( )->end( )->ele( `columns` )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Title` )->end( )->ele( `Column` )->tag( `Text`
+            )->a( n = `text` v = `Value` )->end( )->end( )->ele( `items` )->ele( `ColumnListItem`
+          )->a( n = `selected` v = `{SELKZ}` )->ele( `cells` )->tag( `Input`
+              )->a( n = `value` v = `{TITLE}` )->tag( `Input`
+              )->a( n = `value` v = `{VALUE}` ).
 
-    page->input( client->_bind( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
-    page->input( client->_bind( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
-    page->input( client->_bind( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
-    page->input( client->_bind( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = t_tab[ 1 ]-title tab = t_tab tab_index = 1 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = t_tab[ 1 ]-value tab = t_tab tab_index = 1 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = t_tab[ 2 ]-title tab = t_tab tab_index = 2 ) ).
+    page->tag( `Input`
+        )->a( n = `value` v = client->_bind( val = t_tab[ 2 ]-value tab = t_tab tab_index = 2 ) ).
 
     client->view_display( view->stringify( ) ).
 

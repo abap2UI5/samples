@@ -39,15 +39,20 @@ CLASS z2ui5_cl_smp_app_340 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+        )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    DATA(simple_form) = popup->dialog( title        = `Test`
-                                       contentwidth = `60%`
-                                       afterclose   = client->_event( `POPUP_CLOSE` )
-          )->simple_form( title    = ``
-                          layout   = `ResponsiveGridLayout`
-                          editable = abap_true
-          )->content( `form` )->label( `Test` )->input( `TEST` ).
+    DATA(simple_form) = popup->ele( `Dialog`
+        )->a( n = `title`        v = `Test`
+        )->a( n = `contentWidth` v = `60%`
+        )->a( n = `afterClose`   v = client->_event( `POPUP_CLOSE` ) )->ele( n = `SimpleForm` ns = `form`
+              )->a( n = `title`    v = ``
+              )->a( n = `layout`   v = `ResponsiveGridLayout`
+              )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
+              )->a( n = `text` v = `Test` )->tag( `Input`
+              )->a( n = `value` v = `TEST` ).
 
     client->popup_display( popup->stringify( ) ).
 

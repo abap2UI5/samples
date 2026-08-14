@@ -80,14 +80,21 @@ CLASS z2ui5_cl_smp_app_343 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( title          = `RTTI IV`
-                                                                navbuttonpress = client->_event_nav_app_leave( )
-                                                                shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `View` ns = `mvc`
+        )->a( n = `displayBlock` v = `true`
+        )->a( n = `height`       v = `100%`
+        )->a( n = `xmlns`        v = `sap.m`
+        )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core`   v = `sap.ui.core` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `title`          v = `RTTI IV`
+        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+        )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     TRY.
 
-        DATA(table) = page->table( width   = `auto`
-                                     items = client->_bind( mt_data1 ) ).
+        DATA(table) = page->ele( `Table`
+            )->a( n = `items` v = client->_bind( mt_data1 )
+            )->a( n = `width` v = `auto` ).
 
         client->message_box_display( `error - reference processed in binding without error` ).
       CATCH cx_root.
