@@ -115,19 +115,20 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         anchor TYPE string
         href   TYPE string
         name   TYPE string.
+    "! @parameter name      | the entry's name - the tooltip opens with it and the
+    "!                        popover of an uninstalled repository is titled after it
+    "! @parameter class_old | the overview app's PREVIOUS name, tried when CLASS is
+    "!                        not on the system: a repository that renamed its
+    "!                        overview app is installed under both names in the wild
+    "!                        for a while
     METHODS header_button
       IMPORTING
         toolbar   TYPE REF TO z2ui5_cl_xml_view
         icon      TYPE string
-        "! the entry's name - the tooltip opens with it and the popover of an
-        "! uninstalled repository is titled after it
         name      TYPE string
         descr     TYPE string
         href      TYPE string
         class     TYPE string OPTIONAL
-        "! the overview app's PREVIOUS name, tried when CLASS is not on the
-        "! system: a repository that renamed its overview app is installed
-        "! under both names in the wild for a while
         class_old TYPE string OPTIONAL
         here      TYPE abap_bool DEFAULT abap_false.
     "! the press wire of a button whose target is EXTERNAL: a Button carries no
