@@ -24,6 +24,15 @@
   // Refresh it with `npx abap2ui5lint --update-baseline` after fixing things.
   "baseline": "abap2ui5lint-baseline.json",
 
+  // The README badge. Every run rewrites this shields.io endpoint file with
+  // what the corpus currently is - "148 apps - UI5 1.71 - clean" - and
+  // check-abap2UI5 commits it onto the pull request branch, so the badge on
+  // main updates when the pull request that changed the corpus merges. It
+  // says something the workflow badge next to it cannot: a green workflow
+  // means "the job exited zero", which was also true while the linter found
+  // nothing checkable here at all (AGENTS.md 6).
+  "badge": ".github/badges/abap2ui5lint.json",
+
   // A render error carries no line and its message text is unstable, so it
   // cannot be baselined — naming the file is the only instrument. Two groups,
   // and they are NOT the same thing:

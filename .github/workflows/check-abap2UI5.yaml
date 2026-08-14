@@ -8,12 +8,24 @@ name: check-abap2UI5
 # between the ABAP class and the view it builds, which no UI5 tooling sees.
 # Configuration lives in abap2ui5lint.jsonc; the linter is pinned as a
 # devDependency so CI and `npm run check:abap2ui5` run the same version.
+#
+# The run reports what it LOOKED at, not only what it found: the gates log
+# every file into a collapsed group while they run, and the job closes with
+# the run summary (how many classes, views, controls, bindings and icons were
+# judged, what the baseline swallowed, how long each gate took). On a corpus
+# whose findings are all baselined that summary is the only thing standing
+# between "148 classes were checked" and "nothing was checkable" - a
+# distinction this repository has been on the wrong side of before
+# (AGENTS.md 6). It also goes into the job summary of the run, and into the
+# README badge below.
 
 on:
   pull_request:
+  push:
+    branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: check-abap2UI5-${{ github.ref }}
@@ -24,7 +36,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-    - uses: actions/checkout@v7
+    - name: Checkout Repository
+      uses: actions/checkout@v7
+      with:
+        # check out the branch, not the merge commit, so the badge can go back
+        ref: ${{ github.event.pull_request.head.ref || github.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
     - uses: actions/setup-node@v6
       with:
         node-version: '22'
@@ -33,3 +50,46 @@ jobs:
     # the render gate drives a headless browser
     - run: npx playwright install chromium --with-deps
     - run: npx abap2ui5lint
+
+    # The same corpus once more as markdown, into the job summary - findings
+    # and run summary on the run's own page, without expanding a log. A second
+    # pass, costing the property gate only (--no-render: whether the views
+    # load was decided by the step above), and --no-badge because a pass that
+    # skipped a gate must not overwrite the badge the real run wrote.
+    - name: Job summary
+      if: always()
+      run: npx abap2ui5lint --no-render --advisory --no-progress --no-badge --format markdown >> "$GITHUB_STEP_SUMMARY"
+
+    # abap2ui5lint.jsonc points "badge" at .github/badges/abap2ui5lint.json,
+    # so the step above already rewrote it with what the corpus now is. The
+    # default branch is protected and github-actions[bot] can never be added
+    # to a bypass list, so the badge is committed onto the PULL REQUEST branch
+    # - the pull request that changes the corpus is what changes the badge,
+    # and main picks it up when that pull request merges. Same mechanism as
+    # publish-overview-apps, including the fallback for refs that cannot be
+    # pushed to: there the stale badge is reported, never silently accepted.
+    # only after a green gate: a red pull request cannot merge, so its badge
+    # would never reach main anyway - and a badge commit on top of a failing
+    # run reads as if something had been fixed
+    - name: Publish the badge
+      if: success()
+      env:
+        # only a same-repository pull request can be pushed to with
+        # GITHUB_TOKEN; on main and from a fork the badge is only reported
+        PUSHABLE: ${{ github.event_name == 'pull_request'
+                      && github.event.pull_request.head.repo.full_name == github.repository }}
+      run: |
+        if git diff --quiet -- .github/badges; then
+          echo "The linter badge is up to date."
+          exit 0
+        fi
+        git diff -- .github/badges
+        if [ "$PUSHABLE" != "true" ]; then
+          echo "::warning::The linter badge is out of date and this ref cannot be pushed to. Run 'npm run check:abap2ui5' and commit .github/badges/abap2ui5lint.json."
+          exit 0
+        fi
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+        git commit -qm 'Refresh the abap2UI5-linter badge' -- .github/badges
+        git push
+        echo "Badge refreshed and pushed onto the pull request branch."
