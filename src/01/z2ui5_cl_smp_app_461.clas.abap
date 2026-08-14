@@ -108,7 +108,9 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc`
+        )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Tree - Drag and Drop Nodes`
@@ -116,7 +118,7 @@ CLASS z2ui5_cl_smp_app_461 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Drag a file onto another folder: the drop event ships the binding context ` &&
+        )->a( n = `text` v = `Drag a file onto another folder: the drop event ships the binding context ` &&
                    `paths of both tree items, ABAP moves the node inside the nested table and ` &&
                    `redraws the view - the z2ui5.cc.Tree companion keeps the expanded nodes open.`
         )->a( n = `type`     v = `Information`

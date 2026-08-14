@@ -107,7 +107,8 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
         )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
         )->a( n = `title`          v = `abap2UI5 - Browser - Local and Session Storage`
@@ -115,7 +116,7 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
         )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Reads and writes the browser's local or session storage. The ` &&
+        )->a( n = `text` v = `Reads and writes the browser's local or session storage. The ` &&
                    `value is a whole ABAP structure, not just a string: the write ` &&
                    `side sends it with the STORE_DATA frontend action, the invisible ` &&
                    `z2ui5:Storage control reads it back and reports it as JSON.`
@@ -126,22 +127,22 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
     page->ele( n = `SimpleForm` ns = `form`
         )->a( n = `title`    v = `Local/Session Storage`
         )->a( n = `editable` b = abap_true )->ele( n = `content` ns = `form` )->tag( `Label`
-                )->a( n = `text` v = `Type` )->ele( `Select`
+                )->a( n = `text`           v = `Type` )->ele( `Select`
                 )->a( n = `forceSelection` b = abap_true
                 )->a( n = `selectedKey`    v = client->_bind( s_storage-type )
                 )->a( n = `items`          v = client->_bind( t_types ) )->tag( n = `Item` ns = `core`
                     )->a( n = `key`  v = `{TYPE}`
                     )->a( n = `text` v = `{TYPE}` )->end( )->tag( `Label`
-                )->a( n = `text` v = `Prefix` )->tag( `Input`
+                )->a( n = `text`  v = `Prefix` )->tag( `Input`
                 )->a( n = `value` v = client->_bind( s_storage-prefix ) )->tag( `Label`
-                )->a( n = `text` v = `Key` )->tag( `Input`
+                )->a( n = `text`  v = `Key` )->tag( `Input`
                 )->a( n = `value` v = client->_bind( s_storage-key ) )->tag( `Label`
-                )->a( n = `text` v = `Value - Field 1` )->tag( `Input`
+                )->a( n = `text`  v = `Value - Field 1` )->tag( `Input`
                 )->a( n = `type`  v = `Number`
                 )->a( n = `value` v = client->_bind( s_storage-value-field1 ) )->tag( `Label`
-                )->a( n = `text` v = `Value - Field 2` )->tag( `Input`
+                )->a( n = `text`  v = `Value - Field 2` )->tag( `Input`
                 )->a( n = `value` v = client->_bind( s_storage-value-field2 ) )->tag( `Label`
-                )->a( n = `text` v = `` )->tag( `Button`
+                )->a( n = `text`  v = `` )->tag( `Button`
                 )->a( n = `press` v = client->follow_up_action(
                            val   = z2ui5_if_client=>cs_event-store_data
                            t_arg = VALUE #( ( |${ client->_bind( s_storage ) }| ) ) )
@@ -159,10 +160,10 @@ CLASS z2ui5_cl_smp_app_327 IMPLEMENTATION.
                                                     ( `${$parameters>/prefix}` )
                                                     ( `${$parameters>/key}` )
                                                     ( `${$parameters>/value}` ) ) )
-        )->a( n = `type`     v = client->_bind( s_storage-type )
-        )->a( n = `prefix`   v = client->_bind( s_storage-prefix )
-        )->a( n = `key`      v = client->_bind( s_storage-key )
-        )->a( n = `value`    v = client->_bind( s_stored_value ) ).
+        )->a( n = `type`   v = client->_bind( s_storage-type )
+        )->a( n = `prefix` v = client->_bind( s_storage-prefix )
+        )->a( n = `key`    v = client->_bind( s_storage-key )
+        )->a( n = `value`  v = client->_bind( s_stored_value ) ).
 
     client->view_display( view->stringify( ) ).
 

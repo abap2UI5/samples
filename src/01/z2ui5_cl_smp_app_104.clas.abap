@@ -77,7 +77,10 @@ CLASS z2ui5_cl_smp_app_104 IMPLEMENTATION.
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
         )->a( n = `xmlns:core`   v = `sap.ui.core`
         )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:layout` v = `sap.ui.layout` ).
+        )->a( n = `xmlns:layout` v = `sap.ui.layout`
+        " the sub-apps build into this shared root, so their prefixes are
+        " declared here - z2ui5_cl_smp_app_105 injects a form:SimpleForm
+        )->a( n = `xmlns:form`   v = `sap.ui.layout.form` ).
     DATA(page) = view_nested->ele( `Page`
         )->a( n = `title` v = `Nested View` ).
     grid_sub = page->ele( n = `Grid` ns = `layout`

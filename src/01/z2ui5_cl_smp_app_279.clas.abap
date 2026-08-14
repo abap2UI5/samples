@@ -41,13 +41,14 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
         )->a( n = `xmlns:core`   v = `sap.ui.core`
-        )->a( n = `xmlns:tnt`    v = `sap.tnt` )->ele( `Shell` )->ele( `Page`
+        )->a( n = `xmlns:tnt`    v = `sap.tnt`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` )->ele( `Shell` )->ele( `Page`
                        )->a( n = `title`          v = `abap2UI5 - Navigation - Data Loss Protection on Leaving`
                        )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
                        )->a( n = `navButtonPress` v = client->_event( `BACK` ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Unsaved input marks the page dirty via a custom control; navigating back then opens a confirmation ` &&
+        )->a( n = `text` v = `Unsaved input marks the page dirty via a custom control; navigating back then opens a confirmation ` &&
                    `popup instead of leaving and losing the data.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
@@ -129,7 +130,7 @@ CLASS z2ui5_cl_smp_app_279 IMPLEMENTATION.
         )->a( n = `title` v = `Warning`
         )->a( n = `icon`  v = `sap-icon://status-critical` )->ele( `VBox`
             )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Text`
-                )->a( n = `text` v = `Your entries will be lost when you leave this page.` )->end( )->ele( `buttons` )->tag( `Button`
+                )->a( n = `text`  v = `Your entries will be lost when you leave this page.` )->end( )->ele( `buttons` )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPUP_CANCEL` )
                 )->a( n = `text`  v = `Cancel` )->tag( `Button`
                 )->a( n = `press` v = client->_event( `POPUP_LEAVE` )

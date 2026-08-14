@@ -36,7 +36,8 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
           )->a( n = `height`       v = `100%`
           )->a( n = `xmlns`        v = `sap.m`
           )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+          )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
       view           = view->ele( `Shell` )->ele( `Page`
           )->a( n = `title`          v = `abap2UI5 - Control - MultiInput with Tokens`
@@ -45,7 +46,7 @@ CLASS z2ui5_cl_smp_app_078 IMPLEMENTATION.
           )->a( n = `id`             v = `page_main` ).
 
       view->tag( `MessageStrip`
-          )->a( n = `text`     v = `The multiinput_ext custom control extends a sap.m.MultiInput so that added and removed ` &&
+          )->a( n = `text` v = `The multiinput_ext custom control extends a sap.m.MultiInput so that added and removed ` &&
                      `tokens are reported back to ABAP, where the token table and the linked list are updated.`
           )->a( n = `type`     v = `Information`
           )->a( n = `showIcon` b = abap_true

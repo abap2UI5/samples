@@ -80,7 +80,8 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Tree - Editable Nodes with CustomTreeItem`
@@ -88,7 +89,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Each node is a CustomTreeItem holding an Input bound to the node text. ` &&
+        )->a( n = `text` v = `Each node is a CustomTreeItem holding an Input bound to the node text. ` &&
                    `Rename any node and press "Show model": the edits have already written back into ` &&
                    `the nested ABAP table. The expand state is preserved across the roundtrip.`
         )->a( n = `type`     v = `Information`

@@ -73,7 +73,8 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(cont) = view->ele( `Shell` ).
     DATA(page) = cont->ele( `Page`
@@ -82,7 +83,7 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
         )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Capture photos from the device camera custom control; pick the facing mode and camera, then select ` &&
+        )->a( n = `text` v = `Capture photos from the device camera custom control; pick the facing mode and camera, then select ` &&
                    `a captured picture from the list to display it in full resolution.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
@@ -90,23 +91,23 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
 
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-           )->a( n = `text`     v = `facingMode: `
-           )->a( n = `labelFor` v = `ComboFacingMode` )->ele( `ComboBox`
+           )->a( n = `text`        v = `facingMode: `
+           )->a( n = `labelFor`    v = `ComboFacingMode` )->ele( `ComboBox`
            )->a( n = `selectedKey` v = client->_bind( facing_mode )
            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = facing_modes
                     path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
-           )->a( n = `id`          v = `ComboFacingMode` )->tag( n = `Item` ns = `core`
+           )->a( n = `id`   v = `ComboFacingMode` )->tag( n = `Item` ns = `core`
            )->a( n = `key`  v = `{KEY}`
            )->a( n = `text` v = `{TEXT}` ).
 
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-           )->a( n = `text`     v = `device: `
-           )->a( n = `labelFor` v = `ComboDevice` )->ele( n = `CameraSelector` ns = `z2ui5`
+           )->a( n = `text`        v = `device: `
+           )->a( n = `labelFor`    v = `ComboDevice` )->ele( n = `CameraSelector` ns = `z2ui5`
            )->a( n = `selectedKey` v = client->_bind( device )
            )->a( n = `items`       v = |\{path:'{ client->_bind( val  = devices
            path        = abap_true ) }', sorter: \{ path: 'TEXT' \} \}|
-           )->a( n = `id`          v = `ComboDevice` )->tag( n = `Item` ns = `core`
+           )->a( n = `id`   v = `ComboDevice` )->tag( n = `Item` ns = `core`
            )->a( n = `key`  v = `{KEY}`
            )->a( n = `text` v = `{TEXT}` ).
 

@@ -79,8 +79,9 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
   METHOD popup_display.
 
     DATA(popup) = z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core`
-        )->a( n = `xmlns`      v = `sap.m`
-        )->a( n = `xmlns:core` v = `sap.ui.core` ).
+        )->a( n = `xmlns`       v = `sap.m`
+        )->a( n = `xmlns:core`  v = `sap.ui.core`
+        )->a( n = `xmlns:z2ui5` v = `z2ui5.cc` ).
     DATA(dialog) = popup->ele( `Dialog`
         )->a( n = `title` v = `abap2UI5 - Tree in a dialog` ).
 
@@ -121,7 +122,7 @@ CLASS z2ui5_cl_smp_app_462 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
+        )->a( n = `text` v = `The button opens a Dialog whose content is a sap.m.Tree over a nested ABAP ` &&
                    `table. Expand some nodes, close and reopen: the z2ui5.cc.Tree companion ` &&
                    `preserves the expand state across the roundtrips.`
         )->a( n = `type`     v = `Information`

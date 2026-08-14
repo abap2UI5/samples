@@ -62,7 +62,8 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Message - Message Model and MessageManager`
@@ -70,7 +71,7 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Both sources of the central message> model in one page: the Name messages ` &&
+        )->a( n = `text` v = `Both sources of the central message> model in one page: the Name messages ` &&
                    `are AUTHORED BY THE APP (pushed from an ABAP table by the invisible ` &&
                    `z2ui5.cc.MessageManager companion - the Error targets the Name field and ` &&
                    `colours it), while typing letters into the Amount field collects the failed ` &&
@@ -88,9 +89,9 @@ CLASS z2ui5_cl_smp_app_467 IMPLEMENTATION.
 
     page->ele( `VBox`
         )->a( n = `class` v = `sapUiSmallMargin` )->tag( `Label`
-                )->a( n = `text` v = `Name (message authored by the app)` )->tag( `Input`
+                )->a( n = `text`  v = `Name (message authored by the app)` )->tag( `Input`
                 )->a( n = `value` v = client->_bind( name ) )->tag( `Label`
-                )->a( n = `text` v = `Amount (integer only - validation collected automatically)` )->tag( `Input`
+                )->a( n = `text`  v = `Amount (integer only - validation collected automatically)` )->tag( `Input`
                 )->a( n = `value` v = |\{ path: '{ client->_bind( val = amount path = abap_true ) }', | &&
                               |type: 'sap.ui.model.type.Integer' \}|
                 )->a( n = `width` v = `12rem` ).

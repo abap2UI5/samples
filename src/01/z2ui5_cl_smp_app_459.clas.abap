@@ -84,7 +84,8 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
         )->a( n = `height`       v = `100%`
         )->a( n = `xmlns`        v = `sap.m`
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+        )->a( n = `xmlns:core`   v = `sap.ui.core`
+        )->a( n = `xmlns:dnd`    v = `sap.ui.core.dnd` ).
 
     DATA(page) = view->ele( `Shell` )->ele( `Page`
             )->a( n = `title`          v = `abap2UI5 - Table - Drag and Drop Rows`
@@ -92,7 +93,7 @@ CLASS z2ui5_cl_smp_app_459 IMPLEMENTATION.
             )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->tag( `MessageStrip`
-        )->a( n = `text`     v = `Drag a row and drop it between two others: the dnd:DragDropInfo drop event ` &&
+        )->a( n = `text` v = `Drag a row and drop it between two others: the dnd:DragDropInfo drop event ` &&
                    `sends the dragged/drop indexes and the drop position to the backend, ABAP ` &&
                    `reorders the table and the refreshed model updates the list.`
         )->a( n = `type`     v = `Information`

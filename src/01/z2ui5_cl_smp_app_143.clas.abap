@@ -62,7 +62,8 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
         )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
         )->a( n = `xmlns:core`   v = `sap.ui.core`
         )->a( n = `xmlns:f`      v = `sap.f`
-        )->a( n = `xmlns:table`  v = `sap.ui.table` ).
+        )->a( n = `xmlns:table`  v = `sap.ui.table`
+        )->a( n = `xmlns:z2ui5`  v = `z2ui5.cc` ).
 
     DATA(page1) = view->ele( `Shell` )->ele( `Page`
         )->a( n = `title`          v = `abap2UI5 - Grid Table - Keep Column Filters on Refresh`
@@ -72,7 +73,7 @@ CLASS z2ui5_cl_smp_app_143 IMPLEMENTATION.
         )->a( n = `id`             v = `page_main` ).
 
     page1->tag( `MessageStrip`
-        )->a( n = `text`     v = `This sample uses the abap2UI5 uitableext custom control so the active sap.ui.table column ` &&
+        )->a( n = `text` v = `This sample uses the abap2UI5 uitableext custom control so the active sap.ui.table column ` &&
                    `filters are preserved across a view model update instead of being reset.`
         )->a( n = `type`     v = `Information`
         )->a( n = `showIcon` b = abap_true
