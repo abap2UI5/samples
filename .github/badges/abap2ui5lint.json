@@ -1,10 +1,8 @@
 {
   "schemaVersion": 1,
-  "label": "abap2UI5-linter",
-  "message": "148 apps · 172 views · 2,176 controls · clean",
+  "label": "abap2UI5-linter 148 apps · 172 views · 2,176 controls",
+  "message": "clean",
   "color": "4c1",
-  "labelColor": "0a6ed1",
-  "namedLogo": "sap",
-  "logoColor": "white",
+  "labelColor": "555",
   "cacheSeconds": 3600
 }

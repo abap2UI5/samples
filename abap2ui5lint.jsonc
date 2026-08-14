@@ -24,9 +24,9 @@
   // Refresh it with `npx abap2ui5lint --update-baseline` after fixing things.
   "baseline": "abap2ui5lint-baseline.json",
 
-  // The README badge. Every run rewrites this shields.io endpoint file with
-  // how far the check reached - "148 apps - 172 views - 2,176 controls -
-  // clean", the same numbers the run summary prints - and
+  // The README badge. Every run rewrites this shields.io endpoint file: grey
+  // half how far the check reached ("148 apps - 172 views - 2,176 controls",
+  // the numbers the run summary prints), coloured half the verdict - and
   // check-abap2UI5 commits it onto the pull request branch, so the badge on
   // main updates when the pull request that changed the corpus merges. It
   // says something the workflow badge next to it cannot: a green workflow
