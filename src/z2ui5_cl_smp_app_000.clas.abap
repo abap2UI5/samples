@@ -58,7 +58,10 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
         " the overview app of samples-controls before its 2026-08 rename - an
         " installation that predates it still answers to this name
         controls_old TYPE string VALUE `z2ui5_cl_dmo_app_overview`,
-        stack        TYPE string VALUE `z2ui5_cl_smpe_app_00`,
+        stack        TYPE string VALUE `z2ui5_cl_smps_app_00`,
+        " samples-stack moved every object from the SMPE token to SMPS in
+        " 2026-08; an installation that predates it still answers to this name
+        stack_old    TYPE string VALUE `z2ui5_cl_smpe_app_00`,
       END OF cs_class.
 
     CONSTANTS:
@@ -441,12 +444,13 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    class_old = cs_class-controls_old
                    href      = cs_url-controls ).
 
-    header_button( toolbar = right
-                   icon    = `sap-icon://database`
-                   name    = `Stack Samples`
-                   descr   = `OData, RAP, WebSockets and the Fiori Launchpad`
-                   class   = cs_class-stack
-                   href    = cs_url-stack ).
+    header_button( toolbar   = right
+                   icon      = `sap-icon://database`
+                   name      = `Stack Samples`
+                   descr     = `OData, RAP, WebSockets and the Fiori Launchpad`
+                   class     = cs_class-stack
+                   class_old = cs_class-stack_old
+                   href      = cs_url-stack ).
 
     " ... and then, set apart by a wider gap, the two entries that leave the
     " system: the three icons above open an app, these open a site
