@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/abap2UI5/samples#readme",
   "devDependencies": {
-    "@abap2ui5/linter": "github:abap2UI5/linter#4c9126b",
+    "@abap2ui5/linter": "github:abap2UI5/linter#a899c9c",
     "@abaplint/cli": "^2.119.66"
   },
   "engines": {

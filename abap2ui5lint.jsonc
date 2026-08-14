@@ -36,9 +36,6 @@
   // (b) UNRESOLVED — real findings, parked so the gate can go green over the
   //     rest of the corpus, not because they are acceptable. Each one is a view
   //     that fails to LOAD, which is the worst kind: nothing renders at all.
-  //       * 070/190/194/382 put a <header>/<footer> aggregation on a control
-  //         that has none, and UI5 resolves the unknown lowercase tag as a
-  //         control class — sap/m/footer.js, 404, view dead
   //       * 255 opens headerContent twice and carries a core:HTML content
   //       * 343 binds a TYPE REF TO table, so the items aggregation gets no
   //         template
@@ -57,7 +54,7 @@
         "z2ui5_cl_smp_app_(074|120|143|279|306|327|461|462|463)\\.",
         "z2ui5_cl_smp_app_(173|176)\\.",
         // (b) UNRESOLVED — see above
-        "z2ui5_cl_smp_app_(070|190|194|255|343|382|421)\\.",
+        "z2ui5_cl_smp_app_(255|343|421)\\.",
         // (c) helper-built, not reconstructable
         "z2ui5_cl_smp_app_(117|131|185|191|195|211|338)\\."
       ]

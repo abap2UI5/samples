@@ -60,7 +60,14 @@ CLASS z2ui5_cl_smp_app_190 IMPLEMENTATION.
           )->a( n = `height`       v = `100%`
           )->a( n = `xmlns`        v = `sap.m`
           )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:core`   v = `sap.ui.core` ).
+          )->a( n = `xmlns:core`   v = `sap.ui.core`
+
+          " a real sap.m.Page, because the footer below needs one: mvc:View has
+          " no footer aggregation, and UI5 resolves the unknown lowercase tag as
+          " a control class - sap/m/footer.js, 404, and the whole view dies
+          " instead of rendering without its toolbar. Embedded, the caller
+          " supplies the Page; standalone this is it
+          )->ele( `Page` ).
 
     ELSE.
       page = mo_parent_page.
