@@ -623,7 +623,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
     result = VALUE #(
       ( group = `samples` header = `Basics I` sub = `Hello World, the Smallest App` keywords = `hello world smallest first app minimal start here template` path = `src/01` app = `z2ui5_cl_smp_app_493` )
-      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `two way binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
+      ( group = `samples` header = `Basics II` sub = `Data Binding: Input and Button` keywords = `binding _bind model attribute value input button serialize` path = `src/01` app = `z2ui5_cl_smp_app_494` )
       ( group = `samples` header = `Basics III` sub = `Lifecycle: Init, Event, Navigated` keywords = `lifecycle roundtrip main dispatcher state serialize check_on_init check_on_event check_on_navigated` path = `src/01` app = `z2ui5_cl_smp_app_495` )
       ( group = `samples` header = `Basics IV` sub = `Events, Views and Roundtrips` keywords = `roundtrip restart second view uncaught error controller basics` path = `src/01` app = `z2ui5_cl_smp_app_004` )
       ( group = `samples` header = `Basics V`
@@ -719,7 +719,7 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
       ( group = `samples` header = `Timer` sub = `Progress Indicator during a Backend Call (A)` keywords = `progressindicator busy wait long running backend` path = `src/01` app = `z2ui5_cl_smp_app_064` )
       ( group = `samples` header = `Timer` sub = `Refresh the View Every n Seconds (A)` keywords = `interval polling auto refresh follow_up_action seconds` path = `src/01` app = `z2ui5_cl_smp_app_028` )
       ( group = `samples` header = `Tree` sub = `Drag and Drop Nodes (A,C)` keywords = `dnd move node hierarchy binding context` path = `src/01` app = `z2ui5_cl_smp_app_461` )
-      ( group = `samples` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input two way write back` path = `src/01` app = `z2ui5_cl_smp_app_463` )
+      ( group = `samples` header = `Tree` sub = `Editable Nodes with CustomTreeItem (C)` keywords = `customtreeitem rename input binding write back` path = `src/01` app = `z2ui5_cl_smp_app_463` )
       ( group = `samples` header = `Tree` sub = `Inside a Dialog (C)` keywords = `popup expand state hierarchy nodes` path = `src/01` app = `z2ui5_cl_smp_app_462` )
       ( group = `samples` header = `Tree` sub = `Nested ABAP Table in a sap.m.Tree` keywords = `hierarchy nodes nested json items` path = `src/01` app = `z2ui5_cl_smp_app_460` ) ).
 

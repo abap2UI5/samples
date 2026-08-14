@@ -1,4 +1,4 @@
-" @keywords two way binding _bind model attribute value input button serialize
+" @keywords binding _bind model attribute value input button serialize
 CLASS z2ui5_cl_smp_app_494 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -38,7 +38,7 @@ CLASS z2ui5_cl_smp_app_494 IMPLEMENTATION.
           class    = `sapUiSmallMargin` ).
 
       page->simple_form(
-          title    = `Two-Way Binding`
+          title    = `Data Binding`
           editable = abap_true
           )->content( `form`
           )->label( `your name`
