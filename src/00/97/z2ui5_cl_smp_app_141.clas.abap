@@ -85,7 +85,7 @@ CLASS z2ui5_cl_smp_app_141 IMPLEMENTATION.
 
     page->message_strip(
         text     = `Changes a control INSIDE an open popup from the backend. The ` &&
-                   `label text is an ordinary two-way binding; the style class has ` &&
+                   `label text is an ordinary binding; the style class has ` &&
                    `no bindable equivalent and is applied with follow_up_action( ` &&
                    `control_by_id ) scoped to the popup view. No custom JavaScript ` &&
                    `is involved.`

@@ -821,7 +821,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |
-| Binding | `_bind(val)` | Two-way binding (`_bind_edit` is an obsolete alias) |
+| Binding | `_bind(val)` | Data binding, values travel in both directions (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
@@ -957,13 +957,21 @@ value (human find 2026-07-18 in samples 456/457). Compose raw binding-info
 strings with the bare path from
 `client->_bind( val = x path = abap_true )`.
 
-**Always `_bind( )`, never `_bind_edit( )`.** Both bind two-way into the same
-root model — the one-way/two-way split disappeared with the `XX/` view-model
-node — so `_bind_edit` is only an obsolete alias and is slated for removal.
+**Always `_bind( )`, never `_bind_edit( )`.** Both bind into the same root
+model — the split between them disappeared with the `XX/` view-model node — so
+`_bind_edit` is only an obsolete alias and is slated for removal.
 The single exception is a mapping that differs per direction, because `_bind`
 has no `custom_mapper_back` / `custom_filter_back` parameters; no sample in
 this repository currently needs that — one that does must say so in a comment
 at the call.
+
+**Call it "binding", never "one-way"/"two-way" binding** — in sample titles,
+message strips, comments and `@keywords` alike. With only `_bind( )` left, and
+values always travelling in both directions, the qualifier distinguishes
+nothing and makes readers look for a second mode that does not exist. Say
+"bound attribute", "the value is written back before the event handler runs".
+"One-way" is correct only for a real UI5 one-way model that is not `_bind( )`
+— the `device>` JSONModel in `z2ui5_cl_smp_app_445`, for example.
 
 Key rules for `_generic( )`:
 - `_generic( name = ... ns = ... t_prop = ... )` adds one element and

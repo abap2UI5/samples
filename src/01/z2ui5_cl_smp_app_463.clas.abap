@@ -1,4 +1,4 @@
-" @keywords customtreeitem rename input two way write back
+" @keywords customtreeitem rename input binding write back
 CLASS z2ui5_cl_smp_app_463 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -59,7 +59,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
     CASE client->get_event( ).
 
       WHEN `SHOW_MODEL`.
-        " the two-way bound inputs have already written the edits back into
+        " the bound inputs have already written the edits back into
         " t_nodes before on_event runs - read the (possibly renamed) roots
         " back and echo them, proving the round-trip
         DATA(lv_roots) = ``.
@@ -84,7 +84,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
             shownavbutton  = client->check_app_prev_stack( ) ).
 
     page->message_strip(
-        text     = `Each node is a CustomTreeItem holding an Input bound two-way to the node text. ` &&
+        text     = `Each node is a CustomTreeItem holding an Input bound to the node text. ` &&
                    `Rename any node and press "Show model": the edits have already written back into ` &&
                    `the nested ABAP table. The expand state is preserved across the roundtrip.`
         type     = `Information`
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_smp_app_463 IMPLEMENTATION.
                    press = client->_event( `SHOW_MODEL` ) ).
 
     " CustomTreeItem is not a typed builder method - build it via _generic;
-    " its content aggregation holds the editable Input, bound two-way to
+    " its content aggregation holds the editable Input, bound to
     " {TEXT} because the items aggregation itself is bound with _bind
     DATA(tree) = page->tree( id         = `tree1`
                              headertext = `Files (editable)`
