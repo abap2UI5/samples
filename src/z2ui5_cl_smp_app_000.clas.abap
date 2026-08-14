@@ -92,7 +92,7 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     "! would render on its own. Right one icon per sample
     "! repository of the abap2UI5 family - it jumps into that repository's
     "! overview app when the app is on this system and says how to install it
-    "! when it is not - then a separator and what leaves the system: the
+    "! when it is not - then a wider gap and what leaves the system: the
     "! documentation and GitHub. Exactly one entry of the row is inactive: the
     "! repository you are looking at, there is nowhere to go from it.
     METHODS render_header
@@ -102,11 +102,6 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     METHODS render_sub_header
       IMPORTING
         page TYPE REF TO z2ui5_cl_xml_view.
-    "! the vertical line that groups the header row: the repositories of the
-    "! family first, then what leaves the system
-    METHODS header_separator
-      IMPORTING
-        toolbar TYPE REF TO z2ui5_cl_xml_view.
     "! A repository that is not on this system stays clickable and says what is
     "! missing - a popover on the icon that was pressed, with the GitHub link
     "! to install it from.
@@ -121,16 +116,20 @@ CLASS z2ui5_cl_smp_app_000 DEFINITION PUBLIC.
     "!                        not on the system: a repository that renamed its
     "!                        overview app is installed under both names in the wild
     "!                        for a while
+    "! @parameter group_start | this entry opens the second group of the header
+    "!                          row, so it carries the wider margin that sets the
+    "!                          two groups apart - see render_header( )
     METHODS header_button
       IMPORTING
-        toolbar   TYPE REF TO z2ui5_cl_xml_view
-        icon      TYPE string
-        name      TYPE string
-        descr     TYPE string
-        href      TYPE string
-        class     TYPE string OPTIONAL
-        class_old TYPE string OPTIONAL
-        here      TYPE abap_bool DEFAULT abap_false.
+        toolbar     TYPE REF TO z2ui5_cl_xml_view
+        icon        TYPE string
+        name        TYPE string
+        descr       TYPE string
+        href        TYPE string
+        class       TYPE string OPTIONAL
+        class_old   TYPE string OPTIONAL
+        here        TYPE abap_bool DEFAULT abap_false
+        group_start TYPE abap_bool DEFAULT abap_false.
     "! the press wire of a button whose target is EXTERNAL: a Button carries no
     "! href, and cs_event-open_new_tab is same-origin only, so the new tab is
     "! opened by the URLHELPER frontend action - client-side, inside the click
@@ -392,6 +391,16 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
 
   METHOD render_header.
 
+    " ONLY INLINE CONTROLS BELONG INTO A sap.m.Bar. Its content containers
+    " became flex boxes only after 1.71: on the oldest release abap2UI5
+    " supports, .sapMBarLeft/.sapMBarRight are plain absolutely positioned
+    " blocks that lay their children out in normal flow, so a block-level
+    " child - a ToolbarSpacer or a ToolbarSeparator, both of which render a
+    " <div> - starts a new line, and everything from that line on is cut away
+    " by the overflow:hidden the container carries at the bar's height of
+    " 3rem. This row used to put a ToolbarSeparator between its two groups and
+    " lost the documentation and GitHub icons on 1.71 because of it; the gap
+    " now rides on the first icon of the second group (group_start).
     DATA(bar) = page->custom_header( )->bar( ).
 
     " left: what the stock page header would render on its own
@@ -432,15 +441,14 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
                    class   = cs_class-stack
                    href    = cs_url-stack ).
 
-    " ... and then, set apart by a separator line, the two entries that leave
-    " the system: the three icons above open an app, these open a site
-    header_separator( right ).
-
-    header_button( toolbar = right
-                   icon    = `sap-icon://learning-assistant`
-                   name    = `Documentation`
-                   descr   = `guides, tutorials and the API reference`
-                   href    = cs_url-docs ).
+    " ... and then, set apart by a wider gap, the two entries that leave the
+    " system: the three icons above open an app, these open a site
+    header_button( toolbar     = right
+                   icon        = `sap-icon://learning-assistant`
+                   name        = `Documentation`
+                   descr       = `guides, tutorials and the API reference`
+                   href        = cs_url-docs
+                   group_start = abap_true ).
 
     " not source-code: that icon now belongs to the per-sample links in the list
     header_button( toolbar = right
@@ -531,25 +539,22 @@ CLASS z2ui5_cl_smp_app_000 IMPLEMENTATION.
     " one, the overview you are already in. Everything else is active, whether
     " its repository is on this system or not. The class name doubles as the
     " icon id, so install_display( ) can anchor its popover to the icon pressed
+    " the wider begin margin is what sets the second group of the row apart -
+    " a margin rather than a separator control, see render_header( )
+    DATA(css_class) = COND string( WHEN group_start = abap_true
+                                   THEN `sapUiMediumMarginBegin sapUiTinyMarginEnd`
+                                   ELSE `sapUiTinyMarginBeginEnd` ).
+
     toolbar->_generic(
         name   = `Icon`
         ns     = `core`
         t_prop = VALUE #( ( n = `src`     v = icon )
                           ( n = `id`      v = class )
                           ( n = `size`    v = `1.125rem` )
-                          ( n = `class`   v = `sapUiTinyMarginBeginEnd` )
+                          ( n = `class`   v = css_class )
                           ( n = `color`   v = color )
                           ( n = `tooltip` v = hint )
                           ( n = `press`   v = press ) ) ).
-
-  ENDMETHOD.
-
-
-  METHOD header_separator.
-
-    toolbar->_generic(
-        name   = `ToolbarSeparator`
-        t_prop = VALUE #( ( n = `class` v = `sapUiSmallMarginBegin sapUiSmallMarginEnd` ) ) ).
 
   ENDMETHOD.
 

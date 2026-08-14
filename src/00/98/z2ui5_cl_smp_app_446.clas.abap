@@ -81,8 +81,11 @@ CLASS z2ui5_cl_smp_app_446 IMPLEMENTATION.
         class    = `sapUiSmallMargin` ).
 
     page->vbox( `sapUiSmallMargin`
+        " message-information, not information: the plain `information` glyph
+        " reached the SAP icon font after 1.71, so on the oldest release the
+        " samples must run on the button renders with no icon at all
         )->button( text  = `MessageToast.show`
-                   icon  = `sap-icon://information`
+                   icon  = `sap-icon://message-information`
                    press = client->_event( `TOAST` )
         )->button( text  = `MessageBox.show`
                    icon  = `sap-icon://message-popup`
