@@ -655,19 +655,40 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   | `abap2ui5` | defects living in the relationship between the ABAP class and the view it builds; silent at runtime, invisible to any UI5 tooling |
 
 - Configuration: `abap2ui5lint.jsonc` (UI5 floor `1.71`, distribution
-  `openui5`, `failOn: warning`)
+  `openui5`, `failOn: warning`, baseline, badge)
 - Run: `npm run check:abap2ui5`
 - CI: `abap2UI5` — as opposed to `abap-standard` / `abap-cloud` /
   `abap-702`, which lint ABAP itself against three target releases
-- **It currently reports nothing in this repository.** The samples are on
-  `z2ui5_cl_ui5_view_builder` (§10), but the pinned linter still looks for the
-  builder's former name `z2ui5_cl_ai_xml`, so it finds no checkable file. The
-  gate becomes effective when the pin moves to a version that reads the
-  released builder **and** spells its attribute verb `a( )` (the first version
-  that reads the new builder at all still spelled it `att( )`, which drops
-  every attribute including the namespace declarations — see
-  abap2UI5/samples-controls#89). Until then a green `abap2UI5` badge means
+- **The gate is effective**: 148 app classes, 172 reconstructed views, and
+  the adoption-time debt frozen in `abap2ui5lint-baseline.json` (#753). It was
+  not always: while the linter still looked for the view builder's former name
+  it found no checkable file at all, and a green `abap2UI5` badge then meant
   "nothing was checkable", not "the apps are clean".
+- **That is why a run reports what it LOOKED at**, not only what it found.
+  The gates log every file into a collapsed group while they run, and the run
+  closes with a summary — classes, views reconstructed (**and how many
+  classes produced none**), controls, bindings and icons judged, the control
+  histogram, what the baseline swallowed and per rule, the phase times:
+
+  ```
+  sources    148 app classes
+  views      172 documents reconstructed, nested 11 deep, 7 classes produced none
+  judged     2,176 controls of 106 types, 548 bindings, 69 icons, 4,164 attributes
+  gates      properties 148 files, render 172 documents
+  baselined  476 findings suppressed by abap2ui5lint-baseline.json (…)
+  ```
+
+  A `judged` line of zeroes, or `148 classes produced none`, is the earlier
+  failure repeating itself — and now it says so instead of printing
+  "Success! No findings detected."
+- **The README badge** (`.github/badges/abap2ui5lint.json`, a shields.io
+  endpoint file) carries the same statement, in the reach of the check:
+  *148 apps · 172 views · 2,176 controls · clean*. Every run rewrites it,
+  `check-abap2UI5` commits it onto the pull request branch, and main picks it
+  up when that pull request merges — so the numbers next to "clean" are what
+  the last run actually checked. **A sample added or
+  removed changes this file**; commit it with the change (the workflow pushes
+  it if you forget, and reports it when it cannot).
 
 ### abapGit file consistency
 
