@@ -208,6 +208,28 @@ CLASS z2ui5_cl_smp_context DEFINITION
       RETURNING
         VALUE(rt_params) TYPE ty_t_name_value.
 
+    CLASS-METHODS url_param_create_url
+      IMPORTING
+        t_params      TYPE ty_t_name_value
+      RETURNING
+        VALUE(result) TYPE string.
+
+    "! The URL that starts an abap2UI5 app on this system: the current one with
+    "! its `app_start` parameter replaced by CLASSNAME. The four other importing
+    "! parameters are the `s_config` fields of `client-&gt;get( )`.
+    "! @parameter classname | the app class to start, case-insensitive
+    "! @parameter hash      | the current hash, `s_config-hash` - only the
+    "!                        launchpad shell part of it survives, see below
+    CLASS-METHODS app_get_url
+      IMPORTING
+        classname     TYPE clike
+        origin        TYPE clike
+        pathname      TYPE clike
+        search        TYPE clike
+        hash          TYPE clike OPTIONAL
+      RETURNING
+        VALUE(result) TYPE string.
+
     CLASS-METHODS rtti_get_t_attri_by_any
       IMPORTING
         val           TYPE any
@@ -537,6 +559,46 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     cv_typedescr_kind_struct         = cl_abap_typedescr=>kind_struct.
     cv_typedescr_kind_ref            = cl_abap_typedescr=>kind_ref.
     cv_objectdescr_public            = cl_abap_objectdescr=>public.
+
+  ENDMETHOD.
+
+  METHOD app_get_url.
+
+    DATA(lt_param) = url_param_get_tab( search ).
+    DELETE lt_param WHERE n = `app_start`.
+    INSERT VALUE #( n = `app_start`
+                    v = to_lower( classname ) ) INTO TABLE lt_param.
+
+    " keep only the launchpad shell part of the hash: the app-owned part
+    " (leading `/` standalone, or everything after `&/` inside the FLP)
+    " carries THIS app's route/app-state, which the backend prefers over
+    " app_start - appending it verbatim would re-open the current app
+    " instead of the requested one
+    DATA(lv_hash) = CONV string( hash ).
+    IF lv_hash IS NOT INITIAL.
+      DATA(lv_content) = lv_hash.
+      IF lv_content(1) = `#`.
+        lv_content = substring( val = lv_content
+                                off = 1 ).
+      ENDIF.
+      IF lv_content IS INITIAL OR lv_content(1) = `/`.
+        " pure app hash (route or app-state) - drop it entirely
+        lv_hash = ``.
+      ELSE.
+        " inside the FLP keep the shell part, cut the app part after `&/`
+        DATA(lv_off) = find( val = lv_content
+                             sub = `&/` ).
+        IF lv_off = 0.
+          lv_hash = ``.
+        ELSEIF lv_off > 0.
+          lv_hash = |#{ lv_content(lv_off) }|.
+        ELSE.
+          lv_hash = |#{ lv_content }|.
+        ENDIF.
+      ENDIF.
+    ENDIF.
+
+    result = |{ origin }{ pathname }?| && url_param_create_url( lt_param ) && lv_hash.
 
   ENDMETHOD.
 
@@ -1043,6 +1105,16 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     GET TIME STAMP FIELD result.
   ENDMETHOD.
 
+  METHOD url_param_create_url.
+
+    LOOP AT t_params INTO DATA(ls_param).
+      result = |{ result }{ ls_param-n }={ ls_param-v }&|.
+    ENDLOOP.
+    result = shift_right( val = result
+                          sub = `&` ).
+
+  ENDMETHOD.
+
   METHOD url_param_get.
 
     DATA(lt_params) = url_param_get_tab( url ).
@@ -1058,6 +1130,13 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
                                with = `=`
                                occ  = 0 ).
 
+    " RFC 3986 allows lowercase hex digits in percent-encodings, so decode
+    " %3d the same way as %3D (%26 contains no letters and needs no twin)
+    lv_search = replace( val  = lv_search
+                         sub  = `%3d`
+                         with = `=`
+                         occ  = 0 ).
+
     lv_search = replace( val  = lv_search
                          sub  = `%26`
                          with = `&`
@@ -1066,11 +1145,13 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
     lv_search = shift_left( val = lv_search
                             sub = `?` ).
 
-    DATA(lv_search2) = substring_after( val = lv_search
+    " prepend & before searching so sap-startup-params is also unwrapped
+    " when it is the first/only query parameter (typical FLP target mapping)
+    DATA(lv_search2) = substring_after( val = |&{ lv_search }|
                                         sub = `&sap-startup-params=` ).
     lv_search = COND #( WHEN lv_search2 IS NOT INITIAL THEN lv_search2 ELSE lv_search ).
 
-    lv_search2 = substring_after( val = c_trim_lower( lv_search )
+    lv_search2 = substring_after( val = lv_search
                                   sub = `?` ).
     IF lv_search2 IS NOT INITIAL.
       lv_search = lv_search2.
@@ -1080,7 +1161,16 @@ CLASS z2ui5_cl_smp_context IMPLEMENTATION.
 
     LOOP AT lt_param REFERENCE INTO DATA(lr_param).
       SPLIT lr_param->* AT `=` INTO DATA(lv_name) DATA(lv_value).
-      INSERT VALUE #( n = lv_name
+      " an empty segment (empty search string, trailing &) would otherwise
+      " produce a phantom nameless parameter that url_param_create_url
+      " writes back out as a stray `=&`
+      IF lv_name IS INITIAL.
+        CONTINUE.
+      ENDIF.
+      " normalize the name so lookups are case-insensitive on every input
+      " shape (with or without a leading path/question mark) - the value
+      " keeps its original case
+      INSERT VALUE #( n = c_trim_lower( lv_name )
                       v = lv_value ) INTO TABLE rt_params.
     ENDLOOP.
 
