@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/abap2UI5/samples#readme",
   "devDependencies": {
-    "@abap2ui5/linter": "^0.1.0",
-    "@abap2ui5/render-runtime": "^0.1.0",
+    "@abap2ui5/linter": "^0.1.1",
+    "@abap2ui5/render-runtime": "^0.1.1",
     "@abaplint/cli": "^2.119.66"
   },
   "engines": {

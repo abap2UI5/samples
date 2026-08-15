@@ -675,7 +675,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
   views      172 documents reconstructed, nested 11 deep, 7 classes produced none
   judged     2,176 controls of 106 types, 548 bindings, 69 icons, 4,164 attributes
   gates      properties 148 files, render 172 documents
-  baselined  476 findings suppressed by abap2ui5lint-baseline.json (…)
+  baselined  133 findings suppressed by abap2ui5lint-baseline.json (…)
   ```
 
   A `judged` line of zeroes, or `148 classes produced none`, is the earlier
@@ -684,7 +684,7 @@ newline). **Run `abaplint` — 0 issues — before committing.**
 - **The two README badges** (`.github/badges/abap2ui5.json` and
   `.github/badges/check-abap2ui5.json`, shields.io endpoint files) carry the
   same statement, split along what they mean: *abap2UI5 | 148 apps · 172 views
-  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 83 rules
+  · 2,176 controls* is what is here, blue, a fact; *check-abap2UI5 | 84 rules
   passed* is what the gate made of it, green (or *3 problems*, *7 errors*,
   red). A run that finds nothing checkable turns both grey and says so. Every
   run rewrites them, `check-abap2UI5` commits them onto the pull request
