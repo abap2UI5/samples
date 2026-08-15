@@ -1035,6 +1035,10 @@ single-chain shape, where they separate an `ele( )` block from its first child.
 
 #### What checks this
 
+The rules above are also the **`view-chain-layout` skill**
+(`.claude/skills/view-chain-layout/`), kept byte-identical in `abap2UI5` and
+`abap2UI5/samples-controls` — read it before writing or reformatting a chain.
+
 `node scripts/chain-format.mjs` (`npm run check:chains`, and a job in
 `check-docs.yaml`) checks all six rules and `npm run fmt:chains` applies them.
 It rewrites whitespace *between* chain segments only, and verifies that
