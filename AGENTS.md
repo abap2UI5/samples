@@ -989,6 +989,31 @@ The hierarchy is `mvc:View` → `Shell` → `Page` → `form:SimpleForm` →
 `form:content` → leaves. `Label`, `Input` and `Button` are siblings inside
 `content`, so they are added with `tag( )` and stay at the same indent.
 
+Three rules keep that picture true, and the port of the corpus onto this
+builder (#752) broke all three in a handful of classes:
+
+- **The indent states the depth.** One level per container, the same step
+  throughout the file — a chain that steps by 2 and then by 4 and then stops
+  moving is no longer describing the tree, it is decorating it.
+- **Never unwind with a run of `end( )` to start a sibling.** A line ending in
+  `` )->end( )->end( )->ele( `footer` )->ele( `OverflowToolbar` `` changes four
+  levels where nobody can see them, and every line after it starts in a column
+  that means nothing. When you need a node again, **keep it in a variable** —
+  `DATA(page)`, `DATA(cont)`, `DATA(lo_columns)` in the sample above — and
+  start a new statement per subtree. That is what the corpus does, and it is
+  what lets a statement indent monotonically.
+- **A control may share its line with its own attributes**
+  (`` )->tag( `Label` )->a( n = `text` … ``) **and with the container it opens**
+  (`` view->ele( `Shell` )->ele( `Page` ``) — but a line carrying a whole
+  subtree hides the tree.
+
+The abap2UI5-linter judges this (`chain-indentation`, `chain-element-per-line`),
+but read `abap2ui5lint.jsonc` before relying on it: `chain-element-per-line` is
+still a hint with 339 findings in the baseline, so it fails nothing today. The
+layout is on the author and the reviewer. `z2ui5_cl_smp_app_052` is the worked
+example — its `popover_display` was the broken shape above and is now the
+sound one.
+
 #### Namespaces
 
 Every namespace prefix a view uses must be declared on the view element —

@@ -58,6 +58,15 @@
     "parser_error": true,
     "superclass_final": true,
     "unknown_types": true,
+    // The ABAP editor strips a trailing blank when it saves, so a line that
+    // ends in one comes back changed on the next pull - for everyone. Nothing
+    // here caught that: the port of the corpus onto z2ui5_cl_ui5_view_builder
+    // (#752) left a trailing blank on seven lines in seven app classes, all
+    // four workflows stayed green, and b7edbc6 "fix abaplint diffs" had to be
+    // found and pushed by hand. The tree is clean as of that commit, so the
+    // rule costs nothing and closes the hole. abap2UI5 has carried it for
+    // src/01 and src/02 all along.
+    "whitespace_end": true,
     "xml_consistency": true
   }
 }
