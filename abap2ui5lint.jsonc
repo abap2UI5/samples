@@ -14,6 +14,13 @@
   "ui5": "1.71",
   "distribution": "openui5",
 
+  // The render gate is REQUIRED here, not merely left on. It is on by default,
+  // and a default-on gate whose runtime is missing steps aside for the property
+  // gate and the run stays green - which for a corpus whose whole claim is that
+  // every one of its views loads in a browser would be the wrong kind of quiet.
+  // Saying so makes a missing @abap2ui5/render-runtime an error instead.
+  "render": true,
+
   // Adoption-time debt. The corpus only became readable by the linter when it
   // moved onto z2ui5_cl_ui5_view_builder (#752) — before that every class built
   // its view with the retired builder and the linter found nothing to check, so
