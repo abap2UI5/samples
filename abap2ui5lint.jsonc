@@ -74,6 +74,24 @@
   //     helper, so there is nothing to render. A gate can say nothing about
   //     them either way.
   "rules": {
+    // The chain's layout is the only picture of the view's tree there is, and
+    // nothing else formats it: abaplint's `indentation` is off for app code on
+    // purpose, so a mangled chain is lint-green everywhere else. Both layout
+    // rules ship as `hint`, which `failOn: warning` does not even print - the
+    // port to z2ui5_cl_ui5_view_builder (#752) therefore left classes like
+    // z2ui5_cl_smp_app_052 with an indent that steps by 2, then by 4, then
+    // stops moving, and every gate stayed green.
+    //
+    // `chain-indentation` is raised here because it costs one baseline entry:
+    // it judges only that a chain keeps its OWN rhythm (a sibling in a
+    // different column than its siblings, a call written left of the element
+    // it belongs to), never the step size, so the corpus already passes it.
+    //
+    // `chain-element-per-line` is NOT raised, and that is deliberate: it flags
+    // 339 findings here, and one of them is the idiom AGENTS.md section 10
+    // documents - `view->ele( `Shell` )->ele( `Page`` on one line. Raising it
+    // means changing that convention first.
+    "chain-indentation": { "severity": "warning" },
     "render-error": {
       "exclude": [
         // (a) not served by the harness
