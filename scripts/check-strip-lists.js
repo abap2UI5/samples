@@ -28,8 +28,15 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 
 // every `rm -r`/`rm -rf` of src paths, however the file spells it: a shell
-// command, a workflow step, or an inline code span in the markdown table
-const RM = /rm\s+-r[a-z]*\s+((?:src\/[\d/]+[ \t]*)+)/g;
+// command, a workflow step, or an inline code span in the markdown table.
+// The package segment is NOT restricted to digits: a `src/<name>` package
+// added to one list and forgotten in the other used to be invisible here,
+// because the pattern stopped at the first non-digit and both files then
+// agreed on the same TRUNCATED list - a silent pass from the one check whose
+// whole job is to catch that drift. Shell metacharacters (`&`, `|`, `;`, a
+// quote, a closing backtick) are outside the class, so a path list still ends
+// where the command does.
+const RM = /rm\s+-r[a-z]*\s+((?:src\/[\w.\-/]+[ \t]*)+)/g;
 
 const SOURCES = [
   "package.json",
