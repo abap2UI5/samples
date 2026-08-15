@@ -847,7 +847,7 @@ Use a `CASE` statement (inside an `ELSEIF client->check_on_event( )` block) only
 | Nested views | `nest_view_display/destroy`, `nest2_view_*` | Embedded sub-views |
 | Popups | `popup_display`, `popup_destroy` | Modal dialogs |
 | Popovers | `popover_display`, `popover_destroy` | Context popovers |
-| Binding | `_bind(val)` | Data binding, values travel in both directions (`_bind_edit` is an obsolete alias) |
+| Binding | `_bind(val)` | Data binding — the value is written back before the event handler runs (`_bind_edit` is an obsolete alias) |
 | Events | `_event(val)`, `follow_up_action(val)`, `check_on_event(val)` | Event registration and checking (`_event_client` is an obsolete alias — `follow_up_action` covers both roles: returned into a view attribute it binds the frontend action to a control, called on `client` it queues the action after the current response renders) |
 | Navigation | `nav_app_call(app)`, `nav_app_leave()`, `get_app_prev()` | App stack navigation |
 | Lifecycle | `check_on_init()`, `check_on_navigated()`, `check_app_prev_stack()` | State checks |
@@ -1028,9 +1028,10 @@ at the call.
 
 **Call it "binding", never "one-way"/"two-way" binding** — in sample titles,
 message strips, comments and `@keywords` alike. With only `_bind( )` left, and
-values always travelling in both directions, the qualifier distinguishes
-nothing and makes readers look for a second mode that does not exist. Say
-"bound attribute", "the value is written back before the event handler runs".
+the value always written back before the event handler runs, the qualifier
+distinguishes nothing and makes readers look for a second mode that does not
+exist. Say "bound attribute", "the value is written back before the event
+handler runs".
 "One-way" is correct only for a real UI5 one-way model that is not `_bind( )`
 — the `device>` JSONModel in `z2ui5_cl_smp_app_445`, for example.
 
